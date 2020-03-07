@@ -13311,7 +13311,7 @@ void CMainFrame::SetupJumpToSubMenus(CMenu* parentMenu /*= nullptr*/, int iInser
         if (m_wndPlaylistBar.GetCount() > 1) {
             menuStartRadioSection();
             POSITION pos = m_wndPlaylistBar.m_pl.GetHeadPosition();
-            while (pos) {
+            while (pos && id < ID_NAVIGATE_JUMPTO_SUBITEM_START + 128) {
                 UINT flags = MF_BYCOMMAND | MF_STRING | MF_ENABLED;
                 if (pos == m_wndPlaylistBar.m_pl.GetPos()) {
                     idSelected = id;
