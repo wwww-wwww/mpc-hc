@@ -16894,8 +16894,8 @@ void CMainFrame::UpdateControlState(UpdateControlTarget target)
                     m_wndView.LoadImg(internalCover);
                     m_currentCoverPath = filename;
                     m_currentCoverAuthor = author;
-                } else if (!filedir.IsEmpty() && (m_currentCoverPath != filedir || m_currentCoverAuthor != author)) {
-                    m_wndView.LoadImg(CoverArt::FindExternal(filename_no_ext, filedir, author));
+                } else if (!filedir.IsEmpty() && (m_currentCoverPath != filedir || m_currentCoverAuthor != author || currentCoverIsFileArt)) {
+                    m_wndView.LoadImg(CoverArt::FindExternal(filename_no_ext, filedir, author, currentCoverIsFileArt));
                     m_currentCoverPath = filedir;
                     m_currentCoverAuthor = author;
                 } else if (!m_wndView.IsCustomImgLoaded()) {
