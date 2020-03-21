@@ -325,7 +325,7 @@ private:
     void AddTextPassThruFilter();
 
     int m_nLoops;
-    REFERENCE_TIME abRepeatPositionA, abRepeatPositionB, fileEndPosition;
+    REFERENCE_TIME abRepeatPositionA, abRepeatPositionB;
     bool abRepeatPositionAEnabled, abRepeatPositionBEnabled;
     UINT m_nLastSkipDirection;
 
