@@ -274,6 +274,8 @@ struct wmcmd_base : public ACCEL {
         X2DBLCLK,
         WUP,
         WDOWN,
+        WRIGHT,
+        WLEFT,
         LAST
     };
 
