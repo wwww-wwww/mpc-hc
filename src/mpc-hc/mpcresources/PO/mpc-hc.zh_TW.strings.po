@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2020-01-10 07:05:47+0000\n"
+"POT-Creation-Date: 2020-03-20 18:57:58+0000\n"
 "PO-Revision-Date: 2020-01-02 07:46+0000\n"
 "Last-Translator: Peter Chen <petercpg@gmail.com>, 2020\n"
 "Language-Team: Chinese (Taiwan) (https://www.transifex.com/mpchc/teams/106126/zh_TW/)\n"
@@ -76,7 +76,7 @@ msgstr "播放清單"
 
 msgctxt "IDS_PLAY_LOOPMODE_AB"
 msgid "A-B"
-msgstr ""
+msgstr "A-B 點重複播放"
 
 msgctxt "IDS_FAVFILES"
 msgid "Files"
@@ -140,15 +140,15 @@ msgstr "重播模式: 檔案"
 
 msgctxt "IDS_PLAYLOOPMODE_AB"
 msgid "A-B Repeat: Reset Positions"
-msgstr ""
+msgstr "A-B 點重複播放：重設範圍"
 
 msgctxt "IDS_PLAYLOOPMODE_AB_MARK_A"
 msgid "A-B Repeat: Mark A Position"
-msgstr ""
+msgstr "A-B 點重複播放：標示 A 點"
 
 msgctxt "IDS_PLAYLOOPMODE_AB_MARK_B"
 msgid "A-B Repeat: Mark B Position"
-msgstr ""
+msgstr "A-B 點重複播放：標示 B 點"
 
 msgctxt "IDS_PLAYLOOP_FOREVER_ON"
 msgid "Repeat Forever: On"
@@ -920,7 +920,7 @@ msgstr "暫停\n暫停"
 
 msgctxt "IDS_AG_OPEN_FILE_LOCATION"
 msgid "Open File Location"
-msgstr ""
+msgstr "開啟檔案位置"
 
 msgctxt "ID_PLAY_STOP"
 msgid "Stop\nStop"
@@ -1876,7 +1876,7 @@ msgstr "您要定期檢查 MPC-HC 的更新嗎?\n\n這個功能稍後可在設�
 
 msgctxt "IDS_ZOOM_25"
 msgid "25%"
-msgstr ""
+msgstr "25%"
 
 msgctxt "IDS_ZOOM_50"
 msgid "50%"
@@ -2652,7 +2652,7 @@ msgstr "切換除錯著色器"
 
 msgctxt "IDS_AG_ZOOM_25"
 msgid "Zoom 25%"
-msgstr ""
+msgstr "縮放 25%"
 
 msgctxt "IDS_AG_ZOOM_50"
 msgid "Zoom 50%"
@@ -3232,11 +3232,11 @@ msgstr "替代式垂直同步: 關閉"
 
 msgctxt "IDS_OSD_RS_RESET_DEFAULT"
 msgid "Renderer settings reset to default"
-msgstr "重新設定為預設的繪製器設定"
+msgstr "重設為預設繪製器設定"
 
 msgctxt "IDS_OSD_RS_RESET_OPTIMAL"
 msgid "Renderer settings reset to optimal"
-msgstr "重新設定為最佳的繪製器設定"
+msgstr "重設為最佳繪製器設定"
 
 msgctxt "IDS_OSD_RS_D3D_FS_GUI_SUPP_ON"
 msgid "D3D Fullscreen GUI Support: On"
@@ -3964,35 +3964,35 @@ msgstr "置底對齊"
 
 msgctxt "IDS_PPAGEADVANCED_USE_YDL"
 msgid "Process HTTP(s) URLs with Youtube-DL (if available). There is an internal whitelist/blacklist for URLs that are always/never processed."
-msgstr ""
+msgstr "透過 Youtube-DL 處理 HTTP(S) 網址（可以使用時）。內部有一組總是會使用或不使用的白名單與黑名單。"
 
 msgctxt "IDS_PPAGEADVANCED_YDL_MAX_HEIGHT"
 msgid "Can be used to limit the video resolution that is chosen by Youtube-DL by the given height. Value 0 means it will choose the highest resolution available."
-msgstr ""
+msgstr "可指定高度，以限制 Youtube-DL 選擇的視訊解析度。將值設定為 0 代表選擇可以使用的最高解析度。"
 
 msgctxt "IDS_PPAGEADVANCED_YDL_VIDEO_FORMAT"
 msgid "Preferred video format for stream that is selected from Youtube-DL results.\n0: Automatic\n1: H.264 30fps\n2: H.264 60fps\n3: VP9 30fps\n4: VP9 60fps\n5: VP9 Profile2 30fps\n6: VP9 Profile2 60fps\n7: AV1 30fps\n8: AV1 60fps"
-msgstr ""
+msgstr "Youtube-DL 取得的結果中，偏好使用的視訊格式串流。\n0: 自動選擇\n1: H.264 30fps\n2: H.264 60fps\n3: VP9 30fps\n4: VP9 60fps\n5: VP9 Profile2 30fps\n6: VP9 Profile2 60fps\n7: AV1 30fps\n8: AV1 60fps"
 
 msgctxt "IDS_PPAGEADVANCED_YDL_AUDIO_ONLY"
 msgid "Instructs Youtube-DL to prefer an audio-only stream (if available)"
-msgstr ""
+msgstr "要求 Youtube-DL 偏好使用僅有音訊的串流（可以使用的話）"
 
 msgctxt "IDS_PPAGEADVANCED_YDL_COMMAND_LINE"
 msgid "Command line parameters for downloading (\"save a copy\") with youtube-dl.exe\nExamples:\n-f best[height<=1080]\n-f bestvideo+bestaudio\n-o \"C:\\downloads\\%(title)s.%(ext)s"
-msgstr ""
+msgstr "使用 youtube-dl.exe 下載檔案時要帶入的參數\n範例:\n-f best[height<=1080]\n-f bestvideo+bestaudio\n-o \"C:\\downloads\\%(title)s.%(ext)s"
 
 msgctxt "IDS_PPAGEADVANCED_SAVEIMAGE_POSITION"
 msgid "Include video position in filename"
-msgstr ""
+msgstr "在檔名中包含時間位置"
 
 msgctxt "IDS_PPAGEADVANCED_SAVEIMAGE_CURRENTTIME"
 msgid "Include current time in filename"
-msgstr ""
+msgstr "在檔名中包含目前時間"
 
 msgctxt "IDS_PPAGEADVANCED_ALLOW_INACCURATE_FASTSEEK"
 msgid "When enabled, fast seek (to keyframe) has a maximum inaccuracy of 20 seconds. When disabled, a smaller inaccuracy is allowed when deciding between a fast and a normal seek. For example 30% of jump size."
-msgstr ""
+msgstr "開啟後，快速搜尋到某個關鍵影格的功能最大可能會有 20 秒的誤差。關閉的話，決定使用快速跟一般搜尋時允許較短的誤差，例如 30% 的快轉長度。"
 
 msgctxt "IDS_CMD_FULLSCREEN"
 msgid "/fullscreen\tStart in fullscreen mode"
@@ -4092,17 +4092,17 @@ msgstr "切換使用暗色佈景主題"
 
 msgctxt "IDS_PPAGEADVANCED_LOOP_FOLDER_NEXT_FILE"
 msgid "Loop back to first file in folder after playing the last file."
-msgstr ""
+msgstr "播放完資料夾中的最後一個檔案後，從第一個檔案繼續播放。"
 
 msgctxt "IDS_PPAGEADVANCED_MODERNSEEKBAR"
 msgid "Requires Dark Theme. When enabled, the time seekbar and volume indicator don't show a dragger at current position, but instead are filled from left to right."
-msgstr ""
+msgstr "需要暗色佈景主題。開啟後，搜尋列與音量指示器將不會於目前位置顯示拖曳工具，而是從左至右填滿。"
 
 msgctxt "IDS_PPAGEADVANCED_MODERNSEEKBARHEIGHT"
 msgid "Modern seekbar height (at 96dpi, otherwise scaled)"
-msgstr ""
+msgstr "現代搜尋列高度（96dpi 時，其他解析度時自動縮放）"
 
 msgctxt "IDS_PPAGEADVANCED_FULLSCREEN_DELAY"
 msgid "Delay before showing fullscreen video, to prevent visual glitches."
-msgstr ""
+msgstr "延後顯示全螢幕視訊，以避免畫面不正常"
 

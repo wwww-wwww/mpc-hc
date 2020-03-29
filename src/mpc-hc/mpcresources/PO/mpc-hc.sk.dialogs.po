@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2020-01-10 07:05:47+0000\n"
+"POT-Creation-Date: 2020-03-10 15:14:13+0000\n"
 "PO-Revision-Date: 2020-01-02 07:46+0000\n"
 "Last-Translator: Marián Hikaník <podnety@mojepreklady.net>, 2020\n"
 "Language-Team: Slovak (https://www.transifex.com/mpchc/teams/106126/sk/)\n"
@@ -192,7 +192,7 @@ msgstr "O programe"
 
 msgctxt "IDD_ABOUTBOX_IDC_AUTHORS_LINK"
 msgid "Copyright © 2002-2020 see Authors.txt"
-msgstr "Copyright © 2002-2020, pozrite si súbor Authors.txt"
+msgstr "Copyright © 2002 - 2020, pozrite si súbor Authors.txt"
 
 msgctxt "IDD_ABOUTBOX_IDC_STATIC"
 msgid "This program is freeware and released under the GNU General Public License."
@@ -672,7 +672,7 @@ msgstr "Rýchle vyhľadávanie (na kľúč. snímke)"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_CHECK2"
 msgid "Show chapter marks in seek bar"
-msgstr "Zobraziť značky kapitol vo vyhľadávacom pruhu"
+msgstr "Zobraziť značky kapitol vo vyhľadávacom paneli"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_CHECK4"
 msgid "Display \"Now Playing\" information in Skype's mood message"

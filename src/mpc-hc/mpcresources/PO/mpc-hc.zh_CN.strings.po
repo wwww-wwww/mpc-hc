@@ -3,13 +3,15 @@
 # This file is distributed under the same license as the MPC-HC package.
 # Translators:
 # MPC HC <adiposegithub@gmail.com>, 2020
+# 1 q <g1710431395@gmail.com>, 2020
+# CyanVesper <SharpNight93@gmail.com>, 2020
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2019-12-17 06:27:41+0000\n"
+"POT-Creation-Date: 2020-03-20 18:57:58+0000\n"
 "PO-Revision-Date: 2020-01-02 07:46+0000\n"
-"Last-Translator: MPC HC <adiposegithub@gmail.com>, 2020\n"
+"Last-Translator: CyanVesper <SharpNight93@gmail.com>, 2020\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/mpchc/teams/106126/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -75,7 +77,7 @@ msgstr "播放列表"
 
 msgctxt "IDS_PLAY_LOOPMODE_AB"
 msgid "A-B"
-msgstr ""
+msgstr "A-B循环"
 
 msgctxt "IDS_FAVFILES"
 msgid "Files"
@@ -139,15 +141,15 @@ msgstr "重复模式: 文件"
 
 msgctxt "IDS_PLAYLOOPMODE_AB"
 msgid "A-B Repeat: Reset Positions"
-msgstr ""
+msgstr "重置A-B循环"
 
 msgctxt "IDS_PLAYLOOPMODE_AB_MARK_A"
 msgid "A-B Repeat: Mark A Position"
-msgstr ""
+msgstr "A-B循环：标记A点"
 
 msgctxt "IDS_PLAYLOOPMODE_AB_MARK_B"
 msgid "A-B Repeat: Mark B Position"
-msgstr ""
+msgstr "A-B循环：标记B点"
 
 msgctxt "IDS_PLAYLOOP_FOREVER_ON"
 msgid "Repeat Forever: On"
@@ -163,15 +165,15 @@ msgstr "循环播放"
 
 msgctxt "IDS_PPAGE_CAPTURE_FG0"
 msgid "Never"
-msgstr ""
+msgstr "从不"
 
 msgctxt "IDS_PPAGE_CAPTURE_FG1"
 msgid "Only when switching different video types"
-msgstr ""
+msgstr "只有当切换不同视频类型时"
 
 msgctxt "IDS_PPAGE_CAPTURE_FG2"
 msgid "Always (default)"
-msgstr ""
+msgstr "一直(默认)"
 
 msgctxt "IDS_PPAGE_CAPTURE_FGDESC0"
 msgid "Not supported by some devices. Two video decoders always present in the filter graph."
@@ -187,7 +189,7 @@ msgstr "如果可能不要使用 (最快,不支持大多数滤镜)"
 
 msgctxt "IDS_PPAGE_CAPTURE_SFG1"
 msgid "Only when switching different video types"
-msgstr ""
+msgstr "只有当切换不同视频类型时"
 
 msgctxt "IDS_PPAGE_CAPTURE_SFG2"
 msgid "Always (may be required by some devices)"
@@ -619,7 +621,7 @@ msgstr "频道(&C)"
 
 msgctxt "IDS_PPAGE_OUTPUT_MPCVR"
 msgid "MPC Video Renderer"
-msgstr ""
+msgstr "MPC视频渲染器"
 
 msgctxt "IDD_PPAGEACCELTBL"
 msgid "Player::Keys"
@@ -655,7 +657,7 @@ msgstr "剪辑"
 
 msgctxt "IDC_DSSYSDEF"
 msgid "Default video renderer filter for DirectShow. Others will fall back to this one when they can't be loaded for some reason."
-msgstr ""
+msgstr "用于DirectShow的默认视频渲染器。其他渲染器无法加载时会采用该渲染器。"
 
 msgctxt "IDC_DSOLD"
 msgid "This is the default renderer of Windows 9x/me/2k. Depending on the visibility of the video window and your video card's abilities, it will switch between GDI, DirectDraw, Overlay rendering modes dynamically."
@@ -671,7 +673,7 @@ msgstr "仅在 DirectX 9 已安装的情况下可用。非常稳定，但是由�
 
 msgctxt "IDC_DSVMR9REN"
 msgid "Same as the VMR-9 (windowed), but with the Allocator-Presenter plugin of MPC-HC for subtitling. Overlay video mirroring MIGHT work. \"True Color\" desktop color space recommended."
-msgstr ""
+msgstr "与VMR-9（窗口化）相同，但使用MPC-HC的Allocator-Presenter插件显示字幕。“覆盖视频映射”可能可以正常工作。建议使用True Color桌面色彩空间模式。"
 
 msgctxt "IDC_DSDXR"
 msgid "Same as the VMR-9 (renderless), but uses a true two-pass bicubic resizer."
@@ -687,7 +689,7 @@ msgstr "和普通的空渲染器相同, 但仅会被连接到未压缩的类型�
 
 msgctxt "IDC_DSEVR_CUSTOM"
 msgid "Same as the EVR, but with the Allocator-Presenter of MPC-HC for subtitling and postprocessing. Recommended."
-msgstr ""
+msgstr "与EVR相同，但使用MPC的Allocator-Presenter显示字幕与进行后处理。建议使用。"
 
 msgctxt "IDC_DSMADVR"
 msgid "High-quality renderer, requires a GPU that supports D3D9 or later."
@@ -735,7 +737,7 @@ msgstr "将 VMR-9 (未渲染) 放置到混合器模式中,这将会使许多在�
 
 msgctxt "IDC_DSMPCVR"
 msgid "High-quality renderer, requires a GPU that supports D3D9 or later."
-msgstr ""
+msgstr "高质量的渲染器,需要 GPU 支持 D3D9 或更高的版本。"
 
 msgctxt "IDS_PPAGE_OUTPUT_SYNC"
 msgid "Sync Renderer"
@@ -919,7 +921,7 @@ msgstr "暂停\n暂停"
 
 msgctxt "IDS_AG_OPEN_FILE_LOCATION"
 msgid "Open File Location"
-msgstr ""
+msgstr "打开文件位置"
 
 msgctxt "ID_PLAY_STOP"
 msgid "Stop\nStop"
@@ -1875,7 +1877,7 @@ msgstr "您确实要定期检查 MPC-HC 的更新吗？\n\n此功能可以在其
 
 msgctxt "IDS_ZOOM_25"
 msgid "25%"
-msgstr ""
+msgstr "25%"
 
 msgctxt "IDS_ZOOM_50"
 msgid "50%"
@@ -2371,7 +2373,7 @@ msgstr "缩略图会太小, 而无法创建该文件。\n\n请尝试调低缩略
 
 msgctxt "IDS_CANNOT_LOAD_SUB"
 msgid "To load subtitles you have to change the video renderer type and reopen the file.\n- DirectShow: EVR (Custom Presenter), Sync, VMR-9 (renderless), madVR, MPC VR, or Haali VR\n- RealMedia: Special renderer for RealMedia, or open it through DirectShow\n- QuickTime: DX7 or DX9 renderer for QuickTime\n- ShockWave: n/a"
-msgstr ""
+msgstr "若要加载字幕，您必须修改视频渲染器的类型，并重新打开文件。\n- DirectShow: EVR（自订呈现）, 同步, VMR-9 (无转换), madVR, MPC VR 或 Haali VR\n- RealMedia: RealMedia的特殊渲染器，或通过DirectShow开启。\n- QuickTime: QuickTime 的 DX7 或 DX9 渲染器\n- ShockWave: 不适用"
 
 msgctxt "IDS_SUBTITLE_FILES_FILTER"
 msgid "Subtitle files"
@@ -2651,7 +2653,7 @@ msgstr "切换调试着色器"
 
 msgctxt "IDS_AG_ZOOM_25"
 msgid "Zoom 25%"
-msgstr ""
+msgstr "缩放 25%"
 
 msgctxt "IDS_AG_ZOOM_50"
 msgid "Zoom 50%"
@@ -3839,7 +3841,7 @@ msgstr "正在获取受支持的语言..."
 
 msgctxt "IDS_SUB_CREDENTIALS_ERROR"
 msgid "Failed to log in on \"%1\" with username \"%2\".\n\nPlease enter the correct username and password or reset the credentials to log in as anonymous user."
-msgstr "无法登录 \"%1\" 当前用户名 \"%2\"。\n\n请输入正确的用户名和密码或重置凭据后作为匿名用户登录。"
+msgstr "使用\"%2\"登录\"%1\"失败。\n\n请输入正确的用户名和密码或重置证书以匿名用户身份登录。"
 
 msgctxt "IDS_SUB_AUTODL_IGNORE_TOOLTIP"
 msgid "Automatic search and download will be disabled for all media files whose path contains any of the patterns entered here.\nFor example, type: \"private dir\\videos|work\\\"."
@@ -3931,67 +3933,67 @@ msgstr "/playnext\t\t播放完毕后打开文件夹中的下一个文件"
 
 msgctxt "IDS_CMD_VIEWPRESET"
 msgid "/viewpreset N\tStart with specific preset,\n\t\twhere N is either \"1\" Minimal, \"2\" Compact or \"3\" Normal"
-msgstr ""
+msgstr "/viewpreset N\t使用指定预设启动,\n\t\t其中 N 可以为 \"1\" 最小, \"2\" 简洁 或 \"3\" 普通"
 
 msgctxt "IDS_CMD_MUTE"
 msgid "/mute\t\tMute the audio"
-msgstr ""
+msgstr "/mute\t\t静音"
 
 msgctxt "IDS_CMD_VOLUME"
 msgid "/volume N\tSet Volume, where N is a range from 0 to 100"
-msgstr ""
+msgstr "/volume N\t设置音量，N的范围为0-100"
 
 msgctxt "IDS_YOUTUBEDL_NOT_FOUND"
 msgid "Youtube-dl failed to launch. Make sure youtube-dl is in PATH."
-msgstr ""
+msgstr "Youtube-dl 启动失败。请确保youtube-dl在PATH内。"
 
 msgctxt "IDS_CONTROLS_YOUTUBEDL"
 msgid "Calling youtube-dl..."
-msgstr ""
+msgstr "调用 youtube-dl..."
 
 msgctxt "IDS_VERTICAL_ALIGN_VIDEO_TOP"
 msgid "Align Top"
-msgstr ""
+msgstr "顶部对齐"
 
 msgctxt "IDS_VERTICAL_ALIGN_VIDEO_MIDDLE"
 msgid "Align Middle"
-msgstr ""
+msgstr "中央对齐"
 
 msgctxt "IDS_VERTICAL_ALIGN_VIDEO_BOTTOM"
 msgid "Align Bottom"
-msgstr ""
+msgstr "底部对齐"
 
 msgctxt "IDS_PPAGEADVANCED_USE_YDL"
 msgid "Process HTTP(s) URLs with Youtube-DL (if available). There is an internal whitelist/blacklist for URLs that are always/never processed."
-msgstr ""
+msgstr "如果可能的话使用Youtube-DL处理HTTP(s)链接。内部白(黑)名单内的链接将一直(永不)被Youtube-DL处理。"
 
 msgctxt "IDS_PPAGEADVANCED_YDL_MAX_HEIGHT"
 msgid "Can be used to limit the video resolution that is chosen by Youtube-DL by the given height. Value 0 means it will choose the highest resolution available."
-msgstr ""
+msgstr "可指定高度以限制Youtube-DL选择的视频分辨率，将值设为0代表选择可以使用的最高分辨率。"
 
 msgctxt "IDS_PPAGEADVANCED_YDL_VIDEO_FORMAT"
 msgid "Preferred video format for stream that is selected from Youtube-DL results.\n0: Automatic\n1: H.264 30fps\n2: H.264 60fps\n3: VP9 30fps\n4: VP9 60fps\n5: VP9 Profile2 30fps\n6: VP9 Profile2 60fps\n7: AV1 30fps\n8: AV1 60fps"
-msgstr ""
+msgstr "从Youtube-DL播放时优先选择的视频流格式。\n0: Automatic\n1: H.264 30fps\n2: H.264 60fps\n3: VP9 30fps\n4: VP9 60fps\n5: VP9 Profile2 30fps\n6: VP9 Profile2 60fps\n7: AV1 30fps\n8: AV1 60fps"
 
 msgctxt "IDS_PPAGEADVANCED_YDL_AUDIO_ONLY"
 msgid "Instructs Youtube-DL to prefer an audio-only stream (if available)"
-msgstr ""
+msgstr "告知Youtube-DL优先选择纯音频流（如果可行的话）"
 
 msgctxt "IDS_PPAGEADVANCED_YDL_COMMAND_LINE"
 msgid "Command line parameters for downloading (\"save a copy\") with youtube-dl.exe\nExamples:\n-f best[height<=1080]\n-f bestvideo+bestaudio\n-o \"C:\\downloads\\%(title)s.%(ext)s"
-msgstr ""
+msgstr "使用youtube-dl.exe下载（保存副本）时的命令行参数\n例如：\n-f best[height<=1080]\n-f bestvideo+bestaudio\n-o \"C:\\downloads\\%(title)s.%(ext)s"
 
 msgctxt "IDS_PPAGEADVANCED_SAVEIMAGE_POSITION"
 msgid "Include video position in filename"
-msgstr ""
+msgstr "文件名包含视频位置"
 
 msgctxt "IDS_PPAGEADVANCED_SAVEIMAGE_CURRENTTIME"
 msgid "Include current time in filename"
-msgstr ""
+msgstr "文件名包含当前时间"
 
 msgctxt "IDS_PPAGEADVANCED_ALLOW_INACCURATE_FASTSEEK"
 msgid "When enabled, fast seek (to keyframe) has a maximum inaccuracy of 20 seconds. When disabled, a smaller inaccuracy is allowed when deciding between a fast and a normal seek. For example 30% of jump size."
-msgstr ""
+msgstr "当被启用时，快速定位 (按关键帧) 会有最大 20 秒的误差。当被禁用时，在决定进行快速定位还是普通定位之时会允许更小的误差。比如跳转距离的 30% 。"
 
 msgctxt "IDS_CMD_FULLSCREEN"
 msgid "/fullscreen\tStart in fullscreen mode"
@@ -4059,49 +4061,49 @@ msgstr "/shaderpreset \"Pr\"\t启动时使用着色器预设“Pr”"
 
 msgctxt "IDS_MESSAGEBOX_CANCEL"
 msgid "Cancel"
-msgstr ""
+msgstr "取消"
 
 msgctxt "IDS_MESSAGEBOX_ABORT"
 msgid "&Abort"
-msgstr ""
+msgstr "中止(&A)"
 
 msgctxt "IDS_MESSAGEBOX_RETRY"
 msgid "&Retry"
-msgstr ""
+msgstr "重试(&R)"
 
 msgctxt "IDS_MESSAGEBOX_IGNORE"
 msgid "&Ignore"
-msgstr ""
+msgstr "忽略(&I)"
 
 msgctxt "IDS_MESSAGEBOX_OK"
 msgid "OK"
-msgstr ""
+msgstr "确定"
 
 msgctxt "IDS_MESSAGEBOX_CONTINUE"
 msgid "&Continue"
-msgstr ""
+msgstr "继续(&R)"
 
 msgctxt "IDS_AG_TOGGLE_DEFAULT_SUBTITLE_STYLE"
 msgid "Toggle Default Subtitle Style"
-msgstr ""
+msgstr "重置为默认字幕样式"
 
 msgctxt "IDS_AG_TOGGLE_MPCTHEME"
 msgid "Toggle Dark Theme"
-msgstr ""
+msgstr "夜间模式"
 
 msgctxt "IDS_PPAGEADVANCED_LOOP_FOLDER_NEXT_FILE"
 msgid "Loop back to first file in folder after playing the last file."
-msgstr ""
+msgstr "文件夹内最后一个文件播放完后自动播放第一个文件。"
 
 msgctxt "IDS_PPAGEADVANCED_MODERNSEEKBAR"
 msgid "Requires Dark Theme. When enabled, the time seekbar and volume indicator don't show a dragger at current position, but instead are filled from left to right."
-msgstr ""
+msgstr "该项需要黑暗主题。 当被启用时，时间进度条和音量指示器不会在当前位置显示拖动框，而是会被从左到右进行填充。"
 
 msgctxt "IDS_PPAGEADVANCED_MODERNSEEKBARHEIGHT"
 msgid "Modern seekbar height (at 96dpi, otherwise scaled)"
-msgstr ""
+msgstr "现代风格播放进度条高度（为96dpi，除非进行缩放）"
 
 msgctxt "IDS_PPAGEADVANCED_FULLSCREEN_DELAY"
 msgid "Delay before showing fullscreen video, to prevent visual glitches."
-msgstr ""
+msgstr "在展示全屏视频前延迟以避免视觉问题。"
 

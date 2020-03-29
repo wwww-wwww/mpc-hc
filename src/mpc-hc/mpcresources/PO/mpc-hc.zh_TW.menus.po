@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2019-08-03 00:05:32+0000\n"
+"POT-Creation-Date: 2020-03-20 18:57:58+0000\n"
 "PO-Revision-Date: 2020-01-02 07:46+0000\n"
 "Last-Translator: Peter Chen <petercpg@gmail.com>, 2020\n"
 "Language-Team: Chinese (Taiwan) (https://www.transifex.com/mpchc/teams/106126/zh_TW/)\n"
@@ -68,7 +68,7 @@ msgstr "儲存縮圖(&T)..."
 
 msgctxt "POPUP"
 msgid "S&ubtitles"
-msgstr "字幕"
+msgstr "字幕 (&U)"
 
 msgctxt "ID_FILE_SUBTITLES_LOAD"
 msgid "&Load Subtitles..."
@@ -92,7 +92,7 @@ msgstr "內容(&R)"
 
 msgctxt "ID_FILE_OPEN_LOCATION"
 msgid "Open File &Location"
-msgstr ""
+msgstr "開啟檔案位置 (&L)"
 
 msgctxt "ID_FILE_EXIT"
 msgid "E&xit"
@@ -176,7 +176,7 @@ msgstr "縮放(&Z)"
 
 msgctxt "ID_VIEW_ZOOM_25"
 msgid "&25%"
-msgstr ""
+msgstr "&25%"
 
 msgctxt "ID_VIEW_ZOOM_50"
 msgid "&50%"
@@ -196,7 +196,7 @@ msgstr "自動調整(&F)"
 
 msgctxt "ID_VIEW_ZOOM_AUTOFIT_LARGER"
 msgid "Auto Fit (&Larger Only)"
-msgstr "自動調整 (僅限解像度過大時) (&L)"
+msgstr "自動調整（僅限解析度過大時）(&L)"
 
 msgctxt "POPUP"
 msgid "R&enderer Settings"
@@ -244,11 +244,11 @@ msgstr "D3D 全螢幕 GUI 支援(&G)"
 
 msgctxt "ID_VIEW_HIGHCOLORRESOLUTION"
 msgid "10-bit &RGB Output"
-msgstr "10位元 RGB 輸出(&R)"
+msgstr "10 位元 RGB 輸出(&R)"
 
 msgctxt "ID_VIEW_FORCEINPUTHIGHCOLORRESOLUTION"
 msgid "Force 10-bit RGB &Input"
-msgstr "強制 10位元 RGB 輸入(&I)"
+msgstr "強制 10 位元 RGB 輸入(&I)"
 
 msgctxt "ID_VIEW_FULLFLOATINGPOINTPROCESSING"
 msgid "&Full Floating Point Processing"
@@ -256,7 +256,7 @@ msgstr "全浮點處理(&F)"
 
 msgctxt "ID_VIEW_HALFFLOATINGPOINTPROCESSING"
 msgid "&Half Floating Point Processing"
-msgstr "半浮點處理"
+msgstr "半浮點處理 (&H)"
 
 msgctxt "ID_VIEW_DISABLEDESKTOPCOMPOSITION"
 msgid "Disable desktop composition (&Aero)"
@@ -376,7 +376,7 @@ msgstr "重設(&E)"
 
 msgctxt "ID_VIEW_RESET_DEFAULT"
 msgid "Reset to &default renderer settings"
-msgstr "重設為預設的繪製器設定(˙&D)"
+msgstr "重設為預設的繪製器設定(&D)"
 
 msgctxt "ID_VIEW_RESET_OPTIMAL"
 msgid "Reset to &optimal renderer settings"
@@ -504,19 +504,19 @@ msgstr "置中(&T)"
 
 msgctxt "ID_PANSCAN_ROTATEZM"
 msgid "Rotate Cloc&kwise"
-msgstr ""
+msgstr "順時鐘旋轉 (&k)"
 
 msgctxt "ID_PANSCAN_ROTATEZ270"
 msgid "Rotate Counter-Clock&wise"
-msgstr ""
+msgstr "逆時鐘旋轉 (&w)"
 
 msgctxt "ID_PANSCAN_ROTATEXM"
 msgid "&Flip Vertically"
-msgstr ""
+msgstr "垂直翻轉 (&F)"
 
 msgctxt "ID_PANSCAN_ROTATEYM"
 msgid "&Mirror"
-msgstr ""
+msgstr "映射 (&M)"
 
 msgctxt "ID_VIEW_RESET"
 msgid "Re&set"
@@ -536,7 +536,7 @@ msgstr "總是如此(&A)"
 
 msgctxt "ID_ONTOP_WHILEPLAYING"
 msgid "While &Playing"
-msgstr "當正在播放時(&P)"
+msgstr "當播放任何檔案時(&P)"
 
 msgctxt "ID_ONTOP_WHILEPLAYINGVIDEO"
 msgid "While Playing &Video"
@@ -564,7 +564,7 @@ msgstr "單格步進(&R)"
 
 msgctxt "POPUP"
 msgid "&Repeat"
-msgstr "重複"
+msgstr "重複 (&R)"
 
 msgctxt "ID_PLAY_REPEAT_FOREVER"
 msgid "F&orever"
@@ -580,15 +580,15 @@ msgstr "播放清單(&P)"
 
 msgctxt "ID_PLAY_REPEAT_AB"
 msgid "A-B (&Reset)"
-msgstr ""
+msgstr "重設 A-B 點重複播放範圍 (&R)"
 
 msgctxt "ID_PLAY_REPEAT_AB_MARK_A"
 msgid "A-B (Mark &A)"
-msgstr ""
+msgstr "A-B 點重複播放 (&A 點)"
 
 msgctxt "ID_PLAY_REPEAT_AB_MARK_B"
 msgid "A-B (Mark &B)"
-msgstr ""
+msgstr "A-B 點重複播放 (&B 點)"
 
 msgctxt "ID_PLAY_DECRATE"
 msgid "&Decrease Rate"

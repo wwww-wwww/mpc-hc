@@ -4,13 +4,16 @@
 # Translators:
 # MPC HC <adiposegithub@gmail.com>, 2020
 # Michał Trzebiatowski <michtrz@gmail.com>, 2020
+# Gaugg_Markus, 2020
+# tobsen <github@tobsen.de>, 2020
+# Steve <secure@mail.az>, 2020
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2019-12-17 06:27:41+0000\n"
-"PO-Revision-Date: 2020-01-02 00:34+0000\n"
-"Last-Translator: Michał Trzebiatowski <michtrz@gmail.com>, 2020\n"
+"POT-Creation-Date: 2020-03-20 18:57:58+0000\n"
+"PO-Revision-Date: 2020-01-02 07:46+0000\n"
+"Last-Translator: Steve <secure@mail.az>, 2020\n"
 "Language-Team: German (https://www.transifex.com/mpchc/teams/106126/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -76,7 +79,7 @@ msgstr "Wiedergabeliste"
 
 msgctxt "IDS_PLAY_LOOPMODE_AB"
 msgid "A-B"
-msgstr ""
+msgstr "A-B"
 
 msgctxt "IDS_FAVFILES"
 msgid "Files"
@@ -140,15 +143,15 @@ msgstr "Wiederholung: Datei"
 
 msgctxt "IDS_PLAYLOOPMODE_AB"
 msgid "A-B Repeat: Reset Positions"
-msgstr ""
+msgstr "A-B Wiederholung: Positionen zurücksetzen"
 
 msgctxt "IDS_PLAYLOOPMODE_AB_MARK_A"
 msgid "A-B Repeat: Mark A Position"
-msgstr ""
+msgstr "A-B Wiederholung: Markiere Position A"
 
 msgctxt "IDS_PLAYLOOPMODE_AB_MARK_B"
 msgid "A-B Repeat: Mark B Position"
-msgstr ""
+msgstr "A-B Wiederholung: Markiere Position B"
 
 msgctxt "IDS_PLAYLOOP_FOREVER_ON"
 msgid "Repeat Forever: On"
@@ -920,7 +923,7 @@ msgstr "Pause\nPause"
 
 msgctxt "IDS_AG_OPEN_FILE_LOCATION"
 msgid "Open File Location"
-msgstr ""
+msgstr "Öffne Dateiablageort"
 
 msgctxt "ID_PLAY_STOP"
 msgid "Stop\nStop"
@@ -1876,7 +1879,7 @@ msgstr "Neue Programmversionen können über ein Hinweisfenster umgehend herunte
 
 msgctxt "IDS_ZOOM_25"
 msgid "25%"
-msgstr ""
+msgstr "25%"
 
 msgctxt "IDS_ZOOM_50"
 msgid "50%"
@@ -2372,7 +2375,7 @@ msgstr "Die Miniaturbilder wären zu klein. Bitte die angegebene Breite erhöhen
 
 msgctxt "IDS_CANNOT_LOAD_SUB"
 msgid "To load subtitles you have to change the video renderer type and reopen the file.\n- DirectShow: EVR (Custom Presenter), Sync, VMR-9 (renderless), madVR, MPC VR, or Haali VR\n- RealMedia: Special renderer for RealMedia, or open it through DirectShow\n- QuickTime: DX7 or DX9 renderer for QuickTime\n- ShockWave: n/a"
-msgstr "Um Untertitel zu laden, müssen Sie den Video-Renderer-Typ ändern und die Datei erneut öffnen.\n- DirectShow: EVR (benutzerdefinierter Presenter), Sync, VMR-9 (ohne Rendering), madVR, MPC VR oder Haali VR\n- RealMedia: Spezieller Renderer für RealMedia oder mit DirectShow öffnen\n- QuickTime: DX7- oder DX9-Renderer für QuickTime\n- ShockWave: nicht verfügbar"
+msgstr "To load subtitles you have to change the video renderer type and reopen the file.\n- DirectShow: EVR (Custom Presenter), Sync, VMR-9 (renderless), madVR, MPC VR, or Haali VR\n- RealMedia: Special renderer for RealMedia, or open it through DirectShow\n- QuickTime: DX7 or DX9 renderer for QuickTime\n- ShockWave: n/a"
 
 msgctxt "IDS_SUBTITLE_FILES_FILTER"
 msgid "Subtitle files"
@@ -2652,7 +2655,7 @@ msgstr "Shader-Debugger (ein/aus)"
 
 msgctxt "IDS_AG_ZOOM_25"
 msgid "Zoom 25%"
-msgstr ""
+msgstr "Zoom: 25%"
 
 msgctxt "IDS_AG_ZOOM_50"
 msgid "Zoom 50%"
@@ -3840,7 +3843,7 @@ msgstr "Frage Angebot ab..."
 
 msgctxt "IDS_SUB_CREDENTIALS_ERROR"
 msgid "Failed to log in on \"%1\" with username \"%2\".\n\nPlease enter the correct username and password or reset the credentials to log in as anonymous user."
-msgstr "Auf %1 konnte unter dem angegebenen Benutzernamen \"%2\" nicht zugegriffen werden. Bitte die Einrichtung der Anmeldeinformationen korrigieren oder auf anonyme Anmeldung zurücksetzen."
+msgstr "Anmeldung mit Benutzername \"%2\" auf \"%1\" fehlgeschlagen.\n\nBitte geben Sie den korrekten Benutzernamen und Passwort ein oder setzen die Anmeldedaten zurück um sich als anonymer Benutzer anzumelden."
 
 msgctxt "IDS_SUB_AUTODL_IGNORE_TOOLTIP"
 msgid "Automatic search and download will be disabled for all media files whose path contains any of the patterns entered here.\nFor example, type: \"private dir\\videos|work\\\"."
@@ -3964,35 +3967,35 @@ msgstr "Unten ausrichten"
 
 msgctxt "IDS_PPAGEADVANCED_USE_YDL"
 msgid "Process HTTP(s) URLs with Youtube-DL (if available). There is an internal whitelist/blacklist for URLs that are always/never processed."
-msgstr ""
+msgstr "HTTP(s) URLs mit Youtube-DL (wenn verfügbar) verarbeiten. Dies ist eine interne Positivliste/Sperrliste für URLs die immer/niemals verarbeitet werden."
 
 msgctxt "IDS_PPAGEADVANCED_YDL_MAX_HEIGHT"
 msgid "Can be used to limit the video resolution that is chosen by Youtube-DL by the given height. Value 0 means it will choose the highest resolution available."
-msgstr ""
+msgstr "Kann zur Beschränkung der Videoauflösung, welche von Youtube-DL je nach Größe gewählt wird, verwendet werden. Wert 0 bedeutet, dass die höchste verfügbare Auflösung gewählt wird."
 
 msgctxt "IDS_PPAGEADVANCED_YDL_VIDEO_FORMAT"
 msgid "Preferred video format for stream that is selected from Youtube-DL results.\n0: Automatic\n1: H.264 30fps\n2: H.264 60fps\n3: VP9 30fps\n4: VP9 60fps\n5: VP9 Profile2 30fps\n6: VP9 Profile2 60fps\n7: AV1 30fps\n8: AV1 60fps"
-msgstr ""
+msgstr "Bevorzugtes Videoformat für den Stream der in den Youtube-DL Ergebnissen ausgewählt ist.\n0: Automatisch\n1: H.264 30fps\n2: H.264 60fps\n3: VP9 30fps\n4: VP9 60fps\n5: VP9 Profile2 30fps\n6: VP9 Profile2 60fps\n7: AV1 30fps\n8: AV1 60fps"
 
 msgctxt "IDS_PPAGEADVANCED_YDL_AUDIO_ONLY"
 msgid "Instructs Youtube-DL to prefer an audio-only stream (if available)"
-msgstr ""
+msgstr "Weist Youtube-DL an nur-Audio Streams zu bevorzugen (wenn verfügbar)"
 
 msgctxt "IDS_PPAGEADVANCED_YDL_COMMAND_LINE"
 msgid "Command line parameters for downloading (\"save a copy\") with youtube-dl.exe\nExamples:\n-f best[height<=1080]\n-f bestvideo+bestaudio\n-o \"C:\\downloads\\%(title)s.%(ext)s"
-msgstr ""
+msgstr "Kommandozeilen-Paramter für das Herunterladen (\"Kopie speichern\") mit youtube-dl.exe\nBeispiele:\n-f best[height<=1080]\n-f bestvideo+bestaudio\n-o \"C:\\downloads\\%(title)s.%(ext)s"
 
 msgctxt "IDS_PPAGEADVANCED_SAVEIMAGE_POSITION"
 msgid "Include video position in filename"
-msgstr ""
+msgstr "Video Position in Dateinamen aufnehmen"
 
 msgctxt "IDS_PPAGEADVANCED_SAVEIMAGE_CURRENTTIME"
 msgid "Include current time in filename"
-msgstr ""
+msgstr "Aktuelle Zeit in Dateinamen aufnehmen"
 
 msgctxt "IDS_PPAGEADVANCED_ALLOW_INACCURATE_FASTSEEK"
 msgid "When enabled, fast seek (to keyframe) has a maximum inaccuracy of 20 seconds. When disabled, a smaller inaccuracy is allowed when deciding between a fast and a normal seek. For example 30% of jump size."
-msgstr ""
+msgstr "Wenn aktiviert, schnelles Suchen (nach Schlüsselstelle) hat eine maximale Ungenauigkeit von 20 Sekunden. Wenn deaktiviert, erlaubt zischen einer schnellen und normalen Suche eine kleinere Ungenauigkeit. Zum Beispiel 30% der Sprunggröße."
 
 msgctxt "IDS_CMD_FULLSCREEN"
 msgid "/fullscreen\tStart in fullscreen mode"
@@ -4084,7 +4087,7 @@ msgstr "&Fortsetzen"
 
 msgctxt "IDS_AG_TOGGLE_DEFAULT_SUBTITLE_STYLE"
 msgid "Toggle Default Subtitle Style"
-msgstr ""
+msgstr "Standard-Untertitelstil umschalten"
 
 msgctxt "IDS_AG_TOGGLE_MPCTHEME"
 msgid "Toggle Dark Theme"
@@ -4092,17 +4095,17 @@ msgstr "Dunkles Thema umschalten"
 
 msgctxt "IDS_PPAGEADVANCED_LOOP_FOLDER_NEXT_FILE"
 msgid "Loop back to first file in folder after playing the last file."
-msgstr ""
+msgstr "Gehe zurück zur ersten Datei in dem Ordne nachdem die letzte Datei abgespielt wurde."
 
 msgctxt "IDS_PPAGEADVANCED_MODERNSEEKBAR"
 msgid "Requires Dark Theme. When enabled, the time seekbar and volume indicator don't show a dragger at current position, but instead are filled from left to right."
-msgstr ""
+msgstr "Dunkles Thema erforderlich. Wenn aktiviert, die Zeitsuchleiste und der Lautstärkeindikator zeigen an der aktuellen Position keinen Regler an, werden ab von links nach rechts gefüllt."
 
 msgctxt "IDS_PPAGEADVANCED_MODERNSEEKBARHEIGHT"
 msgid "Modern seekbar height (at 96dpi, otherwise scaled)"
-msgstr ""
+msgstr "Moderne Suchleistenhöhe (bei 96dpi, sonst skaliert)"
 
 msgctxt "IDS_PPAGEADVANCED_FULLSCREEN_DELAY"
 msgid "Delay before showing fullscreen video, to prevent visual glitches."
-msgstr ""
+msgstr "Verzögerung vor Anzeigen des Vollbild-Videos, um visuelle Fehler zu vermeiden."
 

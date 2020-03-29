@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2020-02-23 05:32:01+0000\n"
+"POT-Creation-Date: 2020-03-20 18:57:58+0000\n"
 "PO-Revision-Date: 2020-01-02 07:46+0000\n"
 "Last-Translator: Marián Hikaník <podnety@mojepreklady.net>, 2020\n"
 "Language-Team: Slovak (https://www.transifex.com/mpchc/teams/106126/sk/)\n"
@@ -76,7 +76,7 @@ msgstr "Playlist"
 
 msgctxt "IDS_PLAY_LOOPMODE_AB"
 msgid "A-B"
-msgstr ""
+msgstr "A-B"
 
 msgctxt "IDS_FAVFILES"
 msgid "Files"
@@ -140,15 +140,15 @@ msgstr "Režim opakovania: súbor"
 
 msgctxt "IDS_PLAYLOOPMODE_AB"
 msgid "A-B Repeat: Reset Positions"
-msgstr ""
+msgstr "Opakovanie A-B: reset pozícií"
 
 msgctxt "IDS_PLAYLOOPMODE_AB_MARK_A"
 msgid "A-B Repeat: Mark A Position"
-msgstr ""
+msgstr "Opakovanie A-B: označenie pozície A"
 
 msgctxt "IDS_PLAYLOOPMODE_AB_MARK_B"
 msgid "A-B Repeat: Mark B Position"
-msgstr ""
+msgstr "Opakovanie A-B: označenie pozície B"
 
 msgctxt "IDS_PLAYLOOP_FOREVER_ON"
 msgid "Repeat Forever: On"
@@ -1876,7 +1876,7 @@ msgstr "Chcete pravidelne kontrolovať výskyt aktualizácií programu MPC-HC?\n
 
 msgctxt "IDS_ZOOM_25"
 msgid "25%"
-msgstr ""
+msgstr "25 %"
 
 msgctxt "IDS_ZOOM_50"
 msgid "50%"
@@ -2652,7 +2652,7 @@ msgstr "Prepnúť ladenie shaderov"
 
 msgctxt "IDS_AG_ZOOM_25"
 msgid "Zoom 25%"
-msgstr ""
+msgstr "Priblíženie: 25 %"
 
 msgctxt "IDS_AG_ZOOM_50"
 msgid "Zoom 50%"
@@ -3972,7 +3972,7 @@ msgstr "Dá sa použiť na obmedzenie rozlíšenia videa, ktoré je vybrané sú
 
 msgctxt "IDS_PPAGEADVANCED_YDL_VIDEO_FORMAT"
 msgid "Preferred video format for stream that is selected from Youtube-DL results.\n0: Automatic\n1: H.264 30fps\n2: H.264 60fps\n3: VP9 30fps\n4: VP9 60fps\n5: VP9 Profile2 30fps\n6: VP9 Profile2 60fps\n7: AV1 30fps\n8: AV1 60fps"
-msgstr "Preferovaný formát videa pre stream, ktorý je vybraný z výsledkov Youtube-DL.\n0: Automaticky\n1: H.264 30 sním./sek.\n2: H.264 60 sním./sek.\n3: VP9 30 sním./sek.\n4: VP9 60 sním./sek.\n5: VP9 Profile2 30 sním./sek.\n6: VP9 Profile2 60 sním./sek.\n7: AV1 30 sním./sek.\n8: AV1 60 sním./sek."
+msgstr "Preferovaný formát videa pre stream, ktorý je vybraný z výsledkov Youtube-DL.\n0: Automaticky\n1: H.264 30 sním./sek.\n2: H.264 60 sním./sek.\n3: VP9 30 sním./sek.\n4: VP9 60 sním./sek.\n5: VP9 Profil2 30 sním./sek.\n6: VP9 Profil2 60 sním./sek.\n7: AV1 30 sním./sek.\n8: AV1 60 sním./sek."
 
 msgctxt "IDS_PPAGEADVANCED_YDL_AUDIO_ONLY"
 msgid "Instructs Youtube-DL to prefer an audio-only stream (if available)"
@@ -3980,7 +3980,7 @@ msgstr "Prikáže súčasti Youtube-DL preferovať len zvukový stream (ak je do
 
 msgctxt "IDS_PPAGEADVANCED_YDL_COMMAND_LINE"
 msgid "Command line parameters for downloading (\"save a copy\") with youtube-dl.exe\nExamples:\n-f best[height<=1080]\n-f bestvideo+bestaudio\n-o \"C:\\downloads\\%(title)s.%(ext)s"
-msgstr "Parametre príkazového riadka pre sťahovanie (\"uložiť kópiu\") s youtube-dl.exe\nPríkklady:\n-f best[height<=1080]\n-f bestvideo+bestaudio\n-o \"C:\\downloads\\%(title)s.%(ext)s"
+msgstr "Parametre príkazového riadka pre sťahovanie (\"uložiť kópiu\") s youtube-dl.exe\nPríklady:\n-f best[height<=1080]\n-f bestvideo+bestaudio\n-o \"C:\\downloads\\%(title)s.%(ext)s"
 
 msgctxt "IDS_PPAGEADVANCED_SAVEIMAGE_POSITION"
 msgid "Include video position in filename"
@@ -4092,11 +4092,11 @@ msgstr "Prepnúť tmavú tému"
 
 msgctxt "IDS_PPAGEADVANCED_LOOP_FOLDER_NEXT_FILE"
 msgid "Loop back to first file in folder after playing the last file."
-msgstr "Po prehratí posledného súboru prechod na prvý súbor v priečinku."
+msgstr "Po prehratí posledného súboru prejsť na prvý súbor v priečinku."
 
 msgctxt "IDS_PPAGEADVANCED_MODERNSEEKBAR"
 msgid "Requires Dark Theme. When enabled, the time seekbar and volume indicator don't show a dragger at current position, but instead are filled from left to right."
-msgstr "Vyžaduje tmavú tému. Ak je zapnuté, vyhľadávací panel pre čas a indikátor hlasitosti nezobrazia posuvník na aktuálnej pozícii, ale sú vypĺňané zľava doprava."
+msgstr "Vyžaduje tmavú tému. Ak je zapnuté, vyhľadávací panel pre čas a indikátor hlasitosti nezobrazujú posuvník na aktuálnej pozícii, ale sú vypĺňané zľava doprava."
 
 msgctxt "IDS_PPAGEADVANCED_MODERNSEEKBARHEIGHT"
 msgid "Modern seekbar height (at 96dpi, otherwise scaled)"

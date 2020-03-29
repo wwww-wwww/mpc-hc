@@ -3,13 +3,14 @@
 # This file is distributed under the same license as the MPC-HC package.
 # Translators:
 # MPC HC <adiposegithub@gmail.com>, 2020
+# accma2, 2020
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2019-12-16 07:58:37+0000\n"
-"PO-Revision-Date: 2020-01-02 00:34+0000\n"
-"Last-Translator: MPC HC <adiposegithub@gmail.com>, 2020\n"
+"POT-Creation-Date: 2020-03-10 15:14:13+0000\n"
+"PO-Revision-Date: 2020-01-02 07:46+0000\n"
+"Last-Translator: accma2, 2020\n"
 "Language-Team: Spanish (https://www.transifex.com/mpchc/teams/106126/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -191,7 +192,7 @@ msgstr "Acerca de"
 
 msgctxt "IDD_ABOUTBOX_IDC_AUTHORS_LINK"
 msgid "Copyright © 2002-2020 see Authors.txt"
-msgstr "Derechos de autor © 2002-2020. Consulte Authors.txt"
+msgstr "Copyright © 2002-2020 consultar Authors.txt"
 
 msgctxt "IDD_ABOUTBOX_IDC_STATIC"
 msgid "This program is freeware and released under the GNU General Public License."
@@ -431,7 +432,7 @@ msgstr "Tras la reproducción"
 
 msgctxt "IDD_PPAGEPLAYBACK_IDC_STATIC"
 msgid "Zoom and Alignment"
-msgstr "Escala y Alineamiento"
+msgstr "Escala y alineado"
 
 msgctxt "IDD_PPAGEPLAYBACK_IDC_CHECK5"
 msgid "Auto-zoom:"
@@ -495,7 +496,7 @@ msgstr "Salto de velocidad:"
 
 msgctxt "IDD_PPAGEPLAYBACK_IDC_STATIC4"
 msgid "Vertical Alignment:"
-msgstr "Alineamiento Vertical"
+msgstr "Alineado vertical"
 
 msgctxt "IDD_PPAGESUBTITLES_IDC_CHECK3"
 msgid "Override placement"
@@ -883,7 +884,7 @@ msgstr "Zoom: 0.2 → 3.0"
 
 msgctxt "IDD_PPAGEACCELTBL_CAPTION"
 msgid "Shortcut Keys"
-msgstr ""
+msgstr "Atajos de teclado"
 
 msgctxt "IDD_PPAGEACCELTBL_IDC_CHECK2"
 msgid "Global Media Keys"
@@ -1747,7 +1748,7 @@ msgstr "Nivel:"
 
 msgctxt "IDD_PPAGEAUDIORENDERER_IDC_CHECK4"
 msgid "Ignore system channel mixer (always ignored in exclusive WASAPI mode)"
-msgstr "Ignorar el mezclador de canales (siempre se ignora en modo exclusivo de WASAPI)"
+msgstr "Ignorar el mezclador de canales del sistema (siempre ignorado en modo exclusivo de WAPASI)"
 
 msgctxt "IDD_PPAGEAUDIORENDERER_IDC_STATIC"
 msgid "Note"

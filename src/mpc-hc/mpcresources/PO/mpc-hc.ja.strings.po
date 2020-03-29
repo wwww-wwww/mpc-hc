@@ -4,13 +4,14 @@
 # Translators:
 # MPC HC <adiposegithub@gmail.com>, 2020
 # ever_green, 2020
+# OS, 2020
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2020-02-23 05:32:01+0000\n"
+"POT-Creation-Date: 2020-03-20 18:57:58+0000\n"
 "PO-Revision-Date: 2020-01-02 07:46+0000\n"
-"Last-Translator: ever_green, 2020\n"
+"Last-Translator: OS, 2020\n"
 "Language-Team: Japanese (https://www.transifex.com/mpchc/teams/106126/ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -76,7 +77,7 @@ msgstr "再生リスト"
 
 msgctxt "IDS_PLAY_LOOPMODE_AB"
 msgid "A-B"
-msgstr ""
+msgstr "A-B"
 
 msgctxt "IDS_FAVFILES"
 msgid "Files"
@@ -140,15 +141,15 @@ msgstr "連続再生モード: ファイル"
 
 msgctxt "IDS_PLAYLOOPMODE_AB"
 msgid "A-B Repeat: Reset Positions"
-msgstr ""
+msgstr "A-B リピート: 区間をリセット"
 
 msgctxt "IDS_PLAYLOOPMODE_AB_MARK_A"
 msgid "A-B Repeat: Mark A Position"
-msgstr ""
+msgstr "A-B リピート: 開始点(A)を設定"
 
 msgctxt "IDS_PLAYLOOPMODE_AB_MARK_B"
 msgid "A-B Repeat: Mark B Position"
-msgstr ""
+msgstr "A-B リピート: 終了点(B)を設定"
 
 msgctxt "IDS_PLAYLOOP_FOREVER_ON"
 msgid "Repeat Forever: On"
@@ -920,7 +921,7 @@ msgstr "一時停止\n一時停止"
 
 msgctxt "IDS_AG_OPEN_FILE_LOCATION"
 msgid "Open File Location"
-msgstr ""
+msgstr "ファイルの場所を開く"
 
 msgctxt "ID_PLAY_STOP"
 msgid "Stop\nStop"
@@ -1044,7 +1045,7 @@ msgstr "EDL 保存"
 
 msgctxt "IDS_AG_ENABLEFRAMETIMECORRECTION"
 msgid "Enable Frame Time Correction"
-msgstr "フレーム時間の補正を有効にする"
+msgstr "フレーム時間補正を有効にする"
 
 msgctxt "IDS_AG_TOGGLE_EDITLISTEDITOR"
 msgid "Toggle EDL window"
@@ -1596,11 +1597,11 @@ msgstr "サイズ変更前のシェーダを設定できませんでした"
 
 msgctxt "IDS_OSD_RS_FT_CORRECTION_ON"
 msgid "Frame Time Correction: On"
-msgstr "フレーム時間の補正: オン"
+msgstr "フレーム時間補正: オン"
 
 msgctxt "IDS_OSD_RS_FT_CORRECTION_OFF"
 msgid "Frame Time Correction: Off"
-msgstr "フレーム時間の補正: オフ"
+msgstr "フレーム時間補正: オフ"
 
 msgctxt "IDS_OSD_RS_TARGET_VSYNC_OFFSET"
 msgid "Target VSync Offset: %.1f"
@@ -1876,7 +1877,7 @@ msgstr "MPC-HC の更新を定期的に確認しますか？\n\nこの機能は�
 
 msgctxt "IDS_ZOOM_25"
 msgid "25%"
-msgstr ""
+msgstr "25%"
 
 msgctxt "IDS_ZOOM_50"
 msgid "50%"
@@ -1896,15 +1897,15 @@ msgstr "自動調整"
 
 msgctxt "IDS_ZOOM_AUTOFIT_LARGER"
 msgid "Auto Fit (Larger Only)"
-msgstr "自動調整 (過大のみ)"
+msgstr "自動調整 (超過のみ)"
 
 msgctxt "IDS_AG_ZOOM_AUTO_FIT_LARGER"
 msgid "Zoom Auto Fit (Larger Only)"
-msgstr "拡大 自動調整 (過大のみ)"
+msgstr "拡大 自動調整 (超過のみ)"
 
 msgctxt "IDS_OSD_ZOOM_AUTO_LARGER"
 msgid "Zoom: Auto (Larger Only)"
-msgstr "拡大: 自動 (過大のみ)"
+msgstr "拡大: 自動 (超過のみ)"
 
 msgctxt "IDS_TOOLTIP_EXPLORE_TO_FILE"
 msgid "Double click to open file location"
@@ -2652,7 +2653,7 @@ msgstr "シェーダ デバッガの表示"
 
 msgctxt "IDS_AG_ZOOM_25"
 msgid "Zoom 25%"
-msgstr ""
+msgstr "拡大 25%"
 
 msgctxt "IDS_AG_ZOOM_50"
 msgid "Zoom 50%"
@@ -3844,7 +3845,7 @@ msgstr "ユーザー名 \"%2\" で \"%1\" にログインできませんでし�
 
 msgctxt "IDS_SUB_AUTODL_IGNORE_TOOLTIP"
 msgid "Automatic search and download will be disabled for all media files whose path contains any of the patterns entered here.\nFor example, type: \"private dir\\videos|work\\\"."
-msgstr "自動検索とダウンロードは、ここに入力されたパターンのいずれかがそのパスに含まれているすべてのメディア ファイルで無効になります。\n例: \"private dir\\videos|work\\\" のようにタイプします。"
+msgstr "自動検索とダウンロードは、ここに入力されたパターンのいずれかがそのパスに含まれているすべてのメディア ファイルで無効になります。\n例: \"private dir\\videos|work\\\" のように入力します。"
 
 msgctxt "IDS_CMD_PATHNAME"
 msgid "\"pathname\"\tThe main file or directory to be loaded\n\t\t(wildcards allowed, \"-\" denotes standard input)"
@@ -3972,15 +3973,15 @@ msgstr "Youtube-DL が選択したビデオ解像度を高さによって制限�
 
 msgctxt "IDS_PPAGEADVANCED_YDL_VIDEO_FORMAT"
 msgid "Preferred video format for stream that is selected from Youtube-DL results.\n0: Automatic\n1: H.264 30fps\n2: H.264 60fps\n3: VP9 30fps\n4: VP9 60fps\n5: VP9 Profile2 30fps\n6: VP9 Profile2 60fps\n7: AV1 30fps\n8: AV1 60fps"
-msgstr ""
+msgstr "Youtube-DL の結果から選択されたストリームの優先ビデオ形式。\n0: 自動\n1: H.264 30fps\n2: H.264 60fps\n3: VP9 30fps\n4: VP9 60fps\n5: VP9 Profile2 30fps\n6: VP9 Profile2 60fps\n7: AV1 30fps\n8: AV1 60fps"
 
 msgctxt "IDS_PPAGEADVANCED_YDL_AUDIO_ONLY"
 msgid "Instructs Youtube-DL to prefer an audio-only stream (if available)"
-msgstr ""
+msgstr "YouTube-DL にオーディオのみのストリームを優先するように指示します (使用可能な場合)"
 
 msgctxt "IDS_PPAGEADVANCED_YDL_COMMAND_LINE"
 msgid "Command line parameters for downloading (\"save a copy\") with youtube-dl.exe\nExamples:\n-f best[height<=1080]\n-f bestvideo+bestaudio\n-o \"C:\\downloads\\%(title)s.%(ext)s"
-msgstr ""
+msgstr "youtube-dl.exe を使用してダウンロード (「コピーを保存」) するためのコマンド ライン パラメータ\n例:\n-f best[height<=1080]\n-f bestvideo+bestaudio\n-o \"C:\\downloads\\%(title)s.%(ext)s"
 
 msgctxt "IDS_PPAGEADVANCED_SAVEIMAGE_POSITION"
 msgid "Include video position in filename"

@@ -4,13 +4,14 @@
 # Translators:
 # MPC HC <adiposegithub@gmail.com>, 2020
 # ever_green, 2020
+# OS, 2020
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2020-01-10 07:26:08+0000\n"
+"POT-Creation-Date: 2020-03-10 15:14:13+0000\n"
 "PO-Revision-Date: 2020-01-02 07:46+0000\n"
-"Last-Translator: ever_green, 2020\n"
+"Last-Translator: OS, 2020\n"
 "Language-Team: Japanese (https://www.transifex.com/mpchc/teams/106126/ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -124,11 +125,11 @@ msgstr "Shift キーを押したままクリックすると、即座に変更さ
 
 msgctxt "IDD_GOTO_DLG_CAPTION"
 msgid "Go To..."
-msgstr "指定位置に移動..."
+msgstr "移動..."
 
 msgctxt "IDD_GOTO_DLG_IDC_STATIC"
 msgid "Enter a timecode using the format [hh:]mm:ss.ms to jump to a specified time. You do not need to enter the separators explicitly."
-msgstr "指定時間にジャンプするには、[hh:]mm:ss.ms の形式を使用してタイムコードを入力してください。区切り記号を入力する必要はありません。"
+msgstr "指定時間にジャンプするには、[hh:]mm:ss.ms の形式でタイムコードを入力してください。区切り記号を入力する必要はありません。"
 
 msgctxt "IDD_GOTO_DLG_IDC_STATIC"
 msgid "Time"
@@ -140,7 +141,7 @@ msgstr "移動"
 
 msgctxt "IDD_GOTO_DLG_IDC_STATIC"
 msgid "Enter two numbers to jump to a specified frame, the first is the frame number, the second is the frame rate."
-msgstr "指定フレームにジャンプするには、フレーム番号、フレーム レートの順に二つの数値を入力してください。"
+msgstr "指定フレームにジャンプするには、フレーム番号、フレーム レートの順に 2 つの数値を入力してください。"
 
 msgctxt "IDD_GOTO_DLG_IDC_STATIC"
 msgid "Frame"
@@ -156,7 +157,7 @@ msgstr "開く"
 
 msgctxt "IDD_OPEN_DLG_IDC_STATIC"
 msgid "Type the address of a movie or audio file (on the Internet or your computer) and the player will open it for you."
-msgstr "インターネットやコンピュータ上にある再生したいムービーやオーディオ ファイルのアドレスを入力してください。"
+msgstr "インターネットやコンピュータにある再生したい動画やオーディオ ファイルのアドレスを入力してください。"
 
 msgctxt "IDD_OPEN_DLG_IDC_STATIC"
 msgid "Open:"
@@ -192,7 +193,7 @@ msgstr "バージョン情報"
 
 msgctxt "IDD_ABOUTBOX_IDC_AUTHORS_LINK"
 msgid "Copyright © 2002-2020 see Authors.txt"
-msgstr "Copyright © 2002-2020 (Authors.txt ファイルを参照)"
+msgstr "Copyright © 2002-2020 (Authors.txt を参照)"
 
 msgctxt "IDD_ABOUTBOX_IDC_STATIC"
 msgid "This program is freeware and released under the GNU General Public License."
@@ -200,7 +201,7 @@ msgstr "このプログラムはフリーウェアであり、GNU 一般公衆�
 
 msgctxt "IDD_ABOUTBOX_IDC_STATIC"
 msgid "English translation made by MPC-HC Team"
-msgstr "日本語訳は Transifex の Japanese 翻訳チームによって作成されています"
+msgstr "日本語訳は Transifex の Japanese 翻訳チームが作成します"
 
 msgctxt "IDD_ABOUTBOX_IDC_STATIC"
 msgid "Build information"
@@ -248,7 +249,7 @@ msgstr "再生するメディア ファイルに同じ\nプレーヤーを使用
 
 msgctxt "IDD_PPAGEPLAYER_IDC_RADIO2"
 msgid "Open a new player for each media file played"
-msgstr "再生するメディア ファイルごとに\n新しいプレーヤーを開く"
+msgstr "再生するメディア ファイルごとに\n新規プレーヤーを開く"
 
 msgctxt "IDD_PPAGEPLAYER_IDC_STATIC"
 msgid "Language"
@@ -348,7 +349,7 @@ msgstr "「DVD/BD を開く」 の挙動"
 
 msgctxt "IDD_PPAGEDVD_IDC_RADIO1"
 msgid "Prompt for location"
-msgstr "場所を指定する"
+msgstr "場所を確認する"
 
 msgctxt "IDD_PPAGEDVD_IDC_RADIO2"
 msgid "Always open the default location:"
@@ -356,7 +357,7 @@ msgstr "常に既定の場所を開く:"
 
 msgctxt "IDD_PPAGEDVD_IDC_STATIC"
 msgid "Preferred language for DVD Navigator and the external OGM Splitter"
-msgstr "DVD ナビゲータおよび外部 OGM スプリッタでの優先言語"
+msgstr "DVD ナビゲータおよび外部 OGM スプリッタの優先言語"
 
 msgctxt "IDD_PPAGEDVD_IDC_RADIO3"
 msgid "Menu"
@@ -428,7 +429,7 @@ msgstr "連続再生モード:"
 
 msgctxt "IDD_PPAGEPLAYBACK_IDC_STATIC"
 msgid "After Playback"
-msgstr "再生終了後の動作"
+msgstr "再生終了後"
 
 msgctxt "IDD_PPAGEPLAYBACK_IDC_STATIC"
 msgid "Zoom and Alignment"
@@ -448,7 +449,7 @@ msgstr "%"
 
 msgctxt "IDD_PPAGEPLAYBACK_IDC_STATIC"
 msgid "Default track preference"
-msgstr "既定のトラックでの優先順位"
+msgstr "既定のトラックの優先順位"
 
 msgctxt "IDD_PPAGEPLAYBACK_IDC_STATIC"
 msgid "Subtitles:"
@@ -468,11 +469,11 @@ msgstr "開くの設定"
 
 msgctxt "IDD_PPAGEPLAYBACK_IDC_CHECK7"
 msgid "Use worker thread to construct the filter graph"
-msgstr "フィルタ グラフを構築するためにワーカー スレッドを使用する"
+msgstr "ワーカー スレッドを使用してフィルタ グラフを作成する"
 
 msgctxt "IDD_PPAGEPLAYBACK_IDC_CHECK6"
 msgid "Report pins which fail to render"
-msgstr "表示できないピンを報告する"
+msgstr "表示に失敗したピンを報告する"
 
 msgctxt "IDD_PPAGEPLAYBACK_IDC_CHECK2"
 msgid "Auto-load audio files"
@@ -504,7 +505,7 @@ msgstr "配置を強制的に指定する"
 
 msgctxt "IDD_PPAGESUBTITLES_IDC_STATIC1"
 msgid "Horizontal:"
-msgstr "水平位置:"
+msgstr "水平方向:"
 
 msgctxt "IDD_PPAGESUBTITLES_IDC_STATIC2"
 msgid "%"
@@ -512,7 +513,7 @@ msgstr "%"
 
 msgctxt "IDD_PPAGESUBTITLES_IDC_STATIC3"
 msgid "Vertical:"
-msgstr "垂直位置:"
+msgstr "垂直方向:"
 
 msgctxt "IDD_PPAGESUBTITLES_IDC_STATIC4"
 msgid "%"
@@ -560,7 +561,7 @@ msgstr "% でアニメーション化する"
 
 msgctxt "IDD_PPAGESUBTITLES_IDC_CHECK_ALLOW_DROPPING_SUBPIC"
 msgid "Allow dropping some subpictures if the queue is running late"
-msgstr "キューが遅れて実行されている場合、サブピクチャの欠落を許可する"
+msgstr "キューが遅れている場合に、サブピクチャの欠落を許可する"
 
 msgctxt "IDD_PPAGESUBTITLES_IDC_STATIC"
 msgid "Renderer Layout"
@@ -576,7 +577,7 @@ msgstr "警告"
 
 msgctxt "IDD_PPAGESUBTITLES_IDC_STATIC"
 msgid "If you override and enable fullscreen antialiasing somewhere at your videocard's settings, subtitles aren't going to look any better but it will surely eat your CPU."
-msgstr "字幕の配置を強制的に指定してビデオカードの設定で全画面表示のアンチエイリアスを有効にした場合、CPU を消費するのみで字幕は少しも綺麗になりません。"
+msgstr "字幕の配置を強制的に指定して、ビデオカードの設定で全画面表示のアンチエイリアスを有効にすると、CPU を消費するのみで字幕は少しも綺麗になりません。"
 
 msgctxt "IDD_PPAGEFORMATS_IDC_STATIC2"
 msgid "File extensions"
@@ -660,7 +661,7 @@ msgstr "音楽 CD"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_STATIC"
 msgid "Jump distances (small, medium, large in ms)"
-msgstr "ジャンプの間隔 (小, 中, 大 : ミリ秒単位)"
+msgstr "ジャンプの間隔 (小, 中, 大: ミリ秒単位)"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_BUTTON1"
 msgid "Default"
@@ -680,7 +681,7 @@ msgstr "「再生中」 のファイル情報を Skype のムード メッセー
 
 msgctxt "IDD_PPAGETWEAKS_IDC_CHECK6"
 msgid "Prevent minimizing the player when in fullscreen on a non default monitor"
-msgstr "既定のモニタ以外で全画面表示している場合、プレーヤーを最小化できないようにする"
+msgstr "既定以外のモニタで全画面表示の場合、プレーヤーを最小化できないようにする"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_CHECK_ENHANCED_TASKBAR"
 msgid "Use enhanced taskbar features"
@@ -688,7 +689,7 @@ msgstr "タスク バーの拡張機能を使用する"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_CHECK7"
 msgid "Open previous/next file in folder on \"Skip back/forward\" when there is only one item in playlist"
-msgstr "再生リスト内に項目が一つしかない場合、 「前に戻る/次に進む」 でフォルダ内の前/次のファイルを開く"
+msgstr "再生リストに項目が 1 つしかない場合、 「戻る/進む」 でフォルダ内の前/次のファイルを開く"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_CHECK8"
 msgid "Show time tooltip:"
@@ -904,11 +905,11 @@ msgstr "警告"
 
 msgctxt "IDD_MEDIATYPES_DLG_IDC_STATIC1"
 msgid "MPC-HC could not render some of the pins in the graph, you may not have the needed codecs or filters installed on the system."
-msgstr "MPC-HC はグラフ中の一部のピンを表示できませんでした。必要なコーデックかフィルタがインストールされていない可能性があります。"
+msgstr "MPC-HC は、グラフのピンの一部を表示できませんでした。必要なコーデックまたはフィルタがシステムにインストールされていない可能性があります。"
 
 msgctxt "IDD_MEDIATYPES_DLG_IDC_STATIC2"
 msgid "The following pin(s) failed to find a connectable filter:"
-msgstr "以下のピンが接続可能なフィルタを見つけられませんでした:"
+msgstr "次のピンが接続可能なフィルタを見つけられませんでした:"
 
 msgctxt "IDD_MEDIATYPES_DLG_IDOK"
 msgid "Close"
@@ -1080,7 +1081,7 @@ msgstr "アルファ チャンネルを連動させる"
 
 msgctxt "IDD_PPAGEINTERNALFILTERS_IDC_STATIC"
 msgid "If you would like to use the stand-alone versions of these filters or another replacement, disable them here."
-msgstr "スタンドアロン版や代替フィルタを使用したい場合、ここで該当する箇所を無効にしてください。"
+msgstr "スタンドアロン版や代替フィルタを使用する場合は、ここで無効にしてください。"
 
 msgctxt "IDD_PPAGEINTERNALFILTERS_IDC_STATIC"
 msgid "Source Filters"
@@ -1136,7 +1137,7 @@ msgstr "オーディオ レンダラ"
 
 msgctxt "IDD_PPAGEOUTPUT_IDC_STATIC"
 msgid "VMR-9 (renderless) and EVR (CP) settings"
-msgstr "VMR-9 (レンダーレス) および EVR (カスタム プレゼンタ) の設定"
+msgstr "VMR-9 (レンダーレス) および EVR (CP) の設定"
 
 msgctxt "IDD_PPAGEOUTPUT_IDC_STATIC"
 msgid "Surface:"
@@ -1148,7 +1149,7 @@ msgstr "リサイザ:"
 
 msgctxt "IDD_PPAGEOUTPUT_IDC_D3D9DEVICE"
 msgid "Select D3D9 Render Device"
-msgstr "Direct3D 9 レンダラ デバイスを選択する"
+msgstr "D3D9 レンダラ デバイスを選択する"
 
 msgctxt "IDD_PPAGEOUTPUT_IDC_RESETDEVICE"
 msgid "Reinitialize when changing display"
@@ -1156,7 +1157,7 @@ msgstr "ディスプレイ変更時に再初期化する"
 
 msgctxt "IDD_PPAGEOUTPUT_IDC_FULLSCREEN_MONITOR_CHECK"
 msgid "D3D Fullscreen"
-msgstr "Direct3D フルスクリーン"
+msgstr "D3D フルスクリーン"
 
 msgctxt "IDD_PPAGEOUTPUT_IDC_DSVMR9ALTERNATIVEVSYNC"
 msgid "Alternative VSync"
@@ -1592,7 +1593,7 @@ msgstr "字幕のオンライン検索, ダウンロードおよびアップロ�
 
 msgctxt "IDD_PPAGESUBMISC_IDC_CHECK4"
 msgid "Automatically search and download subtitles if none are found locally"
-msgstr "ローカルで何も見つからない場合、字幕を自動的に検索してダウンロードする"
+msgstr "ローカルで見つからない場合は、字幕を自動的に検索してダウンロードする"
 
 msgctxt "IDD_PPAGESUBMISC_IDC_CHECK5"
 msgid "Prefer subtitles for hearing impaired (when indicated by subtitles provider)"
@@ -1696,7 +1697,7 @@ msgstr "PS 3.0"
 
 msgctxt "IDD_PPAGEADVANCED_IDC_STATIC"
 msgid "Advanced Settings, do not edit unless you know what you are doing."
-msgstr "高度な設定は何をしているのか理解できない場合、編集しないでください。"
+msgstr "高度な設定は何をしているのかわからない限り、編集しないでください。"
 
 msgctxt "IDD_PPAGEADVANCED_IDC_RADIO1"
 msgid "True"
@@ -1756,7 +1757,7 @@ msgstr "注意"
 
 msgctxt "IDD_PPAGEAUDIORENDERER_IDC_STATIC"
 msgid "To minimize audio distortion, it is recommended to keep player volume at around 85% when playing loud lossy-encoded content."
-msgstr "音声の歪みを最小限に抑えるために、大音量の非可逆エンコードされたコンテンツを再生する場合、プレーヤーの音量を約 85% に維持することを推奨します。"
+msgstr "音声の歪みを最小限に抑えるために、大音量の非可逆エンコードされたコンテンツを再生する場合は、プレーヤーの音量を約 85% に維持することを推奨します。"
 
 msgctxt "IDD_SAVEIMAGEDIALOGTEMPL_IDC_STATIC"
 msgid "JPEG quality:"
