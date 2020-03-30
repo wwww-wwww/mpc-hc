@@ -1309,6 +1309,22 @@ void CMainFrame::Dump(CDumpContext& dc) const
 
 #endif //_DEBUG
 
+typedef HIMC(WINAPI* pfnImmAssociateContext)(HWND, HIMC);
+void dynImmAssociateContext(HWND hWnd, HIMC himc) {
+    HMODULE hImm32;
+    pfnImmAssociateContext pImmAssociateContext;
+
+    hImm32 = LoadLibrary(_T("imm32.dll"));
+    if (NULL == hImm32) return; // No East Asian support
+    pImmAssociateContext = (pfnImmAssociateContext)GetProcAddress(hImm32, "ImmAssociateContext");
+    if (NULL == pImmAssociateContext) {
+        FreeLibrary(hImm32);
+        return;
+    }
+    pImmAssociateContext(hWnd, himc);
+    FreeLibrary(hImm32);
+}
+
 /////////////////////////////////////////////////////////////////////////////
 // CMainFrame message handlers
 void CMainFrame::OnSetFocus(CWnd* pOldWnd)
@@ -1316,6 +1332,9 @@ void CMainFrame::OnSetFocus(CWnd* pOldWnd)
     // forward focus to the view window
     if (IsWindow(m_wndView.m_hWnd)) {
         m_wndView.SetFocus();
+        dynImmAssociateContext(m_wndView.m_hWnd, NULL);
+    } else {
+        dynImmAssociateContext(m_hWnd, NULL);
     }
 }
 
