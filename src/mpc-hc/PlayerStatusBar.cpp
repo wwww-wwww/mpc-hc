@@ -267,6 +267,12 @@ CString CPlayerStatusBar::PreparePathStatusMessage(CPath path)
     return path;
 }
 
+CString CPlayerStatusBar::GetTimerOSD() const
+{
+    return timerOSD;
+}
+
+
 CString CPlayerStatusBar::GetStatusTimer() const
 {
     CString strResult;
@@ -336,15 +342,17 @@ void CPlayerStatusBar::SetStatusTimer(REFERENCE_TIME rtNow, REFERENCE_TIME rtDur
         if ((rtDur <= 0) || (rtDur < rtNow)) {
             str = posstr;
         } else {
+            str = posstr + _T(" / ") + durstr;
             percentComplete.Format(_T(" [%3.2f%%]"), 100.f * (float(rtNow) / float(rtDur)));
-            str = posstr + _T(" / ") + durstr + percentComplete;
+            timerOSD = str + percentComplete;
         }
     } else {
         if ((rtDur <= 0) || (rtDur < rtNow)) {
             str = posstr;
         } else {
+            str = _T("- ") + rstr + _T(" / ") + durstr;
             percentComplete.Format(_T(" [%3.2f%%]"), 100.f * (float(rtDur - rtNow) / float(rtDur)));
-            str = _T("- ") + rstr + _T(" / ") + durstr + percentComplete;;
+            timerOSD = str + percentComplete;
         }
     }
 
