@@ -162,7 +162,6 @@
 #define ID_PLAY_PLAY                    887
 #define ID_PLAY_PAUSE                   888
 #define ID_PLAY_PLAYPAUSE               889
-#define IDS_AG_OPEN_FILE_LOCATION       889
 #define ID_PLAY_STOP                    890
 #define ID_PLAY_FRAMESTEP               891
 #define ID_PLAY_FRAMESTEPCANCEL         892
@@ -494,6 +493,7 @@
 #define IDS_SRC_RFS                     14003
 #define IDS_INTERNAL_LAVF               14004
 #define IDS_INTERNAL_LAVF_WMV           14005
+#define IDS_AG_OPEN_FILE_LOCATION       14006
 #define IDS_PLAYLIST_OPEN               14114
 #define IDS_PLAYLIST_ADD                14115
 #define IDS_PLAYLIST_REMOVE             14116
