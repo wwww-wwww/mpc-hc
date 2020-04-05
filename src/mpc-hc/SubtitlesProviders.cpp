@@ -130,7 +130,7 @@ void SubtitlesInfo::OpenUrl() const
     REGEX_DEAD "(HI)" REGEX_DEAD ".*(srt|idx|sub|ssa)$"
 
 #define REGEX_CAPTURE_MEDIAEXTENSIONS                                           \
-    REGEX_DEAD "(3g2|3gp2?|asf|avi|divx|flv|m2ts|m4v|mk[2av]|mov|mp4a?|mpe?g|og[gvm]|qt|ram?|rm|rmvb|ts|wav|webm|wm[av])$"
+    REGEX_DEAD "(3g2|3gp2?|asf|avi|divx|flv|m2ts|m4v|mkv|mov|mp4a?|mpe?g|og[gvm]|rm|rmvb|ts|webm|wmv)$"
 
 #define REGEX_CAPTURE_SUBTITLESEXTENSION                                        \
     REGEX_DEAD "(srt|idx|sub|ssa)$"
