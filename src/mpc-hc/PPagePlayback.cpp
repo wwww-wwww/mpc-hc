@@ -41,7 +41,7 @@ CPPagePlayback::CPPagePlayback()
     , m_iLoopMode(0)
     , m_nLoops(0)
     , m_iAfterPlayback(0)
-    , m_iZoomLevel(0)
+    , m_iZoomLevel(1)
     , verticalAlignVideo(0)
     , m_iRememberZoomLevel(FALSE)
     , m_nAutoFitFactor(75)
@@ -126,7 +126,7 @@ BOOL CPPagePlayback::OnInitDialog()
     m_iLoopMode = static_cast<int>(s.eLoopMode);
     m_nLoops = s.nLoops;
     m_iAfterPlayback = static_cast<int>(s.eAfterPlayback);
-    m_iZoomLevel = s.iZoomLevel;
+    m_iZoomLevel = s.iZoomLevel + 1;
     verticalAlignVideo = static_cast<int>(s.iVerticalAlignVideo);
     m_iRememberZoomLevel = s.fRememberZoomLevel;
     m_nAutoFitFactor = s.nAutoFitFactor;
@@ -206,7 +206,7 @@ BOOL CPPagePlayback::OnApply()
     s.eLoopMode = static_cast<CAppSettings::LoopMode>(m_iLoopMode);
     s.nLoops = m_nLoops;
     s.eAfterPlayback = static_cast<CAppSettings::AfterPlayback>(m_iAfterPlayback);
-    s.iZoomLevel = m_iZoomLevel;
+    s.iZoomLevel = m_iZoomLevel - 1;
     s.iVerticalAlignVideo = static_cast<CAppSettings::verticalAlignVideoType>(verticalAlignVideo);
     s.fRememberZoomLevel = !!m_iRememberZoomLevel;
     s.nAutoFitFactor = m_nAutoFitFactor = std::min(std::max(m_nAutoFitFactor, 25), 100);

@@ -10541,6 +10541,7 @@ void CMainFrame::ZoomVideoWindow(double dScale/* = ZOOM_DEFAULT_LEVEL*/)
                 return;    // ignore default auto-zoom setting
             }
             dScale =
+                s.iZoomLevel == -1 ? 0.25 :
                 s.iZoomLevel == 0 ? 0.5 :
                 s.iZoomLevel == 1 ? 1.0 :
                 s.iZoomLevel == 2 ? 2.0 :
