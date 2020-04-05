@@ -98,7 +98,7 @@ SRESULT OpenSubtitles::Login(const std::string& sUserName, const std::string& sP
             } else if (result["status"] == std::string("401 Unauthorized") && !UserName().empty()) {
                 // Notify user that User/Pass provided are invalid.
                 CString msg;
-                msg.FormatMessage(IDS_SUB_CREDENTIALS_ERROR, Name().c_str(), UserName().c_str());
+                msg.FormatMessage(IDS_SUB_CREDENTIALS_ERROR, UTF8To16(Name().c_str()), UTF8To16(UserName().c_str()));
                 AfxMessageBox(msg, MB_ICONERROR | MB_OK);
             }
         }
