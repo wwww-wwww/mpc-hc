@@ -7046,7 +7046,7 @@ void CMainFrame::OnViewRotate(UINT nID)
                     m_AngleY = 180;
                 }
                 break;
-            case ID_PANSCAN_ROTATEZ270:
+            case ID_PANSCAN_ROTATEZM:
                 if (m_AngleZ > 270) {
                     m_AngleZ = 270;
                 } else if (m_AngleZ > 180) {
@@ -7062,7 +7062,7 @@ void CMainFrame::OnViewRotate(UINT nID)
             case ID_PANSCAN_ROTATEZP:
                 m_AngleZ += 2;
                 break;
-            case ID_PANSCAN_ROTATEZM:
+            case ID_PANSCAN_ROTATEZ270:
                 if (m_AngleZ >= 270) {
                     m_AngleZ = 0;
                 } else if (m_AngleZ >= 180) {
