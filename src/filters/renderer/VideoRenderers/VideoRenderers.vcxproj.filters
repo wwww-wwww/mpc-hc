@@ -154,5 +154,8 @@
     <ClInclude Include="MPCVRAllocatorPresenter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Variables.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

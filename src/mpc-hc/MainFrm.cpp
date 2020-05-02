@@ -109,6 +109,7 @@
 #include "CMPCThemeMenu.h"
 #include "CMPCThemeDockBar.h"
 #include "CMPCThemeMiniDockFrameWnd.h"
+#include "Variables.h"
 
 #include <dwmapi.h>
 #undef SubclassWindow
@@ -12487,6 +12488,8 @@ void CMainFrame::CloseMediaPrivate()
         CAutoLock cAutoLock(&m_csSubLock);
         m_pSubStreams.RemoveAll();
     }
+    m_ExternalSubstreams.clear();
+
     m_pSubClock.Release();
 
     // IMPORTANT: IVMRSurfaceAllocatorNotify/IVMRSurfaceAllocatorNotify9 has to be released before the VMR/VMR9, otherwise it will crash in Release()
@@ -14107,6 +14110,7 @@ bool CMainFrame::LoadSubtitle(CString fn, SubtitleInput* pSubInput /*= nullptr*/
 
     if (pSubStream) {
         SubtitleInput subInput(pSubStream);
+        m_ExternalSubstreams.push_back(pSubStream);
         m_pSubStreams.AddTail(subInput);
 
         if (!m_posFirstExtSub) {
@@ -14258,6 +14262,7 @@ void CMainFrame::SetSubtitle(const SubtitleInput& subInput)
         m_pCurrentSubInput = subInput;
 
         if (m_pCAP) {
+            g_bExternalSubtitle = (std::find(m_ExternalSubstreams.cbegin(), m_ExternalSubstreams.cend(), subInput.pSubStream) != m_ExternalSubstreams.cend());
             m_wndSubresyncBar.SetSubtitle(subInput.pSubStream, m_pCAP->GetFPS());
         }
     }

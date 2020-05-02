@@ -47,6 +47,7 @@
 #include <initguid.h>
 #include <mfapi.h>
 #include "SyncRenderer.h"
+#include "Variables.h"
 
 #define REFERENCE_WIDTH 1920
 #define FONT_HEIGHT     21
@@ -3693,6 +3694,12 @@ void CSyncAP::RenderThread()
     DWORD dwResolution = std::min(std::max(tc.wPeriodMin, 0u), tc.wPeriodMax);
     VERIFY(timeBeginPeriod(dwResolution) == 0);
 
+    auto SubPicSetTime = [&] {
+        if (!g_bExternalSubtitleTime) {
+            CSubPicAllocatorPresenterImpl::SetTime(g_tSegmentStart + m_llSampleTime * (g_bExternalSubtitle ? g_dRate : 1));
+        }
+    };
+
     auto checkPendingMediaFinished = [this]() {
         if (m_bPendingMediaFinished) {
             CAutoLock lock(&m_SampleQueueLock);
@@ -3852,9 +3859,7 @@ void CSyncAP::RenderThread()
                     m_pcFramesDrawn++;
                     stepForward = true;
                 } else if (pNewSample && !m_bStepping) { // When a stepped frame is shown, a new one is fetched that we don't want to show here while stepping
-                    if (!g_bExternalSubtitleTime) {
-                        __super::SetTime(g_tSegmentStart + m_llSampleTime);
-                    }
+                    SubPicSetTime();
                     Paint(pNewSample);
                     m_pcFramesDrawn++;
                     stepForward = true;

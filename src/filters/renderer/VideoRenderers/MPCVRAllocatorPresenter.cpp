@@ -25,6 +25,8 @@
 #include "../../../SubPic/SubPicQueueImpl.h"
 #include "moreuuids.h"
 #include "FilterInterfaces.h"
+#include "Variables.h"
+#include "IPinHook.h"
 
 using namespace DSObjects;
 
@@ -122,7 +124,12 @@ HRESULT CMPCVRAllocatorPresenter::Render(
     CRect wndRect(0, 0, width, height);
     CRect videoRect(left, top, right, bottom);
     __super::SetPosition(wndRect, videoRect); // needed? should be already set by the player
-    SetTime(rtStart);
+    if (g_bExternalSubtitle && g_dRate != 0.0) {
+        const REFERENCE_TIME sampleTime = rtStart - g_tSegmentStart;
+        SetTime(g_tSegmentStart + sampleTime * g_dRate);
+    } else {
+        SetTime(rtStart);
+    }
     if (atpf > 0 && m_pSubPicQueue) {
         m_pSubPicQueue->SetFPS(10000000.0 / atpf);
     }

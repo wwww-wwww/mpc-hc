@@ -256,6 +256,7 @@ private:
     CCritSec m_csSubtitleManagementLock;
 
     CList<SubtitleInput> m_pSubStreams;
+    std::list<ISubStream*> m_ExternalSubstreams;
     POSITION m_posFirstExtSub;
     SubtitleInput m_pCurrentSubInput;
 

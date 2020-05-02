@@ -25,6 +25,8 @@
 #include "RenderersSettings.h"
 #include <initguid.h>
 #include <mvrInterfaces.h>
+#include "IPinHook.h"
+#include "Variables.h"
 
 
 using namespace DSObjects;
@@ -124,7 +126,12 @@ HRESULT CmadVRAllocatorPresenter::RenderEx3(REFERENCE_TIME rtStart,
 
     __super::SetPosition(viewportRect, croppedVideoRect);
     if (!g_bExternalSubtitleTime) {
-        SetTime(rtStart);
+        if (g_bExternalSubtitle && g_dRate != 0.0) {
+            const REFERENCE_TIME sampleTime = rtStart - g_tSegmentStart;
+            SetTime(g_tSegmentStart + sampleTime * g_dRate);
+        } else {
+            SetTime(rtStart);
+        }
     }
     if (atpf > 0) {
         m_fps = 10000000.0 / atpf;

@@ -26,6 +26,7 @@
 #include "IPinHook.h"
 #include "MacrovisionKicker.h"
 #include "IMPCVideoDecFilter.h"
+#include "Variables.h"
 
 #if (0)     // Set to 1 to activate EVR traces
 #define TRACE_EVR   TRACE
@@ -2016,6 +2017,12 @@ void CEVRAllocatorPresenter::RenderThread()
 
     const CRenderersSettings& r = GetRenderersSettings();
 
+    auto SubPicSetTime = [&] {
+        if (!g_bExternalSubtitleTime) {
+            CSubPicAllocatorPresenterImpl::SetTime(g_tSegmentStart + nsSampleTime * (g_bExternalSubtitle ? g_dRate : 1));
+        }
+    };
+
     int NextSleepTime = 1;
     while (!bQuit) {
         LONGLONG llPerf = GetRenderersData()->GetPerfCounter();
@@ -2102,9 +2109,7 @@ void CEVRAllocatorPresenter::RenderThread()
                             /*
                             } else if (m_nStepCount > 0) {
                                 ++m_OrderedPaint;
-                                if (!g_bExternalSubtitleTime) {
-                                    __super::SetTime (g_tSegmentStart + nsSampleTime);
-                                }
+                                SubPicSetTime();
                                 Paint(pMFSample);
                                 m_nDroppedUpdate = 0;
                                 CompleteFrameStep(false);
@@ -2124,9 +2129,7 @@ void CEVRAllocatorPresenter::RenderThread()
                                 // Just play as fast as possible
                                 bStepForward = true;
                                 ++m_OrderedPaint;
-                                if (!g_bExternalSubtitleTime) {
-                                    __super::SetTime(g_tSegmentStart + nsSampleTime);
-                                }
+                                SubPicSetTime();
                                 Paint(pMFSample);
                             } else {
                                 LONGLONG TimePerFrame = (LONGLONG)(GetFrameTime() * 10000000.0);
@@ -2247,9 +2250,7 @@ void CEVRAllocatorPresenter::RenderThread()
 
                                     ++m_OrderedPaint;
 
-                                    if (!g_bExternalSubtitleTime) {
-                                        __super::SetTime(g_tSegmentStart + nsSampleTime);
-                                    }
+                                    SubPicSetTime();
                                     Paint(pMFSample);
 
                                     NextSleepTime = 0;
@@ -2314,9 +2315,7 @@ void CEVRAllocatorPresenter::RenderThread()
                             if (bForcePaint) {
                                 bStepForward = true;
                                 // Ensure that the renderer is properly updated after seeking when paused
-                                if (!g_bExternalSubtitleTime) {
-                                    __super::SetTime(g_tSegmentStart + nsSampleTime);
-                                }
+                                SubPicSetTime();
                                 Paint(pMFSample);
                             }
                             NextSleepTime = int(SampleDuration / 10000 - 2);

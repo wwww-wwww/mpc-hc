@@ -99,6 +99,7 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="SyncAllocatorPresenter.h" />
     <ClInclude Include="SyncRenderer.h" />
+    <ClInclude Include="Variables.h" />
     <ClInclude Include="VMR9AllocatorPresenter.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
