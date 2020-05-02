@@ -81,6 +81,11 @@ void OpenSubtitles::Initialize()
 
 SRESULT OpenSubtitles::Login(const std::string& sUserName, const std::string& sPassword)
 {
+    // OpenSubtitles currently only works with a user account
+    if (sUserName.empty()) {
+        return SR_FAILED;
+    }
+
     if (xmlrpc) {
         XmlRpcValue args, result;
         args[0] = sUserName;
@@ -95,10 +100,10 @@ SRESULT OpenSubtitles::Login(const std::string& sUserName, const std::string& sP
         if (result["status"].getType() == XmlRpcValue::Type::TypeString) {
             if (result["status"] == std::string("200 OK")) {
                 token = result["token"];
-            } else if (result["status"] == std::string("401 Unauthorized") && !UserName().empty()) {
+            } else if (result["status"] == std::string("401 Unauthorized") && !sUserName.empty()) {
                 // Notify user that User/Pass provided are invalid.
                 CString msg;
-                msg.FormatMessage(IDS_SUB_CREDENTIALS_ERROR, UTF8To16(Name().c_str()), UTF8To16(UserName().c_str()));
+                msg.FormatMessage(IDS_SUB_CREDENTIALS_ERROR, UTF8To16(Name().c_str()), UTF8To16(sUserName.c_str()));
                 AfxMessageBox(msg, MB_ICONERROR | MB_OK);
             }
         }
