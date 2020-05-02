@@ -28,6 +28,8 @@
 
 extern bool g_bNoDuration;
 extern bool g_bExternalSubtitleTime;
+extern bool g_bExternalSubtitle;
+extern double g_dRate;
 
 class CFocusThread;
 

@@ -30,7 +30,6 @@
 #include "AllocatorCommon.h"
 
 #include "../../../mpc-hc/FGFilterLAV.h"
-#include "Variables.h"
 
 #define DXVA_LOGFILE_A 0 // set to 1 for logging DXVA data to a file
 #define LOG_BITSTREAM  0 // set to 1 for logging DXVA bitstream data to a file
@@ -48,6 +47,8 @@ REFERENCE_TIME g_tSegmentStart = 0;
 REFERENCE_TIME g_tSampleStart = 0;
 GUID g_guidDXVADecoder = GUID_NULL;
 int  g_nDXVAVersion = 0;
+
+extern double g_dRate;
 
 IPinCVtbl* g_pPinCVtbl = nullptr;
 IPinCVtbl* g_pPinCVtbl10BitWorkAround = nullptr;
@@ -281,6 +282,7 @@ bool HookNewSegmentAndReceive(IPinC* pPinC, IMemInputPinC* pMemInputPinC)
 
     g_tSegmentStart = 0;
     g_tSampleStart = 0;
+    g_dRate = 1.0;
 
     UnhookNewSegmentAndReceive();
 

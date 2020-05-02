@@ -109,7 +109,6 @@
 #include "CMPCThemeMenu.h"
 #include "CMPCThemeDockBar.h"
 #include "CMPCThemeMiniDockFrameWnd.h"
-#include "Variables.h"
 
 #include <dwmapi.h>
 #undef SubclassWindow
@@ -1826,6 +1825,8 @@ LRESULT CMainFrame::OnHotKey(WPARAM wParam, LPARAM lParam)
 
 bool g_bNoDuration = false;
 bool g_bExternalSubtitleTime = false;
+bool g_bExternalSubtitle = false;
+double g_dRate = 1.0;
 
 void CMainFrame::OnTimer(UINT_PTR nIDEvent)
 {
