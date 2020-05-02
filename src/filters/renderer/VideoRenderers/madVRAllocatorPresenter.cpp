@@ -133,7 +133,7 @@ HRESULT CmadVRAllocatorPresenter::RenderEx3(REFERENCE_TIME rtStart,
             SetTime(rtStart);
         }
     }
-    if (atpf > 0) {
+    if (atpf > 0 && m_pSubPicQueue) {
         m_fps = 10000000.0 / atpf;
         m_pSubPicQueue->SetFPS(m_fps);
     }
@@ -157,6 +157,11 @@ STDMETHODIMP CmadVRAllocatorPresenter::CreateRenderer(IUnknown** ppRenderer)
     }
 
     (*ppRenderer = (IUnknown*)(INonDelegatingUnknown*)(this))->AddRef();
+
+    CComQIPtr<IBaseFilter> pBF = m_pMVR;
+    CComPtr<IPin> pPin = GetFirstPin(pBF);
+    CComQIPtr<IMemInputPin> pMemInputPin = pPin;
+    HookNewSegmentAndReceive((IPinC*)(IPin*)pPin, (IMemInputPinC*)(IMemInputPin*)pMemInputPin);
 
     return S_OK;
 }
