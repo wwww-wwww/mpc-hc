@@ -48,6 +48,7 @@ private:
     CPoint m_hoverPoint;
     HCURSOR m_cursor;
     bool m_bDraggingThumb, m_bHoverThumb;
+    ULONGLONG m_lastDragSeekTickCount;
 
     EventClient m_eventc;
     void EventCallback(MpcEvent ev);
@@ -74,7 +75,7 @@ private:
     void SyncVideoToThumb();
     void checkHover(CPoint point);
     void invalidateThumb();
-    void CheckScrollDistance(CPoint point, REFERENCE_TIME minimum_time_change);
+    void CheckScrollDistance(CPoint point, REFERENCE_TIME minimum_duration_change);
     long ChannelPointFromPosition(REFERENCE_TIME rtPos) const;
     REFERENCE_TIME PositionFromClientPoint(const CPoint& point) const;
     void SyncThumbToVideo(REFERENCE_TIME rtPos);

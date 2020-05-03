@@ -47,6 +47,7 @@ CPlayerSeekBar::CPlayerSeekBar(CMainFrame* pMainFrame)
     , m_bHoverThumb(false)
     , m_tooltipState(TOOLTIP_HIDDEN)
     , m_bIgnoreLastTooltipPoint(true)
+    , m_lastDragSeekTickCount(0)
 {
     ZeroMemory(&m_ti, sizeof(m_ti));
     m_ti.cbSize = sizeof(m_ti);
@@ -150,9 +151,12 @@ void CPlayerSeekBar::SyncVideoToThumb()
     GetParent()->PostMessage(WM_HSCROLL, NULL, reinterpret_cast<LPARAM>(m_hWnd));
 }
 
-void CPlayerSeekBar::CheckScrollDistance(CPoint point, REFERENCE_TIME minimum_time_change)
+void CPlayerSeekBar::CheckScrollDistance(CPoint point, REFERENCE_TIME minimum_duration_change)
 {
-    if (m_rtPos != m_rtHoverPos && abs(m_rtHoverPos - m_rtPos) >= minimum_time_change) {
+    ULONGLONG tickcount = GetTickCount64();
+
+    if (m_rtPos != m_rtHoverPos && ((tickcount - m_lastDragSeekTickCount > 100ULL) || abs(m_rtHoverPos - m_rtPos) >= minimum_duration_change)) {
+        m_lastDragSeekTickCount = tickcount;
         m_rtHoverPos = m_rtPos;
         m_hoverPoint = point;
         SyncVideoToThumb();
