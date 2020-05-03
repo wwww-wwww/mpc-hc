@@ -256,7 +256,7 @@
 #define IDS_RS_COUNTRY                      _T("Country")
 
 #define IDS_R_DVB                           _T("DVBConfiguration")
-#define IDS_RS_BDA_NETWORKPROVIDER          _T("BDANetworkProvider")
+//#define IDS_RS_BDA_NETWORKPROVIDER          _T("BDANetworkProvider")
 #define IDS_RS_BDA_TUNER                    _T("BDATuner")
 #define IDS_RS_BDA_RECEIVER                 _T("BDAReceiver")
 #define IDS_RS_BDA_STANDARD                 _T("BDAStandard")

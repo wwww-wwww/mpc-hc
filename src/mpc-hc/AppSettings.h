@@ -574,7 +574,7 @@ public:
     CString         strAnalogVideo;
     CString         strAnalogAudio;
     int             iAnalogCountry;
-    CString         strBDANetworkProvider;
+    //CString         strBDANetworkProvider;
     CString         strBDATuner;
     CString         strBDAReceiver;
     //CString           strBDAStandard;

@@ -951,7 +951,7 @@ void CAppSettings::SaveSettings()
     // Save digital capture settings (BDA)
     pApp->WriteProfileString(IDS_R_DVB, nullptr, nullptr); // Ensure the section is cleared before saving the new settings
 
-    pApp->WriteProfileString(IDS_R_DVB, IDS_RS_BDA_NETWORKPROVIDER, strBDANetworkProvider);
+    //pApp->WriteProfileString(IDS_R_DVB, IDS_RS_BDA_NETWORKPROVIDER, strBDANetworkProvider);
     pApp->WriteProfileString(IDS_R_DVB, IDS_RS_BDA_TUNER, strBDATuner);
     pApp->WriteProfileString(IDS_R_DVB, IDS_RS_BDA_RECEIVER, strBDAReceiver);
     //pApp->WriteProfileString(IDS_R_DVB, IDS_RS_BDA_STANDARD, strBDAStandard);
@@ -1834,7 +1834,7 @@ void CAppSettings::LoadSettings()
     strAnalogAudio        = pApp->GetProfileString(IDS_R_CAPTURE, IDS_RS_AUDIO_DISP_NAME, _T("dummy"));
     iAnalogCountry        = pApp->GetProfileInt(IDS_R_CAPTURE, IDS_RS_COUNTRY, 1);
 
-    strBDANetworkProvider = pApp->GetProfileString(IDS_R_DVB, IDS_RS_BDA_NETWORKPROVIDER);
+    //strBDANetworkProvider = pApp->GetProfileString(IDS_R_DVB, IDS_RS_BDA_NETWORKPROVIDER);
     strBDATuner           = pApp->GetProfileString(IDS_R_DVB, IDS_RS_BDA_TUNER);
     strBDAReceiver        = pApp->GetProfileString(IDS_R_DVB, IDS_RS_BDA_RECEIVER);
     //sBDAStandard        = pApp->GetProfileString(IDS_R_DVB, IDS_RS_BDA_STANDARD);
@@ -2553,7 +2553,7 @@ void CAppSettings::UpdateSettings()
             // Copy DVB section
             const CString oldSection(_T("DVB configuration"));
             const CString newSection(_T("DVBConfiguration"));
-            copyStr(oldSection, _T("BDANetworkProvider"), newSection, _T("BDANetworkProvider"));
+            //copyStr(oldSection, _T("BDANetworkProvider"), newSection, _T("BDANetworkProvider"));
             copyStr(oldSection, _T("BDATuner"), newSection, _T("BDATuner"));
             copyStr(oldSection, _T("BDAReceiver"), newSection, _T("BDAReceiver"));
             copyInt(oldSection, _T("BDAScanFreqStart"), newSection, _T("BDAScanFreqStart"));
