@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2020-01-10 07:05:47+0000\n"
+"POT-Creation-Date: 2020-03-10 15:14:13+0000\n"
 "PO-Revision-Date: 2020-01-02 07:46+0000\n"
 "Last-Translator: Roger Espolet <roger.espolet@gmail.com>, 2020\n"
 "Language-Team: Catalan (https://www.transifex.com/mpchc/teams/106126/ca/)\n"
@@ -120,15 +120,15 @@ msgstr "canals d'entrada:"
 
 msgctxt "IDD_PPAGEAUDIOSWITCHER_IDC_STATIC3"
 msgid "Hold shift for immediate changes when clicking something"
-msgstr "Manteniu premuda la tecla Maj mentre feu clic per aplicar el canvis de seguida"
+msgstr "Mantingueu premuda la tecla Maj mentre feu clic per aplicar el canvis de seguida"
 
 msgctxt "IDD_GOTO_DLG_CAPTION"
 msgid "Go To..."
-msgstr "Vés a…"
+msgstr "Ves a…"
 
 msgctxt "IDD_GOTO_DLG_IDC_STATIC"
 msgid "Enter a timecode using the format [hh:]mm:ss.ms to jump to a specified time. You do not need to enter the separators explicitly."
-msgstr "Introdueixi un codi de temps amb el format [hh]:mm:ss.ms per saltar-hi directament. No cal escriure els signes separadors explícitament."
+msgstr "Introduïu un codi de temps amb el format [hh]:mm:ss.ms per saltar-hi directament. No cal escriure els signes separadors explícitament."
 
 msgctxt "IDD_GOTO_DLG_IDC_STATIC"
 msgid "Time"
@@ -136,11 +136,11 @@ msgstr "Temps"
 
 msgctxt "IDD_GOTO_DLG_IDC_OK1"
 msgid "Go!"
-msgstr "Vés-hi"
+msgstr "Ves-hi"
 
 msgctxt "IDD_GOTO_DLG_IDC_STATIC"
 msgid "Enter two numbers to jump to a specified frame, the first is the frame number, the second is the frame rate."
-msgstr "Introdueixi dos números per accedir a un fotograma específic; el primer és el nombre de fotogrames i el segon la taxa de fotogrames per segon."
+msgstr "Introduïu dos números per accedir a un fotograma específic; el primer és el nombre de fotogrames i el segon la taxa de fotogrames per segon."
 
 msgctxt "IDD_GOTO_DLG_IDC_STATIC"
 msgid "Frame"
@@ -148,7 +148,7 @@ msgstr "Fotograma"
 
 msgctxt "IDD_GOTO_DLG_IDC_OK2"
 msgid "Go!"
-msgstr "Vés-hi"
+msgstr "Ves-hi"
 
 msgctxt "IDD_OPEN_DLG_CAPTION"
 msgid "Open"
@@ -156,7 +156,7 @@ msgstr "Obre"
 
 msgctxt "IDD_OPEN_DLG_IDC_STATIC"
 msgid "Type the address of a movie or audio file (on the Internet or your computer) and the player will open it for you."
-msgstr "Escrigui la ruta del fitxer multimèdia (d'Internet o de l'ordinador) i el reproductor l'obrirà per vostè."
+msgstr "Escriviu la ruta del fitxer multimèdia (d'Internet o de l'ordinador) i el reproductor l'obrirà per vós."
 
 msgctxt "IDD_OPEN_DLG_IDC_STATIC"
 msgid "Open:"
@@ -188,11 +188,11 @@ msgstr "Afegeix-ho a la llista de reproducció sense obrir-ho"
 
 msgctxt "IDD_ABOUTBOX_CAPTION"
 msgid "About"
-msgstr "Quant a"
+msgstr "Sobre"
 
 msgctxt "IDD_ABOUTBOX_IDC_AUTHORS_LINK"
 msgid "Copyright © 2002-2020 see Authors.txt"
-msgstr "Copyright © 2002-2020 Vegeu el fitxer Authors.txt"
+msgstr "Copyright © 2002-2020 vegeu \"Authors.txt\""
 
 msgctxt "IDD_ABOUTBOX_IDC_STATIC"
 msgid "This program is freeware and released under the GNU General Public License."
@@ -288,7 +288,7 @@ msgstr "Mostra OSD (cal que reinicieu)"
 
 msgctxt "IDD_PPAGEPLAYER_IDC_CHECK4"
 msgid "Limit window proportions on resize"
-msgstr "Bloqueja les proporcions en redimensionar la finestra"
+msgstr "Bloca les proporcions en redimensionar la finestra"
 
 msgctxt "IDD_PPAGEPLAYER_IDC_CHECK12"
 msgid "Snap to desktop edges"
@@ -316,7 +316,7 @@ msgstr "Historial"
 
 msgctxt "IDD_PPAGEPLAYER_IDC_CHECK1"
 msgid "Keep history of recently opened files"
-msgstr "Mantén historial dels fitxers oberts recentment"
+msgstr "Mantén l'historial dels fitxers oberts recentment"
 
 msgctxt "IDD_PPAGEPLAYER_IDC_CHECK2"
 msgid "Remember last playlist"
@@ -800,7 +800,7 @@ msgstr "Afegeix-ho a Preferits"
 
 msgctxt "IDD_FAVADD_IDC_STATIC"
 msgid "Choose a name for your shortcut:"
-msgstr "Triï un nom per a l'accés directe:"
+msgstr "Trieu un nom per a l'accés directe:"
 
 msgctxt "IDD_FAVADD_IDC_CHECK1"
 msgid "Remember position"
@@ -844,7 +844,7 @@ msgstr "D'acord"
 
 msgctxt "IDD_PNSPRESET_DLG_CAPTION"
 msgid "Pan & Scan Presets"
-msgstr "Modes de reenquadrament (Pan && Scan)"
+msgstr "Modes de reenquadrament (Pan & Scan)"
 
 msgctxt "IDD_PNSPRESET_DLG_IDC_BUTTON2"
 msgid "New"
@@ -1200,7 +1200,7 @@ msgstr "Emmagatzema els shaders compilats a la memòria cau"
 
 msgctxt "IDD_PPAGEWEBSERVER_IDC_CHECK1"
 msgid "Listen on port:"
-msgstr "Port que rep les conexions:"
+msgstr "Port que rep les connexions:"
 
 msgctxt "IDD_PPAGEWEBSERVER_IDC_STATIC1"
 msgid "Launch in web browser..."

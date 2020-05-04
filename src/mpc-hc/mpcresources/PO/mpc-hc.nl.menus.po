@@ -4,13 +4,14 @@
 # Translators:
 # MPC HC <adiposegithub@gmail.com>, 2020
 # mark van tilburg <markvantilburg@gmail.com>, 2020
+# Renz Straatman <renz75@outlook.com>, 2020
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2019-08-03 00:05:32+0000\n"
+"POT-Creation-Date: 2020-03-20 18:57:58+0000\n"
 "PO-Revision-Date: 2020-01-02 07:46+0000\n"
-"Last-Translator: mark van tilburg <markvantilburg@gmail.com>, 2020\n"
+"Last-Translator: Renz Straatman <renz75@outlook.com>, 2020\n"
 "Language-Team: Dutch (https://www.transifex.com/mpchc/teams/106126/nl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -92,7 +93,7 @@ msgstr "&Eigenschappen"
 
 msgctxt "ID_FILE_OPEN_LOCATION"
 msgid "Open File &Location"
-msgstr ""
+msgstr "Open bestandslocatie"
 
 msgctxt "ID_FILE_EXIT"
 msgid "E&xit"
@@ -176,7 +177,7 @@ msgstr "&In- en uit&zoomen"
 
 msgctxt "ID_VIEW_ZOOM_25"
 msgid "&25%"
-msgstr ""
+msgstr "25%"
 
 msgctxt "ID_VIEW_ZOOM_50"
 msgid "&50%"
@@ -504,19 +505,19 @@ msgstr "&Centreren"
 
 msgctxt "ID_PANSCAN_ROTATEZM"
 msgid "Rotate Cloc&kwise"
-msgstr ""
+msgstr "Rechtsom draaien"
 
 msgctxt "ID_PANSCAN_ROTATEZ270"
 msgid "Rotate Counter-Clock&wise"
-msgstr ""
+msgstr "Linksom draaien"
 
 msgctxt "ID_PANSCAN_ROTATEXM"
 msgid "&Flip Vertically"
-msgstr ""
+msgstr "Verticaal spiegelen"
 
 msgctxt "ID_PANSCAN_ROTATEYM"
 msgid "&Mirror"
-msgstr ""
+msgstr "Spiegelen"
 
 msgctxt "ID_VIEW_RESET"
 msgid "Re&set"
@@ -580,15 +581,15 @@ msgstr "Afs&peellijst"
 
 msgctxt "ID_PLAY_REPEAT_AB"
 msgid "A-B (&Reset)"
-msgstr ""
+msgstr "A-B (reset)"
 
 msgctxt "ID_PLAY_REPEAT_AB_MARK_A"
 msgid "A-B (Mark &A)"
-msgstr ""
+msgstr "A-B (markeer A)"
 
 msgctxt "ID_PLAY_REPEAT_AB_MARK_B"
 msgid "A-B (Mark &B)"
-msgstr ""
+msgstr "A-B (markeer B)"
 
 msgctxt "ID_PLAY_DECRATE"
 msgid "&Decrease Rate"

@@ -4,13 +4,14 @@
 # Translators:
 # MPC HC <adiposegithub@gmail.com>, 2020
 # xknat <321knat@gmail.com>, 2020
+# Renz Straatman <renz75@outlook.com>, 2020
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2020-01-10 07:05:47+0000\n"
+"POT-Creation-Date: 2020-03-20 18:57:58+0000\n"
 "PO-Revision-Date: 2020-01-02 07:46+0000\n"
-"Last-Translator: xknat <321knat@gmail.com>, 2020\n"
+"Last-Translator: Renz Straatman <renz75@outlook.com>, 2020\n"
 "Language-Team: Dutch (https://www.transifex.com/mpchc/teams/106126/nl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -76,7 +77,7 @@ msgstr "Afspeellijst"
 
 msgctxt "IDS_PLAY_LOOPMODE_AB"
 msgid "A-B"
-msgstr ""
+msgstr "A-B"
 
 msgctxt "IDS_FAVFILES"
 msgid "Files"
@@ -140,15 +141,15 @@ msgstr "Herhaal mode: Bestand"
 
 msgctxt "IDS_PLAYLOOPMODE_AB"
 msgid "A-B Repeat: Reset Positions"
-msgstr ""
+msgstr "A-B herhalen: posities resetten"
 
 msgctxt "IDS_PLAYLOOPMODE_AB_MARK_A"
 msgid "A-B Repeat: Mark A Position"
-msgstr ""
+msgstr "A-B herhalen: markeer positie A"
 
 msgctxt "IDS_PLAYLOOPMODE_AB_MARK_B"
 msgid "A-B Repeat: Mark B Position"
-msgstr ""
+msgstr "A-B herhalen: markeer positie B"
 
 msgctxt "IDS_PLAYLOOP_FOREVER_ON"
 msgid "Repeat Forever: On"
@@ -560,19 +561,19 @@ msgstr "Overlay mixer opbouwer"
 
 msgctxt "IDS_PPAGE_OUTPUT_VMR9WINDOWED"
 msgid "Video Mixing Renderer 9 (windowed)"
-msgstr "Video mixing opbouwer 9 (in scherm)"
+msgstr "Video Mixing Renderer 9 (in scherm)"
 
 msgctxt "IDS_PPAGE_OUTPUT_VMR9RENDERLESS"
 msgid "Video Mixing Renderer 9 (renderless)"
-msgstr "Video mixing opbouwer 9 (opbouwloos)"
+msgstr "Video Mixing Renderer 9 (opbouwloos)"
 
 msgctxt "IDS_PPAGE_OUTPUT_EVR"
 msgid "Enhanced Video Renderer"
-msgstr "Verbeterde video opbouwer"
+msgstr "Enhanced Video Renderer"
 
 msgctxt "IDS_PPAGE_OUTPUT_EVR_CUSTOM"
 msgid "Enhanced Video Renderer (custom presenter)"
-msgstr "Verbeterde video opbouwer (eigen presentator)"
+msgstr "Enhanced Video Renderer (aangepaste presentator)"
 
 msgctxt "IDS_PPAGE_OUTPUT_DXR"
 msgid "Haali Video Renderer"
@@ -920,7 +921,7 @@ msgstr "Pauze\nPauze"
 
 msgctxt "IDS_AG_OPEN_FILE_LOCATION"
 msgid "Open File Location"
-msgstr ""
+msgstr "Open bestandslocatie"
 
 msgctxt "ID_PLAY_STOP"
 msgid "Stop\nStop"
@@ -1876,7 +1877,7 @@ msgstr "Wilt u automatisch controleren op opwaarderingen voor MPC-HC?\n\nDit kan
 
 msgctxt "IDS_ZOOM_25"
 msgid "25%"
-msgstr ""
+msgstr "25%"
 
 msgctxt "IDS_ZOOM_50"
 msgid "50%"
@@ -2652,7 +2653,7 @@ msgstr "Schakelen tussen foutzoek informatie shaders"
 
 msgctxt "IDS_AG_ZOOM_25"
 msgid "Zoom 25%"
-msgstr ""
+msgstr "Zoom 25%"
 
 msgctxt "IDS_AG_ZOOM_50"
 msgid "Zoom 50%"
@@ -3952,47 +3953,47 @@ msgstr "Ophalen youtube-dl..."
 
 msgctxt "IDS_VERTICAL_ALIGN_VIDEO_TOP"
 msgid "Align Top"
-msgstr "Align naar boven"
+msgstr "Boven"
 
 msgctxt "IDS_VERTICAL_ALIGN_VIDEO_MIDDLE"
 msgid "Align Middle"
-msgstr "Align naar het midden"
+msgstr "Midden"
 
 msgctxt "IDS_VERTICAL_ALIGN_VIDEO_BOTTOM"
 msgid "Align Bottom"
-msgstr "Align naar beneden"
+msgstr "Onder"
 
 msgctxt "IDS_PPAGEADVANCED_USE_YDL"
 msgid "Process HTTP(s) URLs with Youtube-DL (if available). There is an internal whitelist/blacklist for URLs that are always/never processed."
-msgstr ""
+msgstr "Verwerk HTTP(s) URLs met Youtube-DL (indien beschikbaar). Er is een interne whitelist en blacklist voor URL's die altijd of nooit verwerkt moeten worden."
 
 msgctxt "IDS_PPAGEADVANCED_YDL_MAX_HEIGHT"
 msgid "Can be used to limit the video resolution that is chosen by Youtube-DL by the given height. Value 0 means it will choose the highest resolution available."
-msgstr ""
+msgstr "Kan gebruikt worden om de verticale videoresolutie te begrenzen door Youtube-DL. Een waarde van 0 betekend dat de hoogst beschikbare resolutie gekozen wordt."
 
 msgctxt "IDS_PPAGEADVANCED_YDL_VIDEO_FORMAT"
 msgid "Preferred video format for stream that is selected from Youtube-DL results.\n0: Automatic\n1: H.264 30fps\n2: H.264 60fps\n3: VP9 30fps\n4: VP9 60fps\n5: VP9 Profile2 30fps\n6: VP9 Profile2 60fps\n7: AV1 30fps\n8: AV1 60fps"
-msgstr ""
+msgstr "Voorkeursformaat voor de stream uit de Youtube-DL-resultaten:\n0: Automatisch\n1: H.264 30bps\n2: H.264 60bps\n3: VP9 30bps\n4: VP9 60bps\n5: VP9 Profile2 30bps\n6: VP9 Profile2 60bps\n7: AV1 30bps\n8: AV1 60bps"
 
 msgctxt "IDS_PPAGEADVANCED_YDL_AUDIO_ONLY"
 msgid "Instructs Youtube-DL to prefer an audio-only stream (if available)"
-msgstr ""
+msgstr "Laat Youtube-DL kiezen voor een audio-only stream (indien beschikbaar)"
 
 msgctxt "IDS_PPAGEADVANCED_YDL_COMMAND_LINE"
 msgid "Command line parameters for downloading (\"save a copy\") with youtube-dl.exe\nExamples:\n-f best[height<=1080]\n-f bestvideo+bestaudio\n-o \"C:\\downloads\\%(title)s.%(ext)s"
-msgstr ""
+msgstr "Opdrachtregelopties voor downloaden (\"kopie opslaan\") met youtube-dl.exe\nVoorbeelden:\n-f best[height<=1080]\n-f bestvideo+bestaudio\n-o \"C:\\downloads\\%(title)s.%(ext)s"
 
 msgctxt "IDS_PPAGEADVANCED_SAVEIMAGE_POSITION"
 msgid "Include video position in filename"
-msgstr ""
+msgstr "Videopositie toevoegen aan bestandsnaam"
 
 msgctxt "IDS_PPAGEADVANCED_SAVEIMAGE_CURRENTTIME"
 msgid "Include current time in filename"
-msgstr ""
+msgstr "Huidige tijd toevoegen aan bestandsnaam"
 
 msgctxt "IDS_PPAGEADVANCED_ALLOW_INACCURATE_FASTSEEK"
 msgid "When enabled, fast seek (to keyframe) has a maximum inaccuracy of 20 seconds. When disabled, a smaller inaccuracy is allowed when deciding between a fast and a normal seek. For example 30% of jump size."
-msgstr ""
+msgstr "Wanneer ingeschakeld heeft de snelzoekfunctie (naar een keyframe) een maximale afwijking van 20 seconden. Indien uitgeschakeld is deze afwijking korter bij snel- en normaal zoeken. Bijvoorbeeld 30% van de spronggrootte."
 
 msgctxt "IDS_CMD_FULLSCREEN"
 msgid "/fullscreen\tStart in fullscreen mode"
@@ -4092,17 +4093,17 @@ msgstr "Schakel donker thema in"
 
 msgctxt "IDS_PPAGEADVANCED_LOOP_FOLDER_NEXT_FILE"
 msgid "Loop back to first file in folder after playing the last file."
-msgstr ""
+msgstr "Terug naar het eerste bestand in de map na het afspelen van de laatste."
 
 msgctxt "IDS_PPAGEADVANCED_MODERNSEEKBAR"
 msgid "Requires Dark Theme. When enabled, the time seekbar and volume indicator don't show a dragger at current position, but instead are filled from left to right."
-msgstr ""
+msgstr "Vereist donker thema. Indien ingeschakeld heeft de tijdlijn en de volume-indicator geen wijzer op de huidige positie, maar wordt deze opgevuld vanaf links naar rechts."
 
 msgctxt "IDS_PPAGEADVANCED_MODERNSEEKBARHEIGHT"
 msgid "Modern seekbar height (at 96dpi, otherwise scaled)"
-msgstr ""
+msgstr "Moderne zoekbalk hoogte (op 96dpi, anders geschaald)"
 
 msgctxt "IDS_PPAGEADVANCED_FULLSCREEN_DELAY"
 msgid "Delay before showing fullscreen video, to prevent visual glitches."
-msgstr ""
+msgstr "Vertraging voor weergave van video in volledig scherm, om visuele glitches te voorkomen."
 
