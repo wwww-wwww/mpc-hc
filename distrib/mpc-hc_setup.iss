@@ -287,7 +287,6 @@ Name: {group}\{cm:UninstallProgram,{#app_name}}; Filename: {uninstallexe};      
 
 [Run]
 Filename: {app}\{#mpchc_exe};                    Description: {cm:LaunchProgram,{#app_name}}; WorkingDir: {app}; Flags: nowait postinstall skipifsilent unchecked
-Filename: {#TOOLBARS_URL};                       Description: {cm:run_DownloadToolbarImages};                    Flags: nowait postinstall skipifsilent unchecked shellexec
 
 
 [InstallDelete]
