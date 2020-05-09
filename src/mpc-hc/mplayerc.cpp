@@ -326,6 +326,7 @@ CStringA GetContentType(CString fn, CAtlList<CString>* redir)
 {
     CUrl url;
     CString ct, body;
+    BOOL parsebody = false;
 
     fn.Trim();
 
@@ -486,18 +487,32 @@ CStringA GetContentType(CString fn, CAtlList<CString>* redir)
             ct = _T("application/x-mpc-playlist");
         } else if (ext == _T(".pls")) {
             ct = _T("audio/x-scpls");
+            parsebody = true;
         } else if (ext == _T(".m3u") || ext == _T(".m3u8")) {
             ct = _T("audio/x-mpegurl");
         } else if (ext == _T(".bdmv")) {
             ct = _T("application/x-bdmv-playlist");
         } else if (ext == _T(".asx")) {
             ct = _T("video/x-ms-asf");
+            parsebody = true;
         } else if (ext == _T(".swf")) {
             ct = _T("application/x-shockwave-flash");
         } else if (ext == _T(".qtl")) {
             ct = _T("application/x-quicktimeplayer");
-        } else if (ext == _T(".ram") || ext == _T(".ra")) {
+            parsebody = true;
+        } else if (ext == _T(".ram")) {
             ct = _T("audio/x-pn-realaudio");
+            parsebody = true;
+        }
+
+        if (parsebody) {
+            FILE* f = nullptr;
+            if (!_tfopen_s(&f, fn, _T("rb"))) {
+                CStringA str;
+                str.ReleaseBufferSetLength((int)fread(str.GetBuffer(10240), 1, 10240, f));
+                body = AToT(str);
+                fclose(f);
+            }
         }
     }
 
