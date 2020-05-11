@@ -275,6 +275,7 @@ void CMouse::InternalOnLButtonDown(UINT nFlags, const CPoint& point)
         return;
     }
     bool bIsOnFS = IsOnFullscreenWindow();
+    bool bIsMaximized = m_pMainFrame->IsZoomed();
     if ((!m_bD3DFS || !bIsOnFS) && (abs(GetMessageTime() - m_popupMenuUninitTime) < 2)) {
         return;
     }
@@ -313,7 +314,7 @@ void CMouse::InternalOnLButtonDown(UINT nFlags, const CPoint& point)
         }
         return ret;
     };
-    m_drag = (!onButton() && !bIsOnFS) ? Drag::BEGIN_DRAG : Drag::NO_DRAG;
+    m_drag = (!onButton() && !bIsOnFS && !bIsMaximized) ? Drag::BEGIN_DRAG : Drag::NO_DRAG;
     if (m_drag == Drag::BEGIN_DRAG) {
         GetWnd().SetCapture();
         m_beginDragPoint = point;
