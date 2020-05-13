@@ -34,11 +34,6 @@
 #define NB_JITTER 126
 #include "AsyncCallback.h"
 
-extern bool g_bNoDuration; // Defined in MainFrm.cpp
-extern bool g_bExternalSubtitleTime;
-extern bool g_bExternalSubtitle;
-extern double g_dRate;
-
 class CFocusThread;
 
 // Possible messages to the PowerStrip API. PowerStrip is used to control

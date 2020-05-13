@@ -30,6 +30,7 @@
 #include "AllocatorCommon.h"
 
 #include "../../../mpc-hc/FGFilterLAV.h"
+#include "Variables.h"
 
 #define DXVA_LOGFILE_A 0 // set to 1 for logging DXVA data to a file
 #define LOG_BITSTREAM  0 // set to 1 for logging DXVA bitstream data to a file

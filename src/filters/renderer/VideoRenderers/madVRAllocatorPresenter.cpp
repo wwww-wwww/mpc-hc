@@ -26,12 +26,9 @@
 #include <initguid.h>
 #include <mvrInterfaces.h>
 #include "IPinHook.h"
+#include "Variables.h"
 
 using namespace DSObjects;
-
-extern bool g_bExternalSubtitleTime;
-extern bool g_bExternalSubtitle;
-extern double g_dRate;
 
 CmadVRAllocatorPresenter::CmadVRAllocatorPresenter(HWND hWnd, HRESULT& hr, CString& _Error)
     : CSubPicAllocatorPresenterImpl(hWnd, hr, &_Error)

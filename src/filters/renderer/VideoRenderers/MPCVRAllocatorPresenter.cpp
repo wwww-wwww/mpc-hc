@@ -25,13 +25,10 @@
 #include "../../../SubPic/SubPicQueueImpl.h"
 #include "moreuuids.h"
 #include "FilterInterfaces.h"
+#include "Variables.h"
 #include "IPinHook.h"
 
 using namespace DSObjects;
-
-extern bool g_bExternalSubtitleTime;
-extern bool g_bExternalSubtitle;
-extern double g_dRate;
 
 //
 // CMPCVRAllocatorPresenter

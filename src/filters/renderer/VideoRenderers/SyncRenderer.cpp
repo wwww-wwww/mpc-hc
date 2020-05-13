@@ -47,6 +47,7 @@
 #include <initguid.h>
 #include <mfapi.h>
 #include "SyncRenderer.h"
+#include "Variables.h"
 
 #define REFERENCE_WIDTH 1920
 #define FONT_HEIGHT     21
