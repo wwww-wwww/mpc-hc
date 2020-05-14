@@ -5470,12 +5470,7 @@ void CMainFrame::OnFileSaveImage()
     CPath psrc(s.strSnapshotPath);
     psrc.Combine(s.strSnapshotPath.GetString(), MakeSnapshotFileName(FALSE));
 
-    bool subtitleOptionSupported;
-    if (m_pMVRFG) {
-        subtitleOptionSupported = false;
-    } else {
-        subtitleOptionSupported = true;
-    }
+    bool subtitleOptionSupported = !m_pMVRFG && s.IsISRAutoLoadEnabled();
 
     CSaveImageDialog fd(s.nJpegQuality, nullptr, (LPCTSTR)psrc,
                         _T("BMP - Windows Bitmap (*.bmp)|*.bmp|JPG - JPEG Image (*.jpg)|*.jpg|PNG - Portable Network Graphics (*.png)|*.png||"), GetModalParent(), subtitleOptionSupported);
