@@ -699,6 +699,8 @@ public:
     bool            bFavRelativeDrive;
     // Save Image...
     CString         strSnapshotPath, strSnapshotExt;
+    bool			bSnapShotSubtitles;
+    bool			bSnapShotKeepVideoExtension;
     // Save Thumbnails...
     int             iThumbRows, iThumbCols, iThumbWidth;
     // Save Subtitle

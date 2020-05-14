@@ -27,6 +27,7 @@
 #include "FilterInterfaces.h"
 #include "Variables.h"
 #include "IPinHook.h"
+#include "Utils.h"
 
 using namespace DSObjects;
 
@@ -190,11 +191,21 @@ STDMETHODIMP_(void) CMPCVRAllocatorPresenter::SetPosition(RECT w, RECT v)
 
 STDMETHODIMP CMPCVRAllocatorPresenter::SetRotation(int rotation)
 {
-    HRESULT hr = E_NOTIMPL;
-    if (CComQIPtr<IExFilterConfig> pIExFilterConfig = m_pMPCVR) {
-        hr = pIExFilterConfig->SetInt("rotate", rotation);
-    }
-    return hr;
+	if (AngleStep90(rotation)) {
+		HRESULT hr = E_NOTIMPL;
+		if (CComQIPtr<IExFilterConfig> pIExFilterConfig = m_pMPCVR) {
+			int curRotation = rotation;
+			hr = pIExFilterConfig->GetInt("rotation", &curRotation);
+			if (SUCCEEDED(hr) && rotation != curRotation) {
+				hr = pIExFilterConfig->SetInt("rotation", rotation);
+				if (SUCCEEDED(hr)) {
+					m_bOtherTransform = true;
+				}
+			}
+		}
+		return hr;
+	}
+	return E_INVALIDARG;
 }
 
 STDMETHODIMP_(int) CMPCVRAllocatorPresenter::GetRotation()
@@ -241,6 +252,26 @@ STDMETHODIMP CMPCVRAllocatorPresenter::GetDIB(BYTE* lpDib, DWORD* size)
         hr = pBV->GetCurrentImage((long*)size, (long*)lpDib);
     }
     return hr;
+}
+
+STDMETHODIMP CMPCVRAllocatorPresenter::GetDisplayedImage(LPVOID* dibImage)
+{
+	if (CComQIPtr<IExFilterConfig> pIExFilterConfig = m_pMPCVR) {
+		unsigned size = 0;
+		HRESULT hr = pIExFilterConfig->GetBin("displayedImage", dibImage, &size);
+
+		return hr;
+	}
+
+	return E_FAIL;
+}
+STDMETHODIMP_(bool) CMPCVRAllocatorPresenter::DisplayChange()
+{
+	if (CComQIPtr<IExFilterConfig> pIExFilterConfig = m_pMPCVR) {
+		return SUCCEEDED(pIExFilterConfig->SetBool("displayChange", true));
+	}
+
+	return false;
 }
 
 STDMETHODIMP_(bool) CMPCVRAllocatorPresenter::IsRendering()

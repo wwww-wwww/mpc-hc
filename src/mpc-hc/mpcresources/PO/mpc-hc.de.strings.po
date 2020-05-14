@@ -4109,3 +4109,15 @@ msgctxt "IDS_PPAGEADVANCED_FULLSCREEN_DELAY"
 msgid "Delay before showing fullscreen video, to prevent visual glitches."
 msgstr "Verzögerung vor Anzeigen des Vollbild-Videos, um visuelle Fehler zu vermeiden."
 
+msgctxt "IDS_PPAGEADVANCED_SNAPSHOTSUBTITLES"
+msgid "Render subtitles onto screenshots"
+msgstr ""
+
+msgctxt "IDS_PPAGEADVANCED_SNAPSHOTKEEPVIDEOEXTENSION"
+msgid "Keep video file extension as part of shapshot filenames (e.g., file.mkv.png)"
+msgstr ""
+
+msgctxt "IDS_SNAPSHOT_SUBTITLES"
+msgid "Include Subtitles"
+msgstr ""
+

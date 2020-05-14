@@ -95,7 +95,9 @@ namespace DSObjects
         STDMETHODIMP_(SIZE) GetVideoSize(bool bCorrectAR = true) const;
         STDMETHODIMP_(bool) Paint(bool bAll);
         STDMETHODIMP GetDIB(BYTE* lpDib, DWORD* size);
+		STDMETHODIMP GetDisplayedImage(LPVOID* dibImage);
         STDMETHODIMP SetPixelShader(LPCSTR pSrcData, LPCSTR pTarget);
+		STDMETHODIMP_(bool) DisplayChange() override;
         STDMETHODIMP_(bool) IsRendering();
     };
 }

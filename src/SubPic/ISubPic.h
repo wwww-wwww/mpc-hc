@@ -192,6 +192,7 @@ public IUnknown {
     STDMETHOD_(void, Invalidate)(REFERENCE_TIME rtInvalidate = -1) PURE;
 
     STDMETHOD(GetDIB)(BYTE * lpDib, DWORD * size) PURE;
+	STDMETHOD (GetDisplayedImage) (LPVOID* dibImage) PURE;
 
     STDMETHOD(SetVideoAngle)(Vector v) PURE;
     STDMETHOD(SetPixelShader)(LPCSTR pSrcData, LPCSTR pTarget) PURE;

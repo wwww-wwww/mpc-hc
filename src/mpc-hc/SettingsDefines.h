@@ -200,6 +200,8 @@
 #define IDS_RS_SNAPSHOTPATH                 _T("SnapshotPath")
 #define IDS_RS_PRIORITY                     _T("Priority")
 #define IDS_RS_SNAPSHOTEXT                  _T("SnapshotExt")
+#define IDS_RS_SNAPSHOTSUBTITLES            _T("SnapshotSubtitles")
+#define IDS_RS_SNAPSHOTKEEPVIDEOEXTENSION   _T("SnapshotKeepVideoExtension")
 #define IDS_RS_LAUNCHFULLSCREEN             _T("LaunchFullScreen")
 #define IDS_RS_WEBROOT                      _T("WebRoot")
 #define IDS_RS_WEBSERVERLOCALHOSTONLY       _T("WebServerLocalhostOnly")

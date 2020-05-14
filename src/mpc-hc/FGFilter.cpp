@@ -506,6 +506,13 @@ HRESULT CFGFilterVideoRenderer::Create(IBaseFilter** ppBF, CInterfaceList<IUnkno
             }
         }
 
+		if (m_clsid == CLSID_MPCVRAllocatorPresenter) {
+			// MPC VR supports calling IVideoWindow::put_Owner before the pins are connected
+			if (CComQIPtr<IVideoWindow> pVW = *ppBF) {
+				VERIFY(SUCCEEDED(pVW->put_Owner((OAHWND)m_hWnd)));
+			}
+		}
+
         *ppBF = CComQIPtr<IBaseFilter>(pRenderer).Detach();
         pUnks.AddTail(pCAP);
         if (CComQIPtr<ISubPicAllocatorPresenter2> pCAP2 = pCAP) {

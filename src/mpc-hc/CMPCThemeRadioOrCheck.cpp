@@ -7,7 +7,10 @@
 CMPCThemeRadioOrCheck::CMPCThemeRadioOrCheck()
 {
     isHover = false;
-    buttonType = unknownType;
+    buttonType = RadioOrCheck::unknownType;
+    isFileDialogChild = false;
+    buttonStyle = 0;
+    isAuto = false;
 }
 
 
@@ -127,7 +130,11 @@ void CMPCThemeRadioOrCheck::OnPaint()
                     rectItem.OffsetRect(0, (centerRect.Height() - rectItem.Height()) / 2);
                 }
 
-                dc.SetBkColor(CMPCTheme::WindowBGColor);
+                if (isFileDialogChild) {
+                    CMPCThemeUtil::getCtlColorFileDialog(dc.GetSafeHdc(), CTLCOLOR_BTN);
+                } else {
+                    dc.SetBkColor(CMPCTheme::WindowBGColor);
+                }
                 if (isDisabled) {
                     dc.SetTextColor(CMPCTheme::ButtonDisabledFGColor);
                     dc.DrawText(sTitle, -1, &rectItem, uFormat);
@@ -227,6 +234,11 @@ BOOL CMPCThemeRadioOrCheck::OnEraseBkgnd(CDC* pDC)
 {
     CRect r;
     GetClientRect(r);
-    pDC->FillSolidRect(r, CMPCTheme::CMPCTheme::WindowBGColor);
+    if (isFileDialogChild) {
+        HBRUSH hBrush = CMPCThemeUtil::getCtlColorFileDialog(pDC->GetSafeHdc(), CTLCOLOR_BTN);
+        ::FillRect(pDC->GetSafeHdc(), r, hBrush);
+    } else {
+        CMPCThemeUtil::drawParentDialogBGClr(this, pDC, r);
+    }
     return TRUE;
 }
