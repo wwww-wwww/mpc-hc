@@ -801,6 +801,7 @@ CMainFrame::CMainFrame()
     , abRepeatPositionBEnabled(false)
     , abRepeatPositionA(0)
     , abRepeatPositionB(0)
+    , mediaTypesDlg(nullptr)
 {
     // Don't let CFrameWnd handle automatically the state of the menu items.
     // This means that menu items without handlers won't be automatically
@@ -11183,6 +11184,19 @@ CWnd* CMainFrame::GetModalParent()
     return pParentWnd;
 }
 
+void CMainFrame::ShowMediaTypesDialog() {
+    CComQIPtr<IGraphBuilderDeadEnd> pGBDE = m_pGB;
+    if (pGBDE && pGBDE->GetCount()) {
+        CAutoLock lck(&lockModalDialog); //put a lock here in case this somehow gets called twice?
+        showingModalDialog = true;
+        mediaTypesDlg = DEBUG_NEW CMediaTypesDlg(pGBDE, GetModalParent());
+        mediaTypesDlg->DoModal();
+        delete mediaTypesDlg;
+        mediaTypesDlg = nullptr;
+        showingModalDialog = false;
+    }
+}
+
 // Called from GraphThread
 void CMainFrame::OpenFile(OpenFileData* pOFD)
 {
@@ -11210,10 +11224,7 @@ void CMainFrame::OpenFile(OpenFileData* pOFD)
                 pOFD->title = fn; //we can use this later for skipping to the next file
 
                 if (s.fReportFailedPins) {
-                    CComQIPtr<IGraphBuilderDeadEnd> pGBDE = m_pGB;
-                    if (pGBDE && pGBDE->GetCount()) {
-                        CMediaTypesDlg(pGBDE, GetModalParent()).DoModal();
-                    }
+                    ShowMediaTypesDialog();
                 }
 
                 UINT err;
@@ -11304,10 +11315,7 @@ void CMainFrame::OpenFile(OpenFileData* pOFD)
     }
 
     if (s.fReportFailedPins) {
-        CComQIPtr<IGraphBuilderDeadEnd> pGBDE = m_pGB;
-        if (pGBDE && pGBDE->GetCount()) {
-            CMediaTypesDlg(pGBDE, GetModalParent()).DoModal();
-        }
+        ShowMediaTypesDialog();
     }
 
     if (!(m_pAMOP = m_pGB)) {
@@ -11523,10 +11531,7 @@ void CMainFrame::OpenDVD(OpenDVDData* pODD)
     CAppSettings& s = AfxGetAppSettings();
 
     if (s.fReportFailedPins) {
-        CComQIPtr<IGraphBuilderDeadEnd> pGBDE = m_pGB;
-        if (pGBDE && pGBDE->GetCount()) {
-            CMediaTypesDlg(pGBDE, GetModalParent()).DoModal();
-        }
+        ShowMediaTypesDialog();
     }
 
     BeginEnumFilters(m_pGB, pEF, pBF) {
@@ -15410,6 +15415,13 @@ void CMainFrame::OpenMedia(CAutoPtr<OpenMediaData> pOMD)
 
     // close the current graph before opening new media
     if (GetLoadState() != MLS::CLOSED) {
+        if (showingModalDialog) {
+            if (mediaTypesDlg) {
+                mediaTypesDlg->SendMessage(WM_EXTERNALCLOSE, 0, 0);
+            } else {
+                return; //close will fail if the modal dialog is showing.  since modal means nothing else can happen, we just give up
+            }
+        }
         CloseMedia(true);
         ASSERT(GetLoadState() == MLS::CLOSED);
     }
