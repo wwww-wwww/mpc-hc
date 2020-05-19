@@ -220,6 +220,8 @@ BDA_STREAM_TYPE CMpeg2DataParser::ConvertToDVBType(PES_STREAM_TYPE nType)
             return BDA_AC3;
         case AUDIO_STREAM_AC3_PLUS:
             return BDA_EAC3;
+        case AUDIO_STREAM_AAC:
+            return BDA_ADTS;
         case AUDIO_STREAM_AAC_LATM:
             return BDA_LATM;
         case SUBTITLE_STREAM:
