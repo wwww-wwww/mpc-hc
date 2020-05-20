@@ -229,7 +229,7 @@ static const AM_MEDIA_TYPE mt_Eac3 = {
 /// Media type, Audio AAC ADTS
 static const AM_MEDIA_TYPE mt_adts = {
     MEDIATYPE_Audio,                // majortype
-    MEDIASUBTYPE_AAC_ADTS,          // subtype
+    MEDIASUBTYPE_MPEG_ADTS_AAC,     // subtype
     TRUE,                           // bFixedSizeSamples
     FALSE,                          // bTemporalCompression
     0,                              // lSampleSize
