@@ -87,6 +87,7 @@ CBaseAP::CBaseAP(HWND hWnd, bool bFullscreen, HRESULT& hr, CString& _Error)
     , m_nTearingPos(0)
     , m_VMR9AlphaBitmapWidthBytes()
     , m_pD3DXLoadSurfaceFromMemory(nullptr)
+    , m_pD3DXLoadSurfaceFromSurface(nullptr)
     , m_pD3DXCreateLine(nullptr)
     , m_pD3DXCreateFont(nullptr)
     , m_pD3DXCreateSprite(nullptr)
@@ -161,6 +162,7 @@ CBaseAP::CBaseAP(HWND hWnd, bool bFullscreen, HRESULT& hr, CString& _Error)
 
     if (hDll) {
         (FARPROC&)m_pD3DXLoadSurfaceFromMemory = GetProcAddress(hDll, "D3DXLoadSurfaceFromMemory");
+        (FARPROC&)m_pD3DXLoadSurfaceFromSurface = GetProcAddress(hDll, "D3DXLoadSurfaceFromSurface");
         (FARPROC&)m_pD3DXCreateLine = GetProcAddress(hDll, "D3DXCreateLine");
         (FARPROC&)m_pD3DXCreateFont = GetProcAddress(hDll, "D3DXCreateFontW");
         (FARPROC&)m_pD3DXCreateSprite = GetProcAddress(hDll, "D3DXCreateSprite");
@@ -2320,6 +2322,27 @@ bool CBaseAP::ExtractInterlaced(const AM_MEDIA_TYPE* pmt)
     }
 }
 
+HRESULT CBaseAP::Resize(IDirect3DTexture9* pTexture, const CRect& srcRect, const CRect& destRect) {
+    HRESULT hr;
+
+    const CRenderersSettings& r = GetRenderersSettings();
+
+    DWORD iDX9Resizer = r.iDX9Resizer;
+    Vector dst[4];
+    Transform(destRect, dst);
+
+    if (iDX9Resizer == 0 || iDX9Resizer == 1) {
+        D3DTEXTUREFILTERTYPE Filter = iDX9Resizer == 0 ? D3DTEXF_POINT : D3DTEXF_LINEAR;
+        hr = TextureResize(pTexture, dst, Filter, srcRect);
+    } else if (iDX9Resizer == 2) {
+        hr = TextureResizeBilinear(pTexture, dst, srcRect);
+    } else if (iDX9Resizer >= 3) {
+        hr = TextureResizeBicubic1pass(pTexture, dst, srcRect);
+    }
+
+    return hr;
+}
+
 STDMETHODIMP CBaseAP::GetDIB(BYTE* lpDib, DWORD* size)
 {
     CheckPointer(size, E_POINTER);
@@ -2341,6 +2364,17 @@ STDMETHODIMP CBaseAP::GetDIB(BYTE* lpDib, DWORD* size)
         return hr;
     }
 
+    CSize framesize = GetVideoSize(false);
+    const CSize dar = GetVideoSize(true);
+
+    bool resize = false;
+    if (dar.cx > 0 && dar.cy > 0 && (dar.cx != desc.Width || dar.cy != desc.Height)) {
+        framesize.cx = MulDiv(framesize.cy, dar.cx, dar.cy);
+        resize = true;
+        desc.Width = framesize.cx;
+        desc.Height = framesize.cy;
+    }
+
     DWORD required = sizeof(BITMAPINFOHEADER) + (desc.Width * desc.Height * 32 >> 3);
     if (!lpDib) {
         *size = required;
@@ -2351,13 +2385,36 @@ STDMETHODIMP CBaseAP::GetDIB(BYTE* lpDib, DWORD* size)
     }
     *size = required;
 
-    CComPtr<IDirect3DSurface9> pSurface = pVideoSurface;
+    CComPtr<IDirect3DSurface9> pSurface, tSurface;
+    // Convert to 8-bit when using 10-bit or full/half processing modes
+    if (desc.Format != D3DFMT_X8R8G8B8) {
+        if (FAILED(hr = m_pD3DDev->CreateOffscreenPlainSurface(desc.Width, desc.Height, D3DFMT_X8R8G8B8, D3DPOOL_DEFAULT, &tSurface, nullptr))
+            || FAILED(hr = m_pD3DXLoadSurfaceFromSurface(tSurface, nullptr, nullptr, pVideoSurface, nullptr, nullptr, D3DX_DEFAULT, 0))) {
+            return hr;
+        }
+    } else {
+        tSurface = pVideoSurface;
+    }
+
+    if (resize) {
+        CComPtr<IDirect3DTexture9> pVideoTexture = m_pVideoTexture[m_nCurSurface];
+        if (FAILED(hr = m_pD3DDevEx->CreateRenderTarget(framesize.cx, framesize.cy, D3DFMT_X8R8G8B8, D3DMULTISAMPLE_NONE, 0, TRUE, &pSurface, nullptr))
+            || FAILED(hr = m_pD3DDevEx->SetRenderTarget(0, pSurface))
+            || FAILED(hr = Resize(pVideoTexture, { CPoint(0, 0), m_nativeVideoSize }, { CPoint(0, 0), framesize }))) {
+            return hr;
+        }
+    } else {
+        pSurface = tSurface;
+    }
+
     D3DLOCKED_RECT r;
     if (FAILED(hr = pSurface->LockRect(&r, nullptr, D3DLOCK_READONLY))) {
+        // If this fails, we try to use a surface allocated from the system memory
+        CComPtr<IDirect3DSurface9> pInputSurface = pSurface;
         pSurface = nullptr;
-        if (FAILED(hr = m_pD3DDev->CreateOffscreenPlainSurface(desc.Width, desc.Height, desc.Format, D3DPOOL_SYSTEMMEM, &pSurface, nullptr))
-                || FAILED(hr = m_pD3DDev->GetRenderTargetData(pVideoSurface, pSurface))
-                || FAILED(hr = pSurface->LockRect(&r, nullptr, D3DLOCK_READONLY))) {
+        if (FAILED(hr = m_pD3DDev->CreateOffscreenPlainSurface(desc.Width, desc.Height, D3DFMT_X8R8G8B8, D3DPOOL_SYSTEMMEM, &pSurface, nullptr))
+            || FAILED(hr = m_pD3DDev->GetRenderTargetData(pInputSurface, pSurface))
+            || FAILED(hr = pSurface->LockRect(&r, nullptr, D3DLOCK_READONLY))) {
             return hr;
         }
     }
