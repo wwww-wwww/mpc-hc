@@ -190,3 +190,18 @@ void CMPCThemeListBox::OnSize(UINT nType, int cx, int cy)
 {
     CListBox::OnSize(nType, cx, cy);
 }
+
+void CMPCThemeListBox::EnsureVisible(int index) {
+    CRect r;
+    GetClientRect(&r);
+    int lbHeight = r.Height();
+
+    int height=0;
+    for (int i = index; i >= 0; i--) {
+        height += GetItemHeight(i);
+        if (height > lbHeight) {
+            SetTopIndex(i + 1);
+            return;
+        }
+    }
+}
