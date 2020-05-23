@@ -174,7 +174,7 @@ STDMETHODIMP_(void) CmadVRAllocatorPresenter::SetPosition(RECT w, RECT v)
         pVW->SetWindowPosition(w.left, w.top, w.right - w.left, w.bottom - w.top);
     }
 
-    SetVideoSize(GetVideoSize(), GetVideoSize(true));
+    SetVideoSize(GetVideoSize(false), GetVideoSize(true));
 }
 
 STDMETHODIMP_(SIZE) CmadVRAllocatorPresenter::GetVideoSize(bool bCorrectAR) const

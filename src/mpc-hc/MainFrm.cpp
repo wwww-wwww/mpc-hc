@@ -11864,7 +11864,7 @@ void CMainFrame::OpenSetupVideo()
     if (m_pMFVDC) { // EVR
         m_fAudioOnly = false;
     } else if (m_pCAP) {
-        CSize vs = m_pCAP->GetVideoSize();
+        CSize vs = m_pCAP->GetVideoSize(false);
         m_fAudioOnly = (vs.cx <= 0 || vs.cy <= 0);
     } else {
         {

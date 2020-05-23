@@ -92,7 +92,7 @@ public:
     STDMETHODIMP CreateRenderer(IUnknown** ppRenderer) PURE;
 
     STDMETHODIMP_(void) SetVideoSize(CSize szVideo, CSize szAspectRatio = CSize(0, 0));
-    STDMETHODIMP_(SIZE) GetVideoSize(bool bCorrectAR = true) const;
+    STDMETHODIMP_(SIZE) GetVideoSize(bool bCorrectAR) const;
     STDMETHODIMP_(SIZE) GetVisibleVideoSize() const {
         return m_nativeVideoSize;
     };
