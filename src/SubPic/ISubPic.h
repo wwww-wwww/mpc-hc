@@ -179,7 +179,7 @@ ISubPicAllocatorPresenter :
 public IUnknown {
     STDMETHOD(CreateRenderer)(IUnknown** ppRenderer) PURE;
 
-    STDMETHOD_(SIZE, GetVideoSize)(bool bCorrectAR = true) const PURE;
+    STDMETHOD_(SIZE, GetVideoSize)(bool bCorrectAR) const PURE;
     STDMETHOD_(void, SetPosition)(RECT w, RECT v) PURE;
     STDMETHOD_(bool, Paint)(bool bAll) PURE;
 
