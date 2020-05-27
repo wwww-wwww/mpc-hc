@@ -465,9 +465,8 @@ protected:
 
     CWnd* GetModalParent();
 
-    bool showingModalDialog;
     CCritSec lockModalDialog;
-    CMediaTypesDlg* mediaTypesDlg;
+    CMediaTypesDlg* mediaTypesErrorDlg;
     void ShowMediaTypesDialog();
 
     void OpenCreateGraphObject(OpenMediaData* pOMD);

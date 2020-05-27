@@ -801,7 +801,7 @@ CMainFrame::CMainFrame()
     , abRepeatPositionBEnabled(false)
     , abRepeatPositionA(0)
     , abRepeatPositionB(0)
-    , mediaTypesDlg(nullptr)
+    , mediaTypesErrorDlg(nullptr)
 {
     // Don't let CFrameWnd handle automatically the state of the menu items.
     // This means that menu items without handlers won't be automatically
@@ -11188,12 +11188,10 @@ void CMainFrame::ShowMediaTypesDialog() {
     CComQIPtr<IGraphBuilderDeadEnd> pGBDE = m_pGB;
     if (pGBDE && pGBDE->GetCount()) {
         CAutoLock lck(&lockModalDialog); //put a lock here in case this somehow gets called twice?
-        showingModalDialog = true;
-        mediaTypesDlg = DEBUG_NEW CMediaTypesDlg(pGBDE, GetModalParent());
-        mediaTypesDlg->DoModal();
-        delete mediaTypesDlg;
-        mediaTypesDlg = nullptr;
-        showingModalDialog = false;
+        mediaTypesErrorDlg = DEBUG_NEW CMediaTypesDlg(pGBDE, GetModalParent());
+        mediaTypesErrorDlg->DoModal();
+        delete mediaTypesErrorDlg;
+        mediaTypesErrorDlg = nullptr;
     }
 }
 
@@ -15415,12 +15413,8 @@ void CMainFrame::OpenMedia(CAutoPtr<OpenMediaData> pOMD)
 
     // close the current graph before opening new media
     if (GetLoadState() != MLS::CLOSED) {
-        if (showingModalDialog) {
-            if (mediaTypesDlg) {
-                mediaTypesDlg->SendMessage(WM_EXTERNALCLOSE, 0, 0);
-            } else {
-                return; //close will fail if the modal dialog is showing.  since modal means nothing else can happen, we just give up
-            }
+        if (mediaTypesErrorDlg) { // close pin connection error dialog
+            mediaTypesErrorDlg->SendMessage(WM_EXTERNALCLOSE, 0, 0);
         }
         CloseMedia(true);
         ASSERT(GetLoadState() == MLS::CLOSED);
