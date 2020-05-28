@@ -110,6 +110,9 @@
       <AdditionalProperties>Configuration=Release Portuguese (Brazil)</AdditionalProperties>
     </ProjectToBuild>
     <ProjectToBuild Include="mpcresources.vcxproj">
+      <AdditionalProperties>Configuration=Release Portuguese (Portugal)</AdditionalProperties>
+    </ProjectToBuild>
+    <ProjectToBuild Include="mpcresources.vcxproj">
       <AdditionalProperties>Configuration=Release Polish</AdditionalProperties>
     </ProjectToBuild>
     <ProjectToBuild Include="mpcresources.vcxproj">

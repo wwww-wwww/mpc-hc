@@ -2,77 +2,76 @@
 # Copyright (C) 2002 - 2017 see Authors.txt
 # This file is distributed under the same license as the MPC-HC package.
 # Translators:
-# MPC HC <adiposegithub@gmail.com>, 2020
-# Jindřich T <jindrich.thiel@email.cz>, 2020
+# Hugo Simões <hugo.simoes.1984@gmail.com>, 2020
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
 "POT-Creation-Date: 2020-03-20 18:57:58+0000\n"
 "PO-Revision-Date: 2020-01-02 07:46+0000\n"
-"Last-Translator: Jindřich T <jindrich.thiel@email.cz>, 2020\n"
-"Language-Team: Czech (https://www.transifex.com/mpchc/teams/106126/cs/)\n"
+"Last-Translator: Hugo Simões <hugo.simoes.1984@gmail.com>, 2020\n"
+"Language-Team: Portuguese (Portugal) (https://www.transifex.com/mpchc/teams/106126/pt_PT/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: cs\n"
-"Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
+"Language: pt_PT\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgctxt "IDS_INFOBAR_LOCATION"
 msgid "Location"
-msgstr "Umístění"
+msgstr "Localização"
 
 msgctxt "IDS_INFOBAR_VIDEO"
 msgid "Video"
-msgstr "Video"
+msgstr "Vídeo"
 
 msgctxt "IDS_INFOBAR_AUDIO"
 msgid "Audio"
-msgstr "Zvuk"
+msgstr "Áudio"
 
 msgctxt "IDS_INFOBAR_SUBTITLES"
 msgid "Subtitles"
-msgstr "Titulky"
+msgstr "Legendas"
 
 msgctxt "IDS_INFOBAR_CHAPTER"
 msgid "Chapter"
-msgstr "Kapitola"
+msgstr "Capítulo"
 
 msgctxt "IDS_CONTROLS_COMPLETING"
 msgid "Completing..."
-msgstr "Dokončování..."
+msgstr "A concluir..."
 
 msgctxt "IDS_AUTOPLAY_PLAYVIDEO"
 msgid "Play Video"
-msgstr "Přehrát video"
+msgstr "Reproduzir vídeo"
 
 msgctxt "IDS_AUTOPLAY_PLAYMUSIC"
 msgid "Play Music"
-msgstr "Přehrát hudbu"
+msgstr "Reproduzir música"
 
 msgctxt "IDS_AUTOPLAY_PLAYAUDIOCD"
 msgid "Play Audio CD"
-msgstr "Přehrát Audio CD"
+msgstr "Reproduzir áudio de CD"
 
 msgctxt "IDS_AUTOPLAY_PLAYDVDMOVIE"
 msgid "Play DVD Movie"
-msgstr "Přehrát DVD"
+msgstr "Reproduzir filme de DVD"
 
 msgctxt "IDS_PROPSHEET_PROPERTIES"
 msgid "Properties"
-msgstr "Vlastnosti"
+msgstr "Propriedades"
 
 msgctxt "IDS_PLAY_LOOPMODE_FILE"
 msgid "File"
-msgstr "Soubor"
+msgstr "Ficheiro"
 
 msgctxt "IDS_SUBTITLES_DEFAULT_STYLE"
 msgid "&Default Style"
-msgstr "&Výchozí styl"
+msgstr "Estilo por &defeito"
 
 msgctxt "IDS_PLAY_LOOPMODE_PLAYLIST"
 msgid "Playlist"
-msgstr "Seznam stop"
+msgstr "Lista de reprodução"
 
 msgctxt "IDS_PLAY_LOOPMODE_AB"
 msgid "A-B"
@@ -80,27 +79,27 @@ msgstr "A-B"
 
 msgctxt "IDS_FAVFILES"
 msgid "Files"
-msgstr "Soubory"
+msgstr "Ficheiros"
 
 msgctxt "IDS_FAVDVDS"
 msgid "DVDs"
-msgstr "DVD"
+msgstr "DVDs"
 
 msgctxt "IDS_INFOBAR_CHANNEL"
 msgid "Channel"
-msgstr "Kanál"
+msgstr "Canal"
 
 msgctxt "IDS_INFOBAR_TIME"
 msgid "Time"
-msgstr "Čas"
+msgstr "Tempo"
 
 msgctxt "IDS_STATSBAR_SYNC_OFFSET"
 msgid "Sync Offset"
-msgstr "Odch. synch."
+msgstr "Deslocamento de Sync"
 
 msgctxt "IDS_STATSBAR_SYNC_OFFSET_FORMAT"
 msgid "avg: %d ms, dev: %d ms"
-msgstr "prům.: %d ms, odch.: %d ms"
+msgstr "méd: %d ms, des: %d ms"
 
 msgctxt "IDS_STATSBAR_JITTER"
 msgid "Jitter"
@@ -108,95 +107,95 @@ msgstr "Jitter"
 
 msgctxt "IDS_STATSBAR_BITRATE"
 msgid "Bitrate"
-msgstr "Datový tok"
+msgstr "Bitrate"
 
 msgctxt "IDS_STATSBAR_BITRATE_AVG_CUR"
 msgid "(avg/cur)"
-msgstr "(prům./akt.)"
+msgstr "(méd/atual)"
 
 msgctxt "IDS_STATSBAR_SIGNAL"
 msgid "Signal"
-msgstr "Signál"
+msgstr "Sinal"
 
 msgctxt "IDS_STATSBAR_SIGNAL_FORMAT"
 msgid "Strength: %d dB, Quality: %ld%%"
-msgstr "Síla: %d dB, Kvalita: %ld%%"
+msgstr "Força: %d dB, Qualidade: %ld%%"
 
 msgctxt "IDS_SUBTITLES_STYLES_CAPTION"
 msgid "Styles"
-msgstr "Styly"
+msgstr "Estilos"
 
 msgctxt "IDS_TEXT_SUB_RENDERING_TARGET"
 msgid "If the rendering target is left undefined, SSA/ASS subtitles will be rendered relative to the video frame while all other text subtitles will be rendered relative to the window."
-msgstr "Pokud není určen cíl vykreslování, budou SSA/ASS titulky vykreslovány relativně k oblasti videa, zatímco ostatní formáty titulků budou vykreslovány relativně k oknu."
+msgstr "Se o destino da renderização não for definido, legendas SSA/ASS irão ser renderizadas relativamente ao frame do vídeo enquanto que todas as outras legendas de texto irão ser renderizadas relativamente à janela."
 
 msgctxt "IDS_PLAYLOOPMODE_PLAYLIST"
 msgid "Repeat Mode: Playlist"
-msgstr "Režim opakování: Seznam stop"
+msgstr "Modo de repetição: Lista de reprodução"
 
 msgctxt "IDS_PLAYLOOPMODE_FILE"
 msgid "Repeat Mode: File"
-msgstr "Režim opakování: Soubor"
+msgstr "Modo de repetição: Ficheiro"
 
 msgctxt "IDS_PLAYLOOPMODE_AB"
 msgid "A-B Repeat: Reset Positions"
-msgstr "Opakování A-B: Reset pozic"
+msgstr "Repetição A-B: Repor posições"
 
 msgctxt "IDS_PLAYLOOPMODE_AB_MARK_A"
 msgid "A-B Repeat: Mark A Position"
-msgstr "Opakování A-B: Označit pozici A"
+msgstr "Repetição A-B: Marcar posição A"
 
 msgctxt "IDS_PLAYLOOPMODE_AB_MARK_B"
 msgid "A-B Repeat: Mark B Position"
-msgstr "Opakování A-B: Označit pozici B"
+msgstr "Repetição A-B: Marcar posição B"
 
 msgctxt "IDS_PLAYLOOP_FOREVER_ON"
 msgid "Repeat Forever: On"
-msgstr "Opakovat donekonečna: Aktivní"
+msgstr "Repetir para sempre: Ativado"
 
 msgctxt "IDS_PLAYLOOP_FOREVER_OFF"
 msgid "Repeat Forever: Off"
-msgstr "Opakovat donekonečna: Neaktivní"
+msgstr "Repetir para sempre: Desativado"
 
 msgctxt "IDS_PLAYLOOP_FOREVER"
 msgid "Repeat Forever"
-msgstr "Opakovat donekonečna"
+msgstr "Repetir para sempre"
 
 msgctxt "IDS_PPAGE_CAPTURE_FG0"
 msgid "Never"
-msgstr "Nikdy"
+msgstr "Nunca"
 
 msgctxt "IDS_PPAGE_CAPTURE_FG1"
 msgid "Only when switching different video types"
-msgstr "Pouze při přepínání různých video typů"
+msgstr "Apenas quando alternar entre diferentes tipos de vídeo"
 
 msgctxt "IDS_PPAGE_CAPTURE_FG2"
 msgid "Always (default)"
-msgstr "Vždy (defaultní)"
+msgstr "Sempre (por defeito)"
 
 msgctxt "IDS_PPAGE_CAPTURE_FGDESC0"
 msgid "Not supported by some devices. Two video decoders always present in the filter graph."
-msgstr "Není podporováno všemi zařízeními. V grafu filtrů jsou vždy dva video dekodéry."
+msgstr "Não suportado por alguns dispositivos. Dois descodificador de vídeo sempre presentes no gráfico de filtro."
 
 msgctxt "IDS_PPAGE_CAPTURE_FGDESC1"
 msgid "Fast except when switching between different video streams. Only one video decoder present in the filter graph."
-msgstr "Rychlé s vyjímkou přepínání mezi dvěma různými video toky. V grafu filtrů je jen jeden video dekodér."
+msgstr "Rápido excepto quando alternar entre streams de vídeo diferentes. Apenas um descodificador de vídeo presente no gráfico de filtro."
 
 msgctxt "IDS_PPAGE_CAPTURE_SFG0"
 msgid "Never if possible (fastest, but not supported by most filters)"
-msgstr "Nikdy, pokud je to možné (nejrychlejší, ale podporováno jen některými filtry)"
+msgstr "Nunca se possível (mais rápido, mas não suportado pela maioria filtros)"
 
 msgctxt "IDS_PPAGE_CAPTURE_SFG1"
 msgid "Only when switching different video types"
-msgstr "Pouze při přepínání různých video typů"
+msgstr "Apenas quando alternar entre diferentes tipos de vídeo"
 
 msgctxt "IDS_PPAGE_CAPTURE_SFG2"
 msgid "Always (may be required by some devices)"
-msgstr "Vždy (může být vyžadováno některými zařízeními)"
+msgstr "Sempre (pode ser necessário por alguns dispositivos)"
 
 msgctxt "IDS_INFOBAR_PARENTAL_RATING"
 msgid "Parental rating"
-msgstr "Rodičovské hodnocení"
+msgstr "Classificação parental"
 
 msgctxt "IDS_PARENTAL_RATING"
 msgid "%d+"
@@ -204,19 +203,19 @@ msgstr "%d+"
 
 msgctxt "IDS_NO_PARENTAL_RATING"
 msgid "Not rated"
-msgstr "Bez hodnocení"
+msgstr "Não classificado"
 
 msgctxt "IDS_INFOBAR_CONTENT"
 msgid "Content"
-msgstr "Obsah"
+msgstr "Conteúdo"
 
 msgctxt "IDS_CONTENT_MOVIE_DRAMA"
 msgid "Movie/Drama"
-msgstr "Filmy / Dramata"
+msgstr "Filme/Drama"
 
 msgctxt "IDS_CONTENT_NEWS_CURRENTAFFAIRS"
 msgid "News/Current affairs"
-msgstr "Zpravodajství / Události"
+msgstr "Notícias/Assuntos atuais"
 
 msgctxt "IDS_SPEED_UNIT_G"
 msgid "GB/s"
@@ -224,19 +223,19 @@ msgstr "GB/s"
 
 msgctxt "IDS_FILE_FAV_ADDED"
 msgid "File added to favorites"
-msgstr "Soubor byl přidán mezi oblíbené"
+msgstr "Ficheiro adicionado aos favoritos"
 
 msgctxt "IDS_DVD_FAV_ADDED"
 msgid "DVD added to favorites"
-msgstr "DVD bylo přidáno mezi oblíbené"
+msgstr "DVD adicionado aos favoritos"
 
 msgctxt "IDS_CAPTURE_SETTINGS"
 msgid "Capture Settings"
-msgstr "Nastavení záznamu"
+msgstr "Definições de captura"
 
 msgctxt "IDS_NAVIGATION_BAR"
 msgid "Navigation Bar"
-msgstr "Navigační panel"
+msgstr "Barra de navegação"
 
 msgctxt "IDS_SUBRESYNC_CAPTION"
 msgid "Subresync"
@@ -244,103 +243,103 @@ msgstr "Subresync"
 
 msgctxt "IDS_SUBRESYNC_CLN_TIME"
 msgid "Time"
-msgstr "Čas"
+msgstr "Tempo"
 
 msgctxt "IDS_SUBRESYNC_CLN_END"
 msgid "End"
-msgstr "Konec"
+msgstr "Fim"
 
 msgctxt "IDS_SUBRESYNC_CLN_PREVIEW"
 msgid "Preview"
-msgstr "Náhled"
+msgstr "Pré-visualizar"
 
 msgctxt "IDS_SUBRESYNC_CLN_VOB_ID"
 msgid "Vob ID"
-msgstr "ID VOB"
+msgstr "Id do Vob"
 
 msgctxt "IDS_SUBRESYNC_CLN_CELL_ID"
 msgid "Cell ID"
-msgstr "ID buňky"
+msgstr "Id do Cell"
 
 msgctxt "IDS_SUBRESYNC_CLN_FORCED"
 msgid "Forced"
-msgstr "Vynucený"
+msgstr "Forçado"
 
 msgctxt "IDS_SUBRESYNC_CLN_TEXT"
 msgid "Text"
-msgstr "Text"
+msgstr "Texto"
 
 msgctxt "IDS_SUBRESYNC_CLN_STYLE"
 msgid "Style"
-msgstr "Styl"
+msgstr "Estilo"
 
 msgctxt "IDS_SUBRESYNC_CLN_FONT"
 msgid "Font"
-msgstr "Písmo"
+msgstr "Tipo de letra"
 
 msgctxt "IDS_DVD_NAV_SOME_PINS_ERROR"
 msgid "Failed to render some of the pins of the DVD Navigator filter"
-msgstr "Nepodařilo se propojit některé z vývodů DVD navigátoru"
+msgstr "Falhou ao renderizar alguns dos pins do filtro de navegação do DVD"
 
 msgctxt "IDS_DVD_INTERFACES_ERROR"
 msgid "Failed to query the needed interfaces for DVD playback"
-msgstr "Hledání rozhraní potřebných pro přehrání DVD skončilo neúspěchem"
+msgstr "Falhou ao pedir os interfaces necessários para a reprodução de DVD"
 
 msgctxt "IDS_CAPTURE_LIVE"
 msgid "Live"
-msgstr "Živé"
+msgstr "Em direto"
 
 msgctxt "IDS_CAPTURE_ERROR_VID_FILTER"
 msgid "Can't add video capture filter to the graph"
-msgstr "Do grafu se nepodařilo přidat filtr pro záznam videa"
+msgstr "Não se pôde adic. o filtro de captura de vídeo ao gráfico"
 
 msgctxt "IDS_CAPTURE_ERROR_AUD_FILTER"
 msgid "Can't add audio capture filter to the graph"
-msgstr "Do grafu se nepodařilo přidat filtr pro záznam zvuku"
+msgstr "Não se pôde adic. o filtro de captura de áudio ao gráfico"
 
 msgctxt "IDS_CAPTURE_ERROR_DEVICE"
 msgid "Could not open capture device."
-msgstr "Nepodařilo se otevřít záznamové zařízení."
+msgstr "Não se pôde abrir o dispositivo de captura."
 
 msgctxt "IDS_INVALID_PARAMS_ERROR"
 msgid "Can't open, invalid input parameters"
-msgstr "Nelze otevřít, neplatné vstupní parametry"
+msgstr "Não pode abrir, parâmetros de entrada inválidos"
 
 msgctxt "IDS_EDIT_LIST_EDITOR"
 msgid "Edit List Editor"
-msgstr "Editor"
+msgstr "Editor de lista de adição"
 
 msgctxt "IDS_GOTO_ERROR_INVALID_TIME"
 msgid "The entered time is greater than the file duration."
-msgstr "Zadaný čas přesahuje délku souboru."
+msgstr "O tempo introduzido é maior que a duração do ficheiro."
 
 msgctxt "IDS_MISSING_ICONS_LIB"
 msgid "The icons library \"mpciconlib.dll\" is missing.\nThe player's default icon will be used for file associations.\nPlease, reinstall MPC-HC to get \"mpciconlib.dll\"."
-msgstr "Knihovna ikon \"mpciconlib.dll\" není k dispozici.\nJako ikona pro asociované soubory bude použita výchozí ikona přehrávače.\nSoubor \"mpciconlib.dll\" získáte přeinstalováním MPC-HC."
+msgstr "A biblioteca de ícones \"mpciconlib.dll\" está em falta.\nO ícone por defeito do reprodutor irá ser usado para associação de ficheiros.\nPor favor, reinstale o MPC-HC para obter o \"mpciconlib.dll\"."
 
 msgctxt "IDS_SUBDL_DLG_FILENAME_COL"
 msgid "File"
-msgstr "Soubor"
+msgstr "Ficheiro"
 
 msgctxt "IDS_SUBDL_DLG_LANGUAGE_COL"
 msgid "Language"
-msgstr "Jazyk"
+msgstr "Idioma"
 
 msgctxt "IDS_SUBDL_DLG_FORMAT_COL"
 msgid "Format"
-msgstr "Formát"
+msgstr "Formato"
 
 msgctxt "IDS_SUBDL_DLG_DISC_COL"
 msgid "Disc"
-msgstr "Disk"
+msgstr "Disco"
 
 msgctxt "IDS_SUBDL_DLG_TITLES_COL"
 msgid "Title(s)"
-msgstr "Tituly"
+msgstr "Título(s)"
 
 msgctxt "IDS_SUBRESYNC_CLN_CHARSET"
 msgid "CharSet"
-msgstr "Kódování"
+msgstr "CharSet"
 
 msgctxt "IDS_SUBRESYNC_CLN_UNICODE"
 msgid "Unicode"
@@ -348,171 +347,171 @@ msgstr "Unicode"
 
 msgctxt "IDS_SUBRESYNC_CLN_LAYER"
 msgid "Layer"
-msgstr "Vrstva"
+msgstr "Camada"
 
 msgctxt "IDS_SUBRESYNC_CLN_ACTOR"
 msgid "Actor"
-msgstr "Herec"
+msgstr "Ator"
 
 msgctxt "IDS_SUBRESYNC_CLN_EFFECT"
 msgid "Effect"
-msgstr "Efekt"
+msgstr "Efeito"
 
 msgctxt "IDS_PLAYLIST_CAPTION"
 msgid "Playlist"
-msgstr "Seznam stop"
+msgstr "Lista de reprodução"
 
 msgctxt "IDS_PPAGE_FS_CLN_ON_OFF"
 msgid "On/Off"
-msgstr "Zap/Vyp"
+msgstr "Ativar/Desativar"
 
 msgctxt "IDS_PPAGE_FS_CLN_FROM_FPS"
 msgid "From (FPS)"
-msgstr "Od (FPS)"
+msgstr "De (FPS)"
 
 msgctxt "IDS_PPAGE_FS_CLN_TO_FPS"
 msgid "To (FPS)"
-msgstr "Do (FPS)"
+msgstr "Para (FPS)"
 
 msgctxt "IDS_PPAGE_FS_CLN_DISPLAY_MODE"
 msgid "Display mode (Hz)"
-msgstr "Režim zobrazení (Hz)"
+msgstr "Modo visualização (Hz)"
 
 msgctxt "IDS_PPAGE_FS_DEFAULT"
 msgid "Default"
-msgstr "Výchozí"
+msgstr "Por defeito"
 
 msgctxt "IDS_PPAGE_FS_OTHER"
 msgid "Other"
-msgstr "Ostatní"
+msgstr "Outro"
 
 msgctxt "IDS_PPAGE_OUTPUT_SYS_DEF"
 msgid "System Default"
-msgstr "Systémový"
+msgstr "Por defeito do sistema"
 
 msgctxt "IDS_GRAPH_INTERFACES_ERROR"
 msgid "Failed to query the needed interfaces for playback"
-msgstr "Hledání rozhraní potřebných pro přehrání skončilo neúspěchem"
+msgstr "Falhou ao pedir os interfaces necessários para a reprodução"
 
 msgctxt "IDS_GRAPH_TARGET_WND_ERROR"
 msgid "Could not set target window for graph notification"
-msgstr "Nepodařilo se nastavit cílové okno pro upozornění grafu"
+msgstr "Não se pôde definir a janela de destino para a notificação do gráfico"
 
 msgctxt "IDS_DVD_NAV_ALL_PINS_ERROR"
 msgid "Failed to render all pins of the DVD Navigator filter"
-msgstr "Nepodařilo se propojit žádné z vývodů DVD navigátoru"
+msgstr "Falhou ao renderizar todos os pins do filtro do Navegador de DVD"
 
 msgctxt "IDS_PLAYLIST_OPEN"
 msgid "&Open"
-msgstr "Otevřít"
+msgstr "Abrir"
 
 msgctxt "IDS_PLAYLIST_ADD"
 msgid "A&dd"
-msgstr "Přidat"
+msgstr "A&dicionar"
 
 msgctxt "IDS_PLAYLIST_REMOVE"
 msgid "&Remove"
-msgstr "Odebrat"
+msgstr "&Remover"
 
 msgctxt "IDS_PLAYLIST_CLEAR"
 msgid "C&lear"
-msgstr "&Vymazat"
+msgstr "&Limpar"
 
 msgctxt "IDS_PLAYLIST_COPYTOCLIPBOARD"
 msgid "&Copy to clipboard"
-msgstr "Zkopírovat"
+msgstr "&Copiar para a Área de Transferência"
 
 msgctxt "IDS_PLAYLIST_SAVEAS"
 msgid "&Save As..."
-msgstr "&Uložit jako..."
+msgstr "Guardar como..."
 
 msgctxt "IDS_PLAYLIST_SORTBYLABEL"
 msgid "Sort by &label"
-msgstr "Seřadit podle názvu"
+msgstr "Ordenar por etiqueta"
 
 msgctxt "IDS_PLAYLIST_SORTBYPATH"
 msgid "Sort by &path"
-msgstr "Seřadit podle cesty"
+msgstr "Ordenar por caminho"
 
 msgctxt "IDS_PLAYLIST_RANDOMIZE"
 msgid "R&andomize"
-msgstr "Náhodně"
+msgstr "Baralhar"
 
 msgctxt "IDS_PLAYLIST_RESTORE"
 msgid "R&estore"
-msgstr "Výchozí"
+msgstr "Voltar a guardar"
 
 msgctxt "IDS_SUBRESYNC_SEPARATOR"
 msgid "&Separator"
-msgstr "Oddělovač"
+msgstr "&Separador"
 
 msgctxt "IDS_SUBRESYNC_DELETE"
 msgid "&Delete"
-msgstr "Smazat"
+msgstr "Eliminar"
 
 msgctxt "IDS_SUBRESYNC_DUPLICATE"
 msgid "D&uplicate"
-msgstr "Duplikovat"
+msgstr "D&uplicar"
 
 msgctxt "IDS_SUBRESYNC_RESET"
 msgid "&Reset"
-msgstr "Výchozí"
+msgstr "&Repor"
 
 msgctxt "IDS_MPLAYERC_104"
 msgid "Subtitle Delay -"
-msgstr "Zpoždění titulků -"
+msgstr "Atraso de legenda -"
 
 msgctxt "IDS_MPLAYERC_105"
 msgid "Subtitle Delay +"
-msgstr "Zpoždění titulků +"
+msgstr "Atraso de legenda +"
 
 msgctxt "IDS_FILE_SAVE_THUMBNAILS"
 msgid "Save thumbnails"
-msgstr "Uložit miniatury"
+msgstr "Guardar miniaturas"
 
 msgctxt "IDD_PPAGEPLAYBACK"
 msgid "Playback"
-msgstr "Přehrávání"
+msgstr "Reprodução"
 
 msgctxt "IDD_PPAGEPLAYER"
 msgid "Player"
-msgstr "Přehrávač"
+msgstr "Reprodutor"
 
 msgctxt "IDD_PPAGEDVD"
 msgid "Playback::DVD/OGM"
-msgstr "Přehrávání::DVD/OGM"
+msgstr "Playback::DVD/OGM"
 
 msgctxt "IDD_PPAGESUBTITLES"
 msgid "Subtitles"
-msgstr "Titulky"
+msgstr "Legendas"
 
 msgctxt "IDD_PPAGEFORMATS"
 msgid "Player::Formats"
-msgstr "Přehrávač::Formáty"
+msgstr "Player::Formats"
 
 msgctxt "IDD_PPAGETWEAKS"
 msgid "Tweaks"
-msgstr "Doladění"
+msgstr "Ajustes"
 
 msgctxt "IDD_PPAGEAUDIOSWITCHER"
 msgid "Internal Filters::Audio Switcher"
-msgstr "Interní filtry::Audio Switcher"
+msgstr "Alternador Filters::Audio Interno"
 
 msgctxt "IDD_PPAGEEXTERNALFILTERS"
 msgid "External Filters"
-msgstr "Externí filtry"
+msgstr "Filtros Externos"
 
 msgctxt "IDD_PPAGESHADERS"
 msgid "Playback::Shaders"
-msgstr "Přehrávání::Shadery"
+msgstr "Playback::Shaders"
 
 msgctxt "IDD_FILEPROPRES"
 msgid "Resources"
-msgstr "Zdroje"
+msgstr "Recursos"
 
 msgctxt "IDD_PPAGEMISC"
 msgid "Miscellaneous"
-msgstr "Ostatní"
+msgstr "Diversos"
 
 msgctxt "IDD_FILEMEDIAINFO"
 msgid "MediaInfo"
@@ -520,35 +519,35 @@ msgstr "MediaInfo"
 
 msgctxt "IDD_PPAGECAPTURE"
 msgid "Playback::Capture"
-msgstr "Přehrávání::Záznam"
+msgstr "Playback::Capture"
 
 msgctxt "IDD_PPAGESYNC"
 msgid "Playback::Sync Renderer Settings"
-msgstr "Přehrávání::Sync renderer"
+msgstr "Def. Renderização Playback::Sync"
 
 msgctxt "IDD_PPAGEFULLSCREEN"
 msgid "Playback::Fullscreen"
-msgstr "Přehrávání::Na celou obrazovku"
+msgstr "Playback::Fullscreen"
 
 msgctxt "IDD_PPAGEAUDIORENDERER"
 msgid "Internal Filters::Audio Renderer"
-msgstr "Interní filtry::Audio Renderer"
+msgstr "Renderizador Filters::Audio Interno"
 
 msgctxt "IDS_AUDIOSWITCHER"
 msgid "Audio Switcher"
-msgstr "Audio switcher"
+msgstr "Alternador áudio"
 
 msgctxt "IDS_ICONS_REASSOC_DLG_TITLE"
 msgid "New version of the icon library"
-msgstr "Nová verze knihovny ikon"
+msgstr "Nova versão da biblio. de ícones"
 
 msgctxt "IDS_ICONS_REASSOC_DLG_INSTR"
 msgid "Do you want to reassociate the icons?"
-msgstr "Chcete opravit asociaci ikon?"
+msgstr "Pretende re-associar os ícones?"
 
 msgctxt "IDS_ICONS_REASSOC_DLG_CONTENT"
 msgid "This will fix the icons being incorrectly displayed after an update of the icon library.\nThe file associations will not be modified, only the corresponding icons will be refreshed."
-msgstr "Opravíte tak chybné zobrazení ikon po aktualizaci knihovny ikon.\nAsociace s formáty souborů změněna nebude, pouze bude obnoveno přiřazení jednotlivých ikon."
+msgstr "Isto irá corrigir os ícones estando incorretamente mostrados após uma atualização da biblioteca de ícones. A associação de ficheiros não irá ser modificado, apenas os ícones correspondentes irão ser atualizados."
 
 msgctxt "IDS_PPAGE_OUTPUT_OLDRENDERER"
 msgid "Old Video Renderer"
@@ -572,19 +571,19 @@ msgstr "Enhanced Video Renderer"
 
 msgctxt "IDS_PPAGE_OUTPUT_EVR_CUSTOM"
 msgid "Enhanced Video Renderer (custom presenter)"
-msgstr "Enhanced Video Renderer (vlastní presenter)"
+msgstr "Enhanced Video Renderer (custom presenter)"
 
 msgctxt "IDS_PPAGE_OUTPUT_DXR"
 msgid "Haali Video Renderer"
-msgstr "Haali Video Renderer"
+msgstr "Renderizador Haali de vídeo"
 
 msgctxt "IDS_PPAGE_OUTPUT_NULL_COMP"
 msgid "Null (anything)"
-msgstr "Null (vše)"
+msgstr "Nulo (qualquer coisa)"
 
 msgctxt "IDS_PPAGE_OUTPUT_NULL_UNCOMP"
 msgid "Null (uncompressed)"
-msgstr "Null (nekomprimované)"
+msgstr "Nulo (não comprimido)"
 
 msgctxt "IDS_PPAGE_OUTPUT_MADVR"
 msgid "madVR"
@@ -592,555 +591,555 @@ msgstr "madVR"
 
 msgctxt "IDS_LANG_PREF_EXAMPLE"
 msgid "Enter your preferred languages here.\nFor example, type: \"eng jap swe\""
-msgstr "Zadejte vámi upřednostňované jazyky.\nNapříklad: \"eng jap swe\""
+msgstr "Introduza o seu idioma preferido aqui.\nPor exemplo, digite: \"eng jap swe\""
 
 msgctxt "IDS_OVERRIDE_EXT_SPLITTER_CHOICE"
 msgid "External splitters can have their own language preference options thus MPC-HC default behavior is not to change their initial choice.\nEnable this option if you want MPC-HC to control external splitters."
-msgstr "Externí splittery mohou mít vlastní nastavení preference jazyků, MPC-HC proto ve výchozím nastavení ponechává výběr jazyka na nich.\nPokud chcete, aby MPC-HC ovládalo výběr i u externích splitterů, označte tuto volbu."
+msgstr "Alternadores externos podem ter as suas próprias opções de preferência de idioma assim o o comportamento por defeito do MPC-HC é para não alterar a escolha inicial.\nAtive esta opção se quiser que MPC-HC controle os alternadores externos."
 
 msgctxt "IDS_NAVIGATE_BD_PLAYLISTS"
 msgid "&Blu-Ray playlists"
-msgstr "Seznamy stop &Blu-Ray"
+msgstr "Listas de reprodução &Blu-Ray"
 
 msgctxt "IDS_NAVIGATE_PLAYLIST"
 msgid "&Playlist"
-msgstr "&Seznam stop"
+msgstr "Lista de re&produção"
 
 msgctxt "IDS_NAVIGATE_CHAPTERS"
 msgid "&Chapters"
-msgstr "&Kapitoly"
+msgstr "&Capítulos"
 
 msgctxt "IDS_NAVIGATE_TITLES"
 msgid "&Titles"
-msgstr "&Tituly"
+msgstr "&Títulos"
 
 msgctxt "IDS_NAVIGATE_CHANNELS"
 msgid "&Channels"
-msgstr "K&anály"
+msgstr "&Canais"
 
 msgctxt "IDS_PPAGE_OUTPUT_MPCVR"
 msgid "MPC Video Renderer"
-msgstr "MPC video renderer"
+msgstr "Renderizador de vídeo MPC"
 
 msgctxt "IDD_PPAGEACCELTBL"
 msgid "Player::Keys"
-msgstr "Přehrávač::Klávesové zkratky"
+msgstr "Player::Keys"
 
 msgctxt "IDD_PPAGESUBSTYLE"
 msgid "Subtitles::Default Style"
-msgstr "Titulky::Výchozí styl"
+msgstr "Subtitles::Default Style"
 
 msgctxt "IDD_PPAGEINTERNALFILTERS"
 msgid "Internal Filters"
-msgstr "Interní filtry"
+msgstr "Filtros Internos"
 
 msgctxt "IDD_PPAGELOGO"
 msgid "Player::Logo"
-msgstr "Přehrávač::Logo"
+msgstr "Player::Logo"
 
 msgctxt "IDD_PPAGEOUTPUT"
 msgid "Playback::Output"
-msgstr "Přehrávání::Výstup"
+msgstr "Playback::Output"
 
 msgctxt "IDD_PPAGEWEBSERVER"
 msgid "Player::Web Interface"
-msgstr "Přehrávač::WWW rozhraní"
+msgstr "Interface Player::Web"
 
 msgctxt "IDD_FILEPROPDETAILS"
 msgid "Details"
-msgstr "Podrobnosti"
+msgstr "Detalhes"
 
 msgctxt "IDD_FILEPROPCLIP"
 msgid "Clip"
-msgstr "Klip"
+msgstr "Clip"
 
 msgctxt "IDC_DSSYSDEF"
 msgid "Default video renderer filter for DirectShow. Others will fall back to this one when they can't be loaded for some reason."
-msgstr "Výchozí video renderer pro DirectShow. Pokud z nějakého důvodu není možné použít některý z ostatních zvolených rendererů, použije se tento."
+msgstr "Renderizador de vídeo por defeito para o DirectShow. Outros podem regredir para este quando eles não podem ser carregados por alguma razão."
 
 msgctxt "IDC_DSOLD"
 msgid "This is the default renderer of Windows 9x/me/2k. Depending on the visibility of the video window and your video card's abilities, it will switch between GDI, DirectDraw, Overlay rendering modes dynamically."
-msgstr "Výchozí renderer Windows 9x/ME/2k. V závislosti na viditelnosti okna videa a schopnostech vaší grafické karty bude dynamicky přepínat mezi vykreslováním pomocí GDI, DirectDraw nebo overlay."
+msgstr "Este é o renderizador por defeito do Windows 9x/me/2k. Dependendo da visibilidade da janela do vídeo e das habilidades da sua placa de vídeo, irá alternar entre modos de renderização GDI, DirectDraw, Overlay dinamicamente."
 
 msgctxt "IDC_DSOVERLAYMIXER"
 msgid "Always renders in overlay. Generally only YUV formats are allowed, but they are presented directly without any color conversion to RGB. This is the fastest rendering method of all and the only where you can be sure about fullscreen video mirroring to tv-out activating."
-msgstr "Vždy vykresluje v overlay. Obecně jsou povoleny pouze formáty YUV, ale jsou zobrazovány bez jakéhokoliv převodu barev do RGB. Toto je nejrychlejší způsob vykreslování, a jediný, u kterého si můžete být jisti funkčností fullscreen video mirroringu do tv-out."
+msgstr "Sempre renderiza em camada. Geral só formatos YUV são permitidos mas são apresentados diretamente sem qualquer conversão de cor para RGB. Este é o método de renderização mais rápido de todos e apenas só onde pode ter a certeza sobre a ativação do ecrã inteiro para tv-out."
 
 msgctxt "IDC_DSVMR9WIN"
 msgid "Only available if you have DirectX 9 installed. Very stable but it will never use Overlay rendering and because of this it may be a little slower than Overlay mixer."
-msgstr "Dostupný pouze s nainstalovaným DirectX 9. Stabilní, ale nikdy nepoužije overlay a je proto trochu pomalejší než Overlay mixer."
+msgstr "Apenas disponível se tiver o DirectX 9 instalado. Muito estável mas nunca irá usar renderização Overlay e por causa disto pode ser um bocado lento que a mistura Overlay."
 
 msgctxt "IDC_DSVMR9REN"
 msgid "Same as the VMR-9 (windowed), but with the Allocator-Presenter plugin of MPC-HC for subtitling. Overlay video mirroring MIGHT work. \"True Color\" desktop color space recommended."
-msgstr "Stejný jako VMR-9 (windowed), ale s titulkovým rozšířením MPC-HC. Overlay video mirroring MŮŽE fungovat. Doporučeno ve vlastnostech zobrazení nastavit plnou barevnou hloubku."
+msgstr "O mesmo que VMR-9 (windowed), mas com o plugin Allocator-Presenter do MPC-HC para a legendagem. O espelhamento de vídeo Overlay PODE funcionar. É recomando o esquema de cores \"Cores completas\" do Amb. de Trabalho."
 
 msgctxt "IDC_DSDXR"
 msgid "Same as the VMR-9 (renderless), but uses a true two-pass bicubic resizer."
-msgstr "Stejný jako VMR-9 (renderless), ale pro změnu velikosti používá dvouprůchodový bikubický filtr."
+msgstr "O mesmo que VMR-9 (renderless), mas aumentador bicúbico verdadeiro de duas-passagens."
 
 msgctxt "IDC_DSNULL_COMP"
 msgid "Connects to any video-like media type and will send the incoming samples to nowhere. Use it when you don't need the video display and want to save the CPU from working unnecessarily."
-msgstr "Připojí se k jakémukoliv typu videa a začne všechny vstupní vzorky zahazovat. Použijte ho pokud nepotřebujete video zobrazit a chcete ušetřit výkon procesoru."
+msgstr "Liga a qualquer tipo de media semelhante a vídeo e irá enviar samples de entrada para nenhum lado. Utilize quando não precisar do ecrã de vídeo e poupar o processador de trabalhar necessariamente."
 
 msgctxt "IDC_DSNULL_UNCOMP"
 msgid "Same as the normal Null renderer, but this will only connect to uncompressed types."
-msgstr "Stejný jako běžný Null renderer, ale tento se připojí pouze k nekomprimovaným typům videa."
+msgstr "O mesmo que um renderizador Null normal mas irá apenas ligar a tipos não comprimidos."
 
 msgctxt "IDC_DSEVR_CUSTOM"
 msgid "Same as the EVR, but with the Allocator-Presenter of MPC-HC for subtitling and postprocessing. Recommended."
-msgstr "Stejný jako EVR, ale s titulkovým a efektovým rozšířením MPC-HC. Doporučený."
+msgstr "O mesmo que EVR mas com o Allocator-Presenter do MPC-HC para legendar e fazer pós-processamento. Recomendado."
 
 msgctxt "IDC_DSMADVR"
 msgid "High-quality renderer, requires a GPU that supports D3D9 or later."
-msgstr "Vysoce kvalitní renderer, vyžaduje GPU podporující D3D9 nebo novější."
+msgstr "Renderizador de alta-qualidade, requer um GPU que suporte D3D9 ou melhor."
 
 msgctxt "IDC_DSSYNC"
 msgid "Same as the EVR (CP), but offers several options to synchronize the video frame rate with the display refresh rate to eliminate skipped or duplicated video frames."
-msgstr "Stejný jako EVR (CP), ale s dodatečnými možnostmi pro synchronizaci videa s obnovovací frekvencí displeje pro minimalizaci vynechaných nebo opakovaných video snímků."
+msgstr "O mesmo que EVR (CP) mas oferece muitas opções para sincronizar o ritmo de frame do vídeo com o taxa de refrescamento do ecrã para eliminar frames de vídeo ignorados ou duplicados."
 
 msgctxt "IDC_RMSYSDEF"
 msgid "Real's own renderer. SMIL scripts will work, but interaction not likely. Uses DirectDraw and runs in Overlay when it can."
-msgstr "Vlastní renderer Real. Skripty SMIL budou funkční, ale interakce pravděpodobně ne. Používá DirectDraw a pokud může, použije overlay."
+msgstr "Renderizador da própria Real. Scripts SMIL irá funcionar, mas a interação já não muito. Utiliza DirectDraw e corre em Overlay quando possível."
 
 msgctxt "IDC_RMDX9"
 msgid "The output of Real's engine rendered by the DX9-based Allocator-Presenter of VMR-9 (renderless)."
-msgstr "Výstup Real enginu vykreslovaný pomocí Allocator-Presenteru VMR-9 (renderless)."
+msgstr "A saída do motor da Real renderizado pelo Allocator-Presenter baseado em DirectX 9 do VMR-9 (renderless)."
 
 msgctxt "IDC_QTSYSDEF"
 msgid "QuickTime's own renderer. Gets a little slow when its video area is resized or partially covered by another window. When Overlay is not available it likes to fall back to GDI."
-msgstr "Vlastní renderer QuickTime. Pomalý pokud dojde ke změně velikosti oblasti videa nebo je video částečně překryto jiným oknem. Pokud není k dispozici overlay, většinou použije GDI."
+msgstr "Renderizador do próprio Quicktime. Fica um bocado lento quando a área do vídeo é redimensionada ou parcialmente coberta por outra janela. Quando o Overlay não está disponível ele gosta de regredir para GDI."
 
 msgctxt "IDC_QTDX9"
 msgid "The output of QuickTime's engine rendered by the DX9-based Allocator-Presenter of VMR-9 (renderless)."
-msgstr "Výstup QuickTime enginu vykreslovaný pomocí Allocator-Presenteru VMR-9 (renderless)."
+msgstr "A saída do motor do QuickTime renderizado pelo Allocator-Presenter baseado no DirectX 9 do VMR-9 (renderless)."
 
 msgctxt "IDC_REGULARSURF"
 msgid "Video surface will be allocated as a regular offscreen surface."
-msgstr "Plocha videa bude vymezena jako běžná mimoobrazovková plocha."
+msgstr "A superfície do vídeo será alocado como uma superfície fora do ecrã."
 
 msgctxt "IDC_TEXTURESURF2D"
 msgid "Video surface will be allocated as a texture but still the 2d functions will be used to copy and stretch it onto the backbuffer. Requires a video card which can allocate 32-bit, RGBA, non-power-of-two sized textures and at least in the resolution of the video."
-msgstr "Plocha videa bude vymezena jako textura ale pro její kopírování a roztahování do přípravné vyrovnávací paměti budou stále používány 2D funkce. Vyžaduje video kartu schopnou alokovat 32bitové, RGBA textury s rozměry stran neodpovídajícími druhým mocninám a o minimálně stejné velikosti jako má video."
+msgstr "A superfície do vídeo será alocada como uma textura mas na mesma as funções 2D serão utilizadas para copiá-la e esticá-la para a mem. inter. atrás. Requer uma placa de vídeo que possa alocar 32-bit, RGBA, texturas do tamanho potências-não-de-2 e pelo menos na resolução do vídeo."
 
 msgctxt "IDC_TEXTURESURF3D"
 msgid "Video surface will be allocated as a texture and drawn as two triangles in 3d. Antialiasing turned on at the display settings may have a bad effect on the rendering speed."
-msgstr "Plocha videa bude vymezena jako textura a vykreslena v 3D režimu jako 2 trojúhelníky. Zapnuté vyhlazování hran může mít v tomto režimu velmi nepříznivý vliv na rychlost vykreslování."
+msgstr "A superfície do vídeo irá ser alocada como textura mas desenhada como 2 triângulos em 3D. O Antialiasing ativado nas definições do ecrã irá ter um mau efeito na velocidade da renderização."
 
 msgctxt "IDC_DX9RESIZER_COMBO"
 msgid "If there is no Pixel Shader 2.0 support, simple bilinear is used automatically."
-msgstr "Pokud není podporován Pixel Shader 2.0, automaticky se použije jednoduchý bilineární."
+msgstr "Se não há suporte Pixel Shader 2.0, bilinear simples é utilizado automaticamente."
 
 msgctxt "IDC_DSVMR9LOADMIXER"
 msgid "Puts VMR-9 (renderless) into mixer mode, this means most of the controls on its property page will work and it will use a separate worker thread to renderer frames."
-msgstr "Přepne VMR-9 (renderless) do mixer režimu, to znamená, že většina nastavení v možnostech rendereru bude funkční a pro vykreslování snímků se použije samostatné vlákno."
+msgstr "Põe VMR-9 (renderless) em modo de mistura, isto significa que a maioria dos controlos na sua página de propriedades não irá funcionar e irá utilizar um worker separado para renderizar os frames."
 
 msgctxt "IDC_DSMPCVR"
 msgid "High-quality renderer, requires a GPU that supports D3D9 or later."
-msgstr "Vysoce kvalitní renderer, vyžaduje GPU podporující D3D9 nebo novější."
+msgstr "Renderizador de alta-qualidade, requer um GPU que suporte D3D9 ou melhor."
 
 msgctxt "IDS_PPAGE_OUTPUT_SYNC"
 msgid "Sync Renderer"
-msgstr "Sync Renderer"
+msgstr "Renderizador de Sync"
 
 msgctxt "IDS_PPAGE_OUTPUT_SURF_OFFSCREEN"
 msgid "Regular offscreen plain surface"
-msgstr "Běžný mimoobrazovkový povrch"
+msgstr "Superfície plana normal de fora do ecrã"
 
 msgctxt "IDS_PPAGE_OUTPUT_SURF_2D"
 msgid "2D surfaces"
-msgstr "2D povrchy"
+msgstr "Superfícies 2D"
 
 msgctxt "IDS_PPAGE_OUTPUT_SURF_3D"
 msgid "3D surfaces (recommended)"
-msgstr "3D povrchy (doporučeno)"
+msgstr "Superfícies 3D (recomendado)"
 
 msgctxt "IDS_PPAGE_OUTPUT_RESIZE_NN"
 msgid "Nearest neighbor"
-msgstr "Nejbližší sousední pixel"
+msgstr "Vizinho mais próximo"
 
 msgctxt "IDS_PPAGE_OUTPUT_RESIZER_BILIN"
 msgid "Bilinear"
-msgstr "Bilineární"
+msgstr "Bilinear"
 
 msgctxt "IDS_PPAGE_OUTPUT_RESIZER_BIL_PS"
 msgid "Bilinear (PS 2.0)"
-msgstr "Bilineární (PS 2.0)"
+msgstr "Bilinear (PS 2.0)"
 
 msgctxt "IDS_PPAGE_OUTPUT_RESIZER_BICUB1"
 msgid "Bicubic A=-0.60 (PS 2.0)"
-msgstr "Bikubický A=-0.60 (PS 2.0)"
+msgstr "Bicúbico A=-0.60 (PS 2.0)"
 
 msgctxt "IDS_PPAGE_OUTPUT_RESIZER_BICUB2"
 msgid "Bicubic A=-0.75 (PS 2.0)"
-msgstr "Bikubický A=-0.75 (PS 2.0)"
+msgstr "Bicúbico A=-0.75 (PS 2.0)"
 
 msgctxt "IDS_PPAGE_OUTPUT_RESIZER_BICUB3"
 msgid "Bicubic A=-1.00 (PS 2.0)"
-msgstr "Bikubický A=-1.00 (PS 2.0)"
+msgstr "Bicúbico A=-1.00 (PS 2.0)"
 
 msgctxt "IDS_PPAGE_OUTPUT_UNAVAILABLE"
 msgid "**unavailable**"
-msgstr "**nedostupný**"
+msgstr "\"não disponível\""
 
 msgctxt "IDS_PPAGE_OUTPUT_UNAVAILABLEMSG"
 msgid "The selected renderer is not installed."
-msgstr "Vybraný renderer není nainstalován."
+msgstr "O renderizador selecionado não está instalado."
 
 msgctxt "IDS_PPAGE_OUTPUT_AUD_NULL_COMP"
 msgid "Null (anything)"
-msgstr "Null (vše)"
+msgstr "Null (qualquer coisa)"
 
 msgctxt "IDS_PPAGE_OUTPUT_AUD_NULL_UNCOMP"
 msgid "Null (uncompressed)"
-msgstr "Null (nekomprimované)"
+msgstr "Null (não comprimido)"
 
 msgctxt "IDS_PPAGE_OUTPUT_AUD_INTERNAL_REND"
 msgid "Internal Audio Renderer"
-msgstr "Vestavěný syntezátor zvuku"
+msgstr "Renderizador interno de áudio"
 
 msgctxt "IDS_EMB_RESOURCES_VIEWER_NAME"
 msgid "Name"
-msgstr "Název"
+msgstr "Nome"
 
 msgctxt "IDS_EMB_RESOURCES_VIEWER_TYPE"
 msgid "MIME Type"
-msgstr "MIME typ"
+msgstr "Tipo MIME"
 
 msgctxt "IDS_EMB_RESOURCES_VIEWER_INFO"
 msgid "In order to view an embedded resource in your browser you have to enable the web interface.\n\nUse the \"Save As\" button if you only want to save the information."
-msgstr "Pro zobrazení vložených zdrojů v prohlížeči musíte povolit webové rozhraní.\n\nTlačítko \"Uložit jako\" použijte pokud chcete informace pouze uložit."
+msgstr "Para se ver um recurso incorporado no seu navegador, tem de ativar o interface web."
 
 msgctxt "IDS_SUBTITLES_DOWNLOAD"
 msgid "Download Subtitles..."
-msgstr "Stáhnout titulky..."
+msgstr "Descarregar legendas..."
 
 msgctxt "IDS_SUBTITLES_UPLOAD"
 msgid "Upload Subtitles..."
-msgstr "Odeslat titulky..."
+msgstr "Enviar legendas..."
 
 msgctxt "IDS_SUBFILE_DELAY"
 msgid "Delay (ms):"
-msgstr "Posun (ms):"
+msgstr "Atraso (ms)"
 
 msgctxt "IDS_SPEEDSTEP_AUTO"
 msgid "Auto"
-msgstr "Automaticky"
+msgstr "Auto"
 
 msgctxt "IDS_EXPORT_SETTINGS_NO_KEYS"
 msgid "There are no customized keys to export."
-msgstr "Používáte výchozí nastavení klávesových zkratek. Není co exportovat."
+msgstr "Não há chaves personalizadas para exportar."
 
 msgctxt "IDS_RFS_NO_FILES"
 msgid "No media files found in the archive"
-msgstr "Archiv neobsahuje žádné podporované soubory"
+msgstr "Não foram encontrados ficheiros de media no arquivo."
 
 msgctxt "IDS_RFS_COMPRESSED"
 msgid "Compressed files are not supported"
-msgstr "Komprimované soubory nejsou podporovány"
+msgstr "Ficheiros comprimidos não são suportados."
 
 msgctxt "IDS_RFS_ENCRYPTED"
 msgid "Encrypted files are not supported"
-msgstr "Zašifrované soubory nejsou podporovány"
+msgstr "Ficheiros encriptados não são suportados."
 
 msgctxt "IDS_RFS_MISSING_VOLS"
 msgid "Couldn't find all archive volumes"
-msgstr "Nepodařilo se nalézt všechny díly archivu"
+msgstr "Não foram encontrados todos os volumes do arquivo."
 
 msgctxt "IDC_FULLSCREEN_MONITOR_CHECK"
 msgid "Reduces tearing but prevents the toolbar from being shown."
-msgstr "Omezí trhání, ale nebude možné zobrazovat nabídky."
+msgstr "Reduz o desmanche mas impede a barra de ferramentas de ser mostrada."
 
 msgctxt "IDC_DSVMR9ALTERNATIVEVSYNC"
 msgid "Reduces tearing by bypassing the default VSync built into D3D."
-msgstr "Omezí trhání potlačením výchozího zabudovaného VSync D3D."
+msgstr "Reduz desmanche ao contornar o VSync por defeito incorporado no D3D."
 
 msgctxt "IDS_NAVIGATE_TUNERSCAN"
 msgid "Tuner scan"
-msgstr "Ladění tuneru"
+msgstr "Sintonizar"
 
 msgctxt "IDS_SUBTITLES_ERROR"
 msgid "Subtitles are not loaded or unsupported renderer."
-msgstr "Titulky nejsou načteny nebo je použit nepodporovaný renderer."
+msgstr "Legendas não estão carregadas ou renderizador não suportado."
 
 msgctxt "IDC_CACHESHADERS"
 msgid "Stores compiled shaders in local AppData to speed up load time."
-msgstr "Pro urychlení načítání uloží zkompilované shadery v adresáři AppData."
+msgstr "Guarda shaders compilados na Appdata local para acelerar o tempo de carregamento."
 
 msgctxt "IDS_SRC_VTS"
 msgid "Open VTS_xx_0.ifo to load VTS_xx_x.vob files in one piece"
-msgstr "Pokud chcete otevřít všechny soubory VTS_xx_x.vob jako jeden soubor, otevřete VTS_xx_0.ifo"
+msgstr "Abra VTS_xx_0.ifo para carregar ficheiros VTS_xx_x.vob num só pedaço"
 
 msgctxt "IDS_SRC_RFS"
 msgid "Based on RARFileSource, doesn't support compressed files"
-msgstr "Založeno na RARFileSource, nepodporuje komprimované soubory"
+msgstr "Baseado em RARFileSource, não suporta ficheiros comprimidos."
 
 msgctxt "IDS_INTERNAL_LAVF"
 msgid "Uses LAV Filters"
-msgstr "Používá LAV Filters"
+msgstr "Utiliza filtros LAV"
 
 msgctxt "IDS_INTERNAL_LAVF_WMV"
 msgid "Uses LAV Filters. Disabled by default since Microsoft filters are usually more stable for those formats.\nIf you choose to use the internal filters, enable them for both source and decoding to have a better playback experience."
-msgstr "Používá LAV Filters. Ve výchozím nastavení vypnuto, protože filtry Microsoftu jsou pro tyto formáty stabilnější.\nPokud se rozhodnete použít interní filtry, povolte je pro zajištění optimálního přehrávání jak pro zdroj, tak pro dekódování."
+msgstr "Utiliza filtros LAV. Desativado por defeito visto que os filtros da Microsoft são normalmente mais estáveis para esses formatos.\nSe escolher usar os filtros internos, ative-os para origem e descodificação para ter uma melhor experiência de reprodução."
 
 msgctxt "IDS_AG_TOGGLE_NAVIGATION"
 msgid "Toggle Navigation Bar"
-msgstr "Zobrazit/Skrýt navigační panel"
+msgstr "Alternar barra de navegação"
 
 msgctxt "IDS_AG_VSYNCACCURATE"
 msgid "Accurate VSync"
-msgstr "Přesný VSync"
+msgstr "VSync preciso"
 
 msgctxt "IDC_CHECK_RELATIVETO"
 msgid "If the rendering target is left undefined, it will be inherited from the default style."
-msgstr "Pokud není určen cíl vykreslování, bude převzat z výchozího stylu."
+msgstr "Se o renderizador de destino é deixado não definido, irá ser herdado a partir do estilo por defeito."
 
 msgctxt "IDC_CHECK_NO_SUB_ANIM"
 msgid "Disallow subtitle animation. Enabling this option will lower CPU usage. You can use it if you experience flashing subtitles."
-msgstr "Zakázat animaci titulků. Tuto volbu můžete použít ke snížení zatížení procesoru, nebo pokud máte potíže s blikajícími titulky."
+msgstr "Proibir animação de legendas. Ao ativar esta opção, vai baixar a utilização do processador. Pode usá-la se tiver a ver legendas a piscar."
 
 msgctxt "IDC_SUBPIC_TO_BUFFER"
 msgid "Increasing the number of buffered subpictures should in general improve the rendering performance at the cost of a higher video RAM usage on the GPU."
-msgstr "Zvýšení počtu snímků ve vyrovnávací paměti obvykle zlepší výkon vykreslování titulků, ale za cenu vyššího obsazení paměti grafické karty."
+msgstr "Aumentar o número de subimagens empilhadas deve na generalidade melhorar a performance de renderização a custo de uma maior utilização da RAM no GPU."
 
 msgctxt "IDC_BUTTON_EXT_SET"
 msgid "After clicking this button, the checked state of the format group will reflect the actual file association for MPC-HC. A newly added extension will usually make it grayed, so don't forget to check it again before closing this dialog!"
-msgstr "Stav zaškrtávacího políčka u skupin formátů určuje aktuální asociace MPC-HC. Nově přidaná přípona většinou zruší zaškrtnutí dané skupiny, proto ji před zavřením tohoto dialogu nezapomeňte znovu zaškrtnout!"
+msgstr "Depois de clicar este botão, o estado marcado do grupo de formatos irá refletir a associação atual de ficheiros para o MPC-HC. Uma extensão nova adicionada irá geralmente torná-la em cinzento, então não esqueça de verificá-la novamente antes de fechar esta caixa de diálogo."
 
 msgctxt "IDC_CHECK_ALLOW_DROPPING_SUBPIC"
 msgid "Disabling this option will prevent the subtitles from blinking but it may cause the video renderer to skip some video frames."
-msgstr "Zakázáním této volby zabráníte blikání titulků, ale místo toho může docházet k přeskakování snímků videa."
+msgstr "Desativar esta opção irá impedir as legendas de piscarem mas pode provocar o salto de alguns frames de vídeo no renderizador de vídeo."
 
 msgctxt "ID_PLAY_PLAY"
 msgid "Play\nPlay"
-msgstr "Přehrát\nPřehrát"
+msgstr "Reproduzir\nReproduzir"
 
 msgctxt "ID_PLAY_PAUSE"
 msgid "Pause\nPause"
-msgstr "Pozastavit\nPozastavit"
+msgstr "Pausar\nPausar"
 
 msgctxt "IDS_AG_OPEN_FILE_LOCATION"
 msgid "Open File Location"
-msgstr "Otevřít umístění souboru"
+msgstr "Abrir a localização do ficheiro"
 
 msgctxt "ID_PLAY_STOP"
 msgid "Stop\nStop"
-msgstr "Zastavit\nZastavit"
+msgstr "Parar\nParar"
 
 msgctxt "ID_PLAY_FRAMESTEP"
 msgid "Step\nStep"
-msgstr "Krokovat\nKrokovat"
+msgstr "Passo\nPasso"
 
 msgctxt "ID_PLAY_DECRATE"
 msgid "Decrease speed\nDecrease speed"
-msgstr "Snížit rychlost\nSnížit rychlost"
+msgstr "Diminuir velocidade\nDiminuir velocidade"
 
 msgctxt "ID_PLAY_INCRATE"
 msgid "Increase speed\nIncrease speed"
-msgstr "Zvýšit rychlost\nZvýšit rychlost"
+msgstr "Aumentar velocidade\nAumentar velocidade"
 
 msgctxt "ID_VOLUME_MUTE"
 msgid "Mute"
-msgstr "Ztlumit"
+msgstr "Silenciar"
 
 msgctxt "ID_VOLUME_MUTE_OFF"
 msgid "Unmute"
-msgstr "Zrušit ztlumení"
+msgstr "Silêncio removido"
 
 msgctxt "ID_VOLUME_MUTE_DISABLED"
 msgid "No audio"
-msgstr "Bez zvuku"
+msgstr "Sem som"
 
 msgctxt "ID_NAVIGATE_SKIPBACK"
 msgid "Skip back\nSkip back"
-msgstr "Skočit zpět\nSkočit zpět"
+msgstr "Voltar atrás\nVoltar atrás"
 
 msgctxt "ID_NAVIGATE_SKIPFORWARD"
 msgid "Skip forward\nSkip forward"
-msgstr "Skočit vpřed\nSkočit vpřed"
+msgstr "Voltar para a frente\nVoltar para a frente"
 
 msgctxt "IDS_SUBRESYNC_ORIGINAL"
 msgid "&Original"
-msgstr "Originální"
+msgstr "&Original"
 
 msgctxt "IDS_SUBRESYNC_CURRENT"
 msgid "&Current"
-msgstr "Aktuální"
+msgstr "Atualmente"
 
 msgctxt "IDS_SUBRESYNC_EDIT"
 msgid "&Edit"
-msgstr "Upravit"
+msgstr "&Editar"
 
 msgctxt "IDS_SUBRESYNC_YES"
 msgid "&Yes"
-msgstr "Ano"
+msgstr "Sim"
 
 msgctxt "IDS_SUBRESYNC_NO"
 msgid "&No"
-msgstr "Ne"
+msgstr "&Não"
 
 msgctxt "IDS_SUBRESYNC_DECREASE"
 msgid "&Decrease"
-msgstr "Snížit"
+msgstr "&Diminuir"
 
 msgctxt "IDS_SUBRESYNC_INCREASE"
 msgid "&Increase"
-msgstr "Zvýšit"
+msgstr "Aumentar"
 
 msgctxt "IDS_OPTIONS_CAPTION"
 msgid "Options"
-msgstr "Možnosti"
+msgstr "Opções"
 
 msgctxt "IDS_SHADERS_SELECT"
 msgid "&Select Shaders..."
-msgstr "Vybrat shadery..."
+msgstr "&Selecionar shaders...."
 
 msgctxt "IDS_SHADERS_DEBUG"
 msgid "&Debug Shaders..."
-msgstr "&Ladění shaderů..."
+msgstr "&Depurar shaders..."
 
 msgctxt "IDS_FAVORITES_ADD"
 msgid "&Add to Favorites..."
-msgstr "&Přidat k oblíbeným..."
+msgstr "&Adicionar aos favoritos..."
 
 msgctxt "IDS_FAVORITES_ORGANIZE"
 msgid "&Organize Favorites..."
-msgstr "&Uspořádat oblíbené..."
+msgstr "&Organizar favoritos..."
 
 msgctxt "IDS_PLAYLIST_SHUFFLE"
 msgid "Sh&uffle"
-msgstr "Náhodně"
+msgstr "Baralhar"
 
 msgctxt "IDS_PLAYLIST_SHOWFOLDER"
 msgid "Ope&n file location"
-msgstr "Otevřít nadřazený adresář"
+msgstr "Abrir localização do ficheiro"
 
 msgctxt "IDS_CONTROLS_CLOSING"
 msgid "Closing..."
-msgstr "Zavírání..."
+msgstr "A fechar..."
 
 msgctxt "IDS_CONTROLS_PLAYING"
 msgid "Playing"
-msgstr "Přehrávání"
+msgstr "A reproduzir"
 
 msgctxt "IDS_CONTROLS_PAUSED"
 msgid "Paused"
-msgstr "Pozastaveno"
+msgstr "Pausado"
 
 msgctxt "IDS_AG_EDL_NEW_CLIP"
 msgid "EDL new clip"
-msgstr "EDL - nový klip"
+msgstr "EDL novo clip"
 
 msgctxt "IDS_RECENT_FILES_CLEAR"
 msgid "&Clear list"
-msgstr "Smazat seznam"
+msgstr "Limpar lista"
 
 msgctxt "IDS_RECENT_FILES_QUESTION"
 msgid "Are you sure that you want to delete recent files list?"
-msgstr "Opravdu chcete smazat seznam nedávno otevřených souborů?"
+msgstr "Tem a certeza que pretende eliminar a lista de ficheiros recentes?"
 
 msgctxt "IDS_AG_EDL_SAVE"
 msgid "EDL save"
-msgstr "EDL - uložit"
+msgstr "EDL guardar"
 
 msgctxt "IDS_AG_ENABLEFRAMETIMECORRECTION"
 msgid "Enable Frame Time Correction"
-msgstr "Povolit opravu času snímků"
+msgstr "Ativar correção do tempo de frames"
 
 msgctxt "IDS_AG_TOGGLE_EDITLISTEDITOR"
 msgid "Toggle EDL window"
-msgstr "Zobrazit/Skrýt okno EDL"
+msgstr "Alternar janela EDL"
 
 msgctxt "IDS_AG_EDL_IN"
 msgid "EDL set In"
-msgstr "EDL - nastavit začátek"
+msgstr "EDL estabelecida"
 
 msgctxt "IDS_AG_EDL_OUT"
 msgid "EDL set Out"
-msgstr "EDL - nastavit konec"
+msgstr "EDL desestablecida"
 
 msgctxt "IDS_AG_PNS_ROTATEX_M"
 msgid "PnS Rotate X-"
-msgstr "P&S pootočit X-"
+msgstr "PnS rodar X-"
 
 msgctxt "IDS_AG_PNS_ROTATEY_P"
 msgid "PnS Rotate Y+"
-msgstr "P&S pootočit Y+"
+msgstr "PnS rodar Y+"
 
 msgctxt "IDS_AG_PNS_ROTATEY_M"
 msgid "PnS Rotate Y-"
-msgstr "P&S pootočit Y-"
+msgstr "PnS rodar Y-"
 
 msgctxt "IDS_AG_PNS_ROTATEZ_P"
 msgid "PnS Rotate Z+"
-msgstr "P&S pootočit Z+"
+msgstr "PnS rodar Z+"
 
 msgctxt "IDS_AG_PNS_ROTATEZ_M"
 msgid "PnS Rotate Z-"
-msgstr "P&S pootočit Z-"
+msgstr "PnS rodar Z-"
 
 msgctxt "IDS_AG_TEARING_TEST"
 msgid "Tearing Test"
-msgstr "Test trhání"
+msgstr "Teste de desmanche"
 
 msgctxt "IDS_SCALE_16_9"
 msgid "Scale to 16:9 TV,%.3f,%.3f,%.3f,%.3f"
-msgstr "Roztáhnout na 16:9 TV,%.3f,%.3f,%.3f,%.3f"
+msgstr "Escalar para TV 16:9,%.3f,%.3f,%.3f,%.3f"
 
 msgctxt "IDS_SCALE_WIDESCREEN"
 msgid "Zoom to Widescreen,%.3f,%.3f,%.3f,%.3f"
-msgstr "Zvětšit na Widescreen,%.3f,%.3f,%.3f,%.3f"
+msgstr "Ampliar para ecrã largo,%.3f,%.3f,%.3f,%.3f"
 
 msgctxt "IDS_SCALE_ULTRAWIDE"
 msgid "Zoom to Ultra-Widescreen,%.3f,%.3f,%.3f,%.3f"
-msgstr "Zvětšit na Ultra-Widescreen,%.3f,%.3f,%.3f,%.3f"
+msgstr "Ampliar para ecrã ultra-largo,%.3f,%.3f,%.3f,%.3f"
 
 msgctxt "IDS_PLAYLIST_HIDEFS"
 msgid "&Hide on Fullscreen"
-msgstr "Skrýt v režimu na celou obrazovku"
+msgstr "Ocultar em ecrã completo"
 
 msgctxt "IDS_CONTROLS_STOPPED"
 msgid "Stopped"
-msgstr "Zastaveno"
+msgstr "Parado"
 
 msgctxt "IDS_CONTROLS_BUFFERING"
 msgid "Buffering... (%d%%)"
-msgstr "Ukládání do vyrovnávací paměti... (%d%%)"
+msgstr "A colocar em memória intermédia... (%d%%)"
 
 msgctxt "IDS_CONTROLS_CAPTURING"
 msgid "Capturing..."
-msgstr "Zachytávání..."
+msgstr "A capturar..."
 
 msgctxt "IDS_CONTROLS_OPENING"
 msgid "Opening..."
-msgstr "Otevírání..."
+msgstr "A abrir..."
 
 msgctxt "IDS_CONTROLS_CLOSED"
 msgid "Closed"
-msgstr "Zavřeno"
+msgstr "Fechado"
 
 msgctxt "IDS_SUBTITLES_OPTIONS"
 msgid "&Options..."
-msgstr "&Možnosti..."
+msgstr "&Opções"
 
 msgctxt "IDS_SUBTITLES_STYLES"
 msgid "&Styles..."
-msgstr "&Styly..."
+msgstr "E&stilos..."
 
 msgctxt "IDS_SUBTITLES_RELOAD"
 msgid "&Reload"
-msgstr "&Načíst znovu"
+msgstr "&Recarregar"
 
 msgctxt "IDS_SUBTITLES_ENABLE"
 msgid "&Enable"
-msgstr "&Povolit"
+msgstr "Ativar"
 
 msgctxt "IDS_PANSCAN_EDIT"
 msgid "&Edit..."
-msgstr "Upravit..."
+msgstr "&Editar..."
 
 msgctxt "IDS_INFOBAR_TITLE"
 msgid "Title"
-msgstr "Název"
+msgstr "Título"
 
 msgctxt "IDS_INFOBAR_AUTHOR"
 msgid "Author"
@@ -1152,103 +1151,103 @@ msgstr "Copyright"
 
 msgctxt "IDS_INFOBAR_RATING"
 msgid "Rating"
-msgstr "Hodnocení"
+msgstr "Classificação"
 
 msgctxt "IDS_INFOBAR_DESCRIPTION"
 msgid "Description"
-msgstr "Popis"
+msgstr "Descrição"
 
 msgctxt "IDS_INFOBAR_DOMAIN"
 msgid "Domain"
-msgstr "Doména"
+msgstr "Domínio"
 
 msgctxt "IDS_AG_CLOSE"
 msgid "Close"
-msgstr "Zavřít"
+msgstr "Fechar"
 
 msgctxt "IDS_AG_NONE"
 msgid "None"
-msgstr "Žádné"
+msgstr "Nenhum"
 
 msgctxt "IDS_AG_COMMAND"
 msgid "Command"
-msgstr "Příkaz"
+msgstr "Comando"
 
 msgctxt "IDS_AG_KEY"
 msgid "Key"
-msgstr "Klávesa"
+msgstr "Chave"
 
 msgctxt "IDS_AG_MOUSE"
 msgid "Mouse Windowed"
-msgstr "Myš v okně"
+msgstr "Rato em janela"
 
 msgctxt "IDS_AG_MOUSE_FS"
 msgid "Mouse Fullscreen"
-msgstr "Myš na celou obrazovku"
+msgstr "Rato em ecrã completo"
 
 msgctxt "IDS_AG_APP_COMMAND"
 msgid "App Command"
-msgstr "Příkaz aplikace"
+msgstr "Comando de aplicação"
 
 msgctxt "IDS_AG_MEDIAFILES"
 msgid "Media files (all types)"
-msgstr "Mediální soubory (všechny typy)"
+msgstr "Ficheiros de media (todos os tipos)"
 
 msgctxt "IDS_AG_ALLFILES"
 msgid "All files (*.*)|*.*|"
-msgstr "Všechny soubory (*.*)|*.*|"
+msgstr "Todos os ficheiros (*.*)|*.*|"
 
 msgctxt "IDS_AG_AUDIOFILES"
 msgid "Audio files (all types)"
-msgstr "Audio soubory (všechny typy)"
+msgstr "Ficheiros de áudio (todos os tipos)"
 
 msgctxt "IDS_AG_NOT_KNOWN"
 msgid "Not known"
-msgstr "Neznámé"
+msgstr "Não conhecido"
 
 msgctxt "IDS_MPLAYERC_0"
 msgid "Quick Open File"
-msgstr "Rychle otevřít soubor"
+msgstr "Abertura rápida de ficheiro"
 
 msgctxt "IDS_AG_OPEN_FILE"
 msgid "Open File/URL"
-msgstr "Otevřít soubor"
+msgstr "Abrir ficheiro/URL"
 
 msgctxt "IDS_AG_OPEN_DVD"
 msgid "Open DVD/BD"
-msgstr "Otevřít DVD/BD"
+msgstr "Abrir DVD/BD"
 
 msgctxt "IDS_MAINFRM_POST_SHADERS_FAILED"
 msgid "Failed to set post-resize shaders"
-msgstr "Nastavení shaderů po změně velikosti se nezdařilo"
+msgstr "Falhou ao definir post-resize shaders"
 
 msgctxt "IDS_MAINFRM_BOTH_SHADERS_FAILED"
 msgid "Failed to set both pre-resize and post-resize shaders"
-msgstr "Nastavení shaderů před zvětšením ani shaderů po zvětšení se nezdařilo"
+msgstr "Falhou ao definir ambos shaders pre-reside e post-resize"
 
 msgctxt "IDS_DEBUGSHADERS_FIRSTRUN_MSG"
 msgid "Shaders are recompiled automatically when the corresponding files are modified."
-msgstr "Pokud jsou soubory změněny, shadery jsou automaticky překompilovány."
+msgstr "Shaders são recompilados automaticamente quando os ficheiros correspondentes são modificados."
 
 msgctxt "IDS_SHADER_DLL_ERR_0"
 msgid "Cannot load %s, pixel shaders will not work."
-msgstr "Nepodařilo se načíst %s, pixel shadery nebudou fungovat."
+msgstr "Não se pôde carregar %s, shaders de pixel não irão funcionar."
 
 msgctxt "IDS_SHADER_DLL_ERR_1"
 msgid "Cannot find necessary function entry points in %s, pixel shaders will not work."
-msgstr "V %s nebyly nalezeny požadované vstupní body funkcí, pixel shadery nebudou fungovat."
+msgstr "Não se pôde encontrar pontos de entrada de função necessários %s, shaders de pixel não irão funcionar.."
 
 msgctxt "IDS_OSD_SHADERS_PRESET"
 msgid "Shader preset: %s"
-msgstr "Předvolba shaderů: %s"
+msgstr "Pré-definição shader: %s"
 
 msgctxt "IDS_AG_SHADERS_PRESET_NEXT"
 msgid "Next Shader Preset"
-msgstr "Další předvolba shaderů"
+msgstr "Pré-definição shader seguinte"
 
 msgctxt "IDS_AG_SHADERS_PRESET_PREV"
 msgid "Prev Shader Preset"
-msgstr "Předchozí předvolba shaderů"
+msgstr "Pré-definição shader anterior"
 
 msgctxt "IDS_STRING_COLON"
 msgid "%s:"
@@ -1256,23 +1255,23 @@ msgstr "%s:"
 
 msgctxt "IDS_RECORD_START"
 msgid "Record"
-msgstr "Zaznamenat"
+msgstr "Gravar"
 
 msgctxt "IDS_RECORD_STOP"
 msgid "Stop"
-msgstr "Zastavit"
+msgstr "Parar"
 
 msgctxt "IDS_BALANCE"
 msgid "L = R"
-msgstr "L = R"
+msgstr "E = D"
 
 msgctxt "IDS_BALANCE_L"
 msgid "L +%d%%"
-msgstr "L +%d%%"
+msgstr "E +%d%%"
 
 msgctxt "IDS_BALANCE_R"
 msgid "R +%d%%"
-msgstr "R +%d%%"
+msgstr "D +%d%%"
 
 msgctxt "IDS_VOLUME"
 msgid "%d%%"
@@ -1284,7 +1283,7 @@ msgstr "+%d%%"
 
 msgctxt "IDS_PLAYLIST_ADDFOLDER"
 msgid "Add containing &folder"
-msgstr "Přidat nadřazený adresář"
+msgstr "Adicionar pasta contentora"
 
 msgctxt "IDS_HW_INDICATOR"
 msgid "[H/W]"
@@ -1292,587 +1291,587 @@ msgstr "[H/W]"
 
 msgctxt "IDS_TOOLTIP_SOFTWARE_DECODING"
 msgid "Software Decoding"
-msgstr "Softwarové dekódování"
+msgstr "Descodificação por software"
 
 msgctxt "IDS_STATSBAR_PLAYBACK_RATE"
 msgid "Playback rate"
-msgstr "Rychlost přehrávání"
+msgstr "Ritmo de reprodução"
 
 msgctxt "IDS_FILTERS_COPY_TO_CLIPBOARD"
 msgid "&Copy filters list to clipboard"
-msgstr "&Zkopírovat seznam filtrů do schránky"
+msgstr "&Copiar a lista de filtros para a Área de Transferência"
 
 msgctxt "IDS_CREDENTIALS_SERVER"
 msgid "Enter server credentials"
-msgstr "Zadejte přihlašovací údaje serveru"
+msgstr "Insira as credenciais do servidor"
 
 msgctxt "IDS_CREDENTIALS_CONNECT"
 msgid "Enter your credentials to connect"
-msgstr "Zadejte přihlašovací údaje spojení"
+msgstr "Insira as suas credenciais para ligar"
 
 msgctxt "IDS_SUB_SAVE_EXTERNAL_STYLE_FILE"
 msgid "Save custom style"
-msgstr "Uložit vlastní styl"
+msgstr "Guardar estilo personalizado"
 
 msgctxt "IDS_CONTENT_EDUCATION_SCIENCE"
 msgid "Education/Science/Factual topics"
-msgstr "Vzdělávání/Věda/Fakta"
+msgstr "Tópicos de Educação/Ciência/Factuais"
 
 msgctxt "IDS_PPAGEADVANCED_HIDE_WINDOWED"
 msgid "Hides controls and panels also in windowed mode."
-msgstr "Skryje ovládací prvky a panely i při zobrazení v okně."
+msgstr "Oculta controlos e panéis tambem no modo de janela."
 
 msgctxt "IDS_PPAGEADVANCED_BLOCK_VSFILTER"
 msgid "Prevent external subtitle renderer to be loaded when internal is in use."
-msgstr "Zabránit načtení externího rendereru pro titulky pokud je použit interní renderer."
+msgstr "Impede rend. externo de legendas de ser carregado quando o interno está em uso."
 
 msgctxt "IDS_PPAGEADVANCED_COL_NAME"
 msgid "Name"
-msgstr "Název"
+msgstr "Nome"
 
 msgctxt "IDS_PPAGEADVANCED_COL_VALUE"
 msgid "Value"
-msgstr "Hodnota"
+msgstr "Valor"
 
 msgctxt "IDS_PPAGEADVANCED_RECENT_FILES_NUMBER"
 msgid "Maximum number of files shown in the \"Recent files\" menu and for which the position is potentially saved."
-msgstr "Maximální počet souborů v nabídce \"Nedávno otevřené\" a seznamu uložených pozic."
+msgstr "Número máximo de ficheiros a mostrar no menu \"Ficheiros recentes\" e para que posição é potencialmente guardada."
 
 msgctxt "IDS_PPAGEADVANCED_FILE_POS_LONGER"
 msgid "Remember file position only for files longer than N minutes."
-msgstr "Pamatovat si pozici pouze u souborů delších než N minut."
+msgstr "Relembrar a posição nos ficheiros apenas para ficheiros maiores que N minutos."
 
 msgctxt "IDS_PPAGEADVANCED_FILE_POS_AUDIO"
 msgid "Remember file position also for audio files."
-msgstr "Pamatovat si pozici i u zvukových souborů."
+msgstr "Relembrar a posição no ficheiro também para ficheiros de áudio."
 
 msgctxt "IDS_AFTER_PLAYBACK_DO_NOTHING"
 msgid "Do Nothing"
-msgstr "Žádná akce"
+msgstr "Não fazer nada"
 
 msgctxt "IDS_AFTER_PLAYBACK_PLAY_NEXT"
 msgid "Play next file in the folder"
-msgstr "Přehrát další soubor v adresáři"
+msgstr "Reproduzir o ficheiro seguinte na pasta"
 
 msgctxt "IDS_AFTER_PLAYBACK_REWIND"
 msgid "Rewind current file"
-msgstr "Na začátek aktuálního souboru"
+msgstr "Rebobinar o ficheiro atual"
 
 msgctxt "IDS_AFTER_PLAYBACK_CLOSE"
 msgid "Close"
-msgstr "Zavřít"
+msgstr "Fechar"
 
 msgctxt "IDS_AFTER_PLAYBACK_EXIT"
 msgid "Exit"
-msgstr "Konec"
+msgstr "Sair"
 
 msgctxt "IDS_AFTER_PLAYBACK_MONITOROFF"
 msgid "Turn off the monitor"
-msgstr "Vypnout monitor"
+msgstr "Desligar o ecrã"
 
 msgctxt "IDS_IMAGE_JPEG_QUALITY"
 msgid "JPEG Image"
-msgstr "JPEG obrázek"
+msgstr "Imagem JPEG"
 
 msgctxt "IDS_IMAGE_QUALITY"
 msgid "Quality (%):"
-msgstr "Kvalita (%):"
+msgstr "Qualidade (%):"
 
 msgctxt "IDS_PPAGEADVANCED_COVER_SIZE_LIMIT"
 msgid "Maximum size (NxNpx) of a cover-art loaded in the audio only mode."
-msgstr "Maximální velikost (NxN px) obrázku obalu pro režim přehrávání hudby."
+msgstr "Tamanho máximo (NxNpx) da cover-art carregada no modo apenas de áudio."
 
 msgctxt "IDS_SUBTITLE_DELAY_STEP_TOOLTIP"
 msgid "The subtitle delay will be decreased/increased by this value each time the corresponding hotkeys are used (%s/%s)."
-msgstr "Po použití příslušné klávesové zkratky (%s/%s) bude zpoždění titulků zvětšeno/zmenšeno o zadanou hodnotu."
+msgstr "O atraso de legenda será diminuído/aumentado por este valor cada vez que as teclas de atalho são utilizadas (%s/%s)."
 
 msgctxt "IDS_HOTKEY_NOT_DEFINED"
 msgid "<not defined>"
-msgstr "<není nastaveno>"
+msgstr "<not defined>"
 
 msgctxt "IDS_NAVIGATION_WATCH"
 msgid "Watch"
-msgstr "Sledovat"
+msgstr "Veja"
 
 msgctxt "IDS_NAVIGATION_MOVE_UP"
 msgid "Move Up"
-msgstr "Nahoru"
+msgstr "Mover para cima"
 
 msgctxt "IDS_NAVIGATION_MOVE_DOWN"
 msgid "Move Down"
-msgstr "Dolů"
+msgstr "Mover para baixo"
 
 msgctxt "IDS_NAVIGATION_SORT"
 msgid "Sort by LCN"
-msgstr "Seřadit podle LCN"
+msgstr "Ordenar por LCN"
 
 msgctxt "IDS_NAVIGATION_REMOVE_ALL"
 msgid "Remove all"
-msgstr "Odebrat vše"
+msgstr "Remover todos"
 
 msgctxt "IDS_REMOVE_CHANNELS_QUESTION"
 msgid "Are you sure you want to remove all channels from the list?"
-msgstr "Opravdu chcete ze seznamu odebrat všechny kanály?"
+msgstr "Tem a certeza que pretender remover todos os canais da lista?"
 
 msgctxt "IDS_MEDIAINFO_NO_INFO_AVAILABLE"
 msgid "No information available"
-msgstr "K dispozici nejsou žádné informace"
+msgstr "Sem informação disponível"
 
 msgctxt "IDS_MEDIAINFO_ANALYSIS_IN_PROGRESS"
 msgid "Please wait, analysis in progress..."
-msgstr "Čekejte, probíhá analýza..."
+msgstr "Por favor aguarde, análise em progresso..."
 
 msgctxt "IDS_ASPECT_RATIO_FMT"
 msgid "AR %d:%d"
-msgstr "PS %d:%d"
+msgstr "RA %d:%d"
 
 msgctxt "IDS_PPAGEADVANCED_LOGGER"
 msgid "Enables logging to file (requires restart)"
-msgstr "Povolit záznam protokolu do souboru (vyžaduje restart)"
+msgstr "Ativa registo para ficheiro (requer reinicio)"
 
 msgctxt "IDS_TIMER_REMAINING_TIME"
 msgid "Remaining time"
-msgstr "Zbývající čas"
+msgstr "Tempo restante"
 
 msgctxt "IDS_TIMER_HIGH_PRECISION"
 msgid "High precision"
-msgstr "Vysoká přesnost"
+msgstr "Alta precisão"
 
 msgctxt "IDS_AFTERPLAYBACK_REWIND"
 msgid "After Playback: Rewind current file"
-msgstr "Po přehrání: Na začátek aktuálního souboru"
+msgstr "Após reprodução: Rebobinar ficheiro atual"
 
 msgctxt "IDS_AFTERPLAYBACK_CLOSE"
 msgid "After Playback: Close"
-msgstr "Po přehrání: Zavřít"
+msgstr "Após reprodução: Fechar"
 
 msgctxt "IDS_FRAME_INIT_FAILED"
 msgid "MPC-HC encountered a problem during initialization. With your help we might be able to fix the issue.\n\nDo you want to report it?"
-msgstr "Během inicializace došlo k chybě. S vaší pomocí by se nám mohlo podařit tuto chybu opravit.\n\nChcete tuto chybu nahlásit?"
+msgstr "O MPC-HC encontrou um problema durante a inicialização. Com a sua ajuda, podemos talvez resolver o problema.\n\nPretende reportá-lo?"
 
 msgctxt "IDS_TIME_SHIFT_TOOLTIP"
 msgid "Enter a positive value if the audio is early, a negative value if it is late."
-msgstr "Pokud se zvuk předchází, zadejte kladnou hodnotu, pokud se zpožďuje, tak zápornou."
+msgstr "Insira um valor positivo se o áudio é atrasado, um valor negativo se é adiantado."
 
 msgctxt "IDS_WEBUI_DISABLED_PREVIEW_MSG"
 msgid "Preview is currently disabled. You can enable it in MPC-HC's options."
-msgstr "Náhled je zakázán. Můžete ho povolit v možnostech MPC-HC."
+msgstr "Pré-visualização está atualmente desativada. Pode ativá nas opções do MPC-HC."
 
 msgctxt "IDS_WEBUI_PREVIEW_WARNING"
 msgid "This option can be used to preview media files from remote location. Use it only on a properly secured private network.\n\nDo you really want to enable this option?"
-msgstr "Tato volba umožňuje náhled souborů ze vzdáleného umístění. Použijte ji pouze na řádně zabezpečené privátní síti.\n\nOpravdu chcete tuto volbu povolit?"
+msgstr "Esta opção pode ser usada para pré-visualizar ficheiros de media uma localização remota. Use isto apenas numa rede privada segura apropriada.\n\nPretende realmente ativar esta opção?"
 
 msgctxt "IDS_SUBTITLE_RENDERER_INTERNAL"
 msgid "Internal Subtitle Renderer"
-msgstr "Vestavěný zobrazovač titulků"
+msgstr "Renderizador interno de legendas"
 
 msgctxt "IDS_AG_OPEN_DEVICE"
 msgid "Open Device"
-msgstr "Otevřít zařízení"
+msgstr "Abrir dispositivo"
 
 msgctxt "IDS_AG_SAVE_AS"
 msgid "Save As"
-msgstr "Uložit jako"
+msgstr "Guardar como"
 
 msgctxt "IDS_AG_SAVE_IMAGE"
 msgid "Save Image"
-msgstr "Uložit snímek"
+msgstr "Guardar imagem"
 
 msgctxt "IDS_MPLAYERC_6"
 msgid "Save Image (auto)"
-msgstr "Uložit snímek (automaticky)"
+msgstr "Guardar imagem (auto)"
 
 msgctxt "IDS_OSD_IMAGE_SAVED"
 msgid "Image saved successfully"
-msgstr "Obrázek úspěšně uložen"
+msgstr "Imagem guardada com sucesso"
 
 msgctxt "IDS_AG_LOAD_SUBTITLES"
 msgid "Load Subtitles..."
-msgstr "Načíst titulky..."
+msgstr "Carregar legendas..."
 
 msgctxt "IDS_AG_SAVE_SUBTITLES"
 msgid "Save Subtitles..."
-msgstr "Uložit titulky..."
+msgstr "Guardar legendas..."
 
 msgctxt "IDS_AG_PROPERTIES"
 msgid "Properties"
-msgstr "Vlastnosti"
+msgstr "Propriedades"
 
 msgctxt "IDS_AG_EXIT"
 msgid "Exit"
-msgstr "Konec"
+msgstr "Sair"
 
 msgctxt "IDS_AG_PLAYPAUSE"
 msgid "Play/Pause"
-msgstr "Přehrát/Pozastavit"
+msgstr "Reproduzir/pausar"
 
 msgctxt "IDS_AG_PLAY"
 msgid "Play"
-msgstr "Přehrát"
+msgstr "Reproduzir"
 
 msgctxt "IDS_AG_STOP"
 msgid "Stop"
-msgstr "Zastavit"
+msgstr "Parar"
 
 msgctxt "IDS_AG_FRAMESTEP"
 msgid "Frame-step"
-msgstr "O snímek vpřed"
+msgstr "Passo-frame"
 
 msgctxt "IDS_MPLAYERC_16"
 msgid "Frame-step back"
-msgstr "O snímek zpět"
+msgstr "Passo-frame para trás"
 
 msgctxt "IDS_AG_GO_TO"
 msgid "Go To"
-msgstr "Přejít"
+msgstr "Ir para"
 
 msgctxt "IDS_AG_INCREASE_RATE"
 msgid "Increase Rate"
-msgstr "Zvýšit rychlost"
+msgstr "Aumentar ritmo"
 
 msgctxt "IDS_CONTENT_SHOW_GAMESHOW"
 msgid "Show/Game show"
-msgstr "Zábava / Soutěže"
+msgstr "Show Show/Jogo"
 
 msgctxt "IDS_CONTENT_SPORTS"
 msgid "Sports"
-msgstr "Sport"
+msgstr "Desporto"
 
 msgctxt "IDS_CONTENT_CHILDREN_YOUTH_PROG"
 msgid "Children's/Youth programmes"
-msgstr "Programy pro děti/mladistvé"
+msgstr "Programas de crianças/juventude"
 
 msgctxt "IDS_CONTENT_MUSIC_BALLET_DANCE"
 msgid "Music/Ballet/Dance"
-msgstr "Hudba / Balet / Tanec"
+msgstr "Música/Ballet/Dança"
 
 msgctxt "IDS_CONTENT_MUSIC_ART_CULTURE"
 msgid "Arts/Culture"
-msgstr "Umění / Kultura"
+msgstr "Arte/Cultura"
 
 msgctxt "IDS_CONTENT_SOCIAL_POLITICAL_ECO"
 msgid "Social/Political issues/Economics"
-msgstr "Společnost / Politika / Ekonomika"
+msgstr "Social/Politica/Economia"
 
 msgctxt "IDS_CONTENT_LEISURE"
 msgid "Leisure hobbies"
-msgstr "Volný čas / Koníčky"
+msgstr "Hobbies de lazer"
 
 msgctxt "IDS_FILE_RECYCLE"
 msgid "Move to Recycle Bin"
-msgstr "Přesunout do Koše"
+msgstr "Mover para a Reciclagem"
 
 msgctxt "IDS_AG_SAVE_COPY"
 msgid "Save a Copy"
-msgstr "Uložit kopii"
+msgstr "Guardar uma cópia"
 
 msgctxt "IDS_FASTSEEK_LATEST"
 msgid "Latest keyframe"
-msgstr "Poslední klíčový snímek"
+msgstr "A última chave de frame"
 
 msgctxt "IDS_FASTSEEK_NEAREST"
 msgid "Nearest keyframe"
-msgstr "Nejbližší klíčový snímek"
+msgstr "Chave de frame mais próxima"
 
 msgctxt "IDS_HOOKS_FAILED"
 msgid "MPC-HC encountered a problem during initialization. DVD playback may not work correctly. This might be caused by some incompatibilities with certain security tools.\n\nDo you want to report this issue?"
-msgstr "Během inicializace došlo k chybě. Přehrávání DVD nemusí fungovat správně. To může být způsobeno nekompatibilitou s některými bezpečnostními nástroji.\n\nChcete tento problém nahlásit?"
+msgstr "O MPC-HC encontrou um problema durante a inicialização. A reprodução de DVD pode não funcionar correctamente. Isto pode ser causado por alguma incompatibilidade com certas ferramentas de segurança.\n\nPretende reportar este problema?"
 
 msgctxt "IDS_PPAGEFULLSCREEN_SHOWNEVER"
 msgid "Never show"
-msgstr "Nezobrazovat"
+msgstr "Nunca mostrar"
 
 msgctxt "IDS_PPAGEFULLSCREEN_SHOWMOVED"
 msgid "Show when moving the cursor, hide after:"
-msgstr "Zobrazit při pohybu myši, skrýt za:"
+msgstr "Mostrar quando mover o cursor, ocultar após:"
 
 msgctxt "IDS_PPAGEFULLSCREEN_SHOHHOVERED"
 msgid "Show when hovering control, hide after:"
-msgstr "Zobrazit pokud je myš nad lištou, skrýt za:"
+msgstr "Mostrar quando pairar num controlo, ocultar após:"
 
 msgctxt "IDS_MAINFRM_PRE_SHADERS_FAILED"
 msgid "Failed to set pre-resize shaders"
-msgstr "Nastavení shaderů před změnou velikosti se nezdařilo"
+msgstr "Falhou ao definir pre-resize shaders"
 
 msgctxt "IDS_OSD_RS_FT_CORRECTION_ON"
 msgid "Frame Time Correction: On"
-msgstr "Oprava času snímků: Zapnuto"
+msgstr "Correção de tempo do frame: Ligado"
 
 msgctxt "IDS_OSD_RS_FT_CORRECTION_OFF"
 msgid "Frame Time Correction: Off"
-msgstr "Oprava času snímků: Vypnuto"
+msgstr "Correção de tempo do frame: Desligado"
 
 msgctxt "IDS_OSD_RS_TARGET_VSYNC_OFFSET"
 msgid "Target VSync Offset: %.1f"
-msgstr "Cílový offset synchronizace: %.1f"
+msgstr "Desloc. VSync destino: %.1f"
 
 msgctxt "IDS_OSD_RS_VSYNC_OFFSET"
 msgid "VSync Offset: %d"
-msgstr "VSync offset: %d"
+msgstr "Desloc. VSync: %d"
 
 msgctxt "IDS_OSD_SPEED"
 msgid "Speed: %.2lfx"
-msgstr "Rychlost: %.2lfx"
+msgstr "Velocidade: %.2lfx"
 
 msgctxt "IDS_OSD_THUMBS_SAVED"
 msgid "Thumbnails saved successfully"
-msgstr "Miniatury úspěšně uloženy"
+msgstr "Miniaturas guardadas com sucesso"
 
 msgctxt "IDS_MENU_VIDEO_STREAM"
 msgid "Vide&o Track"
-msgstr "&Video stopa"
+msgstr "Faixa de Víde&o"
 
 msgctxt "IDS_MENU_VIDEO_ANGLE"
 msgid "Video Ang&le"
-msgstr "Úhel poh&ledu"
+msgstr "Ângu&lo de vídeo"
 
 msgctxt "IDS_RESET_SETTINGS"
 msgid "Reset settings"
-msgstr "Obnovit výchozí"
+msgstr "Repor definições"
 
 msgctxt "IDS_RESET_SETTINGS_WARNING"
 msgid "Are you sure you want to restore MPC-HC to its default settings?\nBe warned that ALL your current settings will be lost!"
-msgstr "Opravdu chcete obnovit výchozí nastavení MPC-HC?\nVŠECHNA aktuální nastavení budou ztracena!"
+msgstr "Tem a certeza que pretende restaurar o MPC-HC para as suas definições por defeito?\nEstá avisado que TODAS as suas definições atuais serão perdidas!"
 
 msgctxt "IDS_RESET_SETTINGS_MUTEX"
 msgid "Please close all instances of MPC-HC so that the default settings can be restored."
-msgstr "Aby bylo možné obnovit výchozí nastavení, ukončete všechny otevřené instance MPC-HC."
+msgstr "Por favor feche todas as instâncias do MPC-HC para que as definições por defeito sejam restauradas."
 
 msgctxt "IDS_EXPORT_SETTINGS"
 msgid "Export settings"
-msgstr "Exportovat nastavení"
+msgstr "Exportar definições"
 
 msgctxt "IDS_EXPORT_SETTINGS_WARNING"
 msgid "Some changes have not been saved yet.\nDo you want to save them before exporting?"
-msgstr "Některé změny nastavení nebyly dosud uloženy.\nChcete je před exportováním uložit?"
+msgstr "Algumas alterações não foram guardadas ainda.\nPretende guardá-las antes de exportar?"
 
 msgctxt "IDS_EXPORT_SETTINGS_SUCCESS"
 msgid "The settings have been successfully exported."
-msgstr "Nastavení bylo úspěšně exportováno."
+msgstr "As definições foram exportadas com sucesso."
 
 msgctxt "IDS_EXPORT_SETTINGS_FAILED"
 msgid "The export failed! This can happen when you don't have the correct rights."
-msgstr "Export selhal! To může nastat, pokud nemáte potřebná oprávnění."
+msgstr "A exportação falhou! Isto pode acontecer quando não tem os direitos corretos."
 
 msgctxt "IDS_BDA_ERROR"
 msgid "BDA Error"
-msgstr "Chyba BDA"
+msgstr "Erro BDA"
 
 msgctxt "IDS_AG_DECREASE_RATE"
 msgid "Decrease Rate"
-msgstr "Snížit rychlost"
+msgstr "Diminuir ritmo"
 
 msgctxt "IDS_AG_RESET_RATE"
 msgid "Reset Rate"
-msgstr "Výchozí rychlost"
+msgstr "Repor ritmo"
 
 msgctxt "IDS_MPLAYERC_21"
 msgid "Audio Delay +10 ms"
-msgstr "Posun zvuku +10ms"
+msgstr "Atraso de áudio +10 ms"
 
 msgctxt "IDS_MPLAYERC_22"
 msgid "Audio Delay -10 ms"
-msgstr "Posun zvuku -10ms"
+msgstr "Atraso de áudio -10 ms"
 
 msgctxt "IDS_MPLAYERC_23"
 msgid "Jump Forward (small)"
-msgstr "Skok vpřed (malý)"
+msgstr "Salto para a frente (pequeno)"
 
 msgctxt "IDS_MPLAYERC_24"
 msgid "Jump Backward (small)"
-msgstr "Skok zpět (malý)"
+msgstr "Salto para trás (pequeno)"
 
 msgctxt "IDS_MPLAYERC_25"
 msgid "Jump Forward (medium)"
-msgstr "Skok vpřed (střední)"
+msgstr "Salto para a frente (médio)"
 
 msgctxt "IDS_MPLAYERC_26"
 msgid "Jump Backward (medium)"
-msgstr "Skok zpět (střední)"
+msgstr "Salto para trás (médio)"
 
 msgctxt "IDS_MPLAYERC_27"
 msgid "Jump Forward (large)"
-msgstr "Skok vpřed (velký)"
+msgstr "Salto para a frente (largo)"
 
 msgctxt "IDS_MPLAYERC_28"
 msgid "Jump Backward (large)"
-msgstr "Skok zpět (velký)"
+msgstr "Salto para trás (largo)"
 
 msgctxt "IDS_MPLAYERC_29"
 msgid "Jump Forward (keyframe)"
-msgstr "Skok vpřed (klíčový snímek)"
+msgstr "Salto para a frente (chave de frame)"
 
 msgctxt "IDS_MPLAYERC_30"
 msgid "Jump Backward (keyframe)"
-msgstr "Skok zpět (klíčový snímek)"
+msgstr "Salto para trás (chave de frame)"
 
 msgctxt "IDS_AG_NEXT"
 msgid "Next"
-msgstr "Další"
+msgstr "Seguinte"
 
 msgctxt "IDS_AG_PREVIOUS"
 msgid "Previous"
-msgstr "Předchozí"
+msgstr "Anterior"
 
 msgctxt "IDS_AG_NEXT_FILE"
 msgid "Next File"
-msgstr "Další soubor"
+msgstr "Ficheiro seguinte"
 
 msgctxt "IDS_AG_PREVIOUS_FILE"
 msgid "Previous File"
-msgstr "Předchozí soubor"
+msgstr "Ficheiro anterior"
 
 msgctxt "IDS_MPLAYERC_99"
 msgid "Toggle Direct3D fullscreen"
-msgstr "Zapnout/Vypnout Direct3D fullscreen"
+msgstr "Alternar ecrã completo Direct3D"
 
 msgctxt "IDS_MPLAYERC_100"
 msgid "Goto Prev Subtitle"
-msgstr "Přejít na předchozí titulky"
+msgstr "Ir para legenda anterior"
 
 msgctxt "IDS_MPLAYERC_101"
 msgid "Goto Next Subtitle"
-msgstr "Přejít na další titulky"
+msgstr "Ir para a legenda seguinte"
 
 msgctxt "IDS_MPLAYERC_102"
 msgid "Shift Subtitle Left"
-msgstr "Posunout titulky doleva"
+msgstr "Mudar a legenda para a esquerda"
 
 msgctxt "IDS_MPLAYERC_103"
 msgid "Shift Subtitle Right"
-msgstr "Posunout titulky doprava"
+msgstr "Mudar a legenda para a direita"
 
 msgctxt "IDS_AG_SEEKSET"
 msgid "Jump to Beginning"
-msgstr "Přejít na začátek"
+msgstr "Saltar para o ínicio"
 
 msgctxt "IDS_OSD_SHOW_FILENAME"
 msgid "OSD: Show File Name"
-msgstr "OSD: Zobrazit název souboru"
+msgstr "OSD: Mostrar o nome do ficheiro"
 
 msgctxt "IDS_PLAY_DVD"
 msgid "Play DVD"
-msgstr "Přehrát DVD"
+msgstr "Reproduzir DVD"
 
 msgctxt "IDS_PLAY_BD"
 msgid "Play BD"
-msgstr "Přehrát BD"
+msgstr "Reproduzir BD"
 
 msgctxt "IDS_OSD_DISPLAY_RENDERER_STATS"
 msgid "OSD: Display Renderer Statistics"
-msgstr "OSD: Zobrazit statistiku rendereru"
+msgstr "OSD: Mostrar estatísticas do renderizador"
 
 msgctxt "IDS_OSD_RESET_RENDERER_STATS"
 msgid "OSD: Reset Renderer Statistics"
-msgstr "OSD: Obnovit statistiku rendereru"
+msgstr "OSD: Repor Estatísticas do renderizador"
 
 msgctxt "IDD_PPAGESUBMISC"
 msgid "Subtitles::Misc"
-msgstr "Titulky::Ostatní"
+msgstr "Subtitles::Misc"
 
 msgctxt "IDS_VIEW_BORDERLESS"
 msgid "Hide &borders"
-msgstr "Skrýt okraje"
+msgstr "Ocultar &bordas"
 
 msgctxt "IDS_VIEW_FRAMEONLY"
 msgid "Fra&me Only"
-msgstr "Pouze rámeček s videem"
+msgstr "Apenas fra&me"
 
 msgctxt "IDS_VIEW_CAPTIONMENU"
 msgid "Sho&w Caption&&Menu"
-msgstr "Zobrazit titulek a nabídky"
+msgstr "Mostrar barra de título && menu"
 
 msgctxt "IDS_VIEW_HIDEMENU"
 msgid "Hide &Menu"
-msgstr "Skrýt nabídku"
+msgstr "Ocultar &menu"
 
 msgctxt "IDD_PPAGEADVANCED"
 msgid "Advanced"
-msgstr "Pokročilé"
+msgstr "Avançadas"
 
 msgctxt "IDS_AG_VIEW_MINIMAL"
 msgid "View Minimal"
-msgstr "Minimální zobrazení"
+msgstr "Visualização mínima"
 
 msgctxt "IDS_AG_VIEW_COMPACT"
 msgid "View Compact"
-msgstr "Kompaktní zobrazení"
+msgstr "Visualização compacta"
 
 msgctxt "IDS_AG_VIEW_NORMAL"
 msgid "View Normal"
-msgstr "Standardní zobrazení"
+msgstr "Visualização normal"
 
 msgctxt "IDS_AG_FULLSCREEN"
 msgid "Fullscreen"
-msgstr "Na celou obrazovku"
+msgstr "Ecrã inteiro"
 
 msgctxt "IDS_MPLAYERC_39"
 msgid "Fullscreen (w/o res.change)"
-msgstr "Na celou obrazovku (bez změny velikosti)"
+msgstr "Ecrã completo (sem alt. res.)"
 
 msgctxt "IDS_AG_ZOOM_AUTO_FIT"
 msgid "Zoom Auto Fit"
-msgstr "Velikost: Automaticky přizpůsobit"
+msgstr "Preenchimento ampliação automático"
 
 msgctxt "IDS_AG_VIDFRM_HALF"
 msgid "VidFrm Half"
-msgstr "Výřez videa: Poloviční"
+msgstr "Metade de VidFrm"
 
 msgctxt "IDS_AG_VIDFRM_NORMAL"
 msgid "VidFrm Normal"
-msgstr "Výřez videa: Standardní"
+msgstr "VidFrm Normal"
 
 msgctxt "IDS_AG_VIDFRM_DOUBLE"
 msgid "VidFrm Double"
-msgstr "Výřez videa: Dvojnásobný"
+msgstr "Dobro de VidFrm "
 
 msgctxt "IDS_AG_ALWAYS_ON_TOP"
 msgid "Always On Top"
-msgstr "Vždy navrchu"
+msgstr "Sempre em cima"
 
 msgctxt "IDS_AG_PNS_INC_SIZE"
 msgid "PnS Inc Size"
-msgstr "P&S zvětšit velikost"
+msgstr "Aum. tam. PnS"
 
 msgctxt "IDS_AG_PNS_INC_WIDTH"
 msgid "PnS Inc Width"
-msgstr "P&S zvětšit šířku"
+msgstr "Aum. lar. PnS"
 
 msgctxt "IDS_MPLAYERC_47"
 msgid "PnS Inc Height"
-msgstr "P&S zvětšit výšku"
+msgstr "Aum. alt. PnS"
 
 msgctxt "IDS_AG_PNS_DEC_SIZE"
 msgid "PnS Dec Size"
-msgstr "P&S zmenšit velikost"
+msgstr "Dim. tam. PnS"
 
 msgctxt "IDS_AG_PNS_DEC_WIDTH"
 msgid "PnS Dec Width"
-msgstr "P&S zmenšit šířku"
+msgstr "Dim. lar. PnS"
 
 msgctxt "IDS_MPLAYERC_50"
 msgid "PnS Dec Height"
-msgstr "P&S zmenšit výšku"
+msgstr "Dim. alt. PnS"
 
 msgctxt "IDS_SUBDL_DLG_DOWNLOADING"
 msgid "Downloading [%s] \"%s\""
-msgstr "Stahování [%s] \"%s\""
+msgstr "A descarregar [%s] \"%s\""
 
 msgctxt "IDS_SUBDL_DLG_PARSING"
 msgid "Parsing list..."
-msgstr "Analýza seznamu..."
+msgstr "A analisar a lista..."
 
 msgctxt "IDS_SUBDL_DLG_NOT_FOUND"
 msgid "No subtitles found."
-msgstr "Titulky nenalezeny."
+msgstr "Não foram encontradas legendas"
 
 msgctxt "IDS_SUBDL_DLG_SUBS_AVAIL"
 msgid "%d subtitle(s) available."
-msgstr "k dispozici je %d titulků."
+msgstr "%d legenda(s) disponível(is)."
 
 msgctxt "IDS_UPDATE_CONFIG_AUTO_CHECK"
 msgid "Do you want to check periodically for MPC-HC updates?\n\nThis feature can be disabled later from the Miscellaneous options page."
-msgstr "Chcete pravidelně kontrolovat dostupnost aktualizací MPC-HC?\n\nTato funkce může být později zakázána v dialogu nastavení v sekci Ostatní."
+msgstr "Pretende verificar periodicamente atualizações para MPC-HC?\n\nEsta funcionalidade pode ser desativada mais tarde a partir da página de opções Váriadas."
 
 msgctxt "IDS_ZOOM_25"
 msgid "25%"
@@ -1892,667 +1891,667 @@ msgstr "200%"
 
 msgctxt "IDS_ZOOM_AUTOFIT"
 msgid "Auto Fit"
-msgstr "Automaticky přizpůsobit"
+msgstr "Auto preencher"
 
 msgctxt "IDS_ZOOM_AUTOFIT_LARGER"
 msgid "Auto Fit (Larger Only)"
-msgstr "Automaticky přizpůsobit (jen větší)"
+msgstr "Auto preen. (o mais largo apenas)"
 
 msgctxt "IDS_AG_ZOOM_AUTO_FIT_LARGER"
 msgid "Zoom Auto Fit (Larger Only)"
-msgstr "Velikost: Automaticky přizpůsobit (jen větší)"
+msgstr "Preen. ampl. auto. (o mais largo apenas)"
 
 msgctxt "IDS_OSD_ZOOM_AUTO_LARGER"
 msgid "Zoom: Auto (Larger Only)"
-msgstr "Velikost: Automaticky (jen větší)"
+msgstr "Ampliação: Auto (o mais largo apenas)"
 
 msgctxt "IDS_TOOLTIP_EXPLORE_TO_FILE"
 msgid "Double click to open file location"
-msgstr "Dvojitým kliknutím otevřete umístění souboru"
+msgstr "Clique duplo para abrir a localização do ficheiro"
 
 msgctxt "IDS_TOOLTIP_REMAINING_TIME"
 msgid "Toggle between elapsed and remaining time"
-msgstr "Kliknutím přepnete mezi uplynulým a zbývajícím časem"
+msgstr "Alterar entre o tempo decorrido e o tempo restante"
 
 msgctxt "IDS_UPDATE_DELAY_ERROR_TITLE"
 msgid "Invalid delay"
-msgstr "Neplatné odstup"
+msgstr "Atraso inválido"
 
 msgctxt "IDS_UPDATE_DELAY_ERROR_MSG"
 msgid "Please enter a number between 1 and 365."
-msgstr "Zadejte číslo mezi 1 a 365."
+msgstr "Por favor insira um número entre 1 e 365."
 
 msgctxt "IDS_AG_PNS_CENTER"
 msgid "PnS Center"
-msgstr "P&S vycentrovat"
+msgstr "PnS centrado"
 
 msgctxt "IDS_AG_PNS_LEFT"
 msgid "PnS Left"
-msgstr "P&S doleva"
+msgstr "PnS à esquerda"
 
 msgctxt "IDS_AG_PNS_RIGHT"
 msgid "PnS Right"
-msgstr "P&S doprava"
+msgstr "PnS à direita"
 
 msgctxt "IDS_AG_PNS_UP"
 msgid "PnS Up"
-msgstr "P&S nahoru"
+msgstr "PnS para cima"
 
 msgctxt "IDS_AG_PNS_DOWN"
 msgid "PnS Down"
-msgstr "P&S dolů"
+msgstr "PnS para baixo"
 
 msgctxt "IDS_AG_PNS_UPLEFT"
 msgid "PnS Up/Left"
-msgstr "P&S nahoru/doleva"
+msgstr "PnS cima/esquerda"
 
 msgctxt "IDS_AG_PNS_UPRIGHT"
 msgid "PnS Up/Right"
-msgstr "P&S nahoru/doprava"
+msgstr "PnS cima/direita"
 
 msgctxt "IDS_AG_PNS_DOWNLEFT"
 msgid "PnS Down/Left"
-msgstr "P&S dolů/doleva"
+msgstr "PnS baixo/esquerda"
 
 msgctxt "IDS_MPLAYERC_59"
 msgid "PnS Down/Right"
-msgstr "P&S dolů/doprava"
+msgstr "PnS baixo/direita"
 
 msgctxt "IDS_AG_VOLUME_UP"
 msgid "Volume Up"
-msgstr "Zvýšit hlasitost"
+msgstr "Aumentar volume"
 
 msgctxt "IDS_AG_VOLUME_DOWN"
 msgid "Volume Down"
-msgstr "Snížit hlasitost"
+msgstr "Diminuir volume"
 
 msgctxt "IDS_AG_VOLUME_MUTE"
 msgid "Volume Mute"
-msgstr "Ztlumit"
+msgstr "Silenciar volume"
 
 msgctxt "IDS_MPLAYERC_63"
 msgid "DVD Title Menu"
-msgstr "Úvodní nabídka DVD"
+msgstr "Menu de títulos de DVD"
 
 msgctxt "IDS_AG_DVD_ROOT_MENU"
 msgid "DVD Root Menu"
-msgstr "Hlavní nabídka DVD"
+msgstr "Menu raiz de DVD"
 
 msgctxt "IDS_MPLAYERC_65"
 msgid "DVD Subtitle Menu"
-msgstr "Nabídka titulků DVD"
+msgstr "Menu de legendas de DVD"
 
 msgctxt "IDS_MPLAYERC_66"
 msgid "DVD Audio Menu"
-msgstr "Nabídka zvukových stop DVD"
+msgstr "Menu de áudio de DVD"
 
 msgctxt "IDS_MPLAYERC_67"
 msgid "DVD Angle Menu"
-msgstr "Nabídka úhlů pohledu kamery DVD"
+msgstr "Menu de ângulos de DVD"
 
 msgctxt "IDS_MPLAYERC_68"
 msgid "DVD Chapter Menu"
-msgstr "Nabídka kapitol DVD"
+msgstr "Menu de capítulos de DVD"
 
 msgctxt "IDS_AG_DVD_MENU_LEFT"
 msgid "DVD Menu Left"
-msgstr "DVD nabídka doleva"
+msgstr "Menu esquerdo de DVD"
 
 msgctxt "IDS_MPLAYERC_70"
 msgid "DVD Menu Right"
-msgstr "DVD nabídka doprava"
+msgstr "Menu direito de DVD"
 
 msgctxt "IDS_AG_DVD_MENU_UP"
 msgid "DVD Menu Up"
-msgstr "DVD nabídka nahoru"
+msgstr "Menu cima de DVD"
 
 msgctxt "IDS_AG_DVD_MENU_DOWN"
 msgid "DVD Menu Down"
-msgstr "DVD nabídka dolů"
+msgstr "Menu baixo de DVD"
 
 msgctxt "IDS_MPLAYERC_73"
 msgid "DVD Menu Activate"
-msgstr "DVD nabídka aktivovat"
+msgstr "Ativar menu de DVD"
 
 msgctxt "IDS_AG_DVD_MENU_BACK"
 msgid "DVD Menu Back"
-msgstr "DVD nabídka zpět"
+msgstr "Menu trás de DVD"
 
 msgctxt "IDS_MPLAYERC_75"
 msgid "DVD Menu Leave"
-msgstr "DVD nabídka ukončit"
+msgstr "Deixar menu de DVD"
 
 msgctxt "IDS_AG_BOSS_KEY"
 msgid "Boss key"
-msgstr "Boss klávesa"
+msgstr "Boss key"
 
 msgctxt "IDS_MPLAYERC_77"
 msgid "Player Menu"
-msgstr "Nabídka přehrávače"
+msgstr "Menu do reprodutor"
 
 msgctxt "IDS_MPLAYERC_78"
 msgid "Player Menu (full)"
-msgstr "Nabídka přehrávače (rozšířená)"
+msgstr "Menu de reprodutor (completo)"
 
 msgctxt "IDS_AG_FILTERS_MENU"
 msgid "Filters Menu"
-msgstr "Nabídka filtrů"
+msgstr "Menu de filtros"
 
 msgctxt "IDS_AG_OPTIONS"
 msgid "Options"
-msgstr "Možnosti"
+msgstr "Opções"
 
 msgctxt "IDS_AG_NEXT_AUDIO"
 msgid "Next Audio Track"
-msgstr "Další zvuková stopa"
+msgstr "Faixa seguinte de áudio"
 
 msgctxt "IDS_AG_PREV_AUDIO"
 msgid "Prev Audio Track"
-msgstr "Předchozí zvuková stopa"
+msgstr "Faixa anterior de áudio"
 
 msgctxt "IDS_AG_NEXT_SUBTITLE"
 msgid "Next Subtitle Track"
-msgstr "Další titulky"
+msgstr "Faixa seguinte de legendas"
 
 msgctxt "IDS_AG_PREV_SUBTITLE"
 msgid "Prev Subtitle Track"
-msgstr "Předchozí titulky"
+msgstr "Faixa anterior de legendas"
 
 msgctxt "IDS_MPLAYERC_85"
 msgid "On/Off Subtitle"
-msgstr "Zapnout/Vypnout titulky"
+msgstr "Ativar/desativar legenda"
 
 msgctxt "IDS_MPLAYERC_86"
 msgid "Reload Subtitles"
-msgstr "Znovu načíst titulky"
+msgstr "Recarregar legendas"
 
 msgctxt "IDS_MPLAYERC_91"
 msgid "Next Angle (DVD)"
-msgstr "Další úhel pohledu (DVD)"
+msgstr "Ângulo seguinte (DVD)"
 
 msgctxt "IDS_MPLAYERC_92"
 msgid "Prev Angle (DVD)"
-msgstr "Předchozí úhel pohledu (DVD)"
+msgstr "Ângulo anterior (DVD)"
 
 msgctxt "IDS_MPLAYERC_93"
 msgid "Next Audio Track (DVD)"
-msgstr "Další zvuková stopa (DVD)"
+msgstr "Faixa seguinte áudio (DVD)"
 
 msgctxt "IDS_MPLAYERC_94"
 msgid "Prev Audio Track (DVD)"
-msgstr "Předchozí zvuková stopa (DVD)"
+msgstr "Faixa anterior áudio (DVD)"
 
 msgctxt "IDS_MPLAYERC_95"
 msgid "Next Subtitle Track (DVD)"
-msgstr "Další titulky (DVD)"
+msgstr "Faixa seguinte legendas (DVD)"
 
 msgctxt "IDS_MPLAYERC_96"
 msgid "Prev Subtitle Track (DVD)"
-msgstr "Předchozí titulky (DVD)"
+msgstr "Faixa anterior legendas (DVD)"
 
 msgctxt "IDS_MPLAYERC_97"
 msgid "On/Off Subtitle (DVD)"
-msgstr "Zapnout/Vypnout titulky (DVD)"
+msgstr "Ativar/desativar legendas (DVD)"
 
 msgctxt "IDS_OSD_DISPLAY_CURRENT_TIME"
 msgid "OSD: Display Current Time"
-msgstr "OSD: Zobrazit aktuální čas"
+msgstr "OSD: Mostrar tempo atual"
 
 msgctxt "IDS_PPAGEWEBSERVER_0"
 msgid "Select the directory"
-msgstr "Zvolit adresář"
+msgstr "Selecione uma pasta"
 
 msgctxt "IDS_FAVORITES_QUICKADDFAVORITE"
 msgid "Quick add favorite"
-msgstr "Přidat k oblíbeným"
+msgstr "Adição rápida de favorito"
 
 msgctxt "IDS_DVB_CHANNEL_NUMBER"
 msgid "N"
-msgstr "Č"
+msgstr "N"
 
 msgctxt "IDS_DVB_CHANNEL_NAME"
 msgid "Name"
-msgstr "Název"
+msgstr "Nome"
 
 msgctxt "IDS_DVB_CHANNEL_FREQUENCY"
 msgid "Frequency"
-msgstr "Frekvence"
+msgstr "Frequência"
 
 msgctxt "IDS_DVB_CHANNEL_ENCRYPTION"
 msgid "Encrypted"
-msgstr "Kódovaný"
+msgstr "Encriptado"
 
 msgctxt "IDS_YES"
 msgid "Yes"
-msgstr "Ano"
+msgstr "Sim"
 
 msgctxt "IDS_NO"
 msgid "No"
-msgstr "Ne"
+msgstr "Não"
 
 msgctxt "IDS_DVB_CHANNEL_START_SCAN"
 msgid "Start"
-msgstr "Spustit"
+msgstr "Iniciar"
 
 msgctxt "IDS_DVB_CHANNEL_STOP_SCAN"
 msgid "Stop"
-msgstr "Zastavit"
+msgstr "Parar"
 
 msgctxt "IDS_DVB_TVNAV_SEERADIO"
 msgid "Radio stations"
-msgstr "Radio stanice"
+msgstr "Estações de rádio"
 
 msgctxt "IDS_DVB_TVNAV_SEETV"
 msgid "TV stations"
-msgstr "TV stanice"
+msgstr "Estações de TV"
 
 msgctxt "IDS_DVB_CHANNEL_FORMAT"
 msgid "Format"
-msgstr "Formát"
+msgstr "Formato"
 
 msgctxt "IDS_MAINFRM_2"
 msgid "Focus lost to: %s - %s"
-msgstr "Fokus převzat: %s - %s"
+msgstr "Foco perdido para: %s - %s"
 
 msgctxt "IDS_AG_SUBTITLES_SAVED"
 msgid "Subtitles saved"
-msgstr "Titulky uloženy"
+msgstr "Legenda guardada"
 
 msgctxt "IDS_MAINFRM_4"
 msgid "Cannot save subtitles"
-msgstr "Titulky nelze uložit"
+msgstr "Não pôde guardar legendas"
 
 msgctxt "IDS_AG_FRAMERATE"
 msgid "Frame rate"
-msgstr "Snímková frekvence"
+msgstr "Ritmo de frames"
 
 msgctxt "IDS_MAINFRM_6"
 msgid "drawn: %d, dropped: %d"
-msgstr "vykresleno: %d, zahozeno: %d"
+msgstr "desenhado: %d, caído: %d"
 
 msgctxt "IDS_AG_FRAMES"
 msgid "Frames"
-msgstr "Snímky"
+msgstr "Frames"
 
 msgctxt "IDS_AG_BUFFERS"
 msgid "Buffers"
-msgstr "Buffery"
+msgstr "Pilhas"
 
 msgctxt "IDS_MAINFRM_9"
 msgid "Volume: %02lu/%02lu, Title: %02lu/%02lu, Chapter: %02lu/%02lu"
-msgstr "Díl: %02lu/%02lu, Titul: %02lu/%02lu, Kapitola: %02lu/%02lu"
+msgstr "Volume: %02lu/%02lu, Título: %02lu/%02lu, Capítulo: %02lu/%02lu"
 
 msgctxt "IDS_MAINFRM_10"
 msgid "Angle: %02lu/%02lu, %lux%lu %lu Hz %lu:%lu"
-msgstr "Úhel: %02lu/%02lu, %lux%lu %luHz %lu:%lu"
+msgstr "Ângulo: %02lu/%02lu, %lux%lu %lu Hz %lu:%lu"
 
 msgctxt "IDS_MAINFRM_11"
 msgid "%s, %s %u Hz %d bits %d %s"
-msgstr "%s, %s %uHz %dbitů %d %s"
+msgstr "%s, %s %u Hz %d bits %d %s"
 
 msgctxt "IDS_ADD_TO_PLAYLIST"
 msgid "Add to MPC-HC Playlist"
-msgstr "Přidat do seznamu stop MPC-HC"
+msgstr "Adicionar à lista de reprodução do MPC-HC"
 
 msgctxt "IDS_OPEN_WITH_MPC"
 msgid "Play with MPC-HC"
-msgstr "Přehrát pomocí MPC-HC"
+msgstr "Reproduzir com o MPC-HC"
 
 msgctxt "IDS_CANNOT_CHANGE_FORMAT"
 msgid "MPC-HC does not have sufficient privileges to change file associations. Please click on the \"Run as administrator\" button."
-msgstr "MPC-HC nemá dostatečná oprávnění pro změnu asociace souborů. Klikněte na tlačítko „Spustit jako administrátor“."
+msgstr "O MPC-HC não tem privilégios suficientes para alterar as associações de ficheiros. Por favor clique no botão \"Executar como Administrador\". "
 
 msgctxt "IDS_APP_DESCRIPTION"
 msgid "MPC-HC is an extremely light-weight, open source media player for Windows. It supports all common video and audio file formats available for playback. We are 100% spyware free, there are no advertisements or toolbars."
-msgstr "MPC-HC je přehrávač mediálních souborů pro Windows s nízkou zátěží na systém a s otevřeným zdrojovým kódem. Podporuje přehrávání všech běžně dostupných formátů zvukových a video souborů. Neobsahuje žádný spyware, reklamní lišty ani reklamy."
+msgstr "O MPC-HC é um reprodutor de media leve e de fonte aberta para o Windows. Suporta todos os formatos de ficheiro comuns de vídeo e áudio disponíveis para reprodução. Somos 100% livres de spyware, não existe anúncios nem barras de ferramentas."
 
 msgctxt "IDS_MAINFRM_12"
 msgid "channel"
-msgstr "kanál"
+msgstr "canal"
 
 msgctxt "IDS_MAINFRM_13"
 msgid "channels"
-msgstr "kanály"
+msgstr "canais"
 
 msgctxt "IDS_AG_TITLE"
 msgid "Title %u"
-msgstr "Titul %u"
+msgstr "Título %u"
 
 msgctxt "IDS_MAINFRM_16"
 msgid "DVD: Unexpected error"
-msgstr "DVD: Neočekávaná chyba"
+msgstr "DVD: Erro inesperado"
 
 msgctxt "IDS_MAINFRM_17"
 msgid "DVD: Copy-Protect Fail"
-msgstr "DVD: Selhání ochrany proti kopírování"
+msgstr "DVD: Falha na proteção-cópia"
 
 msgctxt "IDS_MAINFRM_18"
 msgid "DVD: Invalid DVD 1.x Disc"
-msgstr "DVD: Neplatný DVD 1.x disk"
+msgstr "DVD: Disco DVD 1.x inválido"
 
 msgctxt "IDS_MAINFRM_19"
 msgid "DVD: Invalid Disc Region"
-msgstr "DVD: Chybný region disku"
+msgstr "DVD: Região do disco inválida"
 
 msgctxt "IDS_MAINFRM_20"
 msgid "DVD: Low Parental Level"
-msgstr "DVD: Nízká úroveň rodičovského zámku"
+msgstr "DVD: Nível parental baixo"
 
 msgctxt "IDS_MAINFRM_21"
 msgid "DVD: Macrovision Fail"
-msgstr "DVD: Selhání Macrovision"
+msgstr "DVD: Falha Macrovision"
 
 msgctxt "IDS_MAINFRM_22"
 msgid "DVD: Incompatible System And Decoder Regions"
-msgstr "DVD: Nekompatibilní region systému a dekodéru"
+msgstr "DVD: Regiões de sistema e descodificador incompatíveis"
 
 msgctxt "IDS_MAINFRM_23"
 msgid "DVD: Incompatible Disc And Decoder Regions"
-msgstr "DVD: Nekompatibilní region disku a dekodéru"
+msgstr "DVD: Regiões de disco e de descodificação incompatíveis"
 
 msgctxt "IDS_D3DFS_WARNING"
 msgid "This option is designed to avoid tearing. However, it will also prevent MPC-HC from displaying the context menu and any dialog box during playback.\n\nDo you really want to activate this option?"
-msgstr "Tato volba slouží k odstranění trhání. Znemožní ale MPC-HC zobrazit během přehrávání kontextové nabídky a dialogy.\n\nChcete tuto volbu opravdu aktivovat?"
+msgstr "Esta opção está desenhada para impedir o desmanche. No entanto, irá tambem impedir o MPC-HC de mostrar o menu de contexto e qualquer caixa de diálogo durante a reprodução.\n\nPretende realmente ativar esta opção?"
 
 msgctxt "IDS_MAINFRM_139"
 msgid "Sub delay: %ld ms"
-msgstr "Zpoždění titulků: %ld ms"
+msgstr "Atraso leg: %ld ms"
 
 msgctxt "IDS_AG_TITLE2"
 msgid "Title: %02d/%02d"
-msgstr "Titul: %02d/%02d"
+msgstr "Título: %02d/%02d"
 
 msgctxt "IDS_REALVIDEO_INCOMPATIBLE"
 msgid "Filename contains unsupported characters (use only A-Z, 0-9)"
-msgstr "Název souboru obsahuje neplatné znaky (používejte jen A-Z, 0-9)"
+msgstr "O nome de ficheiro contém carateres não suportados (utilize só A-Z, 0-9)"
 
 msgctxt "IDS_THUMB_ROWNUMBER"
 msgid "Rows:"
-msgstr "Řádky:"
+msgstr "Linhas:"
 
 msgctxt "IDS_THUMB_COLNUMBER"
 msgid "Columns:"
-msgstr "Sloupce:"
+msgstr "Colunas:"
 
 msgctxt "IDS_THUMB_IMAGE_WIDTH"
 msgid "Image width"
-msgstr "Šířka obrázku"
+msgstr "Largura da imagem"
 
 msgctxt "IDS_AG_ASPECT_RATIO"
 msgid "Aspect Ratio"
-msgstr "Poměr stran"
+msgstr "Rácio do aspeto"
 
 msgctxt "IDS_MAINFRM_37"
 msgid ", Total: %ld, Dropped: %ld"
-msgstr ", Celkem: %ld, Zahozeno: %ld"
+msgstr ", Total: %ld, Quedas: %ld"
 
 msgctxt "IDS_MAINFRM_38"
 msgid ", Size: %I64d KB"
-msgstr ", Velikost: %I64dKB"
+msgstr ", Tamanho: %I64d KB"
 
 msgctxt "IDS_MAINFRM_39"
 msgid ", Size: %I64d MB"
-msgstr ", Velikost: %I64dMB"
+msgstr ", Tamanho: %I64d MB"
 
 msgctxt "IDS_MAINFRM_40"
 msgid ", Free: %I64d KB"
-msgstr ", Volný: %I64dKB"
+msgstr ", Livre: %I64d KB"
 
 msgctxt "IDS_MAINFRM_41"
 msgid ", Free: %I64d MB"
-msgstr ", Volný: %I64dMB"
+msgstr ", Livre: %I64d MB"
 
 msgctxt "IDS_MAINFRM_42"
 msgid ", Free V/A Buffers: %03d/%03d"
-msgstr ", Volné V/A buffery: %03d/%03d"
+msgstr ", Pilhas V/A livres: %03d/%03d"
 
 msgctxt "IDS_AG_ERROR"
 msgid "Error"
-msgstr "Chyba"
+msgstr "Erro"
 
 msgctxt "IDS_SUBTITLE_STREAM_OFF"
 msgid "Subtitle: off"
-msgstr "Titulky: vypnuty"
+msgstr "Legenda: desativada"
 
 msgctxt "IDS_SUBTITLE_STREAM"
 msgid "Subtitle: %s"
-msgstr "Titulky: %s"
+msgstr "Legenda: %s"
 
 msgctxt "IDS_MAINFRM_46"
 msgid "Select the path for the DVD/BD:"
-msgstr "Zadejte cestu k DVD/BD:"
+msgstr "Selecione o caminho para o DVD/BD:"
 
 msgctxt "IDS_SUB_LOADED_SUCCESS"
 msgid " loaded successfully"
-msgstr " úspěšně načteny"
+msgstr "carregado com sucesso"
 
 msgctxt "IDS_ALL_FILES_FILTER"
 msgid "All files (*.*)|*.*||"
-msgstr "Všechny soubory (*.*)|*.*||"
+msgstr "Todos os ficheiros (*.*)|*.*||"
 
 msgctxt "IDS_GETDIB_FAILED"
 msgid "GetDIB failed, hr = %08x"
-msgstr "GetDIB selhalo, hr = %08x"
+msgstr "GetDIB falhou, hr = %08x"
 
 msgctxt "IDS_GETCURRENTIMAGE_FAILED"
 msgid "GetCurrentImage failed, hr = %08x"
-msgstr "GetCurrentImage selhalo, hr = %08x"
+msgstr "GetCurrentImage falhou, hr = %08x"
 
 msgctxt "IDS_SCREENSHOT_ERROR"
 msgid "Cannot create file"
-msgstr "Nepodařilo se vytvořit soubor"
+msgstr "Não se pôde criar ficheiro"
 
 msgctxt "IDS_THUMBNAILS_NO_DURATION"
 msgid "Cannot create thumbnails for files with no duration"
-msgstr "Pro soubory bez informací o délce nelze miniatury vytvořit"
+msgstr "Não se pode criar miniaturas para ficheiros sem duração"
 
 msgctxt "IDS_THUMBNAILS_NO_FRAME_SIZE"
 msgid "Failed to get video frame size"
-msgstr "Nepodařilo se zjistit rozměry videa"
+msgstr "Falhou ao obter o tamanho do frame do vídeo"
 
 msgctxt "IDS_OUT_OF_MEMORY"
 msgid "Out of memory, go buy some more!"
-msgstr "K dispozici není dostatek paměti, kupte si víc!"
+msgstr "Fora da memória, vá comprar alguma mais!"
 
 msgctxt "IDS_THUMBNAILS_INVALID_FORMAT"
 msgid "Invalid image format, cannot create thumbnails out of %d bpp dibs."
-msgstr "Neplatný formát, miniatury nelze vytvořit z %d bpp dibů."
+msgstr "Formato de imagem inválido, não se pode criar miniaturas a partir de %d bpp dibs."
 
 msgctxt "IDS_THUMBNAILS_INFO_FILESIZE"
 msgid "File Size: %s (%s bytes)\\N"
-msgstr "Velikost souboru: %s (%s bajtů)\\N"
+msgstr "Tamanho do ficheiro: %s (%s bytes)\\N"
 
 msgctxt "IDS_THUMBNAILS_INFO_HEADER"
 msgid "{\\an7\\1c&H000000&\\fs16\\b0\\bord0\\shad0}File Name: %s\\N%sResolution: %dx%d %s\\NDuration: %02d:%02d:%02d"
-msgstr "{\\an7\\1c&H000000&\\fs16\\b0\\bord0\\shad0}Název souboru: %s\\N%sRozlišení: %dx%d %s\\NDélka: %02d:%02d:%02d"
+msgstr "{\\an7\\1c&H000000&\\fs16\\b0\\bord0\\shad0}File Nome: %s\\N%sResolução: %dx%d %s\\NDuração: %02d:%02d:%02d"
 
 msgctxt "IDS_THUMBNAIL_TOO_SMALL"
 msgid "The thumbnails would be too small, impossible to create the file.\n\nTry lowering the number of thumbnails or increasing the total size."
-msgstr "Soubor nelze vytvořit, protože miniatury by byly příliš malé.\n\nSnižte počet miniatur, nebo zadejte větší celkovou velikost."
+msgstr "As miniaturas seriam demasiado pequenas, impossível criar o ficheiro.\n\nTente diminuir o número de miniaturas ou aumente o tamanho total."
 
 msgctxt "IDS_CANNOT_LOAD_SUB"
 msgid "To load subtitles you have to change the video renderer type and reopen the file.\n- DirectShow: EVR (Custom Presenter), Sync, VMR-9 (renderless), madVR, MPC VR, or Haali VR\n- RealMedia: Special renderer for RealMedia, or open it through DirectShow\n- QuickTime: DX7 or DX9 renderer for QuickTime\n- ShockWave: n/a"
-msgstr "Pro načtení titulků musíte použít některý z těchto video rendererů a otevřít daný soubor znovu.\n- DirectShow: EVR (Custom Presenter), Sync, VMR-9 (renderless), madVR, MPC VR nebo Haali VR\n- RealMedia: Special renderer pro RealMedia nebo použijte DirectShow\n- QuickTime: DX7 nebo DX9 renderer pro QuickTime\n- ShockWave: N/A"
+msgstr "Para carregar legendas, tem de alterar o tipo de renderizador de vídeo e reabrir o ficheiro.\n- DirectShow: EVR (Custom Presenter), Sync, VMR-9 (renderless), madVR, MPC VR, ou Haali VR\n- RealMedia: Renderizador especial para RealMedia, ou abra-o através DirectShow\n- QuickTime: renderizador DX7 ou DX9 para QuickTime\n- ShockWave: n/a"
 
 msgctxt "IDS_SUBTITLE_FILES_FILTER"
 msgid "Subtitle files"
-msgstr "Titulky"
+msgstr "Ficheiros de legenda"
 
 msgctxt "IDS_MAINFRM_68"
 msgid "Aspect Ratio: %ld:%ld"
-msgstr "Poměr stran: %ld:%ld"
+msgstr "Rácio do aspeto: %ld:%ld"
 
 msgctxt "IDS_MAINFRM_69"
 msgid "Aspect Ratio: Default (DAR)"
-msgstr "Poměr stran: Výchozí (DAR)"
+msgstr "Rácio do aspeto: Por defeito (DAR)"
 
 msgctxt "IDS_MAINFRM_70"
 msgid "Audio delay: %I64d ms"
-msgstr "Zpoždění zvuku: %I64dms"
+msgstr "Atraso do áudio: %I64d ms"
 
 msgctxt "IDS_AG_CHAPTER"
 msgid "Chapter %d"
-msgstr "Kapitola %d"
+msgstr "Capítulo %d"
 
 msgctxt "IDS_AG_OUT_OF_MEMORY"
 msgid "Out of memory"
-msgstr "Nedostatek paměti"
+msgstr "Fora da memória"
 
 msgctxt "IDS_MAINFRM_77"
 msgid "Error: Adobe Flash Player for Internet Explorer is required"
-msgstr "Chyba: Vyžadován Flash plugin pro Internet Explorer"
+msgstr "Erro: Adobe Flash Player para Internet Explorer é necessário"
 
 msgctxt "IDS_MAINFRM_78"
 msgid "QuickTime not yet supported for X64 (apple library not available)"
-msgstr "QuickTime zatím není v x64 podporován (není k dispozici daná knihovna)"
+msgstr "O QuickTime ainda não suportado em x64 (biblioteca da Apple não disponível)"
 
 msgctxt "IDS_MAINFRM_80"
 msgid "Failed to create the filter graph object"
-msgstr "Nepodařilo se vytvořit objekt grafu filtrů"
+msgstr "Falhou ao criar objeto do gráfico de filtro"
 
 msgctxt "IDS_MAINFRM_81"
 msgid "Invalid argument"
-msgstr "Neplatný argument"
+msgstr "Argumento inválido"
 
 msgctxt "IDS_MAINFRM_82"
 msgid "Opening aborted"
-msgstr "Otevírání zrušeno"
+msgstr "Abertura abortada"
 
 msgctxt "IDS_MAINFRM_83"
 msgid "Failed to render the file"
-msgstr "Soubor se nepodařilo přehrát"
+msgstr "Falhou ao renderizar o ficheiro"
 
 msgctxt "IDS_AG_CHAPTER2"
 msgid "Chapter: "
-msgstr "Kapitola: "
+msgstr "Capítulo:"
 
 msgctxt "IDS_VOLUME_OSD"
 msgid "Vol: %d%%"
-msgstr "Hlasitost: %d%%"
+msgstr "Vol: %d%%"
 
 msgctxt "IDS_BOOST_OSD"
 msgid "Boost: +%u%%"
-msgstr "Zesílení: +%u%%"
+msgstr "Aumento: +%u%%"
 
 msgctxt "IDS_BALANCE_OSD"
 msgid "Balance: %s"
-msgstr "Vyvážení: %s"
+msgstr "Equilíbrio: %s"
 
 msgctxt "IDS_FULLSCREENMONITOR_CURRENT"
 msgid "Current"
-msgstr "Aktuální"
+msgstr "Atual"
 
 msgctxt "IDS_MAINFRM_DIR_TITLE"
 msgid "Select Directory"
-msgstr "Vyberte adresář"
+msgstr "Selecione a pasta"
 
 msgctxt "IDS_MAINFRM_DIR_CHECK"
 msgid "Include subdirectories"
-msgstr "Včetně podadresářů"
+msgstr "Incluir subpastas"
 
 msgctxt "IDS_AG_PAUSE"
 msgid "Pause"
-msgstr "Pozastavit"
+msgstr "Pausar"
 
 msgctxt "IDS_AG_TOGGLE_CAPTION"
 msgid "Toggle Caption&Menu"
-msgstr "Zobrazit/Skrýt záhlaví a hlavní nabídku"
+msgstr "Alternar barra de título e menu"
 
 msgctxt "IDS_AG_TOGGLE_SEEKER"
 msgid "Toggle Seek Bar"
-msgstr "Zobrazit/Skrýt panel hledání"
+msgstr "Alternar barra de pesquisa"
 
 msgctxt "IDS_AG_TOGGLE_CONTROLS"
 msgid "Toggle Controls"
-msgstr "Zobrazit/Skrýt ovládací prvky"
+msgstr "Alternar controlos"
 
 msgctxt "IDS_MAINFRM_84"
 msgid "Invalid file name"
-msgstr "Neplatný název souboru"
+msgstr "Nome de ficheiro inválido"
 
 msgctxt "IDS_MAINFRM_86"
 msgid "Cannot connect the filters"
-msgstr "Nepodařilo se připojit filtry"
+msgstr "Não se pôde ligar os filtros"
 
 msgctxt "IDS_MAINFRM_87"
 msgid "Cannot load any source filter"
-msgstr "Nepodařilo se načíst žádný zdrojový filtr"
+msgstr "Não se pôde carregar qualquer filtro source"
 
 msgctxt "IDS_MAINFRM_88"
 msgid "Cannot render the file"
-msgstr "Soubor se nepodařilo přehrát"
+msgstr "Não se pôde renderizar o ficheiro"
 
 msgctxt "IDS_MAINFRM_89"
 msgid "Invalid file format"
-msgstr "Neplatný formát souboru"
+msgstr "Formato de ficheiro inválido"
 
 msgctxt "IDS_MAINFRM_90"
 msgid "File not found"
-msgstr "Soubor nebyl nalezen"
+msgstr "Ficheiro não encontrado"
 
 msgctxt "IDS_MAINFRM_91"
 msgid "Unknown file type"
-msgstr "Neznámý typ souboru"
+msgstr "Tipo de ficheiro desconhecido"
 
 msgctxt "IDS_MAINFRM_92"
 msgid "Unsupported stream"
-msgstr "Nepodporovaný proud"
+msgstr "Stream não suportado"
 
 msgctxt "IDS_MAINFRM_93"
 msgid "Cannot find DVD directory"
-msgstr "Nebyl nalezen adresář DVD"
+msgstr "Não se pôde encontrar a pasta de DVD"
 
 msgctxt "IDS_MAINFRM_94"
 msgid "Can't create the DVD Navigator filter"
-msgstr "Nepodařilo se vytvořit DVD Navigator filtr"
+msgstr "Não se pode criar o filtro DVD Navigator"
 
 msgctxt "IDS_AG_FAILED"
 msgid "Failed"
-msgstr "Selhalo"
+msgstr "Falhou"
 
 msgctxt "IDS_MAINFRM_96"
 msgid "Can't create video capture filter"
-msgstr "Nepodařilo se vytvořit záznamový filtr"
+msgstr "Não se pode criar o filtro de captura de vídeo"
 
 msgctxt "IDS_MAINFRM_98"
 msgid "No capture filters"
-msgstr "K dispozici nejsou žádné záznamové filtry"
+msgstr "Sem filtros de captura"
 
 msgctxt "IDS_MAINFRM_99"
 msgid "Can't create capture graph builder object"
-msgstr "Nepodařilo se vytvořit objekt záznamového graf builderu"
+msgstr "Não se pôde criar objeto gráfico construtor de captura"
 
 msgctxt "IDS_MAINFRM_108"
 msgid "Couldn't open any device"
-msgstr "Nepodařilo se otevřít žádné zařízení"
+msgstr "Não se pôde abrir qualquer dispositivo"
 
 msgctxt "IDS_AG_SOUND"
 msgid "Sound"
-msgstr "Zvuk"
+msgstr "Som"
 
 msgctxt "IDS_MAINFRM_114"
 msgid "%s was not found, please insert media containing this file."
-msgstr "%s nebyl nalezen, vložte prosím médium obsahující tento soubor."
+msgstr "%s não foi encontrado, por favor insira a media contendo este ficheiro.."
 
 msgctxt "IDS_AG_ABORTED"
 msgid "Aborted"
-msgstr "Přerušeno"
+msgstr "Abortado"
 
 msgctxt "IDS_MAINFRM_116"
 msgid "&Properties..."
-msgstr "&Vlastnosti..."
+msgstr "&Propriedades..."
 
 msgctxt "IDS_MAINFRM_117"
 msgid " (pin) properties..."
-msgstr " (pin) vlastnosti..."
+msgstr " (pin) propriedades..."
 
 msgctxt "IDS_AG_UNKNOWN_STREAM"
 msgid "Unknown Stream"
-msgstr "Neznámý proud"
+msgstr "Stream desconhecido"
 
 msgctxt "IDS_AG_UNKNOWN"
 msgid "Unknown %u"
-msgstr "Neznámý %u"
+msgstr " %u desconhecido"
 
 msgctxt "IDS_AG_VSYNC"
 msgid "VSync"
@@ -2560,323 +2559,323 @@ msgstr "VSync"
 
 msgctxt "IDS_MAINFRM_121"
 msgid " (Director Comments 1)"
-msgstr " (komentář režiséra 1)"
+msgstr " (Director Comments 1)"
 
 msgctxt "IDS_MAINFRM_122"
 msgid " (Director Comments 2)"
-msgstr " (komentář režiséra 2)"
+msgstr " (Comentários do realizador 2)"
 
 msgctxt "IDS_DVD_SUBTITLES_ENABLE"
 msgid "Enable DVD subtitles"
-msgstr "Povolit DVD titulky"
+msgstr "Ativar legendas de DVD"
 
 msgctxt "IDS_AG_ANGLE"
 msgid "Angle %u"
-msgstr "Úhel %u"
+msgstr "Ângulo %u"
 
 msgctxt "IDS_AG_VSYNCOFFSET_INCREASE"
 msgid "Increase VSync Offset"
-msgstr "Zvýšit VSync offset"
+msgstr "Aumentar deslocamento de VSync"
 
 msgctxt "IDS_AG_DISABLED"
 msgid "Disabled"
-msgstr "Zakázáno"
+msgstr "Desativado"
 
 msgctxt "IDS_AG_VSYNCOFFSET_DECREASE"
 msgid "Decrease VSync Offset"
-msgstr "Snížit VSync offset"
+msgstr "Diminuir deslocamento de VSync"
 
 msgctxt "IDS_MAINFRM_136"
 msgid "MPC-HC D3D Fullscreen"
-msgstr "MPC-HC D3D Fullscreen"
+msgstr "Ecrã completo MPC-HC D3D"
 
 msgctxt "IDS_MAINFRM_137"
 msgid "Unknown format"
-msgstr "Neznámý formát"
+msgstr "Formato desconhecido"
 
 msgctxt "IDS_MAINFRM_138"
 msgid "Sub shift: %ld ms"
-msgstr "Posun titulků: %ld"
+msgstr "Mudança legenda: %ld ms"
 
 msgctxt "IDS_VOLUME_BOOST_INC"
 msgid "Volume boost increase"
-msgstr "Zesílení - zvýšit"
+msgstr "Aumentar o aumento de volume"
 
 msgctxt "IDS_VOLUME_BOOST_DEC"
 msgid "Volume boost decrease"
-msgstr "Zesílení - snížit"
+msgstr "Diminuir o aumento de volume"
 
 msgctxt "IDS_VOLUME_BOOST_MIN"
 msgid "Volume boost Min"
-msgstr "Zesílení - minimální"
+msgstr "Aumento de volume mínimo"
 
 msgctxt "IDS_VOLUME_BOOST_MAX"
 msgid "Volume boost Max"
-msgstr "Zesílení - maximální"
+msgstr "Aumento de volume máximo"
 
 msgctxt "IDS_USAGE"
 msgid "Usage: mpc-hc.exe \"pathname\" [switches]"
-msgstr "Použití: mpc-hc.exe \"cesta\" [přepínače]"
+msgstr "Utilização: mpc-hc.exe \"caminho\" [argumentos]"
 
 msgctxt "IDS_UNKNOWN_SWITCH"
 msgid "Unrecognized switch(es) found in command line string: \n\n"
-msgstr "V příkazovém řádku byly použity neznámé parametry: \n\n"
+msgstr "Argumentos não conhecidos encontrados na cadeia de linha de comandos:\n"
 
 msgctxt "IDS_AG_TOGGLE_INFO"
 msgid "Toggle Information"
-msgstr "Zobrazit/Skrýt informace"
+msgstr "Alternar informação"
 
 msgctxt "IDS_AG_TOGGLE_STATS"
 msgid "Toggle Statistics"
-msgstr "Zobrazit/Skrýt statistiku"
+msgstr "Alternar estatísticas"
 
 msgctxt "IDS_AG_TOGGLE_STATUS"
 msgid "Toggle Status"
-msgstr "Zobrazit/Skrýt stavový řádek"
+msgstr "Alternar estado"
 
 msgctxt "IDS_AG_TOGGLE_SUBRESYNC"
 msgid "Toggle Subresync Bar"
-msgstr "Zobrazit/Skrýt Subresync"
+msgstr "Alternar barra de Subresync"
 
 msgctxt "IDS_AG_TOGGLE_PLAYLIST"
 msgid "Toggle Playlist Bar"
-msgstr "Zobrazit/Skrýt seznam stop"
+msgstr "Alternar barra de lista de reprodução"
 
 msgctxt "IDS_AG_TOGGLE_CAPTURE"
 msgid "Toggle Capture Bar"
-msgstr "Zobrazit/Skrýt panel záznamu"
+msgstr "Alternar barra de captura"
 
 msgctxt "IDS_AG_TOGGLE_DEBUGSHADERS"
 msgid "Toggle Debug Shaders"
-msgstr "Zobrazit/Skrýt ladění shaderů"
+msgstr "Alternar depuração de shaders"
 
 msgctxt "IDS_AG_ZOOM_25"
 msgid "Zoom 25%"
-msgstr "Velikost 25%"
+msgstr "Ampliar 25%"
 
 msgctxt "IDS_AG_ZOOM_50"
 msgid "Zoom 50%"
-msgstr "Velikost 50%"
+msgstr "Ampliar 50%"
 
 msgctxt "IDS_AG_ZOOM_100"
 msgid "Zoom 100%"
-msgstr "Velikost 100%"
+msgstr "Ampliar 100%"
 
 msgctxt "IDS_AG_ZOOM_200"
 msgid "Zoom 200%"
-msgstr "Velikost 200%"
+msgstr "Ampliar 200%"
 
 msgctxt "IDS_AG_NEXT_AR_PRESET"
 msgid "Next AR Preset"
-msgstr "Další AR předvolba"
+msgstr "Pré-definição RA seguinte"
 
 msgctxt "IDS_AG_VIDFRM_STRETCH"
 msgid "VidFrm Stretch"
-msgstr "Roztáhnout do okna"
+msgstr "VidFrm esticar"
 
 msgctxt "IDS_AG_VIDFRM_INSIDE"
 msgid "VidFrm Inside"
-msgstr "Dotknout se okna zevnitř"
+msgstr "VidFrm dentro"
 
 msgctxt "IDS_AG_VIDFRM_OUTSIDE"
 msgid "VidFrm Outside"
-msgstr "Dotknout se okna zvenčí"
+msgstr "VidFrm fora"
 
 msgctxt "IDS_AG_PNS_RESET"
 msgid "PnS Reset"
-msgstr "Výchozí P&S"
+msgstr "Repor PnS"
 
 msgctxt "IDS_AG_PNS_ROTATEX_P"
 msgid "PnS Rotate X+"
-msgstr "P&S pootočit X+"
+msgstr "PnS rodar X+"
 
 msgctxt "IDS_AG_VIDFRM_ZOOM1"
 msgid "VidFrm Zoom 1"
-msgstr "Roztáhnout 1"
+msgstr "VidFrm Ampliação 1"
 
 msgctxt "IDS_AG_VIDFRM_ZOOM2"
 msgid "VidFrm Zoom 2"
-msgstr "Roztáhnout 2"
+msgstr "VidFrm Ampliação 2"
 
 msgctxt "IDS_AG_VIDFRM_SWITCHZOOM"
 msgid "VidFrm Switch Zoom"
-msgstr "Přepnout režim roztažení"
+msgstr "VidFrm mudar ampliação"
 
 msgctxt "IDS_ENABLE_ALL_FILTERS"
 msgid "&Enable all filters"
-msgstr "&Povolit všechny filtry"
+msgstr "Ativar todos os filtros"
 
 msgctxt "IDS_LOGO_AUTHOR"
 msgid "Author unknown. Contact us if you made this logo!"
-msgstr "Autor neznámý. Pokud jste autorem tohoto loga, kontaktujte mě!"
+msgstr "Autor desconhecido. Contacte-nos se fez este logo!"
 
 msgctxt "IDS_NO_MORE_MEDIA"
 msgid "No more media in the current folder."
-msgstr "V aktuálním adresáři již nejsou další soubory."
+msgstr "Não existem mais ficheiros de media na pasta atual."
 
 msgctxt "IDS_FIRST_IN_FOLDER"
 msgid "The first file of the folder is already loaded."
-msgstr "První soubor v adresáře je již načten."
+msgstr "O primeiro ficheiro da pasta já está carregado."
 
 msgctxt "IDS_LAST_IN_FOLDER"
 msgid "The last file of the folder is already loaded."
-msgstr "Poslední soubor v adresáři je již načten."
+msgstr "O último ficheiro da pasta já está carregado."
 
 msgctxt "IDS_FRONT_LEFT"
 msgid "Front Left"
-msgstr "Přední levý"
+msgstr "Esquerdo frontal"
 
 msgctxt "IDS_FRONT_RIGHT"
 msgid "Front Right"
-msgstr "Přední pravý"
+msgstr "Direiro frontal"
 
 msgctxt "IDS_FRONT_CENTER"
 msgid "Front Center"
-msgstr "Přední středový"
+msgstr "Centro frontal"
 
 msgctxt "IDS_LOW_FREQUENCY"
 msgid "Low Frequency"
-msgstr "Basový"
+msgstr "Baixa frequência"
 
 msgctxt "IDS_BACK_LEFT"
 msgid "Back Left"
-msgstr "Zadní levý"
+msgstr "Esquerda traseiro"
 
 msgctxt "IDS_BACK_RIGHT"
 msgid "Back Right"
-msgstr "Zadní pravý"
+msgstr "Direito traseiro"
 
 msgctxt "IDS_FRONT_LEFT_OF_CENTER"
 msgid "Front Left of Center"
-msgstr "Přední levý středový"
+msgstr "Esquerdo frontal do centro"
 
 msgctxt "IDS_FRONT_RIGHT_OF_CENTER"
 msgid "Front Right of Center"
-msgstr "Přední pravý středový"
+msgstr "Direito frontal do centro"
 
 msgctxt "IDS_BACK_CENTER"
 msgid "Back Center"
-msgstr "Zadní středový"
+msgstr "Centro traseiro"
 
 msgctxt "IDS_SIDE_LEFT"
 msgid "Side Left"
-msgstr "Boční levý"
+msgstr "Esquerdo do lado"
 
 msgctxt "IDS_SIDE_RIGHT"
 msgid "Side Right"
-msgstr "Boční pravý"
+msgstr "Direito do lado"
 
 msgctxt "IDS_TOP_CENTER"
 msgid "Top Center"
-msgstr "Horní středový"
+msgstr "Cima centro"
 
 msgctxt "IDS_TOP_FRONT_LEFT"
 msgid "Top Front Left"
-msgstr "Horní přední levý"
+msgstr "Cima frontal esquerdo"
 
 msgctxt "IDS_TOP_FRONT_CENTER"
 msgid "Top Front Center"
-msgstr "Horní přední středový"
+msgstr "Cima frontal central"
 
 msgctxt "IDS_TOP_FRONT_RIGHT"
 msgid "Top Front Right"
-msgstr "Horní přední pravý"
+msgstr "Cima frontal direito"
 
 msgctxt "IDS_TOP_BACK_LEFT"
 msgid "Top Back Left"
-msgstr "Horní zadní levý"
+msgstr "Cima traseiro esquerdo"
 
 msgctxt "IDS_TOP_BACK_CENTER"
 msgid "Top Back Center"
-msgstr "Horní zadní středový"
+msgstr "Cima traseiro central"
 
 msgctxt "IDS_TOP_BACK_RIGHT"
 msgid "Top Back Right"
-msgstr "Horní zadní pravý"
+msgstr "Cima traseiro direito"
 
 msgctxt "IDS_TIME_TOOLTIP_ABOVE"
 msgid "Above seek bar"
-msgstr "Nad panelem hledání"
+msgstr "Acima da barra de pesquisa"
 
 msgctxt "IDS_TIME_TOOLTIP_BELOW"
 msgid "Below seek bar"
-msgstr "Pod panelem hledání"
+msgstr "Abaixo da barra de pesquisa"
 
 msgctxt "IDS_VIDEO_STREAM"
 msgid "Video: %s"
-msgstr "Video: %s"
+msgstr "Vídeo: %s"
 
 msgctxt "IDS_APPLY"
 msgid "Apply"
-msgstr "Použít"
+msgstr "Aplicar"
 
 msgctxt "IDS_CLEAR"
 msgid "Clear"
-msgstr "Smazat"
+msgstr "Limpar"
 
 msgctxt "IDS_CANCEL"
 msgid "Cancel"
-msgstr "Storno"
+msgstr "Cancelar"
 
 msgctxt "IDS_THUMB_THUMBNAILS"
 msgid "Layout"
-msgstr "Rozvržení"
+msgstr "Esquema"
 
 msgctxt "IDS_THUMB_PIXELS"
 msgid "Pixels:"
-msgstr "Pixely:"
+msgstr "Pixeis:"
 
 msgctxt "IDS_TEXTFILE_ENC"
 msgid "Encoding:"
-msgstr "Kódování:"
+msgstr "Codificação:"
 
 msgctxt "IDS_DISABLE_ALL_FILTERS"
 msgid "&Disable all filters"
-msgstr "&Zakázat všechny filtry"
+msgstr "&Desativar todos os filtros"
 
 msgctxt "IDS_ENABLE_AUDIO_FILTERS"
 msgid "Enable all audio decoders"
-msgstr "Povolit všechny dekodéry zvuku"
+msgstr "Ativar todos os descodificadores de áudio"
 
 msgctxt "IDS_DISABLE_AUDIO_FILTERS"
 msgid "Disable all audio decoders"
-msgstr "Zakázat všechny dekodéry zvuku"
+msgstr "Desativar todos os descodificadores de áudio"
 
 msgctxt "IDS_ENABLE_VIDEO_FILTERS"
 msgid "Enable all video decoders"
-msgstr "Povolit všechny dekodéry videa"
+msgstr "Ativar todos os descodificadores de vídeo"
 
 msgctxt "IDS_DISABLE_VIDEO_FILTERS"
 msgid "Disable all video decoders"
-msgstr "Zakázat všechny dekodéry videa"
+msgstr "Desativar todos os descodificadores de vídeo"
 
 msgctxt "IDS_STRETCH_TO_WINDOW"
 msgid "Stretch To Window"
-msgstr "Roztáhnout do okna"
+msgstr "Esticar para a janela"
 
 msgctxt "IDS_TOUCH_WINDOW_FROM_INSIDE"
 msgid "Touch Window From Inside"
-msgstr "Dotknout se okna zevnitř"
+msgstr "Tocar a janela por dentro"
 
 msgctxt "IDS_ZOOM1"
 msgid "Zoom 1"
-msgstr "Roztáhnout 1"
+msgstr "Ampliação 1"
 
 msgctxt "IDS_ZOOM2"
 msgid "Zoom 2"
-msgstr "Roztáhnout 2"
+msgstr "Ampliação 2"
 
 msgctxt "IDS_TOUCH_WINDOW_FROM_OUTSIDE"
 msgid "Touch Window From Outside"
-msgstr "Dotknout se okna zvenčí"
+msgstr "Tocar a janela a partir de fora"
 
 msgctxt "IDS_AUDIO_STREAM"
 msgid "Audio: %s"
-msgstr "Zvuk: %s"
+msgstr "Áudio: %s"
 
 msgctxt "IDS_AG_REOPEN"
 msgid "Reopen File"
-msgstr "Znovu otevřít soubor"
+msgstr "Voltar a abrir o ficheiro"
 
 msgctxt "IDS_MFMT_AVI"
 msgid "AVI"
@@ -2892,7 +2891,7 @@ msgstr "MPEG-TS"
 
 msgctxt "IDS_MFMT_DVDVIDEO"
 msgid "DVD-Video"
-msgstr "DVD-Video"
+msgstr "DVD-Vídeo"
 
 msgctxt "IDS_MFMT_MKV"
 msgid "Matroska"
@@ -2908,7 +2907,7 @@ msgstr "MP4"
 
 msgctxt "IDS_MFMT_MOV"
 msgid "QuickTime Movie"
-msgstr "QuickTime Movie"
+msgstr "Filme QuickTime"
 
 msgctxt "IDS_MFMT_3GP"
 msgid "3GP"
@@ -2924,7 +2923,7 @@ msgstr "Flash Video"
 
 msgctxt "IDS_MFMT_OGM"
 msgid "Ogg Media"
-msgstr "Ogg Media"
+msgstr "Media Ogg"
 
 msgctxt "IDS_MFMT_RM"
 msgid "Real Media"
@@ -2944,7 +2943,7 @@ msgstr "Smacker/Bink Video"
 
 msgctxt "IDS_MFMT_FLIC"
 msgid "FLIC Animation"
-msgstr "FLIC Animation"
+msgstr "Animação FLIC"
 
 msgctxt "IDS_MFMT_DSM"
 msgid "DirectShow Media"
@@ -2952,11 +2951,11 @@ msgstr "DirectShow Media"
 
 msgctxt "IDS_MFMT_IVF"
 msgid "Indeo Video Format"
-msgstr "Indeo Video Format"
+msgstr "Formato de vídeo Indeo"
 
 msgctxt "IDS_MFMT_OTHER"
 msgid "Other"
-msgstr "Ostatní"
+msgstr "Outro"
 
 msgctxt "IDS_MFMT_SWF"
 msgid "Shockwave Flash"
@@ -2964,7 +2963,7 @@ msgstr "Shockwave Flash"
 
 msgctxt "IDS_MFMT_OTHER_AUDIO"
 msgid "Other Audio"
-msgstr "Ostatní zvukové formáty"
+msgstr "Outro áudio"
 
 msgctxt "IDS_MFMT_AC3"
 msgid "AC-3"
@@ -2976,7 +2975,7 @@ msgstr "AIFF"
 
 msgctxt "IDS_MFMT_ALAC"
 msgid "Apple Lossless"
-msgstr "Apple Lossless"
+msgstr "Apple sem perdas"
 
 msgctxt "IDS_MFMT_WAV"
 msgid "WAV"
@@ -3012,7 +3011,7 @@ msgstr "AU/SND"
 
 msgctxt "IDS_MFMT_CDA"
 msgid "Audio CD track"
-msgstr "Stopa zvukového CD"
+msgstr "Faixa de CD de áudio"
 
 msgctxt "IDS_MFMT_FLAC"
 msgid "FLAC"
@@ -3020,7 +3019,7 @@ msgstr "FLAC"
 
 msgctxt "IDS_MFMT_M4A"
 msgid "MPEG-4 Audio"
-msgstr "MPEG-4 Audio"
+msgstr "Áudio MPEG-4"
 
 msgctxt "IDS_MFMT_MIDI"
 msgid "MIDI"
@@ -3028,7 +3027,7 @@ msgstr "MIDI"
 
 msgctxt "IDS_MFMT_MKA"
 msgid "Matroska audio"
-msgstr "Matroska audio"
+msgstr "Áudio Matroska"
 
 msgctxt "IDS_MFMT_MP3"
 msgid "MP3"
@@ -3036,7 +3035,7 @@ msgstr "MP3"
 
 msgctxt "IDS_MFMT_MPA"
 msgid "MPEG audio"
-msgstr "MPEG audio"
+msgstr "Áudio MPEG"
 
 msgctxt "IDS_MFMT_MPC"
 msgid "Musepack"
@@ -3064,15 +3063,15 @@ msgstr "True Audio"
 
 msgctxt "IDS_MFMT_PLS"
 msgid "Playlist"
-msgstr "Seznam stop"
+msgstr "Lista de reprodução"
 
 msgctxt "IDS_MFMT_BDPLS"
 msgid "Blu-ray playlist"
-msgstr "Seznam stop Blu-ray"
+msgstr "Lista de reprodução Blu-ray"
 
 msgctxt "IDS_MFMT_RAR"
 msgid "RAR Archive"
-msgstr "RAR archív"
+msgstr "Arquivo RAR"
 
 msgctxt "IDS_DVB_CHANNEL_FPS"
 msgid "FPS"
@@ -3080,307 +3079,307 @@ msgstr "FPS"
 
 msgctxt "IDS_DVB_CHANNEL_RESOLUTION"
 msgid "Resolution"
-msgstr "Rozlišení"
+msgstr "Resolução"
 
 msgctxt "IDS_DVB_CHANNEL_ASPECT_RATIO"
 msgid "Aspect Ratio"
-msgstr "Poměr stran"
+msgstr "Rácio do aspeto"
 
 msgctxt "IDS_OSD_RS_VSYNC_ON"
 msgid "VSync: On"
-msgstr "VSync: Zapnuto"
+msgstr "VSync: Ativado"
 
 msgctxt "IDS_OSD_RS_VSYNC_OFF"
 msgid "VSync: Off"
-msgstr "VSync: Vypnuto"
+msgstr "VSync: Desativado"
 
 msgctxt "IDS_OSD_RS_ACCURATE_VSYNC_ON"
 msgid "Accurate VSync: On"
-msgstr "Přesný VSync: Zapnuto"
+msgstr "VSync preciso: Ativado"
 
 msgctxt "IDS_OSD_RS_ACCURATE_VSYNC_OFF"
 msgid "Accurate VSync: Off"
-msgstr "Přesný VSync: Vypnuto"
+msgstr "VSync preciso: Desativado"
 
 msgctxt "IDS_OSD_RS_SYNC_TO_DISPLAY_ON"
 msgid "Synchronize Video to Display: On"
-msgstr "Synchronizovat video k displeji: Zapnuto"
+msgstr "Sincronizar vídeo para ecrã: Ativado"
 
 msgctxt "IDS_OSD_RS_SYNC_TO_DISPLAY_OFF"
 msgid "Synchronize Video to Display: Off"
-msgstr "Synchronizovat video k displeji: Vypnuto"
+msgstr "Sincronizar vídeo para ecrã: Desativado"
 
 msgctxt "IDS_OSD_RS_SYNC_TO_VIDEO_ON"
 msgid "Synchronize Display to Video: On"
-msgstr "Synchronizovat displej k videu: Zapnuto"
+msgstr "Sincronizar ecrã para vídeo: Ativado"
 
 msgctxt "IDS_OSD_RS_SYNC_TO_VIDEO_OFF"
 msgid "Synchronize Display to Video: Off"
-msgstr "Synchronizovat displej k videu: Vypnuto"
+msgstr "Sincronizar ecrã para vídeo: Desativado"
 
 msgctxt "IDS_OSD_RS_PRESENT_NEAREST_ON"
 msgid "Present at Nearest VSync: On"
-msgstr "Zobrazit při nejbližším VSync: Zapnuto"
+msgstr "Apresentar em VSync mais próximo: Ativado"
 
 msgctxt "IDS_OSD_RS_PRESENT_NEAREST_OFF"
 msgid "Present at Nearest VSync: Off"
-msgstr "Zobrazit při nejbližším VSync: Vypnuto"
+msgstr "Apresentar em VSync mais próximo: Desativar"
 
 msgctxt "IDS_OSD_RS_COLOR_MANAGEMENT_ON"
 msgid "Color Management: On"
-msgstr "Správa barev: Zapnuto"
+msgstr "Gestão de cor: Ativado"
 
 msgctxt "IDS_OSD_RS_COLOR_MANAGEMENT_OFF"
 msgid "Color Management: Off"
-msgstr "Správa barev: Vypnuto"
+msgstr "Gestão de cor: Desativado"
 
 msgctxt "IDS_OSD_RS_INPUT_TYPE_AUTO"
 msgid "Input Type: Auto-Detect"
-msgstr "Typ vstupu: Automaticky"
+msgstr "Tipo de entrada: Auto-detetar"
 
 msgctxt "IDS_OSD_RS_INPUT_TYPE_HDTV"
 msgid "Input Type: HDTV"
-msgstr "Typ vstupu: HDTV"
+msgstr "Tipo de entrada: HDTV"
 
 msgctxt "IDS_OSD_RS_INPUT_TYPE_SD_NTSC"
 msgid "Input Type: SDTV NTSC"
-msgstr "Typ vstupu: SDTV NTSC"
+msgstr "Tipo de entrada: NTSC de SDTV"
 
 msgctxt "IDS_OSD_RS_INPUT_TYPE_SD_PAL"
 msgid "Input Type: SDTV PAL"
-msgstr "Typ vstupu: SDTV PAL"
+msgstr "Tipo de entrada: PAL de SDTV"
 
 msgctxt "IDS_OSD_RS_AMBIENT_LIGHT_BRIGHT"
 msgid "Ambient Light: Bright (2.2 Gamma)"
-msgstr "Osvětlení prostředí: Jasno (2.2 Gamma)"
+msgstr "Luz ambiente: Brilho (Gamma 2.2)"
 
 msgctxt "IDS_OSD_RS_AMBIENT_LIGHT_DIM"
 msgid "Ambient Light: Dim (2.35 Gamma)"
-msgstr "Osvětlení prostředí: Šero (2.35 Gamma)"
+msgstr "Luz ambiente: Fraco (Gamma 2.35)"
 
 msgctxt "IDS_OSD_RS_AMBIENT_LIGHT_DARK"
 msgid "Ambient Light: Dark (2.4 Gamma)"
-msgstr "Osvětlení prostředí: Tma (2.4 Gamma)"
+msgstr "Luz ambiente: Escuro (Gamma 2.4)"
 
 msgctxt "IDS_OSD_RS_REND_INTENT_PERCEPT"
 msgid "Rendering Intent: Perceptual"
-msgstr "Vykreslení: Percepční"
+msgstr "Intenção da renderização: Perceptiva"
 
 msgctxt "IDS_OSD_RS_REND_INTENT_RELATIVE"
 msgid "Rendering Intent: Relative Colorimetric"
-msgstr "Vykreslení: Relativní kolorimetrické"
+msgstr "Intenção da renderização: Métrica da cor relativa"
 
 msgctxt "IDS_OSD_RS_REND_INTENT_SATUR"
 msgid "Rendering Intent: Saturation"
-msgstr "Vykreslení: Sytost"
+msgstr "Intenção do renderizador: Saturação"
 
 msgctxt "IDS_OSD_RS_REND_INTENT_ABSOLUTE"
 msgid "Rendering Intent: Absolute Colorimetric"
-msgstr "Vykreslení: Absolutní kolorimetrické"
+msgstr "Intenção da renderização: Métrica da cor absoluta"
 
 msgctxt "IDS_OSD_RS_OUTPUT_RANGE"
 msgid "Output Range: %s"
-msgstr "Rozsah výstupu: %s"
+msgstr "Margem de saída: %s"
 
 msgctxt "IDS_OSD_RS_FLUSH_BEF_VSYNC_ON"
 msgid "Flush GPU before VSync: On"
-msgstr "Vyprázdnit GPU před VSync: Zapnuto"
+msgstr "Esvaziar GPU antes de VSync: Ativado"
 
 msgctxt "IDS_OSD_RS_FLUSH_BEF_VSYNC_OFF"
 msgid "Flush GPU before VSync: Off"
-msgstr "Vyprázdnit GPU před VSync: Vypnuto"
+msgstr "Esvaziar GPU antes do VSync: Desativado"
 
 msgctxt "IDS_OSD_RS_FLUSH_AFT_PRES_ON"
 msgid "Flush GPU after Present: On"
-msgstr "Vyprázdnit GPU po zobrazení: Zapnuto"
+msgstr "Esvaziar GPU depois de apresentar: Ativado"
 
 msgctxt "IDS_OSD_RS_FLUSH_AFT_PRES_OFF"
 msgid "Flush GPU after Present: Off"
-msgstr "Vyprázdnit GPU po zobrazení: Vypnuto"
+msgstr "Esvaziar GPU depois de apresentar: Desativado"
 
 msgctxt "IDS_OSD_RS_WAIT_ON"
 msgid "Wait for GPU Flush: On"
-msgstr "Čekat na vyprázdnění GPU: Zapnuto"
+msgstr "Esperar pelo esvaziamento do GPU: Ativado"
 
 msgctxt "IDS_OSD_RS_WAIT_OFF"
 msgid "Wait for GPU Flush: Off"
-msgstr "Čekat na vyprázdnění GPU: Vypnuto"
+msgstr "Esperar pelo esvaziamento do GPU: Desativado"
 
 msgctxt "IDS_OSD_RS_D3D_FULLSCREEN_ON"
 msgid "D3D Fullscreen: On"
-msgstr "D3D Fullscreen: Zapnuto"
+msgstr "Ecrã completo D3D: Ativado"
 
 msgctxt "IDS_OSD_RS_D3D_FULLSCREEN_OFF"
 msgid "D3D Fullscreen: Off"
-msgstr "D3D Fullscreen: Vypnuto"
+msgstr "Ecrã completo D3D: Desativado"
 
 msgctxt "IDS_OSD_RS_NO_DESKTOP_COMP_ON"
 msgid "Disable desktop composition: On"
-msgstr "Zakázat kompozici plochy: Zapnuto"
+msgstr "Desativar composição do amb. trabalho: Ativado"
 
 msgctxt "IDS_OSD_RS_NO_DESKTOP_COMP_OFF"
 msgid "Disable desktop composition: Off"
-msgstr "Zakázat kompozici plochy: Vypnuto"
+msgstr "Desativar composição amb. trabalho: Desativado"
 
 msgctxt "IDS_OSD_RS_ALT_VSYNC_ON"
 msgid "Alternative VSync: On"
-msgstr "Alternativní VSync: Zapnuto"
+msgstr "VSync alternativo: Ativado"
 
 msgctxt "IDS_OSD_RS_ALT_VSYNC_OFF"
 msgid "Alternative VSync: Off"
-msgstr "Alternativní VSync: Vypnuto"
+msgstr "VSync alternativo: Desativado"
 
 msgctxt "IDS_OSD_RS_RESET_DEFAULT"
 msgid "Renderer settings reset to default"
-msgstr "Obnoveno výchozí nastavení rendereru"
+msgstr "Definições do renderizador repostas para as originais"
 
 msgctxt "IDS_OSD_RS_RESET_OPTIMAL"
 msgid "Renderer settings reset to optimal"
-msgstr "Obnoveno optimální nastavení rendereru"
+msgstr "Definições do renderizador repostas para otimizadas"
 
 msgctxt "IDS_OSD_RS_D3D_FS_GUI_SUPP_ON"
 msgid "D3D Fullscreen GUI Support: On"
-msgstr "D3D Fullscreen s podporou GUI: Zapnuto"
+msgstr "Suporte GUI do ecrã completo D3D: Ativado"
 
 msgctxt "IDS_OSD_RS_D3D_FS_GUI_SUPP_OFF"
 msgid "D3D Fullscreen GUI Support: Off"
-msgstr "D3D Fullscreen s podporou GUI: Vypnuto"
+msgstr "Suporte GUI do ecrã completo D3D: Desativado"
 
 msgctxt "IDS_OSD_RS_10BIT_RBG_OUT_ON"
 msgid "10-bit RGB Output: On"
-msgstr "10bitový RGB výstup: Zapnuto"
+msgstr "Saída RGB de 10-bit: Ativado"
 
 msgctxt "IDS_OSD_RS_10BIT_RBG_OUT_OFF"
 msgid "10-bit RGB Output: Off"
-msgstr "10bitový RGB výstup: Vypnuto"
+msgstr "Saída RGB de 10-bit: Desativado"
 
 msgctxt "IDS_OSD_RS_10BIT_RBG_IN_ON"
 msgid "Force 10-bit RGB Input: On"
-msgstr "Vynutit 10bitový RGB vstup: Vypnuto"
+msgstr "Forçar entrada RGB de 10-bit: Ativado"
 
 msgctxt "IDS_OSD_RS_10BIT_RBG_IN_OFF"
 msgid "Force 10-bit RGB Input: Off"
-msgstr "Vynutit 10bitový RGB vstup: Zapnuto"
+msgstr "Forçar entrada RGB de 10-bit: Desativado"
 
 msgctxt "IDS_OSD_RS_FULL_FP_PROCESS_ON"
 msgid "Full Floating Point Processing: On"
-msgstr "Formát plovoucí desetinné čárky: Zapnuto"
+msgstr "Processamento de vírgula flutuante completo: Ativado"
 
 msgctxt "IDS_OSD_RS_FULL_FP_PROCESS_OFF"
 msgid "Full Floating Point Processing: Off"
-msgstr "Formát plovoucí desetinné čárky: Vypnuto"
+msgstr "Proc. de vírgula flutuante completo: Desativado"
 
 msgctxt "IDS_OSD_RS_HALF_FP_PROCESS_ON"
 msgid "Half Floating Point Processing: On"
-msgstr "Formát plovoucí desetinné čárky poloviční přesnosti: Zapnuto"
+msgstr "Metade do proc. de vírguka flutuante: Ativado"
 
 msgctxt "IDS_OSD_RS_HALF_FP_PROCESS_OFF"
 msgid "Half Floating Point Processing: Off"
-msgstr "Formát plovoucí desetinné čárky poloviční přesnosti: Vypnuto"
+msgstr "Metade do proc. de vírgula flutuante: Desativado"
 
 msgctxt "IDS_BRIGHTNESS_DEC"
 msgid "Brightness decrease"
-msgstr "Snížení jasu"
+msgstr "Diminuição do brilho"
 
 msgctxt "IDS_CONTRAST_INC"
 msgid "Contrast increase"
-msgstr "Zvýšení kontrastu"
+msgstr "Aumento do brilho"
 
 msgctxt "IDS_CONTRAST_DEC"
 msgid "Contrast decrease"
-msgstr "Snížení kontrastu"
+msgstr "Diminuição do contraste"
 
 msgctxt "IDS_HUE_INC"
 msgid "Hue increase"
-msgstr "Zvýšení odstínu"
+msgstr "Aumento do Hue"
 
 msgctxt "IDS_HUE_DEC"
 msgid "Hue decrease"
-msgstr "Snížení odstínu"
+msgstr "Diminuição do Hue"
 
 msgctxt "IDS_SATURATION_INC"
 msgid "Saturation increase"
-msgstr "Zvýšení sytosti"
+msgstr "Aumento da saturação"
 
 msgctxt "IDS_SATURATION_DEC"
 msgid "Saturation decrease"
-msgstr "Snížení sytosti"
+msgstr "Diminuição da saturação"
 
 msgctxt "IDS_RESET_COLOR"
 msgid "Reset color settings"
-msgstr "Obnovit výchozí"
+msgstr "Repor as definições de cor"
 
 msgctxt "IDS_USING_LATEST_STABLE"
 msgid "\nYou are already using the latest stable version."
-msgstr "\nPoužíváte aktuální stabilní verzi."
+msgstr "\nJá está a utilizar a última versão estável."
 
 msgctxt "IDS_USING_NEWER_VERSION"
 msgid "Your current version is v%s.\n\nThe latest stable version is v%s."
-msgstr "Používáte verzi v%s.\n\nNejnovější stabilní verze je v%s."
+msgstr "A sua versão atual é v%s.\n\nA última versão estável é v%s."
 
 msgctxt "IDS_NEW_UPDATE_AVAILABLE"
 msgid "MPC-HC v%s is now available. You are using v%s.\n\nDo you want to visit MPC-HC's website to download it?"
-msgstr "K dispozici je MPC-HC v%s. Používáte v%s.\n\nChcete přejít na domovskou stránku MPC-HC a stáhnout novou verzi?"
+msgstr "O MPC-HC v%s está agora disponível. Está a usar v%s.\n\nPretende visitar o website do MPC-HC para descarregá-lo?"
 
 msgctxt "IDS_UPDATE_ERROR"
 msgid "Update server not found.\n\nPlease check your internet connection or try again later."
-msgstr "Aktualizační server nebyl nalezen.\n\nZkontrolujte připojení k Internetu a akci zopakujte později."
+msgstr "Servidor de atualização não encontrado.\n\nPor favor verifique a sua ligação à Internet ou tente novamente mais tarde."
 
 msgctxt "IDS_UPDATE_CLOSE"
 msgid "&Close"
-msgstr "&Zavřít"
+msgstr "Fe&char"
 
 msgctxt "IDS_OSD_ZOOM"
 msgid "Zoom: %.0lf%%"
-msgstr "Velikost: %.0lf%%"
+msgstr "Ampliação: %.0lf%%"
 
 msgctxt "IDS_OSD_ZOOM_AUTO"
 msgid "Zoom: Auto"
-msgstr "Velikost: Automaticky"
+msgstr "Ampliação: Auto"
 
 msgctxt "IDS_CUSTOM_CHANNEL_MAPPING"
 msgid "Toggle custom channel mapping"
-msgstr "Zapnout/Vypnout vlastní přiřazení kanálů"
+msgstr "Alternar mapeamento de canal personalizado"
 
 msgctxt "IDS_OSD_CUSTOM_CH_MAPPING_ON"
 msgid "Custom channel mapping: On"
-msgstr "Vlastní přiřazení kanálů: Zapnuto"
+msgstr "Mapeamento de canal personalizado: Ativado"
 
 msgctxt "IDS_OSD_CUSTOM_CH_MAPPING_OFF"
 msgid "Custom channel mapping: Off"
-msgstr "Vlastní přiřazení kanálů: Vypnuto"
+msgstr "Mapeamento de canal personalizado: Desativado"
 
 msgctxt "IDS_NORMALIZE"
 msgid "Toggle normalization"
-msgstr "Zapnout/Vypnout normalizaci"
+msgstr "Alternar normalização"
 
 msgctxt "IDS_OSD_NORMALIZE_ON"
 msgid "Normalization: On"
-msgstr "Normalizace: Zapnuto"
+msgstr "Normalização: Ativado"
 
 msgctxt "IDS_OSD_NORMALIZE_OFF"
 msgid "Normalization: Off"
-msgstr "Normalizace: Vypnuto"
+msgstr "Normalização: Desativado"
 
 msgctxt "IDS_REGAIN_VOLUME"
 msgid "Toggle regain volume"
-msgstr "Zapnout/Vypnout obnovení hlasitosti"
+msgstr "Alternar reganho de volume"
 
 msgctxt "IDS_OSD_REGAIN_VOLUME_ON"
 msgid "Regain volume: On"
-msgstr "Obnovení hlasitosti: Zapnuto"
+msgstr "Reganho de volume: Ativado"
 
 msgctxt "IDS_OSD_REGAIN_VOLUME_OFF"
 msgid "Regain volume: Off"
-msgstr "Obnovení hlasitosti: Vypnuto"
+msgstr "Reganho do volume: Desativado"
 
 msgctxt "IDS_SIZE_UNIT_BYTES"
 msgid "bytes"
-msgstr "bajty"
+msgstr "bytes"
 
 msgctxt "IDS_SIZE_UNIT_K"
 msgid "KB"
-msgstr "kB"
+msgstr "KB"
 
 msgctxt "IDS_SIZE_UNIT_M"
 msgid "MB"
@@ -3392,7 +3391,7 @@ msgstr "GB"
 
 msgctxt "IDS_SPEED_UNIT_K"
 msgid "KB/s"
-msgstr "kB/s"
+msgstr "KB/s"
 
 msgctxt "IDS_SPEED_UNIT_M"
 msgid "MB/s"
@@ -3400,215 +3399,215 @@ msgstr "MB/s"
 
 msgctxt "IDS_BDA_ERROR_CREATE_TUNER"
 msgid "Could not create the tuner."
-msgstr "Nepodařilo se vytvořit tuner."
+msgstr "Não se pôde criar o sintonizador."
 
 msgctxt "IDS_BDA_ERROR_CREATE_RECEIVER"
 msgid "Could not create the receiver."
-msgstr "Nepodařilo se vytvořit přijímač."
+msgstr "Não de pôde criar o receptor."
 
 msgctxt "IDS_BDA_ERROR_CONNECT_NW_TUNER"
 msgid "Could not connect the network and the tuner."
-msgstr "Nepodařilo se připojit k síti a tuneru."
+msgstr "Não se pôde ligar à rede e ao sintonizador."
 
 msgctxt "IDS_BDA_ERROR_CONNECT_TUNER_REC"
 msgid "Could not connect the tuner and the receiver."
-msgstr "Nepodařilo se připojit tuner a přijímač."
+msgstr "Não se pôde ligar ao sintonizador nem ao receptor."
 
 msgctxt "IDS_BDA_ERROR_CONNECT_TUNER"
 msgid "Could not connect the tuner."
-msgstr "Nepodařilo se připojit k tuneru."
+msgstr "Nâo se pôde ligar ao sintonizador."
 
 msgctxt "IDS_BDA_ERROR_DEMULTIPLEXER"
 msgid "Could not create the demultiplexer."
-msgstr "Nepodařilo se vytvořit demultiplexor."
+msgstr "Não se pôde criar o demultiplexer."
 
 msgctxt "IDS_GOTO_ERROR_PARSING_TIME"
 msgid "Error parsing the entered time!"
-msgstr "Při analýze zadaného času došlo k chybě!"
+msgstr "Erro ao analisar o tempo inserido!"
 
 msgctxt "IDS_GOTO_ERROR_PARSING_TEXT"
 msgid "Error parsing the entered text!"
-msgstr "Při analýze zadaného textu došlo k chybě!"
+msgstr "Erro ao analisar o texto inserido!"
 
 msgctxt "IDS_GOTO_ERROR_PARSING_FPS"
 msgid "Error parsing the entered frame rate!"
-msgstr "Při analýze zadané snímkové frekvence došlo k chybě!"
+msgstr "Erro ao analisar o ritmo de frame inserido!"
 
 msgctxt "IDS_FRAME_STEP_ERROR_RENDERER"
 msgid "Cannot frame-step, try a different video renderer."
-msgstr "Pohyb po snímcích není podporován, zkuste použít jiný video renderer."
+msgstr "Não pode fazer passo de frame, tente outro rend. vídeo."
 
 msgctxt "IDS_SCREENSHOT_ERROR_REAL"
 msgid "The \"Save Image\" and \"Save Thumbnails\" functions do not work with the default video renderer for RealMedia.\nSelect one of the DirectX renderers for RealMedia in MPC-HC's output options and reopen the file."
-msgstr "Funkce Uložit obrázek a Uložit miniatury s výchozím video rendererem pro RealMedia nefungují.\nV nastavení výstupu vyberte jeden z DirectX rendererů pro RealMedia a soubor znovu otevřete."
+msgstr "As funções \"Guardar imagem\" e \"Guardar miniaturas\" não funcionam com renderizador por defeito de vídeo para o RealMedia.\nSelecione um dos renderizadores DirectX para o RealMedia nas opções de saída do MPC-HC e volte a abrir o ficheiro."
 
 msgctxt "IDS_SCREENSHOT_ERROR_QT"
 msgid "The \"Save Image\" and \"Save Thumbnails\" functions do not work with the default video renderer for QuickTime.\nSelect one of the DirectX renderers for QuickTime in MPC-HC's output options and reopen the file."
-msgstr "Funkce Uložit obrázek a Uložit miniatury s výchozím video rendererem pro QuickTime nefungují.\nV nastavení výstupu vyberte jeden z DirectX rendererů pro QuickTime a soubor znovu otevřete."
+msgstr "As funções \"Guardar imagem\" e \"Guardar miniaturas\" não funcionam com renderizador por defeito de vídeo para o QuickTime.\nSelecione um dos renderizadores DirectX para o QuickTime nas opções de saída do MPC-HC e volte a abrir o ficheiro."
 
 msgctxt "IDS_SCREENSHOT_ERROR_SHOCKWAVE"
 msgid "The \"Save Image\" and \"Save Thumbnails\" functions do not work for Shockwave files."
-msgstr "Funkce Uložit obrázek a Uložit miniatury nejsou pro Shockwave soubory podporovány."
+msgstr "As funções \"Guardar imagem\" e \"Guardar Miniaturas\" não funcionam para os ficheiros de Shockwave."
 
 msgctxt "IDS_SCREENSHOT_ERROR_OVERLAY"
 msgid "The \"Save Image\" and \"Save Thumbnails\" functions do not work with the Overlay Mixer video renderer.\nChange the video renderer in MPC's output options and reopen the file."
-msgstr "Funkce Uložit obrázek a Uložit miniatury s video rendererem Overlay Mixer nefungují.\nZměňte video renderer v nastavení výstupu a soubor znovu otevřete."
+msgstr "As funções \"Guardar imagem\" e \"Guardar miniaturas\" não funcionam com o renderizador de vídeo Overlay Mixer.\nAltere o renderizador de vídeo nas opções de saída do MPC-HC e volte a abrir o ficheiro."
 
 msgctxt "IDS_MB_SHOW_EDL_EDITOR"
 msgid "Do you want to activate the EDL editor?"
-msgstr "Chcete aktivovat EDL editor?"
+msgstr "Tem a certeza que quer ativar o editor EDL?"
 
 msgctxt "IDS_CAPTURE_ERROR"
 msgid "Capture Error"
-msgstr "Chyba záznamu"
+msgstr "Erro de captura"
 
 msgctxt "IDS_CAPTURE_ERROR_VIDEO"
 msgid "video"
-msgstr "videa"
+msgstr "vídeo"
 
 msgctxt "IDS_CAPTURE_ERROR_AUDIO"
 msgid "audio"
-msgstr "zvuku"
+msgstr "áudio"
 
 msgctxt "IDS_CAPTURE_ERROR_ADD_BUFFER"
 msgid "Can't add the %s buffer filter to the graph."
-msgstr "Do grafu se nepodařilo přidat filtr vyrovnávací paměti %s."
+msgstr "Não se pôde adic. o filtro de pilha %s ao gráfico."
 
 msgctxt "IDS_CAPTURE_ERROR_CONNECT_BUFF"
 msgid "Can't connect the %s buffer filter to the graph."
-msgstr "Ke grafu se nepodařilo připojit filtr vyrovnávací paměti %s."
+msgstr "Não se pôde ligar o filtro de pilha %s ao gráfico."
 
 msgctxt "IDS_CAPTURE_ERROR_ADD_ENCODER"
 msgid "Can't add the %s encoder filter to the graph."
-msgstr "Do grafu se nepodařilo přidat filtr kodéru %s."
+msgstr "Não se pôde adic. o filtro de codificador %s ao gráfico."
 
 msgctxt "IDS_CAPTURE_ERROR_CONNECT_ENC"
 msgid "Can't connect the %s encoder filter to the graph."
-msgstr "Ke grafu se nepodařilo připojit filtr kodéru %s."
+msgstr "Não se pôde ligar o filtro de codificação %s ao gráfico."
 
 msgctxt "IDS_CAPTURE_ERROR_COMPRESSION"
 msgid "Can't set the compression format on the %s encoder filter."
-msgstr "Nepodařilo se nastavit komprimační formát filtru kodéru %s."
+msgstr "Nâo se pôde definir o formato de comp. no filtro de codificação %s."
 
 msgctxt "IDS_CAPTURE_ERROR_MULTIPLEXER"
 msgid "Can't connect the %s stream to the multiplexer filter."
-msgstr "Datový proud %s se nepodařilo připojit k filtru multiplexoru."
+msgstr "Não se pôde ligar o stream %s ao filtro multiplexer."
 
 msgctxt "IDS_CAPTURE_ERROR_VID_CAPT_PIN"
 msgid "No video capture pin was found."
-msgstr "Nebyla nalezena žádná záznamová video spojka."
+msgstr "Nenhum pin de captura de vídeo foi encontrado."
 
 msgctxt "IDS_CAPTURE_ERROR_AUD_CAPT_PIN"
 msgid "No audio capture pin was found."
-msgstr "Nebyla nalezena žádná záznamová zvuková spojka."
+msgstr "Nenhum pin de captura de áudio foi encontrado."
 
 msgctxt "IDS_CAPTURE_ERROR_OUT_FILE"
 msgid "Error initializing the output file."
-msgstr "Při inicializaci výstupního souboru došlo k chybě."
+msgstr "Erro ao inicializar o ficheiro de saída."
 
 msgctxt "IDS_CAPTURE_ERROR_AUD_OUT_FILE"
 msgid "Error initializing the audio output file."
-msgstr "Při inicializaci zvukového výstupního souboru došlo k chybě."
+msgstr "Erro ao inicializar o ficheiro de saída de áudio."
 
 msgctxt "IDS_SUBRESYNC_TIME_FORMAT"
 msgid "The correct time format is [-]hh:mm:ss.ms (e.g. 01:23:45.678)."
-msgstr "Správný formát času je [-]hh:mm:ss.ms (např. 01:23:45.678)."
+msgstr "O formato correto de tempo é [-]hh:mm:ss.ms (exemplo 01:23:45.678)."
 
 msgctxt "IDS_EXTERNAL_FILTERS_ERROR_MT"
 msgid "This type is already in the list!"
-msgstr "Tento typ je již v seznamu uveden!"
+msgstr "O tipo já está na lista!"
 
 msgctxt "IDS_WEBSERVER_ERROR_TEST"
 msgid "You need to apply the new settings before testing them."
-msgstr "Než budete moci nová nastavení vyzkoušet, musíte je aplikovat."
+msgstr "Tem de aplicar as novas definições antes de as testar."
 
 msgctxt "IDS_AFTERPLAYBACK_EXIT"
 msgid "After Playback: Exit"
-msgstr "Po přehrání: Zavřít přehrávač"
+msgstr "Depois da reprodução: Sair"
 
 msgctxt "IDS_AFTERPLAYBACK_STANDBY"
 msgid "After Playback: Stand By"
-msgstr "Po přehrání: Pohotovostní režim"
+msgstr "Depois da reprodução: Suspensão"
 
 msgctxt "IDS_AFTERPLAYBACK_HIBERNATE"
 msgid "After Playback: Hibernate"
-msgstr "Po přehrání: Režim spánku"
+msgstr "Depois da reprodução: Hibernação"
 
 msgctxt "IDS_AFTERPLAYBACK_SHUTDOWN"
 msgid "After Playback: Shutdown"
-msgstr "Po přehrání: Vypnout počítač"
+msgstr "Depois da reprodução: Encerrar"
 
 msgctxt "IDS_AFTERPLAYBACK_LOGOFF"
 msgid "After Playback: Log Off"
-msgstr "Po přehrání: Odhlásit uživatele"
+msgstr "Depois da reprodução: Terminar sessão"
 
 msgctxt "IDS_AFTERPLAYBACK_LOCK"
 msgid "After Playback: Lock"
-msgstr "Po přehrání: Uzamknout počítač"
+msgstr "Depois da reprodução: Bloquear"
 
 msgctxt "IDS_AFTERPLAYBACK_MONITOROFF"
 msgid "After Playback: Turn off the monitor"
-msgstr "Po přehrání: Vypnout monitor"
+msgstr "Depois da reprodução: Desligar o ecrã"
 
 msgctxt "IDS_AFTERPLAYBACK_PLAYNEXT"
 msgid "After Playback: Play next file in the folder"
-msgstr "Po přehrání: Přehrát další soubor v adresáři"
+msgstr "Depois da reprodução: Reproduzir o ficheiro seguinte da pasta"
 
 msgctxt "IDS_AFTERPLAYBACK_DONOTHING"
 msgid "After Playback: Do nothing"
-msgstr "Po přehrání: Nedělat nic"
+msgstr "Depois da reprodução: Não fazer nada"
 
 msgctxt "IDS_OSD_BRIGHTNESS"
 msgid "Brightness: %s"
-msgstr "Jas: %s"
+msgstr "Brilho: %s"
 
 msgctxt "IDS_OSD_CONTRAST"
 msgid "Contrast: %s"
-msgstr "Kontrast: %s"
+msgstr "Contraste: %s"
 
 msgctxt "IDS_OSD_HUE"
 msgid "Hue: %s°"
-msgstr "Odstín: %s°"
+msgstr "Hue: %s°"
 
 msgctxt "IDS_OSD_SATURATION"
 msgid "Saturation: %s"
-msgstr "Sytost: %s"
+msgstr "Saturação: %s"
 
 msgctxt "IDS_OSD_RESET_COLOR"
 msgid "Color settings restored"
-msgstr "Obnoveno výchozí nastavení barev"
+msgstr "Definições de cor restauradas"
 
 msgctxt "IDS_OSD_NO_COLORCONTROL"
 msgid "Color control is not supported"
-msgstr "Nastavení barev není podporováno"
+msgstr "Controlo da cor não é suportado"
 
 msgctxt "IDS_BRIGHTNESS_INC"
 msgid "Brightness increase"
-msgstr "Zvýšení jasu"
+msgstr "Aumentar o brilho"
 
 msgctxt "IDC_FASTSEEK_CHECK"
 msgid "If \"latest keyframe\" is selected, seek to the first keyframe before the actual seek point.\nIf \"nearest keyframe\" is selected, seek to the first keyframe before or after the seek point depending on which is the closest."
-msgstr "Pokud je vybráno „Poslední klíčový snímek“, přejít na první klíčový snímek před cílem hledání.\nPokud je vybráno \"Nejbližší klíčový snímek\", přejít na první klíčový snímek před, nebo za cílem hledání, podle toho, který je blíže."
+msgstr "Se o \"última chave de frame\" estiver selecionada, procurar pela primeira chave de frame antes do ponto de procura atual.\nSe o \"chave de frame seguinte\" estiver selecionada, procurar pela primeira chave de frame antes ou depois do ponto de procura dependendo no qual estiver mais próximo."
 
 msgctxt "IDC_ASSOCIATE_ALL_FORMATS"
 msgid "Associate with all formats"
-msgstr "Asociovat se všemi formáty"
+msgstr "Associar com todos os formatos"
 
 msgctxt "IDC_ASSOCIATE_VIDEO_FORMATS"
 msgid "Associate with video formats only"
-msgstr "Asociovat se všemi video formáty"
+msgstr "Associar com formatos de vídeo apenas"
 
 msgctxt "IDC_ASSOCIATE_AUDIO_FORMATS"
 msgid "Associate with audio formats only"
-msgstr "Asociovat se všemi zvukovými formáty"
+msgstr "Associar com formatos de áudio apenas"
 
 msgctxt "IDC_CLEAR_ALL_ASSOCIATIONS"
 msgid "Clear all associations"
-msgstr "Zrušit všechny asociace"
+msgstr "Limpar todas as associações"
 
 msgctxt "IDS_FILTER_SETTINGS_CAPTION"
 msgid "Settings"
-msgstr "Nastavení"
+msgstr "Definições"
 
 msgctxt "IDS_SUBTITLE_RENDERER_VS_FILTER"
 msgid "VSFilter / DirectVobSub"
@@ -3620,459 +3619,459 @@ msgstr "XySubFilter"
 
 msgctxt "IDS_SUBDL_DLG_PROVIDER_COL"
 msgid "Provider"
-msgstr "Poskytovatel"
+msgstr "Fornecedor"
 
 msgctxt "IDS_SUBDL_DLG_HI_COL"
 msgid "Hearing Impaired"
-msgstr "Neslišící"
+msgstr "Surdos"
 
 msgctxt "IDS_SUBDL_DLG_DOWNLOADS_COL"
 msgid "Downloads"
-msgstr "Stahování"
+msgstr "Transferências"
 
 msgctxt "IDS_SUBDL_DLG_SCORE_COL"
 msgid "Score"
-msgstr "Hodnocení"
+msgstr "Pontuação"
 
 msgctxt "IDS_SUBDL_DLG_FAILED"
 msgid "Online subtitles search failed."
-msgstr "Hledání titulků online se nezdařilo."
+msgstr "Falhou a pesquisa online de legendas"
 
 msgctxt "IDS_SUBDL_DLG_ABORTED"
 msgid "Online subtitles search aborted."
-msgstr "Hledání titulků online bylo zrušeno."
+msgstr "Pesquisa online de legendas abortada."
 
 msgctxt "IDS_SUBDL_DLG_FOUND"
 msgid "Online subtitles search completed, %d subtitles found."
-msgstr "Hledání titulků bylo dokončeno, nalezeno %d titulků."
+msgstr "Pesquisa online de legendas concluída, %d legendas encontradas."
 
 msgctxt "IDS_SUBDL_DLG_NOTFOUND"
 msgid "Online subtitles search completed, no subtitles found."
-msgstr "Hledání titulků bylo dokončeno, nebyly nalezeny žádné titulky."
+msgstr "Pesquisa online de legendas concluída, nenhuma legenda encontrada."
 
 msgctxt "IDS_SUBDL_DLG_TITLE"
 msgid "Download subtitles"
-msgstr "Stáhnout titulky"
+msgstr "Descarregar legendas"
 
 msgctxt "IDS_SUBDL_DLG_SEARCHING"
 msgid "Searching for subtitles online, please wait..."
-msgstr "Probíhá hledání titulků online, prosím čekejte..."
+msgstr "A pesquisar por legendas online, por favor aguarde..."
 
 msgctxt "IDS_SUBDL_DLG_ABORTING"
 msgid "Online subtitles search aborting..."
-msgstr "Rušení hledání titulků..."
+msgstr "A abortar a pesquisa online de legendas..."
 
 msgctxt "IDS_SUBUL_DLG_USERNAME_COL"
 msgid "Username"
-msgstr "Uživatelské jméno"
+msgstr "Nome de utilizador"
 
 msgctxt "IDS_SUBUL_DLG_STATUS_COL"
 msgid "Status"
-msgstr "Stav"
+msgstr "Estado"
 
 msgctxt "IDS_SUBUL_DLG_STATUS_READY"
 msgid "Ready..."
-msgstr "Připraveno..."
+msgstr "Pronto..."
 
 msgctxt "IDS_CMD_PNS"
 msgid "/pns \"name\"\tSpecify Pan & Scan preset name to use"
-msgstr "/pns \"název\"\tPoužije předvolbu Pan & Scan určitého názvu"
+msgstr "/pns \"nome\"\tEspecifica o nome da pré-definição Pan & Scan a utilizar"
 
 msgctxt "IDS_CMD_ICONASSOC"
 msgid "/iconsassoc\tReassociate format icons"
-msgstr "/iconsassoc\tZnovu přiřadí ikony formátů souborů"
+msgstr "/iconsassoc\tVolta a aassociar os ícones de formato"
 
 msgctxt "IDS_CMD_NOFOCUS"
 msgid "/nofocus\t\tOpen MPC-HC in background"
-msgstr "/nofocus\t\tSpustí MPC-HC v pozadí"
+msgstr "/nofocus\t\tAbre o MPC-HC em segundo plano"
 
 msgctxt "IDS_CMD_WEBPORT"
 msgid "/webport N\tStart web interface on specified port"
-msgstr "/webport N\tSpustí webové rozhraní na zadaném portu"
+msgstr "/webport N\tInicia o interface web na porta especificada"
 
 msgctxt "IDS_CMD_DEBUG"
 msgid "/debug\t\tShow debug information in OSD"
-msgstr "/debug\t\tZobrazí ladicí informace v OSD"
+msgstr "/debug\t\tMostra a informação de depuração no OSD"
 
 msgctxt "IDS_CMD_NOCRASHREPORTER"
 msgid "/nocrashreporter\tDisable the crash reporter"
-msgstr "/nocrashreporter\tDisable the crash reporter"
+msgstr "/nocrashreporter\tDesativa o relatório de crash"
 
 msgctxt "IDS_CMD_SLAVE"
 msgid "/slave \"hWnd\"\tUse MPC-HC as slave"
-msgstr "/slave \"hWnd\"\tPoužije MPC-HC jako podřízený proces"
+msgstr "/slave \"hWnd\"\tUtilizar o MPC-HC como escravo"
 
 msgctxt "IDS_CMD_HWGPU"
 msgid "/hwgpu \"index\"\tSet the index of the GPU used for hardware decoding.\n\t\tOnly available for CUVID and DXVA2 (copy-back)"
-msgstr "/hwgpu \"index\"\tNastaví index GPU použitého pro HW dekódování.\n\t\tDostupné pouze pro CUVID a DXVA2 (copy-back)"
+msgstr "/hwgpu \"índice\"\tDefine o índice do GPU utilizado pela descodificação por hardware.\n\t\tApenas disponível para CUVID e DXVA2 (copy-back)"
 
 msgctxt "IDS_CMD_RESET"
 msgid "/reset\t\tRestore default settings"
-msgstr "/reset\t\tObnoví výchozí nastavení"
+msgstr "/reset\t\tRestaura as definições por defeito"
 
 msgctxt "IDS_CMD_HELP"
 msgid "/help /h /?\tShow help about command line switches"
-msgstr "/help /h /?\tZobrazí tento dialog"
+msgstr "/help /h /?\tMostra a ajuda acerca dos argumentos da linha de comandos"
 
 msgctxt "IDS_PPAGEADVANCED_SCORE"
 msgid "Threshold value for subtitles score which are going to be automatically downloaded. Higher values means that more accurately matched subtitles will be loaded, lower values could result in incorrect subtitles being loaded, but there is no one perfect value. Pick one that works best for you."
-msgstr "Prahová hodnota hodnocení pro automaticky stahované titulky. Vyšší hodnota zajistí přesnější výsledky přiřazení, ale sníží pravděpodobnost nalezení titulků, nižší hodnota zvýší pravděpodobnost nalezení titulků, ale zvýší pravděpodobnost načtení chybných titulků. Neexistuje ideální hodnota. Zvolte takovou, která bude fungovat vám."
+msgstr "Valor de desvio para pontuação de legendas que irão ser automaticamente descarregadas. Valores mais altos significam que legendas correspondidas com mais precisão irão ser carregadas. valores mais baixos podem resultar em legendas incorretas sendo carregadas, mas não existe um valor perfeito. Escolha um que funcione melhor para si."
 
 msgctxt "IDS_PPAGE_FS_CLN_AUDIO_DELAY"
 msgid "Audio Delay (ms)"
-msgstr "Posun zvuku (ms)"
+msgstr "Atraso de áudio (ms)"
 
 msgctxt "IDS_PPAGEADVANCED_DEFAULTTOOLBARSIZE"
 msgid "Size in pixels of the default toolbar."
-msgstr "Velikost výchozího panelu nástrojů v pixelech."
+msgstr "Tamanho em pixeis da barra de ferramentas por defeito."
 
 msgctxt "IDS_PPAGEADVANCED_USE_LEGACY_TOOLBAR"
 msgid "Use legacy toolbar instead of new vectorized one."
-msgstr "Použít starý panel nástrojů místo nového vektorového."
+msgstr "Utilizar barra de ferramenta antiga em vez da nova vetorizada."
 
 msgctxt "IDS_SUBTITLE_RENDERER_ASS_FILTER"
 msgid "AssFilter"
-msgstr "ASSFiltr"
+msgstr "AssFilter"
 
 msgctxt "IDS_SUBMENU_COPYURL"
 msgid "Copy URL"
-msgstr "Kopírovat adresu"
+msgstr "Copiar URL"
 
 msgctxt "IDS_SUBUL_DLG_STATUS_NOTIMPLEMENTED"
 msgid "Not implemented."
-msgstr "Není podporováno."
+msgstr "Não implementado"
 
 msgctxt "IDS_SUBUL_DLG_STATUS_UPLOADING"
 msgid "Uploading..."
-msgstr "Odesílání..."
+msgstr "A enviar..."
 
 msgctxt "IDS_SUBUL_DLG_STATUS_UPLOADED"
 msgid "Subtitles uploaded successfully."
-msgstr "Titulky byly úspěšně odeslány."
+msgstr "Legendas enviadas com sucesso"
 
 msgctxt "IDS_SUBUL_DLG_STATUS_FAILED"
 msgid "Subtitles upload failed."
-msgstr "Odeslání titulků se nezdařilo."
+msgstr "Falhou o envio de legendas"
 
 msgctxt "IDS_SUBUL_DLG_STATUS_ABORTED"
 msgid "Subtitles upload aborted."
-msgstr "Odeslání titulků bylo zrušeno."
+msgstr "Envio de legendas abortado"
 
 msgctxt "IDS_SUBUL_DLG_STATUS_ALREADYEXISTS"
 msgid "Subtitles already exist."
-msgstr "Titulky již existují."
+msgstr "As legendas já existem."
 
 msgctxt "IDS_SUBUL_DLG_UPLOADING"
 msgid "Uploading subtitles, please wait..."
-msgstr "Probíhá odesílání titulků, prosím čekejte..."
+msgstr "A enviar legendas, por favor aguarde..."
 
 msgctxt "IDS_SUBUL_DLG_UPLOADED"
 msgid "Upload finished."
-msgstr "Odesílání dokončeno."
+msgstr "Envio terminado."
 
 msgctxt "IDS_SUBUL_DLG_ABORTED"
 msgid "Upload aborted."
-msgstr "Odesílání přerušeno."
+msgstr "Envio abortado."
 
 msgctxt "IDS_SUBUL_DLG_FAILED"
 msgid "Upload failed."
-msgstr "Odesílání se nezdařilo."
+msgstr "Falhou o envio."
 
 msgctxt "IDS_SUBMENU_DOWNLOAD"
 msgid "Download && Open"
-msgstr "Stáhnout a otevřít"
+msgstr "Descarregar && abrir"
 
 msgctxt "IDS_SUBMENU_SETUP"
 msgid "Setup"
-msgstr "Nastavení"
+msgstr "Configurar"
 
 msgctxt "IDS_SUBMENU_RESET"
 msgid "Reset"
-msgstr "Výchozí"
+msgstr "Repor"
 
 msgctxt "IDS_SUBMENU_MOVEUP"
 msgid "Move Up"
-msgstr "Nahoru"
+msgstr "Mover para cima"
 
 msgctxt "IDS_SUBMENU_MOVEDOWN"
 msgid "Move Down"
-msgstr "Dolů"
+msgstr "Mover para baixo"
 
 msgctxt "IDS_SUBMENU_OPENURL"
 msgid "Open URL"
-msgstr "Otevřít adresu"
+msgstr "Abrir URL"
 
 msgctxt "IDS_SUBPP_DLG_LANGUAGES_COL"
 msgid "Languages"
-msgstr "Jazyky"
+msgstr "Idiomas"
 
 msgctxt "IDS_SUBPP_DLG_LANGUAGES_ERROR"
 msgid "ERROR: Internet connection could not be established."
-msgstr "Chyba: Nepodařilo se navázat spojení."
+msgstr "ERRO: A ligação à Internet não pode ser estabelecida."
 
 msgctxt "IDS_SUB_CREDENTIALS_TITLE"
 msgid "Enter website credentials"
-msgstr "Zadejte přihlašovací údaje"
+msgstr "Insira as credenciais do website"
 
 msgctxt "IDS_SUB_CREDENTIALS_MSG"
 msgid "Enter your credentials to connect to: "
-msgstr "Zadejte přihlašovací údaje spojení:"
+msgstr "Insira as suas credenciais para ligar a:"
 
 msgctxt "IDS_ASPECT_RATIO_SAR"
 msgid "Aspect Ratio: Assume square pixels (SAR)"
-msgstr "Poměr stran: Předpokládat čtvercové pixely (SAR)"
+msgstr "Rácio de aspeto: Assumir pixeis quadrados (SAR)"
 
 msgctxt "IDS_SUBDL_DLG_DOWNLOADED"
 msgid "Downloaded [%s] \"%s\""
-msgstr "Staženo [%s] „%s“"
+msgstr "Descarregado [%s] \"%s\""
 
 msgctxt "IDS_SUBUL_DLG_TITLE"
 msgid "Upload subtitles"
-msgstr "Odeslat titulky"
+msgstr "Enviar legendas"
 
 msgctxt "IDS_SUBUL_DLG_CONFIRM"
 msgid "Are you sure you want to upload the subtitle file \"%s\"?"
-msgstr "Opravdu chcete odeslat soubor titulků „%s?"
+msgstr "Tem a certeza que pretende enviar o ficheiro de legenda \"%s\"?"
 
 msgctxt "IDS_SUBPP_DLG_FETCHING_LANGUAGES"
 msgid "Fetching supported languages..."
-msgstr "Načítají se podporované jazyky..."
+msgstr "A obter os idiomas suportados..."
 
 msgctxt "IDS_SUB_CREDENTIALS_ERROR"
 msgid "Failed to log in on \"%1\" with username \"%2\".\n\nPlease enter the correct username and password or reset the credentials to log in as anonymous user."
-msgstr "Přihlášení k \"%1\" pod uživatelským jménem \"%2\" se nezdařilo.\n\nZadejte správné uživatelské jméno a heslo anebo nastavte výchozí přihlašovací údaje a přihlaste se jako anonymní uživatel."
+msgstr "Falha ao iniciar sessão em \"%1\" com o nome de utilizador \"%2\".\n\nPor favor, insira o nome de utilizador correto e a palavra-passe ou reponha as credenciais para iniciar sessão como utilizador anónimo."
 
 msgctxt "IDS_SUB_AUTODL_IGNORE_TOOLTIP"
 msgid "Automatic search and download will be disabled for all media files whose path contains any of the patterns entered here.\nFor example, type: \"private dir\\videos|work\\\"."
-msgstr "Pro soubory jejichž cesta obsahuje některý ze zde zadaných řetězců bude zakázáno automatické vyhledávání a stahování.\nZadejte například: \"soukromá složka\\videa|práce\\\"."
+msgstr "Pesquisa automática e descarga irão ser desativadas para todos os ficheiros de media cujo caminho contenha quaisquer padrões inseridos aqui.\nPor exemplo, digite \"privado pasta\\vídeos\\trabalho\\\"."
 
 msgctxt "IDS_CMD_PATHNAME"
 msgid "\"pathname\"\tThe main file or directory to be loaded\n\t\t(wildcards allowed, \"-\" denotes standard input)"
-msgstr "\"cesta\"\t\tSoubor nebo adresář, který má být otevřen\n\t\t(povoleny masky, \"-\" označuje standardní vstup)"
+msgstr "\"caminho\"\tO ficheiro ou pasta principal a ser carregado\n\t\t(\"*\" e \"?\" são permitidos, \"-\" denota uma entrada normal)"
 
 msgctxt "IDS_CMD_DUB"
 msgid "/dub \"dubname\"\tLoad an additional audio file"
-msgstr "/dub \"soubor\"\tNačte soubor se zvukovou stopou"
+msgstr "/dub \"nomedub\"\tCarrega um ficheiro de áudio adicional"
 
 msgctxt "IDS_CMD_DUBDELAY"
 msgid "/dubdelay \"file\"\tLoad an additional audio file shifted with XXms\n\t\t(if the file contains \"...DELAY XXms...\")"
-msgstr "/dubdelay \"soubor\"\tNačte soubor se zvukovou stopou posunutou\n\t\to XXms (pokud název souboru obsahuje\n\t\t\"...DELAY XXms...\")"
+msgstr "/dubdelay \"ficheiro\"\tCarrega um ficheiro de áudio adicional alterado com XXms\n\t\t(se o ficheiro contém \"...DELAY XXms...\")"
 
 msgctxt "IDS_CMD_D3DFS"
 msgid "/d3dfs\t\tStart rendering in D3D fullscreen mode"
-msgstr "/d3dfs\t\tSpustí vykreslování v D3D fullscreen režimu"
+msgstr "/d3dfs\t\tInicia o modo de renderização D3D em ecrã completo"
 
 msgctxt "IDS_CMD_SUB"
 msgid "/sub \"subname\"\tLoad an additional subtitle file"
-msgstr "/sub \"soubor\"\tNačte soubor s titulky"
+msgstr "/sub \"nomeleg\"\tCarrega um ficheiro de legenda adicional"
 
 msgctxt "IDS_CMD_FILTER"
 msgid "/filter \"filtername\"\tLoad DirectShow filters from a dynamic link library (wildcards allowed)"
-msgstr "/filter \"soubor\"\tNačte DirectShow filtr (*.ax nebo *.dll, povoleny\n\t\tmasky)"
+msgstr "/filter \"nomefiltro\"\tCarrega filtros DirectShow de uma biblioteca dinâmica DLL (caratéres universais são permitidos)"
 
 msgctxt "IDS_CMD_DVD"
 msgid "/dvd\t\tRun in DVD mode, \"pathname\" means the DVD folder (optional)"
-msgstr "/dvd\t\tSpustí MPC-HC v DVD režimu, volitelný parametr\n\t\t\"cesta\" určuje DVD adresář"
+msgstr "/dvd\t\tExecuta no modo de DVD, \"caminho\" significa a pasta do DVD (opcional)"
 
 msgctxt "IDS_CMD_DVDPOS_TC"
 msgid "/dvdpos T#C\tStart playback at title T, chapter C"
-msgstr "/dvdpos T#K\tSpustí přehrávání titulu T, kapitoly K"
+msgstr "/dvdpos T#C\tInicia a reprodução no título T, capítulo C"
 
 msgctxt "IDS_CMD_DVDPOS_TIME"
 msgid "/dvdpos T#P\tStart playback at title T, position P (hh:mm:ss)"
-msgstr "/dvdpos T#P\tSpustit přehrávání titulu T od pozice P (hh:mm:ss)"
+msgstr "/dvdpos T#P\tInicia a reprodução no título T, posição P (hh:mm:ss)"
 
 msgctxt "IDS_CMD_CD"
 msgid "/cd\t\tLoad all the tracks of an Audio CD or (S)VCD,\n\t\t\"pathname\" means the drive path (optional)"
-msgstr "/cd\t\tNačte všechny stopy AudioCD/(S)VCD, volitelný\n\t\tparametr \"cesta\" udává písmeno CD mechaniky"
+msgstr "/cd\t\tCarrega todas as faixas de um CD de Áudio ou (S)VCD,\n\t\t\"caminho\" significa o caminho da unidade (opcional)"
 
 msgctxt "IDS_CMD_DEVICE"
 msgid "/device\t\tOpen the default video device"
-msgstr "/device\t\tOtevře výchozí video zařízení"
+msgstr "/device\t\tAbre o dispositivo de vídeo por defeito"
 
 msgctxt "IDS_CMD_OPEN"
 msgid "/open\t\tOpen the file, don't automatically start playback"
-msgstr "/open\t\tNačte soubor, ale nespustí přehrávání"
+msgstr "/open\t\tAbrir o ficheiro, não iniciar reprodução automaticamente"
 
 msgctxt "IDS_CMD_PLAY"
 msgid "/play\t\tStart playing the file as soon the player is launched"
-msgstr "/play\t\tNačte soubor a přehraje ho"
+msgstr "/play\t\tComeçar a reprodução do ficheiro assim que o reprodutor é lançado"
 
 msgctxt "IDS_CMD_CLOSE"
 msgid "/close\t\tClose the player after playback (only works when used with /play)"
-msgstr "/close\t\tPo ukončení přehrávání zavře přehrávač (funkční\n\t\tjen v kombinaci s /play)"
+msgstr "/close\t\tFechar o reprodutor depois da reprodução (só funciona quando utilizado com /play)"
 
 msgctxt "IDS_CMD_SHUTDOWN"
 msgid "/shutdown\tShutdown the operating system after playback"
-msgstr "/shutdown\tPo ukončení přehrávání vypne počítač"
+msgstr "/shutdown\tEncerra o sistema operativo após a reprodução"
 
 msgctxt "IDS_CMD_STANDBY"
 msgid "/standby\t\tPut the operating system in standby mode after playback"
-msgstr "/standby\t\tPo přehrání přepne systém do úsporného režimu"
+msgstr "/standby\t\tColoca o sistema operativo no modo de suspensão após a reprodução"
 
 msgctxt "IDS_CMD_HIBERNATE"
 msgid "/hibernate\tHibernate operating system after playback"
-msgstr "/hibernate\tPo přehrání přepne systém do režimu hibernace"
+msgstr "/hibernate\tHiberna o sistema operativo após a reprodução"
 
 msgctxt "IDS_CMD_LOGOFF"
 msgid "/logoff\t\tLog off after playback"
-msgstr "/logoff\t\tPo přehrání odhlásí aktuálně přihlášeného uživatele"
+msgstr "/logoff\t\tTermina a sessão após a reprodução"
 
 msgctxt "IDS_CMD_LOCK"
 msgid "/lock\t\tLock workstation after playback"
-msgstr "/lock\t\tPo přehrání uzamkne aktivní uživatelský účet"
+msgstr "/lock\t\tBloqueia a estação de trabalho após a reprodução"
 
 msgctxt "IDS_CMD_MONITOROFF"
 msgid "/monitoroff\tTurn off the monitor after playback"
-msgstr "/monitoroff\tPo přehrání vypne obrazovku"
+msgstr "/monitoroff\tDesliga o ecrã após a reprodução"
 
 msgctxt "IDS_CMD_PLAYNEXT"
 msgid "/playnext\t\tOpen next file in the folder after playback"
-msgstr "/playnext\t\tPo přehrání otevře další soubor v adresáři"
+msgstr "/playnext\t\tAbre o ficheiro seguinte da pasta após a reprodução"
 
 msgctxt "IDS_CMD_VIEWPRESET"
 msgid "/viewpreset N\tStart with specific preset,\n\t\twhere N is either \"1\" Minimal, \"2\" Compact or \"3\" Normal"
-msgstr "/viewpreset N\tSpustí přehrávač se zvolenou předvolbou N, kde N je\n\t\t\"1\" Minimální, \"2\" Kompaktní nebo \"3\" Normální"
+msgstr "/viewpreset N\tIniciar com a pré-definição especifica,\n\t\tonde N é \"1\" para Mínimo, \"2\" para Compacto ou \"3\" para Normal"
 
 msgctxt "IDS_CMD_MUTE"
 msgid "/mute\t\tMute the audio"
-msgstr "/mute\t\tZtlumí zvuk"
+msgstr "/mute\t\tSilenciar o áudio"
 
 msgctxt "IDS_CMD_VOLUME"
 msgid "/volume N\tSet Volume, where N is a range from 0 to 100"
-msgstr "/volume N\tNastaví hlasitost N, kde N je v rozsahu od 0 do 100"
+msgstr "/volume N\tDefinir o Volume, onde N é número de 0 a 100"
 
 msgctxt "IDS_YOUTUBEDL_NOT_FOUND"
 msgid "Youtube-dl failed to launch. Make sure youtube-dl is in PATH."
-msgstr "Youtube-dl se nepodařilo spustit. Ujistěte se, že se youtube-dl nachází v PATH."
+msgstr "Youtube-dl falhou ao ser lançado. Verifique se youtube-dl está no PATH."
 
 msgctxt "IDS_CONTROLS_YOUTUBEDL"
 msgid "Calling youtube-dl..."
-msgstr "Spouštím youtube-dl..."
+msgstr "A chamar youtube-dl..."
 
 msgctxt "IDS_VERTICAL_ALIGN_VIDEO_TOP"
 msgid "Align Top"
-msgstr "Zarovnat nahoru"
+msgstr "Alinhar ao topo"
 
 msgctxt "IDS_VERTICAL_ALIGN_VIDEO_MIDDLE"
 msgid "Align Middle"
-msgstr "Zarovnat doprostřed"
+msgstr "Alinhar ao meio"
 
 msgctxt "IDS_VERTICAL_ALIGN_VIDEO_BOTTOM"
 msgid "Align Bottom"
-msgstr "Zarovnat dolů"
+msgstr "Alinhar em baixo"
 
 msgctxt "IDS_PPAGEADVANCED_USE_YDL"
 msgid "Process HTTP(s) URLs with Youtube-DL (if available). There is an internal whitelist/blacklist for URLs that are always/never processed."
-msgstr "Zpracuje HTTP(s) adresy pomocí Youtube-DL (pokud je dostupný). MPC obsahuje interní seznam adres, které jsou dle (ne)závadnosti zpracovány."
+msgstr "Processar URLs HTTP(s) com o Youtube-DL (se disponível). Existe internamente uma lista branca e uma lista preta para URLs que são sempre/nunca processados."
 
 msgctxt "IDS_PPAGEADVANCED_YDL_MAX_HEIGHT"
 msgid "Can be used to limit the video resolution that is chosen by Youtube-DL by the given height. Value 0 means it will choose the highest resolution available."
-msgstr "Může být použit k omezení rozlišení na základě šířky videa, které vybere Youtube-DL. Hodnota 0 znamená nejvyšší možné rozlišení."
+msgstr "Pode ser utilizado para limitar a resolução do vídeo que é escolhido pelo Youtube-DL pela altura dada. Valor 0 significa que irá escolher a maior resolução possível."
 
 msgctxt "IDS_PPAGEADVANCED_YDL_VIDEO_FORMAT"
 msgid "Preferred video format for stream that is selected from Youtube-DL results.\n0: Automatic\n1: H.264 30fps\n2: H.264 60fps\n3: VP9 30fps\n4: VP9 60fps\n5: VP9 Profile2 30fps\n6: VP9 Profile2 60fps\n7: AV1 30fps\n8: AV1 60fps"
-msgstr "Upřednostňovaný video formát streamů vybraných z Youtube-DL.\n0: Automaticky\n1: H.264 30fps\n2: H.264 60fps\n3: VP9 30fps\n4: VP9 60fps\n5: VP9 Profile2 30fps\n6: VP9 Profile2 60fps\n7: AV1 30fps\n8: AV1 60fps"
+msgstr "Formatos preferidos de vídeos para stream que é selecionado dos resultados do Youtube-DL.\n0: Automático\n1: H.264 30fps\n2: H.264 60fps\n3: VP9 30fps\n4: VP9 60fps\n5: VP9 Profile2 30fps\n6: VP9 Profile2 60fps\n7: AV1 30fps\n8: AV1 60fps"
 
 msgctxt "IDS_PPAGEADVANCED_YDL_AUDIO_ONLY"
 msgid "Instructs Youtube-DL to prefer an audio-only stream (if available)"
-msgstr "Youtube-DL bude preferovat pouze zvukový stream (pokud bude dostupný)"
+msgstr "Diz ao Youtube-DL que prefere um stream só-de-aúdio (se disponível)"
 
 msgctxt "IDS_PPAGEADVANCED_YDL_COMMAND_LINE"
 msgid "Command line parameters for downloading (\"save a copy\") with youtube-dl.exe\nExamples:\n-f best[height<=1080]\n-f bestvideo+bestaudio\n-o \"C:\\downloads\\%(title)s.%(ext)s"
-msgstr "Parametry příkazové řádky ke stahování (\"uložit kopii\") pro použití s youtube-dl.exe\nPříklady:\n-f best[height<=1080]\n-f bestvideo+bestaudio\n-o \"C:\\downloads\\%(title)s.%(ext)s"
+msgstr "Parâmetros de linha de comandos para descarregar (\"guardar uma cópia\") com o youtube-dl.exe\nExemplos:\n-f best[altura<=1080]\n-f bestvideo+bestaudio\n-o \"C:\\downloads\\%(title)s.%(ext)s"
 
 msgctxt "IDS_PPAGEADVANCED_SAVEIMAGE_POSITION"
 msgid "Include video position in filename"
-msgstr "Přidat pozici videa ke jménu souboru"
+msgstr "Incluir a posição no vídeo no nome do ficheiro"
 
 msgctxt "IDS_PPAGEADVANCED_SAVEIMAGE_CURRENTTIME"
 msgid "Include current time in filename"
-msgstr "Přidat aktuální čas ke jménu souboru"
+msgstr "Incluir tempo atual no nome do ficheiro"
 
 msgctxt "IDS_PPAGEADVANCED_ALLOW_INACCURATE_FASTSEEK"
 msgid "When enabled, fast seek (to keyframe) has a maximum inaccuracy of 20 seconds. When disabled, a smaller inaccuracy is allowed when deciding between a fast and a normal seek. For example 30% of jump size."
-msgstr "Při povolení této volby má rychlé hledání (po klíčových snímcích) maximální nepřesnost 20 vteřin. Při zakázání je nepřesnost menší."
+msgstr "Quando ativado, a pesquisa rápida (para a chave de frame) tem uma imprecisão máxima de 20 segundos. Quando desativada, uma menor imprecisão é permitida quando se decide entre uma pesquisa rápida ou normal. Por exemplo 30% do tamanho de salto."
 
 msgctxt "IDS_CMD_FULLSCREEN"
 msgid "/fullscreen\tStart in fullscreen mode"
-msgstr "/fullscreen\tSpustí přehrávač v režimu na celou obrazovku"
+msgstr "/fullscreen\tIniciar em modo de ecrã completo"
 
 msgctxt "IDS_CMD_MINIMIZED"
 msgid "/minimized\tStart in minimized mode"
-msgstr "/minimized\tSpustí přehrávač minimalizovaný"
+msgstr "/minimized\tIniciar no modo minimizado"
 
 msgctxt "IDS_CMD_NEW"
 msgid "/new\t\tUse a new instance of the player"
-msgstr "/new\t\tOtevře novou instanci MPC-HC"
+msgstr "/new\t\tUtilizar uma nova instância do reprodutor"
 
 msgctxt "IDS_CMD_ADD"
 msgid "/add\t\tAdd \"pathname\" to playlist, can be combined with /open and /play"
-msgstr "/add\t\tPřidá \"cestu\" do seznamu stop, může být kombinován\n\t\ts /open a /play"
+msgstr "/add\t\tAdic. \"caminho\" à lista de reprodução, pode ser combinado com /open e /play"
 
 msgctxt "IDS_CMD_RANDOMIZE"
 msgid "/randomize\tRandomize the playlist"
-msgstr "/randomize\tNáhodně seřadí seznam stop"
+msgstr "/randomize\tBaralhar a lista de reprodução"
 
 msgctxt "IDS_CMD_REGVID"
 msgid "/regvid\t\tCreate file associations for video files"
-msgstr "/regvid\t\tNastaví MPC-HC jako výchozí přehrávač pro\n\t\tpodporované video formáty"
+msgstr "/regvid\t\tCriar associações de ficheiros para ficheiros de vídeo"
 
 msgctxt "IDS_CMD_REGAUD"
 msgid "/regaud\t\tCreate file associations for audio files"
-msgstr "/regaud\t\tNastaví MPC-HC jako výchozí přehrávač pro\n\t\tpodporované zvukové formáty"
+msgstr "/regaud\t\tCriar associações de ficheiros para ficheiros de áudio"
 
 msgctxt "IDS_CMD_REGPL"
 msgid "/regpl\t\tCreate file associations for playlist files"
-msgstr "/regpl\t\tNastaví MPC-HC jako výchozí přehrávač pro\n\t\tpodporované seznamy stop"
+msgstr "/regpl\t\tCriar associações de ficheiros para ficheiros de lista de reprodução"
 
 msgctxt "IDS_CMD_REGALL"
 msgid "/regall\t\tCreate file associations for all supported file types"
-msgstr "/regall\t\tNastaví MPC-HC jako výchozí přehrávač pro\n\t\tvšechny podporované formáty"
+msgstr "/regall\t\tCriar associações de ficheiros para todos os tipos de ficheiros suportados"
 
 msgctxt "IDS_CMD_UNREGALL"
 msgid "/unregall\t\tRemove all file associations"
-msgstr "/unregall\t\tZruší asociaci MPC-HC se všemi formáty\n\t\t(včetně playlistů)"
+msgstr "/unregall\t\tRemover todas as associações de ficheiros"
 
 msgctxt "IDS_CMD_START"
 msgid "/start ms\t\tStart playing at \"ms\" (= milliseconds)"
-msgstr "/start ms\t\tSpustí přehrávání od zadané pozice\n\t\t(ms = milisekundy)"
+msgstr "/start ms\t\tIniciar a reprodução a \"ms\" (= milisegundos)"
 
 msgctxt "IDS_CMD_STARTPOS"
 msgid "/startpos hh:mm:ss\tStart playing at position hh:mm:ss"
-msgstr "/startpos hh:mm:ss\tSpustí přehrávání od pozice hh:mm:ss"
+msgstr "/startpos hh:mm:ss\tIniciar a reprodução na posição hh:mm:ss"
 
 msgctxt "IDS_CMD_FIXEDSIZE"
 msgid "/fixedsize w,h\tSet a fixed window size"
-msgstr "/fixedsize w,h\tSpustí přehrávač se zadanou velikostí okna"
+msgstr "/fixedsize l,a\tDefine um tamanho fixo de janela"
 
 msgctxt "IDS_CMD_MONITOR"
 msgid "/monitor N\tStart player on monitor N, where N starts from 1"
-msgstr "/monitor N\tSpustí přehrávání na monitoru N, kde N\n\t\tzačíná od 1"
+msgstr "/monitor N\tInicia o reproduto no ecrã N, onde N começa a partir do 1"
 
 msgctxt "IDS_CMD_AUDIORENDERER"
 msgid "/audiorenderer N\tStart using audiorenderer N, where N starts from 1 (see \"Output\" settings)"
-msgstr "/audiorenderer N\tPoužije audiorenderer N, kde N začíná od 1\n\t\t(viz nastavení \"Výstup\")"
+msgstr "/audiorenderer N\tInicia usando audiorenderer N, onde N começa a partir de 1 (veja as definições \"Saída\")"
 
 msgctxt "IDS_CMD_SHADERPRESET"
 msgid "/shaderpreset \"Pr\"\tStart using \"Pr\" shader preset"
-msgstr "/shaderpreset \"Př\"\tPoužije předvolbu shaderů \"Př\""
+msgstr "/shaderpreset \"Pr\"\tInicia usando a pré-definição shader \"Pr\""
 
 msgctxt "IDS_MESSAGEBOX_CANCEL"
 msgid "Cancel"
-msgstr "Storno"
+msgstr "Cancelar"
 
 msgctxt "IDS_MESSAGEBOX_ABORT"
 msgid "&Abort"
-msgstr "&Zrušit"
+msgstr "&Abortar"
 
 msgctxt "IDS_MESSAGEBOX_RETRY"
 msgid "&Retry"
-msgstr "&Opakovat"
+msgstr "&Repetir"
 
 msgctxt "IDS_MESSAGEBOX_IGNORE"
 msgid "&Ignore"
-msgstr "&Ignorovat"
+msgstr "&Ignorar"
 
 msgctxt "IDS_MESSAGEBOX_OK"
 msgid "OK"
@@ -4080,41 +4079,29 @@ msgstr "OK"
 
 msgctxt "IDS_MESSAGEBOX_CONTINUE"
 msgid "&Continue"
-msgstr "&Pokračovat"
+msgstr "&Continuar"
 
 msgctxt "IDS_AG_TOGGLE_DEFAULT_SUBTITLE_STYLE"
 msgid "Toggle Default Subtitle Style"
-msgstr "Zapnout/vypnout výchozí styl titulků"
+msgstr "Alternar para estilo de legenda por defeito"
 
 msgctxt "IDS_AG_TOGGLE_MPCTHEME"
 msgid "Toggle Dark Theme"
-msgstr "Zapnout/vypnout tmavý režim"
+msgstr "Alternar para tema escuro"
 
 msgctxt "IDS_PPAGEADVANCED_LOOP_FOLDER_NEXT_FILE"
 msgid "Loop back to first file in folder after playing the last file."
-msgstr "Po přehrání posledního souboru v adresáři začne přehrávat od prvního."
+msgstr "Voltar para o primeiro ficheiro na pasta após reproduzir o último ficheiro."
 
 msgctxt "IDS_PPAGEADVANCED_MODERNSEEKBAR"
 msgid "Requires Dark Theme. When enabled, the time seekbar and volume indicator don't show a dragger at current position, but instead are filled from left to right."
-msgstr "Vyžaduje tmavý režim. Při zapnutí panel hledání a ukazatel hlasitosti neukazují posuvník na aktuální pozici, ale jsou zaplňovány zleva doprava."
+msgstr "Requer tema escuro. Quando ativado, o tempo, a barra de pesquisa e o indicador de volume não mostra um arrastador na posição atual, mas em vez disso são preenchidos da esquerda para a direita."
 
 msgctxt "IDS_PPAGEADVANCED_MODERNSEEKBARHEIGHT"
 msgid "Modern seekbar height (at 96dpi, otherwise scaled)"
-msgstr "Výška moderního panelu hledání (o DPI 96, jinak bude škálován)"
+msgstr "Altura de barra de pesquisa moderna (a 96dpi, caso contrário é escalado)"
 
 msgctxt "IDS_PPAGEADVANCED_FULLSCREEN_DELAY"
 msgid "Delay before showing fullscreen video, to prevent visual glitches."
-msgstr "Zpoždění před zobrazením videa na celou obrazovku (k zabránění obrazových vad)."
-
-msgctxt "IDS_PPAGEADVANCED_SNAPSHOTSUBTITLES"
-msgid "Render subtitles onto screenshots"
-msgstr ""
-
-msgctxt "IDS_PPAGEADVANCED_SNAPSHOTKEEPVIDEOEXTENSION"
-msgid "Keep video file extension as part of shapshot filenames (e.g., file.mkv.png)"
-msgstr ""
-
-msgctxt "IDS_SNAPSHOT_SUBTITLES"
-msgid "Include Subtitles"
-msgstr ""
+msgstr "Atraso entre a mostra de vídeo em ecrã completo, para prevenir falhas visuais."
 
