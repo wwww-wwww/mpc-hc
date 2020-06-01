@@ -225,6 +225,7 @@ private:
 
     CComPtr<ISubPicAllocatorPresenter> m_pCAP;
     CComPtr<ISubPicAllocatorPresenter2> m_pCAP2;
+    CComPtr<ISubPicAllocatorPresenter3> m_pCAP3; //ported from mpc-be. in use for mpcvr and madvr
 
     CComPtr<IMadVRSettings> m_pMVRS;
     CComPtr<IMadVRSubclassReplacement> m_pMVRSR;
@@ -577,6 +578,12 @@ public:
 
     // shaders
     void SetShaders(bool bSetPreResize = true, bool bSetPostResize = true);
+	
+	std::list<ShaderC> m_ShaderCache;
+	ShaderC* GetShader(CString path);
+	bool SaveShaderFile(ShaderC* shader);
+	bool DeleteShaderFile(LPCWSTR label);
+	void TidyShaderCashe();
 
     // capturing
     bool m_fCapturing;

@@ -1601,8 +1601,6 @@ void CMainFrame::OnDisplayChange() // untested, not sure if it's working...
 {
     TRACE(_T("*** CMainFrame::OnDisplayChange()\n"));
 
-    const CAppSettings& s = AfxGetAppSettings();
-
     if (GetLoadState() == MLS::LOADED) {
         if (m_pGraphThread) {
             CAMMsgEvent e;
@@ -5817,7 +5815,9 @@ void CMainFrame::OnUpdateViewDisplayRendererStats(CCmdUI* pCmdUI)
     const CAppSettings& s = AfxGetAppSettings();
     bool supported = (s.iDSVideoRendererType == VIDRNDT_DS_VMR9RENDERLESS
                       || s.iDSVideoRendererType == VIDRNDT_DS_EVR_CUSTOM
-                      || s.iDSVideoRendererType == VIDRNDT_DS_SYNC);
+                      || s.iDSVideoRendererType == VIDRNDT_DS_SYNC
+                      || s.iDSVideoRendererType == VIDRNDT_DS_MADVR
+                      || s.iDSVideoRendererType == VIDRNDT_DS_MPCVR);
 
     pCmdUI->Enable(supported && GetLoadState() == MLS::LOADED && !m_fAudioOnly);
     pCmdUI->SetCheck(supported && AfxGetMyApp()->m_Renderers.m_iDisplayStats);
@@ -5833,9 +5833,16 @@ void CMainFrame::OnViewDisplayRendererStats()
     const CAppSettings& s = AfxGetAppSettings();
     bool supported = (s.iDSVideoRendererType == VIDRNDT_DS_VMR9RENDERLESS
                       || s.iDSVideoRendererType == VIDRNDT_DS_EVR_CUSTOM
-                      || s.iDSVideoRendererType == VIDRNDT_DS_SYNC);
+                      || s.iDSVideoRendererType == VIDRNDT_DS_SYNC
+                      || s.iDSVideoRendererType == VIDRNDT_DS_MADVR
+                      || s.iDSVideoRendererType == VIDRNDT_DS_MPCVR);
 
     if (supported) {
+        if (m_pCAP3) {
+            m_pCAP3->ToggleStats();
+            return;
+        }
+
         if (!AfxGetMyApp()->m_Renderers.m_iDisplayStats) {
             AfxGetMyApp()->m_Renderers.m_bResetStats = true; // to reset statistics on first call ...
         }
@@ -7247,11 +7254,8 @@ void CMainFrame::OnViewRotate(UINT nID)
 {
     HRESULT hr = E_NOTIMPL;
 
-    if (m_pMVRC && m_pMVRI) {
-        int rotation;
-        if (FAILED(m_pMVRI->GetInt("rotation", &rotation))) {
-            return;
-        }
+    if (m_pCAP3) {
+        int rotation = m_pCAP3->GetRotation();
 
         switch (nID) {
             case ID_PANSCAN_ROTATEZP:
@@ -7267,7 +7271,11 @@ void CMainFrame::OnViewRotate(UINT nID)
         rotation %= 360;
         ASSERT(rotation >= 0);
 
-        if (SUCCEEDED(hr = m_pMVRC->SendCommandInt("rotate", rotation))) {
+        hr = m_pCAP3->SetRotation(rotation);
+        if (!m_pMVRC) {
+            MoveVideoWindow(); // need for EVRcp and Sync renderer, also mpcvr
+        }
+        if (S_OK == hr) {
             m_AngleZ = (360 - rotation) % 360;
         }
     } else if (m_pCAP) {
@@ -7345,7 +7353,7 @@ void CMainFrame::OnViewRotate(UINT nID)
 
 void CMainFrame::OnUpdateViewRotate(CCmdUI* pCmdUI)
 {
-    pCmdUI->Enable(GetLoadState() == MLS::LOADED && !m_fAudioOnly && (m_pCAP || (m_pMVRC && m_pMVRI)));
+    pCmdUI->Enable(GetLoadState() == MLS::LOADED && !m_fAudioOnly && (m_pCAP || m_pCAP3));
 }
 
 // FIXME
@@ -10927,6 +10935,144 @@ void CMainFrame::RepaintVideo()
     }
 }
 
+ShaderC* CMainFrame::GetShader(CString path)
+{
+	ShaderC* pShader = nullptr;
+
+	for (auto& shader : m_ShaderCache) {
+		if (shader.Match(path, false)) {
+			pShader = &shader;
+			break;
+		}
+	}
+
+	if (!pShader) {
+		if (::PathFileExistsW(path)) {
+			CStdioFile file;
+			if (file.Open(path, CFile::modeRead | CFile::shareDenyWrite | CFile::typeText)) {
+				ShaderC shader;
+				shader.label = path;
+
+				CString str;
+				file.ReadString(str); // read first string
+				if (str.Left(25) == L"// $MinimumShaderProfile:") {
+					shader.profile = str.Mid(25).Trim(); // shader version property
+				} else {
+					file.SeekToBegin();
+				}
+
+				if (shader.profile == L"ps_3_sw") {
+					shader.profile = L"ps_3_0";
+				} else if (shader.profile != L"ps_2_0"
+						&& shader.profile != L"ps_2_a"
+						&& shader.profile != L"ps_2_b"
+						&& shader.profile != L"ps_3_0") {
+					shader.profile = L"ps_2_0";
+				}
+
+				while (file.ReadString(str)) {
+					shader.srcdata += str + L"\n";
+				}
+
+				shader.length = file.GetLength();
+
+				FILETIME ftCreate, ftAccess, ftWrite;
+				if (GetFileTime(file.m_hFile, &ftCreate, &ftAccess, &ftWrite)) {
+					shader.ftwrite = ftWrite;
+				}
+
+				file.Close();
+
+				m_ShaderCache.push_back(shader);
+				pShader = &m_ShaderCache.back();
+			}
+		}
+	}
+
+	return pShader;
+}
+
+bool CMainFrame::SaveShaderFile(ShaderC* shader)
+{
+	CString path;
+	if (AfxGetMyApp()->GetAppSavePath(path)) {
+		path.AppendFormat(L"Shaders\\%s.hlsl", shader->label);
+
+		CStdioFile file;
+		if (file.Open(path, CFile::modeWrite  | CFile::shareExclusive | CFile::typeText)) {
+			file.SetLength(0);
+
+			CString str;
+			str.Format(L"// $MinimumShaderProfile: %s\n", shader->profile);
+			file.WriteString(str);
+
+			file.WriteString(shader->srcdata);
+			file.Close();
+
+			// delete out-of-date data from the cache
+			for (auto it = m_ShaderCache.begin(), end = m_ShaderCache.end(); it != end; ++it) {
+				if (it->Match(shader->label, false)) {
+					m_ShaderCache.erase(it);
+					break;
+				}
+			}
+
+			return true;
+		}
+	}
+	return false;
+}
+
+bool CMainFrame::DeleteShaderFile(LPCWSTR label)
+{
+	CString path;
+	if (AfxGetMyApp()->GetAppSavePath(path)) {
+		path.AppendFormat(L"Shaders\\%s.hlsl", label);
+
+		if (!::PathFileExistsW(path) || ::DeleteFileW(path)) {
+			// if the file is missing or deleted successfully, then remove it from the cache
+			for (auto it = m_ShaderCache.begin(), end = m_ShaderCache.end(); it != end; ++it) {
+				if (it->Match(label, false)) {
+					m_ShaderCache.erase(it);
+					return true;
+				}
+			}
+		}
+	}
+
+	return false;
+}
+
+void CMainFrame::TidyShaderCashe()
+{
+	CString appsavepath;
+	if (!AfxGetMyApp()->GetAppSavePath(appsavepath)) {
+		return;
+	}
+
+	for (auto it = m_ShaderCache.cbegin(); it != m_ShaderCache.cend(); ) {
+		CString path(appsavepath);
+		path += L"Shaders\\";
+		path += (*it).label + L".hlsl";
+
+		CFile file;
+		if (file.Open(path, CFile::modeRead | CFile::modeCreate | CFile::shareDenyNone)) {
+			ULONGLONG length = file.GetLength();
+			FILETIME ftCreate = {}, ftAccess = {}, ftWrite = {};
+			GetFileTime(file.m_hFile, &ftCreate, &ftAccess, &ftWrite);
+
+			file.Close();
+
+			if ((*it).length == length && CompareFileTime(&(*it).ftwrite, &ftWrite) == 0) {
+				it++;
+				continue; // actual shader
+			}
+		}
+
+		m_ShaderCache.erase(it++); // outdated shader
+	}
+}
+
 void CMainFrame::SetShaders(bool bSetPreResize/* = true*/, bool bSetPostResize/* = true*/)
 {
     if (GetLoadState() != MLS::LOADED) {
@@ -10936,10 +11082,48 @@ void CMainFrame::SetShaders(bool bSetPreResize/* = true*/, bool bSetPostResize/*
     const auto& s = AfxGetAppSettings();
     bool preFailed = false, postFailed = false;
 
-    // When pTarget parameter of ISubPicAllocatorPresenter2::SetPixelShader2() is nullptr,
-    // internal video renderers select maximum available profile and madVR (the only external renderer that
-    // supports shader part of ISubPicAllocatorPresenter2 interface) seems to ignore it altogether.
-    if (m_pCAP2) {
+    if (m_pCAP3) { //interfaces for madVR and MPC-VR
+        const int PShaderMode = m_pCAP3->GetPixelShaderMode();
+        if (PShaderMode != 9) {
+            return;
+        }
+
+        if (bSetPreResize) {
+            m_pCAP3->ClearPixelShaders(TARGET_FRAME);
+            for (const auto& shader : s.m_Shaders.GetCurrentPreset().GetPreResize()) {
+                ShaderC* pShader = GetShader(shader.filePath);
+                if (pShader) {
+                    CStringW label = pShader->label;
+                    CStringA profile = pShader->profile;
+                    CStringA srcdata = pShader->srcdata;
+                    if (FAILED(m_pCAP3->AddPixelShader(TARGET_FRAME, label, profile, srcdata))) {
+                        preFailed=true;
+                        m_pCAP3->ClearPixelShaders(TARGET_FRAME);
+                        break;
+                    }
+                }
+            }
+        }
+        if (bSetPostResize) {
+            m_pCAP3->ClearPixelShaders(TARGET_SCREEN);
+            for (const auto& shader : s.m_Shaders.GetCurrentPreset().GetPostResize()) {
+                ShaderC* pShader = GetShader(shader.filePath);
+                if (pShader) {
+                    CStringW label = pShader->label;
+                    CStringA profile = pShader->profile;
+                    CStringA srcdata = pShader->srcdata;
+                    if (FAILED(m_pCAP3->AddPixelShader(TARGET_SCREEN, label, profile, srcdata))) {
+                        postFailed = true;
+                        m_pCAP3->ClearPixelShaders(TARGET_SCREEN);
+                        break;
+                    }
+                }
+            }
+        }
+    } else if (m_pCAP2) {
+        // When pTarget parameter of ISubPicAllocatorPresenter2::SetPixelShader2() is nullptr,
+        // internal video renderers select maximum available profile and madVR (the only external renderer that
+        // supports shader part of ISubPicAllocatorPresenter2 interface) seems to ignore it altogether.
         if (bSetPreResize) {
             m_pCAP2->SetPixelShader2(nullptr, nullptr, false);
             for (const auto& shader : s.m_Shaders.GetCurrentPreset().GetPreResize()) {
@@ -12569,6 +12753,7 @@ bool CMainFrame::OpenMediaPrivate(CAutoPtr<OpenMediaData> pOMD)
             throw (UINT)IDS_INVALID_PARAMS_ERROR;
         }
 
+        m_pCAP3 = nullptr;
         m_pCAP2 = nullptr;
         m_pCAP = nullptr;
 
@@ -12578,6 +12763,7 @@ bool CMainFrame::OpenMediaPrivate(CAutoPtr<OpenMediaData> pOMD)
 
         m_pGB->FindInterface(IID_PPV_ARGS(&m_pCAP), TRUE);
         m_pGB->FindInterface(IID_PPV_ARGS(&m_pCAP2), TRUE);
+        m_pGB->FindInterface(IID_PPV_ARGS(&m_pCAP3), TRUE);
         m_pGB->FindInterface(IID_PPV_ARGS(&m_pVMRWC), FALSE); // might have IVMRMixerBitmap9, but not IVMRWindowlessControl9
         m_pGB->FindInterface(IID_PPV_ARGS(&m_pVMRMC), TRUE);
         m_pGB->FindInterface(IID_PPV_ARGS(&pVMB), TRUE);
@@ -12773,6 +12959,7 @@ void CMainFrame::CloseMediaPrivate()
     m_pMVRS.Release();
     m_pMVRC.Release();
     m_pMVRI.Release();
+    m_pCAP3.Release();
     m_pCAP2.Release();
     m_pCAP.Release();
     m_pVMRWC.Release();
@@ -15108,6 +15295,7 @@ bool CMainFrame::BuildGraphVideoAudio(int fVPreview, bool fVCapture, int fAPrevi
             m_pMVRSR.Release();
 
             m_OSD.Stop();
+            m_pCAP3.Release();
             m_pCAP2.Release();
             m_pCAP.Release();
             m_pVMRWC.Release();
@@ -15120,6 +15308,7 @@ bool CMainFrame::BuildGraphVideoAudio(int fVPreview, bool fVCapture, int fAPrevi
 
             m_pGB->FindInterface(IID_PPV_ARGS(&m_pCAP), TRUE);
             m_pGB->FindInterface(IID_PPV_ARGS(&m_pCAP2), TRUE);
+            m_pGB->FindInterface(IID_PPV_ARGS(&m_pCAP3), TRUE);
             m_pGB->FindInterface(IID_PPV_ARGS(&m_pVMRWC), FALSE);
             m_pGB->FindInterface(IID_PPV_ARGS(&m_pVMRMC), TRUE);
             m_pGB->FindInterface(IID_PPV_ARGS(&pVMB), TRUE);

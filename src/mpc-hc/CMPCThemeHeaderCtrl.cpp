@@ -2,7 +2,6 @@
 #include "CMPCThemeHeaderCtrl.h"
 #include "CMPCTheme.h"
 #include "CMPCThemeUtil.h"
-#include <lcms2\library\include\lcms2.h>
 
 CMPCThemeHeaderCtrl::CMPCThemeHeaderCtrl()
 {

@@ -28,6 +28,7 @@
 #include "Variables.h"
 #include "IPinHook.h"
 #include "Utils.h"
+#include <mfapi.h>
 
 using namespace DSObjects;
 
@@ -66,6 +67,7 @@ STDMETHODIMP CMPCVRAllocatorPresenter::NonDelegatingQueryInterface(REFIID riid, 
 		   QI(ISubRenderCallback2)
 		   QI(ISubRenderCallback3)
 		   QI(ISubRenderCallback4)
+           QI(ISubPicAllocatorPresenter3)
 		   __super::NonDelegatingQueryInterface(riid, ppv);
 }
 
@@ -246,7 +248,7 @@ STDMETHODIMP_(SIZE) CMPCVRAllocatorPresenter::GetVideoSize(bool bCorrectAR) cons
     return size;
 }
 
-STDMETHODIMP_(bool) CMPCVRAllocatorPresenter::Paint(bool bAll)
+STDMETHODIMP_(bool) CMPCVRAllocatorPresenter::Paint(bool /*bAll*/)
 {
     if (CComQIPtr<IExFilterConfig> pIExFilterConfig = m_pMPCVR) {
         return SUCCEEDED(pIExFilterConfig->SetBool("cmd_redraw", true));
@@ -274,6 +276,87 @@ STDMETHODIMP CMPCVRAllocatorPresenter::GetDisplayedImage(LPVOID* dibImage)
 
 	return E_FAIL;
 }
+
+STDMETHODIMP_(int) CMPCVRAllocatorPresenter::GetPixelShaderMode()
+{
+	if (CComQIPtr<IExFilterConfig> pIExFilterConfig = m_pMPCVR) {
+		int rtype = 0;
+		if (S_OK == pIExFilterConfig->GetInt("renderType", &rtype)) {
+			return rtype;
+		}
+	}
+	return -1;
+}
+
+STDMETHODIMP CMPCVRAllocatorPresenter::ClearPixelShaders(int target)
+{
+	HRESULT hr = E_FAIL;
+
+	if (TARGET_SCREEN == target) {
+		// experimental
+		if (CComQIPtr<IExFilterConfig> pIExFilterConfig = m_pMPCVR) {
+			hr = pIExFilterConfig->SetBool("cmd_clearPostScaleShaders", true);
+		}
+	}
+	return hr;
+}
+
+BYTE* WriteChunk(BYTE* dst, const uint32_t code, const int32_t size, BYTE* data)
+{
+	memcpy(dst, &code, 4);
+	dst += 4;
+	memcpy(dst, &size, 4);
+	dst += 4;
+	memcpy(dst, data, size);
+	dst += size;
+
+	return dst;
+}
+
+STDMETHODIMP CMPCVRAllocatorPresenter::AddPixelShader(int target, LPCWSTR name, LPCSTR profile, LPCSTR sourceCode)
+{
+	HRESULT hr = E_FAIL;
+
+	const int namesize = wcslen(name) * sizeof(wchar_t);
+	const int codesize = strlen(sourceCode);
+
+	int iProfile = 0;
+	if (!strcmp(profile, "ps_2_0") || !strcmp(profile, "ps_2_a") || !strcmp(profile, "ps_2_b") || !strcmp(profile, "ps_3_0")) {
+		iProfile = 3;
+	}
+	else if (!strcmp(profile, "ps_4_0")) {
+		iProfile = 4;
+	}
+
+	if (codesize && TARGET_SCREEN == target) {
+		// experimental
+		if (CComQIPtr<IExFilterConfig> pIExFilterConfig = m_pMPCVR) {
+			int rtype = 0;
+			hr = pIExFilterConfig->GetInt("renderType", &rtype);
+			if (S_OK == hr && (rtype == 9 && iProfile == 3 || rtype == 11 && iProfile == 4)) {
+				int size = 8 + codesize;
+				if (namesize) {
+					size += 8 + namesize;
+				}
+
+				BYTE* pBuf = (BYTE*)LocalAlloc(LMEM_FIXED, size);
+				if (pBuf) {
+					BYTE* p = pBuf;
+					if (namesize) {
+						p = WriteChunk(p, FCC('NAME'), namesize, (BYTE*)name);
+					}
+					p = WriteChunk(p, FCC('CODE'), codesize, (BYTE*)sourceCode);
+
+					hr = pIExFilterConfig->SetBin("cmd_addPostScaleShader", (LPVOID)pBuf, size);
+					LocalFree(pBuf);
+				}
+			}
+		}
+	}
+
+	return hr;
+}
+
 STDMETHODIMP_(bool) CMPCVRAllocatorPresenter::DisplayChange()
 {
 	if (CComQIPtr<IExFilterConfig> pIExFilterConfig = m_pMPCVR) {
@@ -291,10 +374,26 @@ STDMETHODIMP_(bool) CMPCVRAllocatorPresenter::IsRendering()
             return playbackState == State_Running;
         }
     }
+
     return false;
 }
 
 STDMETHODIMP CMPCVRAllocatorPresenter::SetPixelShader(LPCSTR pSrcData, LPCSTR pTarget)
 {
     return E_NOTIMPL; // TODO
+}
+
+STDMETHODIMP_(bool) CMPCVRAllocatorPresenter::ToggleStats() {
+    if (CComQIPtr<IExFilterConfig> pIExFilterConfig = m_pMPCVR) {
+        if (pIExFilterConfig) {
+            bool statsEnable = 0;
+            if (S_OK == pIExFilterConfig->GetBool("statsEnable", &statsEnable)) {
+                statsEnable = !statsEnable;
+                pIExFilterConfig->SetBool("statsEnable", statsEnable);
+                return statsEnable;
+            }
+        }
+    }
+
+    return false;
 }

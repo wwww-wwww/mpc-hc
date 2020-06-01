@@ -20,6 +20,7 @@
 
 #include "stdafx.h"
 #include <algorithm>
+#pragma warning(disable: 5033) // warning C5033: 'register' is no longer a supported storage class
 #include "lcms2/library/include/lcms2.h"
 #include "../../../mpc-hc/resource.h"
 #include "Dither.h"

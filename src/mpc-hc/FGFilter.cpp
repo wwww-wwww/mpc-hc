@@ -518,6 +518,9 @@ HRESULT CFGFilterVideoRenderer::Create(IBaseFilter** ppBF, CInterfaceList<IUnkno
         if (CComQIPtr<ISubPicAllocatorPresenter2> pCAP2 = pCAP) {
             pUnks.AddTail(pCAP2);
         }
+        if (CComQIPtr<ISubPicAllocatorPresenter3> pCAP3 = pCAP) {
+            pUnks.AddTail(pCAP3);
+        }
     }
 
     CheckPointer(*ppBF, E_FAIL);
