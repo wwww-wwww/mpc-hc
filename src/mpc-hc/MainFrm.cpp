@@ -3121,6 +3121,17 @@ void CMainFrame::OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu)
             continue;
         }
 
+        // renderer settings
+        if (firstSubItemID == ID_VIEW_TEARING_TEST) {
+            UINT fState = (MF_DISABLED | MF_GRAYED);
+            const CAppSettings& s = AfxGetAppSettings();
+            if (s.iDSVideoRendererType == VIDRNDT_DS_EVR_CUSTOM || s.iDSVideoRendererType == VIDRNDT_DS_SYNC || s.iDSVideoRendererType == VIDRNDT_DS_VMR9RENDERLESS) {
+                fState = MF_ENABLED;
+            }
+            pPopupMenu->EnableMenuItem(i, MF_BYPOSITION | fState);
+            continue;
+        }
+
         UINT itemID = pPopupMenu->GetMenuItemID(i);
         if (itemID == 0xFFFFFFFF) {
             mii.fMask = MIIM_ID;
@@ -3128,6 +3139,16 @@ void CMainFrame::OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu)
             itemID = mii.wID;
         }
         CMPCThemeMenu* pSubMenu = nullptr;
+
+        // debug shaders
+        if (itemID == ID_VIEW_DEBUGSHADERS) {
+            UINT fState = (MF_DISABLED | MF_GRAYED);
+            if (GetLoadState() == MLS::LOADED && !m_fAudioOnly && m_pCAP2) {
+                fState = MF_ENABLED;
+            }
+            pPopupMenu->EnableMenuItem(i, MF_BYPOSITION | fState);
+            continue;
+        }
 
         if (itemID == ID_FILE_OPENDISC) {
             SetupOpenCDSubMenu();
@@ -14418,6 +14439,13 @@ void CMainFrame::SetupShadersSubMenu()
     CMenu& subMenu = m_shadersMenu;
     // Empty the menu
     while (subMenu.RemoveMenu(0, MF_BYPOSITION));
+
+    if (s.iDSVideoRendererType == VIDRNDT_DS_EVR_CUSTOM || s.iDSVideoRendererType == VIDRNDT_DS_SYNC || s.iDSVideoRendererType == VIDRNDT_DS_VMR9RENDERLESS || s.iDSVideoRendererType == VIDRNDT_DS_MADVR || s.iDSVideoRendererType == VIDRNDT_DS_MPCVR) {
+        subMenu.EnableMenuItem(ID_SHADERS, MF_BYPOSITION | MF_ENABLED);
+    } else {
+        subMenu.EnableMenuItem(ID_SHADERS, MF_BYPOSITION | MF_DISABLED | MF_GRAYED);
+        return;
+    }        
 
     VERIFY(subMenu.AppendMenu(MF_STRING | MF_ENABLED, ID_SHADERS_SELECT, ResStr(IDS_SHADERS_SELECT)));
     VERIFY(subMenu.AppendMenu(MF_STRING | MF_ENABLED, ID_VIEW_DEBUGSHADERS, ResStr(IDS_SHADERS_DEBUG)));
