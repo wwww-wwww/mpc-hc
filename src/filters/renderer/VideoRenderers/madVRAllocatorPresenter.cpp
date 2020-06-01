@@ -32,8 +32,7 @@
 using namespace DSObjects;
 
 CmadVRAllocatorPresenter::CmadVRAllocatorPresenter(HWND hWnd, HRESULT& hr, CString& _Error)
-    : CSubPicAllocatorPresenterImpl(hWnd, hr, &_Error),
-    debugShortcutDisabled(FALSE)
+    : CSubPicAllocatorPresenterImpl(hWnd, hr, &_Error)
 {
     if (FAILED(hr)) {
         _Error += L"ISubPicAllocatorPresenterImpl failed\n";
@@ -45,12 +44,6 @@ CmadVRAllocatorPresenter::CmadVRAllocatorPresenter(HWND hWnd, HRESULT& hr, CStri
 
 CmadVRAllocatorPresenter::~CmadVRAllocatorPresenter()
 {
-    if (debugShortcutDisabled) {
-        if (CComQIPtr<IMadVRSettings> pMVRS = m_pMVR) {
-            pMVRS->SettingsSetString(L"keyDebugOSD", debugShortcut);
-        }
-    }
-
     // the order is important here
     m_pSubPicQueue = nullptr;
     m_pAllocator = nullptr;
@@ -168,15 +161,6 @@ STDMETHODIMP CmadVRAllocatorPresenter::CreateRenderer(IUnknown** ppRenderer)
     CComPtr<IPin> pPin = GetFirstPin(pBF);
     CComQIPtr<IMemInputPin> pMemInputPin = pPin;
     HookNewSegmentAndReceive((IPinC*)(IPin*)pPin, (IMemInputPinC*)(IMemInputPin*)pMemInputPin);
-
-    if (CComQIPtr<IMadVRSettings> pMVRS = m_pMVR) {
-        int sz = _countof(debugShortcut);
-        if (pMVRS->SettingsGetString(L"keyDebugOSD", debugShortcut, &sz)) {
-            //disable keyboard shortcut to prevent conflict. in my testing madVR ignored its own shortcut, but it must work for some
-            debugShortcutDisabled = true;
-            pMVRS->SettingsSetString(L"keyDebugOSD", L"");
-        }
-    }
 
     return S_OK;
 }
@@ -313,22 +297,5 @@ STDMETHODIMP CmadVRAllocatorPresenter::AddPixelShader(int target, LPCWSTR name, 
 }
 
 STDMETHODIMP_(bool) CmadVRAllocatorPresenter::ToggleStats() {
-    if (debugShortcutDisabled) {
-        if (CComQIPtr<IMadVRSettings> pMVRS = m_pMVR) {
-            int sz = _countof(debugShortcut);
-            wchar_t ds[1024];
-            if (pMVRS->SettingsGetString(L"keyDebugOSD", ds, &sz) && wcsnlen_s(ds, _countof(debugShortcut))==0) {
-                BOOL debugOSD;
-                if (pMVRS->SettingsGetBoolean(L"DebugOSD", &debugOSD)) {
-                    debugOSD = !debugOSD;
-                    pMVRS->SettingsSetBoolean(L"DebugOSD", debugOSD);
-                    return debugOSD;
-                }
-            } else {
-                debugShortcutDisabled = false; //if they have changed the madvR shortcut we will no longer call from within mpc-hc to avoid double actions
-            }
-        }
-    }
-
     return false;
 }

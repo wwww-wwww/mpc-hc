@@ -28,8 +28,6 @@ namespace DSObjects
     class CmadVRAllocatorPresenter : public CSubPicAllocatorPresenterImpl, ISubRenderCallback4
     {
         CComPtr<IUnknown> m_pMVR;
-        wchar_t debugShortcut[1024];
-        bool debugShortcutDisabled;
     public:
         CmadVRAllocatorPresenter(HWND hWnd, HRESULT& hr, CString& _Error);
         virtual ~CmadVRAllocatorPresenter();
