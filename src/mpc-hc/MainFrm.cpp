@@ -3121,6 +3121,15 @@ void CMainFrame::OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu)
             continue;
         }
 
+        // "File -> Subtitles" submenu
+        if (firstSubItemID == ID_FILE_SUBTITLES_LOAD) {
+            UINT fState = (GetLoadState() == MLS::LOADED && !m_fAudioOnly && m_pCAP)
+                ? MF_ENABLED
+                : (MF_DISABLED | MF_GRAYED);
+            pPopupMenu->EnableMenuItem(i, MF_BYPOSITION | fState);
+            continue;
+        }
+
         // renderer settings
         if (firstSubItemID == ID_VIEW_TEARING_TEST) {
             UINT fState = (MF_DISABLED | MF_GRAYED);
