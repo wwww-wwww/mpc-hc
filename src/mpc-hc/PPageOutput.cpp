@@ -311,7 +311,7 @@ BOOL CPPageOutput::OnInitDialog()
 
         CString sName(StrRes(resName));
         if (!s.IsVideoRendererAvailable(nID)) {
-            sName.AppendFormat(_T(" %s"), ResStr(IDS_PPAGE_OUTPUT_UNAVAILABLE).GetString());
+            sName.AppendFormat(_T("   %s"), ResStr(IDS_PPAGE_OUTPUT_UNAVAILABLE).GetString());
         }
 
         m_iDSVideoRendererTypeCtrl.SetItemData(m_iDSVideoRendererTypeCtrl.AddString(sName), nID);

@@ -756,6 +756,10 @@ bool CAppSettings::IsVideoRendererAvailable(int iVideoRendererType)
             return IsCLSIDRegistered(CLSID_madVR);
         case VIDRNDT_DS_MPCVR:
             return IsCLSIDRegistered(CLSID_MPCVR);
+#ifdef _WIN64
+        case VIDRNDT_DS_OVERLAYMIXER:
+            return false;
+#endif
         default:
             return true;
     }
