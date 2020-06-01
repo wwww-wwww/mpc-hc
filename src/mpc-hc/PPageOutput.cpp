@@ -475,23 +475,23 @@ void CPPageOutput::OnSurfaceChange()
 
     switch (m_iAPSurfaceUsage) {
         case VIDRNDT_AP_SURFACE:
-            m_iDSShaderSupport.SetIcon(m_cross);
-            m_iDSRotationSupport.SetIcon(m_cross);
+            if (m_iDSVideoRendererType == VIDRNDT_DS_VMR9RENDERLESS) {
+                m_iDSShaderSupport.SetIcon(m_cross);
+                m_iDSRotationSupport.SetIcon(m_cross);
+            }
             m_wndToolTip.UpdateTipText(ResStr(IDC_REGULARSURF), GetDlgItem(IDC_DX_SURFACE));
             break;
         case VIDRNDT_AP_TEXTURE2D:
-            m_iDSShaderSupport.SetIcon(m_cross);
-            m_iDSRotationSupport.SetIcon(m_cross);
+            if (m_iDSVideoRendererType == VIDRNDT_DS_VMR9RENDERLESS) {
+                m_iDSShaderSupport.SetIcon(m_cross);
+                m_iDSRotationSupport.SetIcon(m_cross);
+            }
             m_wndToolTip.UpdateTipText(ResStr(IDC_TEXTURESURF2D), GetDlgItem(IDC_DX_SURFACE));
             break;
         case VIDRNDT_AP_TEXTURE3D:
-            if (m_iDSVideoRendererType == VIDRNDT_DS_VMR9RENDERLESS
-                    || m_iDSVideoRendererType == VIDRNDT_DS_EVR_CUSTOM || m_iDSVideoRendererType == VIDRNDT_DS_SYNC) {
+            if (m_iDSVideoRendererType == VIDRNDT_DS_VMR9RENDERLESS) {
                 m_iDSShaderSupport.SetIcon(m_tick);
                 m_iDSRotationSupport.SetIcon(m_tick);
-            } else {
-                m_iDSShaderSupport.SetIcon(m_cross);
-                m_iDSRotationSupport.SetIcon(m_cross);
             }
             m_wndToolTip.UpdateTipText(ResStr(IDC_TEXTURESURF3D), GetDlgItem(IDC_DX_SURFACE));
             break;
