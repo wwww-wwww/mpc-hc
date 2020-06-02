@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2020-03-20 18:57:58+0000\n"
+"POT-Creation-Date: 2020-05-11 19:52:17+0000\n"
 "PO-Revision-Date: 2020-01-02 07:46+0000\n"
 "Last-Translator: Marián Hikaník <podnety@mojepreklady.net>, 2020\n"
 "Language-Team: Slovak (https://www.transifex.com/mpchc/teams/106126/sk/)\n"
@@ -4108,13 +4108,13 @@ msgstr "Oneskorenie pred zobrazením videa na celú obrazovku, aby sa zabránilo
 
 msgctxt "IDS_PPAGEADVANCED_SNAPSHOTSUBTITLES"
 msgid "Render subtitles onto screenshots"
-msgstr ""
+msgstr "Vykresľovať titulky na snímkach obrazovky"
 
 msgctxt "IDS_PPAGEADVANCED_SNAPSHOTKEEPVIDEOEXTENSION"
-msgid "Keep video file extension as part of shapshot filenames (e.g., file.mkv.png)"
-msgstr ""
+msgid "Keep video file extension as part of snapshot filenames (e.g., file.mkv.png)"
+msgstr "Zachovať koncovku súboru s videom ako súčasť názvu súboru so snímkou (napr.: subor.mkv.png)"
 
 msgctxt "IDS_SNAPSHOT_SUBTITLES"
 msgid "Include Subtitles"
-msgstr ""
+msgstr "Zahrnúť titulky"
 

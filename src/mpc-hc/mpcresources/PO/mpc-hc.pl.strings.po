@@ -11,7 +11,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2020-03-20 18:57:58+0000\n"
+"POT-Creation-Date: 2020-05-11 19:52:17+0000\n"
 "PO-Revision-Date: 2020-01-02 07:46+0000\n"
 "Last-Translator: Rudolph RD, 2020\n"
 "Language-Team: Polish (https://www.transifex.com/mpchc/teams/106126/pl/)\n"
@@ -4111,13 +4111,13 @@ msgstr "Opóźnij wyświetlanie filmu na pełnym ekranie, aby zapobiec usterkom 
 
 msgctxt "IDS_PPAGEADVANCED_SNAPSHOTSUBTITLES"
 msgid "Render subtitles onto screenshots"
-msgstr ""
+msgstr " Renderuj napisy do zrzutów ekranu"
 
 msgctxt "IDS_PPAGEADVANCED_SNAPSHOTKEEPVIDEOEXTENSION"
-msgid "Keep video file extension as part of shapshot filenames (e.g., file.mkv.png)"
-msgstr ""
+msgid "Keep video file extension as part of snapshot filenames (e.g., file.mkv.png)"
+msgstr " Zachowaj rozszerzenie pliku wideo jako część nazw plików snapshot (np. file.mkv.png) "
 
 msgctxt "IDS_SNAPSHOT_SUBTITLES"
 msgid "Include Subtitles"
-msgstr ""
+msgstr " Uwzględnij Napisy"
 

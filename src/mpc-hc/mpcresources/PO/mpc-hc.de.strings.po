@@ -4114,7 +4114,7 @@ msgid "Render subtitles onto screenshots"
 msgstr ""
 
 msgctxt "IDS_PPAGEADVANCED_SNAPSHOTKEEPVIDEOEXTENSION"
-msgid "Keep video file extension as part of shapshot filenames (e.g., file.mkv.png)"
+msgid "Keep video file extension as part of snapshot filenames (e.g., file.mkv.png)"
 msgstr ""
 
 msgctxt "IDS_SNAPSHOT_SUBTITLES"
