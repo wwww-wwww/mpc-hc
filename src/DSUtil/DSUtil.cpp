@@ -893,9 +893,9 @@ DVD_HMSF_TIMECODE RT2HMSF(REFERENCE_TIME rt, double fps /*= 0.0*/) // use to rem
     return hmsf;
 }
 
-DVD_HMSF_TIMECODE RT2HMS_r(REFERENCE_TIME rt) // used only for information (for display on the screen)
+DVD_HMSF_TIMECODE RT2HMS(REFERENCE_TIME rt) // used only for information (for display on the screen)
 {
-    rt = (rt + 5000000) / 10000000;
+    rt = rt / 10000000;
     DVD_HMSF_TIMECODE hmsf = {
         (BYTE)(rt / 3600),
         (BYTE)(rt / 60 % 60),
@@ -904,6 +904,12 @@ DVD_HMSF_TIMECODE RT2HMS_r(REFERENCE_TIME rt) // used only for information (for 
     };
 
     return hmsf;
+}
+
+DVD_HMSF_TIMECODE RT2HMS_r(REFERENCE_TIME rt) // used only for information (for display on the screen)
+{
+    // round to nearest second
+    return RT2HMS(rt + 5000000);
 }
 
 REFERENCE_TIME HMSF2RT(DVD_HMSF_TIMECODE hmsf, double fps /*= -1.0*/)

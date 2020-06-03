@@ -307,9 +307,9 @@ void CPlayerStatusBar::SetStatusTimer(REFERENCE_TIME rtNow, REFERENCE_TIME rtDur
             tcDur = RT2HMSF(rtDur);
             tcRt  = RT2HMSF(rtDur - rtNow);
         } else {
-            tcNow = RT2HMS_r(rtNow);
-            tcDur = RT2HMS_r(rtDur);
-            tcRt  = RT2HMS_r(rtDur - rtNow);
+            tcNow = RT2HMS(rtNow);
+            tcDur = RT2HMS(rtDur);
+            tcRt  = RT2HMS(rtDur - rtNow);
         }
 
         if (tcDur.bHours > 0 || (rtNow >= rtDur && tcNow.bHours > 0)) {
