@@ -750,3 +750,4 @@ msgstr "Támogatás"
 msgctxt "ID_HELP_ABOUT"
 msgid "&About..."
 msgstr "&Névjegy..."
+
