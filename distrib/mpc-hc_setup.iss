@@ -82,8 +82,6 @@
   #define bindir        = bindir + " Lite"
 #endif
 
-#define crashreporter_dir = AddBackslash(bindir) + "CrashReporter"
-
 #ifnexist AddBackslash(bindir) + mpchc_exe
   #error Compile MPC-HC first
 #endif
@@ -239,34 +237,32 @@ Name: reset_settings;     Description: {cm:tsk_ResetSettings};     GroupDescript
 
 
 [Files]
-#if localize == "true"
-Source: {#bindir}\Lang\mpcresources.??.dll;     DestDir: {app}\Lang; Components: mpcresources; Flags: ignoreversion
-Source: {#bindir}\Lang\mpcresources.??_??.dll;  DestDir: {app}\Lang; Components: mpcresources; Flags: ignoreversion
-#endif
-#ifndef MPCHC_LITE
-Source: {#bindir}\{#lavfiltersdir}\*.dll;       DestDir: {app}\{#lavfiltersdir}; Components: main; Flags: ignoreversion
-Source: {#bindir}\{#lavfiltersdir}\*.ax;        DestDir: {app}\{#lavfiltersdir}; Components: main; Flags: ignoreversion
-Source: {#bindir}\{#lavfiltersdir}\*.manifest;  DestDir: {app}\{#lavfiltersdir}; Components: main; Flags: ignoreversion
-#endif
-Source: {#platform}\d3dcompiler_{#MPC_D3D_COMPILER_VERSION}.dll; DestDir: {app}; Components: main; Flags: ignoreversion
-Source: {#platform}\d3dx9_{#MPC_DX_SDK_NUMBER}.dll;              DestDir: {app}; Components: main; Flags: ignoreversion
-Source: {#bindir}\mpciconlib.dll;               DestDir: {app}; Components: mpciconlib;   Flags: ignoreversion
-Source: {#bindir}\{#mpchc_exe};                 DestDir: {app}; Components: main;         Flags: ignoreversion
-#if !defined(MPCHC_LITE) & !USE_STATIC_MEDIAINFO
-Source: {#platform}\mediainfo.dll;              DestDir: {app}; Components: main;         Flags: ignoreversion
-#endif
-Source: ..\COPYING.txt;                         DestDir: {app}; Components: main;         Flags: ignoreversion
-Source: ..\docs\Authors.txt;                    DestDir: {app}; Components: main;         Flags: ignoreversion
-Source: ..\docs\Readme.txt;                     DestDir: {app}; Components: main;         Flags: onlyifdestfileexists
-Source: ..\src\mpc-hc\res\shaders\external\*.hlsl; DestDir: {app}\Shaders; Components: main; Flags: onlyifdoesntexist
-#if USE_DRDUMP_CRASH_REPORTER
-#ifexist AddBackslash(crashreporter_dir) + "crashrpt.dll"
-Source: {#crashreporter_dir}\CrashReporterDialog.dll; DestDir: {app}\CrashReporter; Components: main; Flags: ignoreversion
-Source: {#crashreporter_dir}\crashrpt.dll;            DestDir: {app}\CrashReporter; Components: main; Flags: ignoreversion
-Source: {#crashreporter_dir}\dbghelp.dll;             DestDir: {app}\CrashReporter; Components: main; Flags: ignoreversion
-Source: {#crashreporter_dir}\sendrpt.exe;             DestDir: {app}\CrashReporter; Components: main; Flags: ignoreversion
-#endif
-#endif
+Source: {#bindir}\{#mpchc_exe};                    DestDir: {app};                  Components: main;         Flags: ignoreversion
+	#if localize == "true"
+Source: {#bindir}\Lang\mpcresources.??.dll;        DestDir: {app}\Lang;             Components: mpcresources; Flags: ignoreversion
+Source: {#bindir}\Lang\mpcresources.??_??.dll;     DestDir: {app}\Lang;             Components: mpcresources; Flags: ignoreversion
+	#endif
+Source: {#bindir}\mpciconlib.dll;                  DestDir: {app};                  Components: mpciconlib;   Flags: ignoreversion
+	#ifndef MPCHC_LITE
+Source: {#bindir}\{#lavfiltersdir}\*.dll;          DestDir: {app}\{#lavfiltersdir}; Components: main;         Flags: ignoreversion
+Source: {#bindir}\{#lavfiltersdir}\*.ax;           DestDir: {app}\{#lavfiltersdir}; Components: main;         Flags: ignoreversion
+Source: {#bindir}\{#lavfiltersdir}\*.manifest;     DestDir: {app}\{#lavfiltersdir}; Components: main;         Flags: ignoreversion
+	#endif
+Source: {#platform}\d3dcompiler_{#MPC_D3D_COMPILER_VERSION}.dll; DestDir: {app};    Components: main;         Flags: ignoreversion
+Source: {#platform}\d3dx9_{#MPC_DX_SDK_NUMBER}.dll;              DestDir: {app};    Components: main;         Flags: ignoreversion
+	#if !defined(MPCHC_LITE) & !USE_STATIC_MEDIAINFO
+Source: {#platform}\mediainfo.dll;                 DestDir: {app};                  Components: main;         Flags: ignoreversion
+	#endif
+Source: ..\src\mpc-hc\res\shaders\external\*.hlsl; DestDir: {app}\Shaders;          Components: main;         Flags: onlyifdoesntexist
+Source: ..\COPYING.txt;                            DestDir: {app};                  Components: main;         Flags: ignoreversion
+Source: ..\docs\Authors.txt;                       DestDir: {app};                  Components: main;         Flags: ignoreversion
+Source: ..\docs\Readme.txt;                        DestDir: {app};                  Components: main;         Flags: onlyifdestfileexists
+	#if USE_DRDUMP_CRASH_REPORTER
+Source: {#platform}\crashrpt.dll;                  DestDir: {app}\CrashReporter;    Components: main;         Flags: ignoreversion
+Source: {#platform}\dbghelp.dll;                   DestDir: {app}\CrashReporter;    Components: main;         Flags: ignoreversion
+Source: {#platform}\sendrpt.exe;                   DestDir: {app}\CrashReporter;    Components: main;         Flags: ignoreversion
+Source: CrashReporter_LICENSE.txt;                 DestDir: {app}\CrashReporter;    Components: main;         Flags: ignoreversion
+	#endif
 
 
 [Icons]

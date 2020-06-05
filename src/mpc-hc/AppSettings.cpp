@@ -1384,11 +1384,6 @@ void CAppSettings::LoadSettings()
             language = 0;
         }
     }
-#if USE_DRDUMP_CRASH_REPORTER
-    if (language && CrashReporter::IsEnabled()) {
-        CrashReporter::Enable(Translations::GetLanguageResourceByLocaleID(language).dllPath);
-    }
-#endif
 
     CreateCommands();
 
