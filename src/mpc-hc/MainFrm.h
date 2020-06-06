@@ -580,7 +580,7 @@ public:
     void SetShaders(bool bSetPreResize = true, bool bSetPostResize = true);
 	
 	std::list<ShaderC> m_ShaderCache;
-	ShaderC* GetShader(CString path);
+	ShaderC* GetShader(CString path, bool bD3D11);
 	bool SaveShaderFile(ShaderC* shader);
 	bool DeleteShaderFile(LPCWSTR label);
 	void TidyShaderCashe();

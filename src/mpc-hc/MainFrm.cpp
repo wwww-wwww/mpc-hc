@@ -10958,7 +10958,7 @@ void CMainFrame::RepaintVideo()
     }
 }
 
-ShaderC* CMainFrame::GetShader(CString path)
+ShaderC* CMainFrame::GetShader(CString path, bool bD3D11)
 {
 	ShaderC* pShader = nullptr;
 
@@ -10984,7 +10984,9 @@ ShaderC* CMainFrame::GetShader(CString path)
 					file.SeekToBegin();
 				}
 
-				if (shader.profile == L"ps_3_sw") {
+                if (bD3D11) {
+                    shader.profile = L"ps_4_0";
+                } else if (shader.profile == L"ps_3_sw") {
 					shader.profile = L"ps_3_0";
 				} else if (shader.profile != L"ps_2_0"
 						&& shader.profile != L"ps_2_a"
@@ -11107,14 +11109,14 @@ void CMainFrame::SetShaders(bool bSetPreResize/* = true*/, bool bSetPostResize/*
 
     if (m_pCAP3) { //interfaces for madVR and MPC-VR
         const int PShaderMode = m_pCAP3->GetPixelShaderMode();
-        if (PShaderMode != 9) {
+        if (PShaderMode != 9 && PShaderMode != 11) {
             return;
         }
 
         if (bSetPreResize) {
             m_pCAP3->ClearPixelShaders(TARGET_FRAME);
             for (const auto& shader : s.m_Shaders.GetCurrentPreset().GetPreResize()) {
-                ShaderC* pShader = GetShader(shader.filePath);
+                ShaderC* pShader = GetShader(shader.filePath, PShaderMode == 11);
                 if (pShader) {
                     CStringW label = pShader->label;
                     CStringA profile = pShader->profile;
@@ -11130,7 +11132,7 @@ void CMainFrame::SetShaders(bool bSetPreResize/* = true*/, bool bSetPostResize/*
         if (bSetPostResize) {
             m_pCAP3->ClearPixelShaders(TARGET_SCREEN);
             for (const auto& shader : s.m_Shaders.GetCurrentPreset().GetPostResize()) {
-                ShaderC* pShader = GetShader(shader.filePath);
+                ShaderC* pShader = GetShader(shader.filePath, PShaderMode == 11);
                 if (pShader) {
                     CStringW label = pShader->label;
                     CStringA profile = pShader->profile;
