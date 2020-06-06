@@ -12969,13 +12969,11 @@ void CMainFrame::CloseMediaPrivate()
     }
     m_pCB.Release();
 
-    SetSubtitle(SubtitleInput(nullptr));
     {
         CAutoLock cAutoLock(&m_csSubLock);
         m_pSubStreams.RemoveAll();
+        m_ExternalSubstreams.clear();
     }
-    m_ExternalSubstreams.clear();
-
     m_pSubClock.Release();
 
     // IMPORTANT: IVMRSurfaceAllocatorNotify/IVMRSurfaceAllocatorNotify9 has to be released before the VMR/VMR9, otherwise it will crash in Release()
