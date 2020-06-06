@@ -2142,10 +2142,13 @@ CString CAppSettings::ParseFileName(CString const& param)
 
     // Try to transform relative pathname into full pathname
     if (param.Find(_T(":")) < 0) {
-        fullPathName.ReleaseBuffer(GetFullPathName(param, MAX_PATH, fullPathName.GetBuffer(MAX_PATH), nullptr));
+        DWORD dwLen = GetFullPathName(param, MAX_PATH, fullPathName.GetBuffer(MAX_PATH), nullptr);
+        if (dwLen > 0 && dwLen < MAX_PATH) {
+            fullPathName.ReleaseBuffer(dwLen);
 
-        if (!fullPathName.IsEmpty() && PathUtils::Exists(fullPathName)) {
-            return fullPathName;
+            if (!fullPathName.IsEmpty() && PathUtils::Exists(fullPathName)) {
+                return fullPathName;
+            }
         }
     }
 
