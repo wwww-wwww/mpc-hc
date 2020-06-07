@@ -1466,6 +1466,22 @@ BOOL WINAPI Mine_LockWindowUpdate(HWND hWndLock)
     }
 }
 
+BOOL RegQueryBoolValue(HKEY hKeyRoot, LPCWSTR lpSubKey, LPCWSTR lpValuename, BOOL defaultvalue) {
+    BOOL result = defaultvalue;
+    HKEY hKeyOpen;
+    DWORD rv = RegOpenKeyEx(hKeyRoot, lpSubKey, 0, KEY_READ, &hKeyOpen);
+    if (rv == ERROR_SUCCESS) {
+        DWORD data;
+        DWORD dwBufferSize = sizeof(DWORD);
+        rv = RegQueryValueEx(hKeyOpen, lpValuename, NULL, NULL, reinterpret_cast<LPBYTE>(&data), &dwBufferSize);
+        if (rv == ERROR_SUCCESS) {
+            result = (data > 0);
+        }
+        RegCloseKey(hKeyOpen);
+    }
+    return result;
+}
+
 BOOL CMPlayerCApp::InitInstance()
 {
     // Remove the working directory from the search path to work around the DLL preloading vulnerability
@@ -1473,9 +1489,13 @@ BOOL CMPlayerCApp::InitInstance()
 
     // At this point we have not hooked this function yet so we get the real result
     if (!IsDebuggerPresent()) {
-#if USE_DRDUMP_CRASH_REPORTER
-        CrashReporter::Enable();
-        if (!CrashReporter::IsEnabled()) {
+#if !defined(_DEBUG) && USE_DRDUMP_CRASH_REPORTER
+        if (RegQueryBoolValue(HKEY_CURRENT_USER, _T("Software\\MPC-HC\\MPC-HC\\Settings"), _T("EnableCrashReporter"), true)) {
+            CrashReporter::Enable();
+            if (!CrashReporter::IsEnabled()) {
+                MPCExceptionHandler::Enable();
+            }
+        } else {
             MPCExceptionHandler::Enable();
         }
 #else
@@ -1780,6 +1800,13 @@ BOOL CMPlayerCApp::InitInstance()
 
     m_s->UpdateSettings(); // update settings
     m_s->LoadSettings(); // read settings
+
+    #if !defined(_DEBUG) && USE_DRDUMP_CRASH_REPORTER
+    if (!m_s->bEnableCrashReporter && CrashReporter::IsEnabled()) {
+        CrashReporter::Disable();
+        MPCExceptionHandler::Enable();
+    }
+    #endif
 
     m_AudioRendererDisplayName_CL = _T("");
 

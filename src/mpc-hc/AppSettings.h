@@ -791,6 +791,8 @@ public:
     bool bYDLAudioOnly;
     CString sYDLCommandLine;
 
+    bool bEnableCrashReporter;
+
 private:
     struct FilterKey {
         CString name;

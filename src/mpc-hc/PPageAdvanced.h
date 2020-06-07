@@ -186,6 +186,9 @@ private:
         FILE_POS_LONGER,
         FILE_POS_AUDIO,
         COVER_SIZE_LIMIT,
+#if !defined(_DEBUG) && USE_DRDUMP_CRASH_REPORTER
+        CRASHREPORTER,
+#endif
         LOGGING,
         AUTO_DOWNLOAD_SCORE_MOVIES,
         AUTO_DOWNLOAD_SCORE_SERIES,
