@@ -10958,12 +10958,24 @@ void CMainFrame::RepaintVideo()
     }
 }
 
+
+
 ShaderC* CMainFrame::GetShader(CString path, bool bD3D11)
 {
 	ShaderC* pShader = nullptr;
 
+    CString shadersDir = ShaderList::GetShadersDir();
+    CString shadersDir11 = ShaderList::GetShadersDir11();
+    CString tPath = path;
+    tPath.Replace(shadersDir, shadersDir11);
+
+    //if the shader exists in the Shaders11 folder, use that one
+    if (bD3D11 && ::PathFileExistsW(tPath)) {
+        path = tPath;
+    }
+
 	for (auto& shader : m_ShaderCache) {
-		if (shader.Match(path, false)) {
+		if (shader.Match(path, bD3D11)) {
 			pShader = &shader;
 			break;
 		}

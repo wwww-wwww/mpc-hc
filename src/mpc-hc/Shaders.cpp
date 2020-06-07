@@ -115,6 +115,11 @@ CString ShaderList::GetShadersDir()
     return PathUtils::CombinePaths(PathUtils::GetProgramPath(false), SHADERS_DIR);
 }
 
+CString ShaderList::GetShadersDir11()
+{
+    return PathUtils::CombinePaths(PathUtils::GetProgramPath(false), SHADERS_DIR11);
+}
+
 ShaderList ShaderList::GetDefaultShaders()
 {
     ShaderList ret;
