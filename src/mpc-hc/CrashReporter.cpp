@@ -78,7 +78,7 @@ void CrashReporter::Enable()
     crash_rpt::HandlerSettings handlerSettings = {
         sizeof(handlerSettings),
         FALSE,      // If dumps should be kept in temp dir
-        FALSE,      // Open the problem page in the browser
+        TRUE,       // Open the problem page in the browser
         FALSE,      // If Windows Error Reporting should be used
         0,          // Anonymous submitter
         TRUE,       // Additional info
