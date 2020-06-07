@@ -253,7 +253,8 @@ Source: {#platform}\d3dx9_{#MPC_DX_SDK_NUMBER}.dll;              DestDir: {app};
 	#if !defined(MPCHC_LITE) & !USE_STATIC_MEDIAINFO
 Source: {#platform}\mediainfo.dll;                 DestDir: {app};                  Components: main;         Flags: ignoreversion
 	#endif
-Source: ..\src\mpc-hc\res\shaders\external\*.hlsl; DestDir: {app}\Shaders;          Components: main;         Flags: onlyifdoesntexist
+Source: ..\src\mpc-hc\res\shaders\dx9\*.hlsl;      DestDir: {app}\Shaders;          Components: main;         Flags: onlyifdoesntexist
+Source: ..\src\mpc-hc\res\shaders\dx11\*.hlsl;     DestDir: {app}\Shaders11;        Components: main;         Flags: onlyifdoesntexist
 Source: ..\COPYING.txt;                            DestDir: {app};                  Components: main;         Flags: ignoreversion
 Source: ..\docs\Authors.txt;                       DestDir: {app};                  Components: main;         Flags: ignoreversion
 Source: ..\docs\Readme.txt;                        DestDir: {app};                  Components: main;         Flags: onlyifdestfileexists
@@ -291,6 +292,9 @@ Type: files; Name: {commondesktop}\{#app_name}.lnk; Check: not IsTaskSelected('d
 Type: files; Name: {#quick_launch}\{#app_name}.lnk; Check: not IsTaskSelected('quicklaunchicon')    and IsUpgrade(); OnlyBelowVersion: 6.01
 Type: files; Name: {app}\AUTHORS;                   Check: IsUpgrade()
 Type: files; Name: {app}\COPYING;                   Check: IsUpgrade()
+	#if !USE_DRDUMP_CRASH_REPORTER
+Type: filesandordirs; Name: {app}\CrashReporter;    Check: IsUpgrade()
+	#endif
 
 ; old shortcuts
 #ifdef x64Build
