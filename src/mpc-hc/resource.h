@@ -162,6 +162,7 @@
 #define ID_PLAY_PLAY                    887
 #define ID_PLAY_PAUSE                   888
 #define ID_PLAY_PLAYPAUSE               889
+#define IDS_SHADERNOTES                 889
 #define ID_PLAY_STOP                    890
 #define ID_PLAY_FRAMESTEP               891
 #define ID_PLAY_FRAMESTEPCANCEL         892

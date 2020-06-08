@@ -11148,28 +11148,42 @@ void CMainFrame::SetShaders(bool bSetPreResize/* = true*/, bool bSetPostResize/*
             return;
         }
 
+        CStringList processedShaders;
+        m_pCAP3->ClearPixelShaders(TARGET_FRAME);
+        m_pCAP3->ClearPixelShaders(TARGET_SCREEN);
         if (bSetPreResize) {
-            m_pCAP3->ClearPixelShaders(TARGET_FRAME);
+            int preTarget;
+            if (s.iDSVideoRendererType == VIDRNDT_DS_MPCVR) { //for now MPC-VR does not support pre-size shaders
+                preTarget = TARGET_SCREEN;
+            } else {
+                preTarget = TARGET_FRAME;
+            }
             for (const auto& shader : s.m_Shaders.GetCurrentPreset().GetPreResize()) {
                 ShaderC* pShader = GetShader(shader.filePath, PShaderMode == 11);
                 if (pShader) {
                     CStringW label = pShader->label;
+                    if (processedShaders.Find(label)) {
+                        continue;
+                    }
                     CStringA profile = pShader->profile;
                     CStringA srcdata = pShader->srcdata;
-                    if (FAILED(m_pCAP3->AddPixelShader(TARGET_FRAME, label, profile, srcdata))) {
+                    if (FAILED(m_pCAP3->AddPixelShader(preTarget, label, profile, srcdata))) {
                         preFailed=true;
-                        m_pCAP3->ClearPixelShaders(TARGET_FRAME);
+                        m_pCAP3->ClearPixelShaders(preTarget);
                         break;
                     }
+                    processedShaders.AddTail(label);
                 }
             }
         }
         if (bSetPostResize) {
-            m_pCAP3->ClearPixelShaders(TARGET_SCREEN);
             for (const auto& shader : s.m_Shaders.GetCurrentPreset().GetPostResize()) {
                 ShaderC* pShader = GetShader(shader.filePath, PShaderMode == 11);
                 if (pShader) {
                     CStringW label = pShader->label;
+                    if (processedShaders.Find(label)) {
+                        continue;
+                    }
                     CStringA profile = pShader->profile;
                     CStringA srcdata = pShader->srcdata;
                     if (FAILED(m_pCAP3->AddPixelShader(TARGET_SCREEN, label, profile, srcdata))) {
@@ -11177,6 +11191,7 @@ void CMainFrame::SetShaders(bool bSetPreResize/* = true*/, bool bSetPostResize/*
                         m_pCAP3->ClearPixelShaders(TARGET_SCREEN);
                         break;
                     }
+                    processedShaders.AddTail(label);
                 }
             }
         }

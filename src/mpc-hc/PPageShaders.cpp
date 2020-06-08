@@ -230,7 +230,18 @@ void CPPageShaders::DoDataExchange(CDataExchange* pDX)
     DDX_Control(pDX, IDC_LIST2, m_PreResize);
     DDX_Control(pDX, IDC_LIST3, m_PostResize);
     DDX_Control(pDX, IDC_COMBO1, m_PresetsBox);
+    DDX_Control(pDX, IDC_STATIC5, mpcvrNote);
 }
+
+void CPPageShaders::CheckRenderer()
+{
+    if (AfxGetAppSettings().iDSVideoRendererType == VIDRNDT_DS_MPCVR) {
+        mpcvrNote.ShowWindow(TRUE);
+    } else {
+        mpcvrNote.ShowWindow(FALSE);
+    }
+}
+
 
 BOOL CPPageShaders::OnInitDialog()
 {
@@ -266,9 +277,17 @@ BOOL CPPageShaders::OnInitDialog()
 
     m_bCurrentPresetChanged = false;
 
+    CheckRenderer();
     fulfillThemeReqs();
     return TRUE;
 }
+
+BOOL CPPageShaders::OnSetActive() {
+    BOOL ret = __super::OnSetActive();
+    CheckRenderer();
+    return ret;
+}
+
 
 BOOL CPPageShaders::OnApply()
 {
