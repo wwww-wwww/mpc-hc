@@ -648,8 +648,8 @@ CMPlayerCApp::~CMPlayerCApp()
 int CMPlayerCApp::DoMessageBox(LPCTSTR lpszPrompt, UINT nType,
                                UINT nIDPrompt)
 {
-    if (AfxGetAppSettings().bMPCThemeLoaded) {
-
+    const CAppSettings& s = AfxGetAppSettings();
+    if (&s && s.IsInitialized() && s.bMPCThemeLoaded) {
         CWnd* pParentWnd = CWnd::GetActiveWindow();
         if (pParentWnd == NULL) {
             pParentWnd = GetMainWnd()->GetLastActivePopup();
