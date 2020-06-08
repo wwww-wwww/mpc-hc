@@ -13129,8 +13129,8 @@ void CMainFrame::DoTunerScan(TunerScanData* pTSD)
         if (pTun) {
             BOOLEAN bPresent;
             BOOLEAN bLocked;
-            LONG lDbStrength;
-            LONG lPercentQuality;
+            LONG lDbStrength = 0;
+            LONG lPercentQuality = 0;
             int nOffset = pTSD->Offset ? 3 : 1;
             LONG lOffsets[3] = {0, pTSD->Offset, -pTSD->Offset};
             m_bStopTunerScan = false;

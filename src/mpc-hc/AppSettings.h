@@ -412,7 +412,7 @@ public:
 
 class CAppSettings
 {
-    bool bInitialized;
+    bool bInitialized = false;
 
     class CRecentFileAndURLList : public CRecentFileList
     {

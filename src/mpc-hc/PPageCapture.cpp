@@ -636,36 +636,6 @@ void CPPageCapture::FindDigitalDevices()
 {
     const CAppSettings& s = AfxGetAppSettings();
     int iSel = 0;
-    bool bFound = false;
-/*
-    BeginEnumSysDev(KSCATEGORY_BDA_NETWORK_PROVIDER, pMoniker) {
-        CComPtr<IPropertyBag> pPB;
-        pMoniker->BindToStorage(0, 0, IID_PPV_ARGS(&pPB));
-
-        CComVariant var;
-        if (SUCCEEDED(pPB->Read(_T("FriendlyName"), &var, nullptr))) {
-            int i = m_cbDigitalNetworkProvider.AddString(CString(var.bstrVal));
-
-            CComHeapPtr<OLECHAR> strName;
-            if (SUCCEEDED(pMoniker->GetDisplayName(nullptr, nullptr, &strName))) {
-                m_providernames.Add(CString(strName));
-                if (s.strBDANetworkProvider == CString(strName)) {
-                    iSel = i;
-                    bFound = true;
-                } else if (!bFound && CString(var.bstrVal) == _T("Microsoft Network Provider")) {
-                    // Select Microsoft Network Provider by default, other network providers are deprecated.
-                    iSel = i;
-                }
-            }
-        }
-    }
-    EndEnumSysDev;
-    if (m_cbDigitalNetworkProvider.GetCount()) {
-        m_cbDigitalNetworkProvider.SetCurSel(iSel);
-    } else {
-        return;
-    }
-*/
 
     iSel = 0;
     BeginEnumSysDev(KSCATEGORY_BDA_NETWORK_TUNER, pMoniker) {

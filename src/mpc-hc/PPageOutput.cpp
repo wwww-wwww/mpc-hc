@@ -732,8 +732,6 @@ void CPPageOutput::UpdateSubtitleSupport()
 
 void CPPageOutput::UpdateSubtitleRendererList()
 {
-    const auto& s = AfxGetAppSettings();
-
     auto addSubtitleRenderer = [&](CAppSettings::SubtitleRenderer nID) {
         if (!CAppSettings::IsSubtitleRendererSupported(nID, m_iDSVideoRendererType)) {
             return;

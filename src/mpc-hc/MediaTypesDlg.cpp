@@ -109,7 +109,7 @@ BOOL CMediaTypesDlg::OnInitDialog()
     SetMinTrackSize(CSize(300, 200));
     fulfillThemeReqs();
 
-    DWORD threadID = GetWindowThreadProcessId(m_hWnd,nullptr);
+    //DWORD threadID = GetWindowThreadProcessId(m_hWnd,nullptr);
 
     return TRUE;  // return TRUE unless you set the focus to a control
     // EXCEPTION: OCX Property Pages should return FALSE

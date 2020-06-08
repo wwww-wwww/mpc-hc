@@ -48,8 +48,6 @@
 #include "FGFilterLAV.h"
 #include "CMPCThemeMsgBox.h"
 
-#define HOOKS_BUGS_URL _T("https://trac.mpc-hc.org/ticket/3739")
-
 HICON LoadIcon(CString fn, bool bSmallIcon, DpiHelper* pDpiHelper/* = nullptr*/)
 {
     if (fn.IsEmpty()) {
@@ -1533,9 +1531,7 @@ BOOL CMPlayerCApp::InitInstance()
     bHookingSuccessful &= MH_EnableHook(MH_ALL_HOOKS) == MH_OK;
 
     if (!bHookingSuccessful) {
-        if (AfxMessageBox(IDS_HOOKS_FAILED, MB_ICONWARNING | MB_YESNO, 0) == IDYES) {
-            ShellExecute(nullptr, _T("open"), HOOKS_BUGS_URL, nullptr, nullptr, SW_SHOWDEFAULT);
-        }
+        AfxMessageBox(IDS_HOOKS_FAILED);
     }
 
     // If those hooks fail it's annoying but try to run anyway without reporting any error in release mode

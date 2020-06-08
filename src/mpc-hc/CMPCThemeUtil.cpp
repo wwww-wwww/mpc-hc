@@ -576,6 +576,7 @@ void CMPCThemeUtil::Draw2BitTransparent(CDC& dc, int left, int top, int width, i
     dc.SetBkColor(crOldBkColor);
 }
 
+#if 0
 void CMPCThemeUtil::dbg(CString text, ...)
 {
     va_list args;
@@ -586,6 +587,7 @@ void CMPCThemeUtil::dbg(CString text, ...)
     OutputDebugString(_T("\n"));
     va_end(args);
 }
+#endif
 
 float CMPCThemeUtil::getConstantFByDPI(CWnd* window, const float* constants)
 {
