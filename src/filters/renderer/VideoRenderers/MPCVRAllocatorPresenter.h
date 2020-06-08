@@ -68,21 +68,23 @@ namespace DSObjects
 
 
         // ISubPicAllocatorPresenter
-		STDMETHODIMP CreateRenderer(IUnknown** ppRenderer) override;
+        STDMETHODIMP CreateRenderer(IUnknown** ppRenderer) override;
         STDMETHODIMP_(SIZE) GetVideoSize(bool bCorrectAR) const;
-		STDMETHODIMP_(void) SetPosition(RECT w, RECT v) override;
-		STDMETHODIMP_(bool) Paint(bool bAll) override;
-		STDMETHODIMP GetDIB(BYTE* lpDib, DWORD* size) override;
-		STDMETHODIMP GetDisplayedImage(LPVOID* dibImage) override;
+        STDMETHODIMP_(void) SetPosition(RECT w, RECT v) override;
+        STDMETHODIMP_(bool) Paint(bool bAll) override;
+        STDMETHODIMP GetDIB(BYTE* lpDib, DWORD* size) override;
+        STDMETHODIMP GetDisplayedImage(LPVOID* dibImage) override;
         STDMETHODIMP SetPixelShader(LPCSTR pSrcData, LPCSTR pTarget);
         STDMETHODIMP_(bool) DisplayChange() override;
-		STDMETHODIMP_(bool) IsRendering() override;
+        STDMETHODIMP_(bool) IsRendering() override;
         // ISubPicAllocatorPresenter3
-		STDMETHODIMP SetRotation(int rotation) override;
-		STDMETHODIMP_(int) GetRotation() override;
-		STDMETHODIMP_(int) GetPixelShaderMode() override;
-		STDMETHODIMP ClearPixelShaders(int target) override;
-		STDMETHODIMP AddPixelShader(int target, LPCWSTR name, LPCSTR profile, LPCSTR sourceCode) override;
+        STDMETHODIMP SetRotation(int rotation) override;
+        STDMETHODIMP_(int) GetRotation() override;
+        STDMETHODIMP SetFlip(bool flip) override;
+        STDMETHODIMP_(bool) GetFlip() override;
+        STDMETHODIMP_(int) GetPixelShaderMode() override;
+        STDMETHODIMP ClearPixelShaders(int target) override;
+        STDMETHODIMP AddPixelShader(int target, LPCWSTR name, LPCSTR profile, LPCSTR sourceCode) override;
         STDMETHODIMP_(bool) ToggleStats() override;
     };
 }

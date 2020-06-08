@@ -200,6 +200,8 @@ STDMETHODIMP_(void) CMPCVRAllocatorPresenter::SetPosition(RECT w, RECT v)
 	__super::SetPosition(w, v);
 }
 
+// ISubPicAllocatorPresenter
+
 STDMETHODIMP CMPCVRAllocatorPresenter::SetRotation(int rotation)
 {
 	if (AngleStep90(rotation)) {
@@ -230,6 +232,30 @@ STDMETHODIMP_(int) CMPCVRAllocatorPresenter::GetRotation()
     return 0;
 }
 
+STDMETHODIMP CMPCVRAllocatorPresenter::SetFlip(bool flip) {
+    HRESULT hr = E_NOTIMPL;
+    if (CComQIPtr<IExFilterConfig> pIExFilterConfig = m_pMPCVR) {
+        bool curFlip = flip;
+        hr = pIExFilterConfig->GetBool("flip", &curFlip);
+        if (SUCCEEDED(hr) && flip != curFlip) {
+            hr = pIExFilterConfig->SetBool("flip", flip);
+            if (SUCCEEDED(hr)) {
+                m_bOtherTransform = true;
+            }
+        }
+    }
+    return hr;
+}
+
+STDMETHODIMP_(bool) CMPCVRAllocatorPresenter::GetFlip() {
+    if (CComQIPtr<IExFilterConfig> pIExFilterConfig = m_pMPCVR) {
+        bool flip = false;
+        if (SUCCEEDED(pIExFilterConfig->GetBool("flip", &flip))) {
+            return flip;
+        }
+    }
+    return false;
+}
 
 STDMETHODIMP_(SIZE) CMPCVRAllocatorPresenter::GetVideoSize(bool bCorrectAR) const
 {

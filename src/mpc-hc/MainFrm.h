@@ -583,7 +583,7 @@ public:
 	ShaderC* GetShader(CString path, bool bD3D11);
 	bool SaveShaderFile(ShaderC* shader);
 	bool DeleteShaderFile(LPCWSTR label);
-	void TidyShaderCashe();
+	void TidyShaderCache();
 
     // capturing
     bool m_fCapturing;
