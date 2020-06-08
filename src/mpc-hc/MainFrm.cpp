@@ -7300,21 +7300,21 @@ void CMainFrame::OnViewRotate(UINT nID)
         };
 
         switch (nID) {
-        case ID_PANSCAN_ROTATEXM:
-        {
-            isFlip = !isFlip;
-            m_pCAP3->SetFlip(isFlip != isMirror);
-            if (FAILED(doRotate(0))) isFlip = !isFlip;
-            break;
-        }
-        case ID_PANSCAN_ROTATEYM:
-        {
-            isMirror = !isMirror;
-            m_pCAP3->SetFlip(isFlip != isMirror);
-            if (FAILED(doRotate(0))) isMirror = !isMirror;
-            break;
-        }
-        case ID_PANSCAN_ROTATEZP:
+            case ID_PANSCAN_ROTATEXM:
+            {
+                isFlip = !isFlip;
+                m_pCAP3->SetFlip(isFlip != isMirror);
+                if (FAILED(doRotate(0))) isFlip = !isFlip;
+                break;
+            }
+            case ID_PANSCAN_ROTATEYM:
+            {
+                isMirror = !isMirror;
+                m_pCAP3->SetFlip(isFlip != isMirror);
+                if (FAILED(doRotate(0))) isMirror = !isMirror;
+                break;
+            }
+            case ID_PANSCAN_ROTATEZP:
             case ID_PANSCAN_ROTATEZ270:
                 doRotate(270);
                 break;
