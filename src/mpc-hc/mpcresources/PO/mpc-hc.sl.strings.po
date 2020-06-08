@@ -1574,8 +1574,8 @@ msgid "Nearest keyframe"
 msgstr "Najbljižja ključna slika"
 
 msgctxt "IDS_HOOKS_FAILED"
-msgid "MPC-HC encountered a problem during initialization. DVD playback may not work correctly. This might be caused by some incompatibilities with certain security tools.\n\nDo you want to report this issue?"
-msgstr "MPC-HC je naletel na težavo med inicializacijo. DVD predvajanje morda ne bo delovalo pravilno. Vzrok je morda nezdružljivost z določenimi varnostnimi orodji.\n\nŽelite prijaviti težavo?"
+msgid "MPC-HC encountered a problem during initialization. DVD playback may not work correctly. This problem might be caused by an incompatibility with certain security software."
+msgstr ""
 
 msgctxt "IDS_PPAGEFULLSCREEN_SHOWNEVER"
 msgid "Never show"

@@ -1574,8 +1574,8 @@ msgid "Nearest keyframe"
 msgstr "Artimiausias raktinis kadras"
 
 msgctxt "IDS_HOOKS_FAILED"
-msgid "MPC-HC encountered a problem during initialization. DVD playback may not work correctly. This might be caused by some incompatibilities with certain security tools.\n\nDo you want to report this issue?"
-msgstr "Inicializiacijos metu MPC-HC susidūrė su problema. DVD negali teisingai veikti. Tai gali sukelti saugumo įrankių nesuderinamumas.\n\nAr jūs norite pranešti apie šią problemą?"
+msgid "MPC-HC encountered a problem during initialization. DVD playback may not work correctly. This problem might be caused by an incompatibility with certain security software."
+msgstr ""
 
 msgctxt "IDS_PPAGEFULLSCREEN_SHOWNEVER"
 msgid "Never show"

@@ -1575,8 +1575,8 @@ msgid "Nearest keyframe"
 msgstr "Bingkai kunci terhampir"
 
 msgctxt "IDS_HOOKS_FAILED"
-msgid "MPC-HC encountered a problem during initialization. DVD playback may not work correctly. This might be caused by some incompatibilities with certain security tools.\n\nDo you want to report this issue?"
-msgstr "MPC-HC menghadapi masalah ketika pengawalan. Main balik DVD mungkin tidak berfungsi dengan baik. Ia akan mungkin disebabkan oleh beberapa ketidakserasian dengan sesetengah alat keselamatan.\n\nAnda mahu laporkan isu ini?"
+msgid "MPC-HC encountered a problem during initialization. DVD playback may not work correctly. This problem might be caused by an incompatibility with certain security software."
+msgstr ""
 
 msgctxt "IDS_PPAGEFULLSCREEN_SHOWNEVER"
 msgid "Never show"
