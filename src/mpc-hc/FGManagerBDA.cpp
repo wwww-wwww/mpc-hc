@@ -1398,9 +1398,10 @@ HRESULT CFGManagerBDA::ChangeState(FILTER_STATE nRequested)
         CMainFrame* pMainFrame = AfxGetMainFrame();
         switch (nRequested) {
             case State_Stopped: {
-                if (SUCCEEDED(hr = pMC->Stop()) && pMainFrame) {
+                if (pMainFrame) {
                     pMainFrame->KillTimersStop();
                 }
+                hr = pMC->Stop();
                 LOG(_T("IMediaControl stop: 0x%08x."), hr);
                 return hr;
             }

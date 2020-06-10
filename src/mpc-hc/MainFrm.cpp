@@ -7521,6 +7521,8 @@ void CMainFrame::OnPlayPlay()
         // If playback was previously stopped or ended, we need to reset the window size
         bool bVideoWndNeedReset = GetMediaState() == State_Stopped || m_fEndOfStream;
 
+        KillTimersStop();
+
         if (GetPlaybackMode() == PM_FILE) {
             if (m_fEndOfStream) {
                 SendMessage(WM_COMMAND, ID_PLAY_STOP);
@@ -7550,7 +7552,6 @@ void CMainFrame::OnPlayPlay()
 
         // Restart playback
         m_pMC->Run();
-        SetTimersPlay();
 
         if (m_fFrameSteppingActive) {
             m_pFS->CancelStep();
@@ -7562,6 +7563,8 @@ void CMainFrame::OnPlayPlay()
         m_nStepForwardCount = 0;
 
         SetAlwaysOnTop(s.iOnTop);
+
+        SetTimersPlay();
     }
 
     m_Lcd.SetStatusMessage(ResStr(IDS_CONTROLS_PLAYING), 3000);
