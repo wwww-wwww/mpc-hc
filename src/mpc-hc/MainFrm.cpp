@@ -1835,6 +1835,9 @@ void CMainFrame::OnTimer(UINT_PTR nIDEvent)
             break;
         case TIMER_STREAMPOSPOLLER:
             if (GetLoadState() == MLS::LOADED) {
+                CAutoLock cAutoLock(&m_csLoadStateLock);
+                if (GetLoadState() != MLS::LOADED) break;
+
                 REFERENCE_TIME rtNow = 0, rtDur = 0;
                 switch (GetPlaybackMode()) {
                     case PM_FILE:
@@ -1957,6 +1960,9 @@ void CMainFrame::OnTimer(UINT_PTR nIDEvent)
             break;
         case TIMER_STREAMPOSPOLLER2:
             if (GetLoadState() == MLS::LOADED) {
+                CAutoLock cAutoLock(&m_csLoadStateLock);
+                if (GetLoadState() != MLS::LOADED) break;
+
                 switch (GetPlaybackMode()) {
                     case PM_FILE:
                     // no break
@@ -16102,6 +16108,8 @@ LRESULT CMainFrame::OnCurrentChannelInfoUpdated(WPARAM wParam, LPARAM lParam)
 // ==== Added by CASIMIR666
 void CMainFrame::SetLoadState(MLS eState)
 {
+    CAutoLock cAutoLock(&m_csLoadStateLock);
+
     m_eMediaLoadState = eState;
     SendAPICommand(CMD_STATE, L"%d", static_cast<int>(eState));
     if (eState == MLS::LOADED) {
