@@ -1653,7 +1653,8 @@ void CEVRAllocatorPresenter::GetMixerThread()
                 bQuit = true;
                 break;
             case WAIT_TIMEOUT: {
-                if (GetRenderersData()->m_iDisplayStats) {
+                CRenderersData* rd = GetRenderersData();
+                if (rd && rd->m_iDisplayStats) {
                     CComPtr<IPin> pPin;
                     CComPtr<IPin> pPinTo;
                     if (SUCCEEDED(m_pOuterEVR->FindPin(L"EVR Input0", &pPin)) &&

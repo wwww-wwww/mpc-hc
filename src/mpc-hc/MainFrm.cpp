@@ -7683,6 +7683,8 @@ void CMainFrame::OnPlayStop()
     m_bOpeningInAutochangedMonitorMode = false;
     m_bPausedForAutochangeMonitorMode = false;
 
+    KillTimersStop();
+
     m_wndSeekBar.SetPos(0);
     if (GetLoadState() == MLS::LOADED) {
         if (GetPlaybackMode() == PM_FILE) {
@@ -7740,7 +7742,6 @@ void CMainFrame::OnPlayStop()
     m_nLoops = 0;
 
     if (m_hWnd) {
-        KillTimersStop();
         MoveVideoWindow();
 
         if (GetLoadState() == MLS::LOADED) {
