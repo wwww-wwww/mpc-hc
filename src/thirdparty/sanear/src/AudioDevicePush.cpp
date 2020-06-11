@@ -138,7 +138,7 @@ namespace SaneAudioRenderer
                 m_silenceFrames += PushSilenceToDevice(m_backend->deviceBufferSize);
                 m_wake.Wait(m_backend->bufferDuration / 4);
             }
-            catch (HRESULT)
+            catch (std::system_error&)
             {
                 m_error = true;
             }

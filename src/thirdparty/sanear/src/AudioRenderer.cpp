@@ -26,9 +26,9 @@ namespace SaneAudioRenderer
                 throw E_OUTOFMEMORY;
             }
         }
-        catch (HRESULT ex)
+        catch (std::system_error& ex)
         {
-            result = ex;
+            result = ex.code().value();
         }
     }
 
@@ -138,7 +138,7 @@ namespace SaneAudioRenderer
                     }
                 }
             }
-            catch (HRESULT)
+            catch (std::system_error&)
             {
                 ClearDevice();
             }
@@ -205,7 +205,7 @@ namespace SaneAudioRenderer
                         {
                             remaining = m_device->Finish(pFilledEvent);
                         }
-                        catch (HRESULT)
+                        catch (std::system_error&)
                         {
                             ClearDevice();
                         }
@@ -568,7 +568,7 @@ namespace SaneAudioRenderer
                 m_clockCorrection = 0;
                 m_device->Start();
             }
-            catch (HRESULT)
+            catch (std::system_error&)
             {
                 ClearDevice();
             }
@@ -600,7 +600,7 @@ namespace SaneAudioRenderer
                 {
                     PushReslavingJitter();
                 }
-                catch (HRESULT)
+                catch (std::system_error&)
                 {
                     ClearDevice();
                 }
@@ -877,7 +877,7 @@ namespace SaneAudioRenderer
                     m_device->Push(chunk, pFilledEvent);
                     sleepDuration = m_device->GetBufferDuration() / 4;
                 }
-                catch (HRESULT)
+                catch (std::system_error&)
                 {
                     ClearDevice();
                     sleepDuration = 0;

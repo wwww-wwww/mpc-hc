@@ -33,10 +33,10 @@ namespace SaneAudioRenderer
         return llMulDiv(frames, OneSecond, rate, 0);
     }
 
-    inline void ThrowIfFailed(HRESULT result)
+    inline void ThrowIfFailed(HRESULT hr)
     {
-        if (FAILED(result))
-            throw result;
+        if (FAILED(hr))
+            throw std::system_error{hr, std::system_category()};
     }
 
     inline int64_t GetPerformanceFrequency()

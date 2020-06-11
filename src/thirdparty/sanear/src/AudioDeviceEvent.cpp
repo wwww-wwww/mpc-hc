@@ -273,7 +273,7 @@ namespace SaneAudioRenderer
                             m_queuedStart = false;
                         }
                     }
-                    catch (HRESULT)
+                    catch (std::system_error&)
                     {
                         m_error = true;
                     }
@@ -312,7 +312,7 @@ namespace SaneAudioRenderer
                                 if (renewSilence > 0)
                                     m_renewSilenceFrames = TimeToFrames(renewSilence, GetRate());
                             }
-                            catch (HRESULT)
+                            catch (std::system_error&)
                             {
                                 m_renewSilenceFrames = 0;
                             }

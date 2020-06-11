@@ -171,9 +171,9 @@ namespace SaneAudioRenderer
 
                 return device.audioClient->IsFormatSupported(AUDCLNT_SHAREMODE_EXCLUSIVE, &(*format), nullptr);
             }
-            catch (HRESULT ex)
+            catch (std::system_error& err)
             {
-                return ex;
+                return err.code().value();
             }
         }
 
@@ -408,10 +408,10 @@ namespace SaneAudioRenderer
                 backend = nullptr;
                 return E_OUTOFMEMORY;
             }
-            catch (HRESULT ex)
+            catch (std::system_error& ex)
             {
                 backend = nullptr;
-                return ex;
+                return ex.code().value();
             }
         }
 
@@ -454,9 +454,9 @@ namespace SaneAudioRenderer
             {
                 return E_OUTOFMEMORY;
             }
-            catch (HRESULT ex)
+            catch (std::system_error& ex)
             {
-                return ex;
+                return ex.code().value();
             }
 
             return S_OK;
@@ -478,9 +478,9 @@ namespace SaneAudioRenderer
                 ThrowIfFailed(device->GetId(&pDeviceId));
                 id = std::unique_ptr<WCHAR, CoTaskMemFreeDeleter>(pDeviceId);
             }
-            catch (HRESULT ex)
+            catch (std::system_error& ex)
             {
-                return ex;
+                return ex.code().value();
             }
 
             return S_OK;
@@ -562,13 +562,9 @@ namespace SaneAudioRenderer
                 ThrowIfFailed(m_enumerator->RegisterEndpointNotificationCallback(m_notificationClient));
             }
         }
-        catch (HRESULT ex)
+        catch (std::system_error& ex)
         {
-            result = ex;
-        }
-        catch (std::system_error&)
-        {
-            result = E_FAIL;
+            result = ex.code().value();
         }
     }
 
@@ -645,7 +641,7 @@ namespace SaneAudioRenderer
         {
             return device.RenewInactive(renewFunction, position);
         }
-        catch (HRESULT)
+        catch (std::system_error&)
         {
             return false;
         }
