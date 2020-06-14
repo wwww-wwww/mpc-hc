@@ -154,11 +154,15 @@ bool IsAudioWaveRenderer(IBaseFilter* pBF)
 
     return clsid == CLSID_DSoundRender ||
            clsid == CLSID_AudioRender ||
-           clsid == CLSID_ReClock ||
-           clsid == __uuidof(CNullAudioRenderer) ||
-           clsid == __uuidof(CNullUAudioRenderer) ||
            clsid == CLSID_SANEAR_INTERNAL ||
-           clsid == CLSID_SANEAR;
+           clsid == CLSID_SANEAR ||
+           clsid == CLSID_ReClock ||
+           clsid == GUIDFromCString(L"{EC9ED6FC-7B03-4cb6-8C01-4EABE109F26B}") || // MediaPortal Audio Renderer
+           clsid == GUIDFromCString(L"{50063380-2B2F-4855-9A1E-40FCA344C7AC}") || // Surodev ASIO Renderer
+           clsid == GUIDFromCString(L"{8DE31E85-10FC-4088-8861-E0EC8E70744A}") || // MultiChannel ASIO Renderer
+           clsid == GUIDFromCString(L"{205F9417-8EEF-40B4-91CF-C7C6A96936EF}") || // MBSE MultiChannel ASIO Renderer
+           clsid == __uuidof(CNullAudioRenderer) ||
+           clsid == __uuidof(CNullUAudioRenderer);
 }
 
 IBaseFilter* GetUpStreamFilter(IBaseFilter* pBF, IPin* pInputPin)
