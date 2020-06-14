@@ -70,7 +70,7 @@ CString VersionInfo::GetFullVersionString()
 
 CString VersionInfo::GetBuildDateString()
 {
-    return _T(__DATE__) _T(" ") _T(__TIME__);
+    return _T(__DATE__);
 }
 
 unsigned VersionInfo::GetMajorNumber()
