@@ -22,8 +22,6 @@
 #include "stdafx.h"
 #include "MemSubPic.h"
 
-// For CPUID usage
-#include "../DSUtil/vd.h"
 #include <emmintrin.h>
 
 // color conv
