@@ -2977,7 +2977,7 @@ BEGIN
     IDS_TIMER_HIGH_PRECISION "High precision"
     IDS_AFTERPLAYBACK_REWIND "After Playback: Rewind current file"
     IDS_AFTERPLAYBACK_CLOSE "After Playback: Close"
-    IDS_FRAME_INIT_FAILED   "MPC-HC encountered a problem during initialization. With your help we might be able to fix the issue.\n\nDo you want to report it?"
+    IDS_FRAME_INIT_FAILED   "MPC-HC encountered a problem during initialization."
     IDS_TIME_SHIFT_TOOLTIP  "Enter a positive value if the audio is early, a negative value if it is late."
     IDS_WEBUI_DISABLED_PREVIEW_MSG 
                             "Preview is currently disabled. You can enable it in MPC-HC's options."

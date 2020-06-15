@@ -1446,8 +1446,8 @@ msgid "After Playback: Close"
 msgstr "Baigus groti: Uždaryti"
 
 msgctxt "IDS_FRAME_INIT_FAILED"
-msgid "MPC-HC encountered a problem during initialization. With your help we might be able to fix the issue.\n\nDo you want to report it?"
-msgstr "Inicializacijos metu MPC-HC susidūrė su problema. Su jūsų pagalba mes galime ištaisyti problemą.\n\nAr jūs norite pranešti apie ją?"
+msgid "MPC-HC encountered a problem during initialization."
+msgstr ""
 
 msgctxt "IDS_TIME_SHIFT_TOOLTIP"
 msgid "Enter a positive value if the audio is early, a negative value if it is late."

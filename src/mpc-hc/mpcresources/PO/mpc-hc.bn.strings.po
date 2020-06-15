@@ -1446,8 +1446,8 @@ msgid "After Playback: Close"
 msgstr "প্লেব্যাকের পরে: বন্ধ করি"
 
 msgctxt "IDS_FRAME_INIT_FAILED"
-msgid "MPC-HC encountered a problem during initialization. With your help we might be able to fix the issue.\n\nDo you want to report it?"
-msgstr "ইনিশিয়ালাইজেশন প্রক্রিয়া চলার সময় MPC-HC একটি সমস্যার মুখোমুখি হয়েছে। আপনার সহযোগিতার মাধ্যমে বিষয়টি আমরা সমাধান করলেও করতে পারি।\n\nআপনি কি এই বিষয়ে প্রতিবেদন পেশ করতে চান?"
+msgid "MPC-HC encountered a problem during initialization."
+msgstr ""
 
 msgctxt "IDS_TIME_SHIFT_TOOLTIP"
 msgid "Enter a positive value if the audio is early, a negative value if it is late."
