@@ -197,6 +197,8 @@ void CChildView::OnPaint()
 
 BOOL CChildView::OnEraseBkgnd(CDC* pDC)
 {
+    if (!pDC) return FALSE;
+
     CRect r;
 
     CImage img;
