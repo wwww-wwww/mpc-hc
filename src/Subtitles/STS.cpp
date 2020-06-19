@@ -1886,6 +1886,40 @@ static OpenFunctStruct OpenFuncts[] = {
 
 static int nOpenFuncts = _countof(OpenFuncts);
 
+static std::vector<int> PreferredOpenFuncts(CString fn) {
+    std::vector<int> functs;
+    auto fileExt = PathUtils::FileExt(fn).TrimLeft('.');
+    for (int i = 0; i < nOpenFuncts; i++) {
+        if (fileExt == _T("vtt")) {
+            if (OpenFuncts[i].open == OpenVTT) functs.insert(functs.begin(), i);
+            if (OpenFuncts[i].open == OpenSubRipper) functs.push_back(i);
+        } else if (fileExt == _T("srt")) {
+            if (OpenFuncts[i].open == OpenSubRipper) functs.insert(functs.begin(), i);
+            if (OpenFuncts[i].open == OpenOldSubRipper) functs.push_back(i);
+        } else if (fileExt == _T("ssa") || fileExt == _T("ass")) {
+            if (OpenFuncts[i].open == OpenSubStationAlpha) functs.insert(functs.begin(), i);
+        } else if (fileExt == _T("xss")) {
+            if (OpenFuncts[i].open == OpenXombieSub) functs.insert(functs.begin(), i);
+        } else if (fileExt == _T("sub")) {
+            if (OpenFuncts[i].open == OpenSubViewer) functs.insert(functs.begin(), i);
+            if (OpenFuncts[i].open == OpenSubRipper) functs.push_back(i);
+        } else if (fileExt == _T("txt")) {
+            if (OpenFuncts[i].open == OpenMicroDVD) functs.insert(functs.begin(), i);
+            if (OpenFuncts[i].open == OpenSubRipper || OpenFuncts[i].open == OpenVPlayer || OpenFuncts[i].open == OpenMPL2) functs.push_back(i);
+        } else if (fileExt == _T("rt")) {
+            if (OpenFuncts[i].open == OpenRealText) functs.insert(functs.begin(), i);
+        } else if (fileExt == _T("smi")) {
+            if (OpenFuncts[i].open == OpenSami) functs.insert(functs.begin(), i);
+        } else if (fileExt == _T("usf")) {
+            if (OpenFuncts[i].open == OpenUSF) functs.insert(functs.begin(), i);
+        } else {
+            if (OpenFuncts[i].open == OpenSubRipper) functs.insert(functs.begin(), i);
+            if (OpenFuncts[i].open == OpenOldSubRipper || OpenFuncts[i].open == OpenSubStationAlpha) functs.push_back(i);
+        }
+    }
+    return functs;
+}
+
 //
 
 CSimpleTextSubtitle::CSimpleTextSubtitle()
@@ -2714,7 +2748,9 @@ bool CSimpleTextSubtitle::Open(CTextFile* f, int CharSet, CString name)
 
     ULONGLONG pos = f->GetPosition();
 
-    for (ptrdiff_t i = 0; i < nOpenFuncts; i++) {
+    auto functs = PreferredOpenFuncts(f->GetFilePath());
+
+    for (int i: functs) {
         if (!OpenFuncts[i].open(f, *this, CharSet)) {
             if (!IsEmpty()) {
                 CString lastLine;
