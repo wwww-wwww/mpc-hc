@@ -533,6 +533,7 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWnd)
     ON_MESSAGE(WM_GETSUBTITLES, OnGetSubtitles)
     ON_WM_DRAWITEM()
     ON_WM_SETTINGCHANGE()
+    ON_WM_MOUSEHWHEEL()
 END_MESSAGE_MAP()
 
 #ifdef _DEBUG
@@ -18261,4 +18262,13 @@ void CMainFrame::OnSettingChange(UINT uFlags, LPCTSTR lpszSection)
         }
         RecalcLayout();
     }
+}
+
+void CMainFrame::OnMouseHWheel(UINT nFlags, short zDelta, CPoint pt) {
+    if (m_wndView) {
+        //HWHEEL is sent to active window, so we have to manually pass it to CMouseWnd to trap hotkeys
+        m_wndView.SendMessage(WM_MOUSEHWHEEL, MAKEWPARAM(nFlags, zDelta), MAKELPARAM(pt.x, pt.y));
+        return;
+    }
+    __super::OnMouseHWheel(nFlags, zDelta, pt);
 }
