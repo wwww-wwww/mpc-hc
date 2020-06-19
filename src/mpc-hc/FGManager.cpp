@@ -2215,6 +2215,18 @@ CFGManagerCustom::CFGManagerCustom(LPCTSTR pName, LPUNKNOWN pUnk)
     // palm demuxer crashes (even crashes graphedit when dropping an .ac3 onto it)
     m_transform.AddTail(DEBUG_NEW CFGFilterRegistry(GUIDFromCString(_T("{BE2CF8A7-08CE-4A2C-9A25-FD726A999196}")), MERIT64_DO_NOT_USE));
 
+    // mainconcept color space converter
+    m_transform.AddTail(DEBUG_NEW CFGFilterRegistry(GUIDFromCString(_T("{272D77A0-A852-4851-ADA4-9091FEAD4C86}")), MERIT64_DO_NOT_USE));
+
+    // Accusoft PICVideo M-JPEG Codec
+    m_transform.AddTail(DEBUG_NEW CFGFilterRegistry(GUIDFromCString(_T("{4C4CD9E1-F876-11D2-962F-00500471FDDC}")), MERIT64_DO_NOT_USE));
+
+    // SolveigMM MP4 Demultiplexer (smm_mp4demuxer.ax)
+    m_transform.AddTail(DEBUG_NEW CFGFilterRegistry(GUIDFromCString(_T("{5F19B8FE-BA79-4183-B3CF-FEE4E8F801E4}")), MERIT64_DO_NOT_USE));
+
+    // Morgan's Stream Switcher (mmswitch.ax)
+    m_transform.AddTail(DEBUG_NEW CFGFilterRegistry(CLSID_MorganStreamSwitcher, MERIT64_DO_NOT_USE));
+
     // DCDSPFilter (early versions crash mpc)
     {
         CRegKey key;
@@ -2232,14 +2244,7 @@ CFGManagerCustom::CFGManagerCustom(LPCTSTR pName, LPUNKNOWN pUnk)
         }
     }
 
-    /*
-        // NVIDIA Transport Demux crashed for someone, I could not reproduce it
-        m_transform.AddTail(DEBUG_NEW CFGFilterRegistry(GUIDFromCString(_T("{735823C1-ACC4-11D3-85AC-006008376FB8}")), MERIT64_DO_NOT_USE));
-    */
-
-    // mainconcept color space converter
-    m_transform.AddTail(DEBUG_NEW CFGFilterRegistry(GUIDFromCString(_T("{272D77A0-A852-4851-ADA4-9091FEAD4C86}")), MERIT64_DO_NOT_USE));
-
+    // Block unwanted subtitle filters
     if (s.fBlockVSFilter) {
         switch (s.GetSubtitleRenderer()) {
             case CAppSettings::SubtitleRenderer::INTERNAL:
@@ -2273,9 +2278,6 @@ CFGManagerCustom::CFGManagerCustom(LPCTSTR pName, LPUNKNOWN pUnk)
                 break;
         }
     }
-
-    // Blacklist Accusoft PICVideo M-JPEG Codec 2.1 since causes a DEP crash
-    m_transform.AddTail(DEBUG_NEW CFGFilterRegistry(GUIDFromCString(_T("{4C4CD9E1-F876-11D2-962F-00500471FDDC}")), MERIT64_DO_NOT_USE));
 
     // Add preferred subtitle filter
     switch (s.GetSubtitleRenderer()) {
@@ -2425,9 +2427,6 @@ CFGManagerPlayer::CFGManagerPlayer(LPCTSTR pName, LPUNKNOWN pUnk, HWND hWnd)
         pFGF = DEBUG_NEW CFGFilterInternal<CAudioSwitcherFilter>(L"Audio Switcher", renderer_merit + 0x100);
         pFGF->AddType(MEDIATYPE_Audio, MEDIASUBTYPE_NULL);
         m_transform.AddTail(pFGF);
-
-        // Blacklist Morgan's Stream Switcher
-        m_transform.AddTail(DEBUG_NEW CFGFilterRegistry(CLSID_MorganStreamSwitcher, MERIT64_DO_NOT_USE));
     }
 
     // Renderers
@@ -2621,9 +2620,6 @@ CFGManagerCapture::CFGManagerCapture(LPCTSTR pName, LPUNKNOWN pUnk, HWND hWnd)
     CFGFilter* pFGF = DEBUG_NEW CFGFilterInternal<CDeinterlacerFilter>(L"Deinterlacer", MERIT64(0x800001) + 0x200);
     pFGF->AddType(MEDIATYPE_Video, MEDIASUBTYPE_NULL);
     m_transform.AddTail(pFGF);
-
-    // Blacklist Morgan's Stream Switcher
-    m_transform.AddTail(DEBUG_NEW CFGFilterRegistry(CLSID_MorganStreamSwitcher, MERIT64_DO_NOT_USE));
 }
 
 //

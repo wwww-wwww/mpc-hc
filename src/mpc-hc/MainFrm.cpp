@@ -3837,9 +3837,6 @@ void CMainFrame::OnStreamAudio(UINT nID)
     }
 
     CComQIPtr<IAMStreamSelect> pSS = FindFilter(__uuidof(CAudioSwitcherFilter), m_pGB);
-    if (!pSS) {
-        pSS = FindFilter(CLSID_MorganStreamSwitcher, m_pGB);
-    }
 
     DWORD cStreams = 0;
     if (pSS && SUCCEEDED(pSS->Count(&cStreams)) && cStreams > 1) {
@@ -8406,9 +8403,6 @@ void CMainFrame::OnPlayAudio(UINT nID)
     int i = (int)nID - ID_AUDIO_SUBITEM_START;
 
     CComQIPtr<IAMStreamSelect> pSS = FindFilter(__uuidof(CAudioSwitcherFilter), m_pGB);
-    if (!pSS) {
-        pSS = FindFilter(CLSID_MorganStreamSwitcher, m_pGB);
-    }
 
     DWORD cStreams = 0;
 
@@ -12495,9 +12489,7 @@ int CMainFrame::SetupAudioStreams()
 {
     bool bIsSplitter = false;
     CComQIPtr<IAMStreamSelect> pSS = FindFilter(__uuidof(CAudioSwitcherFilter), m_pGB);
-    if (!pSS) {
-        pSS = FindFilter(CLSID_MorganStreamSwitcher, m_pGB);
-    }
+
     if (!pSS && m_pFSF) { // Try to find the main splitter
         pSS = m_pFSF;
         if (!pSS) { // If the source filter isn't a splitter
@@ -13552,9 +13544,6 @@ void CMainFrame::SetupAudioSubMenu()
     UINT id = ID_AUDIO_SUBITEM_START;
 
     CComQIPtr<IAMStreamSelect> pSS = FindFilter(__uuidof(CAudioSwitcherFilter), m_pGB);
-    if (!pSS) {
-        pSS = FindFilter(CLSID_MorganStreamSwitcher, m_pGB);
-    }
 
     DWORD cStreams = 0;
 
@@ -14189,7 +14178,7 @@ void CMainFrame::SetupNavStreamSelectSubMenu(CMenu& subMenu, UINT id, DWORD dwSe
     CComQIPtr<IAMStreamSelect> pSS;
 
     BeginEnumFilters(m_pGB, pEF, pBF) {
-        if (GetCLSID(pBF) == __uuidof(CAudioSwitcherFilter) || GetCLSID(pBF) == CLSID_MorganStreamSwitcher) {
+        if (GetCLSID(pBF) == __uuidof(CAudioSwitcherFilter)) {
             continue;
         }
 
@@ -14241,7 +14230,7 @@ void CMainFrame::OnNavStreamSelectSubMenu(UINT id, DWORD dwSelGroup)
     CComQIPtr<IAMStreamSelect> pSS;
 
     BeginEnumFilters(m_pGB, pEF, pBF) {
-        if (GetCLSID(pBF) == __uuidof(CAudioSwitcherFilter) || GetCLSID(pBF) == CLSID_MorganStreamSwitcher) {
+        if (GetCLSID(pBF) == __uuidof(CAudioSwitcherFilter)) {
             continue;
         }
 
@@ -14264,7 +14253,7 @@ void CMainFrame::OnStreamSelect(bool bForward, DWORD dwSelGroup)
     CComQIPtr<IAMStreamSelect> pSS;
 
     BeginEnumFilters(m_pGB, pEF, pBF) {
-        if (GetCLSID(pBF) == __uuidof(CAudioSwitcherFilter) || GetCLSID(pBF) == CLSID_MorganStreamSwitcher) {
+        if (GetCLSID(pBF) == __uuidof(CAudioSwitcherFilter)) {
             continue;
         }
 
@@ -14911,9 +14900,6 @@ void CMainFrame::SetAudioTrackIdx(int index)
 {
     if (GetLoadState() == MLS::LOADED) {
         CComQIPtr<IAMStreamSelect> pSS = FindFilter(__uuidof(CAudioSwitcherFilter), m_pGB);
-        if (!pSS) {
-            pSS = FindFilter(CLSID_MorganStreamSwitcher, m_pGB);
-        }
 
         DWORD cStreams = 0;
         DWORD dwFlags = AMSTREAMSELECTENABLE_ENABLE;
@@ -16735,9 +16721,6 @@ void CMainFrame::SendAudioTracksToApi()
 
     if (GetLoadState() == MLS::LOADED) {
         CComQIPtr<IAMStreamSelect> pSS = FindFilter(__uuidof(CAudioSwitcherFilter), m_pGB);
-        if (!pSS) {
-            pSS = FindFilter(CLSID_MorganStreamSwitcher, m_pGB);
-        }
 
         DWORD cStreams = 0;
         if (pSS && SUCCEEDED(pSS->Count(&cStreams))) {
@@ -16883,7 +16866,6 @@ void CMainFrame::JumpOfNSeconds(int nSeconds)
 //      if (GetPlaybackMode() == PM_FILE)
 //      {
 //          CComQIPtr<IAMStreamSelect> pSS = FindFilter(__uuidof(CAudioSwitcherFilter), m_pGB);
-//          if (!pSS) pSS = FindFilter(CLSID_MorganStreamSwitcher, m_pGB);
 //
 //          DWORD cStreams = 0;
 //          if (pSS && SUCCEEDED(pSS->Count(&cStreams)))
