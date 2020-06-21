@@ -133,6 +133,7 @@
     </Link>
     <ClCompile>
       <AdditionalIncludeDirectories>..\thirdparty\ZenLib\library\Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</SDLCheck>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
