@@ -171,9 +171,9 @@ namespace SaneAudioRenderer
 
                 return device.audioClient->IsFormatSupported(AUDCLNT_SHAREMODE_EXCLUSIVE, &(*format), nullptr);
             }
-            catch (std::system_error& err)
+            catch (...)
             {
-                return err.code().value();
+                return exception_to_hresult();
             }
         }
 
@@ -403,15 +403,10 @@ namespace SaneAudioRenderer
 
                 return S_OK;
             }
-            catch (std::bad_alloc&)
+            catch (...)
             {
                 backend = nullptr;
-                return E_OUTOFMEMORY;
-            }
-            catch (std::system_error& ex)
-            {
-                backend = nullptr;
-                return ex.code().value();
+                return exception_to_hresult();
             }
         }
 
@@ -450,13 +445,9 @@ namespace SaneAudioRenderer
                 ThrowIfFailed(backend->audioClient->GetStreamLatency(&backend->deviceLatency));
                 ThrowIfFailed(backend->audioClient->GetBufferSize(&backend->deviceBufferSize));
             }
-            catch (std::bad_alloc&)
+            catch (...)
             {
-                return E_OUTOFMEMORY;
-            }
-            catch (std::system_error& ex)
-            {
-                return ex.code().value();
+                return exception_to_hresult();
             }
 
             return S_OK;
@@ -478,9 +469,9 @@ namespace SaneAudioRenderer
                 ThrowIfFailed(device->GetId(&pDeviceId));
                 id = std::unique_ptr<WCHAR, CoTaskMemFreeDeleter>(pDeviceId);
             }
-            catch (std::system_error& ex)
+            catch (...)
             {
-                return ex.code().value();
+                return exception_to_hresult();
             }
 
             return S_OK;
@@ -519,7 +510,7 @@ namespace SaneAudioRenderer
             if (static_cast<HANDLE>(m_wake) == NULL ||
                 static_cast<HANDLE>(m_done) == NULL)
             {
-                throw E_OUTOFMEMORY;
+                throw HResultException{ E_OUTOFMEMORY };
             }
 
             m_thread = std::thread(
@@ -562,9 +553,9 @@ namespace SaneAudioRenderer
                 ThrowIfFailed(m_enumerator->RegisterEndpointNotificationCallback(m_notificationClient));
             }
         }
-        catch (std::system_error& ex)
+        catch (...)
         {
-            result = ex.code().value();
+            result = exception_to_hresult();
         }
     }
 
@@ -616,11 +607,7 @@ namespace SaneAudioRenderer
 
             return std::unique_ptr<AudioDevice>(new AudioDevicePush(backend));
         }
-        catch (std::bad_alloc&)
-        {
-            return nullptr;
-        }
-        catch (std::system_error&)
+        catch (...)
         {
             return nullptr;
         }
@@ -641,7 +628,7 @@ namespace SaneAudioRenderer
         {
             return device.RenewInactive(renewFunction, position);
         }
-        catch (std::system_error&)
+        catch (...)
         {
             return false;
         }

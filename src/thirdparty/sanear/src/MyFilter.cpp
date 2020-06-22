@@ -40,9 +40,9 @@ namespace SaneAudioRenderer
             if (SUCCEEDED(result))
                 result = CreatePosPassThru(GetOwner(), FALSE, m_pin.get(), &m_seeking);
         }
-        catch (std::bad_alloc&)
+        catch (...)
         {
-            result = E_OUTOFMEMORY;
+            result = exception_to_hresult();
         }
 
         return result;
@@ -187,9 +187,9 @@ namespace SaneAudioRenderer
                                                     m_renderer->IsLive(),
                                                     m_renderer->OnGuidedReclock());
         }
-        catch (std::bad_alloc&)
+        catch (...)
         {
-            return E_OUTOFMEMORY;
+            return exception_to_hresult();
         }
 
         return S_OK;

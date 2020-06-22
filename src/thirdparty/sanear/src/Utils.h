@@ -33,10 +33,20 @@ namespace SaneAudioRenderer
         return llMulDiv(frames, OneSecond, rate, 0);
     }
 
+    struct HResultException { HRESULT hr; };
+
     inline void ThrowIfFailed(HRESULT hr)
     {
         if (FAILED(hr))
-            throw std::system_error{hr, std::system_category()};
+            throw HResultException{hr};
+    }
+
+    inline HRESULT exception_to_hresult()
+    {
+        try { throw; } // rethrow exception
+        catch (std::bad_alloc const&) { return E_OUTOFMEMORY; }
+        catch (HResultException& ex) { return ex.hr; }
+        //catch (...) { return E_FAIL; }
     }
 
     inline int64_t GetPerformanceFrequency()

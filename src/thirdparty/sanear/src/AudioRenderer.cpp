@@ -19,16 +19,16 @@ namespace SaneAudioRenderer
         try
         {
             if (!m_settings)
-                throw E_UNEXPECTED;
+                throw HResultException{ E_UNEXPECTED };
 
             if (static_cast<HANDLE>(m_flush) == NULL)
             {
-                throw E_OUTOFMEMORY;
+                throw HResultException{ E_OUTOFMEMORY };
             }
         }
-        catch (std::system_error& ex)
+        catch (...)
         {
-            result = ex.code().value();
+            result = exception_to_hresult();
         }
     }
 
@@ -138,14 +138,14 @@ namespace SaneAudioRenderer
                     }
                 }
             }
-            catch (std::system_error&)
-            {
-                ClearDevice();
-            }
             catch (std::bad_alloc&)
             {
                 ClearDevice();
                 chunk = DspChunk();
+            }
+            catch (...)
+            {
+                ClearDevice();
             }
         }
 
@@ -205,7 +205,7 @@ namespace SaneAudioRenderer
                         {
                             remaining = m_device->Finish(pFilledEvent);
                         }
-                        catch (std::system_error&)
+                        catch (...)
                         {
                             ClearDevice();
                         }
@@ -568,7 +568,7 @@ namespace SaneAudioRenderer
                 m_clockCorrection = 0;
                 m_device->Start();
             }
-            catch (std::system_error&)
+            catch (...)
             {
                 ClearDevice();
             }
@@ -600,7 +600,7 @@ namespace SaneAudioRenderer
                 {
                     PushReslavingJitter();
                 }
-                catch (std::system_error&)
+                catch (...)
                 {
                     ClearDevice();
                 }
@@ -877,7 +877,7 @@ namespace SaneAudioRenderer
                     m_device->Push(chunk, pFilledEvent);
                     sleepDuration = m_device->GetBufferDuration() / 4;
                 }
-                catch (std::system_error&)
+                catch (...)
                 {
                     ClearDevice();
                     sleepDuration = 0;
