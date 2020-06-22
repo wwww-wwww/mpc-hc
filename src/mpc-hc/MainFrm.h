@@ -1168,5 +1168,4 @@ private:
     CMPCThemeUtil* fileDialogHookHelper;
 public:
     afx_msg void OnSettingChange(UINT uFlags, LPCTSTR lpszSection);
-    afx_msg void OnMouseHWheel(UINT nFlags, short zDelta, CPoint pt);
 };
