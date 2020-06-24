@@ -171,6 +171,7 @@ void CPPageAdvanced::InitSettings()
     addIntItem(FULLSCREEN_DELAY, IDS_RS_FULLSCREEN_DELAY, MIN_FULLSCREEN_DELAY, s.iFullscreenDelay, std::make_pair(MIN_FULLSCREEN_DELAY, MAX_FULLSCREEN_DELAY), StrRes(IDS_PPAGEADVANCED_FULLSCREEN_DELAY));
     addBoolItem(SNAPSHOTSUBTITLES, IDS_RS_SNAPSHOTSUBTITLES, true, s.bSnapShotSubtitles, StrRes(IDS_PPAGEADVANCED_SNAPSHOTSUBTITLES));
     addBoolItem(SNAPSHOTKEEPVIDEOEXTENSION, IDS_RS_SNAPSHOTKEEPVIDEOEXTENSION, true, s.bSnapShotKeepVideoExtension, StrRes(IDS_PPAGEADVANCED_SNAPSHOTKEEPVIDEOEXTENSION));
+    addIntItem(STREAMPOSPOLLER_INTERVAL, IDS_RS_TIME_REFRESH_INTERVAL, 100, s.nStreamPosPollerInterval, std::make_pair(40, 500), _T("Refresh interval (in milliseconds) of time in status bar"));
 }
 
 BOOL CPPageAdvanced::OnApply()
@@ -199,6 +200,7 @@ BOOL CPPageAdvanced::OnApply()
     // There is no main frame when the option dialog is displayed stand-alone
     if (CMainFrame* pMainFrame = AfxGetMainFrame()) {
         pMainFrame->UpdateControlState(CMainFrame::UPDATE_CONTROLS_VISIBILITY);
+        pMainFrame->AdjustStreamPosPoller(true);
     }
 
     if (nOldDefaultToolbarSize != s.nDefaultToolbarSize) {

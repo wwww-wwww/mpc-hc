@@ -87,6 +87,7 @@
 #define IDS_RS_SAVEIMAGE_CURRENTTIME        _T("SaveImageCurrentTime")
 #define IDS_RS_ALLOW_INACCURATE_FASTSEEK    _T("AllowInaccurateFastseek")
 #define IDS_RS_LOOP_FOLDER_NEXT_FILE        _T("LoopFolderOnPlayNextFile")
+#define IDS_RS_TIME_REFRESH_INTERVAL        _T("TimeRefreshInterval")
 
 // Audio
 #define IDS_RS_VOLUME                       _T("Volume")

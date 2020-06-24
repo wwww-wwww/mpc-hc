@@ -793,6 +793,8 @@ public:
 
     bool bEnableCrashReporter;
 
+    int nStreamPosPollerInterval;
+
 private:
     struct FilterKey {
         CString name;

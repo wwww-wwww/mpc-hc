@@ -798,6 +798,7 @@ CMainFrame::CMainFrame()
     , abRepeatPositionA(0)
     , abRepeatPositionB(0)
     , mediaTypesErrorDlg(nullptr)
+    , m_iStreamPosPollerInterval(100)
 {
     // Don't let CFrameWnd handle automatically the state of the menu items.
     // This means that menu items without handlers won't be automatically
@@ -1944,17 +1945,11 @@ void CMainFrame::OnTimer(UINT_PTR nIDEvent)
                 if (m_pCAP) {
                     if (g_bExternalSubtitleTime) {
                         m_pCAP->SetTime(rtNow);
+                        AdjustStreamPosPoller(true);
                     }
                     m_wndSubresyncBar.SetTime(rtNow);
                     m_wndSubresyncBar.SetFPS(m_pCAP->GetFPS());
                 }
-
-                // TODO: Update when Auto Upload is finalised
-                //const CAppSettings& s = AfxGetAppSettings();
-                //if (s.bAutoUploadSubtitles && (rtNow / rtDur == 90) && !m_pSubStreams.IsEmpty()
-                //        && s.fEnableSubtitles && m_pCAP && m_pCAP->GetSubtitleDelay() == 0) {
-                //    m_pSubtitlesProviders->Upload();
-                //}
             }
             break;
         case TIMER_STREAMPOSPOLLER2:
@@ -6777,6 +6772,7 @@ void CMainFrame::OnUpdateViewControlBar(CCmdUI* pCmdUI)
 void CMainFrame::OnViewSubresync()
 {
     m_controls.ToggleControl(CMainFrameControls::Panel::SUBRESYNC);
+    AdjustStreamPosPoller(true);
 }
 
 void CMainFrame::OnUpdateViewSubresync(CCmdUI* pCmdUI)
@@ -7962,10 +7958,31 @@ void CMainFrame::OnPlaySeekSet()
     }
 }
 
+void CMainFrame::AdjustStreamPosPoller(bool restart)
+{
+    if (streampospoller_active) {
+        int current_value = m_iStreamPosPollerInterval;
+
+        if (g_bExternalSubtitleTime || IsSubresyncBarVisible()) {
+            m_iStreamPosPollerInterval = 40;
+        } else {
+            m_iStreamPosPollerInterval = AfxGetAppSettings().nStreamPosPollerInterval;
+        }
+
+        if (restart && current_value != m_iStreamPosPollerInterval) {
+            if (KillTimer(TIMER_STREAMPOSPOLLER)) {
+                SetTimer(TIMER_STREAMPOSPOLLER, m_iStreamPosPollerInterval, nullptr);
+            }
+        }
+    }
+}
+
 void CMainFrame::SetTimersPlay()
 {
     streampospoller_active = true;
-    SetTimer(TIMER_STREAMPOSPOLLER, 40, nullptr);
+    AdjustStreamPosPoller(false);
+
+    SetTimer(TIMER_STREAMPOSPOLLER, m_iStreamPosPollerInterval, nullptr);
     SetTimer(TIMER_STREAMPOSPOLLER2, 500, nullptr);
     SetTimer(TIMER_STATS, 1000, nullptr);
 }

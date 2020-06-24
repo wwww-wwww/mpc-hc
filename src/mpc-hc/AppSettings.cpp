@@ -229,6 +229,7 @@ CAppSettings::CAppSettings()
     , bSnapShotSubtitles(true)
     , bSnapShotKeepVideoExtension(true)
     , bEnableCrashReporter(true)
+    , nStreamPosPollerInterval(100)
 {
     // Internal source filter
 #if INTERNAL_SOURCEFILTER_CDDA
@@ -1156,6 +1157,8 @@ void CAppSettings::SaveSettings()
 
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_ENABLE_CRASH_REPORTER, bEnableCrashReporter);
 
+    pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_TIME_REFRESH_INTERVAL, nStreamPosPollerInterval);
+
     pApp->FlushProfile();
 }
 
@@ -1945,6 +1948,8 @@ void CAppSettings::LoadSettings()
     sYDLCommandLine = pApp->GetProfileString(IDS_R_SETTINGS, IDS_RS_YDL_COMMAND_LINE, _T(""));
 
     bEnableCrashReporter = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_ENABLE_CRASH_REPORTER, TRUE);
+
+    nStreamPosPollerInterval = pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_TIME_REFRESH_INTERVAL, 100);
 
     bInitialized = true;
 }

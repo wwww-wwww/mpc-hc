@@ -335,6 +335,8 @@ private:
     bool abRepeatPositionAEnabled, abRepeatPositionBEnabled;
     UINT m_nLastSkipDirection;
 
+    int m_iStreamPosPollerInterval;
+
     bool m_fCustomGraph;
     bool m_fRealMediaGraph, m_fShockwaveGraph, m_fQuicktimeGraph;
 
@@ -1057,6 +1059,7 @@ public:
     bool        IsRealEngineCompatible(CString strFilename) const;
     void        SetTimersPlay();
     void        KillTimersStop();
+    void        AdjustStreamPosPoller(bool restart);
 
 
     // MPC API functions
