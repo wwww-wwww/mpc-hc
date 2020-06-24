@@ -394,7 +394,7 @@ private:
     void SendNowPlayingToSkype();
 
     MLS m_eMediaLoadState;
-    CCritSec m_csLoadStateLock;
+    bool streampospoller_active;
 
     REFTIME GetAvgTimePerFrame() const;
     void OnVideoSizeChanged(const bool bWasAudioOnly = false);

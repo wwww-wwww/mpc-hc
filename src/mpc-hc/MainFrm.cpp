@@ -730,6 +730,7 @@ CMainFrame::CMainFrame()
     , m_lCurrentChapter(0)
     , m_lChapterStartTime(0xFFFFFFFF)
     , m_eMediaLoadState(MLS::CLOSED)
+    , streampospoller_active(false)
     , m_fFullScreen(false)
     , m_fFirstFSAfterLaunchOnFS(false)
     , m_fStartInD3DFullscreen(false)
@@ -1834,10 +1835,8 @@ void CMainFrame::OnTimer(UINT_PTR nIDEvent)
             delayingFullScreen = false;
             break;
         case TIMER_STREAMPOSPOLLER:
-            if (GetLoadState() == MLS::LOADED) {
-                CAutoLock cAutoLock(&m_csLoadStateLock);
-                if (GetLoadState() != MLS::LOADED) break;
-
+            ASSERT(streampospoller_active);
+            if (streampospoller_active && GetLoadState() == MLS::LOADED) {
                 REFERENCE_TIME rtNow = 0, rtDur = 0;
                 switch (GetPlaybackMode()) {
                     case PM_FILE:
@@ -1959,10 +1958,8 @@ void CMainFrame::OnTimer(UINT_PTR nIDEvent)
             }
             break;
         case TIMER_STREAMPOSPOLLER2:
-            if (GetLoadState() == MLS::LOADED) {
-                CAutoLock cAutoLock(&m_csLoadStateLock);
-                if (GetLoadState() != MLS::LOADED) break;
-
+            ASSERT(streampospoller_active);
+            if (streampospoller_active && GetLoadState() == MLS::LOADED) {
                 switch (GetPlaybackMode()) {
                     case PM_FILE:
                     // no break
@@ -3625,6 +3622,7 @@ LRESULT CMainFrame::OnFilePostOpenmedia(WPARAM wParam, LPARAM lParam)
     }
 
     // we don't want to wait until timers initialize the seekbar and the time counter
+    streampospoller_active = true;
     OnTimer(TIMER_STREAMPOSPOLLER);
     OnTimer(TIMER_STREAMPOSPOLLER2);
 
@@ -7966,6 +7964,7 @@ void CMainFrame::OnPlaySeekSet()
 
 void CMainFrame::SetTimersPlay()
 {
+    streampospoller_active = true;
     SetTimer(TIMER_STREAMPOSPOLLER, 40, nullptr);
     SetTimer(TIMER_STREAMPOSPOLLER2, 500, nullptr);
     SetTimer(TIMER_STATS, 1000, nullptr);
@@ -7974,9 +7973,12 @@ void CMainFrame::SetTimersPlay()
 void CMainFrame::KillTimersStop()
 {
     KillTimer(TIMER_STREAMPOSPOLLER2);
-    KillTimer(TIMER_STREAMPOSPOLLER);
+    if (KillTimer(TIMER_STREAMPOSPOLLER)) {
+        ASSERT(streampospoller_active);
+    }
     KillTimer(TIMER_STATS);
     m_timerOneTime.Unsubscribe(TimerOneTimeSubscriber::DVBINFO_UPDATE);
+    streampospoller_active = false;
 }
 
 void CMainFrame::OnPlaySeekKey(UINT nID)
@@ -16101,8 +16103,6 @@ LRESULT CMainFrame::OnCurrentChannelInfoUpdated(WPARAM wParam, LPARAM lParam)
 // ==== Added by CASIMIR666
 void CMainFrame::SetLoadState(MLS eState)
 {
-    CAutoLock cAutoLock(&m_csLoadStateLock);
-
     m_eMediaLoadState = eState;
     SendAPICommand(CMD_STATE, L"%d", static_cast<int>(eState));
     if (eState == MLS::LOADED) {
