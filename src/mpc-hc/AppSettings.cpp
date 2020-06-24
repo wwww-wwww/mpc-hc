@@ -226,7 +226,7 @@ CAppSettings::CAppSettings()
     , iYDLVideoFormat(0)
     , bYDLAudioOnly(false)
     , sYDLCommandLine(_T(""))
-    , bSnapShotSubtitles(false)
+    , bSnapShotSubtitles(true)
     , bSnapShotKeepVideoExtension(true)
     , bEnableCrashReporter(true)
 {
@@ -1782,7 +1782,7 @@ void CAppSettings::LoadSettings()
     }
     strSnapshotPath = pApp->GetProfileString(IDS_R_SETTINGS, IDS_RS_SNAPSHOTPATH, MyPictures);
     strSnapshotExt = pApp->GetProfileString(IDS_R_SETTINGS, IDS_RS_SNAPSHOTEXT, _T(".jpg"));
-    bSnapShotSubtitles = pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_SNAPSHOTSUBTITLES, FALSE);
+    bSnapShotSubtitles = pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_SNAPSHOTSUBTITLES, TRUE);
     bSnapShotKeepVideoExtension = pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_SNAPSHOTKEEPVIDEOEXTENSION, TRUE);
 
     iThumbRows = pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_THUMBROWS, 4);
