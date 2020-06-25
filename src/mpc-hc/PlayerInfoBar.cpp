@@ -235,6 +235,8 @@ BOOL CPlayerInfoBar::PreTranslateMessage(MSG* pMsg)
 
 BOOL CPlayerInfoBar::OnEraseBkgnd(CDC* pDC)
 {
+    if (!pDC) return FALSE;
+
     for (CWnd* pChild = GetWindow(GW_CHILD); pChild; pChild = pChild->GetNextWindow()) {
         CRect r;
         pChild->GetClientRect(&r);
