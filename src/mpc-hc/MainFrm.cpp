@@ -1945,10 +1945,12 @@ void CMainFrame::OnTimer(UINT_PTR nIDEvent)
                 if (m_pCAP) {
                     if (g_bExternalSubtitleTime) {
                         m_pCAP->SetTime(rtNow);
-                        AdjustStreamPosPoller(true);
                     }
                     m_wndSubresyncBar.SetTime(rtNow);
                     m_wndSubresyncBar.SetFPS(m_pCAP->GetFPS());
+                }
+                if (g_bExternalSubtitleTime && (m_iStreamPosPollerInterval > 40)) {
+                    AdjustStreamPosPoller(true);
                 }
             }
             break;
@@ -7970,9 +7972,7 @@ void CMainFrame::AdjustStreamPosPoller(bool restart)
         }
 
         if (restart && current_value != m_iStreamPosPollerInterval) {
-            if (KillTimer(TIMER_STREAMPOSPOLLER)) {
-                SetTimer(TIMER_STREAMPOSPOLLER, m_iStreamPosPollerInterval, nullptr);
-            }
+            SetTimer(TIMER_STREAMPOSPOLLER, m_iStreamPosPollerInterval, nullptr);
         }
     }
 }
