@@ -39,13 +39,13 @@ namespace SaneAudioRenderer
             Stop();
     }
 
-    void AudioRenderer::SetClock(IReferenceClock* pClock)
+    void AudioRenderer::SetClock(IReferenceClock* pClock, bool isDVD)
     {
         CAutoLock objectLock(this);
 
         m_graphClock = pClock;
 
-        if (m_graphClock && !IsEqualObject(m_graphClock, m_myClock.GetOwner()))
+        if ((m_graphClock && !IsEqualObject(m_graphClock, m_myClock.GetOwner())) || isDVD)
         {
             if (!m_externalClock)
                 ClearDevice();

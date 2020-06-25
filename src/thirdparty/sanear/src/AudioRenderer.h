@@ -28,7 +28,7 @@ namespace SaneAudioRenderer
         AudioRenderer& operator=(const AudioRenderer&) = delete;
         ~AudioRenderer();
 
-        void SetClock(IReferenceClock* pClock);
+        void SetClock(IReferenceClock* pClock, bool isDVD = false);
 
         bool Push(IMediaSample* pSample, AM_SAMPLE2_PROPERTIES& sampleProps, CAMEvent* pFilledEvent);
         bool Finish(bool blockUntilEnd, CAMEvent* pFilledEvent);

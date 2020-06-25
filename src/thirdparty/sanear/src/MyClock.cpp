@@ -120,7 +120,7 @@ namespace SaneAudioRenderer
                 audioPosition > m_audioInitialPosition)
             {
                 int64_t counterTime = GetCounterTime();
-                int64_t clockTime = llMulDiv(audioPosition, OneSecond, audioFrequency, 0) +
+                int64_t clockTime = llMulDiv(audioPosition - m_audioInitialPosition, OneSecond, audioFrequency, 0) +
                                     m_audioStart + m_audioOffset + counterTime - audioTime;
 
                 *pAudioTime = clockTime;
