@@ -111,6 +111,9 @@ STDMETHODIMP CDX9SubPic::CopyTo(ISubPic* pSubPic)
     IDirect3DTexture9* pSrcTex = (IDirect3DTexture9*)GetObject();
     CComPtr<IDirect3DSurface9> pSrcSurf;
     pSrcTex->GetSurfaceLevel(0, &pSrcSurf);
+    if (!pSrcSurf) {
+        return E_FAIL;
+    }
     D3DSURFACE_DESC srcDesc;
     pSrcSurf->GetDesc(&srcDesc);
 
