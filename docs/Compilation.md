@@ -9,7 +9,7 @@ Choose `Use Git from the Windows command prompt`. This isn't mandatory, so if yo
 
 ## Part A: Preparing the Visual Studio environment
 
-### Visual Studio 2017
+### Visual Studio 2017/2019
 
 1. Install Visual C++, part of Visual Studio (any edition will work fine).
    Make sure to select **Windows 8.1 SDK** and **MFC and ATL support** and **Windows Universal CRT SDK** during installation.
@@ -57,7 +57,7 @@ Choose `Use Git from the Windows command prompt`. This isn't mandatory, so if yo
 
 ### NOTES
 
-* For Visual Studio 2017, we will try to detect the VS installation path automatically.
+* For Visual Studio, we will try to detect the VS installation path automatically.
   If that fails you need to specify the installation path yourself. For example:
   ```bat
   SET "MPCHC_VS_PATH=%ProgramFiles(x86)%\Microsoft Visual Studio\2017\Community\"
