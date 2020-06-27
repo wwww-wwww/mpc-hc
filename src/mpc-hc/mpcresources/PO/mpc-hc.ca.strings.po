@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2020-01-10 07:05:47+0000\n"
+"POT-Creation-Date: 2020-06-02 20:23:30+0000\n"
 "PO-Revision-Date: 2020-01-02 07:46+0000\n"
 "Last-Translator: Roger Espolet <roger.espolet@gmail.com>, 2020\n"
 "Language-Team: Catalan (https://www.transifex.com/mpchc/teams/106126/ca/)\n"
@@ -76,7 +76,7 @@ msgstr "Llista de reproducció"
 
 msgctxt "IDS_PLAY_LOOPMODE_AB"
 msgid "A-B"
-msgstr ""
+msgstr "A-B"
 
 msgctxt "IDS_FAVFILES"
 msgid "Files"
@@ -140,15 +140,15 @@ msgstr "Mode de repetició: Fitxer"
 
 msgctxt "IDS_PLAYLOOPMODE_AB"
 msgid "A-B Repeat: Reset Positions"
-msgstr ""
+msgstr "Repetició A-B: Restableix posicions"
 
 msgctxt "IDS_PLAYLOOPMODE_AB_MARK_A"
 msgid "A-B Repeat: Mark A Position"
-msgstr ""
+msgstr "Repetició A-B: Marca la posició A"
 
 msgctxt "IDS_PLAYLOOPMODE_AB_MARK_B"
 msgid "A-B Repeat: Mark B Position"
-msgstr ""
+msgstr "Repetició A-B: Marca la posició B"
 
 msgctxt "IDS_PLAYLOOP_FOREVER_ON"
 msgid "Repeat Forever: On"
@@ -316,7 +316,7 @@ msgstr "El temps introduït és major que la durada del fitxer."
 
 msgctxt "IDS_MISSING_ICONS_LIB"
 msgid "The icons library \"mpciconlib.dll\" is missing.\nThe player's default icon will be used for file associations.\nPlease, reinstall MPC-HC to get \"mpciconlib.dll\"."
-msgstr "Manca la llibreria d'icones \"mpciconlib.dll\".\nEs faran servir les icones del reproductor per defecte per a l'associació dels fitxers.\nSi us plau, instal·li  l'MPC-HC per obtenir el \"mpciconlib.dll\"."
+msgstr "Manca la llibreria d'icones \"mpciconlib.dll\".\nEs faran servir les icones del reproductor per defecte per a l'associació dels fitxers.\nSi us plau, instal·leu l'MPC-HC per obtenir el \"mpciconlib.dll\"."
 
 msgctxt "IDS_SUBDL_DLG_FILENAME_COL"
 msgid "File"
@@ -592,7 +592,7 @@ msgstr "madVR"
 
 msgctxt "IDS_LANG_PREF_EXAMPLE"
 msgid "Enter your preferred languages here.\nFor example, type: \"eng jap swe\""
-msgstr "Introdueixi els seus idiomes preferits aquí.\nPer exemple, escrigui: \"cat eng jpn\""
+msgstr "Introduïu els vostres idiomes preferits aquí.\nPer exemple, escriviu: \"cat spa eng\""
 
 msgctxt "IDS_OVERRIDE_EXT_SPLITTER_CHOICE"
 msgid "External splitters can have their own language preference options thus MPC-HC default behavior is not to change their initial choice.\nEnable this option if you want MPC-HC to control external splitters."
@@ -920,7 +920,7 @@ msgstr "Pausa\nPausa"
 
 msgctxt "IDS_AG_OPEN_FILE_LOCATION"
 msgid "Open File Location"
-msgstr ""
+msgstr "Obre la ubicació del fitxer"
 
 msgctxt "ID_PLAY_STOP"
 msgid "Stop\nStop"
@@ -1020,7 +1020,7 @@ msgstr "S'està tancant…"
 
 msgctxt "IDS_CONTROLS_PLAYING"
 msgid "Playing"
-msgstr "Reproduint"
+msgstr "S'està reproduint"
 
 msgctxt "IDS_CONTROLS_PAUSED"
 msgid "Paused"
@@ -1288,7 +1288,7 @@ msgstr "Afegeix carpeta contenidora"
 
 msgctxt "IDS_HW_INDICATOR"
 msgid "[H/W]"
-msgstr "[Descodificador per Maquinari]"
+msgstr "[H/W]"
 
 msgctxt "IDS_TOOLTIP_SOFTWARE_DECODING"
 msgid "Software Decoding"
@@ -1308,7 +1308,7 @@ msgstr "Introduïu les credencials de servidor"
 
 msgctxt "IDS_CREDENTIALS_CONNECT"
 msgid "Enter your credentials to connect"
-msgstr "Introdueixi les seves credencials per connectar-se"
+msgstr "Introduïu les vostres credencials per connectar-vos-hi"
 
 msgctxt "IDS_SUB_SAVE_EXTERNAL_STYLE_FILE"
 msgid "Save custom style"
@@ -1448,11 +1448,11 @@ msgstr "Després de la reproducció: Tanca el fitxer"
 
 msgctxt "IDS_FRAME_INIT_FAILED"
 msgid "MPC-HC encountered a problem during initialization."
-msgstr ""
+msgstr "MPC-HC ha trobat un problema durant la inicialització."
 
 msgctxt "IDS_TIME_SHIFT_TOOLTIP"
 msgid "Enter a positive value if the audio is early, a negative value if it is late."
-msgstr "Introdueixi un valor positiu si l'àudio va avançat, o un de negatiu si va amb retard."
+msgstr "Introduïu un valor positiu si l'àudio va avançat, o un de negatiu si va amb retard."
 
 msgctxt "IDS_WEBUI_DISABLED_PREVIEW_MSG"
 msgid "Preview is currently disabled. You can enable it in MPC-HC's options."
@@ -1524,7 +1524,7 @@ msgstr "Retrocedeix un fotograma"
 
 msgctxt "IDS_AG_GO_TO"
 msgid "Go To"
-msgstr "Vés a"
+msgstr "Ves a"
 
 msgctxt "IDS_AG_INCREASE_RATE"
 msgid "Increase Rate"
@@ -1640,7 +1640,7 @@ msgstr "Si us plau, tanqueu totes les instàncies de l'MPC-HC perquè la configu
 
 msgctxt "IDS_EXPORT_SETTINGS"
 msgid "Export settings"
-msgstr "Exporta les configuracions"
+msgstr "Exporta la configuració"
 
 msgctxt "IDS_EXPORT_SETTINGS_WARNING"
 msgid "Some changes have not been saved yet.\nDo you want to save them before exporting?"
@@ -1728,11 +1728,11 @@ msgstr "Commuta el Direct3D a pantalla completa"
 
 msgctxt "IDS_MPLAYERC_100"
 msgid "Goto Prev Subtitle"
-msgstr "Vés al subtítol anterior"
+msgstr "Ves al subtítol anterior"
 
 msgctxt "IDS_MPLAYERC_101"
 msgid "Goto Next Subtitle"
-msgstr "Vés al subtítol següent"
+msgstr "Ves al subtítol següent"
 
 msgctxt "IDS_MPLAYERC_102"
 msgid "Shift Subtitle Left"
@@ -1744,7 +1744,7 @@ msgstr "Desplaça el subtítol cap a la dreta"
 
 msgctxt "IDS_AG_SEEKSET"
 msgid "Jump to Beginning"
-msgstr "Vés al Començament"
+msgstr "Ves al principi"
 
 msgctxt "IDS_OSD_SHOW_FILENAME"
 msgid "OSD: Show File Name"
@@ -1876,7 +1876,7 @@ msgstr "Voleu que l'MPC-HC comprovi periòdicament si hi ha actualitzacions?\n\n
 
 msgctxt "IDS_ZOOM_25"
 msgid "25%"
-msgstr ""
+msgstr "25%"
 
 msgctxt "IDS_ZOOM_50"
 msgid "50%"
@@ -1920,7 +1920,7 @@ msgstr "El retard no és vàlid"
 
 msgctxt "IDS_UPDATE_DELAY_ERROR_MSG"
 msgid "Please enter a number between 1 and 365."
-msgstr "Si us plau, introduexi un número entre 1 i 365."
+msgstr "Si us plau, introduïu un número entre 1 i 365."
 
 msgctxt "IDS_AG_PNS_CENTER"
 msgid "PnS Center"
@@ -2096,7 +2096,7 @@ msgstr "Activa/Desactiva Subtítols (DVD)"
 
 msgctxt "IDS_OSD_DISPLAY_CURRENT_TIME"
 msgid "OSD: Display Current Time"
-msgstr "OSD: Mostra l'hora actual"
+msgstr "OSD: Mostra el temps de reproducció"
 
 msgctxt "IDS_PPAGEWEBSERVER_0"
 msgid "Select the directory"
@@ -2200,7 +2200,7 @@ msgstr "Reprodueix amb l'MPC-HC"
 
 msgctxt "IDS_CANNOT_CHANGE_FORMAT"
 msgid "MPC-HC does not have sufficient privileges to change file associations. Please click on the \"Run as administrator\" button."
-msgstr "L'MPC-HC no té els privilegis suficients per canviar les associacions del fitxer. Si us plau, premi el botó \"Executa com a administrador\"."
+msgstr "L'MPC-HC no té els privilegis suficients per canviar les associacions del fitxer. Si us plau, premeu el botó \"Executa com a administrador\"."
 
 msgctxt "IDS_APP_DESCRIPTION"
 msgid "MPC-HC is an extremely light-weight, open source media player for Windows. It supports all common video and audio file formats available for playback. We are 100% spyware free, there are no advertisements or toolbars."
@@ -2532,7 +2532,7 @@ msgstr "So"
 
 msgctxt "IDS_MAINFRM_114"
 msgid "%s was not found, please insert media containing this file."
-msgstr "No s'ha trobat %s, si us plau, insereixi el suport que conté aquest fitxer."
+msgstr "No s'ha trobat %s, si us plau, inseriu el suport que conté aquest fitxer."
 
 msgctxt "IDS_AG_ABORTED"
 msgid "Aborted"
@@ -2652,7 +2652,7 @@ msgstr "Commuta la depuració dels PS"
 
 msgctxt "IDS_AG_ZOOM_25"
 msgid "Zoom 25%"
-msgstr ""
+msgstr "Zoom al 25%"
 
 msgctxt "IDS_AG_ZOOM_50"
 msgid "Zoom 50%"
@@ -3324,7 +3324,7 @@ msgstr "L'MPC-HC v%s està disponible. Ara fa servir la v%s.\n\nVoleu visitar la
 
 msgctxt "IDS_UPDATE_ERROR"
 msgid "Update server not found.\n\nPlease check your internet connection or try again later."
-msgstr "No s'ha trobat el servidor d'actualitzacions.\n\nSi us plau, comprovi la seva connexió a Internet o intenti-ho més tard."
+msgstr "No s'ha trobat el servidor d'actualitzacions.\n\nSi us plau, comproveu la vostra connexió a Internet o intenti-ho més tard."
 
 msgctxt "IDS_UPDATE_CLOSE"
 msgid "&Close"
@@ -3656,7 +3656,7 @@ msgstr "Descarrega els subtítols"
 
 msgctxt "IDS_SUBDL_DLG_SEARCHING"
 msgid "Searching for subtitles online, please wait..."
-msgstr "S'estan buscant subtítols en línia, si us plau, esperi..."
+msgstr "S'estan cercant subtítols en línia, si us plau, espereu..."
 
 msgctxt "IDS_SUBDL_DLG_ABORTING"
 msgid "Online subtitles search aborting..."
@@ -3764,7 +3764,7 @@ msgstr "Els subtítols ja existeixen."
 
 msgctxt "IDS_SUBUL_DLG_UPLOADING"
 msgid "Uploading subtitles, please wait..."
-msgstr "S'estan penjant els subtítols, si us plau, esperi..."
+msgstr "S'estan penjant els subtítols, si us plau, espereu..."
 
 msgctxt "IDS_SUBUL_DLG_UPLOADED"
 msgid "Upload finished."
@@ -3836,7 +3836,7 @@ msgstr "Esteu segur que voleu penjar el fitxer de subtítols \"%s\"?"
 
 msgctxt "IDS_SUBPP_DLG_FETCHING_LANGUAGES"
 msgid "Fetching supported languages..."
-msgstr "S'estan buscant idiomes compatibles..."
+msgstr "S'estan cercant idiomes compatibles..."
 
 msgctxt "IDS_SUB_CREDENTIALS_ERROR"
 msgid "Failed to log in on \"%1\" with username \"%2\".\n\nPlease enter the correct username and password or reset the credentials to log in as anonymous user."
@@ -3952,47 +3952,47 @@ msgstr "S'està contactant amb el youtube-dl..."
 
 msgctxt "IDS_VERTICAL_ALIGN_VIDEO_TOP"
 msgid "Align Top"
-msgstr "Alineació a dalt"
+msgstr "Alinea a dalt"
 
 msgctxt "IDS_VERTICAL_ALIGN_VIDEO_MIDDLE"
 msgid "Align Middle"
-msgstr "Alineació al mig"
+msgstr "Alinea al mig"
 
 msgctxt "IDS_VERTICAL_ALIGN_VIDEO_BOTTOM"
 msgid "Align Bottom"
-msgstr "Alineació a baix"
+msgstr "Alinea a baix"
 
 msgctxt "IDS_PPAGEADVANCED_USE_YDL"
 msgid "Process HTTP(s) URLs with Youtube-DL (if available). There is an internal whitelist/blacklist for URLs that are always/never processed."
-msgstr ""
+msgstr "Processa les URL HTTP(S) amb el Youtube-DL (si està disponible). Existeixen llistes blanques i negres internes per decidir quines URL es processaran."
 
 msgctxt "IDS_PPAGEADVANCED_YDL_MAX_HEIGHT"
 msgid "Can be used to limit the video resolution that is chosen by Youtube-DL by the given height. Value 0 means it will choose the highest resolution available."
-msgstr ""
+msgstr "Pot ser utilitzat per limitar la resolució de vídeo que el Youtube-DL tria segons l'altura. El valor 0 selecciona la resolució més alta disponible."
 
 msgctxt "IDS_PPAGEADVANCED_YDL_VIDEO_FORMAT"
 msgid "Preferred video format for stream that is selected from Youtube-DL results.\n0: Automatic\n1: H.264 30fps\n2: H.264 60fps\n3: VP9 30fps\n4: VP9 60fps\n5: VP9 Profile2 30fps\n6: VP9 Profile2 60fps\n7: AV1 30fps\n8: AV1 60fps"
-msgstr ""
+msgstr "Format de vídeo preferit per la transmissió que se selecciona dels resultats del Youtube-DL.\n0: Automàtic\n1: H.264 30fps\n2: H.264 60fps\n3: VP9 30fps\n4: VP9 60fps\n5: VP9 Profile2 30fps\n6: VP9 Profile2 60fps\n7: AV1 30fps\n8: AV1 60fps"
 
 msgctxt "IDS_PPAGEADVANCED_YDL_AUDIO_ONLY"
 msgid "Instructs Youtube-DL to prefer an audio-only stream (if available)"
-msgstr ""
+msgstr "Indica al Youtube-DL que prefereixi una transmissió de només àudio (si està disponible)"
 
 msgctxt "IDS_PPAGEADVANCED_YDL_COMMAND_LINE"
 msgid "Command line parameters for downloading (\"save a copy\") with youtube-dl.exe\nExamples:\n-f best[height<=1080]\n-f bestvideo+bestaudio\n-o \"C:\\downloads\\%(title)s.%(ext)s"
-msgstr ""
+msgstr "Paràmetres de línia de comandes par baixar (\"desar una còpia\") amb el youtube-dl.exe\nExemples:\n-f best[height<=1080]\n-f bestvideo+bestaudio\n-o \"C:\\Baixades\\%(title)s.%(ext)s"
 
 msgctxt "IDS_PPAGEADVANCED_SAVEIMAGE_POSITION"
 msgid "Include video position in filename"
-msgstr ""
+msgstr "Inclou la posició del vídeo al nom del fitxer"
 
 msgctxt "IDS_PPAGEADVANCED_SAVEIMAGE_CURRENTTIME"
 msgid "Include current time in filename"
-msgstr ""
+msgstr "Inclou el temps actual al nom del fitxer"
 
 msgctxt "IDS_PPAGEADVANCED_ALLOW_INACCURATE_FASTSEEK"
 msgid "When enabled, fast seek (to keyframe) has a maximum inaccuracy of 20 seconds. When disabled, a smaller inaccuracy is allowed when deciding between a fast and a normal seek. For example 30% of jump size."
-msgstr ""
+msgstr "Quan està habilitat, la cerca ràpida (al fotograma clau) té una imprecisió màxima de 20 segons. Quan està deshabilitada. es permet una imprecisió menor en decidir entre una cerca ràpida i una cerca normal. Per exemple, 30% de la mida del salt."
 
 msgctxt "IDS_CMD_FULLSCREEN"
 msgid "/fullscreen\tStart in fullscreen mode"
@@ -4092,29 +4092,29 @@ msgstr "Activa/desactiva el tema fosc"
 
 msgctxt "IDS_PPAGEADVANCED_LOOP_FOLDER_NEXT_FILE"
 msgid "Loop back to first file in folder after playing the last file."
-msgstr ""
+msgstr "Torna a reproduir el primer fitxer de la carpeta després de reproduir-ne l'últim."
 
 msgctxt "IDS_PPAGEADVANCED_MODERNSEEKBAR"
 msgid "Requires Dark Theme. When enabled, the time seekbar and volume indicator don't show a dragger at current position, but instead are filled from left to right."
-msgstr ""
+msgstr "Requereix el tema fosc. Quan està habilitat, la barra de desplaçament del temps i l'indicador de volum no mostren un arrossegament a la posició actual, sinó que s'omple d'esquerra a dreta."
 
 msgctxt "IDS_PPAGEADVANCED_MODERNSEEKBARHEIGHT"
 msgid "Modern seekbar height (at 96dpi, otherwise scaled)"
-msgstr ""
+msgstr "Altura de la barra de cerca moderna (a 96ppp, del contrari escalada)"
 
 msgctxt "IDS_PPAGEADVANCED_FULLSCREEN_DELAY"
 msgid "Delay before showing fullscreen video, to prevent visual glitches."
-msgstr ""
+msgstr "Demora la visualització en pantalla completa dels vídeos per prevenir errors visuals."
 
 msgctxt "IDS_PPAGEADVANCED_SNAPSHOTSUBTITLES"
 msgid "Render subtitles onto screenshots"
-msgstr ""
+msgstr "Renderitza els subtítols a les captures de pantalla"
 
 msgctxt "IDS_PPAGEADVANCED_SNAPSHOTKEEPVIDEOEXTENSION"
 msgid "Keep video file extension as part of snapshot filenames (e.g., file.mkv.png)"
-msgstr ""
+msgstr "Mantén l'extensió del fitxer de vídeo com a part del nom del fotograma desat (p. ex.: vídeo.mkv.png)"
 
 msgctxt "IDS_SNAPSHOT_SUBTITLES"
 msgid "Include Subtitles"
-msgstr ""
+msgstr "Inclou els subtítols"
 

@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2020-05-11 19:52:17+0000\n"
+"POT-Creation-Date: 2020-06-02 20:23:30+0000\n"
 "PO-Revision-Date: 2020-01-02 07:46+0000\n"
 "Last-Translator: Jindřich T, 2020\n"
 "Language-Team: Czech (https://www.transifex.com/mpchc/teams/106126/cs/)\n"
@@ -336,7 +336,7 @@ msgstr "Disk"
 
 msgctxt "IDS_SUBDL_DLG_TITLES_COL"
 msgid "Title(s)"
-msgstr "Tituly"
+msgstr "Název filmu"
 
 msgctxt "IDS_SUBRESYNC_CLN_CHARSET"
 msgid "CharSet"
@@ -1448,7 +1448,7 @@ msgstr "Po přehrání: Zavřít"
 
 msgctxt "IDS_FRAME_INIT_FAILED"
 msgid "MPC-HC encountered a problem during initialization."
-msgstr ""
+msgstr "Během inicializace došlo k chybě."
 
 msgctxt "IDS_TIME_SHIFT_TOOLTIP"
 msgid "Enter a positive value if the audio is early, a negative value if it is late."
@@ -1576,7 +1576,7 @@ msgstr "Nejbližší klíčový snímek"
 
 msgctxt "IDS_HOOKS_FAILED"
 msgid "MPC-HC encountered a problem during initialization. DVD playback may not work correctly. This problem might be caused by an incompatibility with certain security software."
-msgstr ""
+msgstr "Během inicializace došlo k chybě. Přehrávání DVD nemusí fungovat správně. To může být způsobeno nekompatibilitou s některými bezpečnostními nástroji.\n"
 
 msgctxt "IDS_PPAGEFULLSCREEN_SHOWNEVER"
 msgid "Never show"

@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2020-03-20 18:57:58+0000\n"
+"POT-Creation-Date: 2020-06-02 20:23:30+0000\n"
 "PO-Revision-Date: 2020-01-02 07:46+0000\n"
 "Last-Translator: Hugo Simões <hugo.simoes.1984@gmail.com>, 2020\n"
 "Language-Team: Portuguese (Portugal) (https://www.transifex.com/mpchc/teams/106126/pt_PT/)\n"
@@ -1451,7 +1451,7 @@ msgstr ""
 
 msgctxt "IDS_TIME_SHIFT_TOOLTIP"
 msgid "Enter a positive value if the audio is early, a negative value if it is late."
-msgstr "Insira um valor positivo se o áudio é atrasado, um valor negativo se é adiantado."
+msgstr ""
 
 msgctxt "IDS_WEBUI_DISABLED_PREVIEW_MSG"
 msgid "Preview is currently disabled. You can enable it in MPC-HC's options."
@@ -1579,7 +1579,7 @@ msgstr ""
 
 msgctxt "IDS_PPAGEFULLSCREEN_SHOWNEVER"
 msgid "Never show"
-msgstr "Nunca mostrar"
+msgstr ""
 
 msgctxt "IDS_PPAGEFULLSCREEN_SHOWMOVED"
 msgid "Show when moving the cursor, hide after:"
@@ -2619,7 +2619,7 @@ msgstr "Utilização: mpc-hc.exe \"caminho\" [argumentos]"
 
 msgctxt "IDS_UNKNOWN_SWITCH"
 msgid "Unrecognized switch(es) found in command line string: \n\n"
-msgstr "Argumentos não conhecidos encontrados na cadeia de linha de comandos:\n"
+msgstr "Argumento(s) não conhecido(s) encontrado(s) na cadeia de linha de comandos:\n"
 
 msgctxt "IDS_AG_TOGGLE_INFO"
 msgid "Toggle Information"
