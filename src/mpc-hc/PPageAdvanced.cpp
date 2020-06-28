@@ -58,7 +58,7 @@ BOOL CPPageAdvanced::OnInitDialog()
     m_list.SetExtendedStyle(m_list.GetExtendedStyle() /* | LVS_EX_FULLROWSELECT */ | LVS_EX_AUTOSIZECOLUMNS /*| LVS_EX_DOUBLEBUFFER */ | LVS_EX_INFOTIP);
     m_list.setAdditionalStyles(LVS_EX_DOUBLEBUFFER | LVS_EX_FULLROWSELECT);
     m_list.InsertColumn(COL_NAME, ResStr(IDS_PPAGEADVANCED_COL_NAME), LVCFMT_LEFT);
-    m_list.InsertColumn(COL_VALUE, ResStr(IDS_PPAGEADVANCED_COL_VALUE), LVCFMT_RIGHT);
+    m_list.InsertColumn(COL_VALUE, ResStr(IDS_PPAGEADVANCED_COL_VALUE), LVCFMT_LEFT);
 
     if (auto pToolTip = m_list.GetToolTips()) {
         // Set topmost for tooltip window. Workaround bug https://connect.microsoft.com/VisualStudio/feedback/details/272350
@@ -82,8 +82,8 @@ BOOL CPPageAdvanced::OnInitDialog()
 
     InitSettings();
 
-    m_list.SetColumnWidth(0, LVSCW_AUTOSIZE_USEHEADER);
     m_list.SetColumnWidth(1, LVSCW_AUTOSIZE_USEHEADER);
+    m_list.SetColumnWidth(0, LVSCW_AUTOSIZE_USEHEADER);
 
     SetRedraw(TRUE);
     return TRUE;
