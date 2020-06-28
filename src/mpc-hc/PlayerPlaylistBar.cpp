@@ -279,11 +279,11 @@ static bool SearchFiles(CString mask, CAtlList<CString>& sl)
             || sl.IsEmpty() && mask.FindOneOf(_T("?*")) >= 0);
 }
 
-void CPlayerPlaylistBar::ParsePlayList(CString fn, CAtlList<CString>* subs)
+void CPlayerPlaylistBar::ParsePlayList(CString fn, CAtlList<CString>* subs, int redir_count)
 {
     CAtlList<CString> sl;
     sl.AddTail(fn);
-    ParsePlayList(sl, subs);
+    ParsePlayList(sl, subs, redir_count);
 }
 
 void CPlayerPlaylistBar::ResolveLinkFiles(CAtlList<CString>& fns)
@@ -303,7 +303,7 @@ void CPlayerPlaylistBar::ResolveLinkFiles(CAtlList<CString>& fns)
     }
 }
 
-void CPlayerPlaylistBar::ParsePlayList(CAtlList<CString>& fns, CAtlList<CString>* subs, CString label, CString ydl_src)
+void CPlayerPlaylistBar::ParsePlayList(CAtlList<CString>& fns, CAtlList<CString>* subs, int redir_count, CString label, CString ydl_src)
 {
     if (fns.IsEmpty()) {
         return;
@@ -318,7 +318,7 @@ void CPlayerPlaylistBar::ParsePlayList(CAtlList<CString>& fns, CAtlList<CString>
         }
         POSITION pos = sl.GetHeadPosition();
         while (pos) {
-            ParsePlayList(sl.GetNext(pos), subs);
+            ParsePlayList(sl.GetNext(pos), subs, redir_count + 1);
         }
         return;
     }
@@ -326,9 +326,13 @@ void CPlayerPlaylistBar::ParsePlayList(CAtlList<CString>& fns, CAtlList<CString>
     CAtlList<CString> redir;
     CStringA ct = GetContentType(fns.GetHead(), &redir);
     if (!redir.IsEmpty()) {
-        POSITION pos = redir.GetHeadPosition();
-        while (pos) {
-            ParsePlayList(sl.GetNext(pos), subs);
+        if (redir_count < 5) {
+            POSITION pos = redir.GetHeadPosition();
+            while (pos) {
+                ParsePlayList(sl.GetNext(pos), subs, redir_count + 1);
+            }
+        } else {
+            ASSERT(FALSE);
         }
         return;
     }
@@ -622,7 +626,7 @@ void CPlayerPlaylistBar::Append(CAtlList<CString>& fns, bool fMulti, CAtlList<CS
             ParsePlayList(fns.GetNext(pos), nullptr);
         }
     } else {
-        ParsePlayList(fns, subs, label, ydl_src);
+        ParsePlayList(fns, subs, 0, label, ydl_src);
     }
 
     Refresh();

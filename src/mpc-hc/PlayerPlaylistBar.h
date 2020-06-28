@@ -61,8 +61,8 @@ private:
 
     void AddItem(CString fn, CAtlList<CString>* subs);
     void AddItem(CAtlList<CString>& fns, CAtlList<CString>* subs, CString label = _T(""), CString ydl_src = _T(""));
-    void ParsePlayList(CString fn, CAtlList<CString>* subs);
-    void ParsePlayList(CAtlList<CString>& fns, CAtlList<CString>* subs, CString label = _T(""), CString ydl_src = _T(""));
+    void ParsePlayList(CString fn, CAtlList<CString>* subs, int redir_count = 0);
+    void ParsePlayList(CAtlList<CString>& fns, CAtlList<CString>* subs, int redir_count = 0, CString label = _T(""), CString ydl_src = _T(""));
     void ResolveLinkFiles(CAtlList<CString>& fns);
 
     bool ParseBDMVPlayList(CString fn);
