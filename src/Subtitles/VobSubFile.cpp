@@ -760,8 +760,13 @@ bool CVobSubFile::ReadSub(CString fn)
 
     int len;
     BYTE buff[2048];
-    while ((len = f.Read(buff, sizeof(buff))) > 0 && *(DWORD*)buff == 0xba010000) {
-        m_sub.Write(buff, len);
+    try {
+        while ((len = f.Read(buff, sizeof(buff))) > 0 && *(DWORD*)buff == 0xba010000) {
+            m_sub.Write(buff, len);
+        }
+    }
+    catch (CFileException*) {
+        return false;
     }
 
     return true;
