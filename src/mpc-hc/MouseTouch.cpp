@@ -396,7 +396,7 @@ BOOL CMouse::InternalOnMouseWheel(UINT nFlags, short zDelta, const CPoint& point
            FALSE;
 }
 
-BOOL CMouse::InternalOnMouseHWheel(UINT nFlags, short zDelta, const CPoint& point) {
+BOOL CMouse::OnMouseHWheelImpl(UINT nFlags, short zDelta, const CPoint& point) {
     return zDelta > 0 ? OnButton(wmcmd::WRIGHT, point) :
         zDelta < 0 ? OnButton(wmcmd::WLEFT, point) :
         FALSE;
@@ -632,7 +632,7 @@ BOOL CMouseWnd::OnMouseWheel(UINT nFlags, short zDelta, CPoint point)
 }
 
 void CMouseWnd::OnMouseHWheel(UINT nFlags, short zDelta, CPoint point) {
-    if (!CMouse::InternalOnMouseHWheel(nFlags, zDelta, point)) {
+    if (!CMouse::OnMouseHWheelImpl(nFlags, zDelta, point)) {
         Default();
     }
 }
