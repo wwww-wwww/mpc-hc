@@ -2167,6 +2167,7 @@ CString CAppSettings::ParseFileName(CString const& param)
 
 void CAppSettings::ParseCommandLine(CAtlList<CString>& cmdln)
 {
+    UINT64 existingAfterPlaybackCL = nCLSwitches & CLSW_AFTERPLAYBACK_MASK;
     nCLSwitches = 0;
     slFiles.RemoveAll();
     slDubs.RemoveAll();
@@ -2353,6 +2354,9 @@ void CAppSettings::ParseCommandLine(CAtlList<CString>& cmdln)
                 slFiles.AddTail(param);
             }
         }
+    }
+    if (0 == (nCLSwitches & CLSW_AFTERPLAYBACK_MASK)) { //no changes to playback mask, so let's preserve existing
+        nCLSwitches |= existingAfterPlaybackCL;
     }
 }
 
