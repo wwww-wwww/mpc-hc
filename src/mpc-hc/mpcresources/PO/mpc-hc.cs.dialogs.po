@@ -4,13 +4,14 @@
 # Translators:
 # MPC HC <adiposegithub@gmail.com>, 2020
 # Random Vandal <zettaboy@gmail.com>, 2020
+# Jindřich T, 2020
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2020-03-10 15:14:13+0000\n"
+"POT-Creation-Date: 2020-06-08 04:44:38+0000\n"
 "PO-Revision-Date: 2020-01-02 07:46+0000\n"
-"Last-Translator: Random Vandal <zettaboy@gmail.com>, 2020\n"
+"Last-Translator: Jindřich T, 2020\n"
 "Language-Team: Czech (https://www.transifex.com/mpchc/teams/106126/cs/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -156,7 +157,7 @@ msgstr "Otevřít soubor"
 
 msgctxt "IDD_OPEN_DLG_IDC_STATIC"
 msgid "Type the address of a movie or audio file (on the Internet or your computer) and the player will open it for you."
-msgstr "Zadejte umístění video nebo zvukového souboru (ve vašem počítači, nebo na Internetu), který chcete otevřít."
+msgstr "Zadejte umístění video nebo audio souboru (ve vašem počítači nebo na internetu), který chcete otevřít."
 
 msgctxt "IDD_OPEN_DLG_IDC_STATIC"
 msgid "Open:"
@@ -184,7 +185,7 @@ msgstr "Storno"
 
 msgctxt "IDD_OPEN_DLG_IDC_CHECK1"
 msgid "Add to playlist without opening"
-msgstr "Pouze přidat do playlistu (neotevírat)"
+msgstr "Přidat do playlistu bez otevření"
 
 msgctxt "IDD_ABOUTBOX_CAPTION"
 msgid "About"
@@ -316,11 +317,11 @@ msgstr "Historie"
 
 msgctxt "IDD_PPAGEPLAYER_IDC_CHECK1"
 msgid "Keep history of recently opened files"
-msgstr "Ukládat historii otevřených souborů"
+msgstr "Ukládat historii nedávno otevřených souborů"
 
 msgctxt "IDD_PPAGEPLAYER_IDC_CHECK2"
 msgid "Remember last playlist"
-msgstr "Pamatovat si poslení seznam stop"
+msgstr "Pamatovat si poslední seznam stop"
 
 msgctxt "IDD_PPAGEPLAYER_IDC_FILE_POS"
 msgid "Remember File position"
@@ -376,7 +377,7 @@ msgstr "Další nastavení"
 
 msgctxt "IDD_PPAGEDVD_IDC_CHECK2"
 msgid "Allow closed captions in \"Line 21 Decoder\""
-msgstr "Povolit closed captions ve filtru 'Line 21 Decoder'"
+msgstr "Povolit titulky pro zvukově postižené ve filtru 'Line 21 Decoder'"
 
 msgctxt "IDD_PPAGEPLAYBACK_IDC_STATIC"
 msgid "Audio"
@@ -400,11 +401,11 @@ msgstr "Vyvážení"
 
 msgctxt "IDD_PPAGEPLAYBACK_IDC_STATIC"
 msgid "L"
-msgstr "L"
+msgstr "Levá"
 
 msgctxt "IDD_PPAGEPLAYBACK_IDC_STATIC"
 msgid "R"
-msgstr "R"
+msgstr "Pravá"
 
 msgctxt "IDD_PPAGEPLAYBACK_IDC_STATIC"
 msgid "Playback"
@@ -432,7 +433,7 @@ msgstr "Po přehrání"
 
 msgctxt "IDD_PPAGEPLAYBACK_IDC_STATIC"
 msgid "Zoom and Alignment"
-msgstr "Přiblížení a zarovnání"
+msgstr "Zvětšení a zarovnání"
 
 msgctxt "IDD_PPAGEPLAYBACK_IDC_CHECK5"
 msgid "Auto-zoom:"
@@ -576,7 +577,7 @@ msgstr "Varování"
 
 msgctxt "IDD_PPAGESUBTITLES_IDC_STATIC"
 msgid "If you override and enable fullscreen antialiasing somewhere at your videocard's settings, subtitles aren't going to look any better but it will surely eat your CPU."
-msgstr "Pokud změníte polohu titulků a zapnete fullscreen antialiasing, titulky určitě nebudou vypadat lépe, zato však zaberou veškerý výkon vašeho procesoru."
+msgstr "Pokud v nastavení grafické karty vynutíte celoobrazovkové vyhlazování, titulky určitě nebudou vypadat lépe a navíc stoupne i zatížení vašeho procesoru."
 
 msgctxt "IDD_PPAGEFORMATS_IDC_STATIC2"
 msgid "File extensions"
@@ -608,7 +609,7 @@ msgstr "Nastavit jako &výchozí program"
 
 msgctxt "IDD_PPAGEFORMATS_IDC_STATIC"
 msgid "Real-Time Streaming Protocol handler (for rtsp://... URLs)"
-msgstr "Zpracování Real-Time Streaming Protocolu (adresy rtsp://...)"
+msgstr "Zpracování Real-Time Streaming protokolu (adresy rtsp://...)"
 
 msgctxt "IDD_PPAGEFORMATS_IDC_RADIO1"
 msgid "RealMedia"
@@ -640,7 +641,7 @@ msgstr "Soubory"
 
 msgctxt "IDD_PPAGEFORMATS_IDC_STATIC1"
 msgid "Autoplay"
-msgstr "Autoplay"
+msgstr "Automatické přehrávání"
 
 msgctxt "IDD_PPAGEFORMATS_IDC_CHECK1"
 msgid "Video"
@@ -672,7 +673,7 @@ msgstr "Rychlé procházení (po klíčových snímcích)"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_CHECK2"
 msgid "Show chapter marks in seek bar"
-msgstr "V panelu procházení zobrazit značky kapitol"
+msgstr "V panelu hledání zobrazit značky kapitol"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_CHECK4"
 msgid "Display \"Now Playing\" information in Skype's mood message"
@@ -680,7 +681,7 @@ msgstr "Zobrazit informace o přehrávaných souborech jako zprávu o náladě v
 
 msgctxt "IDD_PPAGETWEAKS_IDC_CHECK6"
 msgid "Prevent minimizing the player when in fullscreen on a non default monitor"
-msgstr "Zabránit minimalizaci z Fullscreen při běhu na nevýchozím monitoru"
+msgstr "Zabránit minimalizaci z celoobrazovkového režimu při běhu na nevýchozím monitoru"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_CHECK_ENHANCED_TASKBAR"
 msgid "Use enhanced taskbar features"
@@ -1012,7 +1013,7 @@ msgstr "Styl okraje"
 
 msgctxt "IDD_PPAGESUBSTYLE_IDC_RADIO1"
 msgid "Outline"
-msgstr "Obtažení"
+msgstr "Obrys"
 
 msgctxt "IDD_PPAGESUBSTYLE_IDC_RADIO2"
 msgid "Opaque box"
@@ -1072,7 +1073,7 @@ msgstr "Sekundární:"
 
 msgctxt "IDD_PPAGESUBSTYLE_IDC_STATIC"
 msgid "Outline"
-msgstr "Obtažení:"
+msgstr "Obrys:"
 
 msgctxt "IDD_PPAGESUBSTYLE_IDC_CHECK1"
 msgid "Link alpha channels"
@@ -1592,7 +1593,7 @@ msgstr "Hledání, stahování a odesílání titulků online"
 
 msgctxt "IDD_PPAGESUBMISC_IDC_CHECK4"
 msgid "Automatically search and download subtitles if none are found locally"
-msgstr "Automaticky vyhledat a stáhnout titulky pokud nejsou nalezeny lokální"
+msgstr "Automaticky vyhledat a stáhnout titulky, pokud nejsou nalezeny lokální"
 
 msgctxt "IDD_PPAGESUBMISC_IDC_CHECK5"
 msgid "Prefer subtitles for hearing impaired (when indicated by subtitles provider)"
@@ -1672,7 +1673,7 @@ msgstr "Aktivní shadery po změně velikosti"
 
 msgctxt "IDD_PPAGESHADERS_IDC_STATIC5"
 msgid "MPC-VR does not support pre-resize shaders. It will run them after resize, before the post-resize shaders."
-msgstr ""
+msgstr "MPC-VR nepodporuje shadery před změnou velikosti. Budou spuštěny po změně velikosti, před shadery aktivní po změně velikosti."
 
 msgctxt "IDD_DEBUGSHADERS_DLG_CAPTION"
 msgid "Debug Shaders"
@@ -1752,7 +1753,7 @@ msgstr "Úroveň:"
 
 msgctxt "IDD_PPAGEAUDIORENDERER_IDC_CHECK4"
 msgid "Ignore system channel mixer (always ignored in exclusive WASAPI mode)"
-msgstr "Ignorovat systémový směšovač hlasitosti (vždy ignorován v exkluzivním WASAPI móu)"
+msgstr "Ignorovat systémový směšovač hlasitosti (vždy ignorován v exkluzivním WASAPI módu)"
 
 msgctxt "IDD_PPAGEAUDIORENDERER_IDC_STATIC"
 msgid "Note"

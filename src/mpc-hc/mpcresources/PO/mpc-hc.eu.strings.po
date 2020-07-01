@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2019-12-17 06:27:41+0000\n"
-"PO-Revision-Date: 2020-01-02 00:34+0000\n"
+"POT-Creation-Date: 2020-06-15 14:17:38+0000\n"
+"PO-Revision-Date: 2020-01-02 07:46+0000\n"
 "Last-Translator: Xabier Aramendi <azpidatziak@gmail.com>, 2020\n"
 "Language-Team: Basque (https://www.transifex.com/mpchc/teams/106126/eu/)\n"
 "MIME-Version: 1.0\n"
@@ -620,7 +620,7 @@ msgstr "&Bideak"
 
 msgctxt "IDS_PPAGE_OUTPUT_MPCVR"
 msgid "MPC Video Renderer"
-msgstr "MPC Bideo Aurkezlea"
+msgstr "MPC Bideo Aurzkelea"
 
 msgctxt "IDD_PPAGEACCELTBL"
 msgid "Player::Keys"
@@ -3840,7 +3840,7 @@ msgstr "Sostengatutako hizkuntzak lortzen..."
 
 msgctxt "IDS_SUB_CREDENTIALS_ERROR"
 msgid "Failed to log in on \"%1\" with username \"%2\".\n\nPlease enter the correct username and password or reset the credentials to log in as anonymous user."
-msgstr "Hutsegitea \"%1\" saioa hasterakoan \"%2\" erabiltzaile-izenarekin.\n\nMesedez sartu erabiltzaile-izen eta sarhitz zuzena edo berrezarri ezagutarazleak izengabeko erabiltzaile bezala hasteko saioa."
+msgstr ""
 
 msgctxt "IDS_SUB_AUTODL_IGNORE_TOOLTIP"
 msgid "Automatic search and download will be disabled for all media files whose path contains any of the patterns entered here.\nFor example, type: \"private dir\\videos|work\\\"."
@@ -4072,7 +4072,7 @@ msgstr "&Bersaiatu"
 
 msgctxt "IDS_MESSAGEBOX_IGNORE"
 msgid "&Ignore"
-msgstr "E&ziikusi"
+msgstr "E&zikusi"
 
 msgctxt "IDS_MESSAGEBOX_OK"
 msgid "OK"

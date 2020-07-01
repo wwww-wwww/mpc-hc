@@ -584,11 +584,11 @@ msgstr "A-B (&Reset)"
 
 msgctxt "ID_PLAY_REPEAT_AB_MARK_A"
 msgid "A-B (Mark &A)"
-msgstr "A-B (značka &A)"
+msgstr "A-B (označenie &A)"
 
 msgctxt "ID_PLAY_REPEAT_AB_MARK_B"
 msgid "A-B (Mark &B)"
-msgstr "A-B (značka &B)"
+msgstr "A-B (označenie &B)"
 
 msgctxt "ID_PLAY_DECRATE"
 msgid "&Decrease Rate"

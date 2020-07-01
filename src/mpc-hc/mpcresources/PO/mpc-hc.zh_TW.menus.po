@@ -376,11 +376,11 @@ msgstr "重設(&E)"
 
 msgctxt "ID_VIEW_RESET_DEFAULT"
 msgid "Reset to &default renderer settings"
-msgstr "重設為預設的繪製器設定(&D)"
+msgstr "重設為預設繪製器設定 (&D)"
 
 msgctxt "ID_VIEW_RESET_OPTIMAL"
 msgid "Reset to &optimal renderer settings"
-msgstr "重設為最佳的繪製器設定(&O)"
+msgstr "重設為最佳繪製器設定 (&O)"
 
 msgctxt "POPUP"
 msgid "Video &Frame"
@@ -504,11 +504,11 @@ msgstr "置中(&T)"
 
 msgctxt "ID_PANSCAN_ROTATEZM"
 msgid "Rotate Cloc&kwise"
-msgstr "順時鐘旋轉 (&k)"
+msgstr "順時鐘旋轉 (&K)"
 
 msgctxt "ID_PANSCAN_ROTATEZ270"
 msgid "Rotate Counter-Clock&wise"
-msgstr "逆時鐘旋轉 (&w)"
+msgstr "逆時鐘旋轉 (&W)"
 
 msgctxt "ID_PANSCAN_ROTATEXM"
 msgid "&Flip Vertically"

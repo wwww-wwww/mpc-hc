@@ -93,7 +93,7 @@ msgstr "&Eigenschaften"
 
 msgctxt "ID_FILE_OPEN_LOCATION"
 msgid "Open File &Location"
-msgstr "Öffne Datei Ab&lageort"
+msgstr "Öffne Dateiab&lageort"
 
 msgctxt "ID_FILE_EXIT"
 msgid "E&xit"

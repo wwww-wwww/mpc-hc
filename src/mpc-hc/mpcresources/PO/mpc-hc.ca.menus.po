@@ -584,7 +584,7 @@ msgstr "A-B (&restableix)"
 
 msgctxt "ID_PLAY_REPEAT_AB_MARK_A"
 msgid "A-B (Mark &A)"
-msgstr "A-B (fixar &A)"
+msgstr "A-B (fixa &A)"
 
 msgctxt "ID_PLAY_REPEAT_AB_MARK_B"
 msgid "A-B (Mark &B)"

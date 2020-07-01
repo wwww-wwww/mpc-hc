@@ -3,13 +3,14 @@
 # This file is distributed under the same license as the MPC-HC package.
 # Translators:
 # MPC HC <adiposegithub@gmail.com>, 2020
+# linasmi <linasmi@mail.ru>, 2020
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2019-12-16 07:58:37+0000\n"
+"POT-Creation-Date: 2020-06-08 04:44:38+0000\n"
 "PO-Revision-Date: 2020-01-02 07:46+0000\n"
-"Last-Translator: MPC HC <adiposegithub@gmail.com>, 2020\n"
+"Last-Translator: linasmi <linasmi@mail.ru>, 2020\n"
 "Language-Team: Lithuanian (https://www.transifex.com/mpchc/teams/106126/lt/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -191,7 +192,7 @@ msgstr "Apie"
 
 msgctxt "IDD_ABOUTBOX_IDC_AUTHORS_LINK"
 msgid "Copyright © 2002-2020 see Authors.txt"
-msgstr "Autorinės teisės © 2002-2020 skaitykite Authors.txt"
+msgstr ""
 
 msgctxt "IDD_ABOUTBOX_IDC_STATIC"
 msgid "This program is freeware and released under the GNU General Public License."
@@ -199,7 +200,7 @@ msgstr "Ši programa yra nemokama ir platinama pagal licenciją GNU General Publ
 
 msgctxt "IDD_ABOUTBOX_IDC_STATIC"
 msgid "English translation made by MPC-HC Team"
-msgstr "Vertė: Linasmi Linas Tamašauskas, Martynas Kybartas, Ramūnas."
+msgstr "Vertė: Linasmi, Linas Tamašauskas, Martynas Kybartas, Ramūnas."
 
 msgctxt "IDD_ABOUTBOX_IDC_STATIC"
 msgid "Build information"

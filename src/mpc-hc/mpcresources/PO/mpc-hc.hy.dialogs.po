@@ -3,13 +3,14 @@
 # This file is distributed under the same license as the MPC-HC package.
 # Translators:
 # MPC HC <adiposegithub@gmail.com>, 2020
+# Hrant Ohanyan <h.ohanyan@haysoft.org>, 2020
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2019-12-16 07:58:37+0000\n"
+"POT-Creation-Date: 2020-06-08 04:44:38+0000\n"
 "PO-Revision-Date: 2020-01-02 07:46+0000\n"
-"Last-Translator: MPC HC <adiposegithub@gmail.com>, 2020\n"
+"Last-Translator: Hrant Ohanyan <h.ohanyan@haysoft.org>, 2020\n"
 "Language-Team: Armenian (https://www.transifex.com/mpchc/teams/106126/hy/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -23,7 +24,7 @@ msgstr "Ընտրեք տեսակը"
 
 msgctxt "IDD_SELECTMEDIATYPE_IDOK"
 msgid "OK"
-msgstr "ԼԱՎ"
+msgstr "Լավ"
 
 msgctxt "IDD_SELECTMEDIATYPE_IDCANCEL"
 msgid "Cancel"
@@ -147,7 +148,7 @@ msgstr "Կադրը"
 
 msgctxt "IDD_GOTO_DLG_IDC_OK2"
 msgid "Go!"
-msgstr "Առաջ!"
+msgstr "Առաջ"
 
 msgctxt "IDD_OPEN_DLG_CAPTION"
 msgid "Open"
@@ -175,11 +176,11 @@ msgstr "Ընտրել..."
 
 msgctxt "IDD_OPEN_DLG_IDOK"
 msgid "OK"
-msgstr "ԼԱՎ"
+msgstr "Լավ"
 
 msgctxt "IDD_OPEN_DLG_IDCANCEL"
 msgid "Cancel"
-msgstr "Մերժել"
+msgstr "Չեղարկել"
 
 msgctxt "IDD_OPEN_DLG_IDC_CHECK1"
 msgid "Add to playlist without opening"
@@ -191,11 +192,11 @@ msgstr "Ծրագրի մասին"
 
 msgctxt "IDD_ABOUTBOX_IDC_AUTHORS_LINK"
 msgid "Copyright © 2002-2020 see Authors.txt"
-msgstr "Copyright © 2002-2020, կարդացե՛ք Authors.txt ֆայլը"
+msgstr ""
 
 msgctxt "IDD_ABOUTBOX_IDC_STATIC"
 msgid "This program is freeware and released under the GNU General Public License."
-msgstr "Այս ծրագիրը անվճար է և տարածվում է GNU General Public-ի լիցենզիայով։"
+msgstr "Այս ծրագիրը անվճար է և տարածվում է GNU General Public-ի արտոնագրով։"
 
 msgctxt "IDD_ABOUTBOX_IDC_STATIC"
 msgid "English translation made by MPC-HC Team"
@@ -211,7 +212,7 @@ msgstr "Տարբերակ."
 
 msgctxt "IDD_ABOUTBOX_IDC_STATIC"
 msgid "Compiler:"
-msgstr "կազմարկիչ."
+msgstr "Կազմարկիչ."
 
 msgctxt "IDD_ABOUTBOX_IDC_LAVFILTERS_VERSION"
 msgid "Not used"
@@ -227,7 +228,7 @@ msgstr "Օպերացիոն համակարգ"
 
 msgctxt "IDD_ABOUTBOX_IDC_STATIC"
 msgid "Name:"
-msgstr "Անունը."
+msgstr "Անուն."
 
 msgctxt "IDD_ABOUTBOX_IDC_BUTTON1"
 msgid "Copy to clipboard"
@@ -235,7 +236,7 @@ msgstr "Պատճենել մեկուսաշրջույթ"
 
 msgctxt "IDD_ABOUTBOX_IDOK"
 msgid "OK"
-msgstr "ԼԱՎ"
+msgstr "Լավ"
 
 msgctxt "IDD_PPAGEPLAYER_IDC_STATIC"
 msgid "Open options"
@@ -243,11 +244,11 @@ msgstr "Բացելու ընտրանքներ"
 
 msgctxt "IDD_PPAGEPLAYER_IDC_RADIO1"
 msgid "Use the same player for each media file"
-msgstr "Նույն վերարտադրիչը յուրաքանչյուր ֆայլի համար"
+msgstr "Նույն նվագարկիչը յուրաքանչյուր ֆայլի համար"
 
 msgctxt "IDD_PPAGEPLAYER_IDC_RADIO2"
 msgid "Open a new player for each media file played"
-msgstr "Նոր վերարտադրիչ յուրաքանչյուր ֆայլի համար"
+msgstr "Նոր նվագարկիչ յուրաքանչյուր ֆայլի համար"
 
 msgctxt "IDD_PPAGEPLAYER_IDC_STATIC"
 msgid "Language"
@@ -395,7 +396,7 @@ msgstr "Առվ."
 
 msgctxt "IDD_PPAGEPLAYBACK_IDC_STATIC_BALANCE"
 msgid "Balance"
-msgstr "Բալանսը"
+msgstr "Բալանս"
 
 msgctxt "IDD_PPAGEPLAYBACK_IDC_STATIC"
 msgid "L"
@@ -639,7 +640,7 @@ msgstr "Ֆայլերի համար"
 
 msgctxt "IDD_PPAGEFORMATS_IDC_STATIC1"
 msgid "Autoplay"
-msgstr "Ինքնավերարտադրում"
+msgstr "Ինքնանվագարկում"
 
 msgctxt "IDD_PPAGEFORMATS_IDC_CHECK1"
 msgid "Video"
@@ -679,7 +680,7 @@ msgstr "Ցուցադրել \"Այժմ խաղարկվում է\" տեղեկութ
 
 msgctxt "IDD_PPAGETWEAKS_IDC_CHECK6"
 msgid "Prevent minimizing the player when in fullscreen on a non default monitor"
-msgstr "Չփոքրացնել պատուհանը՝ Ամբողջ էկրանով ոչ հիմնական մոնիտորի վրա վերարտադրելիս։"
+msgstr "Չփոքրացնել պատուհանը՝ Ամբողջ էկրանով ոչ հիմնական մոնիտորի վրա նվագարկելիս։"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_CHECK_ENHANCED_TASKBAR"
 msgid "Use enhanced taskbar features"
@@ -779,7 +780,7 @@ msgstr "Հեղինակ."
 
 msgctxt "IDD_FILEPROPCLIP_IDC_STATIC"
 msgid "Copyright:"
-msgstr "Հեղ. իրվ."
+msgstr "Հեղ. իրավունք"
 
 msgctxt "IDD_FILEPROPCLIP_IDC_STATIC"
 msgid "Rating:"
@@ -811,7 +812,7 @@ msgstr "Չեղարկել"
 
 msgctxt "IDD_FAVADD_IDOK"
 msgid "OK"
-msgstr "ԼԱՎ"
+msgstr "Լավ"
 
 msgctxt "IDD_FAVADD_IDC_CHECK2"
 msgid "Relative drive"
@@ -839,7 +840,7 @@ msgstr "Ջնջել"
 
 msgctxt "IDD_FAVORGANIZE_IDOK"
 msgid "OK"
-msgstr "ԼԱՎ"
+msgstr "Լավ"
 
 msgctxt "IDD_PNSPRESET_DLG_CAPTION"
 msgid "Pan & Scan Presets"
@@ -903,7 +904,7 @@ msgstr "Ուշադրություն"
 
 msgctxt "IDD_MEDIATYPES_DLG_IDC_STATIC1"
 msgid "MPC-HC could not render some of the pins in the graph, you may not have the needed codecs or filters installed on the system."
-msgstr "MPC-HC-ն չի կարողանում վերարտադրել որոշ հոսքեր, հնարավոր է, որ տեղակայված չէ համապատասխան կոդավորիչը կամ ֆիլտրը։"
+msgstr "MPC-HC-ն չի կարողանում նվագարկել որոշ հոսքեր, հնարավոր է, որ տեղակայված չէ համապատասխան կոդավորիչը կամ ֆիլտրը։"
 
 msgctxt "IDD_MEDIATYPES_DLG_IDC_STATIC2"
 msgid "The following pin(s) failed to find a connectable filter:"
@@ -975,7 +976,7 @@ msgstr "Դիտել..."
 
 msgctxt "IDD_ADDREGFILTER_IDOK"
 msgid "OK"
-msgstr "ԼԱՎ"
+msgstr "Լավ"
 
 msgctxt "IDD_ADDREGFILTER_IDCANCEL"
 msgid "Cancel"
@@ -1499,7 +1500,7 @@ msgstr "Ցուցադրել մոտագույն vsync-ի հետ"
 
 msgctxt "IDD_PPAGEFULLSCREEN_IDC_CHECK1"
 msgid "Launch files in fullscreen"
-msgstr "Բացել ֆայլերը ամբողջ էկրանով"
+msgstr "Բացել ֆայլերը լիրաէկրան"
 
 msgctxt "IDD_PPAGEFULLSCREEN_IDC_CHECK4"
 msgid "Hide controls in fullscreen"
@@ -1523,7 +1524,7 @@ msgstr "Ամբողջ էկրանի համար մոնիտորը"
 
 msgctxt "IDD_PPAGEFULLSCREEN_IDC_CHECK2"
 msgid "Use autochange fullscreen monitor mode"
-msgstr "Օգտ. մոնիտորի ամբողջ էկրանով ինքնափոխման եղանակը"
+msgstr "Օգտ. մոնիտորի լիաէկրան ինքնափոխման եղանակը"
 
 msgctxt "IDD_PPAGEFULLSCREEN_IDC_BUTTON1"
 msgid "Add"
@@ -1771,7 +1772,7 @@ msgstr "Հրամանի տողի օգնություն"
 
 msgctxt "IDD_CMD_LINE_HELP_IDOK"
 msgid "OK"
-msgstr "ԼԱՎ"
+msgstr "Լավ"
 
 msgctxt "IDD_CRASH_REPORTER_CAPTION"
 msgid "Crash reporter"

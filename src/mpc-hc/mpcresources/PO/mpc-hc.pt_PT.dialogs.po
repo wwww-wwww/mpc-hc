@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2020-03-10 15:14:13+0000\n"
+"POT-Creation-Date: 2020-06-08 04:44:38+0000\n"
 "PO-Revision-Date: 2020-01-02 07:46+0000\n"
 "Last-Translator: Hugo Simões <hugo.simoes.1984@gmail.com>, 2020\n"
 "Language-Team: Portuguese (Portugal) (https://www.transifex.com/mpchc/teams/106126/pt_PT/)\n"
@@ -307,7 +307,7 @@ msgstr "Prioridade do processo acima do normal"
 
 msgctxt "IDD_PPAGEPLAYER_IDC_CHECK14"
 msgid "Enable cover-art support"
-msgstr "Ativar suporte cover-art"
+msgstr "Ativar suporte para Cover-Art"
 
 msgctxt "IDD_PPAGEPLAYER_IDC_STATIC"
 msgid "History"
@@ -339,7 +339,7 @@ msgstr "Relembrar o tamanho da última janela"
 
 msgctxt "IDD_PPAGEPLAYER_IDC_CHECK11"
 msgid "Remember last Pan && Scan Zoom"
-msgstr "Relembrar o último Zoom Pan && Scan"
+msgstr "Relembrar a última ampliação Pan && Scan"
 
 msgctxt "IDD_PPAGEDVD_IDC_STATIC"
 msgid "\"Open DVD/BD\" behavior"
@@ -431,11 +431,11 @@ msgstr "Depois de reproduzir"
 
 msgctxt "IDD_PPAGEPLAYBACK_IDC_STATIC"
 msgid "Zoom and Alignment"
-msgstr "Zoom e alinhamento"
+msgstr "Ampliação e alinhamento"
 
 msgctxt "IDD_PPAGEPLAYBACK_IDC_CHECK5"
 msgid "Auto-zoom:"
-msgstr "Zoom-auto.:"
+msgstr "Ampliação-auto.:"
 
 msgctxt "IDD_PPAGEPLAYBACK_IDC_STATIC2"
 msgid "Auto fit factor:"
@@ -639,7 +639,7 @@ msgstr "Ficheiro(s)"
 
 msgctxt "IDD_PPAGEFORMATS_IDC_STATIC1"
 msgid "Autoplay"
-msgstr "Rep. automática"
+msgstr "Reprodução automática"
 
 msgctxt "IDD_PPAGEFORMATS_IDC_CHECK1"
 msgid "Video"
@@ -659,7 +659,7 @@ msgstr "CD de Áudio"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_STATIC"
 msgid "Jump distances (small, medium, large in ms)"
-msgstr "Distâncias de salto (peq., média, largo em ms)"
+msgstr "Distâncias de salto (pequeno, média, largo em ms)"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_BUTTON1"
 msgid "Default"
@@ -695,7 +695,7 @@ msgstr "Mostrar eti. tempo:"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_STATIC"
 msgid "OSD font:"
-msgstr "Tipo letra OSD:"
+msgstr "Tipo de letra do OSD:"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_CHECK_LCD"
 msgid "Enable Logitech LCD support (experimental)"
@@ -707,7 +707,7 @@ msgstr "Auto-esconder o ponteiro do rato quando a rep. está em modo de janela"
 
 msgctxt "IDD_PPAGEEXTERNALFILTERS_IDC_BUTTON1"
 msgid "Add Filter..."
-msgstr "Adic. filtro..."
+msgstr "Adicionar filtro..."
 
 msgctxt "IDD_PPAGEEXTERNALFILTERS_IDC_BUTTON2"
 msgid "Remove"
@@ -735,11 +735,11 @@ msgstr "Para baixo"
 
 msgctxt "IDD_PPAGEEXTERNALFILTERS_IDC_BUTTON5"
 msgid "Add Media Type..."
-msgstr "Adic. tipo media..."
+msgstr "Adicionar tipo media..."
 
 msgctxt "IDD_PPAGEEXTERNALFILTERS_IDC_BUTTON6"
 msgid "Add Sub Type..."
-msgstr "Adic. sub-tipo..."
+msgstr "Adicionar sub-tipo..."
 
 msgctxt "IDD_PPAGEEXTERNALFILTERS_IDC_BUTTON7"
 msgid "Delete"
@@ -795,7 +795,7 @@ msgstr "Descrição:"
 
 msgctxt "IDD_FAVADD_CAPTION"
 msgid "Add Favorite"
-msgstr "Adic. favorito"
+msgstr "Adicionar favorito"
 
 msgctxt "IDD_FAVADD_IDC_STATIC"
 msgid "Choose a name for your shortcut:"
@@ -879,7 +879,7 @@ msgstr "Pos: 0.0 -> 1.0"
 
 msgctxt "IDD_PNSPRESET_DLG_IDC_STATIC"
 msgid "Zoom: 0.2 -> 3.0"
-msgstr "Zoom: 0.2 -> 3.0"
+msgstr "Ampliação: 0.2 -> 3.0"
 
 msgctxt "IDD_PPAGEACCELTBL_CAPTION"
 msgid "Shortcut Keys"
@@ -967,7 +967,7 @@ msgstr "pixeis"
 
 msgctxt "IDD_ADDREGFILTER_CAPTION"
 msgid "Select Filter"
-msgstr "Selec. filtro"
+msgstr "Selecionar filtro"
 
 msgctxt "IDD_ADDREGFILTER_IDC_BUTTON1"
 msgid "Browse..."
@@ -1099,11 +1099,11 @@ msgstr "Alternador"
 
 msgctxt "IDD_PPAGEINTERNALFILTERS_IDC_VIDEO_DEC_CONF"
 msgid "Video decoder"
-msgstr "Desc. Vídeo"
+msgstr "Descodificação de vídeo"
 
 msgctxt "IDD_PPAGEINTERNALFILTERS_IDC_AUDIO_DEC_CONF"
 msgid "Audio decoder"
-msgstr "Desc. áudio"
+msgstr "Descodificação de áudio"
 
 msgctxt "IDD_PPAGELOGO_IDC_RADIO1"
 msgid "Internal:"
@@ -1155,7 +1155,7 @@ msgstr "Reiniciar quando mudar o ecrã"
 
 msgctxt "IDD_PPAGEOUTPUT_IDC_FULLSCREEN_MONITOR_CHECK"
 msgid "D3D Fullscreen"
-msgstr "Ecrã inteiro D3D"
+msgstr "Ecrã completo D3D"
 
 msgctxt "IDD_PPAGEOUTPUT_IDC_DSVMR9ALTERNATIVEVSYNC"
 msgid "Alternative VSync"
@@ -1291,7 +1291,7 @@ msgstr "Guardar como..."
 
 msgctxt "IDD_PPAGEMISC_IDC_STATIC"
 msgid "Color controls (for VMR-9, EVR and madVR)"
-msgstr "Controlos cor (para VMR-9, EVR e madVR)"
+msgstr "Controlos de cor (para VMR-9, EVR e madVR)"
 
 msgctxt "IDD_PPAGEMISC_IDC_STATIC"
 msgid "Brightness"
@@ -1359,7 +1359,7 @@ msgstr "Cancelar"
 
 msgctxt "IDD_TUNER_SCAN_IDC_STATIC"
 msgid "Freq. Start"
-msgstr "Freq. Inicial"
+msgstr "Freq. inicial"
 
 msgctxt "IDD_TUNER_SCAN_IDC_STATIC"
 msgid "Bandwidth"
@@ -1423,7 +1423,7 @@ msgstr "Definições digital (BDA)"
 
 msgctxt "IDD_PPAGECAPTURE_IDC_STATIC4"
 msgid "Network Provider"
-msgstr "Provedor rede"
+msgstr "Provedor de rede"
 
 msgctxt "IDD_PPAGECAPTURE_IDC_STATIC5"
 msgid "Tuner"
@@ -1639,15 +1639,15 @@ msgstr "Remover"
 
 msgctxt "IDD_PPAGESHADERS_IDC_BUTTON1"
 msgid "Add to pre-resize"
-msgstr "Adic. p/ pré-redim."
+msgstr "Adicionar p/ pré-redimen."
 
 msgctxt "IDD_PPAGESHADERS_IDC_BUTTON2"
 msgid "Add to post-resize"
-msgstr "Adic. p/ pós-redim."
+msgstr "Adicionar p/ pós-redimen."
 
 msgctxt "IDD_PPAGESHADERS_IDC_STATIC"
 msgid "Shader presets"
-msgstr "Pré-def. de shaders"
+msgstr "Pré-definições de shaders"
 
 msgctxt "IDD_PPAGESHADERS_IDC_BUTTON3"
 msgid "Load"
@@ -1663,15 +1663,15 @@ msgstr "Eliminar"
 
 msgctxt "IDD_PPAGESHADERS_IDC_STATIC"
 msgid "Active pre-resize shaders"
-msgstr "Shaders pré-redim. ativos"
+msgstr "Shaders pré-redimensionamento ativos"
 
 msgctxt "IDD_PPAGESHADERS_IDC_STATIC"
 msgid "Active post-resize shaders"
-msgstr "Shaders pós-redim. ativos"
+msgstr "Shaders pós-redimensionamento ativos"
 
 msgctxt "IDD_PPAGESHADERS_IDC_STATIC5"
 msgid "MPC-VR does not support pre-resize shaders. It will run them after resize, before the post-resize shaders."
-msgstr ""
+msgstr "O MPC-VR não suporta shaders de pré-redimensionamento. Irá corrê-los após o redimensionamento, antes do pós-redimensionamento dos shaders."
 
 msgctxt "IDD_DEBUGSHADERS_DLG_CAPTION"
 msgid "Debug Shaders"

@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2020-06-02 20:23:30+0000\n"
+"POT-Creation-Date: 2020-06-15 14:17:38+0000\n"
 "PO-Revision-Date: 2020-01-02 07:46+0000\n"
 "Last-Translator: Hugo Simões <hugo.simoes.1984@gmail.com>, 2020\n"
 "Language-Team: Portuguese (Portugal) (https://www.transifex.com/mpchc/teams/106126/pt_PT/)\n"
@@ -479,7 +479,7 @@ msgstr "Reprodutor"
 
 msgctxt "IDD_PPAGEDVD"
 msgid "Playback::DVD/OGM"
-msgstr "Playback::DVD/OGM"
+msgstr "Reprodução::DVD/OGM"
 
 msgctxt "IDD_PPAGESUBTITLES"
 msgid "Subtitles"
@@ -487,7 +487,7 @@ msgstr "Legendas"
 
 msgctxt "IDD_PPAGEFORMATS"
 msgid "Player::Formats"
-msgstr "Player::Formats"
+msgstr "Reprodutor::Formatos"
 
 msgctxt "IDD_PPAGETWEAKS"
 msgid "Tweaks"
@@ -495,7 +495,7 @@ msgstr "Ajustes"
 
 msgctxt "IDD_PPAGEAUDIOSWITCHER"
 msgid "Internal Filters::Audio Switcher"
-msgstr "Alternador Filters::Audio Interno"
+msgstr "Filtros internos::Alternador de áudio"
 
 msgctxt "IDD_PPAGEEXTERNALFILTERS"
 msgid "External Filters"
@@ -503,7 +503,7 @@ msgstr "Filtros Externos"
 
 msgctxt "IDD_PPAGESHADERS"
 msgid "Playback::Shaders"
-msgstr "Playback::Shaders"
+msgstr "Reprodução::Shaders"
 
 msgctxt "IDD_FILEPROPRES"
 msgid "Resources"
@@ -519,19 +519,19 @@ msgstr "MediaInfo"
 
 msgctxt "IDD_PPAGECAPTURE"
 msgid "Playback::Capture"
-msgstr "Playback::Capture"
+msgstr "Reprodução::Captura"
 
 msgctxt "IDD_PPAGESYNC"
 msgid "Playback::Sync Renderer Settings"
-msgstr "Def. Renderização Playback::Sync"
+msgstr "Reprodução::Definições rend. sinc."
 
 msgctxt "IDD_PPAGEFULLSCREEN"
 msgid "Playback::Fullscreen"
-msgstr "Playback::Fullscreen"
+msgstr "Reprodução::Ecrã completo"
 
 msgctxt "IDD_PPAGEAUDIORENDERER"
 msgid "Internal Filters::Audio Renderer"
-msgstr "Renderizador Filters::Audio Interno"
+msgstr "Filtros internos::Renderização de áudio"
 
 msgctxt "IDS_AUDIOSWITCHER"
 msgid "Audio Switcher"
@@ -623,27 +623,27 @@ msgstr "Renderizador de vídeo MPC"
 
 msgctxt "IDD_PPAGEACCELTBL"
 msgid "Player::Keys"
-msgstr "Player::Keys"
+msgstr "Reprodutor::Teclas"
 
 msgctxt "IDD_PPAGESUBSTYLE"
 msgid "Subtitles::Default Style"
-msgstr "Subtitles::Default Style"
+msgstr "Legendas::Estilo por defeito"
 
 msgctxt "IDD_PPAGEINTERNALFILTERS"
 msgid "Internal Filters"
-msgstr "Filtros Internos"
+msgstr "Filtros internos"
 
 msgctxt "IDD_PPAGELOGO"
 msgid "Player::Logo"
-msgstr "Player::Logo"
+msgstr "Reprodutor::Logótipo"
 
 msgctxt "IDD_PPAGEOUTPUT"
 msgid "Playback::Output"
-msgstr "Playback::Output"
+msgstr "Reprodução::Saída"
 
 msgctxt "IDD_PPAGEWEBSERVER"
 msgid "Player::Web Interface"
-msgstr "Interface Player::Web"
+msgstr "Reprodutor::Interface web"
 
 msgctxt "IDD_FILEPROPDETAILS"
 msgid "Details"
@@ -943,7 +943,7 @@ msgstr "Silenciar"
 
 msgctxt "ID_VOLUME_MUTE_OFF"
 msgid "Unmute"
-msgstr "Silêncio removido"
+msgstr "Remover silêncio"
 
 msgctxt "ID_VOLUME_MUTE_DISABLED"
 msgid "No audio"
@@ -1379,7 +1379,7 @@ msgstr "Qualidade (%):"
 
 msgctxt "IDS_PPAGEADVANCED_COVER_SIZE_LIMIT"
 msgid "Maximum size (NxNpx) of a cover-art loaded in the audio only mode."
-msgstr "Tamanho máximo (NxNpx) da cover-art carregada no modo apenas de áudio."
+msgstr "Tamanho máximo (NxNpx) da Cover-Art carregada no modo apenas de áudio."
 
 msgctxt "IDS_SUBTITLE_DELAY_STEP_TOOLTIP"
 msgid "The subtitle delay will be decreased/increased by this value each time the corresponding hotkeys are used (%s/%s)."
@@ -1447,11 +1447,11 @@ msgstr "Após reprodução: Fechar"
 
 msgctxt "IDS_FRAME_INIT_FAILED"
 msgid "MPC-HC encountered a problem during initialization."
-msgstr ""
+msgstr "O MPC-HC encontrou um problema durante a inicialização."
 
 msgctxt "IDS_TIME_SHIFT_TOOLTIP"
 msgid "Enter a positive value if the audio is early, a negative value if it is late."
-msgstr ""
+msgstr "Insira um valor positivo se o áudio é atrasado, um valor negativo se é adiantado."
 
 msgctxt "IDS_WEBUI_DISABLED_PREVIEW_MSG"
 msgid "Preview is currently disabled. You can enable it in MPC-HC's options."
@@ -1575,11 +1575,11 @@ msgstr "Chave de frame mais próxima"
 
 msgctxt "IDS_HOOKS_FAILED"
 msgid "MPC-HC encountered a problem during initialization. DVD playback may not work correctly. This problem might be caused by an incompatibility with certain security software."
-msgstr ""
+msgstr "O MPC-HC encontrou um problema durante a inicialização. A reprodução de DVD pode não funcionar corretamente. Este problema pode ser causado por uma incompatibilidade com algum software de segurança."
 
 msgctxt "IDS_PPAGEFULLSCREEN_SHOWNEVER"
 msgid "Never show"
-msgstr ""
+msgstr "Nunca mostrar"
 
 msgctxt "IDS_PPAGEFULLSCREEN_SHOWMOVED"
 msgid "Show when moving the cursor, hide after:"
@@ -1767,7 +1767,7 @@ msgstr "OSD: Repor Estatísticas do renderizador"
 
 msgctxt "IDD_PPAGESUBMISC"
 msgid "Subtitles::Misc"
-msgstr "Subtitles::Misc"
+msgstr "Legendas::Mais definições"
 
 msgctxt "IDS_VIEW_BORDERLESS"
 msgid "Hide &borders"
@@ -1803,7 +1803,7 @@ msgstr "Visualização normal"
 
 msgctxt "IDS_AG_FULLSCREEN"
 msgid "Fullscreen"
-msgstr "Ecrã inteiro"
+msgstr "Ecrã completo"
 
 msgctxt "IDS_MPLAYERC_39"
 msgid "Fullscreen (w/o res.change)"
@@ -4107,13 +4107,13 @@ msgstr "Atraso entre a mostra de vídeo em ecrã completo, para prevenir falhas 
 
 msgctxt "IDS_PPAGEADVANCED_SNAPSHOTSUBTITLES"
 msgid "Render subtitles onto screenshots"
-msgstr ""
+msgstr "Renderizar legendas nas cap. de ecrã"
 
 msgctxt "IDS_PPAGEADVANCED_SNAPSHOTKEEPVIDEOEXTENSION"
 msgid "Keep video file extension as part of snapshot filenames (e.g., file.mkv.png)"
-msgstr ""
+msgstr "Manter as ext. fich. vídeo como parte dos nomes de ficheiro de captura (ex: fich.mkv.png)"
 
 msgctxt "IDS_SNAPSHOT_SUBTITLES"
 msgid "Include Subtitles"
-msgstr ""
+msgstr "Incluir legendas"
 

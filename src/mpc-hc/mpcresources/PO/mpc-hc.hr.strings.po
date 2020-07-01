@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2019-12-17 06:27:41+0000\n"
+"POT-Creation-Date: 2020-06-15 14:17:38+0000\n"
 "PO-Revision-Date: 2020-01-02 07:46+0000\n"
 "Last-Translator: MPC HC <adiposegithub@gmail.com>, 2020\n"
 "Language-Team: Croatian (https://www.transifex.com/mpchc/teams/106126/hr/)\n"
@@ -3839,7 +3839,7 @@ msgstr "Dohvaćanje podržanih jezika..."
 
 msgctxt "IDS_SUB_CREDENTIALS_ERROR"
 msgid "Failed to log in on \"%1\" with username \"%2\".\n\nPlease enter the correct username and password or reset the credentials to log in as anonymous user."
-msgstr "Neuspjela prijava na \"%1\" s korisničkim imenom \"%2\".\n\nMolimo unesite ispravno korisničko ime i šifru ili uklonite podatke da biste se prijavili kao anonimni korisnik."
+msgstr ""
 
 msgctxt "IDS_SUB_AUTODL_IGNORE_TOOLTIP"
 msgid "Automatic search and download will be disabled for all media files whose path contains any of the patterns entered here.\nFor example, type: \"private dir\\videos|work\\\"."

@@ -23,7 +23,7 @@ msgstr "&Ficheiro"
 
 msgctxt "ID_FILE_OPENQUICK"
 msgid "&Quick Open File..."
-msgstr "Abertura rápida de ficheiro..."
+msgstr "A&bertura rápida de ficheiro..."
 
 msgctxt "ID_FILE_OPENMEDIA"
 msgid "&Open File/URL..."
@@ -171,7 +171,7 @@ msgstr "Ecrã inteiro"
 
 msgctxt "POPUP"
 msgid "&Zoom"
-msgstr "&Zoom"
+msgstr "Ampliar"
 
 msgctxt "ID_VIEW_ZOOM_25"
 msgid "&25%"
@@ -235,11 +235,11 @@ msgstr "A&presentação"
 
 msgctxt "ID_VIEW_D3DFULLSCREEN"
 msgid "D3D Fullscreen &Mode"
-msgstr "Modo ecrã inteiro D3D"
+msgstr "Modo ecrã completo D3D"
 
 msgctxt "ID_VIEW_FULLSCREENGUISUPPORT"
 msgid "D3D Fullscreen &GUI Support"
-msgstr "Suporte &GUI ecrã inteiro D3D"
+msgstr "Suporte &GUI ecrã completo D3D"
 
 msgctxt "ID_VIEW_HIGHCOLORRESOLUTION"
 msgid "10-bit &RGB Output"
@@ -407,11 +407,11 @@ msgstr "Tocar a janela a part&ir de dentro"
 
 msgctxt "ID_VIEW_VF_ZOOM1"
 msgid "Zoom &1"
-msgstr "Zoom &1"
+msgstr "Ampliar &1"
 
 msgctxt "ID_VIEW_VF_ZOOM2"
 msgid "Zoom &2"
-msgstr "Zoom &2"
+msgstr "Ampliar &2"
 
 msgctxt "ID_VIEW_VF_FROMOUTSIDE"
 msgid "Touch Window From &Outside"
@@ -455,7 +455,7 @@ msgstr "&Corrigir dif. rác. asp. ecrã/amb. de trabalho"
 
 msgctxt "POPUP"
 msgid "Pa&n && Scan"
-msgstr "Panorâmico && detetar"
+msgstr "Pan && Scan"
 
 msgctxt "ID_VIEW_INCSIZE"
 msgid "&Increase Size"
@@ -743,9 +743,9 @@ msgstr "Descarregar imagens de barra de ferramen&tas"
 
 msgctxt "ID_HELP_DONATE"
 msgid "&Donate"
-msgstr "&Doar"
+msgstr "Fazer uma &doação"
 
 msgctxt "ID_HELP_ABOUT"
 msgid "&About..."
-msgstr "&Acerca de..."
+msgstr "&Acerca..."
 

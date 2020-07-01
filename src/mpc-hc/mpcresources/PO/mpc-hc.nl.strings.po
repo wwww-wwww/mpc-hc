@@ -9,7 +9,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2020-03-20 18:57:58+0000\n"
+"POT-Creation-Date: 2020-06-15 14:17:38+0000\n"
 "PO-Revision-Date: 2020-01-02 07:46+0000\n"
 "Last-Translator: Renz Straatman <renz75@outlook.com>, 2020\n"
 "Language-Team: Dutch (https://www.transifex.com/mpchc/teams/106126/nl/)\n"
@@ -109,7 +109,7 @@ msgstr "Jitter"
 
 msgctxt "IDS_STATSBAR_BITRATE"
 msgid "Bitrate"
-msgstr "Beeldjes per seconde"
+msgstr "Bitrate"
 
 msgctxt "IDS_STATSBAR_BITRATE_AVG_CUR"
 msgid "(avg/cur)"
@@ -133,11 +133,11 @@ msgstr "Als het opbouw doel ongedefinieerd is, worden SSA/ASS ondertitels relati
 
 msgctxt "IDS_PLAYLOOPMODE_PLAYLIST"
 msgid "Repeat Mode: Playlist"
-msgstr "Herhaal mode: Afspeellijst"
+msgstr "Herhaal mode: afspeellijst"
 
 msgctxt "IDS_PLAYLOOPMODE_FILE"
 msgid "Repeat Mode: File"
-msgstr "Herhaal mode: Bestand"
+msgstr "Herhaal mode: bestand"
 
 msgctxt "IDS_PLAYLOOPMODE_AB"
 msgid "A-B Repeat: Reset Positions"
@@ -153,15 +153,15 @@ msgstr "A-B herhalen: markeer positie B"
 
 msgctxt "IDS_PLAYLOOP_FOREVER_ON"
 msgid "Repeat Forever: On"
-msgstr "Herhaal eeuwig: Aan"
+msgstr "Oneindig herhalen: Aan"
 
 msgctxt "IDS_PLAYLOOP_FOREVER_OFF"
 msgid "Repeat Forever: Off"
-msgstr "Herhaal eeuwig: Uit"
+msgstr "Oneindig herhalen: Uit"
 
 msgctxt "IDS_PLAYLOOP_FOREVER"
 msgid "Repeat Forever"
-msgstr "Herhaal eeuwig"
+msgstr "Oneindig herhalen"
 
 msgctxt "IDS_PPAGE_CAPTURE_FG0"
 msgid "Never"
@@ -181,7 +181,7 @@ msgstr "Niet ondersteund door sommige apparaten. Er zijn altijd twee video decod
 
 msgctxt "IDS_PPAGE_CAPTURE_FGDESC1"
 msgid "Fast except when switching between different video streams. Only one video decoder present in the filter graph."
-msgstr "Snel, behalve wanneer er gewisseld wordt tussen verschillende video stromen. Er is maar een video decoder zichtbaar in de filter grafiek."
+msgstr "Snel, behalve wanneer er gewisseld wordt tussen verschillende videostreams. Er is maar één video decoder zichtbaar in de filter grafiek."
 
 msgctxt "IDS_PPAGE_CAPTURE_SFG0"
 msgid "Never if possible (fastest, but not supported by most filters)"
@@ -217,7 +217,7 @@ msgstr "Film / Drama"
 
 msgctxt "IDS_CONTENT_NEWS_CURRENTAFFAIRS"
 msgid "News/Current affairs"
-msgstr "Nieuws / Recente gebeurtenissen"
+msgstr "Nieuws / Actualiteiten"
 
 msgctxt "IDS_SPEED_UNIT_G"
 msgid "GB/s"
@@ -233,11 +233,11 @@ msgstr "DVD toegevoegd aan favorieten"
 
 msgctxt "IDS_CAPTURE_SETTINGS"
 msgid "Capture Settings"
-msgstr "Opname instellingen"
+msgstr "Opnameinstellingen"
 
 msgctxt "IDS_NAVIGATION_BAR"
 msgid "Navigation Bar"
-msgstr "Navigatie balk"
+msgstr "Navigatiebalk"
 
 msgctxt "IDS_SUBRESYNC_CAPTION"
 msgid "Subresync"
@@ -537,7 +537,7 @@ msgstr "Interne filters::Audio opbouwer"
 
 msgctxt "IDS_AUDIOSWITCHER"
 msgid "Audio Switcher"
-msgstr "Audio-omschakelaar"
+msgstr "Audio switcher"
 
 msgctxt "IDS_ICONS_REASSOC_DLG_TITLE"
 msgid "New version of the icon library"
@@ -581,11 +581,11 @@ msgstr "Haali video opbouwer"
 
 msgctxt "IDS_PPAGE_OUTPUT_NULL_COMP"
 msgid "Null (anything)"
-msgstr "Ontbrekend (alles)"
+msgstr "Null (alles)"
 
 msgctxt "IDS_PPAGE_OUTPUT_NULL_UNCOMP"
 msgid "Null (uncompressed)"
-msgstr "Ontbrekend (ongecomprimeerd)"
+msgstr "Null (ongecomprimeerd)"
 
 msgctxt "IDS_PPAGE_OUTPUT_MADVR"
 msgid "madVR"
@@ -593,11 +593,11 @@ msgstr "madVR"
 
 msgctxt "IDS_LANG_PREF_EXAMPLE"
 msgid "Enter your preferred languages here.\nFor example, type: \"eng jap swe\""
-msgstr "Voer uw voorkeurstalen hier in.\nBijvoorbeeld: \"eng jap swe\""
+msgstr "Voer uw voorkeurstalen hier in.\nBijvoorbeeld: \"eng dut\""
 
 msgctxt "IDS_OVERRIDE_EXT_SPLITTER_CHOICE"
 msgid "External splitters can have their own language preference options thus MPC-HC default behavior is not to change their initial choice.\nEnable this option if you want MPC-HC to control external splitters."
-msgstr "Externe splitters kunnen eigen voorkeurstaalinstellingen hebben. MPC-HC verandert deze daarom standaard niet.\nU schakelt deze optie in als u MPC-HC de externe splitters wilt laten controleren."
+msgstr "Externe splitters kunnen eigen voorkeurstaalinstellingen hebben. MPC-HC verandert deze daarom standaard niet.\nU schakelt deze optie in als u MPC-HC de externe splitters wilt laten beheren."
 
 msgctxt "IDS_NAVIGATE_BD_PLAYLISTS"
 msgid "&Blu-Ray playlists"
@@ -789,11 +789,11 @@ msgstr "De geselecteerde opbouwer is niet geïnstalleerd "
 
 msgctxt "IDS_PPAGE_OUTPUT_AUD_NULL_COMP"
 msgid "Null (anything)"
-msgstr "Ontbrekend (alles)"
+msgstr "Null (alles)"
 
 msgctxt "IDS_PPAGE_OUTPUT_AUD_NULL_UNCOMP"
 msgid "Null (uncompressed)"
-msgstr "Ontbrekend (ongecomprimeerd)"
+msgstr "Null (ongecomprimeerd)"
 
 msgctxt "IDS_PPAGE_OUTPUT_AUD_INTERNAL_REND"
 msgid "Internal Audio Renderer"
@@ -813,11 +813,11 @@ msgstr "Om een ingebedde bron in uw browser te bekijken dient de web interface g
 
 msgctxt "IDS_SUBTITLES_DOWNLOAD"
 msgid "Download Subtitles..."
-msgstr "Ophalen ondertitels..."
+msgstr "Ondertiteling downloaden..."
 
 msgctxt "IDS_SUBTITLES_UPLOAD"
 msgid "Upload Subtitles..."
-msgstr "Opsturen ondertitels..."
+msgstr "Ondertiteling uploaden..."
 
 msgctxt "IDS_SUBFILE_DELAY"
 msgid "Delay (ms):"
@@ -857,7 +857,7 @@ msgstr "Verminderd verscheuring door het omzeilen van de standaard VSync gebruik
 
 msgctxt "IDS_NAVIGATE_TUNERSCAN"
 msgid "Tuner scan"
-msgstr "Tuner afzoeken"
+msgstr "Tuner scannen"
 
 msgctxt "IDS_SUBTITLES_ERROR"
 msgid "Subtitles are not loaded or unsupported renderer."
@@ -885,7 +885,7 @@ msgstr "Gebruik LAV filters. Standaard uitgeschakeld aangezien Microsoft filters
 
 msgctxt "IDS_AG_TOGGLE_NAVIGATION"
 msgid "Toggle Navigation Bar"
-msgstr "Navigatie balk aan / uit"
+msgstr "Navigatiebalk aan / uit"
 
 msgctxt "IDS_AG_VSYNCACCURATE"
 msgid "Accurate VSync"
@@ -913,7 +913,7 @@ msgstr "Het uitschakelen van deze optie wordt voorkomen dat de ondertitels knipp
 
 msgctxt "ID_PLAY_PLAY"
 msgid "Play\nPlay"
-msgstr "Weergave\nWeergave"
+msgstr "Afspelen\nAfspelen"
 
 msgctxt "ID_PLAY_PAUSE"
 msgid "Pause\nPause"
@@ -969,7 +969,7 @@ msgstr "&Huidig"
 
 msgctxt "IDS_SUBRESYNC_EDIT"
 msgid "&Edit"
-msgstr "&Bewerk"
+msgstr "&Bewerken"
 
 msgctxt "IDS_SUBRESYNC_YES"
 msgid "&Yes"
@@ -1109,7 +1109,7 @@ msgstr "Buffer... (%d%%)"
 
 msgctxt "IDS_CONTROLS_CAPTURING"
 msgid "Capturing..."
-msgstr "Opname..."
+msgstr "Opnemen..."
 
 msgctxt "IDS_CONTROLS_OPENING"
 msgid "Opening..."
@@ -1193,11 +1193,11 @@ msgstr "App opdracht"
 
 msgctxt "IDS_AG_MEDIAFILES"
 msgid "Media files (all types)"
-msgstr "Media bestanden (alle typen)"
+msgstr "Mediabestanden (alle typen)"
 
 msgctxt "IDS_AG_ALLFILES"
 msgid "All files (*.*)|*.*|"
-msgstr "All bestanden (*.*)|*.*|"
+msgstr "Alle bestanden (*.*)|*.*|"
 
 msgctxt "IDS_AG_AUDIOFILES"
 msgid "Audio files (all types)"
@@ -1297,7 +1297,7 @@ msgstr "Software decodering"
 
 msgctxt "IDS_STATSBAR_PLAYBACK_RATE"
 msgid "Playback rate"
-msgstr "Afspeel snelheid"
+msgstr "Afspeelsnelheid"
 
 msgctxt "IDS_FILTERS_COPY_TO_CLIPBOARD"
 msgid "&Copy filters list to clipboard"
@@ -1305,7 +1305,7 @@ msgstr "&Kopieer filters naar klembord"
 
 msgctxt "IDS_CREDENTIALS_SERVER"
 msgid "Enter server credentials"
-msgstr "Voer server inloggegevens in"
+msgstr "Voer inloggegevens voor server in"
 
 msgctxt "IDS_CREDENTIALS_CONNECT"
 msgid "Enter your credentials to connect"
@@ -1373,7 +1373,7 @@ msgstr "Schakel de monitor uit"
 
 msgctxt "IDS_IMAGE_JPEG_QUALITY"
 msgid "JPEG Image"
-msgstr "JPEG afbeelding"
+msgstr "JPEG-afbeelding"
 
 msgctxt "IDS_IMAGE_QUALITY"
 msgid "Quality (%):"
@@ -1489,11 +1489,11 @@ msgstr "Afbeelding succesvol opgeslagen"
 
 msgctxt "IDS_AG_LOAD_SUBTITLES"
 msgid "Load Subtitles..."
-msgstr "Laden ondertitels..."
+msgstr "Ondertiteling openen..."
 
 msgctxt "IDS_AG_SAVE_SUBTITLES"
 msgid "Save Subtitles..."
-msgstr "Opslaan ondertitels..."
+msgstr "Ondertiteling opslaan..."
 
 msgctxt "IDS_AG_PROPERTIES"
 msgid "Properties"
@@ -1505,7 +1505,7 @@ msgstr "Afsluiten"
 
 msgctxt "IDS_AG_PLAYPAUSE"
 msgid "Play/Pause"
-msgstr "Afspelen / Pauze"
+msgstr "Afspelen / Pauzeren"
 
 msgctxt "IDS_AG_PLAY"
 msgid "Play"
@@ -1569,11 +1569,11 @@ msgstr "Kopie opslaan"
 
 msgctxt "IDS_FASTSEEK_LATEST"
 msgid "Latest keyframe"
-msgstr "Laatste sleutelbeeld"
+msgstr "Laatste keyframe"
 
 msgctxt "IDS_FASTSEEK_NEAREST"
 msgid "Nearest keyframe"
-msgstr "Dichtstbijzijnde sleutelbeeld"
+msgstr "Dichtstbijzijnde keyframe"
 
 msgctxt "IDS_HOOKS_FAILED"
 msgid "MPC-HC encountered a problem during initialization. DVD playback may not work correctly. This problem might be caused by an incompatibility with certain security software."
@@ -1777,7 +1777,7 @@ msgstr "Verberg randen"
 
 msgctxt "IDS_VIEW_FRAMEONLY"
 msgid "Fra&me Only"
-msgstr "Beeld alléé&n"
+msgstr "Alleen frame"
 
 msgctxt "IDS_VIEW_CAPTIONMENU"
 msgid "Sho&w Caption&&Menu"
@@ -1857,7 +1857,7 @@ msgstr "PnS Dec Hoogte"
 
 msgctxt "IDS_SUBDL_DLG_DOWNLOADING"
 msgid "Downloading [%s] \"%s\""
-msgstr "Ophalen [%s] \"%s\""
+msgstr "Downloaden [%s] \"%s\""
 
 msgctxt "IDS_SUBDL_DLG_PARSING"
 msgid "Parsing list..."
@@ -1865,7 +1865,7 @@ msgstr "Lijst verwerken..."
 
 msgctxt "IDS_SUBDL_DLG_NOT_FOUND"
 msgid "No subtitles found."
-msgstr "Geen ondertitels gevonden."
+msgstr "Geen ondertiteling gevonden."
 
 msgctxt "IDS_SUBDL_DLG_SUBS_AVAIL"
 msgid "%d subtitle(s) available."
@@ -1873,7 +1873,7 @@ msgstr "%d ondertitel(s) beschikbaar."
 
 msgctxt "IDS_UPDATE_CONFIG_AUTO_CHECK"
 msgid "Do you want to check periodically for MPC-HC updates?\n\nThis feature can be disabled later from the Miscellaneous options page."
-msgstr "Wilt u automatisch controleren op opwaarderingen voor MPC-HC?\n\nDit kan later worden uitgeschakeld in de opties bij pagina \"Overige\" "
+msgstr "Wilt u automatisch controleren op updates voor MPC-HC?\n\nDit kan later worden uitgeschakeld in de opties bij pagina \"Overige\" "
 
 msgctxt "IDS_ZOOM_25"
 msgid "25%"
@@ -2077,11 +2077,11 @@ msgstr "Vorige camerahoek (DVD)"
 
 msgctxt "IDS_MPLAYERC_93"
 msgid "Next Audio Track (DVD)"
-msgstr "Volgende audio spoor (DVD)"
+msgstr "Volgend geluidsspoor (DVD)"
 
 msgctxt "IDS_MPLAYERC_94"
 msgid "Prev Audio Track (DVD)"
-msgstr "Vorig audio spoor (DVD)"
+msgstr "Vorig geluidsspoor (DVD)"
 
 msgctxt "IDS_MPLAYERC_95"
 msgid "Next Subtitle Track (DVD)"
@@ -2161,11 +2161,11 @@ msgstr "Ondertiteling opgeslagen"
 
 msgctxt "IDS_MAINFRM_4"
 msgid "Cannot save subtitles"
-msgstr "Kan Ondertiteling niet opslaan"
+msgstr "Kan ondertiteling niet opslaan"
 
 msgctxt "IDS_AG_FRAMERATE"
 msgid "Frame rate"
-msgstr "Beeld snelheid"
+msgstr "Framerate"
 
 msgctxt "IDS_MAINFRM_6"
 msgid "drawn: %d, dropped: %d"
@@ -2201,11 +2201,11 @@ msgstr "Afspelen met MPC-HC"
 
 msgctxt "IDS_CANNOT_CHANGE_FORMAT"
 msgid "MPC-HC does not have sufficient privileges to change file associations. Please click on the \"Run as administrator\" button."
-msgstr "MPC-HC heeft niet genoeg rechten om bestand associaties te veranderen. Klik op \"Uitvoeren als Administrateur\"."
+msgstr "MPC-HC heeft niet genoeg rechten om bestandsassociaties te veranderen. Klik op \"Uitvoeren als Administrator\"."
 
 msgctxt "IDS_APP_DESCRIPTION"
 msgid "MPC-HC is an extremely light-weight, open source media player for Windows. It supports all common video and audio file formats available for playback. We are 100% spyware free, there are no advertisements or toolbars."
-msgstr "MPC-HC is een extreem lichtgewicht, open source media speler voor Windows. Het ondersteunt alle bekende, speelbare video en audio bestandsformaten. Wij zijn 100% spyware vrij, er zijn geen advertenties of werkbalken."
+msgstr "MPC-HC is een extreem lichtgewicht, open source media speler voor Windows. Het ondersteunt alle bekende bestandsformaten voor video en audio. Wij zijn 100% vrij van spyware en er wordt geen adware gebundeld."
 
 msgctxt "IDS_MAINFRM_12"
 msgid "channel"
@@ -2253,7 +2253,7 @@ msgstr "DVD: Incompatibele disk en decoder regio's"
 
 msgctxt "IDS_D3DFS_WARNING"
 msgid "This option is designed to avoid tearing. However, it will also prevent MPC-HC from displaying the context menu and any dialog box during playback.\n\nDo you really want to activate this option?"
-msgstr "Deze optie is ontwikkeld om \"verscheuring\" te voorkomen. Het zal echter ook voorkomen dat MPC-HC de menu inhoud en dialoogvensters kan weergeven tijdens het afspelen.\n\nWil je echt deze optie te activeren?"
+msgstr "Deze optie is ontwikkeld om \"verscheuring\" te voorkomen. Het zal echter ook verhinderen dat MPC-HC de menu's en dialoogvensters weergeeft tijdens het afspelen.\n\nWil je echt deze optie te activeren?"
 
 msgctxt "IDS_MAINFRM_139"
 msgid "Sub delay: %ld ms"
@@ -2461,7 +2461,7 @@ msgstr "Titel&Menu aan / uit"
 
 msgctxt "IDS_AG_TOGGLE_SEEKER"
 msgid "Toggle Seek Bar"
-msgstr "Zoeken aan / uit"
+msgstr "Tijdlijn aan / uit"
 
 msgctxt "IDS_AG_TOGGLE_CONTROLS"
 msgid "Toggle Controls"
@@ -2797,11 +2797,11 @@ msgstr "Top achter rechts"
 
 msgctxt "IDS_TIME_TOOLTIP_ABOVE"
 msgid "Above seek bar"
-msgstr "Boven zoekbalk"
+msgstr "Boven tijdlijn"
 
 msgctxt "IDS_TIME_TOOLTIP_BELOW"
 msgid "Below seek bar"
-msgstr "Onder zoekbalk"
+msgstr "Onder tijdlijn"
 
 msgctxt "IDS_VIDEO_STREAM"
 msgid "Video: %s"
@@ -2977,7 +2977,7 @@ msgstr "AIFF"
 
 msgctxt "IDS_MFMT_ALAC"
 msgid "Apple Lossless"
-msgstr "Apple verliesvrij"
+msgstr "Apple Lossless"
 
 msgctxt "IDS_MFMT_WAV"
 msgid "WAV"
@@ -3073,7 +3073,7 @@ msgstr "Blu-ray afspeellijst"
 
 msgctxt "IDS_MFMT_RAR"
 msgid "RAR Archive"
-msgstr "RAR Archief"
+msgstr "RAR-archief"
 
 msgctxt "IDS_DVB_CHANNEL_FPS"
 msgid "FPS"
@@ -3181,31 +3181,31 @@ msgstr "Opbouw intentie: Absoluut kleurmetrisch"
 
 msgctxt "IDS_OSD_RS_OUTPUT_RANGE"
 msgid "Output Range: %s"
-msgstr "Uitvoer Bereik: %s"
+msgstr "Uitvoerbereik: %s"
 
 msgctxt "IDS_OSD_RS_FLUSH_BEF_VSYNC_ON"
 msgid "Flush GPU before VSync: On"
-msgstr "Leeg GPU voor VSync: Aan "
+msgstr "Flush GPU voor VSync: Aan "
 
 msgctxt "IDS_OSD_RS_FLUSH_BEF_VSYNC_OFF"
 msgid "Flush GPU before VSync: Off"
-msgstr "Leeg GPU voor VSync: Uit"
+msgstr "Flush GPU voor VSync: Uit"
 
 msgctxt "IDS_OSD_RS_FLUSH_AFT_PRES_ON"
 msgid "Flush GPU after Present: On"
-msgstr "Leeg GPU na VSync: Aan"
+msgstr "Flush GPU na VSync: Aan"
 
 msgctxt "IDS_OSD_RS_FLUSH_AFT_PRES_OFF"
 msgid "Flush GPU after Present: Off"
-msgstr "Leeg GPU na VSync: Uit "
+msgstr "Flush GPU na VSync: Uit "
 
 msgctxt "IDS_OSD_RS_WAIT_ON"
 msgid "Wait for GPU Flush: On"
-msgstr "Wacht voor GPU leeg: Aan"
+msgstr "Wacht op GPU flush: Aan"
 
 msgctxt "IDS_OSD_RS_WAIT_OFF"
 msgid "Wait for GPU Flush: Off"
-msgstr "Wacht voor GPU leeg: Uit"
+msgstr "Wacht op GPU flush: Uit"
 
 msgctxt "IDS_OSD_RS_D3D_FULLSCREEN_ON"
 msgid "D3D Fullscreen: On"
@@ -3257,11 +3257,11 @@ msgstr "10-bit RGB uitvoer: Uit"
 
 msgctxt "IDS_OSD_RS_10BIT_RBG_IN_ON"
 msgid "Force 10-bit RGB Input: On"
-msgstr "Verplicht 10-bit RGB invoer: Aan"
+msgstr "Forceer 10-bit RGB invoer: Aan"
 
 msgctxt "IDS_OSD_RS_10BIT_RBG_IN_OFF"
 msgid "Force 10-bit RGB Input: Off"
-msgstr "Verplicht 10-bit RGB invoer: Uit"
+msgstr "Forceer 10-bit RGB invoer: Uit"
 
 msgctxt "IDS_OSD_RS_FULL_FP_PROCESS_ON"
 msgid "Full Floating Point Processing: On"
@@ -3321,11 +3321,11 @@ msgstr "Geïnstalleerde versie: v%s.\n\nDe laatste stabiele versie is v%s."
 
 msgctxt "IDS_NEW_UPDATE_AVAILABLE"
 msgid "MPC-HC v%s is now available. You are using v%s.\n\nDo you want to visit MPC-HC's website to download it?"
-msgstr "MPC-HC v%s is beschikbaar. U gebruikt v%s.\n\nWilt u de nieuwste MPC-HC versie ophalen van de website?"
+msgstr "MPC-HC versie %s is beschikbaar. U gebruikt momenteel versie %s.\n\nWilt u de nieuwste MPC-HC versie ophalen van de website?"
 
 msgctxt "IDS_UPDATE_ERROR"
 msgid "Update server not found.\n\nPlease check your internet connection or try again later."
-msgstr "Opwaardeer server niet gevonden.\n\nControlleer uw internet verbinding en probeer opnieuw."
+msgstr "Updateserver niet gevonden.\n\nControleer uw internetverbinding en probeer opnieuw."
 
 msgctxt "IDS_UPDATE_CLOSE"
 msgid "&Close"
@@ -3365,7 +3365,7 @@ msgstr "Normalisatie: Uit"
 
 msgctxt "IDS_REGAIN_VOLUME"
 msgid "Toggle regain volume"
-msgstr "Wisselen herwinnen volume"
+msgstr "Herwinnen volume inschakelen"
 
 msgctxt "IDS_OSD_REGAIN_VOLUME_ON"
 msgid "Regain volume: On"
@@ -3441,19 +3441,19 @@ msgstr "Kan géén beeld-stap doen, probeer een andere video opbouwer. "
 
 msgctxt "IDS_SCREENSHOT_ERROR_REAL"
 msgid "The \"Save Image\" and \"Save Thumbnails\" functions do not work with the default video renderer for RealMedia.\nSelect one of the DirectX renderers for RealMedia in MPC-HC's output options and reopen the file."
-msgstr "De \"Afbeelding opslaan\" en \"Miniatuur opslaan\" werken niet met de standaard video opbouwer voor Real Media.\nSelecteer één van de DirectX opbouwers voor Real Media in MPC-HC uitvoer opties en heropen het bestand."
+msgstr "De \"Snapshot maken\" en \"Mozaiekweergave opslaan\" werken niet met de standaard video opbouwer voor Real Media.\nSelecteer één van de DirectX opbouwers voor Real Media in MPC-HC uitvoer opties en heropen het bestand."
 
 msgctxt "IDS_SCREENSHOT_ERROR_QT"
 msgid "The \"Save Image\" and \"Save Thumbnails\" functions do not work with the default video renderer for QuickTime.\nSelect one of the DirectX renderers for QuickTime in MPC-HC's output options and reopen the file."
-msgstr "De \"Afbeelding opslaan\" en \"Miniatuur opslaan\" werken niet met de standaard video opbouwer voor QuickTime.\nSelecteer één van de DirectX opbouwers voor QuickTime in MPC-HC uitvoer opties en heropen het bestand."
+msgstr "De \"Snapshot maken\" en \"Mozaiekweergave opslaan\" werken niet met de standaard video opbouwer voor QuickTime.\nSelecteer één van de DirectX opbouwers voor QuickTime in MPC-HC uitvoer opties en heropen het bestand."
 
 msgctxt "IDS_SCREENSHOT_ERROR_SHOCKWAVE"
 msgid "The \"Save Image\" and \"Save Thumbnails\" functions do not work for Shockwave files."
-msgstr "De \"Opslaan plaatje\" en \"Opslaan miniatuur\" functies werken niet bij \"Schockwave\" bestanden."
+msgstr "De \"Snapshot maken\" en \"Mozaiekweergave opslaan\" functies werken niet bij \"Schockwave\" bestanden."
 
 msgctxt "IDS_SCREENSHOT_ERROR_OVERLAY"
 msgid "The \"Save Image\" and \"Save Thumbnails\" functions do not work with the Overlay Mixer video renderer.\nChange the video renderer in MPC's output options and reopen the file."
-msgstr "De \"Opslaan plaatje\" en \"Opslaan miniatuur\" functies werken niet met de Overlay Mixer video opbouwer.\nVerander de video opbouwer in MPC's uitvoer opties en heropen het bestand."
+msgstr "De \"Snapshot maken\" en \"Mozaiekweergave opslaan\" functies werken niet met de Overlay Mixer video opbouwer.\nVerander de video opbouwer in MPC's uitvoer opties en heropen het bestand."
 
 msgctxt "IDS_MB_SHOW_EDL_EDITOR"
 msgid "Do you want to activate the EDL editor?"
@@ -3589,7 +3589,7 @@ msgstr "Helderheid verhogen"
 
 msgctxt "IDC_FASTSEEK_CHECK"
 msgid "If \"latest keyframe\" is selected, seek to the first keyframe before the actual seek point.\nIf \"nearest keyframe\" is selected, seek to the first keyframe before or after the seek point depending on which is the closest."
-msgstr "Als \"laatste sleutelbeeld\" is geselecteerd, tracht om het eerste sleutelbeeld te zoeken voor de eigenlijke zoekpunt.\nAls \"dichtbijzijnde sleutelbeeld\" is geselecteerd, Als \"laatste sleutelbeeld\" is geselecteerd, tracht de eerste hoofdbeeld vóór of na de zoekpunt afhankelijk van welke het dichtstbij is."
+msgstr "Als \"laatste keyframe\" is geselecteerd, tracht om het eerste sleutelbeeld te zoeken voor de eigenlijke zoekpunt.\nAls \"dichtbijzijnde keyframe\" is geselecteerd, tracht de eerste keyframe vóór of na de zoekpunt afhankelijk van welke het dichtstbij is."
 
 msgctxt "IDC_ASSOCIATE_ALL_FORMATS"
 msgid "Associate with all formats"
@@ -3629,7 +3629,7 @@ msgstr "Slechthorend"
 
 msgctxt "IDS_SUBDL_DLG_DOWNLOADS_COL"
 msgid "Downloads"
-msgstr "Op te halen"
+msgstr "Downloads"
 
 msgctxt "IDS_SUBDL_DLG_SCORE_COL"
 msgid "Score"
@@ -3637,27 +3637,27 @@ msgstr "Score"
 
 msgctxt "IDS_SUBDL_DLG_FAILED"
 msgid "Online subtitles search failed."
-msgstr "Zoeken naar ondertitels online mislukt."
+msgstr "Zoeken naar online ondertitels mislukt."
 
 msgctxt "IDS_SUBDL_DLG_ABORTED"
 msgid "Online subtitles search aborted."
-msgstr "Zoeken naar ondertitels online gestopt."
+msgstr "Zoeken naar online ondertitels gestopt."
 
 msgctxt "IDS_SUBDL_DLG_FOUND"
 msgid "Online subtitles search completed, %d subtitles found."
-msgstr "Zoeken naar ondertitels online voltooid, %d ondertitels gevonden."
+msgstr "Zoeken naar online ondertitels voltooid, %d ondertitels gevonden."
 
 msgctxt "IDS_SUBDL_DLG_NOTFOUND"
 msgid "Online subtitles search completed, no subtitles found."
-msgstr "Zoeken naar ondertitels online voltooid, geen ondertitels gevonden."
+msgstr "Zoeken naar online ondertitels voltooid, geen ondertitels gevonden."
 
 msgctxt "IDS_SUBDL_DLG_TITLE"
 msgid "Download subtitles"
-msgstr "Ophalen ondertiteling"
+msgstr "Ondertiteling downloaden"
 
 msgctxt "IDS_SUBDL_DLG_SEARCHING"
 msgid "Searching for subtitles online, please wait..."
-msgstr "Op zoek naar ondertitels online, even geduld aub..."
+msgstr "Zoeken naar ondertitels, even geduld aub..."
 
 msgctxt "IDS_SUBDL_DLG_ABORTING"
 msgid "Online subtitles search aborting..."
@@ -3733,7 +3733,7 @@ msgstr "Gebruik de veroude werkbalk in plaats van de niewe vectorized werkbalk"
 
 msgctxt "IDS_SUBTITLE_RENDERER_ASS_FILTER"
 msgid "AssFilter"
-msgstr "Achterwerkfilter"
+msgstr "Ass-filter"
 
 msgctxt "IDS_SUBMENU_COPYURL"
 msgid "Copy URL"
@@ -3745,19 +3745,19 @@ msgstr "Niet geïmplementeerd."
 
 msgctxt "IDS_SUBUL_DLG_STATUS_UPLOADING"
 msgid "Uploading..."
-msgstr "Opsturen..."
+msgstr "Uploaden..."
 
 msgctxt "IDS_SUBUL_DLG_STATUS_UPLOADED"
 msgid "Subtitles uploaded successfully."
-msgstr "Ondertitels succesvol opgestuurd."
+msgstr "Ondertitels succesvol geupload."
 
 msgctxt "IDS_SUBUL_DLG_STATUS_FAILED"
 msgid "Subtitles upload failed."
-msgstr "Ondertitels opsturen mislukt."
+msgstr "Ondertitels uploaden mislukt."
 
 msgctxt "IDS_SUBUL_DLG_STATUS_ABORTED"
 msgid "Subtitles upload aborted."
-msgstr "Ondertitels opsturen gestopt."
+msgstr "Ondertitels uploaden afgebroken."
 
 msgctxt "IDS_SUBUL_DLG_STATUS_ALREADYEXISTS"
 msgid "Subtitles already exist."
@@ -3765,23 +3765,23 @@ msgstr "Ondertitel bestaat al."
 
 msgctxt "IDS_SUBUL_DLG_UPLOADING"
 msgid "Uploading subtitles, please wait..."
-msgstr "Ondertitels aan het versturen, even geduld aub..."
+msgstr "Ondertitels aan het uploaden, even geduld..."
 
 msgctxt "IDS_SUBUL_DLG_UPLOADED"
 msgid "Upload finished."
-msgstr "Opsturen voltooid."
+msgstr "Uploaden voltooid."
 
 msgctxt "IDS_SUBUL_DLG_ABORTED"
 msgid "Upload aborted."
-msgstr "Opsturen gestopt."
+msgstr "Uploaden gestopt."
 
 msgctxt "IDS_SUBUL_DLG_FAILED"
 msgid "Upload failed."
-msgstr "Opsturen mislukt."
+msgstr "Uploaden mislukt."
 
 msgctxt "IDS_SUBMENU_DOWNLOAD"
 msgid "Download && Open"
-msgstr "Ophalen && Openen"
+msgstr "Download en openen"
 
 msgctxt "IDS_SUBMENU_SETUP"
 msgid "Setup"
@@ -3813,15 +3813,15 @@ msgstr "FOUT: Internetverbinding kon niet tot stand worden gebracht."
 
 msgctxt "IDS_SUB_CREDENTIALS_TITLE"
 msgid "Enter website credentials"
-msgstr "Geef website inlog gegevens in"
+msgstr "Voer inloggegevens van website in"
 
 msgctxt "IDS_SUB_CREDENTIALS_MSG"
 msgid "Enter your credentials to connect to: "
-msgstr "Geef je inlog gegevens om te verbinden met:"
+msgstr "Voer inloggegevens in om te verbinden met:"
 
 msgctxt "IDS_ASPECT_RATIO_SAR"
 msgid "Aspect Ratio: Assume square pixels (SAR)"
-msgstr "Verwachtte ratio: Aangenomen vierkante pixels (SAR)"
+msgstr "Beeldverhouding: aangenomen vierkante pixels (SAR)"
 
 msgctxt "IDS_SUBDL_DLG_DOWNLOADED"
 msgid "Downloaded [%s] \"%s\""
@@ -3829,11 +3829,11 @@ msgstr "Opgehaald [%s] \"%s\""
 
 msgctxt "IDS_SUBUL_DLG_TITLE"
 msgid "Upload subtitles"
-msgstr "Ondertitel opsturen"
+msgstr "Ondertitel uploaden"
 
 msgctxt "IDS_SUBUL_DLG_CONFIRM"
 msgid "Are you sure you want to upload the subtitle file \"%s\"?"
-msgstr "Weet je zeker dat je ondertitel bestand \"%s\" wilt opsturen?"
+msgstr "Weet je zeker dat je ondertitel bestand \"%s\" wilt uploaden?"
 
 msgctxt "IDS_SUBPP_DLG_FETCHING_LANGUAGES"
 msgid "Fetching supported languages..."
@@ -3849,7 +3849,7 @@ msgstr "Automatisch zoeken en ophalen zal worden uitgeschakeld voor alle media b
 
 msgctxt "IDS_CMD_PATHNAME"
 msgid "\"pathname\"\tThe main file or directory to be loaded\n\t\t(wildcards allowed, \"-\" denotes standard input)"
-msgstr "\"pathname\""
+msgstr "\"pathname\"\nHet bestand of map dat geladen moet worden.\n\n(wildcards zijn toegestaan, \"-\" staat voor de standaard invoer)"
 
 msgctxt "IDS_CMD_DUB"
 msgid "/dub \"dubname\"\tLoad an additional audio file"
@@ -3933,11 +3933,11 @@ msgstr "/playnext\t\tVolgend bestaand open na afspelen"
 
 msgctxt "IDS_CMD_VIEWPRESET"
 msgid "/viewpreset N\tStart with specific preset,\n\t\twhere N is either \"1\" Minimal, \"2\" Compact or \"3\" Normal"
-msgstr "/Voorvertoningbekijken N\tStart met specifieke voorvertoningen,\n\t\twaar N is ofwel \"1\" Minimaal, \"2\" Compact or \"3\" Normaal"
+msgstr "/viewpreset N\tStart met specifieke voorvertoningen,\n\t\twaar N gelijk is aan \"1\" Minimaal, \"2\" Compact of \"3\" Normaal"
 
 msgctxt "IDS_CMD_MUTE"
 msgid "/mute\t\tMute the audio"
-msgstr "/dempen\t\tDemp het geluid"
+msgstr "/mute\t\tDemp het geluid"
 
 msgctxt "IDS_CMD_VOLUME"
 msgid "/volume N\tSet Volume, where N is a range from 0 to 100"
@@ -3945,11 +3945,11 @@ msgstr "/volume N\tStel Volume in, waar N de reikwijdte is van 0 tot 100"
 
 msgctxt "IDS_YOUTUBEDL_NOT_FOUND"
 msgid "Youtube-dl failed to launch. Make sure youtube-dl is in PATH."
-msgstr "Youtube-dl kan niet worden gestart. Zorg ervoor dat youtube-dl is in PATH"
+msgstr "Youtube-dl kan niet worden gestart. Zorg ervoor dat youtube-dl is opgenomen in PATH"
 
 msgctxt "IDS_CONTROLS_YOUTUBEDL"
 msgid "Calling youtube-dl..."
-msgstr "Ophalen youtube-dl..."
+msgstr "Oproepen youtube-dl..."
 
 msgctxt "IDS_VERTICAL_ALIGN_VIDEO_TOP"
 msgid "Align Top"
@@ -4101,7 +4101,7 @@ msgstr "Vereist donker thema. Indien ingeschakeld heeft de tijdlijn en de volume
 
 msgctxt "IDS_PPAGEADVANCED_MODERNSEEKBARHEIGHT"
 msgid "Modern seekbar height (at 96dpi, otherwise scaled)"
-msgstr "Moderne zoekbalk hoogte (op 96dpi, anders geschaald)"
+msgstr "Hoogte van moderne tijdlijn (bij 96dpi, anders bijgeschaald)"
 
 msgctxt "IDS_PPAGEADVANCED_FULLSCREEN_DELAY"
 msgid "Delay before showing fullscreen video, to prevent visual glitches."

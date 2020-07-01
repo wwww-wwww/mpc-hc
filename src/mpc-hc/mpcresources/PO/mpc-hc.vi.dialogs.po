@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2020-01-10 07:05:47+0000\n"
+"POT-Creation-Date: 2020-06-08 04:44:38+0000\n"
 "PO-Revision-Date: 2020-01-02 07:46+0000\n"
 "Last-Translator: Trần Anh Minh <anhminhvks@yahoo.com>, 2020\n"
 "Language-Team: Vietnamese (https://www.transifex.com/mpchc/teams/106126/vi/)\n"
@@ -192,7 +192,7 @@ msgstr "Giới thiệu"
 
 msgctxt "IDD_ABOUTBOX_IDC_AUTHORS_LINK"
 msgid "Copyright © 2002-2020 see Authors.txt"
-msgstr "Bản quyền © 2002-2020 xem Authors.txt"
+msgstr ""
 
 msgctxt "IDD_ABOUTBOX_IDC_STATIC"
 msgid "This program is freeware and released under the GNU General Public License."
@@ -200,7 +200,7 @@ msgstr "Chương trình này là phần mềm miễn phí và phát hành theo g
 
 msgctxt "IDD_ABOUTBOX_IDC_STATIC"
 msgid "English translation made by MPC-HC Team"
-msgstr "Được dịch bởi Trần Anh Minh - https://www.facebook.com/anhminhvks"
+msgstr "Được dịch bởi Trần Anh Minh (anhminhvks) - https://www.facebook.com/anhminhvks"
 
 msgctxt "IDD_ABOUTBOX_IDC_STATIC"
 msgid "Build information"
@@ -1752,7 +1752,7 @@ msgstr "Mức độ:"
 
 msgctxt "IDD_PPAGEAUDIORENDERER_IDC_CHECK4"
 msgid "Ignore system channel mixer (always ignored in exclusive WASAPI mode)"
-msgstr "Bỏ qua bộ trộn kênh hệ thống (luôn bỏ qua trong chế dộ WASAPI độc )"
+msgstr "Bỏ qua bộ trộn kênh hệ thống (luôn bỏ qua trong chế dộ WASAPI độc quyền)"
 
 msgctxt "IDD_PPAGEAUDIORENDERER_IDC_STATIC"
 msgid "Note"
