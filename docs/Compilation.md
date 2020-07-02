@@ -1,23 +1,33 @@
 # Compilation instructions
 
-## General Tools
-
-First of all, install **Git for Windows** from <https://git-for-windows.github.io/>.
-Choose `Use Git from the Windows command prompt`. This isn't mandatory, so if you choose
-`Use Git from Git Bash only` make sure you set the `MPCHC_GIT` variable in `build.user.bat`.
-
-
 ## Part A: Preparing the Visual Studio environment
 
 ### Visual Studio 2017/2019
 
-1. Install Visual C++, part of Visual Studio (any edition will work fine).
-   Make sure to select **Windows 8.1 SDK** and **MFC and ATL support** and **Windows Universal CRT SDK** during installation.
-2. Make sure you have installed all available updates from Microsoft Update
-3. Install the DirectX SDK (June 2010) → <https://go.microsoft.com/fwlink/?LinkID=71193>
+1. Install Visual Studio (any edition will work fine) with at minimum the following components:
+    Workloads:
+    Desktop Development with C++
+    Individual Components:
+    C++ x64/x86 build tools
+    MFC
+    ATL
+    Windows Universal CRT SDK
+    Windows 8.1 SDK
+2. Install the DirectX SDK (June 2010) → <https://go.microsoft.com/fwlink/?LinkID=71193>
 
 
-## Part B: Preparing the GCC environment
+## Part B: Install Python 2.7
+
+This is required for building the translation DLL files.
+
+1. Install Python version 2.7.18 from <https://www.python.org/downloads/release/python-2718/>
+2. Run this command to install a required library:
+    c:\Python2.7\Scripts\pip install polib
+
+
+## Part C: Preparing the GCC environment
+
+This is required for building LAV Filters, which is used as the internal codecs by MPC-HC.
 
 1. Download MSYS2 from <http://www.msys2.org/>.
    If you are on a 64-bit Operating System, which you should be, get the 64-bit version.
@@ -60,18 +70,24 @@ Choose `Use Git from the Windows command prompt`. This isn't mandatory, so if yo
 * For Visual Studio, we will try to detect the VS installation path automatically.
   If that fails you need to specify the installation path yourself. For example:
   ```bat
-  SET "MPCHC_VS_PATH=%ProgramFiles(x86)%\Microsoft Visual Studio\2017\Community\"
+  SET "MPCHC_VS_PATH=%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Community\"
   ```
 * If you installed the MSYS/MinGW package in another directory you will have to use that path in the previous steps.
-* If you don't have Git installed then the revision number will be a hard-coded one, like 1.6.3.0.
+* If you don't have Git installed then the build version will be inaccurate, the revision number will be a hard-coded as zero.
 
 
-## Part C: Downloading and compiling the MPC-HC source
+## Part D: Downloading and compiling the MPC-HC source
+
+You need Git for downloading the source code.
+
+Install **Git for Windows** from <https://git-for-windows.github.io/> or **Git Extensions** from <http://gitextensions.github.io/>.
+Choose `Use Git from the Windows command prompt`. This isn't mandatory, so if you choose
+`Use Git from Git Bash only` make sure you set the `MPCHC_GIT` variable in `build.user.bat`.
 
 1. Use Git to clone MPC-HC's repository to **C:\mpc-hc** (or anywhere else you like).
 
-    1. Download Git from <https://git-for-windows.github.io/>
-    2. Run:
+    1. Install Git
+    2. Run these commands:
 
         ```text
         git clone --recursive https://github.com/clsid2/mpc-hc.git
@@ -112,7 +128,7 @@ Choose `Use Git from the Windows command prompt`. This isn't mandatory, so if yo
 Alternatively, you can use **build.bat** that can build everything for you (run: `build.bat help` for more info)
 
 
-## Part D: Building the installer
+## Part E: Building the installer
 
 Download Inno Setup Unicode v5.5.9 or newer from <http://www.jrsoftware.org/isdl.php>.
 Install everything and then go to **C:\mpc-hc\distrib**, open **mpc-hc_setup.iss** with Inno Setup,
