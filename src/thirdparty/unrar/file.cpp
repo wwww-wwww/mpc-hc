@@ -12,7 +12,7 @@ File::File()
   ErrorType=FILE_SUCCESS;
   OpenShared=false;
   AllowDelete=true;
-  AllowExceptions=true;
+  AllowExceptions=false; // mpc-hc
   PreserveAtime=false;
 #ifdef _WIN_ALL
   NoSequentialRead=false;
