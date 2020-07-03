@@ -447,7 +447,7 @@ IF /I "%NAME%" == "MPC-HC" (
   IF NOT EXIST "%PCKG_NAME%\Shaders" MD "%PCKG_NAME%\Shaders"
   COPY /Y /V "..\src\mpc-hc\res\shaders\dx9\*.hlsl" "%PCKG_NAME%\Shaders" >NUL
   IF NOT EXIST "%PCKG_NAME%\Shaders11" MD "%PCKG_NAME%\Shaders11"
-  COPY /Y /V "..\src\mpc-hc\res\shaders\dx11\*.hlsl" "%PCKG_NAME%\Shaders" >NUL
+  COPY /Y /V "..\src\mpc-hc\res\shaders\dx11\*.hlsl" "%PCKG_NAME%\Shaders11" >NUL
   IF /I "%BUILDCFG%" NEQ "Debug" IF /I "%BUILDCFG%" NEQ "Debug Lite" IF EXIST "%VS_OUT_DIR%\CrashReporter\crashrpt.dll" (
     IF NOT EXIST "%PCKG_NAME%\CrashReporter" MD "%PCKG_NAME%\CrashReporter"
     COPY /Y /V "%VS_OUT_DIR%\CrashReporter\crashrpt.dll"            "%PCKG_NAME%\CrashReporter"
@@ -461,9 +461,6 @@ IF /I "%NAME%" == "MPC-HC" (
 )
 
 COPY /Y /V "..\COPYING.txt"         "%PCKG_NAME%" >NUL
-COPY /Y /V "..\docs\Authors.txt"    "%PCKG_NAME%" >NUL
-COPY /Y /V "..\docs\Changelog.txt"  "%PCKG_NAME%" >NUL
-COPY /Y /V "..\docs\Readme.txt"     "%PCKG_NAME%" >NUL
 
 TITLE Creating archive %PCKG_NAME%.7z...
 START "7z" /B /WAIT "%SEVENZIP%" a -t7z "%PCKG_NAME%.7z" "%PCKG_NAME%" -m0=LZMA2^
