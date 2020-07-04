@@ -26,7 +26,7 @@
 
 namespace
 {
-    static_assert(std::is_pod<Translations::LanguageResource>::value, "POD type is expected.");
+    static_assert(std::is_standard_layout<Translations::LanguageResource>::value, "POD type is expected.");
 
     constexpr Translations::LanguageResource languageResources[] = {
         { 1025,   _T("Arabic"),                   _T("Lang\\mpcresources.ar.dll")    },
