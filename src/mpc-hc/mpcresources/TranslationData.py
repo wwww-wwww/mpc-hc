@@ -22,7 +22,7 @@ from collections import OrderedDict
 import itertools
 import ConfigParser
 from datetime import datetime
-import polib
+
 
 def xstr(s):
     return '' if s is None else s
@@ -156,20 +156,14 @@ class TranslationData:
         self.prepareHeaders(ext)
 
         if output[0]:
-            fname = filename + '.dialogs.' + ext
-            self.writePOData(fname, self.dialogs, self.dialogsHeader)
-            po = polib.pofile(fname)
-            po.save(fname)
+            self.writePOData(filename + '.dialogs.' + ext,
+                             self.dialogs, self.dialogsHeader)
         if output[1]:
-            fname = filename + '.menus.' + ext
-            self.writePOData(fname, self.menus, self.menusHeader)
-            po = polib.pofile(fname)
-            po.save(fname)
+            self.writePOData(filename + '.menus.' + ext,
+                             self.menus, self.menusHeader)
         if output[2]:
-            fnane = filename + '.strings.' + ext
-            self.writePOData(fname, self.strings, self.stringsHeader)
-            po = polib.pofile(fname)
-            po.save(fname)
+            self.writePOData(filename + '.strings.' + ext,
+                             self.strings, self.stringsHeader)
 
     def prepareHeaders(self, ext):
         if ext == 'pot':
