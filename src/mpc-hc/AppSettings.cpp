@@ -1701,6 +1701,40 @@ void CAppSettings::LoadSettings()
         if (n >= 2) {
             tmp.fVirt = (BYTE)fVirt;
         }
+
+        // If there is no distinct bindings for windowed and
+        // fullscreen modes we use the same for both.
+        // tMFS will be valid for n >= 6
+        BYTE tMFS = (n >= 8) ? tmp.mouseFS : tmp.mouse;
+
+        POSITION p = wmcmds.GetHeadPosition();
+        for (int j = 0; j < wmcmds.GetCount(); j++) {
+            wmcmd& wc = wmcmds.GetNext(p);
+            if (wc != tmp) {
+                //FNOINVERT is deprecated but present on at least some default key assignments. remove for comparison
+                BYTE wcv = wc.fVirt & ~(FNOINVERT); 
+                BYTE tv = tmp.fVirt & ~(FNOINVERT);
+
+                if (tmp.key != 0 && wc.key == tmp.key && wcv == tv) {
+                    wc.key = 0;
+                    wc.fVirt = 0;
+                }
+                if (n >= 6) {
+                    if (tmp.mouse != wmcmd::NONE && wc.mouse == tmp.mouse) {
+                        wc.mouse = wmcmd::NONE;
+                    }
+                    if (tMFS != wmcmd::NONE && wc.mouseFS == tMFS) {
+                        wc.mouseFS = wmcmd::NONE;
+                    }
+                    if (n >= 7) {
+                        if (tmp.appcmd != 0 && wc.appcmd == tmp.appcmd) {
+                            wc.appcmd = 0;
+                        }
+                    }
+                }
+            }
+        }
+
         if (POSITION pos = wmcmds.Find(tmp)) {
             wmcmd& wc = wmcmds.GetAt(pos);
             wc.cmd = tmp.cmd;
@@ -1708,13 +1742,11 @@ void CAppSettings::LoadSettings()
             wc.key = tmp.key;
             if (n >= 6) {
                 wc.mouse = tmp.mouse;
+                wc.mouseFS = tMFS;
             }
             if (n >= 7) {
                 wc.appcmd = tmp.appcmd;
             }
-            // If there is no distinct bindings for windowed and
-            // fullscreen modes we use the same for both.
-            wc.mouseFS = (n >= 8) ? tmp.mouseFS : wc.mouse;
             wc.rmcmd = tmp.rmcmd.Trim('\"');
             wc.rmrepcnt = tmp.rmrepcnt;
         }
