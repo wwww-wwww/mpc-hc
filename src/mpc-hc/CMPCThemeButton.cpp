@@ -6,7 +6,8 @@
 
 CMPCThemeButton::CMPCThemeButton()
 {
-    if (AfxGetAppSettings().bMPCThemeLoaded) {
+    const CAppSettings& s = AfxGetAppSettings();
+    if (&s && s.IsInitialized() && s.bMPCThemeLoaded) {
         m_nFlatStyle = CMFCButton::BUTTONSTYLE_FLAT; //just setting this to get hovering working
     }
     drawShield = false;
