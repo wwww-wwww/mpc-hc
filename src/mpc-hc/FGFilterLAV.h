@@ -206,6 +206,7 @@ public:
         int iDRCLevel;
         BOOL bBitstream[Bitstream_NB];
         BOOL bDTSHDFraming;
+        BOOL bBitstreamingFallback;
         BOOL bAutoAVSync;
         BOOL bExpandMono;
         BOOL bExpand61;

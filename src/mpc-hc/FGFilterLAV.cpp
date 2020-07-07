@@ -910,6 +910,8 @@ void CFGFilterLAVAudio::Settings::LoadSettings()
 
     bDTSHDFraming = pApp->GetProfileInt(IDS_R_INTERNAL_LAVAUDIO, _T("DTSHDFraming"), bDTSHDFraming);
 
+    bDTSHDFraming = pApp->GetProfileInt(IDS_R_INTERNAL_LAVAUDIO, _T("BitstreamingFallback"), bBitstreamingFallback);
+
     bAutoAVSync = pApp->GetProfileInt(IDS_R_INTERNAL_LAVAUDIO, _T("AutoAVSync"), bAutoAVSync);
 
     bExpandMono = pApp->GetProfileInt(IDS_R_INTERNAL_LAVAUDIO, _T("ExpandMono"), bExpandMono);
@@ -964,6 +966,8 @@ void CFGFilterLAVAudio::Settings::SaveSettings()
 
     pApp->WriteProfileInt(IDS_R_INTERNAL_LAVAUDIO, _T("DTSHDFraming"), bDTSHDFraming);
 
+    pApp->WriteProfileInt(IDS_R_INTERNAL_LAVAUDIO, _T("BitstreamingFallback"), bBitstreamingFallback);
+
     pApp->WriteProfileInt(IDS_R_INTERNAL_LAVAUDIO, _T("AutoAVSync"), bAutoAVSync);
 
     pApp->WriteProfileInt(IDS_R_INTERNAL_LAVAUDIO, _T("ExpandMono"), bExpandMono);
@@ -1017,6 +1021,8 @@ bool CFGFilterLAVAudio::Settings::GetSettings(CComQIPtr<ILAVAudioSettings> pLAVF
 
     bDTSHDFraming = pLAVFSettings->GetDTSHDFraming();
 
+    bBitstreamingFallback = pLAVFSettings->GetBitstreamingFallback();
+
     bAutoAVSync = pLAVFSettings->GetAutoAVSync();
 
     bExpandMono = pLAVFSettings->GetExpandMono();
@@ -1063,6 +1069,8 @@ bool CFGFilterLAVAudio::Settings::SetSettings(CComQIPtr<ILAVAudioSettings> pLAVF
     pLAVFSettings->SetDRC(bDRCEnabled, iDRCLevel);
 
     pLAVFSettings->SetDTSHDFraming(bDTSHDFraming);
+
+    pLAVFSettings->SetBitstreamingFallback(bBitstreamingFallback);
 
     pLAVFSettings->SetAutoAVSync(bAutoAVSync);
 
