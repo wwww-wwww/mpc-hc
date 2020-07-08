@@ -4528,6 +4528,17 @@ DROPEFFECT CMainFrame::OnDropAccept(COleDataObject* pDataObject, DWORD dwKeyStat
     return DROPEFFECT_NONE;
 }
 
+BOOL IsSubtitleExtension(CString ext)
+{
+    return (ext == _T(".srt") || ext == _T(".ssa") || ext == _T(".ass") || ext == _T(".idx") || ext == _T(".sub") || ext == _T(".vtt") || ext == _T(".sup") || ext == _T(".smi") || ext == _T(".psb") || ext == _T(".usf") || ext == _T(".xss") || ext == _T(".rt")|| ext == _T(".txt"));
+}
+
+BOOL IsSubtitleFilename(CString filename)
+{
+    CString ext = CPath(filename).GetExtension().MakeLower();
+    return IsSubtitleExtension(ext);
+}
+
 void CMainFrame::OnDropFiles(CAtlList<CString>& slFiles, DROPEFFECT dropEffect)
 {
     SetForegroundWindow();
@@ -4542,55 +4553,66 @@ void CMainFrame::OnDropFiles(CAtlList<CString>& slFiles, DROPEFFECT dropEffect)
 
     PathUtils::ParseDirs(slFiles);
 
+    bool bAppend = !!(dropEffect & DROPEFFECT_APPEND);
+
+    // Check for subtitle files
     SubtitleInput subInputSelected;
-    if (GetLoadState() == MLS::LOADED && !IsPlaybackCaptureMode() && !m_fAudioOnly && m_pCAP) {
-        POSITION pos = slFiles.GetHeadPosition();
-        while (pos) {
-            // Try to open all dropped files as subtitles. If one of the files
-            // cannot be loaded as subtitle, add all files to the playlist.
-            SubtitleInput subInput;
-            if (LoadSubtitle(slFiles.GetNext(pos), &subInput)) {
-                if (!subInputSelected.pSubStream) {
+    CString subfile;
+    BOOL onlysubs = true;
+    POSITION pos = slFiles.GetHeadPosition();
+    while (pos) {
+        SubtitleInput subInput;
+        subfile = slFiles.GetNext(pos);
+        if (IsSubtitleFilename(subfile)) {
+            // remove subtitle file from list
+            slFiles.RemoveHeadNoReturn();
+            // try to load it
+            if (!bAppend && m_pCAP && GetLoadState() == MLS::LOADED && !IsPlaybackCaptureMode() && !m_fAudioOnly && LoadSubtitle(subfile, &subInput, False)) {
+                if (onlysubs && !subInputSelected.pSubStream) {
+                    // first one
                     subInputSelected = subInput;
+                    AfxGetAppSettings().fEnableSubtitles = true;
+                    SetSubtitle(subInputSelected);
+
+                    CPath fn(subfile);
+                    fn.StripPath();
+                    CString statusmsg(static_cast<LPCTSTR>(fn));
+                    SendStatusMessage(statusmsg + ResStr(IDS_SUB_LOADED_SUCCESS), 3000);
                 }
-            } else {
-                subInputSelected = SubtitleInput();
-                break;
             }
+        }
+        else {
+            onlysubs = false;
         }
     }
 
-    bool bAppend = !!(dropEffect & DROPEFFECT_APPEND);
-    // Use the first subtitle file that was just loaded
-    if (subInputSelected.pSubStream) {
-        AfxGetAppSettings().fEnableSubtitles = true;
-        SetSubtitle(subInputSelected);
+    if (onlysubs && subInputSelected.pSubStream) {
+        // subtitles have been loaded, we are done now
+        return;
+    }
 
-        CString filenames;
-        POSITION pos = slFiles.GetHeadPosition();
-        while (pos) {
-            CPath fn(slFiles.GetNext(pos));
-            fn.StripPath();
-            filenames.AppendFormat(pos ? _T("%s, ") : _T("%s"), static_cast<LPCTSTR>(fn));
-        }
-        SendStatusMessage(filenames + ResStr(IDS_SUB_LOADED_SUCCESS), 3000);
-    } else {
-        //load http url with youtube-dl, if available
-        if (CanSendToYoutubeDL(slFiles.GetHead())) {
-            if (ProcessYoutubeDLURL(slFiles.GetHead(), bAppend)) {
-                if (!bAppend) {
-                    OpenCurPlaylistItem();
-                }
-                return;
+    // list might be empty now if a subtitle file failed to load
+    if (slFiles.IsEmpty()) {
+        SendStatusMessage(_T("Failed to load subtitle file"), 3000);
+        return;
+    }
+
+    // load http url with youtube-dl, if available
+    if (CanSendToYoutubeDL(slFiles.GetHead())) {
+        if (ProcessYoutubeDLURL(slFiles.GetHead(), bAppend)) {
+            if (!bAppend) {
+                OpenCurPlaylistItem();
             }
+            return;
         }
+    }
 
-        if (bAppend) {
-            m_wndPlaylistBar.Append(slFiles, true);
-        } else {
-            m_wndPlaylistBar.Open(slFiles, true);
-            OpenCurPlaylistItem();
-        }
+    // add remaining items
+    if (bAppend) {
+        m_wndPlaylistBar.Append(slFiles, true);
+    } else {
+        m_wndPlaylistBar.Open(slFiles, true);
+        OpenCurPlaylistItem();
     }
 }
 
@@ -14661,19 +14683,17 @@ bool CMainFrame::LoadSubtitle(CString fn, SubtitleInput* pSubInput /*= nullptr*/
         videoName = m_wndPlaylistBar.GetCurFileName();
     }
 
-    if (!pSubStream) {
+    CString ext = CPath(fn).GetExtension().MakeLower();
+
+    if (!pSubStream && (ext == _T(".idx") || !bAutoLoad && ext == _T(".sub"))) {
         CAutoPtr<CVobSubFile> pVSF(DEBUG_NEW CVobSubFile(&m_csSubLock));
-        CString ext = CPath(fn).GetExtension().MakeLower();
-        // To avoid loading the same subtitles file twice, we ignore .sub file when auto-loading
-        if ((ext == _T(".idx") || (!bAutoLoad && ext == _T(".sub")))
-                && pVSF && pVSF->Open(fn) && pVSF->GetStreamCount() > 0) {
+        if (pVSF && pVSF->Open(fn) && pVSF->GetStreamCount() > 0) {
             pSubStream = pVSF.Detach();
         }
     }
 
     if (!pSubStream) {
         CAutoPtr<CRenderedTextSubtitle> pRTS(DEBUG_NEW CRenderedTextSubtitle(&m_csSubLock));
-
         if (pRTS && pRTS->Open(fn, DEFAULT_CHARSET, _T(""), videoName) && pRTS->GetStreamCount() > 0) {
             pSubStream = pRTS.Detach();
         }
