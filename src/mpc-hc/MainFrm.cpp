@@ -11494,9 +11494,9 @@ CWnd* CMainFrame::GetModalParent()
 }
 
 void CMainFrame::ShowMediaTypesDialog() {
+    CAutoLock lck(&lockModalDialog);
     CComQIPtr<IGraphBuilderDeadEnd> pGBDE = m_pGB;
     if (pGBDE && pGBDE->GetCount()) {
-        CAutoLock lck(&lockModalDialog); //put a lock here in case this somehow gets called twice?
         mediaTypesErrorDlg = DEBUG_NEW CMediaTypesDlg(pGBDE, GetModalParent());
         mediaTypesErrorDlg->DoModal();
         delete mediaTypesErrorDlg;
@@ -15725,9 +15725,6 @@ void CMainFrame::OpenMedia(CAutoPtr<OpenMediaData> pOMD)
 
     // close the current graph before opening new media
     if (GetLoadState() != MLS::CLOSED) {
-        if (mediaTypesErrorDlg) { // close pin connection error dialog
-            mediaTypesErrorDlg->SendMessage(WM_EXTERNALCLOSE, 0, 0);
-        }
         CloseMedia(true);
         ASSERT(GetLoadState() == MLS::CLOSED);
     }
@@ -15858,6 +15855,13 @@ void CMainFrame::CloseMedia(bool bNextIsQueued/* = false*/)
 
         // tell OpenMediaPrivate() that we want to abort
         m_fOpeningAborted = true;
+
+        // close pin connection error dialog
+        if (mediaTypesErrorDlg) {
+            mediaTypesErrorDlg->SendMessage(WM_EXTERNALCLOSE, 0, 0);
+        }
+        // wait till error dialog has been closed
+        CAutoLock lck(&lockModalDialog);
 
         // abort current graph task
         if (m_pGB) {
