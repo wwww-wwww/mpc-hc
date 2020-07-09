@@ -39,12 +39,6 @@
 
 #define USE_STATIC_UNRAR 1
 
-#ifdef MPCHC_LITE
-#define USE_STATIC_MEDIAINFO 0
-#else
-#define USE_STATIC_MEDIAINFO 0
-#endif
-
 #define USE_DRDUMP_CRASH_REPORTER 1
 
 #define SHADERS_DIR _T("Shaders")
