@@ -3294,10 +3294,10 @@ STDMETHODIMP CRenderedTextSubtitle::SetStream(int iStream)
 
 STDMETHODIMP CRenderedTextSubtitle::Reload()
 {
-    if (!PathUtils::Exists(m_path)) {
+    if (m_path.IsEmpty() || !PathUtils::Exists(m_path)) {
         return E_FAIL;
     }
-    return !m_path.IsEmpty() && Open(m_path, DEFAULT_CHARSET, m_name) ? S_OK : E_FAIL;
+    return Open(m_path, DEFAULT_CHARSET, m_name) ? S_OK : E_FAIL;
 }
 
 STDMETHODIMP CRenderedTextSubtitle::SetSourceTargetInfo(CString yuvVideoMatrix, int targetBlackLevel, int targetWhiteLevel)

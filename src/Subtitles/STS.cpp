@@ -2839,6 +2839,8 @@ bool CSimpleTextSubtitle::Open(BYTE* data, int len, int CharSet, CString name)
 
     _tremove(fn);
 
+    m_path = _T("");
+
     return fRet;
 }
 
