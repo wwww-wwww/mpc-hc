@@ -324,11 +324,13 @@ CStringA GetContentType(CString fn, CAtlList<CString>* redir)
 {
     CUrl url;
     CString ct, body;
-    BOOL parsebody = false;
+    BOOL isurl = false;
+    BOOL ishttp = false;
 
     fn.Trim();
 
     if (fn.Find(_T("://")) >= 0) {
+        isurl = true;
         url.CrackUrl(fn);
 
         if (_tcsicmp(url.GetSchemeName(), _T("pnm")) == 0) {
@@ -339,10 +341,16 @@ CStringA GetContentType(CString fn, CAtlList<CString>* redir)
             return "video/x-ms-asf";
         }
 
-        if (_tcsicmp(url.GetSchemeName(), _T("http")) != 0) {
-            return "";
+        if (_tcsicmp(url.GetSchemeName(), _T("http")) == 0) {
+            ishttp = true;
         }
 
+        if (!ishttp && _tcsicmp(url.GetSchemeName(), _T("https")) != 0) {
+            return "";
+        }
+    }
+
+    if (ishttp) {
         DWORD ProxyEnable = 0;
         CString ProxyServer;
         DWORD ProxyPort = 0;
@@ -479,6 +487,7 @@ CStringA GetContentType(CString fn, CAtlList<CString>* redir)
 
     // Try to guess from the extension if we don't have much info yet
     if (!fn.IsEmpty() && (ct.IsEmpty() || ct == _T("text/plain"))) {
+        BOOL parsebody = false;
         CPath p(fn);
         CString ext = p.GetExtension().MakeLower();
         if (ext == _T(".mpcpl")) {
@@ -503,7 +512,7 @@ CStringA GetContentType(CString fn, CAtlList<CString>* redir)
             parsebody = true;
         }
 
-        if (parsebody) {
+        if (!isurl && parsebody) {
             FILE* f = nullptr;
             if (!_tfopen_s(&f, fn, _T("rb"))) {
                 CStringA str;
@@ -538,7 +547,7 @@ CStringA GetContentType(CString fn, CAtlList<CString>* redir)
         }
 
         if (!body.IsEmpty()) {
-            if (fn.Find(_T("://")) >= 0) {
+            if (isurl) {
                 FindRedir(url, ct, body, *redir, res);
             } else {
                 FindRedir(fn, ct, *redir, res);

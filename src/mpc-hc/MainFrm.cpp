@@ -11356,11 +11356,11 @@ void CMainFrame::OpenCreateGraphObject(OpenMediaData* pOMD)
     if (auto pOpenFileData = dynamic_cast<OpenFileData*>(pOMD)) {
         engine_t engine = s.m_Formats.GetEngine(pOpenFileData->fns.GetHead());
 
+#ifndef _WIN64
         CStringA ct = GetContentType(pOpenFileData->fns.GetHead());
 
         if (ct == "application/x-shockwave-flash") {
             engine = ShockWave;
-#ifndef _WIN64
         } else if (ct == "audio/x-pn-realaudio"
                    || ct == "audio/x-pn-realaudio-plugin"
                    || ct == "audio/x-realaudio-secure"
@@ -11373,12 +11373,8 @@ void CMainFrame::OpenCreateGraphObject(OpenMediaData* pOMD)
         }
         else if (ct == "application/x-quicktimeplayer") {
             engine = QuickTime;
-#endif
-#if 0
-        } else if (ct == "video/x-ms-asf") {
-            // TODO: put something here to make the windows media source filter load later
-#endif
         }
+#endif
 
 #ifdef _WIN64
         // override unsupported frameworks
