@@ -476,9 +476,12 @@ static bool OpenVTT(CTextFile* file, CSimpleTextSubtitle& ret, int CharSet) {
         WCHAR sep;
         int c = swscanf_s(str, L"%d%c%d%c%d%c%d",
             &hh, &sep, 1, &mm, &sep, 1, &ss, &sep, 1, &ms);
-        // Check if ms was present
         if (c == 5) {
-            ms = 0;
+            // Hours value is absent, shift read values
+            ms = ss;
+            ss = mm;
+            mm = hh;
+            hh = 0;
         }
         return (c == 5 || c == 7);
     };
