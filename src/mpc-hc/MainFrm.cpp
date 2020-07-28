@@ -15856,9 +15856,9 @@ void CMainFrame::CloseMedia(bool bNextIsQueued/* = false*/)
         // close pin connection error dialog
         if (mediaTypesErrorDlg) {
             mediaTypesErrorDlg->SendMessage(WM_EXTERNALCLOSE, 0, 0);
+            // wait till error dialog has been closed
+            CAutoLock lck(&lockModalDialog);
         }
-        // wait till error dialog has been closed
-        CAutoLock lck(&lockModalDialog);
 
         // abort current graph task
         if (m_pGB) {
