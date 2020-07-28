@@ -641,7 +641,6 @@ public:
     CString         strAutoDownloadSubtitlesExclude;
     bool            bAutoUploadSubtitles;
     bool            bPreferHearingImpairedSubtitles;
-    bool            bMPCThemeLoaded;
     bool            bMPCTheme;
     bool            bWindows10DarkThemeActive;
     bool            bWindows10AccentColorsEnabled;

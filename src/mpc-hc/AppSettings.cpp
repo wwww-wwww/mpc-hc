@@ -158,7 +158,6 @@ CAppSettings::CAppSettings()
     , bAutoUploadSubtitles(false)
     , bPreferHearingImpairedSubtitles(false)
     , bMPCTheme(false)
-    , bMPCThemeLoaded(false)
     , bWindows10DarkThemeActive(false)
     , bWindows10AccentColorsEnabled(false)
     , bModernSeekbar(true)
@@ -1566,7 +1565,6 @@ void CAppSettings::LoadSettings()
     bAutoUploadSubtitles = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_AUTOUPLOADSUBTITLES, FALSE);
     bPreferHearingImpairedSubtitles = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_PREFERHEARINGIMPAIREDSUBTITLES, FALSE);
     bMPCTheme = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_MPCTHEME, FALSE);
-    bMPCThemeLoaded = bMPCTheme;
     if (IsWindows10OrGreater()) {
         CRegKey key;
         if (ERROR_SUCCESS == key.Open(HKEY_CURRENT_USER, _T("Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize"), KEY_READ)) {
@@ -1982,6 +1980,9 @@ void CAppSettings::LoadSettings()
     bEnableCrashReporter = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_ENABLE_CRASH_REPORTER, TRUE);
 
     nStreamPosPollerInterval = pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_TIME_REFRESH_INTERVAL, 100);
+
+    // GUI theme can be used now
+    static_cast<CMPlayerCApp*>(AfxGetApp())->m_bThemeLoaded = bMPCTheme;
 
     bInitialized = true;
 }

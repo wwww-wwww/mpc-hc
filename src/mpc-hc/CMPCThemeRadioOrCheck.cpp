@@ -50,7 +50,7 @@ END_MESSAGE_MAP()
 
 void CMPCThemeRadioOrCheck::OnPaint()
 {
-    if (AfxGetAppSettings().bMPCThemeLoaded) {
+    if (AppIsThemeLoaded()) {
         CPaintDC dc(this);
         CRect   rectItem;
         GetClientRect(rectItem);
@@ -219,7 +219,7 @@ void CMPCThemeRadioOrCheck::OnLButtonDown(UINT nFlags, CPoint point)
 
 void CMPCThemeRadioOrCheck::OnEnable(BOOL bEnable)
 {
-    if (AfxGetAppSettings().bMPCThemeLoaded) {
+    if (AppIsThemeLoaded()) {
         SetRedraw(FALSE);
         __super::OnEnable(bEnable);
         SetRedraw(TRUE);

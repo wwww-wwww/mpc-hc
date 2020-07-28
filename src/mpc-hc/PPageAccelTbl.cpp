@@ -1385,7 +1385,7 @@ HBRUSH CPPageAccelTbl::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
     HBRUSH hbr = __super::OnCtlColor(pDC, pWnd, nCtlColor);
 
     const CAppSettings& s = AfxGetAppSettings();
-    if (s.bMPCThemeLoaded) {
+    if (AppIsThemeLoaded()) {
         return hbr; //should have already been handled inside themed ctlcolor
     }
     int status = -1;

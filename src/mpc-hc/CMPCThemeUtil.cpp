@@ -33,7 +33,7 @@ CMPCThemeUtil::~CMPCThemeUtil()
 
 void CMPCThemeUtil::fulfillThemeReqs(CWnd* wnd)
 {
-    if (AfxGetAppSettings().bMPCThemeLoaded) {
+    if (AppIsThemeLoaded()) {
 
         initHelperObjects(wnd);
 
@@ -246,7 +246,7 @@ static inline const WORD& DlgTemplateItemCount(const DLGTEMPLATE* pTemplate)
 
 bool CMPCThemeUtil::ModifyTemplates(CPropertySheet* sheet, CRuntimeClass* pageClass, DWORD id, DWORD addStyle, DWORD removeStyle)
 {
-    if (AfxGetAppSettings().bMPCThemeLoaded) {
+    if (AppIsThemeLoaded()) {
         PROPSHEETHEADER m_psh = sheet->m_psh;
         for (int i = 0; i < sheet->GetPageCount(); i++) {
             CPropertyPage* pPage = sheet->GetPage(i);
@@ -336,7 +336,7 @@ HBRUSH CMPCThemeUtil::getCtlColorFileDialog(HDC hDC, UINT nCtlColor)
 
 HBRUSH CMPCThemeUtil::getCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 {
-    if (AfxGetAppSettings().bMPCThemeLoaded) {
+    if (AppIsThemeLoaded()) {
         LRESULT lResult;
         if (pWnd->SendChildNotifyLastMsg(&lResult)) {
             return (HBRUSH)lResult;
@@ -356,7 +356,7 @@ HBRUSH CMPCThemeUtil::getCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 
 bool CMPCThemeUtil::MPCThemeEraseBkgnd(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 {
-    if (AfxGetAppSettings().bMPCThemeLoaded) {
+    if (AppIsThemeLoaded()) {
         CRect rect;
         pWnd->GetClientRect(rect);
         if (CTLCOLOR_DLG == nCtlColor) { //only supported "class" for now
@@ -798,7 +798,7 @@ void CMPCThemeUtil::drawCheckBox(UINT checkState, bool isHover, bool useSystemSi
 
 bool CMPCThemeUtil::canUseWin10DarkTheme()
 {
-    if (AfxGetAppSettings().bMPCThemeLoaded) {
+    if (AppIsThemeLoaded()) {
         //        return false; //FIXME.  return false to test behavior for OS < Win10 1809
         RTL_OSVERSIONINFOW osvi = GetRealOSVersion();
         bool ret = (osvi.dwMajorVersion = 10 && osvi.dwMajorVersion >= 0 && osvi.dwBuildNumber >= 17763); //dark theme first available in win 10 1809
@@ -842,7 +842,7 @@ void CMPCThemeUtil::drawParentDialogBGClr(CWnd* wnd, CDC* pDC, CRect r, bool fil
 
 void CMPCThemeUtil::fulfillThemeReqs(CProgressCtrl* ctl)
 {
-    if (AfxGetAppSettings().bMPCThemeLoaded) {
+    if (AppIsThemeLoaded()) {
         SetWindowTheme(ctl->GetSafeHwnd(), _T(""), _T(""));
         ctl->SetBarColor(CMPCTheme::ProgressBarColor);
         ctl->SetBkColor(CMPCTheme::ProgressBarBGColor);

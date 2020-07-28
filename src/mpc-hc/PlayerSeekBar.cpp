@@ -68,7 +68,7 @@ BOOL CPlayerSeekBar::Create(CWnd* pParentWnd)
         return FALSE;
     }
 
-    if (!AfxGetAppSettings().bMPCThemeLoaded) {
+    if (!AppIsThemeLoaded()) {
         if (CMPCThemeUtil::getFontByType(mpcThemeFont, GetWindowDC(), CMPCThemeUtil::MessageFont)) {
             SetFont(&mpcThemeFont);
         }
@@ -122,7 +122,7 @@ CSize CPlayerSeekBar::CalcFixedLayout(BOOL bStretch, BOOL bHorz)
 {
     CSize ret = __super::CalcFixedLayout(bStretch, bHorz);
     const CAppSettings& s = AfxGetAppSettings();
-    if (s.bMPCThemeLoaded && s.bModernSeekbar) {
+    if (s.bMPCTheme && s.bModernSeekbar) {
         ret.cy = m_pMainFrame->m_dpi.ScaleY(5 + s.iModernSeekbarHeight); //expand the toolbar if using "fill" mode
     } else {
         ret.cy = m_pMainFrame->m_dpi.ScaleY(20);
@@ -227,8 +227,7 @@ void CPlayerSeekBar::CreateThumb(bool bEnabled, CDC& parentDC)
         VERIFY(bmp.CreateCompatibleBitmap(&parentDC, r.Width(), r.Height()));
         VERIFY(pThumb->SelectObject(bmp));
 
-        const CAppSettings& s = AfxGetAppSettings();
-        if (s.bMPCThemeLoaded) {
+        if (AppIsThemeLoaded()) {
             //just a rectangle, we will draw from scratch
         } else {
             pThumb->Draw3dRect(&r, light, 0);
@@ -268,9 +267,9 @@ CRect CPlayerSeekBar::GetChannelRect() const
     if (m_pMainFrame->m_controls.ControlChecked(CMainFrameControls::Toolbar::CONTROLS)) {
         r.bottom += ADD_TO_BOTTOM_WITHOUT_CONTROLBAR;
     }
-    const CAppSettings& s = AfxGetAppSettings();
 
-    if (s.bMPCThemeLoaded && s.bModernSeekbar) { //no thumb so we can use all the space
+    const CAppSettings& s = AfxGetAppSettings();
+    if (s.bMPCTheme && s.bModernSeekbar) { //no thumb so we can use all the space
         r.DeflateRect(m_pMainFrame->m_dpi.ScaleFloorX(2), m_pMainFrame->m_dpi.ScaleFloorX(2));
     } else {
         CSize sz(m_pMainFrame->m_dpi.ScaleFloorX(8), m_pMainFrame->m_dpi.ScaleFloorY(7) + 1);
@@ -532,7 +531,7 @@ void CPlayerSeekBar::OnPaint()
     };
 
     const CAppSettings& s = AfxGetAppSettings();
-    if (s.bMPCThemeLoaded) {
+    if (s.bMPCTheme) {
         // Thumb
         if (!s.bModernSeekbar) { //no thumb while showing seek progress
             CRect r(GetThumbRect());

@@ -157,7 +157,7 @@ void CChildView::LoadImgInternal(HGDIOBJ hImg)
         s.strLogoFileName.Empty();             // clear logo file name
         UINT useLogoId = s.nLogoId;
         if ((UINT) - 1 == useLogoId) { //if the user has never chosen a logo, we can try loading a theme default logo
-            if (s.bMPCThemeLoaded) {
+            if (AppIsThemeLoaded()) {
                 useLogoId = CMPCThemeUtil::defaultLogo();
             } else {
                 useLogoId = DEF_LOGO;

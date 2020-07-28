@@ -1261,14 +1261,14 @@ void CPlayerPlaylistBar::OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruc
     COLORREF bgColor;
 
     if (itemSelected) {
-        if (s.bMPCThemeLoaded) {
+        if (AppIsThemeLoaded()) {
             bgColor = CMPCTheme::ContentSelectedColor;
         } else {
             bgColor = 0xf1dacc;
             FrameRect(pDC->m_hDC, rcItem, CBrush(0xc56a31));
         }
     } else {
-        if (s.bMPCThemeLoaded) {
+        if (AppIsThemeLoaded()) {
             bgColor = CMPCTheme::ContentBGColor;
         } else {
             bgColor = GetSysColor(COLOR_WINDOW);
@@ -1281,7 +1281,7 @@ void CPlayerPlaylistBar::OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruc
     CString bullet = _T("\x25CF ");
     CSize bulletWidth = pDC->GetTextExtent(bullet);
 
-    if (s.bMPCThemeLoaded) {
+    if (AppIsThemeLoaded()) {
         if (pli.m_fInvalid) {
             textcolor = CMPCTheme::ContentTextDisabledFGColorFade2;
         } else if (itemPlaying) {
@@ -1635,7 +1635,7 @@ void CPlayerPlaylistBar::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
     m.AppendMenu(MF_STRING | MF_ENABLED | (s.bShufflePlaylistItems ? MF_CHECKED : MF_UNCHECKED), M_SHUFFLE, ResStr(IDS_PLAYLIST_SHUFFLE));
     m.AppendMenu(MF_SEPARATOR);
     m.AppendMenu(MF_STRING | MF_ENABLED | (s.bHidePlaylistFullScreen ? MF_CHECKED : MF_UNCHECKED), M_HIDEFULLSCREEN, ResStr(IDS_PLAYLIST_HIDEFS));
-    if (s.bMPCThemeLoaded) {
+    if (AppIsThemeLoaded()) {
         m.fulfillThemeReqs();
     }
 
@@ -1943,8 +1943,7 @@ void CPlayerPlaylistBar::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
 
 void CPlayerPlaylistBar::OnLvnBeginlabeleditList(NMHDR* pNMHDR, LRESULT* pResult)
 {
-    const CAppSettings& s = AfxGetAppSettings();
-    if (s.bMPCThemeLoaded) {
+    if (AppIsThemeLoaded()) {
         HWND e_hwnd = (HWND)m_list.SendMessage(LVM_GETEDITCONTROL);
         if (::IsWindow(m_edit.m_hWnd)) {
             m_edit.UnsubclassWindow();
@@ -1962,8 +1961,7 @@ void CPlayerPlaylistBar::OnLvnEndlabeleditList(NMHDR* pNMHDR, LRESULT* pResult)
         pli.m_label = pDispInfo->item.pszText;
         m_list.SetItemText(pDispInfo->item.iItem, 0, pDispInfo->item.pszText);
     }
-    const CAppSettings& s = AfxGetAppSettings();
-    if (s.bMPCThemeLoaded) {
+    if (AppIsThemeLoaded()) {
         if (::IsWindow(m_edit.m_hWnd)) {
             m_edit.UnsubclassWindow();
         }

@@ -338,7 +338,7 @@ void CMPCThemeFrameWnd::OnPaint()
 
 void CMPCThemeFrameWnd::OnNcCalcSize(BOOL bCalcValidRects, NCCALCSIZE_PARAMS* lpncsp)
 {
-    if (AfxGetAppSettings().bMPCThemeLoaded && IsWindows10OrGreater() && !AfxGetAppSettings().bWindows10AccentColorsEnabled) {
+    if (AppIsThemeLoaded() && IsWindows10OrGreater() && !AfxGetAppSettings().bWindows10AccentColorsEnabled) {
         drawCustomFrame = true;
     } else {
         drawCustomFrame = false;

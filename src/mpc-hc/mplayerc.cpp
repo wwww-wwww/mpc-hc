@@ -624,6 +624,7 @@ CMPlayerCApp::CMPlayerCApp()
     , m_bQueuedProfileFlush(false)
     , m_dwProfileLastAccessTick(0)
     , m_fClosingState(false)
+    , m_bThemeLoaded(false)
 {
     m_strVersion = FileVersionInfo::GetFileVersionStr(PathUtils::GetProgramPath(true));
 
@@ -657,8 +658,7 @@ CMPlayerCApp::~CMPlayerCApp()
 int CMPlayerCApp::DoMessageBox(LPCTSTR lpszPrompt, UINT nType,
                                UINT nIDPrompt)
 {
-    const CAppSettings& s = AfxGetAppSettings();
-    if (&s && s.IsInitialized() && s.bMPCThemeLoaded) {
+    if (AppIsThemeLoaded()) {
         CWnd* pParentWnd = CWnd::GetActiveWindow();
         if (pParentWnd == NULL) {
             pParentWnd = GetMainWnd()->GetLastActivePopup();

@@ -1248,7 +1248,7 @@ void CPlayerSubresyncBar::GetCustomTextColors(INT_PTR nItem, int iSubItem, COLOR
     COLORREF bgNormalOdd, bgNormalEven, bgMod, bgAdjust;
     bool useFadeText;
 
-    if (AfxGetAppSettings().bMPCThemeLoaded) {
+    if (AppIsThemeLoaded()) {
         normalText = CMPCTheme::SubresyncFadeText1;
         fadeText = CMPCTheme::SubresyncFadeText2;
         activeNormalText = CMPCTheme::TextFGColor;
@@ -1305,7 +1305,7 @@ void CPlayerSubresyncBar::GetCustomTextColors(INT_PTR nItem, int iSubItem, COLOR
 void CPlayerSubresyncBar::GetCustomGridColors(int nItem, COLORREF& horzGridColor, COLORREF& vertGridColor)
 {
     bool bSeparator = nItem < m_list.GetItemCount() - 1 && (m_displayData[nItem + 1].flags & TSEP);
-    if (AfxGetAppSettings().bMPCThemeLoaded) {
+    if (AppIsThemeLoaded()) {
         horzGridColor = bSeparator ? CMPCTheme::SubresyncGridSepColor : CMPCTheme::ListCtrlGridColor;
         vertGridColor = CMPCTheme::ListCtrlGridColor;
     } else {

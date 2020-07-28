@@ -58,7 +58,7 @@ BOOL CPlayerStatusBar::Create(CWnd* pParentWnd)
 
     // Should never be RTLed
     ModifyStyleEx(WS_EX_LAYOUTRTL, WS_EX_NOINHERITLAYOUT);
-    if (AfxGetAppSettings().bMPCThemeLoaded) {
+    if (AppIsThemeLoaded()) {
         themedToolTip.Create(this, TTS_NOPREFIX | TTS_ALWAYSTIP);
         themedToolTip.SetDelayTime(TTDT_INITIAL, 0);
         themedToolTip.SetDelayTime(TTDT_AUTOPOP, 2500);
@@ -408,15 +408,13 @@ void CPlayerStatusBar::OnPaint()
         r.InflateRect(1, 0, 1, 0);
     }
 
-    const CAppSettings& s = AfxGetAppSettings();
-    if (s.bMPCThemeLoaded) {
+    if (AppIsThemeLoaded()) {
         dc.FillSolidRect(&r, CMPCTheme::NoBorderColor);
         CRect top(r.left, r.top, r.right, r.top + 1);
         dc.FillSolidRect(&top, CMPCTheme::WindowBGColor);
     } else {
         dc.Draw3dRect(&r, GetSysColor(COLOR_3DSHADOW), GetSysColor(COLOR_3DHILIGHT));
     }
-
 
     r.DeflateRect(1, 1);
 
@@ -514,7 +512,7 @@ HBRUSH CPlayerStatusBar::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 
 BOOL CPlayerStatusBar::PreTranslateMessage(MSG* pMsg)
 {
-    if (AfxGetAppSettings().bMPCThemeLoaded) {
+    if (AppIsThemeLoaded()) {
         themedToolTip.RelayEvent(pMsg);
     } else {
         m_tooltip.RelayEvent(pMsg);

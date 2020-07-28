@@ -185,7 +185,7 @@ BOOL CSubtitleDlDlg::OnInitDialog()
 {
     __super::OnInitDialog();
     m_progress.SetParent(&m_status);
-    if (AfxGetAppSettings().bMPCThemeLoaded) {
+    if (AppIsThemeLoaded()) {
         SetWindowTheme(m_progress.GetSafeHwnd(), _T(""), _T(""));
         m_progress.SetBarColor(CMPCTheme::ProgressBarColor);
         m_progress.SetBkColor(CMPCTheme::ProgressBarBGColor);
@@ -496,7 +496,7 @@ void CSubtitleDlDlg::OnRightClick(NMHDR* pNMHDR, LRESULT* pResult)
         m.AppendMenu(MF_SEPARATOR);
         m.AppendMenu(MF_STRING | (!subtitlesInfo.url.empty() ? MF_ENABLED : MF_DISABLED), OPEN_URL, ResStr(IDS_SUBMENU_OPENURL));
         m.AppendMenu(MF_STRING | (!subtitlesInfo.url.empty() ? MF_ENABLED : MF_DISABLED), COPY_URL, ResStr(IDS_SUBMENU_COPYURL));
-        if (AfxGetAppSettings().bMPCThemeLoaded) {
+        if (AppIsThemeLoaded()) {
             m.fulfillThemeReqs();
         }
 

@@ -96,7 +96,7 @@ UINT CMPCThemeMenu::findID(UINT& nPos, bool byCommand)
 
 void CMPCThemeMenu::cleanupItem(UINT nPosition, UINT nFlags)
 {
-    if (AfxGetAppSettings().bMPCThemeLoaded) {
+    if (AppIsThemeLoaded()) {
         UINT nID = findID(nPosition, 0 == (nFlags & MF_BYPOSITION));
 
         MENUITEMINFO tInfo = { sizeof(MENUITEMINFO) };
@@ -131,7 +131,7 @@ BOOL CMPCThemeMenu::AppendMenu(UINT nFlags, UINT_PTR nIDNewItem, LPCTSTR lpszNew
 
 void CMPCThemeMenu::fulfillThemeReqs(bool isMenubar)
 {
-    if (AfxGetAppSettings().bMPCThemeLoaded) {
+    if (AppIsThemeLoaded()) {
         MENUINFO oldInfo = { sizeof(MENUINFO) };
         oldInfo.fMask = MIM_STYLE;
         GetMenuInfo(&oldInfo);
@@ -193,7 +193,7 @@ void CMPCThemeMenu::fulfillThemeReqs(bool isMenubar)
 
 void CMPCThemeMenu::fulfillThemeReqsItem(UINT i, bool byCommand)
 {
-    if (AfxGetAppSettings().bMPCThemeLoaded) {
+    if (AppIsThemeLoaded()) {
         MENUITEMINFO tInfo = { sizeof(MENUITEMINFO) };
         tInfo.fMask = MIIM_DATA;
         GetMenuItemInfo(i, &tInfo, !byCommand);

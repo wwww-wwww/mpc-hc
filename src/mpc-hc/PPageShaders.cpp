@@ -167,7 +167,7 @@ CString CShaderListBox::GetTitle(const Shader& shader)
 void CShaderListBox::PreSubclassWindow()
 {
     CMPCThemeListBox::PreSubclassWindow();
-    if (AfxGetAppSettings().bMPCThemeLoaded) {
+    if (AppIsThemeLoaded()) {
         EnableToolTips(FALSE);
     } else {
         EnableToolTips(TRUE);

@@ -6,8 +6,7 @@
 
 CMPCThemeButton::CMPCThemeButton()
 {
-    const CAppSettings& s = AfxGetAppSettings();
-    if (&s && s.IsInitialized() && s.bMPCThemeLoaded) {
+    if (AppIsThemeLoaded()) {
         m_nFlatStyle = CMFCButton::BUTTONSTYLE_FLAT; //just setting this to get hovering working
     }
     drawShield = false;
@@ -169,7 +168,7 @@ void CMPCThemeButton::OnNMCustomdraw(NMHDR* pNMHDR, LRESULT* pResult)
 {
     LPNMCUSTOMDRAW pNMCD = reinterpret_cast<LPNMCUSTOMDRAW>(pNMHDR);
     *pResult = CDRF_DODEFAULT;
-    if (AfxGetAppSettings().bMPCThemeLoaded) {
+    if (AppIsThemeLoaded()) {
         if (pNMCD->dwDrawStage == CDDS_PREERASE) {
             drawButton(pNMCD->hdc, pNMCD->rc, pNMCD->uItemState);
             *pResult = CDRF_SKIPDEFAULT;

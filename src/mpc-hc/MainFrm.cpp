@@ -3270,6 +3270,7 @@ void CMainFrame::OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu)
     }
 
     if (fPnSPresets) {
+        bool usetheme = AppIsThemeLoaded();
         const CAppSettings& s = AfxGetAppSettings();
         INT_PTR i = 0, j = s.m_pnspresets.GetCount();
         for (; i < j; i++) {
@@ -3282,7 +3283,7 @@ void CMainFrame::OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu)
         {
             VERIFY(pPopupMenu->InsertMenu(ID_VIEW_RESET, MF_BYCOMMAND, ID_PANNSCAN_PRESETS_START + i, ResStr(IDS_PANSCAN_EDIT)));
             VERIFY(pPopupMenu->InsertMenu(ID_VIEW_RESET, MF_BYCOMMAND | MF_SEPARATOR));
-            if (s.bMPCThemeLoaded) {
+            if (usetheme) {
                 CMPCThemeMenu::fulfillThemeReqsItem(pPopupMenu, (UINT)(ID_PANNSCAN_PRESETS_START + i), true);
                 UINT pos = CMPCThemeMenu::getPosFromID(pPopupMenu, ID_VIEW_RESET); //separator is inserted right before view_reset
                 CMPCThemeMenu::fulfillThemeReqsItem(pPopupMenu, pos - 1);

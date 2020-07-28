@@ -339,7 +339,7 @@ int CALLBACK CPPageSubMisc::SortCompare(LPARAM lParam1, LPARAM lParam2, LPARAM l
 
 BOOL CPPageSubMisc::PreTranslateMessage(MSG* pMsg)
 {
-    if (AfxGetAppSettings().bMPCThemeLoaded) {
+    if (AppIsThemeLoaded()) {
         if (IsWindow(themedToolTip)) {
             themedToolTip.RelayEvent(pMsg);
         }
