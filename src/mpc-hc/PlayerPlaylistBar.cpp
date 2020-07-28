@@ -1256,7 +1256,6 @@ void CPlayerPlaylistBar::OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruc
 
     CDC* pDC = CDC::FromHandle(lpDrawItemStruct->hDC);
     int oldDC = pDC->SaveDC();
-    const CAppSettings& s = AfxGetAppSettings();
 
     COLORREF bgColor;
 

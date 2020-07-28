@@ -1047,8 +1047,6 @@ BEGIN
     LTEXT           "Languages in order of preference:",IDC_STATIC,14,160,216,8
     EDITTEXT        IDC_EDIT3,233,156,108,14,ES_AUTOHSCROLL
     CONTROL         "",IDC_LIST1,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_SHAREIMAGELISTS | LVS_ALIGNLEFT | WS_BORDER | WS_TABSTOP,14,175,326,88
-    CONTROL         "Automatically upload active subtitles at the end of video playback",IDC_CHECK6,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,14,266,324,8
 END
 
 IDD_UPDATE_DIALOG DIALOGEX 0, 0, 300, 60
