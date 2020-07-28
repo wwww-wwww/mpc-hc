@@ -1648,11 +1648,6 @@ msgctxt "IDD_PPAGESUBMISC_IDC_STATIC"
 msgid "Languages in order of preference:"
 msgstr "Bahasa mengikut tertib keutamaan:"
 
-msgctxt "IDD_PPAGESUBMISC_IDC_CHECK6"
-msgid "Automatically upload active subtitles at the end of video playback"
-msgstr ""
-"Muat naik sarikata aktif secara automatik dipenghujung main balik video"
-
 msgctxt "IDD_UPDATE_DIALOG_CAPTION"
 msgid "Update Checker"
 msgstr "Kemakini Pemeriksa"

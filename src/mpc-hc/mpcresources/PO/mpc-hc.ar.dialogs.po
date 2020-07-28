@@ -1638,10 +1638,6 @@ msgctxt "IDD_PPAGESUBMISC_IDC_STATIC"
 msgid "Languages in order of preference:"
 msgstr "اللغات بالترتيب حسب تفضيلها (مثل \"eng ell spa\"):"
 
-msgctxt "IDD_PPAGESUBMISC_IDC_CHECK6"
-msgid "Automatically upload active subtitles at the end of video playback"
-msgstr "ارفع الترجمات النشطة عند نهاية مقطع الفيديو"
-
 msgctxt "IDD_UPDATE_DIALOG_CAPTION"
 msgid "Update Checker"
 msgstr "فاحص التحديث"

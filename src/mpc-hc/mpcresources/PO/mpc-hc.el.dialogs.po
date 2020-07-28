@@ -1652,10 +1652,6 @@ msgctxt "IDD_PPAGESUBMISC_IDC_STATIC"
 msgid "Languages in order of preference:"
 msgstr "Γλώσσες κατά σειρά προτίμησης:"
 
-msgctxt "IDD_PPAGESUBMISC_IDC_CHECK6"
-msgid "Automatically upload active subtitles at the end of video playback"
-msgstr "Αυτόματη αποστολή ενεργών υπότιτλων στο τέλος της αναπαραγωγής βίντεο"
-
 msgctxt "IDD_UPDATE_DIALOG_CAPTION"
 msgid "Update Checker"
 msgstr "Έλεγχος για ενημερώσεις"
