@@ -3816,6 +3816,9 @@ void CSyncAP::RenderThread()
         }
     };
 
+    const CRenderersSettings r = GetRenderersSettings();
+    double dTargetSyncOffset = r.m_AdvRendSets.fTargetSyncOffset;
+
     while (!bQuit) {
         m_lNextSampleWait = 1; // Default value for running this loop
         int nSamplesLeft = 0;
@@ -3823,9 +3826,6 @@ void CSyncAP::RenderThread()
         LONG lDisplayCycle  = (LONG)(GetDisplayCycle());
         LONG lDisplayCycle2 = (LONG)(GetDisplayCycle() / 2.0); // These are a couple of empirically determined constants used the control the "snap" function
         LONG lDisplayCycle4 = (LONG)(GetDisplayCycle() / 4.0);
-
-        const CRenderersSettings& r = GetRenderersSettings();
-        double dTargetSyncOffset = r.m_AdvRendSets.fTargetSyncOffset;
 
         if ((m_nRenderState == Started || !m_bPrerolled) && !pNewSample) {  // If either streaming or the pre-roll sample and no sample yet fetched
             if (SUCCEEDED(GetScheduledSample(&pNewSample, nSamplesLeft))) { // Get the next sample
