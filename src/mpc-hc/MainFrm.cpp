@@ -13071,6 +13071,10 @@ void CMainFrame::CloseMediaPrivate()
     }
     m_pSubClock.Release();
 
+    if (m_pVW && !m_pMVRS) {
+        m_pVW->put_Owner(NULL);
+    }
+
     // IMPORTANT: IVMRSurfaceAllocatorNotify/IVMRSurfaceAllocatorNotify9 has to be released before the VMR/VMR9, otherwise it will crash in Release()
     m_OSD.Stop();
     m_pMVRSR.Release();
