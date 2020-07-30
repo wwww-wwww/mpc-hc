@@ -15791,6 +15791,7 @@ void CMainFrame::OpenMedia(CAutoPtr<OpenMediaData> pOMD)
     // don't set video renderer output rect until the window is repositioned
     m_bDelaySetOutputRect = true;
 
+#if 0
     // display corresponding media icon in status bar
     if (pFileData) {
         CString filename = m_wndPlaylistBar.GetCurFileName();
@@ -15802,6 +15803,7 @@ void CMainFrame::OpenMedia(CAutoPtr<OpenMediaData> pOMD)
         // TODO: Create icons for pDeviceData
         m_wndStatusBar.SetMediaType(_T(".unknown"));
     }
+#endif
 
     // initiate graph creation, OpenMediaPrivate() will call OnFilePostOpenmedia()
     if (bUseThread) {
