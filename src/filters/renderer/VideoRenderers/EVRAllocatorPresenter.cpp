@@ -1654,6 +1654,7 @@ void CEVRAllocatorPresenter::GetMixerThread()
                 break;
             case WAIT_TIMEOUT: {
                 CRenderersData* rd = GetRenderersData();
+                // FIXME: can give access violation error if main thread is closing down
                 if (rd && rd->m_iDisplayStats) {
                     CComPtr<IPin> pPin;
                     CComPtr<IPin> pPinTo;
