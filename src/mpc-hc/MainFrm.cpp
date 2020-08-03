@@ -1844,15 +1844,11 @@ void CMainFrame::OnTimer(UINT_PTR nIDEvent)
                     case PM_FILE:
                         g_bExternalSubtitleTime = false;
                         if (m_pMS) {
-                            try {
-                                m_pMS->GetCurrentPosition(&rtNow);
-                                m_pMS->GetDuration(&rtDur);
+                            m_pMS->GetCurrentPosition(&rtNow);
+                            m_pMS->GetDuration(&rtDur);
 
-                                if (abRepeatPositionBEnabled && rtNow >= abRepeatPositionB) {
-                                    PerformABRepeat();
-                                    return;
-                                }
-                            } catch(...) {
+                            if (abRepeatPositionBEnabled && rtNow >= abRepeatPositionB) {
+                                PerformABRepeat();
                                 return;
                             }
 
