@@ -341,8 +341,10 @@ void CPlayerPlaylistBar::ParsePlayList(CAtlList<CString>& fns, CAtlList<CString>
         ParseMPCPlayList(fns.GetHead());
         return;
     } else if (ct == "audio/x-mpegurl") {
-        if (ParseM3UPlayList(fns.GetHead())) {
-            return; //we have handled this one. if parse fails it should fall through to AddItem below
+        if (ydl_src.IsEmpty()) {
+            if (ParseM3UPlayList(fns.GetHead())) {
+                return; //we have handled this one. if parse fails it should fall through to AddItem below
+            }
         }
     } else {
 #if INTERNAL_SOURCEFILTER_MPEG
