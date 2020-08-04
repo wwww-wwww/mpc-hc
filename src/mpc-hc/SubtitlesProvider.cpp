@@ -666,7 +666,15 @@ SRESULT podnapisi::Search(const SubtitlesInfo& pFileInfo)
             }
         }
         const auto languages = LanguagesISO6391();
-        url += (!languages.empty() ? "&sL=" + JoinContainer(languages, ",") : "");
+        if (!languages.empty()) {
+            url += "&sL=" + JoinContainer(languages, ",");
+            // add alternative language codes used by the provider in case they differ from standard ISO code
+            for (auto it = languages.begin(); it != languages.end(); ++it) {
+                if ((*it).compare("pb") == 0) { // Portuguese Brazil
+                    url += ",pt-br";
+                }
+            }
+        }
         url += "&page=" + std::to_string(page);
         LOG(LOG_INPUT, url.c_str());
 
