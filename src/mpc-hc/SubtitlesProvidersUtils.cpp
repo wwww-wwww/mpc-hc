@@ -774,7 +774,16 @@ std::list<std::string> SubtitlesProvidersUtils::LanguagesISO6391()
 {
     std::list<std::string> result;
     for (const auto& iter : StringTokenize(UTF16To8(AfxGetAppSettings().strSubtitlesLanguageOrder).GetString(), ",; ")) {
-        result.push_back(iter.length() > 2 ? CStringA(ISOLang::ISO6392To6391(iter.c_str())).GetString() : iter);
+        if (iter.length() > 2) {
+            std::string lang = CStringA(ISOLang::ISO6392To6391(iter.c_str())).GetString();
+            if (!lang.empty()) {
+                result.push_back(lang);
+            }
+        } else if (iter.length() == 2) {
+            if (ISOLang::IsISO6391(iter.c_str())) {
+                result.push_back(iter);
+            }
+        }
     }
     return result;
 }
@@ -783,7 +792,17 @@ std::list<std::string> SubtitlesProvidersUtils::LanguagesISO6392()
 {
     std::list<std::string> result;
     for (const auto& iter : StringTokenize(UTF16To8(AfxGetAppSettings().strSubtitlesLanguageOrder).GetString(), ",; ")) {
-        result.push_back(iter.length() < 3 ? ISOLang::ISO6391To6392(iter.c_str()).GetString() : iter);
+        if (iter.length() == 2) {
+            std::string lang = ISOLang::ISO6391To6392(iter.c_str()).GetString();
+            if (!lang.empty()) {
+                result.push_back(lang);
+            }
+        } else if (iter.length() == 3) {
+            if (ISOLang::IsISO6392(iter.c_str())) {
+                result.push_back(iter);
+            }
+        }
+        
     }
     return result;
 }
