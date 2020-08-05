@@ -90,6 +90,7 @@ const COLORREF CMPCTheme::StaticEtchedColor = COLORREF(RGB(65, 65, 65));
 
 const COLORREF CMPCTheme::ListCtrlDisabledBGColor = COLORREF(RGB(40, 40, 40));
 const COLORREF CMPCTheme::ListCtrlGridColor = COLORREF(RGB(43, 43, 43));
+const COLORREF CMPCTheme::ListCtrlErrorColor = COLORREF(RGB(242, 13, 13));
 const COLORREF CMPCTheme::HeaderCtrlGridColor = COLORREF(RGB(99, 99, 99));
 const COLORREF CMPCTheme::AudioSwitcherGridColor = COLORREF(RGB(99, 99, 99));
 

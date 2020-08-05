@@ -1242,7 +1242,7 @@ void CPlayerSubresyncBar::DoCustomPrePaint()
     }
 }
 
-void CPlayerSubresyncBar::GetCustomTextColors(INT_PTR nItem, int iSubItem, COLORREF& clrText, COLORREF& clrTextBk)
+void CPlayerSubresyncBar::GetCustomTextColors(INT_PTR nItem, int iSubItem, COLORREF& clrText, COLORREF& clrTextBk, bool& overrideSelectedBG)
 {
     COLORREF fadeText, normalText, activeNormalText, activeFadeText;
     COLORREF bgNormalOdd, bgNormalEven, bgMod, bgAdjust;
@@ -1328,7 +1328,8 @@ void CPlayerSubresyncBar::OnCustomdrawList(NMHDR* pNMHDR, LRESULT* pResult)
 
         *pResult = CDRF_NOTIFYPOSTPAINT | CDRF_NOTIFYSUBITEMDRAW;
     } else if ((CDDS_ITEMPREPAINT | CDDS_SUBITEM) == pLVCD->nmcd.dwDrawStage) {
-        GetCustomTextColors(pLVCD->nmcd.dwItemSpec, pLVCD->iSubItem, pLVCD->clrText, pLVCD->clrTextBk);
+        bool ignore;
+        GetCustomTextColors(pLVCD->nmcd.dwItemSpec, pLVCD->iSubItem, pLVCD->clrText, pLVCD->clrTextBk, ignore);
         *pResult = CDRF_NOTIFYPOSTPAINT;
     } else if ((CDDS_ITEMPOSTPAINT | CDDS_SUBITEM) == pLVCD->nmcd.dwDrawStage) {
         //      *pResult = CDRF_DODEFAULT;

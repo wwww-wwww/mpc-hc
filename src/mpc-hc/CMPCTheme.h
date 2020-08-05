@@ -89,6 +89,7 @@ public:
 
     static const COLORREF ListCtrlDisabledBGColor;
     static const COLORREF ListCtrlGridColor;
+    static const COLORREF ListCtrlErrorColor;
     static const COLORREF HeaderCtrlGridColor;
     static const COLORREF AudioSwitcherGridColor;
 

@@ -280,13 +280,18 @@ void CMPCThemePlayerListCtrl::drawItem(CDC* pDC, int nItem, int nSubItem)
         if (rClient.left <= rect.right && rClient.right >= rect.left && rClient.top <= rect.bottom && rClient.bottom >= rect.top) {
             COLORREF textColor = CMPCTheme::TextFGColor;
             COLORREF bgColor = CMPCTheme::ContentBGColor;
+            COLORREF selectedBGColor = CMPCTheme::ContentSelectedColor;
 
             COLORREF oldTextColor = pDC->GetTextColor();
             COLORREF oldBkColor = pDC->GetBkColor();
 
             CString text = GetItemText(nItem, nSubItem);
             if (nullptr != customThemeInterface) { //subclasses can override colors here
-                customThemeInterface->GetCustomTextColors(nItem, nSubItem, textColor, bgColor);
+                bool overrideSelectedBG = false;
+                customThemeInterface->GetCustomTextColors(nItem, nSubItem, textColor, bgColor, overrideSelectedBG);
+                if (overrideSelectedBG) {
+                    selectedBGColor = bgColor;
+                }
             }
 
             pDC->SetTextColor(textColor);
@@ -377,7 +382,7 @@ void CMPCThemePlayerListCtrl::drawItem(CDC* pDC, int nItem, int nSubItem)
 
             if (IsWindowEnabled()) {
                 if (GetItemState(nItem, LVIS_SELECTED) == LVIS_SELECTED && (nSubItem == 0 || fullRowSelect)) {
-                    bgColor = CMPCTheme::ContentSelectedColor;
+                    bgColor = selectedBGColor;
                     if (LVS_REPORT != dwStyle) { //in list mode we don't fill the "whole" column
                         CRect tmp = rText;
                         dcMem.DrawText(text, tmp, textFormat | DT_CALCRECT); //end of string
