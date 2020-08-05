@@ -4180,9 +4180,11 @@ msgstr ""
 
 msgctxt "IDS_SUB_CREDENTIALS_ERROR"
 msgid ""
-"Failed to log in on \"%1\" with username \"%2\".\n"
+"Failed to log in on subtitle search provider \"%1\" with username \"%2\".\n"
 "\n"
-"Please enter the correct username and password or reset the credentials to log in as anonymous user."
+"Check if your username and password are correct.\n"
+"\n"
+"Failure can also happen when you are temporarily blocked due to too many search requests from your account or IP address."
 msgstr ""
 
 msgctxt "IDS_SUB_AUTODL_IGNORE_TOOLTIP"
