@@ -21,6 +21,12 @@ CMPCThemeResizableDialog::~CMPCThemeResizableDialog()
 {
 }
 
+BOOL CMPCThemeResizableDialog::OnInitDialog() {
+    BOOL ret = CResizableDialog::OnInitDialog();
+    CMPCThemeUtil::enableWindows10DarkFrame(this);
+    return ret;
+}
+
 void CMPCThemeResizableDialog::fulfillThemeReqs()
 {
     CMPCThemeUtil::enableWindows10DarkFrame(this);
