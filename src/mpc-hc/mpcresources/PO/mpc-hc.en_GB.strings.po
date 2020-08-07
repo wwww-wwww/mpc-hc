@@ -1659,7 +1659,7 @@ msgstr "After Playback: Close"
 
 msgctxt "IDS_FRAME_INIT_FAILED"
 msgid "MPC-HC encountered a problem during initialization."
-msgstr ""
+msgstr "MPC-HC encountered a problem during initialisation."
 
 msgctxt "IDS_TIME_SHIFT_TOOLTIP"
 msgid ""
@@ -1801,6 +1801,9 @@ msgid ""
 "work correctly. This problem might be caused by an incompatibility with "
 "certain security software."
 msgstr ""
+"MPC-HC encountered a problem during initialisation. DVD playback may not "
+"work correctly. This problem might be caused by an incompatibility with "
+"certain security software."
 
 msgctxt "IDS_PPAGEFULLSCREEN_SHOWNEVER"
 msgid "Never show"

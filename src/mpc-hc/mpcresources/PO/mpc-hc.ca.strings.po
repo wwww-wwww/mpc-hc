@@ -1689,7 +1689,7 @@ msgstr "Després de la reproducció: Tanca el fitxer"
 
 msgctxt "IDS_FRAME_INIT_FAILED"
 msgid "MPC-HC encountered a problem during initialization."
-msgstr ""
+msgstr "L'MPC-HC ha topat amb un problema durant la inicialització."
 
 msgctxt "IDS_TIME_SHIFT_TOOLTIP"
 msgid ""
@@ -1833,6 +1833,9 @@ msgid ""
 "work correctly. This problem might be caused by an incompatibility with "
 "certain security software."
 msgstr ""
+"L'MPC-HC ha trobat un problema durant la inicialització. La reproducció de "
+"DVD podria funcionar incorrectament. Això pot ser causat per algunes "
+"incompatibilitats amb certes eines de seguretat."
 
 msgctxt "IDS_PPAGEFULLSCREEN_SHOWNEVER"
 msgid "Never show"
