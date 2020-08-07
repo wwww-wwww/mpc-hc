@@ -171,9 +171,41 @@ SRESULT OpenSubtitles::Search(const SubtitlesInfo& pFileInfo)
     }
 
     int nCount = result["data"].size();
+    bool searchedByFileName = false;
+
+    if (nCount == 0 && movieInfo.hasMember("moviehash")) {
+        movieInfo.clear();
+    //    movieInfo["tag"] = std::string(pFileInfo.fileName); //sadly, tag support has been disabled on opensubtitles.org :-/
+        movieInfo["query"] = std::string(pFileInfo.fileName); //search by filename...as a query
+        movieInfo["sublanguageid"] = !languages.empty() ? JoinContainer(languages, ",") : "all";
+        if (!xmlrpc->execute("SearchSubtitles", args, result)) {
+            LOG(_T("search failed"));
+            return SR_FAILED;
+        }
+        if (result["data"].getType() != XmlRpcValue::Type::TypeArray) {
+            LOG(_T("search failed (invalid data)"));
+            return SR_FAILED;
+        }
+        nCount = result["data"].size();
+        searchedByFileName = true;
+    }
+
+    std::string fnameLower = pFileInfo.fileName;
+    std::transform(fnameLower.begin(), fnameLower.end(), fnameLower.begin(), [](unsigned char c) { return std::tolower(c); });
+
     for (int i = 0; i < nCount; ++i) {
         CheckAbortAndReturn();
         XmlRpcValue& data(result["data"][i]);
+        std::string subFileName = (const char*)data["SubFileName"];
+
+        if (searchedByFileName) {
+            std::string subFilePrefix = subFileName.substr(0, subFileName.find_last_of("."));
+            std::transform(subFilePrefix.begin(), subFilePrefix.end(), subFilePrefix.begin(), [](unsigned char c) { return std::tolower(c); });
+            if (fnameLower.compare(subFilePrefix) != 0) {
+                continue;
+            }
+        }
+
         SubtitlesInfo pSubtitlesInfo;
         pSubtitlesInfo.id = (const char*)data["IDSubtitleFile"];
         pSubtitlesInfo.discNumber = data["SubActualCD"];
@@ -183,7 +215,7 @@ SRESULT OpenSubtitles::Search(const SubtitlesInfo& pFileInfo)
         pSubtitlesInfo.languageName = (const char*)data["LanguageName"];
         pSubtitlesInfo.downloadCount = data["SubDownloadsCnt"];
 
-        pSubtitlesInfo.fileName = (const char*)data["SubFileName"];
+        pSubtitlesInfo.fileName = subFileName;
         regexResult results;
         stringMatch("\"([^\"]+)\" (.+)", (const char*)data["MovieName"], results);
         if (!results.empty()) {
