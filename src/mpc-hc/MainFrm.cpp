@@ -1873,6 +1873,7 @@ void CMainFrame::OnTimer(UINT_PTR nIDEvent)
                         g_bExternalSubtitleTime = false;
                         if (m_pMS) {
                             m_pMS->GetCurrentPosition(&rtNow);
+                            if (!m_pMS) return; // can happen very rarely due to race condition
                             m_pMS->GetDuration(&rtDur);
 
                             if (abRepeatPositionBEnabled && rtNow >= abRepeatPositionB) {
