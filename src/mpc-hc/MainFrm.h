@@ -196,6 +196,11 @@ private:
         ZOOM_AUTOFIT_LARGER = -2
     };
 
+
+    typedef std::map<int, float> PlaybackRateMap;
+    static PlaybackRateMap filePlaybackRates;
+    static PlaybackRateMap dvdPlaybackRates;
+
     friend class CPPageFileInfoSheet;
     friend class CPPageLogo;
     friend class CMouse;

@@ -125,6 +125,32 @@ static UINT s_uTaskbarRestart = RegisterWindowMessage(_T("TaskbarCreated"));
 static UINT WM_NOTIFYICON = RegisterWindowMessage(_T("MYWM_NOTIFYICON"));
 static UINT s_uTBBC = RegisterWindowMessage(_T("TaskbarButtonCreated"));
 
+CMainFrame::PlaybackRateMap CMainFrame::filePlaybackRates = {
+    { ID_PLAY_PLAYBACKRATE_025,  .25f},
+    { ID_PLAY_PLAYBACKRATE_050,  .50f},
+    { ID_PLAY_PLAYBACKRATE_075,  .75f},
+    { ID_PLAY_PLAYBACKRATE_090,  .90f},
+    { ID_PLAY_PLAYBACKRATE_100, 1.00f},
+    { ID_PLAY_PLAYBACKRATE_110, 1.10f},
+    { ID_PLAY_PLAYBACKRATE_125, 1.25f},
+    { ID_PLAY_PLAYBACKRATE_150, 1.50f},
+    { ID_PLAY_PLAYBACKRATE_200, 2.00f},
+    { ID_PLAY_PLAYBACKRATE_300, 3.00f},
+    { ID_PLAY_PLAYBACKRATE_400, 4.00f},
+    { ID_PLAY_PLAYBACKRATE_600, 6.00f},
+    { ID_PLAY_PLAYBACKRATE_800, 8.00f},
+};
+
+CMainFrame::PlaybackRateMap CMainFrame::dvdPlaybackRates = {
+    { ID_PLAY_PLAYBACKRATE_025,  .25f},
+    { ID_PLAY_PLAYBACKRATE_050,  .50f},
+    { ID_PLAY_PLAYBACKRATE_100, 1.00f},
+    { ID_PLAY_PLAYBACKRATE_200, 2.00f},
+    { ID_PLAY_PLAYBACKRATE_400, 4.00f},
+    { ID_PLAY_PLAYBACKRATE_800, 8.00f},
+};
+
+
 #include "MediaInfo/MediaInfoDLL.h"
 using namespace MediaInfoDLL;
 
@@ -446,6 +472,8 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWnd)
     ON_UPDATE_COMMAND_UI_RANGE(ID_PLAY_SEEKKEYBACKWARD, ID_PLAY_SEEKKEYFORWARD, OnUpdatePlaySeek)
     ON_COMMAND_RANGE(ID_PLAY_DECRATE, ID_PLAY_INCRATE, OnPlayChangeRate)
     ON_UPDATE_COMMAND_UI_RANGE(ID_PLAY_DECRATE, ID_PLAY_INCRATE, OnUpdatePlayChangeRate)
+    ON_COMMAND_RANGE(ID_PLAY_PLAYBACKRATE_START, ID_PLAY_PLAYBACKRATE_END, OnPlayChangeRate)
+    ON_UPDATE_COMMAND_UI_RANGE(ID_PLAY_PLAYBACKRATE_START, ID_PLAY_PLAYBACKRATE_END, OnUpdatePlayChangeRate)
     ON_COMMAND(ID_PLAY_RESETRATE, OnPlayResetRate)
     ON_UPDATE_COMMAND_UI(ID_PLAY_RESETRATE, OnUpdatePlayResetRate)
     ON_COMMAND_RANGE(ID_PLAY_INCAUDDELAY, ID_PLAY_DECAUDDELAY, OnPlayChangeAudDelay)
@@ -8125,6 +8153,15 @@ void CMainFrame::OnPlayChangeRate(UINT nID)
             } else {
                 SetPlayingRate(m_dSpeedRate / 2.0);
             }
+        } else if (nID > ID_PLAY_PLAYBACKRATE_START && nID < ID_PLAY_PLAYBACKRATE_END) {
+            if (filePlaybackRates.contains(nID)) {
+                SetPlayingRate(filePlaybackRates[nID]);
+            } else if (nID == ID_PLAY_PLAYBACKRATE_FPS24 || nID == ID_PLAY_PLAYBACKRATE_FPS25) {
+                if (m_pCAP) {
+                    float target = (nID == ID_PLAY_PLAYBACKRATE_FPS24 ? 24.0f : 25.0f);
+                    SetPlayingRate(target / m_pCAP->GetFPS());
+                }
+            }
         }
     } else if (GetPlaybackMode() == PM_DVD) {
         if (nID == ID_PLAY_INCRATE) {
@@ -8142,6 +8179,10 @@ void CMainFrame::OnPlayChangeRate(UINT nID)
                 SetPlayingRate(-1);
             } else {
                 SetPlayingRate(m_dSpeedRate / 2.0);
+            }
+        } else if (nID > ID_PLAY_PLAYBACKRATE_START && nID < ID_PLAY_PLAYBACKRATE_END) {
+            if (dvdPlaybackRates.contains(nID)) {
+                SetPlayingRate(dvdPlaybackRates[nID]);
             }
         }
     } else if (GetPlaybackMode() == PM_ANALOG_CAPTURE) {
@@ -8193,25 +8234,60 @@ void CMainFrame::OnUpdatePlayChangeRate(CCmdUI* pCmdUI)
     bool fEnable = false;
 
     if (GetLoadState() == MLS::LOADED) {
-        bool fInc = pCmdUI->m_nID == ID_PLAY_INCRATE;
+        if (pCmdUI->m_nID > ID_PLAY_PLAYBACKRATE_START && pCmdUI->m_nID < ID_PLAY_PLAYBACKRATE_END && pCmdUI->m_pMenu) {
+            fEnable = false;
+            if (GetPlaybackMode() == PM_FILE) {
+                if (filePlaybackRates.contains(pCmdUI->m_nID)) {
+                    fEnable = true;
+                    if (filePlaybackRates[pCmdUI->m_nID] == m_dSpeedRate) {
+                        pCmdUI->m_pMenu->CheckMenuRadioItem(ID_PLAY_PLAYBACKRATE_START, ID_PLAY_PLAYBACKRATE_END, pCmdUI->m_nID, MF_BYCOMMAND);
+                    }
+                } else if (pCmdUI->m_nID == ID_PLAY_PLAYBACKRATE_FPS24 || pCmdUI->m_nID == ID_PLAY_PLAYBACKRATE_FPS25) {
+                    fEnable = true;
+                    if (m_pCAP) {
+                        float target = (pCmdUI->m_nID == ID_PLAY_PLAYBACKRATE_FPS24 ? 24.0f : 25.0f);
+                        if (target / m_pCAP->GetFPS() == m_dSpeedRate) {
+                            bool found = false;
+                            for (auto const& [key, rate] : filePlaybackRates) { //make sure it wasn't a standard rate already
+                                if (rate == m_dSpeedRate) {
+                                    found = true;
+                                }
+                            }
+                            if (!found) { //must have used fps, as it didn't match a standard rate
+                                pCmdUI->m_pMenu->CheckMenuRadioItem(ID_PLAY_PLAYBACKRATE_START, ID_PLAY_PLAYBACKRATE_END, pCmdUI->m_nID, MF_BYCOMMAND);
+                            }
+                        }
+                    }
+                }
+            } else if (GetPlaybackMode() == PM_DVD) {
+                if (dvdPlaybackRates.contains(pCmdUI->m_nID)) {
+                    fEnable = true;
+                    if (dvdPlaybackRates[pCmdUI->m_nID] == m_dSpeedRate) {
+                        pCmdUI->m_pMenu->CheckMenuRadioItem(ID_PLAY_PLAYBACKRATE_START, ID_PLAY_PLAYBACKRATE_END, pCmdUI->m_nID, MF_BYCOMMAND);
+                    }
+                }
+            }
+        } else {
+            bool fInc = pCmdUI->m_nID == ID_PLAY_INCRATE;
 
-        fEnable = true;
-        if (fInc && m_dSpeedRate >= 128.0) {
-            fEnable = false;
-        } else if (!fInc && GetPlaybackMode() == PM_FILE && m_dSpeedRate < 0.125) {
-            fEnable = false;
-        } else if (!fInc && GetPlaybackMode() == PM_DVD && m_dSpeedRate <= -128.0) {
-            fEnable = false;
-        } else if (GetPlaybackMode() == PM_DVD && m_iDVDDomain != DVD_DOMAIN_Title) {
-            fEnable = false;
-        } else if (m_fRealMediaGraph || m_fShockwaveGraph) {
-            fEnable = false;
-        } else if (GetPlaybackMode() == PM_ANALOG_CAPTURE && (!m_wndCaptureBar.m_capdlg.IsTunerActive() || m_fCapturing)) {
-            fEnable = false;
-        } else if (GetPlaybackMode() == PM_DIGITAL_CAPTURE) {
-            fEnable = false;
-        } else if (m_fLiveWM) {
-            fEnable = false;
+            fEnable = true;
+            if (fInc && m_dSpeedRate >= 128.0) {
+                fEnable = false;
+            } else if (!fInc && GetPlaybackMode() == PM_FILE && m_dSpeedRate < 0.125) {
+                fEnable = false;
+            } else if (!fInc && GetPlaybackMode() == PM_DVD && m_dSpeedRate <= -128.0) {
+                fEnable = false;
+            } else if (GetPlaybackMode() == PM_DVD && m_iDVDDomain != DVD_DOMAIN_Title) {
+                fEnable = false;
+            } else if (m_fRealMediaGraph || m_fShockwaveGraph) {
+                fEnable = false;
+            } else if (GetPlaybackMode() == PM_ANALOG_CAPTURE && (!m_wndCaptureBar.m_capdlg.IsTunerActive() || m_fCapturing)) {
+                fEnable = false;
+            } else if (GetPlaybackMode() == PM_DIGITAL_CAPTURE) {
+                fEnable = false;
+            } else if (m_fLiveWM) {
+                fEnable = false;
+            }
         }
     }
 
