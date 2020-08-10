@@ -282,7 +282,8 @@ static bool FindRedir(const CString& fn, CString ct, CAtlList<CString>& fns, con
 
     CTextFile f(CTextFile::UTF8);
     if (f.Open(fn)) {
-        for (CString tmp; f.ReadString(tmp); body += tmp + '\n') {
+        int i = 0;
+        for (CString tmp; i < 10000 && f.ReadString(tmp); body += tmp + '\n', ++i) {
             ;
         }
     }
@@ -326,6 +327,7 @@ CStringA GetContentType(CString fn, CAtlList<CString>* redir)
     CString ct, body;
     BOOL isurl = false;
     BOOL ishttp = false;
+    BOOL parsefile = false;
 
     fn.Trim();
 
@@ -487,43 +489,32 @@ CStringA GetContentType(CString fn, CAtlList<CString>* redir)
 
     // Try to guess from the extension if we don't have much info yet
     if (!fn.IsEmpty() && (ct.IsEmpty() || ct == _T("text/plain"))) {
-        BOOL parsebody = false;
         CPath p(fn);
         CString ext = p.GetExtension().MakeLower();
         if (ext == _T(".mpcpl")) {
             ct = _T("application/x-mpc-playlist");
         } else if (ext == _T(".pls")) {
             ct = _T("audio/x-scpls");
-            parsebody = true;
+            parsefile = true;
         } else if (ext == _T(".m3u") || ext == _T(".m3u8")) {
             ct = _T("audio/x-mpegurl");
         } else if (ext == _T(".bdmv")) {
             ct = _T("application/x-bdmv-playlist");
         } else if (ext == _T(".asx")) {
             ct = _T("video/x-ms-asf");
-            parsebody = true;
+            parsefile = true;
         } else if (ext == _T(".swf")) {
             ct = _T("application/x-shockwave-flash");
         } else if (ext == _T(".qtl")) {
             ct = _T("application/x-quicktimeplayer");
-            parsebody = true;
+            parsefile = true;
         } else if (ext == _T(".ram")) {
             ct = _T("audio/x-pn-realaudio");
-            parsebody = true;
-        }
-
-        if (!isurl && parsebody) {
-            FILE* f = nullptr;
-            if (!_tfopen_s(&f, fn, _T("rb"))) {
-                CStringA str;
-                str.ReleaseBufferSetLength((int)fread(str.GetBuffer(10240), 1, 10240, f));
-                body = AToT(str);
-                fclose(f);
-            }
+            parsefile = true;
         }
     }
 
-    if (redir && !ct.IsEmpty()) {
+    if (redir && !ct.IsEmpty() && (isurl && !body.IsEmpty() || !isurl && parsefile) ) {
         std::vector<std::wregex> res;
         const std::wregex::flag_type reFlags = std::wregex::icase | std::wregex::optimize;
 
@@ -546,12 +537,10 @@ CStringA GetContentType(CString fn, CAtlList<CString>* redir)
             res.emplace_back(_T("http://[^\n]+"), reFlags);
         }
 
-        if (!body.IsEmpty()) {
-            if (isurl) {
-                FindRedir(url, ct, body, *redir, res);
-            } else {
-                FindRedir(fn, ct, *redir, res);
-            }
+        if (isurl) {
+            FindRedir(url, ct, body, *redir, res);
+        } else {
+            FindRedir(fn, ct, *redir, res);
         }
     }
 

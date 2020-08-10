@@ -308,6 +308,10 @@ void CPlayerPlaylistBar::ParsePlayList(CAtlList<CString>& fns, CAtlList<CString>
     if (fns.IsEmpty()) {
         return;
     }
+    if (redir_count >= 5) {
+        ASSERT(FALSE);
+        return;
+    }
 
     ResolveLinkFiles(fns);
 
@@ -326,13 +330,9 @@ void CPlayerPlaylistBar::ParsePlayList(CAtlList<CString>& fns, CAtlList<CString>
     CAtlList<CString> redir;
     CStringA ct = GetContentType(fns.GetHead(), &redir);
     if (!redir.IsEmpty()) {
-        if (redir_count < 5) {
-            POSITION pos = redir.GetHeadPosition();
-            while (pos) {
-                ParsePlayList(sl.GetNext(pos), subs, redir_count + 1);
-            }
-        } else {
-            ASSERT(FALSE);
+        POSITION pos = redir.GetHeadPosition();
+        while (pos) {
+            ParsePlayList(sl.GetNext(pos), subs, redir_count + 1);
         }
         return;
     }
