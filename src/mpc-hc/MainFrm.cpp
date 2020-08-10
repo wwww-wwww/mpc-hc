@@ -17338,7 +17338,7 @@ HRESULT CMainFrame::UpdateThumbarButton(MPC_PLAYSTATE iPlayState)
 
 HRESULT CMainFrame::UpdateThumbnailClip()
 {
-    if (!m_pTaskbarList) {
+    if (!m_pTaskbarList || !m_hWnd) {
         return E_FAIL;
     }
 
