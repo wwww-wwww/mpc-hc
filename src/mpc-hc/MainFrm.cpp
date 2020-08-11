@@ -13139,6 +13139,7 @@ void CMainFrame::CloseMediaPrivate()
 
     {
         CAutoLock cAutoLock(&m_csSubLock);
+        m_pCurrentSubInput = SubtitleInput(nullptr);
         m_pSubStreams.RemoveAll();
         m_ExternalSubstreams.clear();
     }
