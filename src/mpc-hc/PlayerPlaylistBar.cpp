@@ -743,6 +743,19 @@ INT_PTR CPlayerPlaylistBar::GetCount() const
     return m_pl.GetCount(); // TODO: n - .fInvalid
 }
 
+int CPlayerPlaylistBar::GetValidCount() const
+{
+    int validcount = 0;
+    POSITION pos = m_pl.GetHeadPosition();
+    while (pos) {
+        if (!m_pl.GetAt(pos).m_fInvalid) {
+            validcount++;
+        }
+        m_pl.GetNext(pos);
+    }
+    return validcount;
+}
+
 int CPlayerPlaylistBar::GetSelIdx() const
 {
     return FindItem(m_pl.GetPos());
