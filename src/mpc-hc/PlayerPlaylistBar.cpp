@@ -359,6 +359,21 @@ void CPlayerPlaylistBar::ParsePlayList(CAtlList<CString>& fns, CAtlList<CString>
     AddItem(fns, subs, label, ydl_src);
 }
 
+static CString CombinePath(CString base, CString fn, bool isurl)
+{
+    if (isurl) {
+        if (fn.Find(_T("://")) >= 0) {
+            return fn;
+        }
+    }
+    else {
+        if (fn.Find(_T(":")) >= 0 || fn.Find(_T("\\")) >= 0) {
+            return fn;
+        }
+    }
+    return base + fn;
+}
+
 static CString CombinePath(CPath p, CString fn)
 {
     if (fn.Find(':') >= 0 || fn.Find(_T("\\")) == 0) {
@@ -408,48 +423,70 @@ bool CPlayerPlaylistBar::ParseM3UPlayList(CString fn) {
         f.SetEncoding(CTextFile::ANSI);
     }
 
-    CPath base(fn);
-    base.RemoveFileSpec();
+    CString base;
+    bool isurl = fn.Find(_T("://")) > 0;
+    if (isurl) {
+        int p = fn.Find(_T('?'));
+        if (p > 0) {
+            fn = fn.Left(p);
+        }
+        p = fn.ReverseFind(_T('/'));
+        if (p > 0) {
+            base = fn.Left(p + 1);
+        }
+    }
+    else {
+        CPath basefilepath(fn);
+        basefilepath.RemoveFileSpec();
+        basefilepath.AddBackslash();
+        base = basefilepath.m_strPath;
+    }
 
     bool success = false;
 
     while (f.ReadString(str)) {
-        if (isExt) {
-            CAtlList<CString> sl;
-            Explode(str, sl, ':', 2);
-            if (sl.GetCount() == 2) {
-                CString key = sl.RemoveHead();
-                CString value = sl.RemoveHead();
-                if (key == _T("#EXTINF")) {
-                    int findDelim;
-                    if (-1 == (findDelim = value.Find(_T(",")))) {
-                        continue; //discard invalid EXTINF line
-                    }
-                    if (f.ReadString(str)) {
-                        pli.m_label = value.Mid(findDelim + 1);
-                        pli.m_fns.RemoveAll();
-                        str = CombinePath(base, str);
-                        pli.m_fns.AddTail(str);
-                        m_pl.AddTail(pli);
-                        success = true;
-                        continue;
-                    } else {
-                        break; //we could not read any more from the file, so the loop should break (and we have to discard this last EXTINF that has no valid filename)
+        if (str.Find(_T("#")) == 0) {
+            if (isExt && str.Find(_T("#EXTINF")) == 0) {
+                CAtlList<CString> sl;
+                Explode(str, sl, ':', 2);
+                if (sl.GetCount() == 2) {
+                    CString key = sl.RemoveHead();
+                    CString value = sl.RemoveHead();
+                    if (key == _T("#EXTINF")) {
+                        int findDelim;
+                        if (-1 == (findDelim = value.Find(_T(",")))) {
+                            continue; // discard invalid EXTINF line
+                        }
+                        if (f.ReadString(str)) {
+                            pli.m_label = value.Mid(findDelim + 1);
+                            pli.m_fns.RemoveAll();
+                            str = CombinePath(base, str, isurl);
+                            pli.m_fns.AddTail(str);
+                            m_pl.AddTail(pli);
+                            success = true;
+                            continue;
+                        }
+                        else {
+                            break; // end of file
+                        }
                     }
                 }
+                else {
+                    continue; // discard invalid EXTINF line
+                }
+            }
+            else {
+                continue; // ignore this line
             }
         }
 
-        //we can process this line as a single unlabeled file, since it didn't validate as an EXTINF line
-        if (str.Find(_T("#EXT")) != 0) { //discard all ^#EXT.* indiscriminately
-            pli.m_label = _T("");
-            pli.m_fns.RemoveAll();
-            str = CombinePath(base, str);
-            pli.m_fns.AddTail(str);
-            m_pl.AddTail(pli);
-            success = true;
-        }
-
+        // parse as an entry without EXTINF
+        pli.m_label = _T("");
+        pli.m_fns.RemoveAll();
+        str = CombinePath(base, str, isurl);
+        pli.m_fns.AddTail(str);
+        m_pl.AddTail(pli);
+        success = true;
     }
 
     return success;
