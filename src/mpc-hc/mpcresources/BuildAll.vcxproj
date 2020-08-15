@@ -40,6 +40,9 @@
     <ProjectToBuild Include="mpcresources.vcxproj">
       <AdditionalProperties>Configuration=Release Bosnian</AdditionalProperties>
     </ProjectToBuild>
+     <ProjectToBuild Include="mpcresources.vcxproj">
+      <AdditionalProperties>Configuration=Release Bulgarian</AdditionalProperties>
+    </ProjectToBuild>
     <ProjectToBuild Include="mpcresources.vcxproj">
       <AdditionalProperties>Configuration=Release Catalan</AdditionalProperties>
     </ProjectToBuild>

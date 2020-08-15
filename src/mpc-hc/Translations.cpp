@@ -35,6 +35,7 @@ namespace
         { 1059,   _T("Belarusian"),               _T("Lang\\mpcresources.be.dll")    },
         { 1093,   _T("Bengali"),                  _T("Lang\\mpcresources.bn.dll")    },
         { 5146,   _T("Bosnian"),                  _T("Lang\\mpcresources.bs_BA.dll") },
+        { 1026,   _T("Bulgarian"),                _T("Lang\\mpcresources.bg.dll")    },
         { 1027,   _T("Catalan"),                  _T("Lang\\mpcresources.ca.dll")    },
         { 2052,   _T("Chinese (Simplified)"),     _T("Lang\\mpcresources.zh_CN.dll") },
         { 1028,   _T("Chinese (Traditional)"),    _T("Lang\\mpcresources.zh_TW.dll") },
