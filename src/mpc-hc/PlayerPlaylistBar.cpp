@@ -1005,23 +1005,29 @@ bool CPlayerPlaylistBar::SelectFileInPlaylist(LPCTSTR filename)
 
 bool CPlayerPlaylistBar::DeleteFileInPlaylist(POSITION pos, bool recycle)
 {
+    bool isplaying = false;
     if (pos == m_pl.GetPos()) {
-        // release the file handle by changing to the next item or stopping playback
+        isplaying = true;
+        // close file to release the file handle
         m_pMainFrame->SendMessage(WM_COMMAND, ID_FILE_CLOSEMEDIA);
     }
 
     if (SUCCEEDED(FileDelete(m_pl.GetAt(pos).m_fns.GetHead(), m_pMainFrame->m_hWnd, recycle))) {
-        // Get position of next file
         POSITION nextpos = pos;
-        m_pl.GetNext(nextpos);
-        // remove from playlist
+        if (isplaying) {
+            // Get position of next file
+            m_pl.GetNext(nextpos);
+        }
+        // remove selected from playlist
         m_list.DeleteItem(FindItem(pos));
         m_pl.RemoveAt(pos);
         SavePlaylist();
-        // play next file
-        if (nextpos || AfxGetAppSettings().bLoopFolderOnPlayNextFile) {
-            m_pl.SetPos(nextpos);
-            m_pMainFrame->OpenCurPlaylistItem();
+        if (isplaying) {
+            // play next file
+            if (nextpos || AfxGetAppSettings().bLoopFolderOnPlayNextFile) {
+                m_pl.SetPos(nextpos);
+                m_pMainFrame->OpenCurPlaylistItem();
+            }
         }
         return true;
     }
