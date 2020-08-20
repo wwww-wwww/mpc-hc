@@ -1895,21 +1895,21 @@ static std::vector<int> PreferredOpenFuncts(CString fn) {
     for (int i = 0; i < nOpenFuncts; i++) {
         if (fileExt == _T("vtt")) {
             if (OpenFuncts[i].open == OpenVTT) functs.insert(functs.begin(), i);
-            if (OpenFuncts[i].open == OpenSubRipper) functs.push_back(i);
+            else if (OpenFuncts[i].open == OpenSubRipper) functs.push_back(i);
         } else if (fileExt == _T("srt")) {
             if (OpenFuncts[i].open == OpenSubRipper) functs.insert(functs.begin(), i);
-            if (OpenFuncts[i].open == OpenOldSubRipper || OpenFuncts[i].open == OpenSubStationAlpha || OpenFuncts[i].open == OpenMicroDVD || OpenFuncts[i].open == OpenMPL2) functs.push_back(i);
+            else functs.push_back(i);
         } else if (fileExt == _T("ssa") || fileExt == _T("ass")) {
             if (OpenFuncts[i].open == OpenSubStationAlpha) functs.insert(functs.begin(), i);
-            if (OpenFuncts[i].open == OpenSubRipper) functs.push_back(i);
+            else if (OpenFuncts[i].open == OpenSubRipper) functs.push_back(i);
         } else if (fileExt == _T("xss")) {
             if (OpenFuncts[i].open == OpenXombieSub) functs.insert(functs.begin(), i);
         } else if (fileExt == _T("sub")) {
             if (OpenFuncts[i].open == OpenSubViewer) functs.insert(functs.begin(), i);
-            if (OpenFuncts[i].open == OpenSubRipper || OpenFuncts[i].open == OpenOldSubRipper || OpenFuncts[i].open == OpenMicroDVD || OpenFuncts[i].open == OpenMPL2) functs.push_back(i);
+            else functs.push_back(i);
         } else if (fileExt == _T("txt")) {
             if (OpenFuncts[i].open == OpenMicroDVD) functs.insert(functs.begin(), i);
-            if (OpenFuncts[i].open == OpenSubRipper || OpenFuncts[i].open == OpenOldSubRipper || OpenFuncts[i].open == OpenVPlayer || OpenFuncts[i].open == OpenMPL2) functs.push_back(i);
+            else functs.push_back(i);
         } else if (fileExt == _T("rt")) {
             if (OpenFuncts[i].open == OpenRealText) functs.insert(functs.begin(), i);
         } else if (fileExt == _T("smi")) {
@@ -1919,7 +1919,7 @@ static std::vector<int> PreferredOpenFuncts(CString fn) {
         } else if (fileExt == _T("style")) {
             if (OpenFuncts[i].open == OpenSubStationAlpha) functs.push_back(i);
         } else if (fileExt == _T("tmp")) { // used for embedded subs
-            if (OpenFuncts[i].open == OpenSubRipper || OpenFuncts[i].open == OpenSubStationAlpha) functs.push_back(i);
+            if (OpenFuncts[i].open == OpenSubRipper || OpenFuncts[i].open == OpenSubStationAlpha || OpenFuncts[i].open == OpenVTT) functs.push_back(i);
         } else {
             functs.push_back(i);
         }
