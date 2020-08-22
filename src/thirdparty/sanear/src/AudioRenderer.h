@@ -109,6 +109,7 @@ namespace SaneAudioRenderer
 
         MyClock& m_myClock;
         IReferenceClockPtr m_graphClock;
+        bool m_isDVD = false;
 
         std::atomic<bool> m_externalClock = false;
         std::atomic<bool> m_live = false;
