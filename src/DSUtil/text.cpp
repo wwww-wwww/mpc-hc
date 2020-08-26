@@ -22,6 +22,7 @@
 #include "stdafx.h"
 #include <atlutil.h>
 #include "text.h"
+#include <memory>
 
 DWORD CharSetToCodePage(DWORD dwCharSet)
 {
@@ -120,6 +121,25 @@ CStringA UrlDecode(const CStringA& strIn)
     strOut.ReleaseBuffer(dwStrLen);
 
     return strOut;
+}
+
+CStringW UrlDecodeWithUTF8(CString in) {
+    TCHAR t[100];
+    DWORD bufSize = _countof(t);
+    in.Replace(_T("+"), _T(" ")); //UrlUnescape does not deal with '+' properly
+    HRESULT result = UrlUnescape(in.GetBuffer(), t, &bufSize, URL_ESCAPE_AS_UTF8); //URL_ESCAPE_AS_UTF8 will work as URL_UNESCAPE_AS_UTF8 on windows 8+, otherwise it will just ignore utf-8
+
+    if (result == E_POINTER) {
+        std::shared_ptr<TCHAR[]> buffer(new TCHAR[bufSize]);
+        if (S_OK == UrlUnescape(in.GetBuffer(), buffer.get(), &bufSize, URL_ESCAPE_AS_UTF8)) {
+            CString urlDecoded(buffer.get());
+            return urlDecoded;
+        }
+    } else {
+        CString urlDecoded(t);
+        return urlDecoded;
+    }
+    return in;
 }
 
 CString ExtractTag(CString tag, CMapStringToString& attribs, bool& fClosing)

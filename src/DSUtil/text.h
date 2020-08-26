@@ -133,6 +133,7 @@ extern CStringA UrlEncode(const CStringA& strIn);
  */
 extern CStringA EscapeJSONString(const CStringA& str);
 extern CStringA UrlDecode(const CStringA& strIn);
+extern CStringW UrlDecodeWithUTF8(const CStringW in);
 extern CStringA HtmlSpecialChars(CStringA str, bool bQuotes = false);
 extern CStringA HtmlSpecialCharsDecode(CStringA str);
 extern DWORD CharSetToCodePage(DWORD dwCharSet);

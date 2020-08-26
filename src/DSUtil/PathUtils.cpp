@@ -20,6 +20,8 @@
 
 #include "stdafx.h"
 #include "PathUtils.h"
+#include <memory>
+#include "text.h"
 
 namespace PathUtils
 {
@@ -136,10 +138,16 @@ namespace PathUtils
     {
         // Replacement for CPath::StripPath which works fine also for URLs
         CString p = path;
+        bool isURL = (-1 != p.Find(_T("://")));
         p.Replace('\\', '/');
         p.TrimRight('/');
         p = p.Mid(p.ReverseFind('/') + 1);
-        return p.IsEmpty() ? CString(path) : p;
+        if (p.IsEmpty()) {
+            return CString(path);
+        } else if (isURL) {
+            return UrlDecodeWithUTF8(p);
+        }
+        return p;
     }
 
     bool IsInDir(LPCTSTR path, LPCTSTR dir)
