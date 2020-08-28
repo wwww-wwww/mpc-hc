@@ -11851,8 +11851,6 @@ void CMainFrame::SetupChapters()
         EndEnumPins;
     }
 
-    m_pCB->ChapSort();
-
     UpdateSeekbarChapterBag();
 }
 
