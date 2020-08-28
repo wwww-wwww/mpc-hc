@@ -193,47 +193,53 @@ SRESULT OpenSubtitles::Search(const SubtitlesInfo& pFileInfo)
     std::string fnameLower = pFileInfo.fileName;
     std::transform(fnameLower.begin(), fnameLower.end(), fnameLower.begin(), [](unsigned char c) { return std::tolower(c); });
 
-    for (int i = 0; i < nCount; ++i) {
-        CheckAbortAndReturn();
-        XmlRpcValue& data(result["data"][i]);
-        std::string subFileName = (const char*)data["SubFileName"];
+    bool matchFound = false;
+    int maxPasses = searchedByFileName ? 2 : 1;
+    for (int passCount = 0; passCount < maxPasses && !matchFound; passCount++) {
+        for (int i = 0; i < nCount; ++i) {
+            CheckAbortAndReturn();
+            XmlRpcValue& data(result["data"][i]);
+            std::string subFileName = (const char*)data["SubFileName"];
 
-        if (searchedByFileName) {
-            std::string subFilePrefix = subFileName.substr(0, subFileName.find_last_of("."));
-            std::transform(subFilePrefix.begin(), subFilePrefix.end(), subFilePrefix.begin(), [](unsigned char c) { return std::tolower(c); });
-            if (fnameLower.compare(subFilePrefix) != 0) {
-                continue;
+            if (searchedByFileName && 0 == passCount) {
+                std::string subFilePrefix = subFileName.substr(0, subFileName.find_last_of("."));
+                std::transform(subFilePrefix.begin(), subFilePrefix.end(), subFilePrefix.begin(), [](unsigned char c) { return std::tolower(c); });
+                if (fnameLower.compare(subFilePrefix) != 0) {
+                    continue;
+                }
             }
-        }
+            matchFound = true;
 
-        SubtitlesInfo pSubtitlesInfo;
-        pSubtitlesInfo.id = (const char*)data["IDSubtitleFile"];
-        pSubtitlesInfo.discNumber = data["SubActualCD"];
-        pSubtitlesInfo.discCount = data["SubSumCD"];
-        pSubtitlesInfo.fileExtension = (const char*)data["SubFormat"];
-        pSubtitlesInfo.languageCode = (const char*)data["ISO639"]; //"SubLanguageID"
-        pSubtitlesInfo.languageName = (const char*)data["LanguageName"];
-        pSubtitlesInfo.downloadCount = data["SubDownloadsCnt"];
+            SubtitlesInfo pSubtitlesInfo;
+            pSubtitlesInfo.id = (const char*)data["IDSubtitleFile"];
+            pSubtitlesInfo.discNumber = data["SubActualCD"];
+            pSubtitlesInfo.discCount = data["SubSumCD"];
+            pSubtitlesInfo.fileExtension = (const char*)data["SubFormat"];
+            pSubtitlesInfo.languageCode = (const char*)data["ISO639"]; //"SubLanguageID"
+            pSubtitlesInfo.languageName = (const char*)data["LanguageName"];
+            pSubtitlesInfo.downloadCount = data["SubDownloadsCnt"];
 
-        pSubtitlesInfo.fileName = subFileName;
-        regexResult results;
-        stringMatch("\"([^\"]+)\" (.+)", (const char*)data["MovieName"], results);
-        if (!results.empty()) {
-            pSubtitlesInfo.title = results[0];
-            pSubtitlesInfo.title2 = results[1];
-        } else {
-            pSubtitlesInfo.title = (const char*)data["MovieName"];
+            pSubtitlesInfo.fileName = subFileName;
+            regexResult results;
+            stringMatch("\"([^\"]+)\" (.+)", (const char*)data["MovieName"], results);
+            if (!results.empty()) {
+                pSubtitlesInfo.title = results[0];
+                pSubtitlesInfo.title2 = results[1];
+            } else {
+                pSubtitlesInfo.title = (const char*)data["MovieName"];
+            }
+            pSubtitlesInfo.year = (int)data["MovieYear"] == 0 ? -1 : (int)data["MovieYear"];
+            pSubtitlesInfo.seasonNumber = (int)data["SeriesSeason"] == 0 ? -1 : (int)data["SeriesSeason"];
+            pSubtitlesInfo.episodeNumber = (int)data["SeriesEpisode"] == 0 ? -1 : (int)data["SeriesEpisode"];
+            pSubtitlesInfo.hearingImpaired = data["SubHearingImpaired"];
+            pSubtitlesInfo.url = (const char*)data["SubtitlesLink"];
+            pSubtitlesInfo.releaseNames.emplace_back((const char*)data["MovieReleaseName"]);
+            pSubtitlesInfo.imdbid = (const char*)data["IDMovieImdb"];
+            pSubtitlesInfo.corrected = (int)data["SubBad"] ? -1 : 0;
+            Set(pSubtitlesInfo);
         }
-        pSubtitlesInfo.year = (int)data["MovieYear"] == 0 ? -1 : (int)data["MovieYear"];
-        pSubtitlesInfo.seasonNumber = (int)data["SeriesSeason"] == 0 ? -1 : (int)data["SeriesSeason"];
-        pSubtitlesInfo.episodeNumber = (int)data["SeriesEpisode"] == 0 ? -1 : (int)data["SeriesEpisode"];
-        pSubtitlesInfo.hearingImpaired = data["SubHearingImpaired"];
-        pSubtitlesInfo.url = (const char*)data["SubtitlesLink"];
-        pSubtitlesInfo.releaseNames.emplace_back((const char*)data["MovieReleaseName"]);
-        pSubtitlesInfo.imdbid = (const char*)data["IDMovieImdb"];
-        pSubtitlesInfo.corrected = (int)data["SubBad"] ? -1 : 0;
-        Set(pSubtitlesInfo);
     }
+
     LOG(std::to_wstring(nCount).c_str());
     return SR_SUCCEEDED;
 }
