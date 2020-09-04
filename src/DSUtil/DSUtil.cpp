@@ -157,7 +157,7 @@ bool IsAudioWaveRenderer(IBaseFilter* pBF)
            clsid == CLSID_SANEAR_INTERNAL ||
            clsid == CLSID_SANEAR ||
            clsid == CLSID_ReClock ||
-           clsid == GUIDFromCString(L"{601D2A2B-9CDE-40BD-8650-0485E3522727}") || // MPC(BE) Audio Renderer
+           clsid == CLSID_MPCBEAudioRenderer ||
            clsid == GUIDFromCString(L"{EC9ED6FC-7B03-4cb6-8C01-4EABE109F26B}") || // MediaPortal Audio Renderer
            clsid == GUIDFromCString(L"{50063380-2B2F-4855-9A1E-40FCA344C7AC}") || // Surodev ASIO Renderer
            clsid == GUIDFromCString(L"{8DE31E85-10FC-4088-8861-E0EC8E70744A}") || // MultiChannel ASIO Renderer
