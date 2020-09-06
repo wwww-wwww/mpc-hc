@@ -585,7 +585,7 @@ namespace SaneAudioRenderer
 
         m_deviceSettingsSerial = m_settings->GetSerial();
         m_defaultDeviceSerial = m_deviceManager.GetDefaultDeviceSerial();
-        m_device = m_deviceManager.CreateDevice(m_inputFormat, m_live || m_externalClock || m_isDVD, m_settings);
+        m_device = m_deviceManager.CreateDevice(m_inputFormat, m_live || m_externalClock, m_isDVD, m_settings);
 
         if (m_device)
         {
