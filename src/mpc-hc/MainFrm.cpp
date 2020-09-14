@@ -14480,12 +14480,13 @@ void CMainFrame::SetupRecentFilesSubMenu()
             UINT flags = MF_BYCOMMAND | MF_STRING | MF_ENABLED;
             if (!MRU[i].IsEmpty()) {
                 CString p = MRU[i];
-                bool isURL = (-1 != p.Find(_T("://")));
-                if (isURL) {
-                    VERIFY(subMenu.AppendMenu(flags, id, UrlDecodeWithUTF8(p)));
-                } else {
-                    VERIFY(subMenu.AppendMenu(flags, id, p));
+                if (p.Find(_T("://")) > 0) {
+                    p = UrlDecodeWithUTF8(p);
                 }
+                if (p.GetLength() > 120) {
+                    p = p.Left(50) + _T(" *** ") + p.Right(65);
+                }
+                VERIFY(subMenu.AppendMenu(flags, id, p));
             }
             id++;
         }
