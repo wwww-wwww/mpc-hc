@@ -18235,6 +18235,7 @@ static const CString ydl_whitelist[] = {
 
 static const CString ydl_blacklist[] = {
     _T("googlevideo.com/videoplayback"), // already processed URL
+    _T("googlevideo.com/api/manifest"),
     _T("saunalahti.fi/")
 };
 
