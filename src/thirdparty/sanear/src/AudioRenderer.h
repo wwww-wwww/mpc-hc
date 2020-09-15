@@ -56,6 +56,7 @@ namespace SaneAudioRenderer
 
         void TakeGuidedReclock(REFERENCE_TIME offset) { m_guidedReclockOffset += offset; }
 
+        bool IsDVD()          const { return m_isDVD; }
         bool OnExternalClock() const { return m_externalClock; }
         bool IsLive()          const { return m_live; }
         bool IsBitstreaming()  const { return m_bitstreaming; }
@@ -109,8 +110,7 @@ namespace SaneAudioRenderer
 
         MyClock& m_myClock;
         IReferenceClockPtr m_graphClock;
-        bool m_isDVD = false;
-
+        std::atomic<bool> m_isDVD = false;
         std::atomic<bool> m_externalClock = false;
         std::atomic<bool> m_live = false;
         std::atomic<bool> m_bitstreaming = false;

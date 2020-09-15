@@ -178,7 +178,7 @@ namespace SaneAudioRenderer
         }
 
         HRESULT CreateAudioDeviceBackend(IMMDeviceEnumerator* pEnumerator,
-                                         SharedWaveFormat format, bool realtime, bool isDVD, ISettings* pSettings,
+                                         SharedWaveFormat format, bool realtime, ISettings* pSettings,
                                          std::shared_ptr<AudioDeviceBackend>& backend)
         {
             assert(pEnumerator);
@@ -200,7 +200,6 @@ namespace SaneAudioRenderer
                     backend->exclusive = !!exclusive;
                     backend->realtime = realtime;
                     backend->bufferDuration = buffer;
-                    backend->isDVD = isDVD;
                 }
 
                 CreateAudioClient(pEnumerator, *backend);
@@ -352,7 +351,7 @@ namespace SaneAudioRenderer
                                                                   AUDCLNT_SHAREMODE_SHARED;
 
                     DWORD flags = AUDCLNT_STREAMFLAGS_NOPERSIST;
-                    if (backend->eventMode || (backend->isDVD && backend->supportsSharedEventMode))
+                    if (backend->eventMode)
                         flags |= AUDCLNT_STREAMFLAGS_EVENTCALLBACK;
 
                     REFERENCE_TIME defaultPeriod;
@@ -586,7 +585,7 @@ namespace SaneAudioRenderer
         return SUCCEEDED(m_result);
     }
 
-    std::unique_ptr<AudioDevice> AudioDeviceManager::CreateDevice(SharedWaveFormat format, bool realtime, bool isDVD,
+    std::unique_ptr<AudioDevice> AudioDeviceManager::CreateDevice(SharedWaveFormat format, bool realtime,
                                                                   ISettings* pSettings)
     {
         assert(format);
@@ -594,7 +593,7 @@ namespace SaneAudioRenderer
 
         std::shared_ptr<AudioDeviceBackend> backend;
 
-        m_function = [&] { return CreateAudioDeviceBackend(m_enumerator, format, realtime, isDVD, pSettings, backend); };
+        m_function = [&] { return CreateAudioDeviceBackend(m_enumerator, format, realtime, pSettings, backend); };
         m_wake.Set();
         m_done.Wait();
 

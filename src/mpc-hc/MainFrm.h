@@ -458,6 +458,7 @@ protected:
     bool restoringWindowRect;
 
     bool m_fAudioOnly;
+    bool m_fValidDVDOpen;
     CString m_LastOpenBDPath;
     CAutoPtr<OpenMediaData> m_lastOMD;
 
