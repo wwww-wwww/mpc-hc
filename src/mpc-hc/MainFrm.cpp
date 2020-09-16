@@ -9890,9 +9890,27 @@ void CMainFrame::OnUpdateFavoritesFile(CCmdUI* pCmdUI)
 
 void CMainFrame::OnRecentFile(UINT nID)
 {
-    nID -= ID_RECENT_FILE_START;
     CString fn;
-    m_recentFilesMenu.GetMenuString(nID + 2, fn, MF_BYPOSITION);
+    CRecentFileList& MRU = AfxGetAppSettings().MRU;
+    MRU.ReadList();
+
+    // find corresponding item in MRU list, we can't directly use string from menu because it may have been shortened
+    nID -= ID_RECENT_FILE_START;
+    for (int i = 0; i < MRU.GetSize(); i++) {
+        if (!MRU[i].IsEmpty()) {
+            if (nID > 0) {
+                nID--;
+            }
+            else {
+                fn = MRU[i];
+                break;
+            }
+        }
+    }
+    if (fn.IsEmpty()) {
+        ASSERT(false);
+        return;
+    }
 
     if (CanSendToYoutubeDL(fn)) {
         SendMessage(WM_COMMAND, ID_FILE_CLOSEMEDIA);
