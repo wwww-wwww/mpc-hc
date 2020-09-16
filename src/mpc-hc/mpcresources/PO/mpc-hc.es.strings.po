@@ -4,18 +4,19 @@
 # Translators:
 # MPC HC <adiposegithub@gmail.com>, 2020
 # Oliver Hattshire <hattshire@gmail.com>, 2020
-#
+# Astro_Corp <astrocorporation16@gmail.com>, 2020
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2020-06-15 14:17:38+0000\n"
+"POT-Creation-Date: 2020-08-05 15:40:49+0000\n"
 "PO-Revision-Date: 2020-01-02 07:46+0000\n"
-"Last-Translator: Oliver Hattshire <hattshire@gmail.com>, 2020\n"
+"Last-Translator: Astro_Corp <astrocorporation16@gmail.com>, 2020\n"
 "Language-Team: Spanish (https://www.transifex.com/mpchc/teams/106126/es/)\n"
-"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: es\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgctxt "IDS_INFOBAR_LOCATION"
@@ -1710,7 +1711,7 @@ msgstr "Tras la reproducción: Cerrar"
 
 msgctxt "IDS_FRAME_INIT_FAILED"
 msgid "MPC-HC encountered a problem during initialization."
-msgstr ""
+msgstr "MPC-HC encontró un problema durante la inicialización."
 
 msgctxt "IDS_TIME_SHIFT_TOOLTIP"
 msgid ""
@@ -1854,6 +1855,9 @@ msgid ""
 "work correctly. This problem might be caused by an incompatibility with "
 "certain security software."
 msgstr ""
+"MPC-HC encontró un problema durante la inicialización. Es posible que la "
+"reproducción del DVD no funcione correctamente. Este problema puede deberse "
+"a una incompatibilidad con el software de seguridad (DRM)."
 
 msgctxt "IDS_PPAGEFULLSCREEN_SHOWNEVER"
 msgid "Never show"
@@ -4252,6 +4256,11 @@ msgid ""
 "\n"
 "Failure can also happen when you are temporarily blocked due to too many search requests from your account or IP address."
 msgstr ""
+"No se ha podido iniciar la búsqueda en el proveedor de subtítulos \"%1\", realizada con el usuario \"%2\".\n"
+"\n"
+"Comprueba si tu usuario y contraseña son correctos.\n"
+"\n"
+"Puede ser que su cuenta o dirección IP hayan sido bloqueadas temporalmente por realizar varias búsquedas. En ese caso, inténtelo más tarde."
 
 msgctxt "IDS_SUB_AUTODL_IGNORE_TOOLTIP"
 msgid ""
@@ -4625,13 +4634,15 @@ msgstr ""
 
 msgctxt "IDS_PPAGEADVANCED_SNAPSHOTSUBTITLES"
 msgid "Render subtitles onto screenshots"
-msgstr ""
+msgstr "Mostrar subtítulos en las capturas de pantalla"
 
 msgctxt "IDS_PPAGEADVANCED_SNAPSHOTKEEPVIDEOEXTENSION"
 msgid ""
 "Keep video file extension as part of snapshot filenames (e.g., file.mkv.png)"
 msgstr ""
+"Conservar la extensión del archivo del vídeo como parte del nombre de las "
+"capturas de pantalla (ejemplo: file.mkv.png)"
 
 msgctxt "IDS_SNAPSHOT_SUBTITLES"
 msgid "Include Subtitles"
-msgstr ""
+msgstr "Incluir subtítulos"

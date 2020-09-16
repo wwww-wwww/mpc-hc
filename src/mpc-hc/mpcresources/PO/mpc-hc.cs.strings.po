@@ -4,18 +4,18 @@
 # Translators:
 # MPC HC <adiposegithub@gmail.com>, 2020
 # Jindřich T, 2020
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2020-06-15 14:17:38+0000\n"
+"POT-Creation-Date: 2020-08-05 15:40:49+0000\n"
 "PO-Revision-Date: 2020-01-02 07:46+0000\n"
 "Last-Translator: Jindřich T, 2020\n"
 "Language-Team: Czech (https://www.transifex.com/mpchc/teams/106126/cs/)\n"
-"Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: cs\n"
 "Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
 
 msgctxt "IDS_INFOBAR_LOCATION"
@@ -751,7 +751,7 @@ msgid ""
 "CPU from working unnecessarily."
 msgstr ""
 "Připojí se k jakémukoliv typu videa a začne všechny vstupní vzorky "
-"zahazovat. Použijte ho pokud nepotřebujete video zobrazit a chcete ušetřit "
+"zahazovat. Použijte ho, pokud nepotřebujete video zobrazit a chcete ušetřit "
 "výkon procesoru."
 
 msgctxt "IDC_DSNULL_UNCOMP"
@@ -1801,8 +1801,8 @@ msgid ""
 "certain security software."
 msgstr ""
 "Během spouštění MPC-HC se vyskytla chyba. Přehrávání DVD nemusí fungovat "
-"správně. To může být způsobeno nekompatibilitou s některými antivirovými "
-"programy ."
+"správně. Tento problém může být způsoben nekompatibilitou s některými "
+"antivirovými programy ."
 
 msgctxt "IDS_PPAGEFULLSCREEN_SHOWNEVER"
 msgid "Never show"
@@ -4188,6 +4188,11 @@ msgid ""
 "\n"
 "Failure can also happen when you are temporarily blocked due to too many search requests from your account or IP address."
 msgstr ""
+"Nepodařilo se přihlásit k \"%1\" s uživatelským jménem \"%2\".\n"
+"\n"
+"Zkontrolujte správnost vašeho jména a hesla.\n"
+"\n"
+"Neplatné přihlášení může někdy souviset s dočasným zablokováním vašeho účtu kvůli množství požadavků provedených z vašeho uživatelského účtu nebo IP adresy. "
 
 msgctxt "IDS_SUB_AUTODL_IGNORE_TOOLTIP"
 msgid ""

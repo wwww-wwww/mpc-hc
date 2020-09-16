@@ -5,18 +5,18 @@
 # MPC HC <adiposegithub@gmail.com>, 2020
 # xknat <321knat@gmail.com>, 2020
 # Renz Straatman <renz75@outlook.com>, 2020
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2020-06-15 14:17:38+0000\n"
+"POT-Creation-Date: 2020-08-05 15:40:49+0000\n"
 "PO-Revision-Date: 2020-01-02 07:46+0000\n"
 "Last-Translator: Renz Straatman <renz75@outlook.com>, 2020\n"
 "Language-Team: Dutch (https://www.transifex.com/mpchc/teams/106126/nl/)\n"
-"Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: nl\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgctxt "IDS_INFOBAR_LOCATION"
@@ -1672,7 +1672,7 @@ msgstr "Na afspelen: Sluiten"
 
 msgctxt "IDS_FRAME_INIT_FAILED"
 msgid "MPC-HC encountered a problem during initialization."
-msgstr ""
+msgstr "MPC-HC is tegen een probleem aangelopen tijdens de initialisatie."
 
 msgctxt "IDS_TIME_SHIFT_TOOLTIP"
 msgid ""
@@ -1815,6 +1815,9 @@ msgid ""
 "work correctly. This problem might be caused by an incompatibility with "
 "certain security software."
 msgstr ""
+"MPC-HC is tegen een probleem aangelopen tijdens de initialisatie. Het "
+"afspelen van DVD's werkt mogelijk niet correct. Dit kan veroorzaakt worden "
+"door incompatibiliteit met bepaalde beveiligingssoftware."
 
 msgctxt "IDS_PPAGEFULLSCREEN_SHOWNEVER"
 msgid "Never show"
@@ -4200,6 +4203,11 @@ msgid ""
 "\n"
 "Failure can also happen when you are temporarily blocked due to too many search requests from your account or IP address."
 msgstr ""
+"Het inloggen bij ondertitelprovider \"%1\" met gebruikersnaam \"%2\" is niet gelukt.\n"
+"\n"
+"Controleer je gebruikersnaam en wachtwoord. \n"
+"\n"
+"Het is ook mogelijk dat dit probleem veroorzaakt wordt door te veel verzoeken vanaf je account of IP-adres."
 
 msgctxt "IDS_SUB_AUTODL_IGNORE_TOOLTIP"
 msgid ""
@@ -4561,13 +4569,15 @@ msgstr ""
 
 msgctxt "IDS_PPAGEADVANCED_SNAPSHOTSUBTITLES"
 msgid "Render subtitles onto screenshots"
-msgstr ""
+msgstr "Ondertitels renderen in screenshots"
 
 msgctxt "IDS_PPAGEADVANCED_SNAPSHOTKEEPVIDEOEXTENSION"
 msgid ""
 "Keep video file extension as part of snapshot filenames (e.g., file.mkv.png)"
 msgstr ""
+"Bestandsextensie behouden in de bestandsnaam van screenshots (bijv. "
+"bestand.mkv.png)"
 
 msgctxt "IDS_SNAPSHOT_SUBTITLES"
 msgid "Include Subtitles"
-msgstr ""
+msgstr "Ondertitels bijvoegen"

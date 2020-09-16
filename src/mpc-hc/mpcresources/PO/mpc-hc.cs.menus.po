@@ -4,18 +4,18 @@
 # Translators:
 # MPC HC <adiposegithub@gmail.com>, 2020
 # Jindřich T, 2020
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2020-03-20 18:57:58+0000\n"
+"POT-Creation-Date: 2020-08-09 19:14:33+0000\n"
 "PO-Revision-Date: 2020-01-02 07:46+0000\n"
 "Last-Translator: Jindřich T, 2020\n"
 "Language-Team: Czech (https://www.transifex.com/mpchc/teams/106126/cs/)\n"
-"Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: cs\n"
 "Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
 
 msgctxt "POPUP"
@@ -592,67 +592,67 @@ msgstr "A-B (Konec &B)"
 
 msgctxt "POPUP"
 msgid "&Playback Rate"
-msgstr ""
+msgstr "Rychlost přehrávání"
 
 msgctxt "POPUP"
 msgid "0.25 x"
-msgstr ""
+msgstr "0.25 x"
 
 msgctxt "POPUP"
 msgid "0.50 x"
-msgstr ""
+msgstr "0.50 x"
 
 msgctxt "POPUP"
 msgid "0.75 x"
-msgstr ""
+msgstr "0.75 x"
 
 msgctxt "POPUP"
 msgid "0.90 x"
-msgstr ""
+msgstr "0.90 x"
 
 msgctxt "POPUP"
 msgid "1.00 x"
-msgstr ""
+msgstr "1.00 x"
 
 msgctxt "POPUP"
 msgid "1.10 x"
-msgstr ""
+msgstr "1.10 x"
 
 msgctxt "POPUP"
 msgid "1.25 x"
-msgstr ""
+msgstr "1.25 x"
 
 msgctxt "POPUP"
 msgid "1.50 x"
-msgstr ""
+msgstr "1.50 x"
 
 msgctxt "POPUP"
 msgid "2.00 x"
-msgstr ""
+msgstr "2.00 x"
 
 msgctxt "POPUP"
 msgid "3.00 x"
-msgstr ""
+msgstr "3.00 x"
 
 msgctxt "POPUP"
 msgid "4.00 x"
-msgstr ""
+msgstr "4.00 x"
 
 msgctxt "POPUP"
 msgid "6.00 x"
-msgstr ""
+msgstr "6.00 x"
 
 msgctxt "POPUP"
 msgid "8.00 x"
-msgstr ""
+msgstr "8.00 x"
 
 msgctxt "POPUP"
 msgid "24 fps"
-msgstr ""
+msgstr "24 FPS"
 
 msgctxt "POPUP"
 msgid "25 fps"
-msgstr ""
+msgstr "25 FPS"
 
 msgctxt "ID_PLAY_DECRATE"
 msgid "&Decrease Rate"
