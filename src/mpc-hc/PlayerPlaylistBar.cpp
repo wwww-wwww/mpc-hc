@@ -1006,6 +1006,7 @@ bool CPlayerPlaylistBar::SelectFileInPlaylist(LPCTSTR filename)
 bool CPlayerPlaylistBar::DeleteFileInPlaylist(POSITION pos, bool recycle)
 {
     bool isplaying = false;
+    bool folderPlayNext = (m_pl.GetCount() == 1 && AfxGetAppSettings().eAfterPlayback == CAppSettings::AfterPlayback::PLAY_NEXT); //only one item in pl, so we are looping by folder, not pl
     if (pos == m_pl.GetPos()) {
         isplaying = true;
         // close file to release the file handle
@@ -1024,7 +1025,9 @@ bool CPlayerPlaylistBar::DeleteFileInPlaylist(POSITION pos, bool recycle)
         SavePlaylist();
         if (isplaying) {
             // play next file
-            if (nextpos || AfxGetAppSettings().bLoopFolderOnPlayNextFile) {
+            if (folderPlayNext) {
+                m_pMainFrame->DoAfterPlaybackEvent(); //we know this will call PLAY_NEXT, which should do normal folder looping
+            } else if (nextpos || AfxGetAppSettings().bLoopFolderOnPlayNextFile) {
                 m_pl.SetPos(nextpos);
                 m_pMainFrame->OpenCurPlaylistItem();
             }
