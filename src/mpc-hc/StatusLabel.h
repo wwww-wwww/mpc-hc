@@ -37,8 +37,8 @@ public:
     CStatusLabel(const DpiHelper& dpiHelper, bool fRightAlign, bool fAddEllipses);
     virtual ~CStatusLabel();
 
-    void ScaleFont(const DpiHelper& dpiHelper);
-    CFont& GetFont() { return m_font; }
+    void ScaleFont(CFont* f, const DpiHelper& dpiHelper);
+    CFont& GetScaledFont() { return m_font; }
 
     void DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct);
 

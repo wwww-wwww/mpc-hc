@@ -55,6 +55,9 @@ CPlayerStatusBar::~CPlayerStatusBar()
 BOOL CPlayerStatusBar::Create(CWnd* pParentWnd)
 {
     BOOL ret = CDialogBar::Create(pParentWnd, IDD_PLAYERSTATUSBAR, WS_CHILD | WS_VISIBLE | CBRS_ALIGN_BOTTOM, IDD_PLAYERSTATUSBAR);
+    m_type.SetFont(GetFont());
+    m_status.ScaleFont(GetFont(), m_pMainFrame->m_dpi);
+    m_time.ScaleFont(GetFont(), m_pMainFrame->m_dpi);
 
     // Should never be RTLed
     ModifyStyleEx(WS_EX_LAYOUTRTL, WS_EX_NOINHERITLAYOUT);
@@ -128,8 +131,8 @@ void CPlayerStatusBar::EventCallback(MpcEvent ev)
 {
     switch (ev) {
         case MpcEvent::DPI_CHANGED:
-            m_status.ScaleFont(m_pMainFrame->m_dpi);
-            m_time.ScaleFont(m_pMainFrame->m_dpi);
+            m_status.ScaleFont(GetFont(), m_pMainFrame->m_dpi);
+            m_time.ScaleFont(GetFont(), m_pMainFrame->m_dpi);
             SetMediaTypeIcon();
             break;
 
@@ -162,7 +165,7 @@ void CPlayerStatusBar::Relayout()
 #endif
 
     if (CDC* pDC = m_time.GetDC()) {
-        CFont* pOld = pDC->SelectObject(&m_time.GetFont());
+        CFont* pOld = pDC->SelectObject(&m_time.GetScaledFont());
         m_time.GetWindowText(str);
         r2 = r;
         r2.left = r2.right - pDC->GetTextExtent(str).cx;
@@ -175,17 +178,16 @@ void CPlayerStatusBar::Relayout()
     }
 
     if (CDC* pDC = m_status.GetDC()) {
-        CFont* pOld = pDC->SelectObject(&m_status.GetFont());
         m_status.GetWindowText(str);
+        CSize cs = CMPCThemeUtil::GetTextSize(str, pDC, &m_status.GetScaledFont()); //GetTextExtent not accurate with extended characters
         r2 = r;
-        r2.right = r2.left + pDC->GetTextExtent(str).cx;
+        r2.right = r2.left + cs.cx;
         // If the text is too long, ensure it won't overlap
         // with the timer. Ellipses will be added if needed.
         if (r2.right >= m_time_rect.left) {
             r2.right = m_time_rect.left - 1;
         }
         m_status.MoveWindow(&r2, FALSE);
-        pDC->SelectObject(pOld);
         m_status.ReleaseDC(pDC);
     } else {
         ASSERT(FALSE);
