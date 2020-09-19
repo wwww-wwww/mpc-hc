@@ -141,6 +141,7 @@ extern CAtlList<CString>& MakeLower(CAtlList<CString>& sl);
 extern CAtlList<CString>& MakeUpper(CAtlList<CString>& sl);
 
 CString FormatNumber(CString szNumber, bool bNoFractionalDigits = true);
+void GetLocaleString(LCID lcid, LCTYPE, CString& output);
 
 template<class T>
 T& FastTrimRight(T& str)

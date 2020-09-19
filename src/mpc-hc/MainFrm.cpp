@@ -2175,8 +2175,7 @@ void CMainFrame::OnTimer(UINT_PTR nIDEvent)
                         && SUCCEEDED(m_pDVDI->GetAudioAttributes(ulCurrent, &AATR))) {
                     CString lang;
                     if (AATR.Language) {
-                        int len = GetLocaleInfo(AATR.Language, LOCALE_SENGLANGUAGE, lang.GetBuffer(64), 64);
-                        lang.ReleaseBufferSetLength(std::max(len - 1, 0));
+                        GetLocaleString(AATR.Language, LOCALE_SENGLANGUAGE, lang);
                     } else {
                         lang.Format(IDS_AG_UNKNOWN, ulCurrent + 1);
                     }
@@ -2227,8 +2226,7 @@ void CMainFrame::OnTimer(UINT_PTR nIDEvent)
                 if (SUCCEEDED(m_pDVDI->GetCurrentSubpicture(&ulAvailable, &ulCurrent, &bIsDisabled))
                         && SUCCEEDED(m_pDVDI->GetSubpictureAttributes(ulCurrent, &SATR))) {
                     CString lang;
-                    int len = GetLocaleInfo(SATR.Language, LOCALE_SENGLANGUAGE, lang.GetBuffer(64), 64);
-                    lang.ReleaseBufferSetLength(std::max(len - 1, 0));
+                    GetLocaleString(SATR.Language, LOCALE_SENGLANGUAGE, lang);
 
                     switch (SATR.LanguageExtension) {
                         case DVD_SP_EXT_NotSpecified:
@@ -3540,6 +3538,7 @@ void CMainFrame::OnUpdatePlayerStatus(CCmdUI* pCmdUI)
         if (m_bUsingDXVA && (msg == ResStr(IDS_CONTROLS_PAUSED) || msg == ResStr(IDS_CONTROLS_PLAYING))) {
             msg.AppendFormat(_T(" %s"), ResStr(IDS_HW_INDICATOR).GetString());
         }
+
         m_wndStatusBar.SetStatusMessage(msg);
     } else if (GetLoadState() == MLS::CLOSING) {
         m_wndStatusBar.SetStatusMessage(StrRes(IDS_CONTROLS_CLOSING));
@@ -3979,8 +3978,7 @@ void CMainFrame::OnDvdAudio(UINT nID)
                 CString lang;
                 CString strMessage;
                 if (AATR.Language) {
-                    int len = GetLocaleInfo(AATR.Language, LOCALE_SENGLANGUAGE, lang.GetBuffer(64), 64);
-                    lang.ReleaseBufferSetLength(std::max(len - 1, 0));
+                    GetLocaleString(AATR.Language, LOCALE_SENGLANGUAGE, lang);
                 } else {
                     lang.Format(IDS_AG_UNKNOWN, nNextStream + 1);
                 }
@@ -4040,8 +4038,8 @@ void CMainFrame::OnDvdSub(UINT nID)
                 if (SUCCEEDED(m_pDVDI->GetSubpictureAttributes(nNextStream, &SATR))) {
                     CString lang;
                     CString strMessage;
-                    int len = GetLocaleInfo(SATR.Language, LOCALE_SENGLANGUAGE, lang.GetBuffer(64), 64);
-                    lang.ReleaseBufferSetLength(std::max(len - 1, 0));
+                    GetLocaleString(SATR.Language, LOCALE_SENGLANGUAGE, lang);
+
                     if (FAILED(hr)) {
                         lang += _T(" [") + ResStr(IDS_AG_ERROR) + _T("] ");
                     }
@@ -5804,8 +5802,7 @@ void CMainFrame::OnFileSubtitlesSave()
 
             if (pRTS->m_lcid && pRTS->m_lcid != LCID(-1)) {
                 CString str;
-                int len = GetLocaleInfo(pRTS->m_lcid, LOCALE_SISO639LANGNAME, str.GetBuffer(64), 64);
-                str.ReleaseBufferSetLength(std::max(len - 1, 0));
+                GetLocaleString(pRTS->m_lcid, LOCALE_SISO639LANGNAME, str);
                 suggestedFileName += _T('.') + str;
 
                 if (pRTS->m_eHearingImpaired == Subtitle::HI_YES) {
@@ -13741,8 +13738,7 @@ void CMainFrame::SetupAudioSubMenu()
 
             CString str;
             if (Language) {
-                int len = GetLocaleInfo(Language, LOCALE_SENGLANGUAGE, str.GetBuffer(256), 256);
-                str.ReleaseBufferSetLength(std::max(len - 1, 0));
+                GetLocaleString(Language, LOCALE_SENGLANGUAGE, str);
             } else {
                 str.Format(IDS_AG_UNKNOWN, i + 1);
             }
@@ -13861,8 +13857,7 @@ void CMainFrame::SetupSubtitlesSubMenu()
 
                 CString str;
                 if (Language) {
-                    int len = GetLocaleInfo(Language, LOCALE_SENGLANGUAGE, str.GetBuffer(256), 256);
-                    str.ReleaseBufferSetLength(std::max(len - 1, 0));
+                    GetLocaleString(Language, LOCALE_SENGLANGUAGE, str);
                 } else {
                     str.Format(IDS_AG_UNKNOWN, i + 1);
                 }
@@ -13975,8 +13970,7 @@ void CMainFrame::SetupSubtitlesSubMenu()
                         str.LoadString(IDS_AG_DISABLED);
                     } else {
                         if (lcid != 0) {
-                            int len = GetLocaleInfo(lcid, LOCALE_SENGLANGUAGE, str.GetBuffer(64), 64);
-                            str.ReleaseBufferSetLength(std::max(len - 1, 0));
+                            GetLocaleString(lcid, LOCALE_SENGLANGUAGE, str);
                         }
 
                         CString lcstr = CString(str).MakeLower();
@@ -14307,8 +14301,7 @@ void CMainFrame::SetupNavStreamSelectSubMenu(CMenu& subMenu, UINT id, DWORD dwSe
                 str.LoadString(IDS_AG_DISABLED);
             } else {
                 if (lcid && lcid != LCID(-1)) {
-                    int len = GetLocaleInfo(lcid, LOCALE_SENGLANGUAGE, str.GetBuffer(64), 64);
-                    str.ReleaseBufferSetLength(std::max(len - 1, 0));
+                    GetLocaleString(lcid, LOCALE_SENGLANGUAGE, str);
                 }
 
                 CString lcstr(str);
@@ -14475,8 +14468,7 @@ CString CMainFrame::GetStreamOSDString(CString name, LCID lcid, DWORD dwSelGroup
     name.Replace(_T("\t"), _T(" - "));
     CString sLcid;
     if (lcid && lcid != LCID(-1)) {
-        int len = GetLocaleInfo(lcid, LOCALE_SENGLANGUAGE, sLcid.GetBuffer(64), 64);
-        sLcid.ReleaseBufferSetLength(std::max(len - 1, 0));
+        GetLocaleString(lcid, LOCALE_SENGLANGUAGE, sLcid);
     }
     if (!sLcid.IsEmpty() && CString(name).MakeLower().Find(CString(sLcid).MakeLower()) < 0) {
         name += _T(" (") + sLcid + _T(")");
@@ -18234,8 +18226,7 @@ LRESULT CMainFrame::OnGetSubtitles(WPARAM, LPARAM lParam)
 
     if (!pSubtitlesInfo->languageCode.length() && pRTS->m_lcid && pRTS->m_lcid != LCID(-1)) {
         CString str;
-        int len = GetLocaleInfo(pRTS->m_lcid, LOCALE_SISO639LANGNAME, str.GetBuffer(64), 64);
-        str.ReleaseBufferSetLength(std::max(len - 1, 0));
+        GetLocaleString(pRTS->m_lcid, LOCALE_SISO639LANGNAME, str);
         pSubtitlesInfo->languageCode = UTF16To8(str);
     }
 
