@@ -3540,19 +3540,23 @@ void CMainFrame::OnUpdatePlayerStatus(CCmdUI* pCmdUI)
             msg.AppendFormat(_T(" %s"), ResStr(IDS_HW_INDICATOR).GetString());
         }
 
+        // get audio and subtitle languages
+        CString subLangStr;
+        if (nullptr != m_pCurrentSubInput.pSubStream) {
+            LCID lcid;
+            m_pCurrentSubInput.pSubStream->GetStreamInfo(0, nullptr, &lcid);
+            if (lcid) {
+                GetLocaleString(lcid, LOCALE_SISO639LANGNAME2, subLangStr); //iso 639-2
+            }
+        }
+
         if (!currentAudioLang.IsEmpty()) {
             msg.AppendFormat(_T("\u2001\U0001F50A %s"), currentAudioLang.GetString()); //speaker with 3 sound waves for audio stream
         }
 
-        if (nullptr != m_pCurrentSubInput.pSubStream) {
-            LCID lcid;
-            m_pCurrentSubInput.pSubStream->GetStreamInfo(0, nullptr, &lcid);
-            CString langStr;
-            GetLocaleString(lcid, LOCALE_SISO639LANGNAME2, langStr);//iso 639-2
-            if (langStr.GetLength() > 1) {
-                langStr.MakeUpper();
-                msg.AppendFormat(_T("\u2001\U0001F5E8 %s"), langStr.GetString()); //speech bubble for subs
-            }
+        if (!subLangStr.IsEmpty()) {
+            subLangStr.MakeUpper();
+            msg.AppendFormat(_T("\u2001\U0001F5E8 %s"), subLangStr.GetString()); //speech bubble for subs
         }
 
         m_wndStatusBar.SetStatusMessage(msg);
@@ -13819,8 +13823,10 @@ void CMainFrame::SetupAudioSubMenu()
             }
             if (dwFlags) {
                 iSel = i;
-                GetLocaleString(lcid, LOCALE_SISO639LANGNAME2, currentAudioLang);
-                currentAudioLang.MakeUpper();
+                if (lcid) {
+                    GetLocaleString(lcid, LOCALE_SISO639LANGNAME2, currentAudioLang);
+                    currentAudioLang.MakeUpper();
+                }
             }
 
             CString name(pName);
