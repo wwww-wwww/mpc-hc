@@ -254,7 +254,7 @@ CString FormatNumber(CString szNumber, bool bNoFractionalDigits /*= true*/)
     return ret;
 }
 
-void GetLocaleString(LCID lcid, LCTYPE, CString& output) {
-    int len = GetLocaleInfo(lcid, LOCALE_SISO639LANGNAME, output.GetBuffer(256), 256);
+void GetLocaleString(LCID lcid, LCTYPE type, CString& output) {
+    int len = GetLocaleInfo(lcid, type, output.GetBuffer(256), 256);
     output.ReleaseBufferSetLength(std::max(len - 1, 0));
 }
