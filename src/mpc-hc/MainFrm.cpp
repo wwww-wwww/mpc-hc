@@ -3543,8 +3543,9 @@ void CMainFrame::OnUpdatePlayerStatus(CCmdUI* pCmdUI)
         // get audio and subtitle languages
         CString subLangStr;
         if (nullptr != m_pCurrentSubInput.pSubStream) {
-            LCID lcid;
-            m_pCurrentSubInput.pSubStream->GetStreamInfo(0, nullptr, &lcid);
+            LCID lcid = 0;
+            CComHeapPtr<WCHAR> pName; //discard but required for GetStreamInfo to work
+            m_pCurrentSubInput.pSubStream->GetStreamInfo(0, &pName, &lcid);
             if (lcid) {
                 GetLocaleString(lcid, LOCALE_SISO639LANGNAME2, subLangStr); //iso 639-2
             }
@@ -8560,7 +8561,7 @@ void CMainFrame::OnPlayAudio(UINT nID)
 
     if (GetPlaybackMode() == PM_DVD) {
         m_pDVDC->SelectAudioStream(i, DVD_CMD_FLAG_Block, nullptr);
-        LCID lcid;
+        LCID lcid = 0;
         if (SUCCEEDED(m_pDVDI->GetAudioLanguage(i, &lcid)) && lcid != 0) {
             GetLocaleString(lcid, LOCALE_SISO639LANGNAME2, currentAudioLang);
             currentAudioLang.MakeUpper();
@@ -8571,7 +8572,7 @@ void CMainFrame::OnPlayAudio(UINT nID)
             ShowOptions(CPPageAudioSwitcher::IDD);
         } else {
             pSS->Enable(i - 1, AMSTREAMSELECTENABLE_ENABLE);
-            LCID lcid;
+            LCID lcid = 0;
             if (SUCCEEDED(pSS->Info(i - 1, nullptr, nullptr, &lcid, nullptr, nullptr, nullptr, nullptr)) && lcid != 0) {
                 GetLocaleString(lcid, LOCALE_SISO639LANGNAME2, currentAudioLang);
                 currentAudioLang.MakeUpper();
@@ -13639,7 +13640,7 @@ void CMainFrame::SetupFiltersSubMenu()
                 DWORD flags = DWORD_MAX;
                 DWORD group = DWORD_MAX;
                 DWORD prevgroup = DWORD_MAX;
-                LCID lcid;
+                LCID lcid = 0;
                 WCHAR* wname = nullptr;
                 UINT uMenuFlags;
 
@@ -13829,7 +13830,7 @@ void CMainFrame::SetupAudioSubMenu()
         for (long i = 0; i < (long)cStreams; i++) {
             DWORD dwFlags;
             WCHAR* pName = nullptr;
-            LCID lcid;
+            LCID lcid = 0;
             if (FAILED(pSS->Info(i, nullptr, &dwFlags, &lcid, nullptr, &pName, nullptr, nullptr))) {
                 break;
             }
@@ -13985,7 +13986,7 @@ void CMainFrame::SetupSubtitlesSubMenu()
 
                 for (int j = 0, cnt = (int)cStreams; j < cnt; j++) {
                     DWORD dwFlags, dwGroup;
-                    LCID lcid;
+                    LCID lcid = 0;
                     WCHAR* pszName = nullptr;
 
                     if (FAILED(pSSF->Info(j, nullptr, &dwFlags, &lcid, &dwGroup, &pszName, nullptr, nullptr))
@@ -14323,7 +14324,7 @@ void CMainFrame::SetupNavStreamSelectSubMenu(CMenu& subMenu, UINT id, DWORD dwSe
         bool bAdded = false;
         for (DWORD i = 0; i < cStreams; i++) {
             DWORD dwFlags, dwGroup;
-            LCID lcid;
+            LCID lcid = 0;
             CComHeapPtr<WCHAR> pszName;
 
             if (FAILED(pSS->Info(i, nullptr, &dwFlags, &lcid, &dwGroup, &pszName, nullptr, nullptr))
@@ -14404,7 +14405,7 @@ void CMainFrame::OnNavStreamSelectSubMenu(UINT id, DWORD dwSelGroup)
         if (SUCCEEDED(pSS->Count(&cStreams))) {
             for (int i = 0, j = cStreams; i < j; i++) {
                 DWORD dwFlags, dwGroup;
-                LCID lcid;
+                LCID lcid = 0;
                 CComHeapPtr<WCHAR> pszName;
 
                 if (FAILED(pSS->Info(i, nullptr, &dwFlags, &lcid, &dwGroup, &pszName, nullptr, nullptr))
@@ -14472,7 +14473,7 @@ void CMainFrame::OnStreamSelect(bool bForward, DWORD dwSelGroup)
         size_t currentSel = SIZE_MAX;
         for (DWORD i = 0; i < cStreams; i++) {
             DWORD dwFlags, dwGroup;
-            LCID lcid;
+            LCID lcid = 0;
             CComHeapPtr<WCHAR> pszName;
 
             if (FAILED(pSS->Info(i, nullptr, &dwFlags, &lcid, &dwGroup, &pszName, nullptr, nullptr))
@@ -14494,7 +14495,7 @@ void CMainFrame::OnStreamSelect(bool bForward, DWORD dwSelGroup)
         if (count && currentSel != SIZE_MAX) {
             size_t requested = (bForward ? currentSel + 1 : currentSel - 1) % count;
             DWORD id;
-            LCID lcid;
+            LCID lcid = 0;
             CString name;
             std::tie(id, lcid, name) = streams.at(requested);
             pSS->Enable(id, AMSTREAMSELECTENABLE_ENABLE);
