@@ -8556,14 +8556,26 @@ void CMainFrame::OnPlayAudio(UINT nID)
     CComQIPtr<IAMStreamSelect> pSS = FindFilter(__uuidof(CAudioSwitcherFilter), m_pGB);
 
     DWORD cStreams = 0;
+    currentAudioLang = _T("");
 
     if (GetPlaybackMode() == PM_DVD) {
         m_pDVDC->SelectAudioStream(i, DVD_CMD_FLAG_Block, nullptr);
+        LCID lcid;
+        if (SUCCEEDED(m_pDVDI->GetAudioLanguage(i, &lcid)) && lcid != 0) {
+            GetLocaleString(lcid, LOCALE_SISO639LANGNAME2, currentAudioLang);
+            currentAudioLang.MakeUpper();
+        }
+
     } else if (pSS && SUCCEEDED(pSS->Count(&cStreams)) && cStreams > 0) {
         if (i == 0) {
             ShowOptions(CPPageAudioSwitcher::IDD);
         } else {
             pSS->Enable(i - 1, AMSTREAMSELECTENABLE_ENABLE);
+            LCID lcid;
+            if (SUCCEEDED(pSS->Info(i - 1, nullptr, nullptr, &lcid, nullptr, nullptr, nullptr, nullptr)) && lcid != 0) {
+                GetLocaleString(lcid, LOCALE_SISO639LANGNAME2, currentAudioLang);
+                currentAudioLang.MakeUpper();
+            }
         }
     } else if (GetPlaybackMode() == PM_FILE) {
         OnNavStreamSelectSubMenu(i, 1);
