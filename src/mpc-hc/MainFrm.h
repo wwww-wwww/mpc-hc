@@ -270,6 +270,8 @@ private:
     POSITION m_posFirstExtSub;
     SubtitleInput m_pCurrentSubInput;
 
+    CString currentAudioLang;
+
     SubtitleInput* GetSubtitleInput(int& i, bool bIsOffset = false);
 
     friend class CTextPassThruFilter;
