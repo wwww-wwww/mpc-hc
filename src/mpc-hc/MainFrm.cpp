@@ -3918,6 +3918,9 @@ void CMainFrame::OnStreamAudio(UINT nID)
                 pSS->Enable(stream_index, AMSTREAMSELECTENABLE_ENABLE);
                 if (SUCCEEDED(pSS->Info(stream_index, nullptr, &dwFlags, &lcid, &dwGroup, &pszName, nullptr, nullptr))) {
                     m_OSD.DisplayMessage(OSD_TOPLEFT, GetStreamOSDString(CString(pszName), lcid, 1));
+                    if (lcid) {
+                        GetLocaleString(lcid, LOCALE_SISO639LANGNAME2, currentAudioLang);
+                    }
                 }
                 break;
             }
