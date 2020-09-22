@@ -3551,13 +3551,18 @@ void CMainFrame::OnUpdatePlayerStatus(CCmdUI* pCmdUI)
             }
         }
 
-        if (!currentAudioLang.IsEmpty()) {
-            msg.AppendFormat(_T("\u2001\U0001F50A %s"), currentAudioLang.GetString()); //speaker with 3 sound waves for audio stream
-        }
-
-        if (!subLangStr.IsEmpty()) {
-            subLangStr.MakeUpper();
-            msg.AppendFormat(_T("\u2001\U0001F5E8 %s"), subLangStr.GetString()); //speech bubble for subs
+        if (!currentAudioLang.IsEmpty() || !subLangStr.IsEmpty()) {
+            msg.Append(_T("\u2001["));
+            if (!currentAudioLang.IsEmpty()) {
+                msg.AppendFormat(_T("AUD: %s"), currentAudioLang.GetString());
+            }
+            if (!subLangStr.IsEmpty()) {
+                if (!currentAudioLang.IsEmpty()) {
+                    msg.Append(_T(", "));
+                }
+                msg.AppendFormat(_T("SUB: %s"), subLangStr.GetString());
+            }
+            msg.Append(_T("]"));
         }
 
         m_wndStatusBar.SetStatusMessage(msg);
@@ -8564,7 +8569,6 @@ void CMainFrame::OnPlayAudio(UINT nID)
         LCID lcid = 0;
         if (SUCCEEDED(m_pDVDI->GetAudioLanguage(i, &lcid)) && lcid != 0) {
             GetLocaleString(lcid, LOCALE_SISO639LANGNAME2, currentAudioLang);
-            currentAudioLang.MakeUpper();
         }
 
     } else if (pSS && SUCCEEDED(pSS->Count(&cStreams)) && cStreams > 0) {
@@ -8575,7 +8579,6 @@ void CMainFrame::OnPlayAudio(UINT nID)
             LCID lcid = 0;
             if (SUCCEEDED(pSS->Info(i - 1, nullptr, nullptr, &lcid, nullptr, nullptr, nullptr, nullptr)) && lcid != 0) {
                 GetLocaleString(lcid, LOCALE_SISO639LANGNAME2, currentAudioLang);
-                currentAudioLang.MakeUpper();
             }
         }
     } else if (GetPlaybackMode() == PM_FILE) {
@@ -13770,7 +13773,6 @@ void CMainFrame::SetupAudioSubMenu()
                 flags |= MF_CHECKED;
                 if (Language) {
                     GetLocaleString(Language, LOCALE_SISO639LANGNAME2, currentAudioLang);
-                    currentAudioLang.MakeUpper();
                 }
             }
 
@@ -13838,7 +13840,6 @@ void CMainFrame::SetupAudioSubMenu()
                 iSel = i;
                 if (lcid) {
                     GetLocaleString(lcid, LOCALE_SISO639LANGNAME2, currentAudioLang);
-                    currentAudioLang.MakeUpper();
                 }
             }
 
