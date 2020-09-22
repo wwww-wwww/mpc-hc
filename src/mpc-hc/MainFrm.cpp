@@ -3540,29 +3540,31 @@ void CMainFrame::OnUpdatePlayerStatus(CCmdUI* pCmdUI)
             msg.AppendFormat(_T(" %s"), ResStr(IDS_HW_INDICATOR).GetString());
         }
 
-        // get audio and subtitle languages
-        CString subLangStr;
-        if (nullptr != m_pCurrentSubInput.pSubStream) {
-            LCID lcid = 0;
-            CComHeapPtr<WCHAR> pName; //discard but required for GetStreamInfo to work
-            m_pCurrentSubInput.pSubStream->GetStreamInfo(0, &pName, &lcid);
-            if (lcid) {
-                GetLocaleString(lcid, LOCALE_SISO639LANGNAME2, subLangStr); //iso 639-2
-            }
-        }
-
-        if (!currentAudioLang.IsEmpty() || !subLangStr.IsEmpty()) {
-            msg.Append(_T("\u2001["));
-            if (!currentAudioLang.IsEmpty()) {
-                msg.AppendFormat(_T("AUD: %s"), currentAudioLang.GetString());
-            }
-            if (!subLangStr.IsEmpty()) {
-                if (!currentAudioLang.IsEmpty()) {
-                    msg.Append(_T(", "));
+        if (AfxGetAppSettings().bShowLangInStatusbar) {
+            // get audio and subtitle languages
+            CString subLangStr;
+            if (nullptr != m_pCurrentSubInput.pSubStream) {
+                LCID lcid = 0;
+                CComHeapPtr<WCHAR> pName; //discard but required for GetStreamInfo to work
+                m_pCurrentSubInput.pSubStream->GetStreamInfo(0, &pName, &lcid);
+                if (lcid) {
+                    GetLocaleString(lcid, LOCALE_SISO639LANGNAME2, subLangStr); //iso 639-2
                 }
-                msg.AppendFormat(_T("SUB: %s"), subLangStr.GetString());
             }
-            msg.Append(_T("]"));
+
+            if (!currentAudioLang.IsEmpty() || !subLangStr.IsEmpty()) {
+                msg.Append(_T("\u2001["));
+                if (!currentAudioLang.IsEmpty()) {
+                    msg.AppendFormat(_T("AUD: %s"), currentAudioLang.GetString());
+                }
+                if (!subLangStr.IsEmpty()) {
+                    if (!currentAudioLang.IsEmpty()) {
+                        msg.Append(_T(", "));
+                    }
+                    msg.AppendFormat(_T("SUB: %s"), subLangStr.GetString());
+                }
+                msg.Append(_T("]"));
+            }
         }
 
         m_wndStatusBar.SetStatusMessage(msg);

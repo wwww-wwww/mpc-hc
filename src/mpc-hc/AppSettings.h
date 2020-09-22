@@ -793,6 +793,7 @@ public:
     bool bEnableCrashReporter;
 
     int nStreamPosPollerInterval;
+    bool bShowLangInStatusbar;
 
 private:
     struct FilterKey {
