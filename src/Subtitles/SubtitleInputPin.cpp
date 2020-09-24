@@ -103,8 +103,13 @@ HRESULT CSubtitleInputPin::CompleteConnect(IPin* pReceivePin)
         if (psi != nullptr) {
             dwOffset = psi->dwOffset;
 
-            name = ISOLang::ISO6392ToLanguage(psi->IsoLang);
             lcid = ISOLang::ISO6392ToLcid(psi->IsoLang);
+            if (0 == lcid) { //try 639-1 in case it comes from BCP-47 (contains mix of 639-1 and 639-2)
+                lcid = ISOLang::ISO6391ToLcid(psi->IsoLang);
+                name = ISOLang::ISO6391ToLanguage(psi->IsoLang);
+            } else {
+                name = ISOLang::ISO6392ToLanguage(psi->IsoLang);
+            }
 
             CString trackName(psi->TrackName);
             trackName.Trim();
