@@ -3419,11 +3419,12 @@ void CMainFrame::OnUpdatePlayerStatus(CCmdUI* pCmdUI)
             m_pTaskbarList->SetProgressState(m_hWnd, TBPF_INDETERMINATE);
         }
     } else if (GetLoadState() == MLS::LOADED) {
+        if (!m_tempstatus_msg.IsEmpty()) {
+            m_wndStatusBar.SetStatusMessage(m_tempstatus_msg);
+            return;
+        }
         CString msg;
-
-        if (!m_playingmsg.IsEmpty()) {
-            msg = m_playingmsg;
-        } else if (m_fCapturing) {
+        if (m_fCapturing) {
             msg.LoadString(IDS_CONTROLS_CAPTURING);
 
             if (m_pAMDF) {
@@ -15822,13 +15823,13 @@ void CMainFrame::SendStatusMessage(CString msg, int nTimeOut)
 
     m_timerOneTime.Unsubscribe(timerId);
 
-    m_playingmsg.Empty();
+    m_tempstatus_msg.Empty();
     if (nTimeOut <= 0) {
         return;
     }
 
-    m_playingmsg = msg;
-    m_timerOneTime.Subscribe(timerId, [this] { m_playingmsg.Empty(); }, nTimeOut);
+    m_tempstatus_msg = msg;
+    m_timerOneTime.Subscribe(timerId, [this] { m_tempstatus_msg.Empty(); }, nTimeOut);
 
     m_Lcd.SetStatusMessage(msg, nTimeOut);
 }

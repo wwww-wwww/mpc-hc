@@ -367,7 +367,7 @@ private:
     bool delayingFullScreen;
 
     void SendStatusMessage(CString msg, int nTimeOut);
-    CString m_playingmsg, m_closingmsg;
+    CString m_tempstatus_msg, m_closingmsg;
 
     REFERENCE_TIME m_rtDurationOverride;
 
