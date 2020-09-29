@@ -448,6 +448,7 @@ class __declspec(uuid("537DCACA-2812-4a4f-B2C6-1A34C17ADEB0"))
     CAtlMap<int, CSubtitle*> m_subtitleCache;
 
     RenderingCaches m_renderingCaches;
+    CCritSec renderLock;
 
     CScreenLayoutAllocator m_sla;
 
