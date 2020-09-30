@@ -628,26 +628,6 @@ msgid "Set as &default program"
 msgstr "Tetapkan sebagai program &baku"
 
 msgctxt "IDD_PPAGEFORMATS_IDC_STATIC"
-msgid "Real-Time Streaming Protocol handler (for rtsp://... URLs)"
-msgstr "Penangan Protokol Real-Time Streaming (untuk URL rtsp://...)"
-
-msgctxt "IDD_PPAGEFORMATS_IDC_RADIO1"
-msgid "RealMedia"
-msgstr "RealMedia"
-
-msgctxt "IDD_PPAGEFORMATS_IDC_RADIO2"
-msgid "QuickTime"
-msgstr "QuickTime"
-
-msgctxt "IDD_PPAGEFORMATS_IDC_RADIO3"
-msgid "DirectShow"
-msgstr "DirectShow"
-
-msgctxt "IDD_PPAGEFORMATS_IDC_CHECK5"
-msgid "Check file extension first"
-msgstr "Periksa dulu ekstensi berkas"
-
-msgctxt "IDD_PPAGEFORMATS_IDC_STATIC"
 msgid "Explorer Context Menu"
 msgstr "Menu Konteks Explorer"
 
@@ -1159,16 +1139,32 @@ msgid "DirectShow Video"
 msgstr "Video DirectShow"
 
 msgctxt "IDD_PPAGEOUTPUT_IDC_STATIC"
-msgid "RealMedia Video"
-msgstr "Video RealMedia"
+msgid "DXVA"
+msgstr "DXVA"
 
 msgctxt "IDD_PPAGEOUTPUT_IDC_STATIC"
-msgid "QuickTime Video"
-msgstr "Video QuickTime"
+msgid "Subtitles"
+msgstr "Subtitel"
+
+msgctxt "IDD_PPAGEOUTPUT_IDC_STATIC"
+msgid "Screenshot"
+msgstr "Cuplikan layar"
+
+msgctxt "IDD_PPAGEOUTPUT_IDC_STATIC"
+msgid "Shaders"
+msgstr "Shader"
+
+msgctxt "IDD_PPAGEOUTPUT_IDC_STATIC"
+msgid "Rotation"
+msgstr "Rotasi"
 
 msgctxt "IDD_PPAGEOUTPUT_IDC_STATIC"
 msgid "Audio Renderer"
 msgstr "Perender Audio"
+
+msgctxt "IDD_PPAGEOUTPUT_IDC_STATIC"
+msgid "Subtitle Renderer"
+msgstr "Perender Subtitel"
 
 msgctxt "IDD_PPAGEOUTPUT_IDC_STATIC"
 msgid "VMR-9 (renderless) and EVR (CP) settings"
@@ -1205,30 +1201,6 @@ msgstr "Mode Pengadon VMR-9"
 msgctxt "IDD_PPAGEOUTPUT_IDC_EVR_BUFFERS_TXT"
 msgid "EVR Buffers:"
 msgstr "Bufer EVR:"
-
-msgctxt "IDD_PPAGEOUTPUT_IDC_STATIC"
-msgid "DXVA"
-msgstr "DXVA"
-
-msgctxt "IDD_PPAGEOUTPUT_IDC_STATIC"
-msgid "Subtitles"
-msgstr "Subtitel"
-
-msgctxt "IDD_PPAGEOUTPUT_IDC_STATIC"
-msgid "Screenshot"
-msgstr "Cuplikan layar"
-
-msgctxt "IDD_PPAGEOUTPUT_IDC_STATIC"
-msgid "Shaders"
-msgstr "Shader"
-
-msgctxt "IDD_PPAGEOUTPUT_IDC_STATIC"
-msgid "Rotation"
-msgstr "Rotasi"
-
-msgctxt "IDD_PPAGEOUTPUT_IDC_STATIC"
-msgid "Subtitle Renderer"
-msgstr "Perender Subtitel"
 
 msgctxt "IDD_PPAGEOUTPUT_IDC_CACHESHADERS"
 msgid "Cache compiled Shaders"

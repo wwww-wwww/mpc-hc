@@ -617,26 +617,6 @@ msgid "Set as &default program"
 msgstr "以預設關聯程式來設定 (&d)"
 
 msgctxt "IDD_PPAGEFORMATS_IDC_STATIC"
-msgid "Real-Time Streaming Protocol handler (for rtsp://... URLs)"
-msgstr "即時串流協定處理器 (給 rtsp://... 網址用)"
-
-msgctxt "IDD_PPAGEFORMATS_IDC_RADIO1"
-msgid "RealMedia"
-msgstr "RealMedia"
-
-msgctxt "IDD_PPAGEFORMATS_IDC_RADIO2"
-msgid "QuickTime"
-msgstr "QuickTime"
-
-msgctxt "IDD_PPAGEFORMATS_IDC_RADIO3"
-msgid "DirectShow"
-msgstr "DirectShow"
-
-msgctxt "IDD_PPAGEFORMATS_IDC_CHECK5"
-msgid "Check file extension first"
-msgstr "先看副檔名"
-
-msgctxt "IDD_PPAGEFORMATS_IDC_STATIC"
 msgid "Explorer Context Menu"
 msgstr "檔案總管右鍵選單"
 
@@ -1140,16 +1120,32 @@ msgid "DirectShow Video"
 msgstr "DirectShow 視訊"
 
 msgctxt "IDD_PPAGEOUTPUT_IDC_STATIC"
-msgid "RealMedia Video"
-msgstr "RealMedia 視訊"
+msgid "DXVA"
+msgstr "DXVA"
 
 msgctxt "IDD_PPAGEOUTPUT_IDC_STATIC"
-msgid "QuickTime Video"
-msgstr "QuickTime 視訊"
+msgid "Subtitles"
+msgstr "字幕"
+
+msgctxt "IDD_PPAGEOUTPUT_IDC_STATIC"
+msgid "Screenshot"
+msgstr "螢幕截圖"
+
+msgctxt "IDD_PPAGEOUTPUT_IDC_STATIC"
+msgid "Shaders"
+msgstr "著色器"
+
+msgctxt "IDD_PPAGEOUTPUT_IDC_STATIC"
+msgid "Rotation"
+msgstr "旋轉"
 
 msgctxt "IDD_PPAGEOUTPUT_IDC_STATIC"
 msgid "Audio Renderer"
 msgstr "音訊譜製器"
+
+msgctxt "IDD_PPAGEOUTPUT_IDC_STATIC"
+msgid "Subtitle Renderer"
+msgstr "字幕繪製器"
 
 msgctxt "IDD_PPAGEOUTPUT_IDC_STATIC"
 msgid "VMR-9 (renderless) and EVR (CP) settings"
@@ -1186,30 +1182,6 @@ msgstr "VMR-9 合成模式"
 msgctxt "IDD_PPAGEOUTPUT_IDC_EVR_BUFFERS_TXT"
 msgid "EVR Buffers:"
 msgstr "EVR 緩衝區:"
-
-msgctxt "IDD_PPAGEOUTPUT_IDC_STATIC"
-msgid "DXVA"
-msgstr "DXVA"
-
-msgctxt "IDD_PPAGEOUTPUT_IDC_STATIC"
-msgid "Subtitles"
-msgstr "字幕"
-
-msgctxt "IDD_PPAGEOUTPUT_IDC_STATIC"
-msgid "Screenshot"
-msgstr "螢幕截圖"
-
-msgctxt "IDD_PPAGEOUTPUT_IDC_STATIC"
-msgid "Shaders"
-msgstr "著色器"
-
-msgctxt "IDD_PPAGEOUTPUT_IDC_STATIC"
-msgid "Rotation"
-msgstr "旋轉"
-
-msgctxt "IDD_PPAGEOUTPUT_IDC_STATIC"
-msgid "Subtitle Renderer"
-msgstr "字幕繪製器"
 
 msgctxt "IDD_PPAGEOUTPUT_IDC_CACHESHADERS"
 msgid "Cache compiled Shaders"

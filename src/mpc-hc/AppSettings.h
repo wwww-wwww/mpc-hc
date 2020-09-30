@@ -559,8 +559,6 @@ public:
     // Output
     CRenderersSettings m_RenderersSettings;
     int             iDSVideoRendererType;
-    int             iRMVideoRendererType;
-    int             iQTVideoRendererType;
 
     CStringW        strAudioRendererDisplayName;
     bool            fD3DFullscreen;

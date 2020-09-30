@@ -51,11 +51,9 @@ CQuicktimeGraph::CQuicktimeGraph(HWND hWndParent, HRESULT& hr)
     const CAppSettings& s = AfxGetAppSettings();
 
     CComPtr<ISubPicAllocatorPresenter> pQTAP;
-    if (s.iQTVideoRendererType == VIDRNDT_QT_DX9) {
-        bool bFullscreen = (AfxGetApp()->m_pMainWnd != nullptr) && (((CMainFrame*)AfxGetApp()->m_pMainWnd)->IsD3DFullScreenMode());
-        if (SUCCEEDED(hr = CreateAP9(CLSID_QT9AllocatorPresenter, hWndParent, bFullscreen, &pQTAP))) {
-            dwStyle &= ~WS_VISIBLE;
-        }
+    bool bFullscreen = (AfxGetApp()->m_pMainWnd != nullptr) && (((CMainFrame*)AfxGetApp()->m_pMainWnd)->IsD3DFullScreenMode());
+    if (SUCCEEDED(hr = CreateAP9(CLSID_QT9AllocatorPresenter, hWndParent, bFullscreen, &pQTAP))) {
+        dwStyle &= ~WS_VISIBLE;
     }
     m_pQTAP = pQTAP;
 

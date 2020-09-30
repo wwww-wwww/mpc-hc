@@ -186,8 +186,6 @@ CString CMediaFormatCategory::GetBackupExtsWithPeriod(bool fAppendEngine) const
 //
 
 CMediaFormats::CMediaFormats()
-    : m_iRtspHandler((engine_t)(int)RealMedia)
-    , m_fRtspFileExtFirst(1)
 {
 }
 
@@ -199,9 +197,6 @@ void CMediaFormats::UpdateData(bool fSave)
 {
     if (fSave) {
         AfxGetApp()->WriteProfileString(_T("FileFormats"), nullptr, nullptr);
-
-        AfxGetApp()->WriteProfileInt(_T("FileFormats"), _T("RtspHandler"), m_iRtspHandler);
-        AfxGetApp()->WriteProfileInt(_T("FileFormats"), _T("RtspFileExtFirst"), m_fRtspFileExtFirst);
     } else {
         RemoveAll();
 
@@ -261,26 +256,11 @@ void CMediaFormats::UpdateData(bool fSave)
         ADDFMT((_T("bdpls"),       StrRes(IDS_MFMT_BDPLS),       _T("mpls bdmv")));
         ADDFMT((_T("rar"),         StrRes(IDS_MFMT_RAR),         _T("rar"), false, _T("RARFileSource"), DirectShow, false));
 #undef ADDFMT
-
-        m_iRtspHandler = (engine_t)AfxGetApp()->GetProfileInt(_T("FileFormats"), _T("RtspHandler"), (int)DirectShow);
-        m_fRtspFileExtFirst = !!AfxGetApp()->GetProfileInt(_T("FileFormats"), _T("RtspFileExtFirst"), TRUE);
     }
 
     for (size_t i = 0; i < GetCount(); i++) {
         GetAt(i).UpdateData(fSave);
     }
-}
-
-engine_t CMediaFormats::GetRtspHandler(bool& fRtspFileExtFirst) const
-{
-    fRtspFileExtFirst = m_fRtspFileExtFirst;
-    return m_iRtspHandler;
-}
-
-void CMediaFormats::SetRtspHandler(engine_t e, bool fRtspFileExtFirst)
-{
-    m_iRtspHandler = e;
-    m_fRtspFileExtFirst = fRtspFileExtFirst;
 }
 
 bool CMediaFormats::IsUsingEngine(CString path, engine_t e) const
@@ -292,32 +272,15 @@ engine_t CMediaFormats::GetEngine(CString path) const
 {
     path.Trim().MakeLower();
 
-    if (!m_fRtspFileExtFirst && path.Find(_T("rtsp://")) == 0) {
-        return m_iRtspHandler;
-    }
-
     CString ext = CPath(path).GetExtension();
     ext.MakeLower();
     if (!ext.IsEmpty()) {
-        if (path.Find(_T("rtsp://")) == 0) {
-            if (ext == _T(".ram") || ext == _T(".rm") || ext == _T(".ra")) {
-                return RealMedia;
-            }
-            if (ext == _T(".qt") || ext == _T(".mov")) {
-                return QuickTime;
-            }
-        }
-
         for (size_t i = 0; i < GetCount(); i++) {
             const CMediaFormatCategory& mfc = GetAt(i);
             if (mfc.FindExt(ext)) {
                 return mfc.GetEngineType();
             }
         }
-    }
-
-    if (m_fRtspFileExtFirst && path.Find(_T("rtsp://")) == 0) {
-        return m_iRtspHandler;
     }
 
     return DirectShow;

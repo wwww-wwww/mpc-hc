@@ -27,8 +27,10 @@
 #include "FGFilterLAV.h"
 #include "FGManager.h"
 #include "FGManagerBDA.h"
+#ifndef _WIN64
 #include "QuicktimeGraph.h"
 #include "RealMediaGraph.h"
+#endif
 #include "ShockwaveGraph.h"
 #include "TextPassThruFilter.h"
 #include "FakeFilterMapper2.h"
@@ -5540,13 +5542,7 @@ BOOL CMainFrame::IsRendererCompatibleWithSaveImage()
     BOOL result = TRUE;
     const CAppSettings& s = AfxGetAppSettings();
 
-    if (m_fRealMediaGraph && (s.iRMVideoRendererType == VIDRNDT_RM_DEFAULT)) {
-        AfxMessageBox(IDS_SCREENSHOT_ERROR_REAL, MB_ICONEXCLAMATION | MB_OK, 0);
-        result = FALSE;
-    } else if (m_fQuicktimeGraph && (s.iQTVideoRendererType == VIDRNDT_QT_DEFAULT)) {
-        AfxMessageBox(IDS_SCREENSHOT_ERROR_QT, MB_ICONEXCLAMATION | MB_OK, 0);
-        result = FALSE;
-    } else if (m_fShockwaveGraph) {
+    if (m_fShockwaveGraph) {
         AfxMessageBox(IDS_SCREENSHOT_ERROR_SHOCKWAVE, MB_ICONEXCLAMATION | MB_OK, 0);
         result = FALSE;
     } else if (s.iDSVideoRendererType == VIDRNDT_DS_OVERLAYMIXER) {

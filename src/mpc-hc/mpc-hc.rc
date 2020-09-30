@@ -391,11 +391,6 @@ BEGIN
     CONTROL         "Use the format-specific icons",IDC_CHECK8,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,12,184,332,8
     PUSHBUTTON      "Run as &administrator",IDC_BUTTON1,12,199,165,14
     PUSHBUTTON      "Set as &default program",IDC_BUTTON7,181,199,162,14,BS_MULTILINE
-    GROUPBOX        "Real-Time Streaming Protocol handler (for rtsp://... URLs)",IDC_STATIC,6,223,343,29
-    CONTROL         "RealMedia",IDC_RADIO1,"Button",BS_AUTORADIOBUTTON | WS_GROUP,12,238,56,8
-    CONTROL         "QuickTime",IDC_RADIO2,"Button",BS_AUTORADIOBUTTON,71,238,53,8
-    CONTROL         "DirectShow",IDC_RADIO3,"Button",BS_AUTORADIOBUTTON,136,238,51,8
-    CONTROL         "Check file extension first",IDC_CHECK5,"Button",BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,192,238,156,8
     GROUPBOX        "Explorer Context Menu",IDC_STATIC,6,256,142,29
     CONTROL         "Directory",IDC_CHECK6,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,12,270,60,8
     CONTROL         "File(s)",IDC_CHECK7,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,77,270,66,8
@@ -764,12 +759,20 @@ FONT 9, "Segoe UI", 400, 0, 0x1
 BEGIN
     GROUPBOX        "DirectShow Video",IDC_STATIC,6,6,342,52
     COMBOBOX        IDC_VIDRND_COMBO,12,19,331,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-    GROUPBOX        "RealMedia Video",IDC_STATIC,6,59,167,48
-    COMBOBOX        IDC_RMRND_COMBO,12,71,157,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-    GROUPBOX        "QuickTime Video",IDC_STATIC,181,59,167,48
-    COMBOBOX        IDC_QTRND_COMBO,186,71,157,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-    GROUPBOX        "Audio Renderer",IDC_STATIC,6,108,342,36
-    COMBOBOX        IDC_AUDRND_COMBO,12,122,331,46,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "DXVA", IDC_STATIC, 29, 41, 36, 8
+    ICON            "", IDC_VIDRND_DXVA_SUPPORT, 12, 40, 24, 20
+    LTEXT           "Subtitles", IDC_STATIC, 83, 41, 54, 8
+    ICON            "", IDC_VIDRND_SUBTITLE_SUPPORT, 65, 40, 24, 20
+    LTEXT           "Screenshot", IDC_STATIC, 155, 41, 54, 8
+    ICON            "", IDC_VIDRND_SAVEIMAGE_SUPPORT, 137, 40, 24, 20
+    LTEXT           "Shaders", IDC_STATIC, 227, 41, 42, 8
+    ICON            "", IDC_VIDRND_SHADER_SUPPORT, 209, 40, 24, 20
+    LTEXT           "Rotation", IDC_STATIC, 288, 41, 54, 8
+    ICON            "", IDC_VIDRND_ROTATION_SUPPORT, 270, 40, 24, 20
+    GROUPBOX        "Audio Renderer",IDC_STATIC,6,60,342,36
+    COMBOBOX        IDC_AUDRND_COMBO,12,74,331,46,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    GROUPBOX        "Subtitle Renderer", IDC_STATIC, 6, 98, 342, 36
+    COMBOBOX        IDC_COMBO1, 12, 113, 331, 46, CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
     GROUPBOX        "VMR-9 (renderless) and EVR (CP) settings",IDC_STATIC,6,184,342,100
     RTEXT           "Surface:",IDC_STATIC,142,221,72,8
     COMBOBOX        IDC_DX_SURFACE,217,217,126,49,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
@@ -784,26 +787,6 @@ BEGIN
     CONTROL         "VMR-9 Mixer Mode",IDC_DSVMR9LOADMIXER,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,12,212,130,10
     RTEXT           "EVR Buffers:",IDC_EVR_BUFFERS_TXT,202,259,97,8
     COMBOBOX        IDC_EVR_BUFFERS,302,256,41,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-    LTEXT           "DXVA",IDC_STATIC,29,41,36,8
-    ICON            "",IDC_VIDRND_DXVA_SUPPORT,12,40,24,20
-    LTEXT           "Subtitles",IDC_STATIC,83,41,54,8
-    ICON            "",IDC_VIDRND_SUBTITLE_SUPPORT,65,40,24,20
-    LTEXT           "Screenshot",IDC_STATIC,155,41,54,8
-    ICON            "",IDC_VIDRND_SAVEIMAGE_SUPPORT,137,40,24,20
-    LTEXT           "Shaders",IDC_STATIC,227,41,42,8
-    ICON            "",IDC_VIDRND_SHADER_SUPPORT,209,40,24,20
-    LTEXT           "Rotation",IDC_STATIC,288,41,54,8
-    ICON            "",IDC_VIDRND_ROTATION_SUPPORT,270,40,24,20
-    LTEXT           "Subtitles",IDC_STATIC,29,91,60,8
-    ICON            "",IDC_RMRND_SUBTITLE_SUPPORT,12,90,24,20
-    LTEXT           "Screenshot",IDC_STATIC,106,91,60,8
-    ICON            "",IDC_RMRND_SAVEIMAGE_SUPPORT,89,90,24,20
-    LTEXT           "Subtitles",IDC_STATIC,204,91,60,8
-    ICON            "",IDC_QTRND_SUBTITLE_SUPPORT,186,90,24,20
-    LTEXT           "Screenshot",IDC_STATIC,282,91,60,8
-    ICON            "",IDC_QTRND_SAVEIMAGE_SUPPORT,265,90,24,20
-    GROUPBOX        "Subtitle Renderer",IDC_STATIC,6,145,342,36
-    COMBOBOX        IDC_COMBO1,12,160,331,46,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
     CONTROL         "Cache compiled Shaders",IDC_CACHESHADERS,"Button",BS_AUTOCHECKBOX | BS_MULTILINE | WS_TABSTOP,12,265,205,10
 END
 
@@ -2709,10 +2692,6 @@ STRINGTABLE
 BEGIN
     IDC_DSMADVR             "High-quality renderer, requires a GPU that supports D3D9 or later."
     IDC_DSSYNC              "Same as the EVR (CP), but offers several options to synchronize the video frame rate with the display refresh rate to eliminate skipped or duplicated video frames."
-    IDC_RMSYSDEF            "Real's own renderer. SMIL scripts will work, but interaction not likely. Uses DirectDraw and runs in Overlay when it can."
-    IDC_RMDX9               "The output of Real's engine rendered by the DX9-based Allocator-Presenter of VMR-9 (renderless)."
-    IDC_QTSYSDEF            "QuickTime's own renderer. Gets a little slow when its video area is resized or partially covered by another window. When Overlay is not available it likes to fall back to GDI."
-    IDC_QTDX9               "The output of QuickTime's engine rendered by the DX9-based Allocator-Presenter of VMR-9 (renderless)."
     IDC_REGULARSURF         "Video surface will be allocated as a regular offscreen surface."
 END
 
@@ -3331,7 +3310,7 @@ BEGIN
     IDS_THUMBNAILS_INFO_HEADER 
                             "{\\an7\\1c&H000000&\\fs16\\b0\\bord0\\shad0}File Name: %s\\N%sResolution: %dx%d %s\\NDuration: %02d:%02d:%02d"
     IDS_THUMBNAIL_TOO_SMALL "The thumbnails would be too small, impossible to create the file.\n\nTry lowering the number of thumbnails or increasing the total size."
-    IDS_CANNOT_LOAD_SUB     "To load subtitles you have to change the video renderer type and reopen the file.\n- DirectShow: EVR (Custom Presenter), Sync, VMR-9 (renderless), madVR, MPC VR, or Haali VR\n- RealMedia: Special renderer for RealMedia, or open it through DirectShow\n- QuickTime: DX7 or DX9 renderer for QuickTime\n- ShockWave: n/a"
+    IDS_CANNOT_LOAD_SUB     "To load subtitles you have to change the video renderer type and reopen the file.\n- DirectShow: EVR (Custom Presenter), Sync, VMR-9 (renderless), madVR, MPC VR, or Haali VR"
     IDS_SUBTITLE_FILES_FILTER "Subtitle files"
 END
 
@@ -3706,9 +3685,6 @@ BEGIN
     IDS_GOTO_ERROR_PARSING_FPS "Error parsing the entered frame rate!"
     IDS_FRAME_STEP_ERROR_RENDERER 
                             "Cannot frame-step, try a different video renderer."
-    IDS_SCREENSHOT_ERROR_REAL 
-                            "The ""Save Image"" and ""Save Thumbnails"" functions do not work with the default video renderer for RealMedia.\nSelect one of the DirectX renderers for RealMedia in MPC-HC's output options and reopen the file."
-    IDS_SCREENSHOT_ERROR_QT "The ""Save Image"" and ""Save Thumbnails"" functions do not work with the default video renderer for QuickTime.\nSelect one of the DirectX renderers for QuickTime in MPC-HC's output options and reopen the file."
     IDS_SCREENSHOT_ERROR_SHOCKWAVE 
                             "The ""Save Image"" and ""Save Thumbnails"" functions do not work for Shockwave files."
     IDS_SCREENSHOT_ERROR_OVERLAY 
