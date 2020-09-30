@@ -1686,6 +1686,7 @@ void CRenderedTextSubtitle::Empty()
 void CRenderedTextSubtitle::OnChanged()
 {
     __super::OnChanged();
+    CAutoLock cAutoLock(&renderLock);
 
     POSITION pos = m_subtitleCache.GetStartPosition();
     while (pos) {
@@ -1714,6 +1715,7 @@ bool CRenderedTextSubtitle::Init(CSize size, const CRect& vidrect)
 
 void CRenderedTextSubtitle::Deinit()
 {
+    CAutoLock cAutoLock(&renderLock);
     POSITION pos = m_subtitleCache.GetStartPosition();
     while (pos) {
         int i;
@@ -2661,6 +2663,7 @@ double CRenderedTextSubtitle::CalcAnimation(double dst, double src, bool fAnimat
 
 CSubtitle* CRenderedTextSubtitle::GetSubtitle(int entry)
 {
+    CAutoLock cAutoLock(&renderLock);
     CSubtitle* sub;
     if (m_subtitleCache.Lookup(entry, sub)) {
         if (sub->m_fAnimated) {
