@@ -361,7 +361,7 @@ void CMPCThemeMenu::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 
         CFont* pOldFont = pDC->GetCurrentFont();
         CFont font;
-        if (CMPCThemeUtil::getFontByType(font, pDC, CMPCThemeUtil::MenuFont)) {
+        if (CMPCThemeUtil::getFontByType(font, pDC, AfxGetMainWnd(), CMPCThemeUtil::MenuFont)) {
             pDC->SelectObject(&font);
         }
 
@@ -391,7 +391,7 @@ void CMPCThemeMenu::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 
             if (mInfo.hSubMenu) {
                 CFont sfont;
-                if (CMPCThemeUtil::getFontByFace(sfont, pDC, CMPCTheme::uiSymbolFont, 14, FW_BOLD)) {
+                if (CMPCThemeUtil::getFontByFace(sfont, pDC, AfxGetMainWnd(), CMPCTheme::uiSymbolFont, 14, FW_BOLD)) {
                     pDC->SelectObject(&sfont);
                 }
                 pDC->SetTextColor(ArrowColor);
@@ -409,7 +409,7 @@ void CMPCThemeMenu::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
                     size = 10;
                 }
                 CFont bFont;
-                if (CMPCThemeUtil::getFontByFace(bFont, pDC, CMPCTheme::uiSymbolFont, size, FW_REGULAR)) {
+                if (CMPCThemeUtil::getFontByFace(bFont, pDC, AfxGetMainWnd(), CMPCTheme::uiSymbolFont, size, FW_REGULAR)) {
                     pDC->SelectObject(&bFont);
                 }
                 pDC->SetTextColor(TextFGColor);
@@ -451,19 +451,19 @@ void CMPCThemeMenu::MeasureItem(LPMEASUREITEMSTRUCT lpMeasureItemStruct)
         lpMeasureItemStruct->itemWidth = 0;
         lpMeasureItemStruct->itemHeight = separatorHeight;
     } else {
-        CSize height = CMPCThemeUtil::GetTextSize(_T("W"), hDC, CMPCThemeUtil::MenuFont);
+        CSize height = CMPCThemeUtil::GetTextSize(_T("W"), hDC, AfxGetMainWnd(), CMPCThemeUtil::MenuFont);
         if (mo->isMenubar) {
-            CSize cs = CMPCThemeUtil::GetTextSize(mo->m_strCaption, hDC, CMPCThemeUtil::MenuFont);
+            CSize cs = CMPCThemeUtil::GetTextSize(mo->m_strCaption, hDC, AfxGetMainWnd(), CMPCThemeUtil::MenuFont);
             lpMeasureItemStruct->itemWidth = cs.cx;
             lpMeasureItemStruct->itemHeight = height.cy + rowPadding;
         } else {
             CString left, right;
             GetStrings(mo, left, right);
-            CSize cs = CMPCThemeUtil::GetTextSize(left, hDC, CMPCThemeUtil::MenuFont);
+            CSize cs = CMPCThemeUtil::GetTextSize(left, hDC, AfxGetMainWnd(), CMPCThemeUtil::MenuFont);
             lpMeasureItemStruct->itemHeight = height.cy + rowPadding;
             lpMeasureItemStruct->itemWidth = iconSpacing + postTextSpacing + subMenuPadding + cs.cx;
             if (right.GetLength() > 0) {
-                CSize csAccel = CMPCThemeUtil::GetTextSize(right, hDC, CMPCThemeUtil::MenuFont);
+                CSize csAccel = CMPCThemeUtil::GetTextSize(right, hDC, AfxGetMainWnd(), CMPCThemeUtil::MenuFont);
                 lpMeasureItemStruct->itemWidth += accelSpacing + csAccel.cx;
             }
         }

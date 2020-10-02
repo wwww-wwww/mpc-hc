@@ -17,8 +17,6 @@ CBrush CMPCThemeUtil::windowBrush = CBrush();
 CBrush CMPCThemeUtil::controlAreaBrush = CBrush();
 CBrush CMPCThemeUtil::W10DarkThemeFileDialogInjectedBGBrush = CBrush();
 
-CFont CMPCThemeUtil::dialogFont = CFont();
-
 CMPCThemeUtil::CMPCThemeUtil()
 {
 }
@@ -141,11 +139,6 @@ void CMPCThemeUtil::initHelperObjects(CWnd* wnd)
     }
     if (W10DarkThemeFileDialogInjectedBGBrush.m_hObject == nullptr) {
         W10DarkThemeFileDialogInjectedBGBrush.CreateSolidBrush(CMPCTheme::W10DarkThemeFileDialogInjectedBGColor);
-    }
-    if (dialogFont.m_hObject == nullptr) {
-        CDC* pDC = wnd->GetWindowDC();
-        CMPCThemeUtil::getFontByType(dialogFont, pDC, CMPCThemeUtil::DialogFont);
-        wnd->ReleaseDC(pDC);
     }
 }
 
@@ -370,13 +363,18 @@ bool CMPCThemeUtil::MPCThemeEraseBkgnd(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
     }
 }
 
-bool CMPCThemeUtil::getFontByFace(CFont& font, CDC* pDC, wchar_t* fontName, int size, LONG weight)
+bool CMPCThemeUtil::getFontByFace(CFont& font, CDC* pDC, CWnd* wnd, wchar_t* fontName, int size, LONG weight)
 {
     LOGFONT lf;
     memset(&lf, 0, sizeof(LOGFONT));
 
+    if (!wnd) {
+        wnd = AfxGetMainWnd();
+    }
+
     DpiHelper dpiWindow;
-    dpiWindow.Override(AfxGetMainWnd()->GetSafeHwnd());
+
+    dpiWindow.Override(wnd->GetSafeHwnd());
     lf.lfHeight = -MulDiv(size, dpiWindow.DPIY(), 72);
 
     lf.lfQuality = CLEARTYPE_QUALITY;
@@ -388,10 +386,14 @@ bool CMPCThemeUtil::getFontByFace(CFont& font, CDC* pDC, wchar_t* fontName, int 
     return font.CreateFontIndirect(&lf);
 }
 
-bool CMPCThemeUtil::getFixedFont(CFont& font, CDC* pDC)
+bool CMPCThemeUtil::getFixedFont(CFont& font, CDC* pDC, CWnd* wnd)
 {
+    if (!wnd) {
+        wnd = AfxGetMainWnd();
+    }
+
     DpiHelper dpiWindow;
-    dpiWindow.Override(AfxGetMainWnd()->GetSafeHwnd());
+    dpiWindow.Override(wnd->GetSafeHwnd());
 
     LOGFONT tlf;
     memset(&tlf, 0, sizeof(LOGFONT));
@@ -402,11 +404,20 @@ bool CMPCThemeUtil::getFixedFont(CFont& font, CDC* pDC)
     return font.CreateFontIndirect(&tlf);
 }
 
-bool CMPCThemeUtil::getFontByType(CFont& font, CDC* pDC, int type, bool underline, bool bold)
+bool CMPCThemeUtil::getFontByType(CFont& font, CDC* pDC, CWnd* wnd, int type, bool underline, bool bold)
 {
     /* adipose: works poorly for dialogs as they cannot be scaled to fit zoomed fonts, only use for menus and status bars*/
     NONCLIENTMETRICS m;
     GetMetrics(&m);
+
+    if (!wnd) {
+        wnd = AfxGetMainWnd();
+    }
+
+    //metrics will have the right fonts for the main window, but current window may be on another screen
+    DpiHelper dpiWindow, dpiMain;
+    dpiWindow.Override(wnd->GetSafeHwnd());
+    dpiMain.Override(AfxGetMainWnd()->GetSafeHwnd());
 
     LOGFONT* lf;
     if (type == CaptionFont) {
@@ -433,24 +444,15 @@ bool CMPCThemeUtil::getFontByType(CFont& font, CDC* pDC, int type, bool underlin
         //wcsncpy_s(tlf.lfFaceName, _T("MS Shell Dlg"), LF_FACESIZE);
         lf = &tlf;
 #endif
-    } else if (type == fixedFont) {
-        DpiHelper dpiWindow;
-        dpiWindow.Override(AfxGetMainWnd()->GetSafeHwnd());
-
-        LOGFONT tlf;
-        memset(&tlf, 0, sizeof(LOGFONT));
-        tlf.lfHeight = -MulDiv(10, dpiWindow.DPIY(), 72);
-        tlf.lfQuality = CLEARTYPE_QUALITY;
-        tlf.lfWeight = FW_REGULAR;
-        wcsncpy_s(tlf.lfFaceName, _T("Consolas"), LF_FACESIZE);
-        lf = &tlf;
     } else {
         lf = &m.lfMessageFont;
     }
-    if (underline || bold) {
+
+    int newHeight = MulDiv(lf->lfHeight, dpiWindow.DPIY(), dpiMain.DPIY());
+    if (underline || bold || newHeight != lf->lfHeight) {
         LOGFONT tlf;
         memset(&tlf, 0, sizeof(LOGFONT));
-        tlf.lfHeight = lf->lfHeight;
+        tlf.lfHeight = newHeight;
         tlf.lfQuality = lf->lfQuality;
         tlf.lfWeight = lf->lfWeight;
         wcsncpy_s(tlf.lfFaceName, lf->lfFaceName, LF_FACESIZE);
@@ -481,18 +483,18 @@ CSize CMPCThemeUtil::GetTextSize(CString str, HDC hDC, CFont* font)
     return GetTextSize(str, pDC, font);
 }
 
-CSize CMPCThemeUtil::GetTextSize(CString str, HDC hDC, int type)
+CSize CMPCThemeUtil::GetTextSize(CString str, HDC hDC, CWnd *wnd, int type)
 {
     CDC* pDC = CDC::FromHandle(hDC);
     CFont font;
-    getFontByType(font, pDC, type);
+    getFontByType(font, pDC, wnd, type);
 
     return GetTextSize(str, pDC, &font);
 }
 
-CSize CMPCThemeUtil::GetTextSizeDiff(CString str, HDC hDC, int type, CFont* curFont)
+CSize CMPCThemeUtil::GetTextSizeDiff(CString str, HDC hDC, CWnd* wnd, int type, CFont* curFont)
 {
-    CSize cs = GetTextSize(str, hDC, type);
+    CSize cs = GetTextSize(str, hDC, wnd, type);
     CDC* cDC = CDC::FromHandle(hDC);
     CFont* pOldFont = cDC->SelectObject(curFont);
     CSize curCs = cDC->GetTextExtent(str);

@@ -69,7 +69,7 @@ BOOL CPlayerSeekBar::Create(CWnd* pParentWnd)
     }
 
     if (!AppIsThemeLoaded()) {
-        if (CMPCThemeUtil::getFontByType(mpcThemeFont, GetWindowDC(), CMPCThemeUtil::MessageFont)) {
+        if (CMPCThemeUtil::getFontByType(mpcThemeFont, GetWindowDC(), GetParent(), CMPCThemeUtil::MessageFont)) {
             SetFont(&mpcThemeFont);
         }
     }

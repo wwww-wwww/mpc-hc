@@ -70,7 +70,7 @@ void CMPCThemeStatusBar::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
     dc.SetBkColor(CMPCTheme::StatusBarBGColor);
     dc.SetTextColor(CMPCTheme::TextFGColor);
     CFont font;
-    if (CMPCThemeUtil::getFontByType(font, &dc, CMPCThemeUtil::MessageFont)) {
+    if (CMPCThemeUtil::getFontByType(font, &dc, this, CMPCThemeUtil::MessageFont)) {
         dc.SelectObject(&font);
     }
     dc.FillSolidRect(rect, CMPCTheme::StatusBarBGColor);

@@ -299,7 +299,7 @@ void CMPCThemeFrameWnd::OnPaint()
         if (currentFrameState == frameThemedCaption) {
 
             CFont f;
-            CMPCThemeUtil::getFontByType(f, &dcMem, CMPCThemeUtil::CaptionFont);
+            CMPCThemeUtil::getFontByType(f, &dcMem, this, CMPCThemeUtil::CaptionFont);
             dcMem.SelectObject(f);
 
             CRect captionRect = titleBarRect;
@@ -313,7 +313,7 @@ void CMPCThemeFrameWnd::OnPaint()
             captionRect.right = minimizeRect.left - dpi.ScaleX(4);
 
             CFont font;
-            CMPCThemeUtil::getFontByType(font, &dcMem, CMPCThemeUtil::CaptionFont);
+            CMPCThemeUtil::getFontByType(font, &dcMem, this, CMPCThemeUtil::CaptionFont);
             dcMem.SetBkColor(titleBarColor);
             dcMem.SetTextColor(CMPCTheme::W10DarkThemeTitlebarFGColor);
             CString windowText;

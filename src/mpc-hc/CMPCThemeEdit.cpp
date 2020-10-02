@@ -97,7 +97,7 @@ void CMPCThemeEdit::SetFixedWidthFont(CFont& f)
 {
     if (AppIsThemeLoaded()) {
         CWindowDC dc(this);
-        if (CMPCThemeUtil::getFixedFont(font, &dc)) {
+        if (CMPCThemeUtil::getFixedFont(font, &dc, this)) {
             SetFont(&font);
         } else {
             SetFont(&f);
