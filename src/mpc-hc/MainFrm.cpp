@@ -5134,54 +5134,52 @@ HRESULT CMainFrame::GetOriginalFrame(std::vector<BYTE>& dib, CString& errmsg) {
 }
 
 HRESULT CMainFrame::RenderCurrentSubtitles(BYTE* pData) {
+    ASSERT(AfxGetAppSettings().bSnapShotSubtitles && !m_pMVRFG && AfxGetAppSettings().fEnableSubtitles && AfxGetAppSettings().IsISRAutoLoadEnabled());
     CheckPointer(pData, E_FAIL);
     HRESULT hr = S_FALSE;
 
-    const CAppSettings& s = AfxGetAppSettings();
-    if (s.fEnableSubtitles && s.bSnapShotSubtitles) {
-        if (CComQIPtr<ISubPicProvider> pSubPicProvider = m_pCurrentSubInput.pSubStream) {
-            const PBITMAPINFOHEADER bih = (PBITMAPINFOHEADER)pData;
-            const int width = bih->biWidth;
-            const int height = bih->biHeight;
+    if (CComQIPtr<ISubPicProvider> pSubPicProvider = m_pCurrentSubInput.pSubStream) {
+        const PBITMAPINFOHEADER bih = (PBITMAPINFOHEADER)pData;
+        const int width = bih->biWidth;
+        const int height = bih->biHeight;
 
-            SubPicDesc spdRender;
-			spdRender.type    = MSP_RGB32;
-            spdRender.w = width;
-            spdRender.h = abs(height);
-            spdRender.bpp = 32;
-            spdRender.pitch = width * 4;
-            spdRender.vidrect = { 0, 0, width, height };
-            spdRender.bits = DEBUG_NEW BYTE[spdRender.pitch * spdRender.h];
+        SubPicDesc spdRender;
+		spdRender.type    = MSP_RGB32;
+        spdRender.w = width;
+        spdRender.h = abs(height);
+        spdRender.bpp = 32;
+        spdRender.pitch = width * 4;
+        spdRender.vidrect = { 0, 0, width, height };
+        spdRender.bits = DEBUG_NEW BYTE[spdRender.pitch * spdRender.h];
 
-            REFERENCE_TIME rtNow = 0;
-            m_pMS->GetCurrentPosition(&rtNow);
+        REFERENCE_TIME rtNow = 0;
+        m_pMS->GetCurrentPosition(&rtNow);
 
-            CComPtr<CMemSubPicAllocator> pSubPicAllocator = DEBUG_NEW CMemSubPicAllocator(spdRender.type, CSize(spdRender.w, spdRender.h));
+        CComPtr<CMemSubPicAllocator> pSubPicAllocator = DEBUG_NEW CMemSubPicAllocator(spdRender.type, CSize(spdRender.w, spdRender.h));
 
-            CMemSubPic memSubPic(spdRender, pSubPicAllocator);
-            memSubPic.ClearDirtyRect(0xFF000000);
+        CMemSubPic memSubPic(spdRender, pSubPicAllocator);
+        memSubPic.ClearDirtyRect(0xFF000000);
 
-            RECT bbox = {};
-            hr = pSubPicProvider->Render(spdRender, rtNow, m_pCAP->GetFPS(), bbox);
-            if (S_OK == hr) {
-                SubPicDesc spdTarget;
-				spdTarget.type    = MSP_RGB32;
-                spdTarget.w = width;
-                spdTarget.h = height;
-                spdTarget.bpp = 32;
-                spdTarget.pitch = -width * 4;
-                spdTarget.vidrect = { 0, 0, width, height };
-                spdTarget.bits = (BYTE*)(bih + 1) + (width * 4) * (height - 1);
+        RECT bbox = {};
+        hr = pSubPicProvider->Render(spdRender, rtNow, m_pCAP->GetFPS(), bbox);
+        if (S_OK == hr) {
+            SubPicDesc spdTarget;
+			spdTarget.type    = MSP_RGB32;
+            spdTarget.w = width;
+            spdTarget.h = height;
+            spdTarget.bpp = 32;
+            spdTarget.pitch = -width * 4;
+            spdTarget.vidrect = { 0, 0, width, height };
+            spdTarget.bits = (BYTE*)(bih + 1) + (width * 4) * (height - 1);
 
-                hr = memSubPic.AlphaBlt(&spdRender.vidrect, &spdTarget.vidrect, &spdTarget);
-            }
+            hr = memSubPic.AlphaBlt(&spdRender.vidrect, &spdTarget.vidrect, &spdTarget);
         }
     }
 
     return hr;
 }
 
-void CMainFrame::SaveImage(LPCWSTR fn, bool displayed) {
+void CMainFrame::SaveImage(LPCWSTR fn, bool displayed, bool includeSubtitles) {
     std::vector<BYTE> dib;
     CString errmsg;
     HRESULT hr;
@@ -5189,7 +5187,7 @@ void CMainFrame::SaveImage(LPCWSTR fn, bool displayed) {
         hr = GetDisplayedImage(dib, errmsg);
     } else {
         hr = GetCurrentFrame(dib, errmsg);
-        if (hr == S_OK) {
+        if (includeSubtitles && hr == S_OK) {
             RenderCurrentSubtitles(dib.data());
         }
     }
@@ -5586,7 +5584,7 @@ void CMainFrame::OnFileSaveImage()
     CPath psrc(s.strSnapshotPath);
     psrc.Combine(s.strSnapshotPath.GetString(), MakeSnapshotFileName(FALSE));
 
-    bool subtitleOptionSupported = !m_pMVRFG && s.IsISRAutoLoadEnabled();
+    bool subtitleOptionSupported = !m_pMVRFG && s.fEnableSubtitles && s.IsISRAutoLoadEnabled();
 
     CSaveImageDialog fd(s.nJpegQuality, nullptr, (LPCTSTR)psrc,
                         _T("BMP - Windows Bitmap (*.bmp)|*.bmp|JPG - JPEG Image (*.jpg)|*.jpg|PNG - Portable Network Graphics (*.png)|*.png||"), GetModalParent(), subtitleOptionSupported);
@@ -5627,7 +5625,9 @@ void CMainFrame::OnFileSaveImage()
     pdst.RemoveFileSpec();
     s.strSnapshotPath = (LPCTSTR)pdst;
 
-    SaveImage(path, false);
+    bool includeSubtitles = subtitleOptionSupported && s.bSnapShotSubtitles;
+
+    SaveImage(path, false, includeSubtitles);
 }
 
 void CMainFrame::OnFileSaveImageAuto()
@@ -5646,9 +5646,11 @@ void CMainFrame::OnFileSaveImageAuto()
         return;
     }
 
+    bool includeSubtitles = s.bSnapShotSubtitles && !m_pMVRFG && s.fEnableSubtitles && s.IsISRAutoLoadEnabled();
+
     CString fn;
     fn.Format(_T("%s\\%s"), s.strSnapshotPath.GetString(), MakeSnapshotFileName(FALSE).GetString());
-    SaveImage(fn.GetString(), false);
+    SaveImage(fn.GetString(), false, includeSubtitles);
 }
 
 void CMainFrame::OnUpdateFileSaveImage(CCmdUI* pCmdUI)
@@ -13046,6 +13048,7 @@ bool CMainFrame::OpenMediaPrivate(CAutoPtr<OpenMediaData> pOMD)
         m_pMVRI = m_pCAP;
         m_pMVRS = m_pCAP;
         m_pMVRSR = m_pCAP;
+        m_pMVRFG = m_pCAP;
         pMVTO = m_pCAP;
 
         if (s.fShowOSD || s.fShowDebugInfo) { // Force OSD on when the debug switch is used
