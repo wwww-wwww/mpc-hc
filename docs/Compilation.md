@@ -16,7 +16,7 @@
 2. Install the DirectX SDK (June 2010) → <https://go.microsoft.com/fwlink/?LinkID=71193>
 
 
-## Part B: Install Python 2.7
+## Part B: Install Python 2.7 (optional)
 
 This is required for building the translation DLL files.
 
@@ -25,9 +25,14 @@ This is required for building the translation DLL files.
     c:\Python2.7\Scripts\pip install polib
 
 
-## Part C: Preparing the GCC environment
+## Part C: Preparing the GCC environment (optional)
 
 This is required for building LAV Filters, which is used as the internal codecs by MPC-HC.
+
+You can skip compilation of LAV Filters by selecting the "Release Lite"/"Debug Lite" build configuration
+in the MPC-HC project file. This can be useful for making quick builds during development. The resulting
+binary will be missing the internal filter functionality. So don't use this configuration for actual
+releases.
 
 1. Download MSYS2 from <http://www.msys2.org/>.
    If you are on a 64-bit Operating System, which you should be, get the 64-bit version.
