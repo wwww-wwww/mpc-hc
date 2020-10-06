@@ -13235,6 +13235,7 @@ void CMainFrame::CloseMediaPrivate()
 
     // IMPORTANT: IVMRSurfaceAllocatorNotify/IVMRSurfaceAllocatorNotify9 has to be released before the VMR/VMR9, otherwise it will crash in Release()
     m_OSD.Stop();
+    m_pMVRFG.Release();
     m_pMVRSR.Release();
     m_pMVRS.Release();
     m_pMVRC.Release();
@@ -15585,6 +15586,7 @@ bool CMainFrame::BuildGraphVideoAudio(int fVPreview, bool fVCapture, int fAPrevi
             CComPtr<IMadVRTextOsd>       pMVTO;
 
             m_pMVRS.Release();
+            m_pMVRFG.Release();
             m_pMVRSR.Release();
 
             m_OSD.Stop();
@@ -15611,6 +15613,7 @@ bool CMainFrame::BuildGraphVideoAudio(int fVPreview, bool fVCapture, int fAPrevi
             pMVTO = m_pCAP;
             m_pMVRSR = m_pCAP;
             m_pMVRS = m_pCAP;
+            m_pMVRFG = m_pCAP;
 
             const CAppSettings& s = AfxGetAppSettings();
             m_pVideoWnd = &m_wndView;
