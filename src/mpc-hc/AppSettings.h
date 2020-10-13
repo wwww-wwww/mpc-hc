@@ -793,6 +793,8 @@ public:
     int nStreamPosPollerInterval;
     bool bShowLangInStatusbar;
 
+    bool bAddLangCodeWhenSaveSubtitles;
+
 private:
     struct FilterKey {
         CString name;

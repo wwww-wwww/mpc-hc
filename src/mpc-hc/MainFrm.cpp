@@ -5830,7 +5830,7 @@ void CMainFrame::OnFileSubtitlesSave()
 
             CAppSettings& s = AfxGetAppSettings();
 
-            if (pRTS->m_lcid && pRTS->m_lcid != LCID(-1)) {
+            if (s.bAddLangCodeWhenSaveSubtitles && pRTS->m_lcid && pRTS->m_lcid != LCID(-1)) {
                 CString str;
                 GetLocaleString(pRTS->m_lcid, LOCALE_SISO639LANGNAME, str);
                 suggestedFileName += _T('.') + str;
