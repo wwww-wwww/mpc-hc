@@ -517,7 +517,7 @@ static bool OpenVTT(CTextFile* file, CSimpleTextSubtitle& ret, int CharSet) {
                 std::string stdTmp(pszConvertedAnsiString);
                 //remove tags we don't support
                 stdTmp = std::regex_replace(stdTmp, std::regex("<c[.\\w\\d]*>"), "");
-                stdTmp = std::regex_replace(stdTmp, std::regex("</c>"), "");
+                stdTmp = std::regex_replace(stdTmp, std::regex("</c[.\\w\\d]*>"), "");
                 stdTmp = std::regex_replace(stdTmp, std::regex("<\\d\\d:\\d\\d:\\d\\d.\\d\\d\\d>"), "");
                 stdTmp = std::regex_replace(stdTmp, std::regex("<v[ .][^>]*>"), "");
                 stdTmp = std::regex_replace(stdTmp, std::regex("</v>"), "");
