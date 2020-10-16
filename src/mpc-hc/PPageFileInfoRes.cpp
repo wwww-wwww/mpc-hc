@@ -47,7 +47,7 @@ CPPageFileInfoRes::CPPageFileInfoRes(CString path, IFilterGraph* pFG, IFileSourc
     }
 
     if (-1 != path.Find(_T("://"))) {
-        m_displayFn = UrlDecodeWithUTF8(m_fn);
+        m_displayFn = UrlDecodeWithUTF8(UrlGetPathname(m_fn));
     } else {
         m_displayFn = m_fn;
     }

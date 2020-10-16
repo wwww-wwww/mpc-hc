@@ -343,7 +343,7 @@ BOOL CPPageFileInfoDetails::OnInitDialog()
     }
 
     if (-1 != m_path.Find(_T("://"))) {
-        m_displayFn = UrlDecodeWithUTF8(m_fn);
+        m_displayFn = UrlDecodeWithUTF8(UrlGetPathname(m_fn));
     } else {
         m_displayFn = m_fn;
     }

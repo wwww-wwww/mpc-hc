@@ -14566,7 +14566,7 @@ void CMainFrame::SetupRecentFilesSubMenu()
             if (!MRU[i].IsEmpty()) {
                 CString p = MRU[i];
                 if (p.Find(_T("://")) > 0) {
-                    p = UrlDecodeWithUTF8(p);
+                    p = UrlDecodeWithUTF8(UrlGetPathname(p));
                 }
                 if (p.GetLength() > 120) {
                     p = p.Left(50) + _T(" *** ") + p.Right(65);
@@ -17989,6 +17989,7 @@ CString CMainFrame::GetFileName()
                 path = pFN;
             }
         }
+        if (path.Find(_T("://")) != -1) path = UrlGetPathname(path);
         return pli->m_bYoutubeDL ? path : PathUtils::StripPathOrUrl(path);
     }
     return _T("");
