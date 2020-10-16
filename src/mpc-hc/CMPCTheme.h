@@ -14,6 +14,7 @@ public:
 
     static const COLORREF MenuSelectedColor;
     static const COLORREF MenuItemDisabledColor;
+    static const COLORREF MainMenuBorderColor;
     static const COLORREF MenuSeparatorColor;
 
     static const COLORREF ShadowColor;

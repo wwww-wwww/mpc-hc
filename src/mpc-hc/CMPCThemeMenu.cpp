@@ -341,7 +341,7 @@ void CMPCThemeMenu::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
             ::GetClientRect(AfxGetMainWnd()->m_hWnd, &wndSize);
 
             CRect rectBorder(rectM.left, rectM.bottom, rectM.left + wndSize.Width(), rectM.bottom + 1);
-            pDC->FillSolidRect(&rectBorder, CMPCTheme::MenuItemDisabledColor);
+            pDC->FillSolidRect(&rectBorder, CMPCTheme::MainMenuBorderColor);
             ExcludeClipRect(lpDrawItemStruct->hDC, rectBorder.left, rectBorder.top, rectBorder.right, rectBorder.bottom);
         }
         rectM = rectFull;
