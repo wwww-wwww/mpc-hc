@@ -68,12 +68,10 @@ bool CPlayerInfoBar::SetLine(CString label, CString info)
 
     CAutoPtr<CStatusLabel> l(DEBUG_NEW CStatusLabel(m_pMainFrame->m_dpi, true, false));
     l->Create(label, WS_CHILD | WS_VISIBLE | WS_CLIPCHILDREN | WS_CLIPSIBLINGS | SS_OWNERDRAW, CRect(0, 0, 0, 0), this);
-    l->ScaleFont(GetFont(), m_pMainFrame->m_dpi);
     m_label.Add(l);
 
     CAutoPtr<CStatusLabel> i(DEBUG_NEW CStatusLabel(m_pMainFrame->m_dpi, false, true));
     i->Create(info, WS_CHILD | WS_VISIBLE | WS_CLIPCHILDREN | WS_CLIPSIBLINGS | SS_OWNERDRAW | SS_NOTIFY, CRect(0, 0, 0, 0), this);
-    i->ScaleFont(GetFont(), m_pMainFrame->m_dpi);
     if (usetheme) {
         themedToolTip.AddTool(i, info);
     } else {
@@ -177,10 +175,10 @@ void CPlayerInfoBar::EventCallback(MpcEvent ev)
     switch (ev) {
         case MpcEvent::DPI_CHANGED:
             for (size_t i = 0; i < m_label.GetCount(); i++) {
-                m_label[i]->ScaleFont(GetFont(), m_pMainFrame->m_dpi);
+                m_label[i]->ScaleFont(m_pMainFrame->m_dpi);
             }
             for (size_t i = 0; i < m_info.GetCount(); i++) {
-                m_info[i]->ScaleFont(GetFont(), m_pMainFrame->m_dpi);
+                m_info[i]->ScaleFont(m_pMainFrame->m_dpi);
             }
             break;
 

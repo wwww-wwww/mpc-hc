@@ -32,21 +32,18 @@ CStatusLabel::CStatusLabel(const DpiHelper& dpiHelper, bool fRightAlign, bool fA
     : m_fRightAlign(fRightAlign)
     , m_fAddEllipses(fAddEllipses)
 {
-    ScaleFont(nullptr, dpiHelper);
+    ScaleFont(dpiHelper);
 }
 
 CStatusLabel::~CStatusLabel()
 {
 }
 
-void CStatusLabel::ScaleFont(CFont* f, const DpiHelper& dpiHelper)
+void CStatusLabel::ScaleFont(const DpiHelper& dpiHelper)
 {
     m_font.DeleteObject();
     LOGFONT lf;
-    if (!f || !f->GetSafeHandle() || !f->GetLogFont(&lf)) {
-        GetStatusFont(&lf); //fall back if we couldn't use passed font successfully
-    }
-
+    GetStatusFont(&lf);
     lf.lfHeight = dpiHelper.ScaleSystemToOverrideY(lf.lfHeight);
     VERIFY(m_font.CreateFontIndirect(&lf));
 }
