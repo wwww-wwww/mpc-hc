@@ -573,15 +573,24 @@ void CFGFilterList::Insert(CFGFilter* pFGF, int group, bool exactmatch, bool aut
             break;
         }
 
-        if (group != f.group) {
-            continue;
+        if (pFGF->GetCLSID() != GUID_NULL && pFGF->GetCLSID() == f.pFGF->GetCLSID()) {
+            if (group == f.group && f.pFGF->GetMerit() == MERIT64_DO_NOT_USE) {
+                TRACE(_T("Rejected (same filter with merit DO_NOT_USE already in the list)\n"));
+                bInsert = false;
+                break;
+            }
+            if (f.pFGF->GetCLSID() == CLSID_AsyncReader || f.pFGF->GetCLSID() == CLSID_URLReader) {
+                if (pFGF->GetMerit() == f.pFGF->GetMerit()) {
+                    // to avoid duplicates with different group value
+                    TRACE(_T("Rejected (same source filter already in list)\n"));
+                    bInsert = false;
+                    break;
+                }
+            }
         }
 
-        if (pFGF->GetCLSID() != GUID_NULL && pFGF->GetCLSID() == f.pFGF->GetCLSID()
-                && f.pFGF->GetMerit() == MERIT64_DO_NOT_USE) {
-            TRACE(_T("Rejected (same filter with merit DO_NOT_USE already in the list)\n"));
-            bInsert = false;
-            break;
+        if (group != f.group) {
+            continue;
         }
 
         if (CFGFilterRegistry* pFGFR2 = dynamic_cast<CFGFilterRegistry*>(f.pFGF)) {
