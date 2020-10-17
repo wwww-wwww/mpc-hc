@@ -227,7 +227,7 @@ CAppSettings::CAppSettings()
     , bSnapShotKeepVideoExtension(true)
     , bEnableCrashReporter(true)
     , nStreamPosPollerInterval(100)
-    , bShowLangInStatusbar(true)
+    , bShowLangInStatusbar(false)
     , bAddLangCodeWhenSaveSubtitles(true)
 {
     // Internal source filter
@@ -1947,7 +1947,7 @@ void CAppSettings::LoadSettings()
     bEnableCrashReporter = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_ENABLE_CRASH_REPORTER, TRUE);
 
     nStreamPosPollerInterval = pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_TIME_REFRESH_INTERVAL, 100);
-    bShowLangInStatusbar = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_SHOW_LANG_STATUSBAR, TRUE);
+    bShowLangInStatusbar = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_SHOW_LANG_STATUSBAR, FALSE);
 
     bAddLangCodeWhenSaveSubtitles = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_ADD_LANGCODE_WHEN_SAVE_SUBTITLES, TRUE);
 
