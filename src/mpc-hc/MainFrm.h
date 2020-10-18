@@ -271,6 +271,7 @@ private:
     SubtitleInput m_pCurrentSubInput;
 
     CString currentAudioLang;
+    CString currentSubLang;
 
     SubtitleInput* GetSubtitleInput(int& i, bool bIsOffset = false);
 
@@ -569,7 +570,7 @@ public:
 
     bool LoadSubtitle(CString fn, SubtitleInput* pSubInput = nullptr, bool bAutoLoad = false);
     bool SetSubtitle(int i, bool bIsOffset = false, bool bDisplayMessage = false);
-    void SetSubtitle(const SubtitleInput& subInput);
+    void SetSubtitle(const SubtitleInput& subInput, bool skip_lcid = false);
     void ToggleSubtitleOnOff(bool bDisplayMessage = false);
     void ReplaceSubtitle(const ISubStream* pSubStreamOld, ISubStream* pSubStreamNew);
     void InvalidateSubtitle(DWORD_PTR nSubtitleId = DWORD_PTR_MAX, REFERENCE_TIME rtInvalidate = -1);

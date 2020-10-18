@@ -831,6 +831,7 @@ CMainFrame::CMainFrame()
     , mediaTypesErrorDlg(nullptr)
     , m_iStreamPosPollerInterval(100)
     , currentAudioLang(_T(""))
+    , currentSubLang(_T(""))
 {
     // Don't let CFrameWnd handle automatically the state of the menu items.
     // This means that menu items without handlers won't be automatically
@@ -3544,27 +3545,16 @@ void CMainFrame::OnUpdatePlayerStatus(CCmdUI* pCmdUI)
         }
 
         if (AfxGetAppSettings().bShowLangInStatusbar) {
-            // get audio and subtitle languages
-            CString subLangStr;
-            if (nullptr != m_pCurrentSubInput.pSubStream) {
-                LCID lcid = 0;
-                CComHeapPtr<WCHAR> pName; //discard but required for GetStreamInfo to work
-                m_pCurrentSubInput.pSubStream->GetStreamInfo(0, &pName, &lcid);
-                if (lcid) {
-                    GetLocaleString(lcid, LOCALE_SISO639LANGNAME2, subLangStr); //iso 639-2
-                }
-            }
-
-            if (!currentAudioLang.IsEmpty() || !subLangStr.IsEmpty()) {
+            if (!currentAudioLang.IsEmpty() || !currentSubLang.IsEmpty()) {
                 msg.Append(_T("\u2001["));
                 if (!currentAudioLang.IsEmpty()) {
                     msg.AppendFormat(_T("AUD: %s"), currentAudioLang.GetString());
                 }
-                if (!subLangStr.IsEmpty()) {
+                if (!currentSubLang.IsEmpty()) {
                     if (!currentAudioLang.IsEmpty()) {
                         msg.Append(_T(", "));
                     }
-                    msg.AppendFormat(_T("SUB: %s"), subLangStr.GetString());
+                    msg.AppendFormat(_T("SUB: %s"), currentSubLang.GetString());
                 }
                 msg.Append(_T("]"));
             }
@@ -3831,6 +3821,8 @@ void CMainFrame::OnFilePostClosemedia(bool bNextIsQueued/* = false*/)
     m_wndStatsBar.RemoveAllLines();
     m_wndStatusBar.Clear();
     m_wndStatusBar.ShowTimer(false);
+    currentAudioLang.Empty();
+    currentSubLang.Empty();
     m_OSD.SetRange(0, 0);
     m_OSD.SetPos(0);
     m_Lcd.SetMediaRange(0, 0);
@@ -14507,6 +14499,13 @@ void CMainFrame::OnStreamSelect(bool bForward, DWORD dwSelGroup)
             std::tie(id, lcid, name) = streams.at(requested);
             pSS->Enable(id, AMSTREAMSELECTENABLE_ENABLE);
             m_OSD.DisplayMessage(OSD_TOPLEFT, GetStreamOSDString(name, lcid, dwSelGroup));
+            if (lcid && AfxGetAppSettings().fEnableSubtitles) {
+                if (dwSelGroup == 2) {
+                    GetLocaleString(lcid, LOCALE_SISO639LANGNAME2, currentSubLang);
+                } else {
+                    GetLocaleString(lcid, LOCALE_SISO639LANGNAME2, currentAudioLang);
+                }
+            }
             break;
         }
     }
@@ -14911,9 +14910,14 @@ bool CMainFrame::SetSubtitle(int i, bool bIsOffset /*= false*/, bool bDisplayMes
         CComHeapPtr<WCHAR> pName;
         if (CComQIPtr<IAMStreamSelect> pSSF = pSubInput->pSourceFilter) {
             DWORD dwFlags;
-            if (FAILED(pSSF->Info(i, nullptr, &dwFlags, nullptr, nullptr, &pName, nullptr, nullptr))) {
+            LCID lcid = 0;
+            if (FAILED(pSSF->Info(i, nullptr, &dwFlags, &lcid, nullptr, &pName, nullptr, nullptr))) {
                 dwFlags = 0;
             }
+            if (lcid && AfxGetAppSettings().fEnableSubtitles) {
+                GetLocaleString(lcid, LOCALE_SISO639LANGNAME2, currentSubLang);
+            }
+
             // Enable the track only if it isn't already the only selected track in the group
             if (!(dwFlags & AMSTREAMSELECTINFO_EXCLUSIVE)) {
                 pSSF->Enable(i, AMSTREAMSELECTENABLE_ENABLE);
@@ -14925,12 +14929,19 @@ bool CMainFrame::SetSubtitle(int i, bool bIsOffset /*= false*/, bool bDisplayMes
             CAutoLock cAutoLock(&m_csSubLock);
             pSubInput->pSubStream->SetStream(i);
         }
-        SetSubtitle(*pSubInput);
+        SetSubtitle(*pSubInput, true);
 
-        if (bDisplayMessage) {
-            if (pName || SUCCEEDED(pSubInput->pSubStream->GetStreamInfo(0, &pName, nullptr))) {
-                m_OSD.DisplayMessage(OSD_TOPLEFT, GetStreamOSDString(CString(pName), LCID(-1), 2));
+        if (!pName) {
+            LCID lcid = 0;
+            if (SUCCEEDED(pSubInput->pSubStream->GetStreamInfo(0, &pName, &lcid))) {
+                if (lcid && AfxGetAppSettings().fEnableSubtitles) {
+                    GetLocaleString(lcid, LOCALE_SISO639LANGNAME2, currentSubLang);
+                }
             }
+        }
+
+        if (bDisplayMessage && pName) {
+            m_OSD.DisplayMessage(OSD_TOPLEFT, GetStreamOSDString(CString(pName), LCID(-1), 2));
         }
         success = true;
     }
@@ -14938,7 +14949,7 @@ bool CMainFrame::SetSubtitle(int i, bool bIsOffset /*= false*/, bool bDisplayMes
     return success;
 }
 
-void CMainFrame::SetSubtitle(const SubtitleInput& subInput)
+void CMainFrame::SetSubtitle(const SubtitleInput& subInput, bool skip_lcid /* = false */)
 {
     CAppSettings& s = AfxGetAppSettings();
 
@@ -15033,6 +15044,19 @@ void CMainFrame::SetSubtitle(const SubtitleInput& subInput)
 
         m_pCurrentSubInput = subInput;
 
+        if (!skip_lcid) {
+            LCID lcid = 0;
+            if (m_pCurrentSubInput.pSubStream && s.fEnableSubtitles) {
+                CComHeapPtr<WCHAR> pName;
+                m_pCurrentSubInput.pSubStream->GetStreamInfo(0, &pName, &lcid);
+            }
+            if (lcid) {
+                GetLocaleString(lcid, LOCALE_SISO639LANGNAME2, currentSubLang);
+            } else {
+                currentSubLang.Empty();
+            }
+        }
+
         if (m_pCAP) {
             g_bExternalSubtitle = (std::find(m_ExternalSubstreams.cbegin(), m_ExternalSubstreams.cend(), subInput.pSubStream) != m_ExternalSubstreams.cend());
             m_wndSubresyncBar.SetSubtitle(subInput.pSubStream, m_pCAP->GetFPS());
@@ -15053,6 +15077,7 @@ void CMainFrame::ToggleSubtitleOnOff(bool bDisplayMessage /*= false*/)
         SetSubtitle(0, true, bDisplayMessage);
     } else {
         m_pCAP->SetSubPicProvider(nullptr);
+        currentSubLang.Empty();
 
         if (bDisplayMessage) {
             m_OSD.DisplayMessage(OSD_TOPLEFT, ResStr(IDS_SUBTITLE_STREAM_OFF));
@@ -15068,7 +15093,7 @@ void CMainFrame::ReplaceSubtitle(const ISubStream* pSubStreamOld, ISubStream* pS
         if (pSubStreamOld == m_pSubStreams.GetNext(pos).pSubStream) {
             m_pSubStreams.GetAt(cur).pSubStream = pSubStreamNew;
             if (m_pCurrentSubInput.pSubStream == pSubStreamOld) {
-                SetSubtitle(m_pSubStreams.GetAt(cur));
+                SetSubtitle(m_pSubStreams.GetAt(cur), true);
             }
             break;
         }
