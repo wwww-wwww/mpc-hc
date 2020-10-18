@@ -3414,6 +3414,8 @@ BEGIN
     IDS_AG_VIDFRM_OUTSIDE   "VidFrm Outside"
     IDS_AG_PNS_RESET        "PnS Reset"
     IDS_AG_PNS_ROTATEX_P    "PnS Rotate X+"
+    IDS_AG_MOUSE_MODIFIER   "Mouse Modifier"
+    IDS_AG_MOUSE_FS_MODIFIER "Mouse FS Modifier"
 END
 
 STRINGTABLE

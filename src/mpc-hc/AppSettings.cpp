@@ -1010,9 +1010,9 @@ void CAppSettings::SaveSettings()
             CString str;
             str.Format(_T("CommandMod%d"), i);
             CString str2;
-            str2.Format(_T("%hu %hx %hx \"%S\" %d %hhu %u %hhu"),
+            str2.Format(_T("%hu %hx %hx \"%S\" %d %hhu %u %hhu %hx %hx"),
                         wc.cmd, (WORD)wc.fVirt, wc.key, wc.rmcmd.GetString(),
-                        wc.rmrepcnt, wc.mouse, wc.appcmd, wc.mouseFS);
+                        wc.rmrepcnt, wc.mouse, wc.appcmd, wc.mouseFS, wc.mouseVirt, wc.mouseFSVirt);
             pApp->WriteProfileString(IDS_R_COMMANDS, str, str2);
             i++;
         }
@@ -1689,9 +1689,10 @@ void CAppSettings::LoadSettings()
         wmcmd tmp;
         int n;
         int fVirt = 0;
-        if (5 > (n = _stscanf_s(str2, _T("%hu %x %hx %S %d %hhu %u %hhu"),
+        if (5 > (n = _stscanf_s(str2, _T("%hu %x %hx %S %d %hhu %u %hhu %x %x"),
                                 &tmp.cmd, &fVirt, &tmp.key, tmp.rmcmd.GetBuffer(128), 128,
-                                &tmp.rmrepcnt, &tmp.mouse, &tmp.appcmd, &tmp.mouseFS))) {
+                                &tmp.rmrepcnt, &tmp.mouse, &tmp.appcmd, &tmp.mouseFS,
+                                &tmp.mouseVirt, &tmp.mouseFSVirt))) {
             break;
         }
         tmp.rmcmd.ReleaseBuffer();
@@ -1712,6 +1713,12 @@ void CAppSettings::LoadSettings()
             // If there is no distinct bindings for windowed and
             // fullscreen modes we use the same for both.
             wc.mouseFS = (n >= 8) ? tmp.mouseFS : wc.mouse;
+            if (n > 8) {
+                wc.mouseVirt = tmp.mouseVirt;
+            }
+            if (n > 9) {
+                wc.mouseFSVirt = tmp.mouseFSVirt;
+            }
             wc.rmcmd = tmp.rmcmd.Trim('\"');
             wc.rmrepcnt = tmp.rmrepcnt;
         }

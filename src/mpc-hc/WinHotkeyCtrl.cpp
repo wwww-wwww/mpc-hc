@@ -42,6 +42,7 @@ CWinHotkeyCtrl::CWinHotkeyCtrl()
     , m_fModRel(0)
     , m_fModSet_def(0)
     , m_fIsPressed(FALSE)
+    , isMouseModifier(false)
 {
 }
 
@@ -106,7 +107,11 @@ BOOL CWinHotkeyCtrl::UninstallKbHook()
 void CWinHotkeyCtrl::UpdateText()
 {
     CString sText;
-    HotkeyToString(m_vkCode, m_fModSet, sText);
+    if (isMouseModifier) {
+        HotkeyToString(0, m_fModSet, sText);
+    } else {
+        HotkeyToString(m_vkCode, m_fModSet, sText);
+    }
     SetWindowText((LPCTSTR)sText);
     SetSel(0x8fffffff, 0x8fffffff, FALSE);
 }

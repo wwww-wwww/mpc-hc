@@ -552,16 +552,29 @@ WORD AssignedToCmd(UINT keyOrMouseValue, bool bIsFullScreen, bool bCheckMouse)
     WORD assignTo = 0;
     const CAppSettings& s = AfxGetAppSettings();
 
+    BYTE mouseVirt = 0;
+    if (bCheckMouse) {
+        if (GetKeyState(VK_SHIFT) & 0x8000) {
+            mouseVirt |= FSHIFT | FVIRTKEY;
+        }
+        if (GetKeyState(VK_MENU) & 0x8000) {
+            mouseVirt |= FALT | FVIRTKEY;
+        }
+        if (GetKeyState(VK_CONTROL) & 0x8000) {
+            mouseVirt |= FCONTROL | FVIRTKEY;
+        }
+    }
+
     POSITION pos = s.wmcmds.GetHeadPosition();
     while (pos && !assignTo) {
         const wmcmd& wc = s.wmcmds.GetNext(pos);
 
         if (bCheckMouse) {
             if (bIsFullScreen) {
-                if (wc.mouseFS == keyOrMouseValue) {
+                if (wc.mouseFS == keyOrMouseValue && wc.mouseFSVirt == mouseVirt) {
                     assignTo = wc.cmd;
                 }
-            } else if (wc.mouse == keyOrMouseValue) {
+            } else if (wc.mouse == keyOrMouseValue && wc.mouseVirt == mouseVirt) {
                 assignTo = wc.cmd;
             }
         } else if (wc.key == keyOrMouseValue) {

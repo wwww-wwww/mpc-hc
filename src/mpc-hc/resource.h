@@ -1067,7 +1067,9 @@
 #define ID_PLAY_REPEAT_WHOLEPLAYLIST    33451
 #define IDS_AG_ZOOM_25                  33452
 #define ID_PLAY_REPEAT_AB               33453
+#define IDS_AG_MOUSE_MODIFIER           33453
 #define ID_PLAY_REPEAT_AB_MARK_A        33454
+#define IDS_AG_MOUSE_FS_MODIFIER        33454
 #define ID_PLAY_REPEAT_AB_MARK_B        33455
 #define IDS_MFMT_AVI                    39001
 #define IDS_MFMT_MPEG                   39002
