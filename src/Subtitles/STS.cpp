@@ -460,6 +460,10 @@ static CStringW SubRipper2SSA(CStringW str, int CharSet)
     str.Replace(L"</b>", L"{\\b}");
     str.Replace(L"<u>", L"{\\u1}");
     str.Replace(L"</u>", L"{\\u}");
+    str.Replace(L"&lt;", L"<");
+    str.Replace(L"&gt;", L">");
+    str.Replace(L"&nbsp;", L"\\h");
+    str.Replace(L"&amp;", L"&");
 
     return str;
 }
@@ -526,6 +530,9 @@ static bool OpenVTT(CTextFile* file, CSimpleTextSubtitle& ret, int CharSet) {
 
                 CString tmp2(stdTmp.c_str());
                 
+                tmp2.Replace(L"&lrm;", L""); //remove escape sequences we don't support
+                tmp2.Replace(L"&rlm;", L"");
+
                 str += tmp2 + '\n';
             }
 
