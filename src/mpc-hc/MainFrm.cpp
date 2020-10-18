@@ -3917,6 +3917,8 @@ void CMainFrame::OnStreamAudio(UINT nID)
                     m_OSD.DisplayMessage(OSD_TOPLEFT, GetStreamOSDString(CString(pszName), lcid, 1));
                     if (lcid) {
                         GetLocaleString(lcid, LOCALE_SISO639LANGNAME2, currentAudioLang);
+                    } else {
+                        currentAudioLang.Empty();
                     }
                 }
                 break;
@@ -8558,7 +8560,9 @@ void CMainFrame::OnPlayAudio(UINT nID)
     CComQIPtr<IAMStreamSelect> pSS = FindFilter(__uuidof(CAudioSwitcherFilter), m_pGB);
 
     DWORD cStreams = 0;
-    currentAudioLang = _T("");
+    if (i != 0) {
+        currentAudioLang = _T("");
+    }
 
     if (GetPlaybackMode() == PM_DVD) {
         m_pDVDC->SelectAudioStream(i, DVD_CMD_FLAG_Block, nullptr);
