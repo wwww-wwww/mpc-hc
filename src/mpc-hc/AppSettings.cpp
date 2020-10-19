@@ -1010,7 +1010,7 @@ void CAppSettings::SaveSettings()
             CString str;
             str.Format(_T("CommandMod%d"), i);
             CString str2;
-            str2.Format(_T("%hu %hx %hx \"%S\" %d %hhu %u %hhu %hx %hx"),
+            str2.Format(_T("%hu %hx %hx \"%S\" %d %hhu %u %hhu %hhu %hhu"),
                         wc.cmd, (WORD)wc.fVirt, wc.key, wc.rmcmd.GetString(),
                         wc.rmrepcnt, wc.mouse, wc.appcmd, wc.mouseFS, wc.mouseVirt, wc.mouseFSVirt);
             pApp->WriteProfileString(IDS_R_COMMANDS, str, str2);
@@ -1689,7 +1689,7 @@ void CAppSettings::LoadSettings()
         wmcmd tmp;
         int n;
         int fVirt = 0;
-        if (5 > (n = _stscanf_s(str2, _T("%hu %x %hx %S %d %hhu %u %hhu %x %x"),
+        if (5 > (n = _stscanf_s(str2, _T("%hu %x %hx %S %d %hhu %u %hhu %hhu %hhu"),
                                 &tmp.cmd, &fVirt, &tmp.key, tmp.rmcmd.GetBuffer(128), 128,
                                 &tmp.rmrepcnt, &tmp.mouse, &tmp.appcmd, &tmp.mouseFS,
                                 &tmp.mouseVirt, &tmp.mouseFSVirt))) {
