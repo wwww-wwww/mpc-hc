@@ -536,17 +536,16 @@ static bool OpenVTT(CTextFile* file, CSimpleTextSubtitle& ret, int CharSet) {
                 }
 
                 if (tmp.Find(L'<') >= 0) {
-                    // FIXME: this breaks Unicode chars
-                    CT2CA pszConvertedAnsiString(tmp);
-                    std::string stdTmp(pszConvertedAnsiString);
+                    CW2CW pszConvertedAnsiString(tmp);
+                    std::wstring stdTmp(pszConvertedAnsiString);
                     // remove tags we don't support
-                    stdTmp = std::regex_replace(stdTmp, std::regex("<c[.\\w\\d]*>"), "");
-                    stdTmp = std::regex_replace(stdTmp, std::regex("</c[.\\w\\d]*>"), "");
-                    stdTmp = std::regex_replace(stdTmp, std::regex("<\\d\\d:\\d\\d:\\d\\d.\\d\\d\\d>"), "");
-                    stdTmp = std::regex_replace(stdTmp, std::regex("<v[ .][^>]*>"), "");
-                    stdTmp = std::regex_replace(stdTmp, std::regex("</v>"), "");
-                    stdTmp = std::regex_replace(stdTmp, std::regex("<lang[^>]*>"), "");
-                    stdTmp = std::regex_replace(stdTmp, std::regex("</lang>"), "");
+                    stdTmp = std::regex_replace(stdTmp, std::wregex(L"<c[.\\w\\d]*>"), L"");
+                    stdTmp = std::regex_replace(stdTmp, std::wregex(L"</c[.\\w\\d]*>"), L"");
+                    stdTmp = std::regex_replace(stdTmp, std::wregex(L"<\\d\\d:\\d\\d:\\d\\d.\\d\\d\\d>"), L"");
+                    stdTmp = std::regex_replace(stdTmp, std::wregex(L"<v[ .][^>]*>"), L"");
+                    stdTmp = std::regex_replace(stdTmp, std::wregex(L"</v>"), L"");
+                    stdTmp = std::regex_replace(stdTmp, std::wregex(L"<lang[^>]*>"), L"");
+                    stdTmp = std::regex_replace(stdTmp, std::wregex(L"</lang>"), L"");
                     tmp = stdTmp.c_str();
                 }
 
