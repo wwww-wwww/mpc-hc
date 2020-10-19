@@ -263,8 +263,8 @@ struct AutoChangeFullscreenMode {
 
 struct wmcmd_base : public ACCEL {
     BYTE mouse;
-    BYTE mouseVirt;
     BYTE mouseFS;
+    BYTE mouseVirt;
     BYTE mouseFSVirt;
     DWORD dwname;
     UINT appcmd;
@@ -298,8 +298,8 @@ struct wmcmd_base : public ACCEL {
         0, 0, 0
     })
     , mouse(NONE)
-    , mouseVirt(0)
     , mouseFS(NONE)
+    , mouseVirt(0)
     , mouseFSVirt(0)
     , dwname(0)
     , appcmd(0) {}
@@ -307,8 +307,8 @@ struct wmcmd_base : public ACCEL {
     constexpr wmcmd_base(WORD _cmd, WORD _key, BYTE _fVirt, DWORD _dwname, UINT _appcmd = 0, BYTE _mouse = NONE, BYTE _mouseFS = NONE, BYTE _mouseVirt = 0, BYTE _mouseFSVirt = 0)
         : ACCEL{ _fVirt, _key, _cmd }
         , mouse(_mouse)
-        , mouseVirt(_mouseVirt)
         , mouseFS(_mouseFS)
+        , mouseVirt(_mouseVirt)
         , mouseFSVirt(_mouseFSVirt)
         , dwname(_dwname)
         , appcmd(_appcmd) {}
