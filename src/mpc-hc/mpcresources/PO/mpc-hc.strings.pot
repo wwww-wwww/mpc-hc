@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2020-09-30 15:29:35+0000\n"
+"POT-Creation-Date: 2020-10-19 15:10:51+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2798,6 +2798,14 @@ msgstr ""
 
 msgctxt "IDS_AG_PNS_ROTATEX_P"
 msgid "PnS Rotate X+"
+msgstr ""
+
+msgctxt "IDS_AG_MOUSE_MODIFIER"
+msgid "Mouse Modifier"
+msgstr ""
+
+msgctxt "IDS_AG_MOUSE_FS_MODIFIER"
+msgid "Mouse FS Modifier"
 msgstr ""
 
 msgctxt "IDS_AG_VIDFRM_ZOOM1"

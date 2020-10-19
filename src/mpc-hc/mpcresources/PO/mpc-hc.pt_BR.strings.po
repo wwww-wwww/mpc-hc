@@ -2954,6 +2954,14 @@ msgctxt "IDS_AG_PNS_ROTATEX_P"
 msgid "PnS Rotate X+"
 msgstr "Rotacionar PnS X+"
 
+msgctxt "IDS_AG_MOUSE_MODIFIER"
+msgid "Mouse Modifier"
+msgstr ""
+
+msgctxt "IDS_AG_MOUSE_FS_MODIFIER"
+msgid "Mouse FS Modifier"
+msgstr ""
+
 msgctxt "IDS_AG_VIDFRM_ZOOM1"
 msgid "VidFrm Zoom 1"
 msgstr "VidFrm Zoom 1"
