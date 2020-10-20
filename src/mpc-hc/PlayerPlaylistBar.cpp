@@ -413,7 +413,7 @@ bool CPlayerPlaylistBar::ParseM3UPlayList(CString fn) {
     }
 
     bool isExt = false;
-    if (str == _T("#EXTM3U")) {
+    if (str.Left(7) == _T("#EXTM3U")) {
         isExt = true;
     } else {
         f.Seek(0, CFile::SeekPosition::begin);
