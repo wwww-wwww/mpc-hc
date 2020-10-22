@@ -154,8 +154,11 @@ void CPlayerSeekBar::SyncVideoToThumb()
 void CPlayerSeekBar::CheckScrollDistance(CPoint point, REFERENCE_TIME minimum_duration_change)
 {
     ULONGLONG tickcount = GetTickCount64();
+    ULONGLONG ticks_since_last_seek = tickcount - m_lastDragSeekTickCount;
 
-    if (m_rtPos != m_rtHoverPos && ((tickcount - m_lastDragSeekTickCount > 100ULL) || abs(m_rtHoverPos - m_rtPos) >= minimum_duration_change)) {
+    // While dragging m_rtPos doesn't get updated. So in that case seek after 1 second if mouse isn't moving.
+    // If mouse pointer has moved, seek after 200ms and if at least minimum duration change. */
+    if (ticks_since_last_seek >= 1000ULL || m_rtPos != m_rtHoverPos && ticks_since_last_seek >= 200ULL && (minimum_duration_change == 0 || abs(m_rtHoverPos - m_rtPos) >= minimum_duration_change)) {
         m_lastDragSeekTickCount = tickcount;
         m_rtHoverPos = m_rtPos;
         m_hoverPoint = point;
@@ -690,7 +693,7 @@ void CPlayerSeekBar::OnLButtonDown(UINT nFlags, CPoint point)
         SetCapture();
         m_bDraggingThumb = true;
         MoveThumb(point);
-        SyncVideoToThumb();
+        CheckScrollDistance(point, 0);
         invalidateThumb();
     } else {
         if (!m_pMainFrame->m_fFullScreen) {
