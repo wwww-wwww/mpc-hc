@@ -1504,7 +1504,9 @@ void CPPageAccelTbl::OnEndListLabelEdit(NMHDR* pNMHDR, LRESULT* pResult)
         if (mod & MOD_SHIFT) {
             virt |= FSHIFT;
         }
-        virt |= FVIRTKEY;
+        if (!mouse) {
+            virt |= FVIRTKEY;
+        }
 
         CString str;
         HotkeyToString(key, mod, str);

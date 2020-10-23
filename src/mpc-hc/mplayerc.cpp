@@ -555,13 +555,13 @@ WORD AssignedToCmd(UINT keyOrMouseValue, bool bIsFullScreen, bool bCheckMouse)
     BYTE mouseVirt = 0;
     if (bCheckMouse) {
         if (GetKeyState(VK_SHIFT) & 0x8000) {
-            mouseVirt |= FSHIFT | FVIRTKEY;
+            mouseVirt |= FSHIFT;
         }
         if (GetKeyState(VK_MENU) & 0x8000) {
-            mouseVirt |= FALT | FVIRTKEY;
+            mouseVirt |= FALT;
         }
         if (GetKeyState(VK_CONTROL) & 0x8000) {
-            mouseVirt |= FCONTROL | FVIRTKEY;
+            mouseVirt |= FCONTROL;
         }
     }
 
@@ -571,10 +571,10 @@ WORD AssignedToCmd(UINT keyOrMouseValue, bool bIsFullScreen, bool bCheckMouse)
 
         if (bCheckMouse) {
             if (bIsFullScreen) {
-                if (wc.mouseFS == keyOrMouseValue && wc.mouseFSVirt == mouseVirt) {
+                if (wc.mouseFS == keyOrMouseValue && (wc.mouseFSVirt & ~FVIRTKEY) == mouseVirt) {
                     assignTo = wc.cmd;
                 }
-            } else if (wc.mouse == keyOrMouseValue && wc.mouseVirt == mouseVirt) {
+            } else if (wc.mouse == keyOrMouseValue && (wc.mouseFSVirt & ~FVIRTKEY) == mouseVirt) {
                 assignTo = wc.cmd;
             }
         } else if (wc.key == keyOrMouseValue) {
