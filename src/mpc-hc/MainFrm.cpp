@@ -3099,9 +3099,8 @@ void CMainFrame::OnInitMenu(CMenu* pMenu)
 
         if (pSubMenu) {
             mii.fMask = MIIM_STATE | MIIM_SUBMENU | MIIM_ID;
-            mii.fType = MF_POPUP;
             mii.wID = itemID; // save ID after set popup type
-            mii.fState = (pSubMenu->GetMenuItemCount()) > 0 ? MF_ENABLED : (MF_DISABLED | MF_GRAYED);
+            mii.fState = (pSubMenu->GetMenuItemCount()) > 0 ? MFS_ENABLED : MFS_DISABLED;
             mii.hSubMenu = *pSubMenu;
             VERIFY(pMenu->SetMenuItemInfo(i, &mii, TRUE));
             pSubMenu->fulfillThemeReqs();
@@ -3143,7 +3142,7 @@ void CMainFrame::OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu)
             UINT fState = (GetLoadState() == MLS::LOADED
                            && (1/*GetPlaybackMode() == PM_DVD *//*|| (GetPlaybackMode() == PM_FILE && !m_PlayList.IsEmpty())*/))
                           ? MF_ENABLED
-                          : (MF_DISABLED | MF_GRAYED);
+                          : MF_GRAYED;
             pPopupMenu->EnableMenuItem(i, MF_BYPOSITION | fState);
             continue;
         }
@@ -3153,7 +3152,7 @@ void CMainFrame::OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu)
                 || firstSubItemID == ID_VIEW_ZOOM_25) {     // is "Zoom" submenu
             UINT fState = (GetLoadState() == MLS::LOADED && !m_fAudioOnly)
                           ? MF_ENABLED
-                          : (MF_DISABLED | MF_GRAYED);
+                          : MF_GRAYED;
             pPopupMenu->EnableMenuItem(i, MF_BYPOSITION | fState);
             continue;
         }
@@ -3162,14 +3161,14 @@ void CMainFrame::OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu)
         if (firstSubItemID == ID_FILE_SUBTITLES_LOAD) {
             UINT fState = (GetLoadState() == MLS::LOADED && !m_fAudioOnly && m_pCAP)
                 ? MF_ENABLED
-                : (MF_DISABLED | MF_GRAYED);
+                : MF_GRAYED;
             pPopupMenu->EnableMenuItem(i, MF_BYPOSITION | fState);
             continue;
         }
 
         // renderer settings
         if (firstSubItemID == ID_VIEW_TEARING_TEST) {
-            UINT fState = (MF_DISABLED | MF_GRAYED);
+            UINT fState = MF_GRAYED;
             const CAppSettings& s = AfxGetAppSettings();
             if (s.iDSVideoRendererType == VIDRNDT_DS_EVR_CUSTOM || s.iDSVideoRendererType == VIDRNDT_DS_SYNC || s.iDSVideoRendererType == VIDRNDT_DS_VMR9RENDERLESS) {
                 fState = MF_ENABLED;
@@ -3188,7 +3187,7 @@ void CMainFrame::OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu)
 
         // debug shaders
         if (itemID == ID_VIEW_DEBUGSHADERS) {
-            UINT fState = (MF_DISABLED | MF_GRAYED);
+            UINT fState = MF_GRAYED;
             if (GetLoadState() == MLS::LOADED && !m_fAudioOnly && m_pCAP2) {
                 fState = MF_ENABLED;
             }
@@ -3235,9 +3234,8 @@ void CMainFrame::OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu)
 
         if (pSubMenu) {
             mii.fMask = MIIM_STATE | MIIM_SUBMENU | MIIM_ID;
-            mii.fType = MF_POPUP;
-            mii.wID = itemID; // save ID after set popup type
-            mii.fState = (pSubMenu->GetMenuItemCount() > 0) ? MF_ENABLED : (MF_DISABLED | MF_GRAYED);
+            mii.wID = itemID;
+            mii.fState = (pSubMenu->GetMenuItemCount() > 0) ? MF_ENABLED : MF_GRAYED;
             mii.hSubMenu = *pSubMenu;
             VERIFY(pPopupMenu->SetMenuItemInfo(i, &mii, TRUE));
             pSubMenu->fulfillThemeReqs();
@@ -13554,7 +13552,7 @@ void CMainFrame::SetupFiltersSubMenu()
     m_ssarray.RemoveAll();
 
     if (GetLoadState() == MLS::LOADED) {
-        UINT idf = 0;
+        UINT idf = 1; //used as an id, so make non-zero to start
         UINT ids = ID_FILTERS_SUBITEM_START;
         UINT idl = ID_FILTERSTREAMS_SUBITEM_START;
 
@@ -13706,16 +13704,11 @@ void CMainFrame::SetupFiltersSubMenu()
             if (nPPages == 1 && !pSS) {
                 VERIFY(subMenu.AppendMenu(MF_STRING | MF_ENABLED, ids, filterName));
             } else {
-                VERIFY(subMenu.AppendMenu(MF_STRING | MF_DISABLED | MF_GRAYED, idf, filterName));
-
                 if (nPPages > 0 || pSS) {
-                    MENUITEMINFO mii;
-                    mii.cbSize = sizeof(mii);
-                    mii.fMask = MIIM_STATE | MIIM_SUBMENU;
-                    mii.fType = MF_POPUP;
-                    mii.hSubMenu = internalSubMenu.Detach();
-                    mii.fState = (pSPP || pSS) ? MF_ENABLED : (MF_DISABLED | MF_GRAYED);
-                    VERIFY(subMenu.SetMenuItemInfo(idf, &mii, FALSE));
+                    UINT nFlags = MF_STRING | MF_POPUP | ((pSPP || pSS) ? MF_ENABLED : MF_GRAYED);
+                    VERIFY(subMenu.AppendMenu(nFlags, (UINT_PTR)internalSubMenu.Detach(), filterName));
+                } else {
+                    VERIFY(subMenu.AppendMenu(MF_STRING | MF_GRAYED, idf, filterName));
                 }
             }
 
@@ -14080,7 +14073,7 @@ void CMainFrame::SetupSubtitlesSubMenu()
         const CAppSettings& s = AfxGetAppSettings();
         // Style
         if (!bTextSubtitles) {
-            subMenu.EnableMenuItem(nItemsBeforeStart + 1, MF_BYPOSITION | MF_DISABLED | MF_GRAYED);
+            subMenu.EnableMenuItem(nItemsBeforeStart + 1, MF_BYPOSITION | MF_GRAYED);
         }
         // Enabled
         if (s.fEnableSubtitles) {
@@ -14089,7 +14082,7 @@ void CMainFrame::SetupSubtitlesSubMenu()
         // Default style
         // TODO: foxX - default subtitles style toggle here; still wip
         if (!bTextSubtitles) {
-            subMenu.EnableMenuItem(nItemsBeforeStart + 5, MF_BYPOSITION | MF_DISABLED | MF_GRAYED);
+            subMenu.EnableMenuItem(nItemsBeforeStart + 5, MF_BYPOSITION | MF_GRAYED);
         }
         if (s.fUseDefaultSubtitlesStyle) {
             subMenu.CheckMenuItem(nItemsBeforeStart + 5, MF_BYPOSITION | MF_CHECKED);
@@ -14269,7 +14262,7 @@ void CMainFrame::SetupJumpToSubMenus(CMenu* parentMenu /*= nullptr*/, int iInser
                     idSelected = id;
                 }
                 if (ulUOPs & UOP_FLAG_Play_Title) {
-                    flags |= MF_DISABLED | MF_GRAYED;
+                    flags |= MF_GRAYED;
                 }
 
                 CString str;
@@ -14287,7 +14280,7 @@ void CMainFrame::SetupJumpToSubMenus(CMenu* parentMenu /*= nullptr*/, int iInser
                     idSelected = id;
                 }
                 if (ulUOPs & UOP_FLAG_Play_Chapter) {
-                    flags |= MF_DISABLED | MF_GRAYED;
+                    flags |= MF_GRAYED;
                 }
 
                 CString str;
@@ -14716,7 +14709,7 @@ void CMainFrame::SetupShadersSubMenu()
     if (s.iDSVideoRendererType == VIDRNDT_DS_EVR_CUSTOM || s.iDSVideoRendererType == VIDRNDT_DS_SYNC || s.iDSVideoRendererType == VIDRNDT_DS_VMR9RENDERLESS || s.iDSVideoRendererType == VIDRNDT_DS_MADVR || s.iDSVideoRendererType == VIDRNDT_DS_MPCVR) {
         subMenu.EnableMenuItem(ID_SHADERS, MF_BYPOSITION | MF_ENABLED);
     } else {
-        subMenu.EnableMenuItem(ID_SHADERS, MF_BYPOSITION | MF_DISABLED | MF_GRAYED);
+        subMenu.EnableMenuItem(ID_SHADERS, MF_BYPOSITION | MF_GRAYED);
         return;
     }        
 

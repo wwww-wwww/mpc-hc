@@ -9,6 +9,7 @@
 #include "CMPCThemeTabCtrl.h"
 #include "VersionHelpersInternal.h"
 #include "CMPCThemeTitleBarControlButton.h"
+#include "CMPCThemeInternalPropertyPageWnd.h"
 #include "CMPCThemeWin10Api.h"
 #undef SubclassWindow
 
@@ -114,6 +115,9 @@ void CMPCThemeUtil::fulfillThemeReqs(CWnd* wnd)
                     makeThemed(pObject, tChild);
                 } else if (0 == _tcsicmp(windowClass, WC_TABCONTROL)) {
                     CMPCThemeTabCtrl* pObject = DEBUG_NEW CMPCThemeTabCtrl();
+                    makeThemed(pObject, tChild);
+                } else if (windowTitle == _T("CInternalPropertyPageWnd")) { //only seems to be needed for windows from external filters?
+                    CMPCThemeInternalPropertyPageWnd* pObject = DEBUG_NEW CMPCThemeInternalPropertyPageWnd();
                     makeThemed(pObject, tChild);
                 }
             }

@@ -602,6 +602,9 @@
       <Filter>MPCTheme</Filter>
     </ClCompile>
     <ClCompile Include="ColorProfileUtil.cpp" />
+    <ClCompile Include="CMPCThemeInternalPropertyPageWnd.cpp">
+      <Filter>MPCTheme</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AppSettings.h">
@@ -1137,6 +1140,9 @@
       <Filter>MPCTheme</Filter>
     </ClInclude>
     <ClInclude Include="ColorProfileUtil.h" />
+    <ClInclude Include="CMPCThemeInternalPropertyPageWnd.h">
+      <Filter>MPCTheme</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\ani.avi">
