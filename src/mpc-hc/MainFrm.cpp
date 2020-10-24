@@ -8191,7 +8191,7 @@ void CMainFrame::OnPlayChangeRate(UINT nID)
                 SetPlayingRate(m_dSpeedRate / 2.0);
             }
         } else if (nID > ID_PLAY_PLAYBACKRATE_START && nID < ID_PLAY_PLAYBACKRATE_END) {
-            if (filePlaybackRates.contains(nID)) {
+            if (filePlaybackRates.count(nID) != 0) {
                 SetPlayingRate(filePlaybackRates[nID]);
             } else if (nID == ID_PLAY_PLAYBACKRATE_FPS24 || nID == ID_PLAY_PLAYBACKRATE_FPS25) {
                 if (m_pCAP) {
@@ -8218,7 +8218,7 @@ void CMainFrame::OnPlayChangeRate(UINT nID)
                 SetPlayingRate(m_dSpeedRate / 2.0);
             }
         } else if (nID > ID_PLAY_PLAYBACKRATE_START && nID < ID_PLAY_PLAYBACKRATE_END) {
-            if (dvdPlaybackRates.contains(nID)) {
+            if (dvdPlaybackRates.count(nID) != 0) {
                 SetPlayingRate(dvdPlaybackRates[nID]);
             }
         }
@@ -8274,7 +8274,7 @@ void CMainFrame::OnUpdatePlayChangeRate(CCmdUI* pCmdUI)
         if (pCmdUI->m_nID > ID_PLAY_PLAYBACKRATE_START && pCmdUI->m_nID < ID_PLAY_PLAYBACKRATE_END && pCmdUI->m_pMenu) {
             fEnable = false;
             if (GetPlaybackMode() == PM_FILE) {
-                if (filePlaybackRates.contains(pCmdUI->m_nID)) {
+                if (filePlaybackRates.count(pCmdUI->m_nID) != 0) {
                     fEnable = true;
                     if (filePlaybackRates[pCmdUI->m_nID] == m_dSpeedRate) {
                         pCmdUI->m_pMenu->CheckMenuRadioItem(ID_PLAY_PLAYBACKRATE_START, ID_PLAY_PLAYBACKRATE_END, pCmdUI->m_nID, MF_BYCOMMAND);
@@ -8297,7 +8297,7 @@ void CMainFrame::OnUpdatePlayChangeRate(CCmdUI* pCmdUI)
                     }
                 }
             } else if (GetPlaybackMode() == PM_DVD) {
-                if (dvdPlaybackRates.contains(pCmdUI->m_nID)) {
+                if (dvdPlaybackRates.count(pCmdUI->m_nID) != 0) {
                     fEnable = true;
                     if (dvdPlaybackRates[pCmdUI->m_nID] == m_dSpeedRate) {
                         pCmdUI->m_pMenu->CheckMenuRadioItem(ID_PLAY_PLAYBACKRATE_START, ID_PLAY_PLAYBACKRATE_END, pCmdUI->m_nID, MF_BYCOMMAND);
