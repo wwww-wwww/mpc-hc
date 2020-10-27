@@ -200,8 +200,10 @@ void CPlayerInfoBar::Relayout()
         CDC* pDC = m_label[i]->GetDC();
         CString str;
         m_label[i]->GetWindowText(str);
-        w = std::max<int>(w, pDC->GetTextExtent(str).cx);
-        m_label[i]->ReleaseDC(pDC);
+        if (pDC) {
+            w = std::max<int>(w, pDC->GetTextExtent(str).cx);
+            m_label[i]->ReleaseDC(pDC);
+        }
     }
 
     const int sep = m_pMainFrame->m_dpi.ScaleX(10);
