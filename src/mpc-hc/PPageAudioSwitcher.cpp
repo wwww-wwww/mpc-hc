@@ -34,10 +34,10 @@
 #pragma warning(disable: 4351) // new behavior: elements of array 'array' will be default initialized
 IMPLEMENT_DYNAMIC(CPPageAudioSwitcher, CMPCThemePPageBase)
 CPPageAudioSwitcher::CPPageAudioSwitcher(IFilterGraph* pFG)
-#ifdef MPCHC_LITE
-    : CMPCThemePPageBase(CPPageAudioSwitcher::IDD, IDS_AUDIOSWITCHER)
-#else
+#if 1
     : CMPCThemePPageBase(CPPageAudioSwitcher::IDD, CPPageAudioSwitcher::IDD)
+#else
+    : CMPCThemePPageBase(CPPageAudioSwitcher::IDD, IDS_AUDIOSWITCHER)
 #endif
     , m_pSpeakerToChannelMap()
     , m_dwChannelMask(0)

@@ -93,7 +93,7 @@ private:
     CPPageFullscreen m_fullscreen;
     CPPageSync m_sync;
     CPPageCapture m_tuner;
-#ifndef MPCHC_LITE
+#if USE_LAVFILTERS
     CPPageInternalFilters m_internalfilters;
 #endif
     CPPageAudioSwitcher m_audioswitcher;

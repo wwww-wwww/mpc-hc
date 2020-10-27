@@ -46,6 +46,8 @@
 #define SHADERS_DIR11 _T("Shaders11")
 #define SHADERS_EXT _T(".hlsl")
 
+#define USE_LAVFILTERS 1
+
 // If this is enabled, the registered LAV Filters can be loaded as internal filters
 #define ENABLE_LOAD_EXTERNAL_LAVF_AS_INTERNAL 1
 
