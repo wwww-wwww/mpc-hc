@@ -3012,7 +3012,7 @@ LRESULT CMainFrame::OnResetDevice(WPARAM wParam, LPARAM lParam)
         ResetDevice();
     }
 
-    if (fs == State_Running) {
+    if (fs == State_Running && m_pMC) {
         m_pMC->Run();
 
         // When restarting DVB capture, we need to set again the channel.
