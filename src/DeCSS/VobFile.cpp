@@ -612,12 +612,18 @@ bool CVobFile::Open(CString fn, CAtlList<CString>& vobs, ULONG nProgNum /*= 1*/,
         vob.Format(_T("%s%d.vob"), fn.GetString(), i);
 
         CFileStatus status;
-        if (!CFile::GetStatus(vob, status)) {
-            if (i == 0) {
-                continue;
-            } else {
-                break;
+        try {
+            if (!CFile::GetStatus(vob, status)) {
+                if (i == 0) {
+                    continue;
+                }
+                else {
+                    break;
+                }
             }
+        }
+        catch (...) {
+            break;
         }
 
         if (status.m_size & 0x7ff) {
