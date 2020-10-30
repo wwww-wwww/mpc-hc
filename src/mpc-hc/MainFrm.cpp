@@ -3098,11 +3098,10 @@ void CMainFrame::OnInitMenu(CMenu* pMenu)
         }*/
 
         if (pSubMenu) {
-            mii.fMask = MIIM_STATE | MIIM_SUBMENU | MIIM_ID;
-            mii.wID = itemID; // save ID after set popup type
+            mii.fMask = MIIM_STATE | MIIM_SUBMENU;
             mii.fState = (pSubMenu->GetMenuItemCount()) > 0 ? MFS_ENABLED : MFS_DISABLED;
             mii.hSubMenu = *pSubMenu;
-            VERIFY(pMenu->SetMenuItemInfo(i, &mii, TRUE));
+            VERIFY(CMPCThemeMenu::SetThemedMenuItemInfo(pMenu, i, &mii, TRUE));
             pSubMenu->fulfillThemeReqs();
         }
     }
@@ -3213,7 +3212,7 @@ void CMainFrame::OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu)
 
             mii.fMask = MIIM_STRING;
             mii.dwTypeData = (LPTSTR)(LPCTSTR)menuStr;
-            VERIFY(pPopupMenu->SetMenuItemInfo(i, &mii, TRUE));
+            VERIFY(CMPCThemeMenu::SetThemedMenuItemInfo(pPopupMenu, i, &mii, TRUE));
 
             SetupVideoStreamsSubMenu();
             pSubMenu = &m_videoStreamsMenu;
@@ -3233,11 +3232,10 @@ void CMainFrame::OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu)
         }
 
         if (pSubMenu) {
-            mii.fMask = MIIM_STATE | MIIM_SUBMENU | MIIM_ID;
-            mii.wID = itemID;
+            mii.fMask = MIIM_STATE | MIIM_SUBMENU;
             mii.fState = (pSubMenu->GetMenuItemCount() > 0) ? MF_ENABLED : MF_GRAYED;
             mii.hSubMenu = *pSubMenu;
-            VERIFY(pPopupMenu->SetMenuItemInfo(i, &mii, TRUE));
+            VERIFY(CMPCThemeMenu::SetThemedMenuItemInfo(pPopupMenu, i, &mii, TRUE));
             pSubMenu->fulfillThemeReqs();
         }
     }
@@ -3276,7 +3274,7 @@ void CMainFrame::OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu)
         // this works fine
         mii.fMask = MIIM_STRING;
         mii.dwTypeData = (LPTSTR)(LPCTSTR)str;
-        VERIFY(pPopupMenu->SetMenuItemInfo(i, &mii, TRUE));
+        VERIFY(CMPCThemeMenu::SetThemedMenuItemInfo(pPopupMenu, i, &mii, TRUE));
     }
 
     uiMenuCount = pPopupMenu->GetMenuItemCount();
@@ -9037,7 +9035,7 @@ void CMainFrame::OnUpdateAfterplayback(CCmdUI* pCmdUI)
         mii.fMask = MIIM_FTYPE | MIIM_STATE;
         mii.fType = (bRadio ? MFT_RADIOCHECK : 0) | (cii.fType & MFT_OWNERDRAW); //preserve owner draw flag
         mii.fState = (bRadio ? MFS_DISABLED : 0) | (bChecked || bRadio ? MFS_CHECKED : 0);
-        VERIFY(pCmdUI->m_pMenu->SetMenuItemInfo(pCmdUI->m_nID, &mii));
+        VERIFY(CMPCThemeMenu::SetThemedMenuItemInfo(pCmdUI->m_pMenu, pCmdUI->m_nID, &mii));
     }
 }
 
