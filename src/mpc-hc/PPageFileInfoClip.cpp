@@ -84,6 +84,8 @@ CPPageFileInfoClip::CPPageFileInfoClip(CString path, IFilterGraph* pFG, IFileSou
             bstr.Empty();
             if (SUCCEEDED(pAMMC->get_Description(&bstr)) && bstr.Length()) {
                 m_desc = bstr.m_str;
+                m_desc.Replace(L"\r\n", L"\n"); //Relpace existing \r\n to \n
+                m_desc.Replace(L"\n", L"\r\n");
                 bFound = true;
             }
             bstr.Empty();
