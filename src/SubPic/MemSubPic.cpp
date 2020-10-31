@@ -713,7 +713,7 @@ void CMemSubPicAllocator::FreeSpdBits(SubPicDesc& spd)
 
 STDMETHODIMP CMemSubPicAllocator::SetMaxTextureSize(SIZE maxTextureSize)
 {
-    if (m_maxsize != maxTextureSize) {
+    if (maxTextureSize.cx > 0 && maxTextureSize.cy > 0 && m_maxsize != maxTextureSize) {
         m_maxsize = maxTextureSize;
         CAutoLock cAutoLock(this);
         for (const auto& p : m_freeMemoryChunks) {
