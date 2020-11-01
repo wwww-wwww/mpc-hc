@@ -447,6 +447,10 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWnd)
 
     ON_COMMAND(ID_VIEW_VSYNCOFFSET_INCREASE, OnViewVSyncOffsetIncrease)
     ON_COMMAND(ID_VIEW_VSYNCOFFSET_DECREASE, OnViewVSyncOffsetDecrease)
+	ON_UPDATE_COMMAND_UI(ID_PRESIZE_SHADERS_TOGGLE, OnUpdateShaderToggle1)
+	ON_COMMAND(ID_PRESIZE_SHADERS_TOGGLE, OnShaderToggle1)
+	ON_UPDATE_COMMAND_UI(ID_POSTSIZE_SHADERS_TOGGLE, OnUpdateShaderToggle2)
+	ON_COMMAND(ID_POSTSIZE_SHADERS_TOGGLE, OnShaderToggle2)
     ON_UPDATE_COMMAND_UI(ID_VIEW_OSD_DISPLAY_TIME, OnUpdateViewOSDDisplayTime)
     ON_COMMAND(ID_VIEW_OSD_DISPLAY_TIME, OnViewOSDDisplayTime)
     ON_UPDATE_COMMAND_UI(ID_VIEW_OSD_SHOW_FILENAME, OnUpdateViewOSDShowFileName)
@@ -6725,6 +6729,72 @@ void CMainFrame::OnViewOSDShowFileName()
     if (!strOSD.IsEmpty()) {
         m_OSD.DisplayMessage(OSD_TOPLEFT, strOSD);
     }
+}
+
+void CMainFrame::OnUpdateShaderToggle1(CCmdUI* pCmdUI)
+{
+	if (AfxGetAppSettings().m_Shaders.GetCurrentPreset().GetPreResize().empty()) {
+		pCmdUI->Enable(FALSE);
+		m_bToggleShader = false;
+		pCmdUI->SetCheck (0);
+	} else {
+		pCmdUI->Enable(TRUE);
+		pCmdUI->SetCheck (m_bToggleShader);
+	}
+}
+
+void CMainFrame::OnUpdateShaderToggle2(CCmdUI* pCmdUI)
+{
+	CAppSettings& s = AfxGetAppSettings();
+
+	if (s.m_Shaders.GetCurrentPreset().GetPostResize().empty()) {
+		pCmdUI->Enable(FALSE);
+		m_bToggleShaderScreenSpace = false;
+		pCmdUI->SetCheck(0);
+	} else {
+		pCmdUI->Enable(TRUE);
+		pCmdUI->SetCheck(m_bToggleShaderScreenSpace);
+	}
+}
+
+void CMainFrame::OnShaderToggle1()
+{
+	m_bToggleShader = !m_bToggleShader;
+	if (m_bToggleShader) {
+		SetShaders(m_bToggleShader, m_bToggleShaderScreenSpace);
+		m_OSD.DisplayMessage(OSD_TOPRIGHT, ResStr(IDS_PRESIZE_SHADERS_ENABLED));
+	} else {
+		if (m_pCAP3) {
+            SetShaders(m_bToggleShader, m_bToggleShaderScreenSpace); //current implementation for m_pCAP3 clears all shaders first
+        } else if (m_pCAP2) {
+            m_pCAP2->SetPixelShader2(nullptr, nullptr, false);
+        }
+		m_OSD.DisplayMessage(OSD_TOPRIGHT, ResStr(IDS_PRESIZE_SHADERS_DISABLED));
+	}
+
+	if (m_pCAP) {
+		RepaintVideo();
+	}
+}
+
+void CMainFrame::OnShaderToggle2()
+{
+	m_bToggleShaderScreenSpace = !m_bToggleShaderScreenSpace;
+	if (m_bToggleShaderScreenSpace) {
+        SetShaders(m_bToggleShader, m_bToggleShaderScreenSpace);
+        m_OSD.DisplayMessage(OSD_TOPRIGHT, ResStr(IDS_POSTSIZE_SHADERS_ENABLED));
+	} else {
+		if (m_pCAP3) {
+            SetShaders(m_bToggleShader, m_bToggleShaderScreenSpace); //current implementation for m_pCAP3 clears all shaders first
+        } else if (m_pCAP2) {
+            m_pCAP2->SetPixelShader2(nullptr, nullptr, true);
+        }
+        m_OSD.DisplayMessage(OSD_TOPRIGHT, ResStr(IDS_POSTSIZE_SHADERS_DISABLED));
+	}
+
+	if (m_pCAP) {
+		RepaintVideo();
+	}
 }
 
 void CMainFrame::OnD3DFullscreenToggle()
@@ -14712,6 +14782,8 @@ void CMainFrame::SetupShadersSubMenu()
         return;
     }        
 
+    subMenu.AppendMenu(MF_BYCOMMAND | MF_STRING | MF_ENABLED, ID_PRESIZE_SHADERS_TOGGLE, ResStr(IDS_PRESIZE_SHADERS_TOGGLE));
+    subMenu.AppendMenu(MF_BYCOMMAND | MF_STRING | MF_ENABLED, ID_POSTSIZE_SHADERS_TOGGLE, ResStr(IDS_POSTSIZE_SHADERS_TOGGLE));
     VERIFY(subMenu.AppendMenu(MF_STRING | MF_ENABLED, ID_SHADERS_SELECT, ResStr(IDS_SHADERS_SELECT)));
     VERIFY(subMenu.AppendMenu(MF_STRING | MF_ENABLED, ID_VIEW_DEBUGSHADERS, ResStr(IDS_SHADERS_DEBUG)));
 
@@ -16747,6 +16819,9 @@ void CMainFrame::ProcessAPICommand(COPYDATASTRUCT* pCDS)
         case CMD_DECREASEVOLUME:
             m_wndToolBar.m_volctrl.DecreaseVolume();
             break;
+		case CMD_SHADER_TOGGLE :
+			OnShaderToggle1();
+			break;
         case CMD_CLOSEAPP:
             PostMessage(WM_CLOSE);
             break;

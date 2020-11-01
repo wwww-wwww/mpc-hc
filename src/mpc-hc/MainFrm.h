@@ -591,6 +591,8 @@ public:
     // shaders
     void SetShaders(bool bSetPreResize = true, bool bSetPostResize = true);
 	
+	bool m_bToggleShader;
+	bool m_bToggleShaderScreenSpace;
 	std::list<ShaderC> m_ShaderCache;
 	ShaderC* GetShader(CString path, bool bD3D11);
 	bool SaveShaderFile(ShaderC* shader);
@@ -943,6 +945,10 @@ public:
     afx_msg void OnViewEnableFrameTimeCorrection();
     afx_msg void OnViewVSyncOffsetIncrease();
     afx_msg void OnViewVSyncOffsetDecrease();
+	afx_msg void OnUpdateShaderToggle1(CCmdUI* pCmdUI);
+	afx_msg void OnUpdateShaderToggle2(CCmdUI* pCmdUI);
+	afx_msg void OnShaderToggle1();
+	afx_msg void OnShaderToggle2();
     afx_msg void OnUpdateViewOSDDisplayTime(CCmdUI* pCmdUI);
     afx_msg void OnViewOSDDisplayTime();
     afx_msg void OnUpdateViewOSDShowFileName(CCmdUI* pCmdUI);
