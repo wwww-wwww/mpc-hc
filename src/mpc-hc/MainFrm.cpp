@@ -3107,8 +3107,7 @@ void CMainFrame::OnInitMenu(CMenu* pMenu)
     }
 }
 
-void CMainFrame::OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu)
-{
+void CMainFrame::OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu) {
     __super::OnInitMenuPopup(pPopupMenu, nIndex, bSysMenu);
 
     if (bSysMenu) {
@@ -3139,19 +3138,19 @@ void CMainFrame::OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu)
 
         if (firstSubItemID == ID_NAVIGATE_SKIPBACK) { // is "Navigate" submenu {
             UINT fState = (GetLoadState() == MLS::LOADED
-                           && (1/*GetPlaybackMode() == PM_DVD *//*|| (GetPlaybackMode() == PM_FILE && !m_PlayList.IsEmpty())*/))
-                          ? MF_ENABLED
-                          : MF_GRAYED;
+                && (1/*GetPlaybackMode() == PM_DVD *//*|| (GetPlaybackMode() == PM_FILE && !m_PlayList.IsEmpty())*/))
+                ? MF_ENABLED
+                : MF_GRAYED;
             pPopupMenu->EnableMenuItem(i, MF_BYPOSITION | fState);
             continue;
         }
         if (firstSubItemID == ID_VIEW_VF_HALF               // is "Video Frame" submenu
-                || firstSubItemID == ID_VIEW_INCSIZE        // is "Pan&Scan" submenu
-                || firstSubItemID == ID_ASPECTRATIO_START   // is "Override Aspect Ratio" submenu
-                || firstSubItemID == ID_VIEW_ZOOM_25) {     // is "Zoom" submenu
+            || firstSubItemID == ID_VIEW_INCSIZE        // is "Pan&Scan" submenu
+            || firstSubItemID == ID_ASPECTRATIO_START   // is "Override Aspect Ratio" submenu
+            || firstSubItemID == ID_VIEW_ZOOM_25) {     // is "Zoom" submenu
             UINT fState = (GetLoadState() == MLS::LOADED && !m_fAudioOnly)
-                          ? MF_ENABLED
-                          : MF_GRAYED;
+                ? MF_ENABLED
+                : MF_GRAYED;
             pPopupMenu->EnableMenuItem(i, MF_BYPOSITION | fState);
             continue;
         }
@@ -3245,36 +3244,38 @@ void CMainFrame::OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu)
         return;
     }
 
-    for (UINT i = 0; i < uiMenuCount; ++i) {
-        UINT nID = pPopupMenu->GetMenuItemID(i);
-        if (nID == ID_SEPARATOR || nID == -1
+    if (!AppIsThemeLoaded()) { //themed menus draw accelerators already, no need to append
+        for (UINT i = 0; i < uiMenuCount; ++i) {
+            UINT nID = pPopupMenu->GetMenuItemID(i);
+            if (nID == ID_SEPARATOR || nID == -1
                 || nID >= ID_FAVORITES_FILE_START && nID <= ID_FAVORITES_FILE_END
                 || nID >= ID_RECENT_FILE_START && nID <= ID_RECENT_FILE_END
                 || nID >= ID_SUBTITLES_SUBITEM_START && nID <= ID_SUBTITLES_SUBITEM_END
                 || nID >= ID_NAVIGATE_JUMPTO_SUBITEM_START && nID <= ID_NAVIGATE_JUMPTO_SUBITEM_END) {
-            continue;
+                continue;
+            }
+
+            CString str;
+            pPopupMenu->GetMenuString(i, str, MF_BYPOSITION);
+            int k = str.Find('\t');
+            if (k > 0) {
+                str = str.Left(k);
+            }
+
+            CString key = CPPageAccelTbl::MakeAccelShortcutLabel(nID);
+            if (key.IsEmpty() && k < 0) {
+                continue;
+            }
+            str += _T("\t") + key;
+
+            // BUG(?): this disables menu item update ui calls for some reason...
+            //pPopupMenu->ModifyMenu(i, MF_BYPOSITION|MF_STRING, nID, str);
+
+            // this works fine
+            mii.fMask = MIIM_STRING;
+            mii.dwTypeData = (LPTSTR)(LPCTSTR)str;
+            VERIFY(pPopupMenu->SetMenuItemInfo(i, &mii, TRUE));
         }
-
-        CString str;
-        pPopupMenu->GetMenuString(i, str, MF_BYPOSITION);
-        int k = str.Find('\t');
-        if (k > 0) {
-            str = str.Left(k);
-        }
-
-        CString key = CPPageAccelTbl::MakeAccelShortcutLabel(nID);
-        if (key.IsEmpty() && k < 0) {
-            continue;
-        }
-        str += _T("\t") + key;
-
-        // BUG(?): this disables menu item update ui calls for some reason...
-        //pPopupMenu->ModifyMenu(i, MF_BYPOSITION|MF_STRING, nID, str);
-
-        // this works fine
-        mii.fMask = MIIM_STRING;
-        mii.dwTypeData = (LPTSTR)(LPCTSTR)str;
-        VERIFY(CMPCThemeMenu::SetThemedMenuItemInfo(pPopupMenu, i, &mii, TRUE));
     }
 
     uiMenuCount = pPopupMenu->GetMenuItemCount();
