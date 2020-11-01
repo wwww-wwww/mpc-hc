@@ -14987,6 +14987,8 @@ bool CMainFrame::SetSubtitle(int i, bool bIsOffset /*= false*/, bool bDisplayMes
             }
             if (lcid && AfxGetAppSettings().fEnableSubtitles) {
                 GetLocaleString(lcid, LOCALE_SISO639LANGNAME2, currentSubLang);
+            } else {
+                currentSubLang.Empty();
             }
 
             // Enable the track only if it isn't already the only selected track in the group
@@ -15004,10 +15006,11 @@ bool CMainFrame::SetSubtitle(int i, bool bIsOffset /*= false*/, bool bDisplayMes
 
         if (!pName) {
             LCID lcid = 0;
-            if (SUCCEEDED(pSubInput->pSubStream->GetStreamInfo(0, &pName, &lcid))) {
-                if (lcid && AfxGetAppSettings().fEnableSubtitles) {
-                    GetLocaleString(lcid, LOCALE_SISO639LANGNAME2, currentSubLang);
-                }
+            pSubInput->pSubStream->GetStreamInfo(0, &pName, &lcid);
+            if (lcid && AfxGetAppSettings().fEnableSubtitles) {
+                GetLocaleString(lcid, LOCALE_SISO639LANGNAME2, currentSubLang);
+            } else {
+                currentSubLang.Empty();
             }
         }
 
