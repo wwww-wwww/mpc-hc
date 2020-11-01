@@ -733,12 +733,14 @@ HRESULT CFGManager::Connect(IPin* pPinOut, IPin* pPinIn, bool bContinueRender)
         while (pos) {
             CFGFilter* pFGF = fl.GetNext(pos);
 
+#if 0
             // Checks if madVR is already in the graph to avoid two instances at the same time
             CComPtr<IBaseFilter> pBFmadVR;
-            FindFilterByName(_T("madVR Renderer"), &pBFmadVR);
-            if (pBFmadVR && (pFGF->GetName() == _T("madVR Renderer"))) {
+            FindFilterByName(_T("madVR"), &pBFmadVR);
+            if (pBFmadVR && (pFGF->GetName() == _T("madVR"))) {
                 continue;
             }
+#endif
 
             if (pMadVRAllocatorPresenter && (pFGF->GetCLSID() == CLSID_madVR)) {
                 // the pure madVR filter was selected (without the allocator presenter)
@@ -753,6 +755,15 @@ HRESULT CFGManager::Connect(IPin* pPinOut, IPin* pPinIn, bool bContinueRender)
             CInterfaceList<IUnknown, &IID_IUnknown> pUnks;
             if (FAILED(pFGF->Create(&pBF, pUnks))) {
                 TRACE(_T("     --> Filter creation failed\n"));
+                // Check if selected video renderer fails to load
+                CLSID filter = pFGF->GetCLSID();
+                if (filter == CLSID_EVRAllocatorPresenter || filter == CLSID_VMR9AllocatorPresenter || filter == CLSID_MPCVRAllocatorPresenter || filter == CLSID_madVRAllocatorPresenter || filter == CLSID_DXRAllocatorPresenter) {
+                    if (IDYES == AfxMessageBox(_T("The selected video renderer has failed to load.\n\nThis problem is often caused by a bug in the graphics driver. Or you may be using a generic driver which has limited capabilities. It is recommended to update the graphics driver to solve this problem. A proper driver is required for optimal video playback performance and quality.\n\nThe player will now fallback to using a basic video renderer, which has reduced performance and quality. Subtitles may also fail to load for current video.\n\nYou can select a different renderer here:\nOptions > playback > Output\n\nDo you want to use the basic video renderer by default?"), MB_ICONEXCLAMATION | MB_YESNO, 0)) {
+                        CAppSettings& s = AfxGetAppSettings();
+                        s.iDSVideoRendererType = IsCLSIDRegistered(CLSID_EnhancedVideoRenderer) ? VIDRNDT_DS_EVR : VIDRNDT_DS_VMR9WINDOWED;
+                        s.SetSubtitleRenderer(CAppSettings::SubtitleRenderer::VS_FILTER);
+                    }
+                }
                 continue;
             }
 
