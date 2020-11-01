@@ -3944,17 +3944,17 @@ BEGIN
     IDS_SNAPSHOT_SUBTITLES
                             "Include Subtitles"
     IDS_PRESIZE_SHADERS_ENABLED
-														"Pre-Resize Pixel Shaders: on"
+                            "Pre-Resize Pixel Shaders: on"
     IDS_PRESIZE_SHADERS_DISABLED
-														"Pre-Resize Pixel Shaders: off"
+                            "Pre-Resize Pixel Shaders: off"
     IDS_PRESIZE_SHADERS_TOGGLE
- 													  "Enable Pre-Resize Pixel Shaders"	
+                            "Enable Pre-Resize Pixel Shaders"
     IDS_POSTSIZE_SHADERS_ENABLED
-														"Post-Resize Pixel Shaders: on"
+                            "Post-Resize Pixel Shaders: on"
     IDS_POSTSIZE_SHADERS_DISABLED
-														"Post-Resize Pixel Shaders: off"
+                            "Post-Resize Pixel Shaders: off"
     IDS_POSTSIZE_SHADERS_TOGGLE
-													  "Enable Post-Resize Pixel Shaders"	
+                            "Enable Post-Resize Pixel Shaders"
 END
 
 #endif    // English (United States) resources

@@ -4480,3 +4480,27 @@ msgstr ""
 msgctxt "IDS_SNAPSHOT_SUBTITLES"
 msgid "Include Subtitles"
 msgstr ""
+
+msgctxt "IDS_PRESIZE_SHADERS_ENABLED"
+msgid "Pre-Resize Pixel Shaders: on"
+msgstr ""
+
+msgctxt "IDS_PRESIZE_SHADERS_DISABLED"
+msgid "Pre-Resize Pixel Shaders: off"
+msgstr ""
+
+msgctxt "IDS_PRESIZE_SHADERS_TOGGLE"
+msgid "Enable Pre-Resize Pixel Shaders"
+msgstr ""
+
+msgctxt "IDS_POSTSIZE_SHADERS_ENABLED"
+msgid "Post-Resize Pixel Shaders: on"
+msgstr ""
+
+msgctxt "IDS_POSTSIZE_SHADERS_DISABLED"
+msgid "Post-Resize Pixel Shaders: off"
+msgstr ""
+
+msgctxt "IDS_POSTSIZE_SHADERS_TOGGLE"
+msgid "Enable Post-Resize Pixel Shaders"
+msgstr ""
