@@ -10197,20 +10197,23 @@ void CMainFrame::SetDefaultFullscreenState()
     CAppSettings& s = AfxGetAppSettings();
 
     bool clGoFullscreen = !(s.nCLSwitches & CLSW_ADD) && (s.nCLSwitches & CLSW_FULLSCREEN);
-    bool foundVideoFiles = false;
+
     if (clGoFullscreen && !s.slFiles.IsEmpty()) {
+        // ignore fullscreen if all files are audio
+        clGoFullscreen = false;
         const CMediaFormats& mf = AfxGetAppSettings().m_Formats;
         POSITION pos = s.slFiles.GetHeadPosition();
         while (pos) {
             CString fpath = s.slFiles.GetNext(pos);
             CString ext = fpath.Mid(fpath.ReverseFind('.'));
-            if (!mf.FindExt(ext, true) && mf.FindExt(ext)) {
-                foundVideoFiles = true;
+            if (!mf.FindExt(ext, true)) {
+                clGoFullscreen = true;
+                break;
             }
         }
     }
 
-    if (clGoFullscreen && foundVideoFiles) {
+    if (clGoFullscreen) {
         if (s.IsD3DFullscreen()) {
             m_fStartInD3DFullscreen = true;
         } else {
