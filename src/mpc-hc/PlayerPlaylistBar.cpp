@@ -359,15 +359,26 @@ void CPlayerPlaylistBar::ParsePlayList(CAtlList<CString>& fns, CAtlList<CString>
     AddItem(fns, subs, label, ydl_src);
 }
 
-static CString CombinePath(CString base, CString fn, bool isurl)
+bool inline IsURL(CString& fn)
 {
-    if (isurl) {
-        if (fn.Find(_T("://")) >= 0) {
+    int p = fn.Find(_T("://"));
+    return (p > 0 && p < 10);
+}
+
+bool inline IsFullFilePath(CString& fn)
+{
+    return (fn.Find(_T(":")) > 0 || fn.Find(_T("\\\\")) == 0);
+}
+
+static CString CombinePath(CString base, CString fn, bool base_is_url)
+{
+    if (base_is_url) {
+        if (IsURL(fn)) {
             return fn;
         }
     }
     else {
-        if (fn.Find(_T(":")) >= 0 || fn.Find(_T("\\")) >= 0) {
+        if (IsFullFilePath(fn)) {
             return fn;
         }
     }
@@ -376,7 +387,7 @@ static CString CombinePath(CString base, CString fn, bool isurl)
 
 static CString CombinePath(CPath p, CString fn)
 {
-    if (fn.Find(':') >= 0 || fn.Find(_T("\\")) == 0) {
+    if (IsFullFilePath(fn)) {
         return fn;
     }
     p.Append(CPath(fn));
@@ -424,7 +435,7 @@ bool CPlayerPlaylistBar::ParseM3UPlayList(CString fn) {
     }
 
     CString base;
-    bool isurl = fn.Find(_T("://")) > 0;
+    bool isurl = IsURL(fn);
     if (isurl) {
         int p = fn.Find(_T('?'));
         if (p > 0) {
@@ -445,6 +456,8 @@ bool CPlayerPlaylistBar::ParseM3UPlayList(CString fn) {
     bool success = false;
 
     while (f.ReadString(str)) {
+        if (str.Trim().IsEmpty()) { continue; }
+
         if (str.Find(_T("#")) == 0) {
             if (isExt && str.Find(_T("#EXTINF")) == 0) {
                 CAtlList<CString> sl;
