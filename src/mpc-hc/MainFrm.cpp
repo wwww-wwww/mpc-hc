@@ -3808,6 +3808,7 @@ void CMainFrame::OnFilePostClosemedia(bool bNextIsQueued/* = false*/)
 
     m_nCurSubtitle = -1;
     m_lSubtitleShift = 0;
+    m_AngleX = m_AngleY = m_AngleZ = 0;
 
     if (m_closingmsg.IsEmpty()) {
         m_closingmsg.LoadString(IDS_CONTROLS_CLOSED);
