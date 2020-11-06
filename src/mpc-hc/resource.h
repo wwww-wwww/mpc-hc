@@ -610,6 +610,7 @@
 #define IDD_SAVEIMAGEDIALOGTEMPL        20015
 #define IDD_CMD_LINE_HELP               20016
 #define IDD_CRASH_REPORTER              20017
+#define IDD_PPAGEDPICALC                20018
 #define IDB_DT_CB_96                    20050
 #define IDB_DT_CB_120                   20051
 #define IDB_DT_CB_144                   20052

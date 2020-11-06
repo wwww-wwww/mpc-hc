@@ -54,9 +54,9 @@ public:
     static void dbg(CString text, ...);
     static float getConstantFByDPI(CWnd* window, const float* constants);
     static int getConstantByDPI(CWnd* window, const int* constants);
-    static UINT getResourceByDPI(CDC* pDC, const UINT* resources);
+    static UINT getResourceByDPI(CWnd* window, CDC* pDC, const UINT* resources);
     static const std::vector<CMPCTheme::pathPoint> getIconPathByDPI(CMPCThemeTitleBarControlButton* button);
-    static void drawCheckBox(UINT checkState, bool isHover, bool useSystemSize, CRect rectCheck, CDC* pDC, bool isRadio = false);
+    static void drawCheckBox(CWnd* window, UINT checkState, bool isHover, bool useSystemSize, CRect rectCheck, CDC* pDC, bool isRadio = false);
     static bool canUseWin10DarkTheme();
     static UINT defaultLogo();
     static void drawParentDialogBGClr(CWnd* wnd, CDC* pDC, CRect r, bool fill = true);

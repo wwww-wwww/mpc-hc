@@ -1165,6 +1165,15 @@ BEGIN
     PUSHBUTTON      "Quit MPC-HC",IDC_BUTTON2,175,220,120,14
 END
 
+IDD_PPAGEDPICALC DIALOGEX 0, 0, 355, 289
+STYLE DS_SETFONT | WS_CHILD
+FONT 9, "Segoe UI", 400, 0, 0x1
+BEGIN
+    GROUPBOX        "Groupbox",IDC_STATIC1,6,6,343,164
+    PUSHBUTTON      "",IDC_BUTTON1,323,20,20,17,BS_BITMAP | BS_FLAT
+    GROUPBOX        "Autoplay",IDC_STATIC2,152,256,197,29
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -1426,6 +1435,12 @@ BEGIN
     IDD_CRASH_REPORTER, DIALOG
     BEGIN
         BOTTOMMARGIN, 200
+    END
+
+    IDD_PPAGEDPICALC, DIALOG
+    BEGIN
+        VERTGUIDE, 12
+        HORZGUIDE, 199
     END
 END
 #endif    // APSTUDIO_INVOKED

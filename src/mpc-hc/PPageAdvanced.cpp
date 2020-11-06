@@ -48,10 +48,12 @@ BOOL CPPageAdvanced::OnInitDialog()
     __super::OnInitDialog();
 
     if (CFont* pFont = m_list.GetFont()) {
-        LOGFONT logfont;
-        pFont->GetLogFont(&logfont);
-        logfont.lfWeight = FW_BOLD;
-        m_fontBold.CreateFontIndirect(&logfont);
+        if (!m_fontBold.m_hObject) {
+            LOGFONT logfont;
+            pFont->GetLogFont(&logfont);
+            logfont.lfWeight = FW_BOLD;
+            m_fontBold.CreateFontIndirect(&logfont);
+        }
     }
 
     SetRedraw(FALSE);

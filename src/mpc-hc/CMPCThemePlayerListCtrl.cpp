@@ -353,7 +353,7 @@ void CMPCThemePlayerListCtrl::drawItem(CDC* pDC, int nItem, int nSubItem)
                             rIcon.DeflateRect(0, (rIcon.Height() - rIcon.Width()) / 2); //as tall as wide
                         }
 
-                        CMPCThemeUtil::drawCheckBox(lvi.iImage, false, false, rIcon, &dcMem);
+                        CMPCThemeUtil::drawCheckBox(GetParent(), lvi.iImage, false, false, rIcon, &dcMem);
                     } else {
                         if (dwStyle == LVS_ICON) {
                         } else if (dwStyle == LVS_SMALLICON || dwStyle == LVS_LIST || dwStyle == LVS_REPORT) {
@@ -376,7 +376,7 @@ void CMPCThemePlayerListCtrl::drawItem(CDC* pDC, int nItem, int nSubItem)
                     int cbYMargin = (rect.Height() - cbSize - 1) / 2;
                     int cbXMargin = (contentLeft - rect.left - cbSize) / 2;
                     CRect rcb = { rect.left + cbXMargin, rect.top + cbYMargin, rect.left + cbXMargin + cbSize, rect.top + cbYMargin + cbSize };
-                    CMPCThemeUtil::drawCheckBox(isChecked, false, true, rcb, &dcMem);
+                    CMPCThemeUtil::drawCheckBox(GetParent(), isChecked, false, true, rcb, &dcMem);
                 }
             }
 

@@ -3,6 +3,8 @@
 #include "CMPCTheme.h"
 #include "CMPCThemeButton.h"
 #include "CMPCThemeUtil.h"
+#include "VersionHelpersInternal.h"
+#include "DpiHelper.h"
 
 CMPCThemeRadioOrCheck::CMPCThemeRadioOrCheck()
 {
@@ -74,8 +76,17 @@ void CMPCThemeRadioOrCheck::OnPaint()
             dc.SelectObject(oFont);
         } else {
             CRect rectCheck;
-            int cbWidth = GetSystemMetrics(SM_CXMENUCHECK);
-            int cbHeight = GetSystemMetrics(SM_CYMENUCHECK);
+            int cbWidth;
+            int cbHeight;
+            if (IsWindows8OrGreater()) {
+                DpiHelper dpiWindow;
+                dpiWindow.Override(this->GetSafeHwnd());
+                cbWidth = dpiWindow.GetSystemMetricsDPI(SM_CXMENUCHECK);
+                cbHeight = dpiWindow.GetSystemMetricsDPI(SM_CYMENUCHECK);
+            } else {
+                cbWidth = ::GetSystemMetrics(SM_CXMENUCHECK);
+                cbHeight = ::GetSystemMetrics(SM_CYMENUCHECK);
+            }
 
             if (buttonStyle & BS_LEFTTEXT) {
                 rectCheck.left = rectItem.right - cbWidth;
@@ -91,11 +102,11 @@ void CMPCThemeRadioOrCheck::OnPaint()
             rectCheck.bottom = rectCheck.top + cbHeight;
 
             if (buttonType == checkType) {
-                CMPCThemeUtil::drawCheckBox(checkState, isHover, true, rectCheck, &dc);
+                CMPCThemeUtil::drawCheckBox(GetParent(), checkState, isHover, true, rectCheck, &dc);
             } else if (buttonType == threeStateType) {
-                CMPCThemeUtil::drawCheckBox(checkState, isHover, true, rectCheck, &dc);
+                CMPCThemeUtil::drawCheckBox(GetParent(), checkState, isHover, true, rectCheck, &dc);
             } else if (buttonType == radioType) {
-                CMPCThemeUtil::drawCheckBox(checkState, isHover, true, rectCheck, &dc, true);
+                CMPCThemeUtil::drawCheckBox(GetParent(), checkState, isHover, true, rectCheck, &dc, true);
             }
 
             if (!sTitle.IsEmpty()) {
