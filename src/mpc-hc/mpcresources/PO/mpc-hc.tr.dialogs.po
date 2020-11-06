@@ -5,18 +5,19 @@
 # MPC HC <adiposegithub@gmail.com>, 2020
 # Ali Kömesöğütlü <byzlo685@gmail.com>, 2020
 # bgette nameless <akiakane.nameless@gmail.com>, 2020
-#
+# Mücahid Aksel <mucahidaksel@gmail.com>, 2020
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2020-06-08 04:44:38+0000\n"
+"POT-Creation-Date: 2020-09-30 15:29:35+0000\n"
 "PO-Revision-Date: 2020-01-02 07:46+0000\n"
-"Last-Translator: bgette nameless <akiakane.nameless@gmail.com>, 2020\n"
+"Last-Translator: Mücahid Aksel <mucahidaksel@gmail.com>, 2020\n"
 "Language-Team: Turkish (https://www.transifex.com/mpchc/teams/106126/tr/)\n"
-"Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: tr\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 msgctxt "IDD_SELECTMEDIATYPE_CAPTION"
@@ -212,11 +213,14 @@ msgctxt "IDD_ABOUTBOX_IDC_STATIC"
 msgid ""
 "This program is freeware and released under the GNU General Public License."
 msgstr ""
-"Bu program ücretsiz olup Genel Kamusal GNU Lisansı altında sunulmaktadır."
+"Bu program ücretsiz bir yazılımdır ve (GNU) Genel Kamu Lisansı altında "
+"yayınlanmıştır."
 
 msgctxt "IDD_ABOUTBOX_IDC_STATIC"
 msgid "English translation made by MPC-HC Team"
-msgstr "bosluk - Sinan Hunerel tarafından Türkçeleştirilmiştir"
+msgstr ""
+"bosluk - Sinan Hunerel ve xLn2 - Mücahid Aksel tarafından "
+"Türkçeleştirilmiştir"
 
 msgctxt "IDD_ABOUTBOX_IDC_STATIC"
 msgid "Build information"
@@ -228,7 +232,7 @@ msgstr "Sürüm:"
 
 msgctxt "IDD_ABOUTBOX_IDC_STATIC"
 msgid "Compiler:"
-msgstr "Derleme:"
+msgstr "Derleyici:"
 
 msgctxt "IDD_ABOUTBOX_IDC_LAVFILTERS_VERSION"
 msgid "Not used"
@@ -384,7 +388,7 @@ msgstr "Ses"
 
 msgctxt "IDD_PPAGEDVD_IDC_RADIO5"
 msgid "Subtitles"
-msgstr "Alt Yazılar"
+msgstr "Altyazılar"
 
 msgctxt "IDD_PPAGEDVD_IDC_STATIC"
 msgid "Additional settings"
@@ -404,7 +408,7 @@ msgstr "Düzey"
 
 msgctxt "IDD_PPAGEPLAYBACK_IDC_STATIC"
 msgid "Min"
-msgstr "Alçak"
+msgstr "Min"
 
 msgctxt "IDD_PPAGEPLAYBACK_IDC_STATIC"
 msgid "Max"
@@ -448,7 +452,7 @@ msgstr "Oynatmadan Sonra"
 
 msgctxt "IDD_PPAGEPLAYBACK_IDC_STATIC"
 msgid "Zoom and Alignment"
-msgstr ""
+msgstr "Yakınlaştırma ve Hizalama"
 
 msgctxt "IDD_PPAGEPLAYBACK_IDC_CHECK5"
 msgid "Auto-zoom:"
@@ -468,7 +472,7 @@ msgstr "Varsayılan parça seçimi"
 
 msgctxt "IDD_PPAGEPLAYBACK_IDC_STATIC"
 msgid "Subtitles:"
-msgstr "Alt Yazılar:"
+msgstr "Altyazılar:"
 
 msgctxt "IDD_PPAGEPLAYBACK_IDC_STATIC"
 msgid "Audio:"
@@ -512,7 +516,7 @@ msgstr "Hız oranı:"
 
 msgctxt "IDD_PPAGEPLAYBACK_IDC_STATIC4"
 msgid "Vertical Alignment:"
-msgstr ""
+msgstr "Dikey hizalama:"
 
 msgctxt "IDD_PPAGESUBTITLES_IDC_CHECK3"
 msgid "Override placement"
@@ -556,7 +560,7 @@ msgstr "En fazla doku çözünürlüğü:"
 
 msgctxt "IDD_PPAGESUBTITLES_IDC_CHECK_NO_SUB_ANIM"
 msgid "Never animate the subtitles"
-msgstr "Alt yazıları hareketlendirme"
+msgstr "Altyazıları hareketlendirme"
 
 msgctxt "IDD_PPAGESUBTITLES_IDC_STATIC5"
 msgid "Render at"
@@ -597,8 +601,8 @@ msgid ""
 "surely eat your CPU."
 msgstr ""
 "Ekran kartınızın ayarlarından Tam ekran keskinlik yumuşatması seçeneğini "
-"açarsanız, alt yazılar düzgün görülmeyecek ve daha fazla işlemci kullanımına"
-" neden olacaktır."
+"açarsanız, altyazılar düzgün görünmeyecek ve daha fazla işlemci kullanımına "
+"neden olacaktır."
 
 msgctxt "IDD_PPAGEFORMATS_IDC_STATIC2"
 msgid "File extensions"
@@ -747,7 +751,7 @@ msgstr "Medya Biçimi Ekle..."
 
 msgctxt "IDD_PPAGEEXTERNALFILTERS_IDC_BUTTON6"
 msgid "Add Sub Type..."
-msgstr "Alt Yazı Biçimi Ekle..."
+msgstr "Altyazı Biçimi Ekle..."
 
 msgctxt "IDD_PPAGEEXTERNALFILTERS_IDC_BUTTON7"
 msgid "Delete"
@@ -915,7 +919,7 @@ msgid ""
 "needed codecs or filters installed on the system."
 msgstr ""
 "MPC-HC, grafikteki bazı görüntüleri gösteremedi. Gerekli süzgeçler "
-"innDirilmemiş ya da sisteminize yüklenmemiş olabilir."
+"indirilmemiş ya da sisteminize yüklenmemiş olabilir."
 
 msgctxt "IDD_MEDIATYPES_DLG_IDC_STATIC2"
 msgid "The following pin(s) failed to find a connectable filter:"
@@ -1059,7 +1063,7 @@ msgstr "Aşağı"
 
 msgctxt "IDD_PPAGESUBSTYLE_IDC_CHECK_RELATIVETO"
 msgid "Position subtitles relative to the video frame"
-msgstr "Alt yazıları video çerçevesine bağla"
+msgstr "Altyazıları video çerçevesine bağla"
 
 msgctxt "IDD_PPAGESUBSTYLE_IDC_STATIC"
 msgid "Colors && Transparency"
@@ -1144,7 +1148,7 @@ msgstr "DXVA"
 
 msgctxt "IDD_PPAGEOUTPUT_IDC_STATIC"
 msgid "Subtitles"
-msgstr "Alt Yazılar"
+msgstr "Altyazılar"
 
 msgctxt "IDD_PPAGEOUTPUT_IDC_STATIC"
 msgid "Screenshot"
@@ -1164,7 +1168,7 @@ msgstr "Ses İşleyicisi"
 
 msgctxt "IDD_PPAGEOUTPUT_IDC_STATIC"
 msgid "Subtitle Renderer"
-msgstr "Alt Yazı İşleyicisi"
+msgstr "Altyazı İşleyicisi"
 
 msgctxt "IDD_PPAGEOUTPUT_IDC_STATIC"
 msgid "VMR-9 (renderless) and EVR (CP) settings"
@@ -1180,7 +1184,7 @@ msgstr "Yakınlaştırma:"
 
 msgctxt "IDD_PPAGEOUTPUT_IDC_D3D9DEVICE"
 msgid "Select D3D9 Render Device"
-msgstr "D3D9 Karıştırıcı aygıtı seçimi"
+msgstr "D3D9 İşleyici aygıtı seçimi"
 
 msgctxt "IDD_PPAGEOUTPUT_IDC_RESETDEVICE"
 msgid "Reinitialize when changing display"
@@ -1252,11 +1256,11 @@ msgstr "CGI komutları: (.uzantı1=yol1;.uzantı2=yol2;...)"
 
 msgctxt "IDD_SUBTITLEDL_DLG_CAPTION"
 msgid "Download subtitles"
-msgstr "Alt yazı indir"
+msgstr "Altyazı indir"
 
 msgctxt "IDD_SUBTITLEDL_DLG_IDC_CHECK1"
 msgid "Replace currently loaded subtitles"
-msgstr "Geçerli alt yazıyı değiştir"
+msgstr "Geçerli altyazıyı değiştir"
 
 msgctxt "IDD_SUBTITLEDL_DLG_IDOK"
 msgid "Download"
@@ -1280,7 +1284,7 @@ msgstr "Ara"
 
 msgctxt "IDD_SUBTITLEUP_DLG_CAPTION"
 msgid "Upload subtitles"
-msgstr "Alt yazı gönder"
+msgstr "Altyazı gönder"
 
 msgctxt "IDD_SUBTITLEUP_DLG_IDOK"
 msgid "Upload"
@@ -1348,7 +1352,7 @@ msgstr "Sıfırla"
 
 msgctxt "IDD_PPAGEMISC_IDC_EXPORT_SETTINGS"
 msgid "Export"
-msgstr "Ver"
+msgstr "Dışa aktar"
 
 msgctxt "IDD_PPAGEMISC_IDC_EXPORT_KEYS"
 msgid "Export keys"
@@ -1408,7 +1412,7 @@ msgstr "Karasal"
 
 msgctxt "IDD_PPAGECAPTURE_IDC_RADIO2"
 msgid "Digital"
-msgstr "Sayısal"
+msgstr "Dijital"
 
 msgctxt "IDD_PPAGECAPTURE_IDC_STATIC"
 msgid "Analog settings"
@@ -1578,15 +1582,15 @@ msgstr "Tara"
 
 msgctxt "IDD_PPAGESUBMISC_IDC_CHECK1"
 msgid "Prefer forced and/or default subtitles tracks"
-msgstr "Zorlanmış ve/veya varsayılan alt yazı izlerini tercih et"
+msgstr "Zorlanmış ve/veya varsayılan altyazı izlerini tercih et"
 
 msgctxt "IDD_PPAGESUBMISC_IDC_CHECK2"
 msgid "Prefer external subtitles over embedded subtitles"
-msgstr "Her zaman harici alt yazıları tercih et"
+msgstr "Her zaman harici altyazıları tercih et"
 
 msgctxt "IDD_PPAGESUBMISC_IDC_CHECK3"
 msgid "Ignore embedded subtitles"
-msgstr "Gömülü alt yazıları yükleme"
+msgstr "Gömülü altyazıları yükleme"
 
 msgctxt "IDD_PPAGESUBMISC_IDC_STATIC"
 msgid "Autoload paths"
@@ -1598,18 +1602,17 @@ msgstr "Sıfırla"
 
 msgctxt "IDD_PPAGESUBMISC_IDC_STATIC"
 msgid "Online search, download and upload subtitles"
-msgstr "Çevrimiçi alt yazı arama, indirme ve gönderme"
+msgstr "Çevrimiçi altyazı arama, indirme ve gönderme"
 
 msgctxt "IDD_PPAGESUBMISC_IDC_CHECK4"
 msgid "Automatically search and download subtitles if none are found locally"
-msgstr ""
-"Geçerli konumda bulunmuyorsa alt yazıları otomatik olarak ara ve indir"
+msgstr "Geçerli konumda bulunmuyorsa altyazıları otomatik olarak ara ve indir"
 
 msgctxt "IDD_PPAGESUBMISC_IDC_CHECK5"
 msgid ""
 "Prefer subtitles for hearing impaired (when indicated by subtitles provider)"
 msgstr ""
-"İşitme engelliler için hazırlanmış alt yazıları tercih et (sağlayıcı "
+"İşitme engelliler için hazırlanmış altyazıları tercih et (sağlayıcı "
 "tanımlamışsa)"
 
 msgctxt "IDD_PPAGESUBMISC_IDC_STATIC1"
@@ -1781,8 +1784,8 @@ msgid ""
 "To minimize audio distortion, it is recommended to keep player volume at "
 "around 85% when playing loud lossy-encoded content."
 msgstr ""
-"Ses bozunumunu en aza indirmek için, kayıplı bir kodlama ile oluşturulan "
-"içeriği yürütürken sesi %85 seviyesinde tutmanız önerilir."
+"Ses bozulmasını en aza indirmek için, gürültülü-kayıplı kodlanmış içerik "
+"oynatılırken oynatıcı ses düzeyinin %85 civarında tutulması önerilir."
 
 msgctxt "IDD_SAVEIMAGEDIALOGTEMPL_IDC_STATIC"
 msgid "JPEG quality:"

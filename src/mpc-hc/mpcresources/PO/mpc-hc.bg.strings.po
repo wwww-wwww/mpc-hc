@@ -4,18 +4,18 @@
 # Translators:
 # Симеон Цветков <sicvetkov@uni-sofia.bg>, 2020
 # astankov84 <astankov84@gmail.com>, 2020
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2020-08-05 15:40:49+0000\n"
+"POT-Creation-Date: 2020-11-01 23:45:42+0000\n"
 "PO-Revision-Date: 2020-01-02 07:46+0000\n"
 "Last-Translator: astankov84 <astankov84@gmail.com>, 2020\n"
 "Language-Team: Bulgarian (https://www.transifex.com/mpchc/teams/106126/bg/)\n"
-"Language: bg\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: bg\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgctxt "IDS_INFOBAR_LOCATION"
@@ -526,7 +526,7 @@ msgstr "Външни филтри"
 
 msgctxt "IDD_PPAGESHADERS"
 msgid "Playback::Shaders"
-msgstr "Възпройзвеждане::Шейдъри"
+msgstr "Възпроизвеждане::Шейдъри"
 
 msgctxt "IDD_FILEPROPRES"
 msgid "Resources"
@@ -542,15 +542,15 @@ msgstr "Информация за носителя"
 
 msgctxt "IDD_PPAGECAPTURE"
 msgid "Playback::Capture"
-msgstr "Възпройзвеждане::Записване"
+msgstr "Възпроизвеждане::Записване"
 
 msgctxt "IDD_PPAGESYNC"
 msgid "Playback::Sync Renderer Settings"
-msgstr "Възпройзвеждане::Sync Renderer настройки"
+msgstr "Възпроизвеждане::Sync Renderer настройки"
 
 msgctxt "IDD_PPAGEFULLSCREEN"
 msgid "Playback::Fullscreen"
-msgstr "Възпройзвеждане::На цял екран"
+msgstr "Възпроизвеждане::На цял екран"
 
 msgctxt "IDD_PPAGEAUDIORENDERER"
 msgid "Internal Filters::Audio Renderer"
@@ -674,7 +674,7 @@ msgstr "Плейър::Лого"
 
 msgctxt "IDD_PPAGEOUTPUT"
 msgid "Playback::Output"
-msgstr "Възпройзвеждане::Изход"
+msgstr "Възпроизвеждане::Извеждане"
 
 msgctxt "IDD_PPAGEWEBSERVER"
 msgid "Player::Web Interface"

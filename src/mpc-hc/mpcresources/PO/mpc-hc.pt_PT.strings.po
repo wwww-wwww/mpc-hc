@@ -3,18 +3,18 @@
 # This file is distributed under the same license as the MPC-HC package.
 # Translators:
 # Hugo Simões <hugo.simoes.1984@gmail.com>, 2020
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2020-06-15 14:17:38+0000\n"
+"POT-Creation-Date: 2020-11-01 23:45:42+0000\n"
 "PO-Revision-Date: 2020-01-02 07:46+0000\n"
 "Last-Translator: Hugo Simões <hugo.simoes.1984@gmail.com>, 2020\n"
 "Language-Team: Portuguese (Portugal) (https://www.transifex.com/mpchc/teams/106126/pt_PT/)\n"
-"Language: pt_PT\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: pt_PT\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgctxt "IDS_INFOBAR_LOCATION"
@@ -71,7 +71,7 @@ msgstr "Estilo por &defeito"
 
 msgctxt "IDS_PLAY_LOOPMODE_PLAYLIST"
 msgid "Playlist"
-msgstr "Lista de reprodução"
+msgstr "Lista reprodução"
 
 msgctxt "IDS_PLAY_LOOPMODE_AB"
 msgid "A-B"
@@ -1188,7 +1188,7 @@ msgstr "A reproduzir"
 
 msgctxt "IDS_CONTROLS_PAUSED"
 msgid "Paused"
-msgstr "Pausado"
+msgstr "Em pausa"
 
 msgctxt "IDS_AG_EDL_NEW_CLIP"
 msgid "EDL new clip"
@@ -4156,6 +4156,11 @@ msgid ""
 "\n"
 "Failure can also happen when you are temporarily blocked due to too many search requests from your account or IP address."
 msgstr ""
+"Falha ao iniciar sessão no fornecedor de legendas \"%1\" com o nome de utilizador \"%2\".\n"
+"\n"
+"Verifique se o seu nome de utilizador e/ou palavra-passe estão corretos.\n"
+"\n"
+"Esta falha pode também acontecer quando a sua conta está temporariamente bloqueada devido aos demasiados pedidos de pesquisa a partir da sua conta ou do endereço de IP."
 
 msgctxt "IDS_SUB_AUTODL_IGNORE_TOOLTIP"
 msgid ""

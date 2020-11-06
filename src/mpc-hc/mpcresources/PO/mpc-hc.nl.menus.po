@@ -5,7 +5,7 @@
 # MPC HC <adiposegithub@gmail.com>, 2020
 # mark van tilburg <markvantilburg@gmail.com>, 2020
 # Renz Straatman <renz75@outlook.com>, 2020
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
@@ -13,10 +13,10 @@ msgstr ""
 "PO-Revision-Date: 2020-01-02 07:46+0000\n"
 "Last-Translator: Renz Straatman <renz75@outlook.com>, 2020\n"
 "Language-Team: Dutch (https://www.transifex.com/mpchc/teams/106126/nl/)\n"
-"Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: nl\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgctxt "POPUP"
@@ -57,7 +57,7 @@ msgstr "Sl&uiten"
 
 msgctxt "ID_FILE_SAVE_COPY"
 msgid "&Save a Copy..."
-msgstr "&Opslaan als"
+msgstr "&Opslaan als..."
 
 msgctxt "ID_FILE_SAVE_IMAGE"
 msgid "Save &Image..."
@@ -65,7 +65,7 @@ msgstr "Snapshot maken..."
 
 msgctxt "ID_FILE_SAVE_THUMBNAILS"
 msgid "Save &Thumbnails..."
-msgstr "Mozaïekweergave opslaan..."
+msgstr "Mozaïekweergave maken..."
 
 msgctxt "POPUP"
 msgid "S&ubtitles"
@@ -101,11 +101,11 @@ msgstr "Afsluiten"
 
 msgctxt "POPUP"
 msgid "&View"
-msgstr "Bee&ld"
+msgstr "Beeld"
 
 msgctxt "ID_VIEW_CAPTIONMENU"
 msgid "Caption&&Menu"
-msgstr "Titelbalk && menu"
+msgstr "Titelbalk en menu"
 
 msgctxt "ID_VIEW_SEEKER"
 msgid "See&k Bar"
@@ -121,7 +121,7 @@ msgstr "&Informatie"
 
 msgctxt "ID_VIEW_STATISTICS"
 msgid "&Statistics"
-msgstr "S&tatistieken"
+msgstr "Statistieken"
 
 msgctxt "ID_VIEW_STATUS"
 msgid "St&atus"
@@ -129,7 +129,7 @@ msgstr "St&atus"
 
 msgctxt "ID_VIEW_SUBRESYNC"
 msgid "Su&bresync"
-msgstr "&Ondertiteling resync"
+msgstr "Ondertiteling verschuiven"
 
 msgctxt "ID_VIEW_PLAYLIST"
 msgid "Pla&ylist"
@@ -157,7 +157,7 @@ msgstr "W&eergave..."
 
 msgctxt "ID_VIEW_PRESETS_MINIMAL"
 msgid "&Minimal"
-msgstr "&Minimum"
+msgstr "&Minimaal"
 
 msgctxt "ID_VIEW_PRESETS_COMPACT"
 msgid "&Compact"
@@ -165,7 +165,7 @@ msgstr "&Compact"
 
 msgctxt "ID_VIEW_PRESETS_NORMAL"
 msgid "&Normal"
-msgstr "&Standaard"
+msgstr "&Volledig"
 
 msgctxt "ID_VIEW_FULLSCREEN"
 msgid "F&ull Screen"
@@ -201,7 +201,7 @@ msgstr "Automatisch aanpassen (a&lleen groot)"
 
 msgctxt "POPUP"
 msgid "R&enderer Settings"
-msgstr "Opbouw instellingen"
+msgstr "Renderinstellingen"
 
 msgctxt "ID_VIEW_TEARING_TEST"
 msgid "&Tearing Test"
@@ -209,15 +209,15 @@ msgstr "&Tearing test"
 
 msgctxt "ID_VIEW_DISPLAY_RENDERER_STATS"
 msgid "&Display Statistics"
-msgstr "&Statistieken weergeven"
+msgstr "Toon statistieken"
 
 msgctxt "ID_VIEW_OSD_DISPLAY_TIME"
 msgid "Display Current T&ime"
-msgstr "Hu&idige tijd weergeven"
+msgstr "Toon huidige tijd"
 
 msgctxt "ID_VIEW_OSD_SHOW_FILENAME"
 msgid "Show &File Name"
-msgstr "&Bestandsnaam weergeven"
+msgstr "Toon bestandsnaam"
 
 msgctxt "POPUP"
 msgid "&Output Range"
@@ -233,7 +233,7 @@ msgstr "16 - 235"
 
 msgctxt "POPUP"
 msgid "&Presentation"
-msgstr "Presentatie"
+msgstr "Presentator"
 
 msgctxt "ID_VIEW_D3DFULLSCREEN"
 msgid "D3D Fullscreen &Mode"
@@ -313,11 +313,11 @@ msgstr "Donker (2.4 Gamma)"
 
 msgctxt "POPUP"
 msgid "&Rendering Intent"
-msgstr "Opbouw intentie"
+msgstr "Render-intentie"
 
 msgctxt "ID_VIEW_CM_INTENT_PERCEPTUAL"
 msgid "&Perceptual"
-msgstr "Perceptual"
+msgstr "Perceptueel"
 
 msgctxt "ID_VIEW_CM_INTENT_RELATIVECOLORIMETRIC"
 msgid "&Relative Colorimetric"
@@ -377,11 +377,11 @@ msgstr "Resetten"
 
 msgctxt "ID_VIEW_RESET_DEFAULT"
 msgid "Reset to &default renderer settings"
-msgstr "Standaardinstellingen opbouwer herstellen"
+msgstr "Reset naar standaard render-instellingen"
 
 msgctxt "ID_VIEW_RESET_OPTIMAL"
 msgid "Reset to &optimal renderer settings"
-msgstr "Optimale opbopuw instellingen herstellen"
+msgstr "Reset naar optimale render-instellingen"
 
 msgctxt "POPUP"
 msgid "Video &Frame"
@@ -405,7 +405,7 @@ msgstr "Spreiden"
 
 msgctxt "ID_VIEW_VF_FROMINSIDE"
 msgid "Touch Window From &Inside"
-msgstr "Pas venster vanuit binnen aan"
+msgstr "Passend binnen venster"
 
 msgctxt "ID_VIEW_VF_ZOOM1"
 msgid "Zoom &1"
@@ -417,11 +417,11 @@ msgstr "Zoom &2"
 
 msgctxt "ID_VIEW_VF_FROMOUTSIDE"
 msgid "Touch Window From &Outside"
-msgstr "Pas venster vanaf buiten aan"
+msgstr "Passend buiten venster"
 
 msgctxt "POPUP"
 msgid "&Aspect Ratio"
-msgstr "Verw&achtte verhouding"
+msgstr "Beeldverhouding aanpassen..."
 
 msgctxt "ID_ASPECTRATIO_DAR"
 msgid "&Default (DAR)"
@@ -449,15 +449,15 @@ msgstr "185:100"
 
 msgctxt "ID_ASPECTRATIO_SAR"
 msgid "Assume &square pixels (SAR)"
-msgstr "Veronderstel verkante pixels (SAR)"
+msgstr "Vierkante pixels (SAR)"
 
 msgctxt "ID_VIEW_VF_COMPMONDESKARDIFF"
 msgid "&Correct Monitor/Desktop AR Diff"
-msgstr "AR afwijking scherm/bureaublad corrigeren"
+msgstr "Afwijking beeldschermverhouding corrigeren"
 
 msgctxt "POPUP"
 msgid "Pa&n && Scan"
-msgstr "Pa&n && scan"
+msgstr "Positie en uitsnede"
 
 msgctxt "ID_VIEW_INCSIZE"
 msgid "&Increase Size"
@@ -673,7 +673,7 @@ msgstr "&Filters"
 
 msgctxt "ID_SHADERS"
 msgid "S&haders"
-msgstr "Pixel s&hader"
+msgstr "Shaders"
 
 msgctxt "ID_AUDIOS"
 msgid "&Audio Track"
@@ -705,7 +705,7 @@ msgstr "&Dempen"
 
 msgctxt "POPUP"
 msgid "Af&ter Playback"
-msgstr "&Na weergave"
+msgstr "Na afspelen"
 
 msgctxt "ID_AFTERPLAYBACK_DONOTHING"
 msgid "Do no&thing"

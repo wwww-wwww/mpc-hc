@@ -3,20 +3,20 @@
 # This file is distributed under the same license as the MPC-HC package.
 # Translators:
 # MPC HC <adiposegithub@gmail.com>, 2020
-# Luna Jernberg <bittin@cafe8bitar.se>, 2020
 # Robert Nilsson, 2020
-#
+# Luna Jernberg <bittin@cafe8bitar.se>, 2020
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2020-06-15 14:17:38+0000\n"
+"POT-Creation-Date: 2020-11-01 23:45:42+0000\n"
 "PO-Revision-Date: 2020-01-02 07:46+0000\n"
-"Last-Translator: Robert Nilsson, 2020\n"
+"Last-Translator: Luna Jernberg <bittin@cafe8bitar.se>, 2020\n"
 "Language-Team: Swedish (https://www.transifex.com/mpchc/teams/106126/sv/)\n"
-"Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: sv\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgctxt "IDS_INFOBAR_LOCATION"
@@ -3968,7 +3968,7 @@ msgstr ""
 
 msgctxt "IDS_CMD_NOFOCUS"
 msgid "/nofocus\t\tOpen MPC-HC in background"
-msgstr ""
+msgstr "/nofocus\t\t Öppna MPC-HC i bakgrunden"
 
 msgctxt "IDS_CMD_WEBPORT"
 msgid "/webport N\tStart web interface on specified port"
@@ -3994,7 +3994,7 @@ msgstr ""
 
 msgctxt "IDS_CMD_RESET"
 msgid "/reset\t\tRestore default settings"
-msgstr ""
+msgstr "/reset\t\tÅterställ standardinställningar"
 
 msgctxt "IDS_CMD_HELP"
 msgid "/help /h /?\tShow help about command line switches"
@@ -4038,35 +4038,35 @@ msgstr "Laddar upp..."
 
 msgctxt "IDS_SUBUL_DLG_STATUS_UPLOADED"
 msgid "Subtitles uploaded successfully."
-msgstr ""
+msgstr "Uppladdning av undertext lyckades."
 
 msgctxt "IDS_SUBUL_DLG_STATUS_FAILED"
 msgid "Subtitles upload failed."
-msgstr ""
+msgstr "Uppladdning av undertext misslyckades."
 
 msgctxt "IDS_SUBUL_DLG_STATUS_ABORTED"
 msgid "Subtitles upload aborted."
-msgstr ""
+msgstr "Uppladdning av undertext avbruten."
 
 msgctxt "IDS_SUBUL_DLG_STATUS_ALREADYEXISTS"
 msgid "Subtitles already exist."
-msgstr ""
+msgstr "Undertext existerar redan."
 
 msgctxt "IDS_SUBUL_DLG_UPLOADING"
 msgid "Uploading subtitles, please wait..."
-msgstr ""
+msgstr "Laddar upp undertext,  vänligen vänta..."
 
 msgctxt "IDS_SUBUL_DLG_UPLOADED"
 msgid "Upload finished."
-msgstr ""
+msgstr "Uppladdning slutförd."
 
 msgctxt "IDS_SUBUL_DLG_ABORTED"
 msgid "Upload aborted."
-msgstr ""
+msgstr "Uppladdning avbruten."
 
 msgctxt "IDS_SUBUL_DLG_FAILED"
 msgid "Upload failed."
-msgstr ""
+msgstr "Uppladdning misslyckades."
 
 msgctxt "IDS_SUBMENU_DOWNLOAD"
 msgid "Download && Open"
@@ -4098,7 +4098,7 @@ msgstr "Språk"
 
 msgctxt "IDS_SUBPP_DLG_LANGUAGES_ERROR"
 msgid "ERROR: Internet connection could not be established."
-msgstr ""
+msgstr "FEL: Internetanslutning kunde inte upprättas."
 
 msgctxt "IDS_SUB_CREDENTIALS_TITLE"
 msgid "Enter website credentials"
@@ -4114,7 +4114,7 @@ msgstr ""
 
 msgctxt "IDS_SUBDL_DLG_DOWNLOADED"
 msgid "Downloaded [%s] \"%s\""
-msgstr ""
+msgstr "Laddar ner [%s] \"%s\""
 
 msgctxt "IDS_SUBUL_DLG_TITLE"
 msgid "Upload subtitles"
@@ -4151,7 +4151,7 @@ msgstr ""
 
 msgctxt "IDS_CMD_DUB"
 msgid "/dub \"dubname\"\tLoad an additional audio file"
-msgstr ""
+msgstr "/dub \"dubname\"\tLadda en ytterligare ljudfil"
 
 msgctxt "IDS_CMD_DUBDELAY"
 msgid ""
@@ -4165,7 +4165,7 @@ msgstr ""
 
 msgctxt "IDS_CMD_SUB"
 msgid "/sub \"subname\"\tLoad an additional subtitle file"
-msgstr ""
+msgstr "/sub \"subname\"\tLadda ytterligare en undertext fil"
 
 msgctxt "IDS_CMD_FILTER"
 msgid ""
@@ -4179,7 +4179,7 @@ msgstr ""
 
 msgctxt "IDS_CMD_DVDPOS_TC"
 msgid "/dvdpos T#C\tStart playback at title T, chapter C"
-msgstr ""
+msgstr "/dvdpos T#C\tStarta uppspelning vid titel T, kapitel C"
 
 msgctxt "IDS_CMD_DVDPOS_TIME"
 msgid "/dvdpos T#P\tStart playback at title T, position P (hh:mm:ss)"
@@ -4210,7 +4210,7 @@ msgstr ""
 
 msgctxt "IDS_CMD_SHUTDOWN"
 msgid "/shutdown\tShutdown the operating system after playback"
-msgstr ""
+msgstr "/shutdown\tStäng av operativsystemet efter uppspelning"
 
 msgctxt "IDS_CMD_STANDBY"
 msgid "/standby\t\tPut the operating system in standby mode after playback"
@@ -4222,19 +4222,19 @@ msgstr ""
 
 msgctxt "IDS_CMD_LOGOFF"
 msgid "/logoff\t\tLog off after playback"
-msgstr ""
+msgstr "/logoff\t\tLogga ut efter uppspelning"
 
 msgctxt "IDS_CMD_LOCK"
 msgid "/lock\t\tLock workstation after playback"
-msgstr ""
+msgstr "/lock\t\tLås datorn efter uppspelning"
 
 msgctxt "IDS_CMD_MONITOROFF"
 msgid "/monitoroff\tTurn off the monitor after playback"
-msgstr ""
+msgstr "/monitoroff\tStäng av skärmen efter uppspelning"
 
 msgctxt "IDS_CMD_PLAYNEXT"
 msgid "/playnext\t\tOpen next file in the folder after playback"
-msgstr ""
+msgstr "/playnext\t\tÖppna nästa fil i mappen efter uppspelning"
 
 msgctxt "IDS_CMD_VIEWPRESET"
 msgid ""
@@ -4244,7 +4244,7 @@ msgstr ""
 
 msgctxt "IDS_CMD_MUTE"
 msgid "/mute\t\tMute the audio"
-msgstr ""
+msgstr "/mute\t\tStäng av ljudet"
 
 msgctxt "IDS_CMD_VOLUME"
 msgid "/volume N\tSet Volume, where N is a range from 0 to 100"
@@ -4327,15 +4327,15 @@ msgstr ""
 
 msgctxt "IDS_CMD_FULLSCREEN"
 msgid "/fullscreen\tStart in fullscreen mode"
-msgstr ""
+msgstr "/fullscreen\tStarta i fullskärmsläge"
 
 msgctxt "IDS_CMD_MINIMIZED"
 msgid "/minimized\tStart in minimized mode"
-msgstr ""
+msgstr "/minimized\tStarta i minimerat läge"
 
 msgctxt "IDS_CMD_NEW"
 msgid "/new\t\tUse a new instance of the player"
-msgstr ""
+msgstr "/new\t\tAnvänd en ny instans av spelaren"
 
 msgctxt "IDS_CMD_ADD"
 msgid "/add\t\tAdd \"pathname\" to playlist, can be combined with /open and /play"
@@ -4347,23 +4347,23 @@ msgstr ""
 
 msgctxt "IDS_CMD_REGVID"
 msgid "/regvid\t\tCreate file associations for video files"
-msgstr ""
+msgstr "/regvid\t\tSkapa filassociationer för videofiler"
 
 msgctxt "IDS_CMD_REGAUD"
 msgid "/regaud\t\tCreate file associations for audio files"
-msgstr ""
+msgstr "/regaud\t\tSkapa filassociationer för ljudfiler"
 
 msgctxt "IDS_CMD_REGPL"
 msgid "/regpl\t\tCreate file associations for playlist files"
-msgstr ""
+msgstr "/regpl\t\tSkapa filassociationer för spellistefiler"
 
 msgctxt "IDS_CMD_REGALL"
 msgid "/regall\t\tCreate file associations for all supported file types"
-msgstr ""
+msgstr "/regall\t\tSkapa filassociationer för alla filtyper som stöds"
 
 msgctxt "IDS_CMD_UNREGALL"
 msgid "/unregall\t\tRemove all file associations"
-msgstr ""
+msgstr "/unregall\t\tTa bort alla filassociationer"
 
 msgctxt "IDS_CMD_START"
 msgid "/start ms\t\tStart playing at \"ms\" (= milliseconds)"
@@ -4401,7 +4401,7 @@ msgstr "&Avbryt"
 
 msgctxt "IDS_MESSAGEBOX_RETRY"
 msgid "&Retry"
-msgstr ""
+msgstr "&Försök igen"
 
 msgctxt "IDS_MESSAGEBOX_IGNORE"
 msgid "&Ignore"
@@ -4421,7 +4421,7 @@ msgstr ""
 
 msgctxt "IDS_AG_TOGGLE_MPCTHEME"
 msgid "Toggle Dark Theme"
-msgstr ""
+msgstr "Slå på Mörkt tema"
 
 msgctxt "IDS_PPAGEADVANCED_LOOP_FOLDER_NEXT_FILE"
 msgid "Loop back to first file in folder after playing the last file."

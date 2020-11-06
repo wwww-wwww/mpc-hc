@@ -3,18 +3,19 @@
 # This file is distributed under the same license as the MPC-HC package.
 # Translators:
 # MPC HC <adiposegithub@gmail.com>, 2020
-#
+# Anton G, 2020
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2020-03-20 18:57:58+0000\n"
+"POT-Creation-Date: 2020-08-09 19:14:33+0000\n"
 "PO-Revision-Date: 2020-01-02 07:46+0000\n"
-"Last-Translator: MPC HC <adiposegithub@gmail.com>, 2020\n"
+"Last-Translator: Anton G, 2020\n"
 "Language-Team: Croatian (https://www.transifex.com/mpchc/teams/106126/hr/)\n"
-"Language: hr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: hr\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 
 msgctxt "POPUP"
@@ -91,7 +92,7 @@ msgstr "Svo&jstva"
 
 msgctxt "ID_FILE_OPEN_LOCATION"
 msgid "Open File &Location"
-msgstr ""
+msgstr "Otvori datoteku i lokaciju"
 
 msgctxt "ID_FILE_EXIT"
 msgid "E&xit"
@@ -147,7 +148,7 @@ msgstr "&Debugiranje shadera"
 
 msgctxt "ID_VIEW_MPCTHEME"
 msgid "Dark Theme (restart)"
-msgstr ""
+msgstr "Tamna tema (restart)"
 
 msgctxt "POPUP"
 msgid "&Presets..."
@@ -591,7 +592,7 @@ msgstr ""
 
 msgctxt "POPUP"
 msgid "&Playback Rate"
-msgstr ""
+msgstr "&Brzina reprodukcije"
 
 msgctxt "POPUP"
 msgid "0.25 x"
@@ -647,7 +648,7 @@ msgstr ""
 
 msgctxt "POPUP"
 msgid "24 fps"
-msgstr ""
+msgstr "24 fps"
 
 msgctxt "POPUP"
 msgid "25 fps"

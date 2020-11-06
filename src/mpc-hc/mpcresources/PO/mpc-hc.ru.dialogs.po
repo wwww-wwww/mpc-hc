@@ -3,20 +3,20 @@
 # This file is distributed under the same license as the MPC-HC package.
 # Translators:
 # MPC HC <adiposegithub@gmail.com>, 2020
-# Александр Станкович <sanekst00@yandex.ru>, 2020
+# Alexandr Stankovich <sanekst00@yandex.ru>, 2020
 # CoolCmd, 2020
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2020-06-08 04:44:38+0000\n"
+"POT-Creation-Date: 2020-09-30 15:29:35+0000\n"
 "PO-Revision-Date: 2020-01-02 07:46+0000\n"
 "Last-Translator: CoolCmd, 2020\n"
 "Language-Team: Russian (https://www.transifex.com/mpchc/teams/106126/ru/)\n"
-"Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: ru\n"
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
 
 msgctxt "IDD_SELECTMEDIATYPE_CAPTION"
@@ -258,7 +258,7 @@ msgstr "Открывать файлы, используя"
 
 msgctxt "IDD_PPAGEPLAYER_IDC_RADIO1"
 msgid "Use the same player for each media file"
-msgstr "Один проигрыватель для каждого файла"
+msgstr "Один и тот же проигрыватель для каждого файла"
 
 msgctxt "IDD_PPAGEPLAYER_IDC_RADIO2"
 msgid "Open a new player for each media file played"
@@ -510,7 +510,7 @@ msgstr "Шаг скорости:"
 
 msgctxt "IDD_PPAGEPLAYBACK_IDC_STATIC4"
 msgid "Vertical Alignment:"
-msgstr "Вертикал. выравнивание:"
+msgstr "Вертикальное выравнивание:"
 
 msgctxt "IDD_PPAGESUBTITLES_IDC_CHECK3"
 msgid "Override placement"
@@ -582,7 +582,7 @@ msgstr "Раскладка рендера"
 
 msgctxt "IDD_PPAGESUBTITLES_IDC_CHECK_SUB_AR_COMPENSATION"
 msgid "Apply aspect ratio compensation for anamorphic videos"
-msgstr "Компенсация соотношение сторон для анаморфированного видео"
+msgstr "Применять компенсацию соотношения сторон для анаморфированного видео"
 
 msgctxt "IDD_PPAGESUBTITLES_IDC_STATIC"
 msgid "Warning"
@@ -594,8 +594,9 @@ msgid ""
 "videocard's settings, subtitles aren't going to look any better but it will "
 "surely eat your CPU."
 msgstr ""
-"От изменения положения и полноэкранного сглаживания субтитры не станут "
-"выглядеть лучше, но это будет чрезмерно нагружать ваш процессор."
+"Если вы отрегулируете и включите полноэкранное сглаживание где-то в "
+"настройках вашей видеокарты, субтитры не станут выглядеть лучше, но это "
+"будет чрезмерно нагружать ваш процессор."
 
 msgctxt "IDD_PPAGEFORMATS_IDC_STATIC2"
 msgid "File extensions"
@@ -619,11 +620,11 @@ msgstr "Использовать специальные иконки форма�
 
 msgctxt "IDD_PPAGEFORMATS_IDC_BUTTON1"
 msgid "Run as &administrator"
-msgstr "Запуск от имени администратора"
+msgstr "Запуск от имени &администратора"
 
 msgctxt "IDD_PPAGEFORMATS_IDC_BUTTON7"
 msgid "Set as &default program"
-msgstr "Сделать программой по умолчанию"
+msgstr "Сделать программой по &умолчанию"
 
 msgctxt "IDD_PPAGEFORMATS_IDC_STATIC"
 msgid "Explorer Context Menu"
@@ -655,7 +656,7 @@ msgstr "DVD"
 
 msgctxt "IDD_PPAGEFORMATS_IDC_CHECK3"
 msgid "Audio CD"
-msgstr "Аудио-CD"
+msgstr "Audio CD"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_STATIC"
 msgid "Jump distances (small, medium, large in ms)"
@@ -698,7 +699,7 @@ msgstr ""
 
 msgctxt "IDD_PPAGETWEAKS_IDC_CHECK8"
 msgid "Show time tooltip:"
-msgstr "Показывать время"
+msgstr "Показывать время:"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_STATIC"
 msgid "OSD font:"
@@ -706,7 +707,7 @@ msgstr "Шрифт OSD:"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_CHECK_LCD"
 msgid "Enable Logitech LCD support (experimental)"
-msgstr "Включить поддержку Logitech LCD"
+msgstr "Включить поддержку Logitech LCD (экспериментальная функция)"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_CHECK3"
 msgid "Auto-hide the mouse pointer during playback in windowed mode"
@@ -870,15 +871,15 @@ msgstr "Вниз"
 
 msgctxt "IDD_PNSPRESET_DLG_IDC_BUTTON1"
 msgid "&Set"
-msgstr "Выбрать"
+msgstr "&Выбрать"
 
 msgctxt "IDD_PNSPRESET_DLG_IDCANCEL"
 msgid "&Cancel"
-msgstr "Отмена"
+msgstr "&Отмена"
 
 msgctxt "IDD_PNSPRESET_DLG_IDOK"
 msgid "&Save"
-msgstr "Сохранить"
+msgstr "&Сохранить"
 
 msgctxt "IDD_PNSPRESET_DLG_IDC_STATIC"
 msgid "Pos: 0.0 -> 1.0"
@@ -1038,7 +1039,7 @@ msgstr "Тень"
 
 msgctxt "IDD_PPAGESUBSTYLE_IDC_STATIC"
 msgid "Screen Alignment && Margins"
-msgstr "Выравнивание экрана и поля"
+msgstr "&Выравнивание экрана и поля"
 
 msgctxt "IDD_PPAGESUBSTYLE_IDC_STATIC"
 msgid "Left"
@@ -1062,7 +1063,7 @@ msgstr "Располагать субтитры относительно кад�
 
 msgctxt "IDD_PPAGESUBSTYLE_IDC_STATIC"
 msgid "Colors && Transparency"
-msgstr "Цвета и прозрачность"
+msgstr "&Цвета и прозрачность"
 
 msgctxt "IDD_PPAGESUBSTYLE_IDC_STATIC"
 msgid "0%"
@@ -1622,15 +1623,15 @@ msgstr "Проверка обновлений"
 
 msgctxt "IDD_UPDATE_DIALOG_IDC_UPDATE_DL_BUTTON"
 msgid "&Download now"
-msgstr "Загрузить сейчас"
+msgstr "&Загрузить сейчас"
 
 msgctxt "IDD_UPDATE_DIALOG_IDC_UPDATE_LATER_BUTTON"
 msgid "Remind me &later"
-msgstr "Напомнить позже"
+msgstr "Напомнить &позже"
 
 msgctxt "IDD_UPDATE_DIALOG_IDC_UPDATE_IGNORE_BUTTON"
 msgid "&Ignore this update"
-msgstr "Игнорировать это обновление"
+msgstr "&Игнорировать это обновление"
 
 msgctxt "IDD_PPAGESHADERS_IDC_STATIC"
 msgid ""
@@ -1638,7 +1639,8 @@ msgid ""
 "process."
 msgstr ""
 "Шейдеры содержат специальные эффекты, которые могут быть добавлены в процесс"
-" рендеринга видео."
+" рендеринга видео. Шейдеры pre-resize добавляются перед изменением размера, "
+"post-resize - после."
 
 msgctxt "IDD_PPAGESHADERS_IDC_BUTTON12"
 msgid "Add shader file"
@@ -1780,8 +1782,9 @@ msgid ""
 "To minimize audio distortion, it is recommended to keep player volume at "
 "around 85% when playing loud lossy-encoded content."
 msgstr ""
-"Для сведения звуковых искажений к минимуму, рекомендуется держать уровень "
-"громкости около 85% при проигрывании громкого материала, сжатого с потерями."
+"Для сведения звуковых искажений к минимуму при проигрывании громкого "
+"материала, сжатого с потерями, рекомендуется держать уровень громкости около"
+" 85%."
 
 msgctxt "IDD_SAVEIMAGEDIALOGTEMPL_IDC_STATIC"
 msgid "JPEG quality:"
@@ -1820,8 +1823,8 @@ msgid ""
 "Your email address is optional and will only be used if the developers need "
 "to contact you for more information."
 msgstr ""
-"Вводить адрес электронной почты не обязательно, но может быть использован "
-"для связи разработчиков с вами."
+"Вводить адрес электронной почты не обязательно, но он может быть использован"
+" для связи разработчиков с вами."
 
 msgctxt "IDD_CRASH_REPORTER_IDC_STATIC4"
 msgid "Problem description (use English only):"
