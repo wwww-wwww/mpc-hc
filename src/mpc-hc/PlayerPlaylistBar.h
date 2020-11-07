@@ -34,6 +34,13 @@ class OpenMediaData;
 
 class CMainFrame;
 
+struct CueTrackMeta {
+    CString title;
+    CString performer;
+    int trackID = 0;
+    REFERENCE_TIME time;
+};
+
 class CPlayerPlaylistBar : public CMPCThemePlayerBar, public CDropClient
 {
     DECLARE_DYNAMIC(CPlayerPlaylistBar)
@@ -70,6 +77,7 @@ private:
     bool ParseMPCPlayList(CString fn);
     bool SaveMPCPlayList(CString fn, CTextFile::enc e, bool fRemovePath);
     bool ParseM3UPlayList(CString fn);
+    bool ParseCUESheet(CString fn);
 
     void SetupList();
     void UpdateList();

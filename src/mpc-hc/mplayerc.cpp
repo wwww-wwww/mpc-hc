@@ -493,6 +493,8 @@ CStringA GetContentType(CString fn, CAtlList<CString>* redir)
         CString ext = p.GetExtension().MakeLower();
         if (ext == _T(".mpcpl")) {
             ct = _T("application/x-mpc-playlist");
+        }  else if (ext == _T(".cue")) {
+            ct = _T("application/x-cue-sheet");
         } else if (ext == _T(".pls")) {
             ct = _T("audio/x-scpls");
             parsefile = true;

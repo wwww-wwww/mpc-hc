@@ -329,6 +329,7 @@ private:
     // chapters (file mode)
     CComPtr<IDSMChapterBag> m_pCB;
     void SetupChapters();
+    void SetupCueChapters(CString fn);
 
     // chapters (DVD mode)
     void SetupDVDChapters();

@@ -11996,7 +11996,123 @@ void CMainFrame::SetupChapters()
         EndEnumPins;
     }
 
+    CPlaylistItem* pli = m_wndPlaylistBar.GetCur();
+    if (pli->m_cue) {
+        SetupCueChapters(pli->m_cue_filename);
+    }
+
     UpdateSeekbarChapterBag();
+}
+
+void CMainFrame::SetupCueChapters(CString fn) {
+    CString str;
+    int cue_index(-1);
+    CPlaylistItem* pli = m_wndPlaylistBar.GetCur();
+
+    CWebTextFile f(CTextFile::UTF8);
+    if (!f.Open(fn) || !f.ReadString(str)) {
+        return;
+    }
+
+    f.Seek(0, CFile::SeekPosition::begin);
+    if (f.GetEncoding() == CTextFile::DEFAULT_ENCODING) {
+        f.SetEncoding(CTextFile::ANSI);
+    }
+
+    CString base;
+    bool isurl = fn.Find(_T("://")) > 0;
+    if (isurl) {
+        int p = fn.Find(_T('?'));
+        if (p > 0) {
+            fn = fn.Left(p);
+        }
+        p = fn.ReverseFind(_T('/'));
+        if (p > 0) {
+            base = fn.Left(p + 1);
+        }
+    }
+    else {
+        CPath basefilepath(fn);
+        basefilepath.RemoveFileSpec();
+        basefilepath.AddBackslash();
+        base = basefilepath.m_strPath;
+    }
+
+    CString title;
+    CString performer;
+    CAtlList<CueTrackMeta> trackl;
+    CueTrackMeta track;
+    int trackID(0);
+
+    while (f.ReadString(str)) {
+        str.Trim();
+        if (cue_index == -1 && str.Left(5) == _T("TITLE")) {
+            title = str.Mid(6).Trim(_T("\""));
+        }
+        else if (cue_index == -1 && str.Left(9) == _T("PERFORMER")) {
+            performer = str.Mid(10).Trim(_T("\""));
+        }
+        else if (str.Left(4) == _T("FILE")) {
+            if (str.Right(4) == _T("WAVE") || str.Right(3) == _T("MP3") || str.Right(4) == _T("AIFF")) { // We just support audio file.
+                cue_index++;
+            }
+        }
+        else if (cue_index >= 0) {
+            if (str.Left(5) == _T("TRACK") && str.Right(5) == _T("AUDIO")) {
+                CT2CA tmp(str.Mid(6, str.GetLength() - 12));
+                const char* tmp2(tmp);
+                sscanf_s(tmp2, "%d", &trackID);
+                if (track.trackID != 0) {
+                    trackl.AddTail(track);
+                    track = CueTrackMeta();
+                }
+                track.trackID = trackID;
+            }
+            else if (str.Left(5) == _T("TITLE")) {
+                track.title = str.Mid(6).Trim(_T("\""));
+            }
+            else if (str.Left(9) == _T("PERFORMER")) {
+                track.performer = str.Mid(10).Trim(_T("\""));
+            }
+            else if (str.Left(5) == _T("INDEX")) {
+                CT2CA tmp(str.Mid(6));
+                const char* tmp2(tmp);
+                int i1(0), m(0), s(0), ms(0);
+                sscanf_s(tmp2, "%d %d:%d:%d", &i1, &m, &s, &ms);
+                if (i1 != 0) track.time = 10000i64 * ((m * 60 + s) * 1000 + ms);
+            }
+        }
+    }
+
+    if (track.trackID != 0) {
+        trackl.AddTail(track);
+    }
+
+    if ((cue_index == 0 && trackl.GetCount() == 1) || cue_index > 1) pli->m_cue = false; // avoid unnecessary parsing of cue again later
+
+    if (trackl.GetCount() >= 1) {
+        POSITION p = trackl.GetHeadPosition();
+        bool b(true);
+        do {
+            if (p == trackl.GetTailPosition()) b = false;
+            CueTrackMeta c(trackl.GetNext(p));
+            if (cue_index == 0 || (cue_index > 0 && c.trackID == (pli->m_cue_index + 1))) {
+                CString label;
+                if (c.trackID != 0 && !c.title.IsEmpty()) {
+                    label = c.title;
+                    if (!c.performer.IsEmpty()) {
+                        label += (_T(" - ") + c.performer);
+                    }
+                    else if (!performer.IsEmpty()) {
+                        label += (_T(" - ") + performer);
+                    }
+                }
+                REFERENCE_TIME time(c.time);
+                if (cue_index > 0) time = 0; // We don't support gap.
+                m_pCB->ChapAppend(time, label);
+            }
+        } while (b);
+    }
 }
 
 void CMainFrame::SetupDVDChapters()
@@ -12716,6 +12832,12 @@ void CMainFrame::OpenSetupWindowTitle(bool reset /*= false*/)
                             }
                         }
                         EndEnumFilters;
+                        if (!use_label && pli && !pli->m_fns.IsEmpty()) {
+                            if (pli->m_label && !pli->m_label.IsEmpty()) {
+                                title = pli->m_label;
+                                use_label = true;
+                            }
+                        }
                     }
                 }
             } else if (GetPlaybackMode() == PM_DVD) {
@@ -17809,11 +17931,14 @@ void CMainFrame::UpdateControlState(UpdateControlTarget target)
                 m_wndInfoBar.GetLine(StrRes(IDS_INFOBAR_AUTHOR), author);
 
                 CComQIPtr<IFilterGraph> pFilterGraph = m_pGB;
+                CPlaylistItem* pli = m_wndPlaylistBar.GetCur();
                 std::vector<BYTE> internalCover;
                 if (CoverArt::FindEmbedded(pFilterGraph, internalCover)) {
                     m_wndView.LoadImg(internalCover);
                     m_currentCoverPath = filename;
                     m_currentCoverAuthor = author;
+                } else if (!pli->m_cover.IsEmpty() && CPath(pli->m_cover).FileExists()) {
+                    m_wndView.LoadImg(pli->m_cover);
                 } else if (!filedir.IsEmpty() && (m_currentCoverPath != filedir || m_currentCoverAuthor != author || currentCoverIsFileArt)) {
                     m_wndView.LoadImg(CoverArt::FindExternal(filename_no_ext, filedir, author, currentCoverIsFileArt));
                     m_currentCoverPath = filedir;

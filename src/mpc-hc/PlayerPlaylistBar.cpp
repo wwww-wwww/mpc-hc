@@ -32,6 +32,7 @@
 #include "PathUtils.h"
 #include "WinAPIUtils.h"
 #include "CMPCTheme.h"
+#include "CoverArt.h"
 #undef SubclassWindow
 
 
@@ -340,6 +341,9 @@ void CPlayerPlaylistBar::ParsePlayList(CAtlList<CString>& fns, CAtlList<CString>
     if (ct == "application/x-mpc-playlist") {
         ParseMPCPlayList(fns.GetHead());
         return;
+    } else if (ct == "application/x-cue-sheet") {
+        ParseCUESheet(fns.GetHead());
+        return;
     } else if (ct == "audio/x-mpegurl") {
         if (fns.GetHead().Find(_T("://")) == -1) { // prefer opening M3U URLs directly with LAV Splitter
             if (ParseM3UPlayList(fns.GetHead())) {
@@ -411,6 +415,165 @@ bool CPlayerPlaylistBar::ParseBDMVPlayList(CString fn)
     }
 
     return !m_pl.IsEmpty();
+}
+
+bool CPlayerPlaylistBar::ParseCUESheet(CString fn) {
+    CString str;
+    std::vector<int> idx;
+    int cue_index(0);
+
+    CWebTextFile f(CTextFile::UTF8);
+    if (!f.Open(fn) || !f.ReadString(str)) {
+        return false;
+    }
+
+    f.Seek(0, CFile::SeekPosition::begin);
+    if (f.GetEncoding() == CTextFile::DEFAULT_ENCODING) {
+        f.SetEncoding(CTextFile::ANSI);
+    }
+
+    CString base;
+    bool isurl = fn.Find(_T("://")) > 0;
+    if (isurl) {
+        int p = fn.Find(_T('?'));
+        if (p > 0) {
+            fn = fn.Left(p);
+        }
+        p = fn.ReverseFind(_T('/'));
+        if (p > 0) {
+            base = fn.Left(p + 1);
+        }
+    }
+    else {
+        CPath basefilepath(fn);
+        basefilepath.RemoveFileSpec();
+        basefilepath.AddBackslash();
+        base = basefilepath.m_strPath;
+    }
+
+    bool success = false;
+    CString title(_T(""));
+    CString performer(_T(""));
+    CAtlList<CueTrackMeta> trackl;
+    CAtlList<CPlaylistItem> pl;
+    CueTrackMeta track;
+    int trackID(0);
+
+    while(f.ReadString(str)) {
+        str.Trim();
+        if (cue_index == 0 && str.Left(5) == _T("TITLE")) {
+            title = str.Mid(6).Trim(_T("\""));
+        }
+        else if (cue_index == 0 && str.Left(9) == _T("PERFORMER")) {
+            performer = str.Mid(10).Trim(_T("\""));
+        }
+        else if (str.Left(4) == _T("FILE")) {
+            if (str.Right(4) == _T("WAVE") || str.Right(3) == _T("MP3") || str.Right(4) == _T("AIFF")) { // We just support audio file.
+                CPlaylistItem pli;
+                CString filen;
+                if (str.Right(3) == _T("MP3")) filen = str.Mid(5, str.GetLength() - 9).Trim(_T("\""));
+                else filen = str.Mid(5, str.GetLength() - 10).Trim(_T("\""));
+                filen = CombinePath(base, filen, isurl);
+                pli.m_cue = true;
+                pli.m_cue_index = cue_index;
+                pli.m_cue_filename = fn;
+                pli.m_fns.AddTail(filen);
+                pl.AddTail(pli);
+                cue_index++;
+            }
+        }
+        else if (cue_index > 0) {
+            if (str.Left(5) == _T("TRACK") && str.Right(5) == _T("AUDIO")) {
+                CT2CA tmp(str.Mid(6, str.GetLength() - 12));
+                const char* tmp2(tmp);
+                sscanf_s(tmp2, "%d", &trackID);
+                if (track.trackID != 0) {
+                    trackl.AddTail(track);
+                    track = CueTrackMeta();
+                }
+                track.trackID = trackID;
+            }
+            else if (str.Left(5) == _T("TITLE")) {
+                track.title = str.Mid(6).Trim(_T("\""));
+            }
+            else if (str.Left(9) == _T("PERFORMER")) {
+                track.performer = str.Mid(10).Trim(_T("\""));
+            }
+        }
+    }
+
+    if (track.trackID != 0) {
+        trackl.AddTail(track);
+    }
+
+    CPath cp(fn);
+    CString fn_no_ext;
+    CString fdir;
+    if (cp.FileExists()) {
+        cp.RemoveExtension();
+        fn_no_ext = cp.m_strPath;
+        cp.RemoveFileSpec();
+        fdir = cp.m_strPath;
+    }
+    bool currentCoverIsFileArt(false);
+    CString cover(CoverArt::FindExternal(fn_no_ext, fdir, _T(""), currentCoverIsFileArt));
+
+    if (pl.GetCount() == 1) {
+        CPlaylistItem tpl = pl.GetHead();
+        CString label;
+        if (!title.IsEmpty()) {
+            label = title;
+            if (!performer.IsEmpty()) {
+                label += (_T(" - ") + performer);
+            }
+        }
+        if (!label.IsEmpty()) tpl.m_label = label;
+        if (!cover.IsEmpty()) tpl.m_cover = cover;
+        m_pl.AddTail(tpl);
+        success = true;
+    }
+    else if (pl.GetCount() > 1) {
+        POSITION p = pl.GetHeadPosition();
+        POSITION p2 = trackl.GetHeadPosition();
+        bool b(true), b2(false);
+        if (trackl.GetCount() > 0) b2 = true;
+        do {
+            if (p == pl.GetTailPosition()) b = false;
+            CueTrackMeta c;
+            if (b2 && p2 == trackl.GetTailPosition()) {
+                b2 = false;
+                c = trackl.GetNext(p2);
+            }
+            if (b2) c = trackl.GetNext(p2);
+            CPlaylistItem tpl(pl.GetNext(p));
+            CString label;
+            if (c.trackID != 0 && !c.title.IsEmpty()) {
+                label = c.title;
+                if (!c.performer.IsEmpty()) {
+                    label += (_T(" - ") + c.performer);
+                }
+                else if (!performer.IsEmpty()) {
+                    label += (_T(" - ") + performer);
+                }
+            }
+            else if (!title.IsEmpty()) {
+                label = title;
+                if (!performer.IsEmpty()) {
+                    label += (_T(" - ") + performer);
+                }
+                CString tmp;
+                tmp.Format(_T(" - File %d"), tpl.m_cue_index + 1);
+                label += tmp;
+            }
+            if (!label.IsEmpty()) tpl.m_label = label;
+            tpl.m_cue = false; // avoid unnecessary parsing of cue again later
+            if (!cover.IsEmpty()) tpl.m_cover = cover;
+            m_pl.AddTail(tpl);
+            success = true;
+        } while (b);
+    }
+    
+    return success;
 }
 
 bool CPlayerPlaylistBar::ParseM3UPlayList(CString fn) {
@@ -566,6 +729,13 @@ bool CPlayerPlaylistBar::ParseMPCPlayList(CString fn)
                 pli[i].m_ainput = _ttol(value);
             } else if (key == _T("country")) {
                 pli[i].m_country = _ttol(value);
+            } else if (key == _T("cue_filename")) {
+                pli[i].m_cue = true;
+                pli[i].m_cue_filename = value;
+            } else if (key == _T("cue_index")) {
+                pli[i].m_cue_index = _ttoi(value);
+            } else if (key == _T("cover")) {
+                pli[i].m_cover = value;
             }
         }
     }
@@ -626,6 +796,16 @@ bool CPlayerPlaylistBar::SaveMPCPlayList(CString fn, CTextFile::enc e, bool fRem
             }
             if (pli.m_bYoutubeDL && !pli.m_ydlSourceURL.IsEmpty()) {
                 f.WriteString(idx + _T(",ydlSourceURL,") + pli.m_ydlSourceURL + _T("\n"));
+            }
+            if (pli.m_cue) {
+                f.WriteString(idx + _T(",cue_filename,") + pli.m_cue_filename + _T("\n"));
+                if (pli.m_cue_index > 0) {
+                    str.Format(_T("%d,cue_index,%d"), i, pli.m_cue_index);
+                    f.WriteString(str + _T("\n"));
+                }
+            }
+            if (!pli.m_cover.IsEmpty()) {
+                f.WriteString(idx + _T(",cover,") + pli.m_cover + _T("\n"));
             }
         } else if (pli.m_type == CPlaylistItem::device && pli.m_fns.GetCount() == 2) {
             f.WriteString(idx + _T(",video,") + pli.m_fns.GetHead() + _T("\n"));
