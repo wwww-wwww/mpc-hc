@@ -1682,7 +1682,9 @@ static bool OpenSubStationAlpha(CTextFile* file, CSimpleTextSubtitle& ret, int C
         } else if (entry == L"fontname") {
             LoadUUEFont(file);
         } else if (entry == L"ycbcr matrix") {
-            ret.m_sYCbCrMatrix = GetStrW(pszBuff, nBuffLength);
+            try {
+                ret.m_sYCbCrMatrix = GetStrW(pszBuff, nBuffLength);
+            } catch (...) {}
         }
     }
 
