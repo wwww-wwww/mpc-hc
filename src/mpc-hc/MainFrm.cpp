@@ -3541,25 +3541,24 @@ void CMainFrame::OnUpdatePlayerStatus(CCmdUI* pCmdUI)
             if (msg_id) {
                 msg.LoadString(msg_id);
             }
-        }
 
-        if (m_bUsingDXVA && (msg == ResStr(IDS_CONTROLS_PAUSED) || msg == ResStr(IDS_CONTROLS_PLAYING))) {
-            msg.AppendFormat(_T(" %s"), ResStr(IDS_HW_INDICATOR).GetString());
-        }
-
-        if (AfxGetAppSettings().bShowLangInStatusbar) {
-            if (!currentAudioLang.IsEmpty() || !currentSubLang.IsEmpty()) {
-                msg.Append(_T("\u2001["));
-                if (!currentAudioLang.IsEmpty()) {
-                    msg.AppendFormat(_T("AUD: %s"), currentAudioLang.GetString());
-                }
-                if (!currentSubLang.IsEmpty()) {
+            if (m_bUsingDXVA && (msg == ResStr(IDS_CONTROLS_PAUSED) || msg == ResStr(IDS_CONTROLS_PLAYING))) {
+                msg.AppendFormat(_T(" %s"), ResStr(IDS_HW_INDICATOR).GetString());
+            }
+            if (AfxGetAppSettings().bShowLangInStatusbar) {
+                if (!currentAudioLang.IsEmpty() || !currentSubLang.IsEmpty()) {
+                    msg.Append(_T("\u2001["));
                     if (!currentAudioLang.IsEmpty()) {
-                        msg.Append(_T(", "));
+                        msg.AppendFormat(_T("AUD: %s"), currentAudioLang.GetString());
                     }
-                    msg.AppendFormat(_T("SUB: %s"), currentSubLang.GetString());
+                    if (!currentSubLang.IsEmpty()) {
+                        if (!currentAudioLang.IsEmpty()) {
+                            msg.Append(_T(", "));
+                        }
+                        msg.AppendFormat(_T("SUB: %s"), currentSubLang.GetString());
+                    }
+                    msg.Append(_T("]"));
                 }
-                msg.Append(_T("]"));
             }
         }
 
