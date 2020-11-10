@@ -59,10 +59,10 @@ msgstr ""
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\\n"
 "Language-Team: LANGUAGE <LL@li.org>\\n"
+"Language: \\n"
 "MIME-Version: 1.0\\n"
 "Content-Type: text/plain; charset=UTF-8\\n"
-"Content-Transfer-Encoding: 8bit\\n"
-"Language: \\n"\n
+"Content-Transfer-Encoding: 8bit\\n"\n
 '''
 
 
@@ -158,18 +158,12 @@ class TranslationData:
         if output[0]:
             fname = filename + '.dialogs.' + ext
             self.writePOData(fname, self.dialogs, self.dialogsHeader)
-            po = polib.pofile(fname)
-            po.save(fname)
         if output[1]:
             fname = filename + '.menus.' + ext
             self.writePOData(fname, self.menus, self.menusHeader)
-            po = polib.pofile(fname)
-            po.save(fname)
         if output[2]:
             fname = filename + '.strings.' + ext
             self.writePOData(fname, self.strings, self.stringsHeader)
-            po = polib.pofile(fname)
-            po.save(fname)
 
     def prepareHeaders(self, ext):
         if ext == 'pot':
@@ -190,7 +184,6 @@ class TranslationData:
         with codecs.open(filename, 'w', 'utf8') as f:
             if header:
                 f.write(header)
-
             for dataID in data:
                 f.write('msgctxt "')
                 f.write(dataID[0].replace('""', '\\"'))     # msgctxt
@@ -201,6 +194,17 @@ class TranslationData:
                 f.write('msgstr "')
                 f.write(data[dataID].replace('""', '\\"'))  # msgstr
                 f.write('"\r\n\r\n')
+            f.close()
+        po = polib.pofile(filename)
+        po.save(filename)
+        with codecs.open(filename, 'r', 'utf8') as f:
+            lines = f.readlines()
+        with codecs.open(filename, 'w', 'utf8') as f:
+            f.write(header)
+            for num,line in enumerate(lines):
+                if num >= len(header.splitlines()):
+                    f.write(line)
+            f.close()
 
     def areEqualsSections(self, translationData):
         return (self.dialogs == translationData.dialogs,
