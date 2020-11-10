@@ -805,7 +805,11 @@ int CVobFile::Seek(int pos)
     m_pos = pos;
 
     pos -= (size - m_files[i].size);
-    m_file.Seek(pos);
+    try {
+        m_file.Seek(pos);
+    } catch (...) {
+        return -1;
+    }
 
     return GetPosition();
 }
