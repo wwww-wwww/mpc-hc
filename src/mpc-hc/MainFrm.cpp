@@ -3230,7 +3230,11 @@ void CMainFrame::OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu) 
             SetupRecentFilesSubMenu();
             pSubMenu = &m_recentFilesMenu;
         } else if (itemID == ID_SHADERS) {
-            SetupShadersSubMenu();
+            if (SetupShadersSubMenu()) {
+                pPopupMenu->EnableMenuItem(ID_SHADERS, MF_BYPOSITION | MF_ENABLED);
+            } else {
+                pPopupMenu->EnableMenuItem(ID_SHADERS, MF_BYPOSITION | MF_GRAYED);
+            }
             pSubMenu = &m_shadersMenu;
         }
 
@@ -14894,7 +14898,7 @@ void CMainFrame::SetupFavoritesSubMenu()
     }
 }
 
-void CMainFrame::SetupShadersSubMenu()
+bool CMainFrame::SetupShadersSubMenu()
 {
     const auto& s = AfxGetAppSettings();
 
@@ -14902,11 +14906,9 @@ void CMainFrame::SetupShadersSubMenu()
     // Empty the menu
     while (subMenu.RemoveMenu(0, MF_BYPOSITION));
 
-    if (s.iDSVideoRendererType == VIDRNDT_DS_EVR_CUSTOM || s.iDSVideoRendererType == VIDRNDT_DS_SYNC || s.iDSVideoRendererType == VIDRNDT_DS_VMR9RENDERLESS || s.iDSVideoRendererType == VIDRNDT_DS_MADVR || s.iDSVideoRendererType == VIDRNDT_DS_MPCVR) {
-        subMenu.EnableMenuItem(ID_SHADERS, MF_BYPOSITION | MF_ENABLED);
-    } else {
-        subMenu.EnableMenuItem(ID_SHADERS, MF_BYPOSITION | MF_GRAYED);
-        return;
+    if (!(s.iDSVideoRendererType == VIDRNDT_DS_EVR_CUSTOM || s.iDSVideoRendererType == VIDRNDT_DS_SYNC
+        || s.iDSVideoRendererType == VIDRNDT_DS_VMR9RENDERLESS || s.iDSVideoRendererType == VIDRNDT_DS_MADVR || s.iDSVideoRendererType == VIDRNDT_DS_MPCVR)) {
+        return false;
     }        
 
     subMenu.AppendMenu(MF_BYCOMMAND | MF_STRING | MF_ENABLED, ID_PRESIZE_SHADERS_TOGGLE, ResStr(IDS_PRESIZE_SHADERS_TOGGLE));
@@ -14934,6 +14936,7 @@ void CMainFrame::SetupShadersSubMenu()
             nID++;
         }
     }
+    return true;
 }
 
 /////////////

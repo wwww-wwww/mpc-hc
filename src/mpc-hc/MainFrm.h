@@ -305,7 +305,7 @@ private:
     void SetupVideoStreamsSubMenu();
     void SetupJumpToSubMenus(CMenu* parentMenu = nullptr, int iInsertPos = -1);
     void SetupFavoritesSubMenu();
-    void SetupShadersSubMenu();
+    bool SetupShadersSubMenu();
     void SetupRecentFilesSubMenu();
 
     void SetupNavStreamSelectSubMenu(CMenu& subMenu, UINT id, DWORD dwSelGroup);
