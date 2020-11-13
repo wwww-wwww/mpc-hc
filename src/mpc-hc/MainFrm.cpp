@@ -11422,6 +11422,7 @@ void CMainFrame::SetShaders(bool bSetPreResize/* = true*/, bool bSetPostResize/*
     bool preFailed = false, postFailed = false;
 
     if (m_pCAP3) { //interfaces for madVR and MPC-VR
+        TidyShaderCache();
         const int PShaderMode = m_pCAP3->GetPixelShaderMode();
         if (PShaderMode != 9 && PShaderMode != 11) {
             return;
