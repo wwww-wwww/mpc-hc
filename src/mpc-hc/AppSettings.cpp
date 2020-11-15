@@ -35,6 +35,7 @@
 #include "../thirdparty/sanear/src/Factory.h"
 #include <VersionHelpersInternal.h>
 #include <mvrInterfaces.h>
+#include "../Subtitles/SubRendererSettings.h"
 
 #pragma warning(push)
 #pragma warning(disable: 4351) // new behavior: elements of array 'array' will be default initialized
@@ -228,6 +229,7 @@ CAppSettings::CAppSettings()
     , bEnableCrashReporter(true)
     , nStreamPosPollerInterval(100)
     , bShowLangInStatusbar(false)
+    , bRenderSubtitlesUsingLibass(false)
     , bAddLangCodeWhenSaveSubtitles(true)
 {
     // Internal source filter
@@ -873,6 +875,10 @@ void CAppSettings::SaveSettings()
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_MENULANG, idMenuLang);
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_AUDIOLANG, idAudioLang);
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_SUBTITLESLANG, idSubtitlesLang);
+#if USE_LIBASS
+    pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_RENDERSUBTITLESUSINGLIBASS, bRenderSubtitlesUsingLibass);
+    pApp->WriteProfileString(IDS_R_SETTINGS, IDS_RS_OPENTYPELANGHINT, CString(strOpenTypeLangHint));
+#endif
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_CLOSEDCAPTIONS, fClosedCaptions);
     CString style;
     pApp->WriteProfileString(IDS_R_SETTINGS, IDS_RS_SPSTYLE, style <<= subtitlesDefStyle);
@@ -1540,6 +1546,11 @@ void CAppSettings::LoadSettings()
     idMenuLang = pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_MENULANG, 0);
     idAudioLang = pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_AUDIOLANG, 0);
     idSubtitlesLang = pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_SUBTITLESLANG, 0);
+#if USE_LIBASS
+    bRenderSubtitlesUsingLibass = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_RENDERSUBTITLESUSINGLIBASS, FALSE);
+    CT2A tmpLangHint(pApp->GetProfileString(IDS_R_SETTINGS, IDS_RS_OPENTYPELANGHINT, _T("")));
+    strOpenTypeLangHint = tmpLangHint;
+#endif
     fClosedCaptions = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_CLOSEDCAPTIONS, FALSE);
     {
         CString temp = pApp->GetProfileString(IDS_R_SETTINGS, IDS_RS_SPSTYLE);
@@ -2762,3 +2773,15 @@ void CAppSettings::UpdateSettings()
             pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_R_VERSION, APPSETTINGS_VERSION);
     }
 }
+
+#if USE_LIBASS
+SubRendererSettings CAppSettings::GetSubRendererSettings() {
+    SubRendererSettings s;
+    s.renderUsingLibass = this->bRenderSubtitlesUsingLibass;
+    int otlLen = this->strOpenTypeLangHint.GetLength();
+    if (otlLen > 0) {
+        strncpy_s(s.openTypeLangHint, _countof(s.openTypeLangHint), this->strOpenTypeLangHint.GetBuffer(), std::min(OpenTypeLang::OTLangHintLen, otlLen + 1));
+    }
+    return s;
+}
+#endif

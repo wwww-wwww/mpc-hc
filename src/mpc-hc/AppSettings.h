@@ -649,6 +649,8 @@ public:
     CString         strAutoDownloadSubtitlesExclude;
     bool            bAutoUploadSubtitles;
     bool            bPreferHearingImpairedSubtitles;
+    bool            bRenderSubtitlesUsingLibass;
+    CStringA        strOpenTypeLangHint;
     bool            bMPCTheme;
     bool            bWindows10DarkThemeActive;
     bool            bWindows10AccentColorsEnabled;
@@ -870,4 +872,7 @@ public:
     bool            GetAllowMultiInst() const;
 
     static bool     IsVSFilterInstalled();
+#if USE_LIBASS
+    SubRendererSettings	GetSubRendererSettings();
+#endif
 };

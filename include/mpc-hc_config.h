@@ -40,6 +40,8 @@
 
 #define USE_STATIC_UNRAR 1
 
+#define USE_LIBASS 0
+
 #define USE_DRDUMP_CRASH_REPORTER 1
 
 #define SHADERS_DIR _T("Shaders")

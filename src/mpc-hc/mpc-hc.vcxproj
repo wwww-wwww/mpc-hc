@@ -107,6 +107,7 @@
     <Link>
       <AdditionalLibraryDirectories Condition="'$(PlatformToolsetVersion)'!='140'">$(SolutionDir)bin\lib\Release_$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalLibraryDirectories Condition="'$(PlatformToolsetVersion)'=='140'">$(SolutionDir)bin15\lib\Release_$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>msvcrt.lib;vcruntime.lib;ucrt.lib</IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="$(Configuration.Contains('Debug'))">
@@ -135,6 +136,11 @@
       <AdditionalIncludeDirectories>..\thirdparty\ZenLib\library\Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</SDLCheck>
     </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="$(Configuration.Contains('Lite'))">
+    <Link>
+      <AdditionalDependencies>libass.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\thirdparty\MessageBoxDialog\MessageBoxDialog.cpp" />
