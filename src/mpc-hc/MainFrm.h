@@ -1125,6 +1125,8 @@ protected:
 
     void UpdateUILanguage();
 
+    bool PerformFlipRotate();
+
     bool m_bAltDownClean;
     bool m_bShowingFloatingMenubar;
     virtual void OnShowMenuBar() override {
