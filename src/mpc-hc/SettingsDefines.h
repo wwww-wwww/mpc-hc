@@ -281,6 +281,9 @@
 
 #define IDS_RS_LCD_SUPPORT                  _T("LcdSupport")
 
+#define IDS_RS_TOGGLESHADER                 _T("PreSizeShadersEnabled")
+#define IDS_RS_TOGGLESHADERSSCREENSPACE     _T("PostSizeShadersEnabled")
+
 #define IDS_RS_REMAINING_TIME               _T("RemainingTime")
 #define IDS_RS_HIGH_PRECISION_TIMER         _T("HighPrecisionTimer")
 

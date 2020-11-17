@@ -727,6 +727,8 @@ public:
     // Save Subtitle
     bool            bSubSaveExternalStyleFile;
     // Shaders
+    bool            bToggleShader;
+    bool            bToggleShaderScreenSpace;
     ShaderList      m_ShadersExtraList;
     ShaderSelection m_Shaders;
     // Playlist (contex menu)

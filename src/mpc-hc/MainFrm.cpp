@@ -692,13 +692,9 @@ void CMainFrame::EventCallback(MpcEvent ev)
     const auto& s = AfxGetAppSettings();
     switch (ev) {
         case MpcEvent::SHADER_SELECTION_CHANGED:
-            SetShaders();
-            break;
         case MpcEvent::SHADER_PRERESIZE_SELECTION_CHANGED:
-            SetShaders(true, false);
-            break;
         case MpcEvent::SHADER_POSTRESIZE_SELECTION_CHANGED:
-            SetShaders(false, true);
+            SetShaders(m_bToggleShader, m_bToggleShaderScreenSpace);
             break;
         case MpcEvent::DISPLAY_MODE_AUTOCHANGING:
             if (GetLoadState() == MLS::LOADED && GetMediaState() == State_Running && s.autoChangeFSMode.uDelay) {
@@ -836,6 +832,8 @@ CMainFrame::CMainFrame()
     , m_iStreamPosPollerInterval(100)
     , currentAudioLang(_T(""))
     , currentSubLang(_T(""))
+    , m_bToggleShader(false)
+    , m_bToggleShaderScreenSpace(false)
 {
     // Don't let CFrameWnd handle automatically the state of the menu items.
     // This means that menu items without handlers won't be automatically
@@ -1035,6 +1033,8 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
         }
     }
 
+    m_bToggleShader = s.bToggleShader;
+    m_bToggleShaderScreenSpace = s.bToggleShaderScreenSpace;
     OpenSetupWindowTitle(true);
 
     WTSRegisterSessionNotification();
@@ -1091,6 +1091,8 @@ void CMainFrame::OnClose()
 {
     CAppSettings& s = AfxGetAppSettings();
 
+    s.bToggleShader = m_bToggleShader;
+    s.bToggleShaderScreenSpace = m_bToggleShaderScreenSpace;
     s.dZoomX = m_ZoomX;
     s.dZoomY = m_ZoomY;
 
@@ -3605,7 +3607,7 @@ LRESULT CMainFrame::OnFilePostOpenmedia(WPARAM wParam, LPARAM lParam)
 
     // set shader selection
     if (m_pCAP || m_pCAP2) {
-        SetShaders();
+        SetShaders(m_bToggleShader, m_bToggleShaderScreenSpace);
     }
 
     // load keyframes for fast-seek
@@ -6773,15 +6775,10 @@ void CMainFrame::OnUpdateShaderToggle2(CCmdUI* pCmdUI)
 void CMainFrame::OnShaderToggle1()
 {
 	m_bToggleShader = !m_bToggleShader;
-	if (m_bToggleShader) {
-		SetShaders(m_bToggleShader, m_bToggleShaderScreenSpace);
+    SetShaders(m_bToggleShader, m_bToggleShaderScreenSpace);
+    if (m_bToggleShader) {
 		m_OSD.DisplayMessage(OSD_TOPRIGHT, ResStr(IDS_PRESIZE_SHADERS_ENABLED));
 	} else {
-		if (m_pCAP3) {
-            SetShaders(m_bToggleShader, m_bToggleShaderScreenSpace); //current implementation for m_pCAP3 clears all shaders first
-        } else if (m_pCAP2) {
-            m_pCAP2->SetPixelShader2(nullptr, nullptr, false);
-        }
 		m_OSD.DisplayMessage(OSD_TOPRIGHT, ResStr(IDS_PRESIZE_SHADERS_DISABLED));
 	}
 
@@ -6793,15 +6790,10 @@ void CMainFrame::OnShaderToggle1()
 void CMainFrame::OnShaderToggle2()
 {
 	m_bToggleShaderScreenSpace = !m_bToggleShaderScreenSpace;
-	if (m_bToggleShaderScreenSpace) {
-        SetShaders(m_bToggleShader, m_bToggleShaderScreenSpace);
+    SetShaders(m_bToggleShader, m_bToggleShaderScreenSpace);
+    if (m_bToggleShaderScreenSpace) {
         m_OSD.DisplayMessage(OSD_TOPRIGHT, ResStr(IDS_POSTSIZE_SHADERS_ENABLED));
 	} else {
-		if (m_pCAP3) {
-            SetShaders(m_bToggleShader, m_bToggleShaderScreenSpace); //current implementation for m_pCAP3 clears all shaders first
-        } else if (m_pCAP2) {
-            m_pCAP2->SetPixelShader2(nullptr, nullptr, true);
-        }
         m_OSD.DisplayMessage(OSD_TOPRIGHT, ResStr(IDS_POSTSIZE_SHADERS_DISABLED));
 	}
 
@@ -11469,8 +11461,8 @@ void CMainFrame::SetShaders(bool bSetPreResize/* = true*/, bool bSetPostResize/*
         // When pTarget parameter of ISubPicAllocatorPresenter2::SetPixelShader2() is nullptr,
         // internal video renderers select maximum available profile and madVR (the only external renderer that
         // supports shader part of ISubPicAllocatorPresenter2 interface) seems to ignore it altogether.
+        m_pCAP2->SetPixelShader2(nullptr, nullptr, false);
         if (bSetPreResize) {
-            m_pCAP2->SetPixelShader2(nullptr, nullptr, false);
             for (const auto& shader : s.m_Shaders.GetCurrentPreset().GetPreResize()) {
                 if (FAILED(m_pCAP2->SetPixelShader2(shader.GetCode(), nullptr, false))) {
                     preFailed = true;
@@ -11479,8 +11471,8 @@ void CMainFrame::SetShaders(bool bSetPreResize/* = true*/, bool bSetPostResize/*
                 }
             }
         }
+        m_pCAP2->SetPixelShader2(nullptr, nullptr, true);
         if (bSetPostResize) {
-            m_pCAP2->SetPixelShader2(nullptr, nullptr, true);
             for (const auto& shader : s.m_Shaders.GetCurrentPreset().GetPostResize()) {
                 if (FAILED(m_pCAP2->SetPixelShader2(shader.GetCode(), nullptr, true))) {
                     postFailed = true;
@@ -11493,8 +11485,8 @@ void CMainFrame::SetShaders(bool bSetPreResize/* = true*/, bool bSetPostResize/*
         // shouldn't happen, all knows renderers that support ISubPicAllocatorPresenter interface
         // support ISubPicAllocatorPresenter2 as well, and it takes priority
         ASSERT(FALSE);
+        m_pCAP->SetPixelShader(nullptr, nullptr);
         if (bSetPreResize) {
-            m_pCAP->SetPixelShader(nullptr, nullptr);
             for (const auto& shader : s.m_Shaders.GetCurrentPreset().GetPreResize()) {
                 if (FAILED(m_pCAP->SetPixelShader(shader.GetCode(), nullptr))) {
                     preFailed = true;
