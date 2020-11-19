@@ -125,7 +125,7 @@ CPPageAccelTbl::CPPageAccelTbl()
     , m_fWinLirc(FALSE)
     , m_WinLircLink(_T("http://winlirc.sourceforge.net/"))
     , m_fUIce(FALSE)
-	, m_UIceLink(L"https://web.archive.org/web/20160609195532/http://www.mediatexx.com/") // home site no longer works
+    , m_UIceLink(L"https://web.archive.org/web/20160609195532/http://www.mediatexx.com/") // home site no longer works
     , m_nStatusTimerID(0)
     , m_fGlobalMedia(FALSE)
 {
@@ -148,121 +148,121 @@ BOOL CPPageAccelTbl::PreTranslateMessage(MSG* pMsg)
 
 void CPPageAccelTbl::UpdateKeyDupFlags()
 {
-	for (int row = 0; row < m_list.GetItemCount(); row++) {
-		auto itemData = (ITEMDATA*)m_list.GetItemData(row);
-		const wmcmd& wc = m_wmcmds.GetAt(itemData->index);
+    for (int row = 0; row < m_list.GetItemCount(); row++) {
+        auto itemData = (ITEMDATA*)m_list.GetItemData(row);
+        const wmcmd& wc = m_wmcmds.GetAt(itemData->index);
 
-		itemData->flag &= ~DUP_KEY;
+        itemData->flag &= ~DUP_KEY;
 
-		if (wc.key) {
+        if (wc.key) {
             POSITION pos = m_wmcmds.GetHeadPosition();
             for (; pos; m_wmcmds.GetNext(pos)) {
                 if (itemData->index == pos) { continue; }
 
-				if (wc.key == m_wmcmds.GetAt(pos).key && (wc.fVirt & (FCONTROL | FALT | FSHIFT)) == (m_wmcmds.GetAt(pos).fVirt & (FCONTROL | FALT | FSHIFT))) {
-					itemData->flag |= DUP_KEY;
-					break;
-				}
-			}
-		}
-	}
+                if (wc.key == m_wmcmds.GetAt(pos).key && (wc.fVirt & (FCONTROL | FALT | FSHIFT)) == (m_wmcmds.GetAt(pos).fVirt & (FCONTROL | FALT | FSHIFT))) {
+                    itemData->flag |= DUP_KEY;
+                    break;
+                }
+            }
+        }
+    }
 }
 
 void CPPageAccelTbl::UpdateMouseDupFlags()
 {
-	for (int row = 0; row < m_list.GetItemCount(); row++) {
-		auto itemData = (ITEMDATA*)m_list.GetItemData(row);
-		const wmcmd& wc = m_wmcmds.GetAt(itemData->index);
+    for (int row = 0; row < m_list.GetItemCount(); row++) {
+        auto itemData = (ITEMDATA*)m_list.GetItemData(row);
+        const wmcmd& wc = m_wmcmds.GetAt(itemData->index);
 
-		itemData->flag &= ~DUP_MOUSE;
+        itemData->flag &= ~DUP_MOUSE;
 
-		if (wc.mouse) {
+        if (wc.mouse) {
             POSITION pos = m_wmcmds.GetHeadPosition();
             for (; pos; m_wmcmds.GetNext(pos)) {
                 if (itemData->index == pos) { continue; }
 
-				if (wc.mouse == m_wmcmds.GetAt(pos).mouse && wc.mouseVirt == m_wmcmds.GetAt(pos).mouseVirt) {
-					itemData->flag |= DUP_MOUSE;
-					break;
-				}
-			}
-		}
-	}
+                if (wc.mouse == m_wmcmds.GetAt(pos).mouse && wc.mouseVirt == m_wmcmds.GetAt(pos).mouseVirt) {
+                    itemData->flag |= DUP_MOUSE;
+                    break;
+                }
+            }
+        }
+    }
 }
 
 void CPPageAccelTbl::UpdateMouseFSDupFlags()
 {
-	for (int row = 0; row < m_list.GetItemCount(); row++) {
-		auto itemData = (ITEMDATA*)m_list.GetItemData(row);
+    for (int row = 0; row < m_list.GetItemCount(); row++) {
+        auto itemData = (ITEMDATA*)m_list.GetItemData(row);
         const wmcmd& wc = m_wmcmds.GetAt(itemData->index);
 
-		itemData->flag &= ~DUP_MOUSE_FS;
+        itemData->flag &= ~DUP_MOUSE_FS;
 
-		if (wc.mouseFS) {
+        if (wc.mouseFS) {
             POSITION pos = m_wmcmds.GetHeadPosition();
             for (; pos; m_wmcmds.GetNext(pos)) {
                 if (itemData->index == pos) { continue; }
 
-				if (wc.mouseFS == m_wmcmds.GetAt(pos).mouseFS && wc.mouseFSVirt == m_wmcmds.GetAt(pos).mouseFSVirt) {
-					itemData->flag |= DUP_MOUSE_FS;
-					break;
-				}
-			}
-		}
-	}
+                if (wc.mouseFS == m_wmcmds.GetAt(pos).mouseFS && wc.mouseFSVirt == m_wmcmds.GetAt(pos).mouseFSVirt) {
+                    itemData->flag |= DUP_MOUSE_FS;
+                    break;
+                }
+            }
+        }
+    }
 }
 
 void CPPageAccelTbl::UpdateAppcmdDupFlags()
 {
-	for (int row = 0; row < m_list.GetItemCount(); row++) {
-		auto itemData = (ITEMDATA*)m_list.GetItemData(row);
+    for (int row = 0; row < m_list.GetItemCount(); row++) {
+        auto itemData = (ITEMDATA*)m_list.GetItemData(row);
         const wmcmd& wc = m_wmcmds.GetAt(itemData->index);
 
-		itemData->flag &= ~DUP_APPCMD;
+        itemData->flag &= ~DUP_APPCMD;
 
-		if (wc.appcmd) {
+        if (wc.appcmd) {
             POSITION pos = m_wmcmds.GetHeadPosition();
             for (; pos; m_wmcmds.GetNext(pos)) {
                 if (itemData->index == pos) { continue; }
 
-				if (wc.appcmd == m_wmcmds.GetAt(pos).appcmd) {
-					itemData->flag |= DUP_APPCMD;
-					break;
-				}
-			}
-		}
-	}
+                if (wc.appcmd == m_wmcmds.GetAt(pos).appcmd) {
+                    itemData->flag |= DUP_APPCMD;
+                    break;
+                }
+            }
+        }
+    }
 }
 
 void CPPageAccelTbl::UpdateRmcmdDupFlags()
 {
-	for (int row = 0; row < m_list.GetItemCount(); row++) {
-		auto itemData = (ITEMDATA*)m_list.GetItemData(row);
+    for (int row = 0; row < m_list.GetItemCount(); row++) {
+        auto itemData = (ITEMDATA*)m_list.GetItemData(row);
         const wmcmd& wc = m_wmcmds.GetAt(itemData->index);
 
-		itemData->flag &= ~DUP_RMCMD;
+        itemData->flag &= ~DUP_RMCMD;
 
-		if (wc.rmcmd.GetLength()) {
+        if (wc.rmcmd.GetLength()) {
             POSITION pos = m_wmcmds.GetHeadPosition();
             for (; pos; m_wmcmds.GetNext(pos)) {
                 if (itemData->index == pos) { continue; }
 
-				if (wc.rmcmd.CompareNoCase(m_wmcmds.GetAt(pos).rmcmd) == 0) {
-					itemData->flag |= DUP_RMCMD;
-					break;
-				}
-			}
-		}
-	}
+                if (wc.rmcmd.CompareNoCase(m_wmcmds.GetAt(pos).rmcmd) == 0) {
+                    itemData->flag |= DUP_RMCMD;
+                    break;
+                }
+            }
+        }
+    }
 }
 
 void CPPageAccelTbl::UpdateAllDupFlags()
 {
-	UpdateKeyDupFlags();
-	UpdateMouseDupFlags();
-	UpdateMouseFSDupFlags();
-	UpdateAppcmdDupFlags();
-	UpdateRmcmdDupFlags();
+    UpdateKeyDupFlags();
+    UpdateMouseDupFlags();
+    UpdateMouseFSDupFlags();
+    UpdateAppcmdDupFlags();
+    UpdateRmcmdDupFlags();
 }
 
 void CPPageAccelTbl::SetupList(bool allowResize)
@@ -297,7 +297,7 @@ void CPPageAccelTbl::SetupList(bool allowResize)
         m_list.SetItemText(row, COL_RMREPCNT, repcnt);
     }
 
-	UpdateAllDupFlags();
+    UpdateAllDupFlags();
 
     if (allowResize) {
         for (int nCol = COL_CMD; nCol <= COL_RMREPCNT; nCol++) {
@@ -1520,9 +1520,11 @@ void CPPageAccelTbl::OnEndListLabelEdit(NMHDR* pNMHDR, LRESULT* pResult)
     switch (pItem->iSubItem) {
         case COL_MOUSE_MODIFIER:
             updateHotkey(wc.mouseVirt, discard, true);
+            UpdateMouseDupFlags();
             break;
         case COL_MOUSE_FS_MODIFIER:
             updateHotkey(wc.mouseFSVirt, discard, true);
+            UpdateMouseFSDupFlags();
             break;
         case COL_KEY:
             updateHotkey(wc.fVirt, wc.key);
@@ -1533,7 +1535,7 @@ void CPPageAccelTbl::OnEndListLabelEdit(NMHDR* pNMHDR, LRESULT* pResult)
                 wc.appcmd = g_CommandList[i].appcmd;
                 m_list.SetItemText(pItem->iItem, COL_APPCMD, pItem->pszText);
                 *pResult = TRUE;
-				UpdateAppcmdDupFlags();
+                UpdateAppcmdDupFlags();
             }
         }
         break;
@@ -1541,13 +1543,13 @@ void CPPageAccelTbl::OnEndListLabelEdit(NMHDR* pNMHDR, LRESULT* pResult)
             wc.mouse = BYTE(pItem->lParam);
             m_list.SetItemText(pItem->iItem, COL_MOUSE, pItem->pszText);
             *pResult = TRUE;
-			UpdateMouseDupFlags();
+            UpdateMouseDupFlags();
             break;
         case COL_MOUSE_FS:
             wc.mouseFS = BYTE(pItem->lParam);
             m_list.SetItemText(pItem->iItem, COL_MOUSE_FS, pItem->pszText);
             *pResult = TRUE;
-			UpdateMouseFSDupFlags();
+            UpdateMouseFSDupFlags();
             break;
         case COL_RMCMD: {
             CString cmd = pItem->pszText;
@@ -1556,7 +1558,7 @@ void CPPageAccelTbl::OnEndListLabelEdit(NMHDR* pNMHDR, LRESULT* pResult)
             m_list.SetItemText(pItem->iItem, pItem->iSubItem, cmd);
             wc.rmcmd = cmd;
             *pResult = TRUE;
-			UpdateRmcmdDupFlags();
+            UpdateRmcmdDupFlags();
             break;
         }
         case COL_RMREPCNT:
@@ -1569,7 +1571,7 @@ void CPPageAccelTbl::OnEndListLabelEdit(NMHDR* pNMHDR, LRESULT* pResult)
     }
 
     if (*pResult) {
-		m_list.RedrawWindow();
+        m_list.RedrawWindow();
         SetModified();
     }
 }

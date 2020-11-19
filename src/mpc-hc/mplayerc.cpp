@@ -576,7 +576,7 @@ WORD AssignedToCmd(UINT keyOrMouseValue, bool bIsFullScreen, bool bCheckMouse)
                 if (wc.mouseFS == keyOrMouseValue && (wc.mouseFSVirt & ~FVIRTKEY) == mouseVirt) {
                     assignTo = wc.cmd;
                 }
-            } else if (wc.mouse == keyOrMouseValue && (wc.mouseFSVirt & ~FVIRTKEY) == mouseVirt) {
+            } else if (wc.mouse == keyOrMouseValue && (wc.mouseVirt & ~FVIRTKEY) == mouseVirt) {
                 assignTo = wc.cmd;
             }
         } else if (wc.key == keyOrMouseValue) {
