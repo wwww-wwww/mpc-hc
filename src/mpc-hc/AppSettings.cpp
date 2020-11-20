@@ -59,7 +59,7 @@ CAppSettings::CAppSettings()
     , iTitleBarTextStyle(1)
     , fTitleBarTextTitle(false)
     , fKeepHistory(true)
-    , iRecentFilesNumber(20)
+    , iRecentFilesNumber(40)
     , MRU(0, _T("Recent File List"), _T("File%d"), iRecentFilesNumber)
     , MRUDub(0, _T("Recent Dub List"), _T("Dub%d"), iRecentFilesNumber)
     , filePositions(AfxGetApp(), IDS_R_SETTINGS, iRecentFilesNumber)
@@ -1519,7 +1519,7 @@ void CAppSettings::LoadSettings()
 
     fKeepHistory = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_KEEPHISTORY, TRUE);
     fileAssoc.SetNoRecentDocs(!fKeepHistory);
-    iRecentFilesNumber = std::max(0, (int)pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_RECENT_FILES_NUMBER, 20));
+    iRecentFilesNumber = std::max(0, (int)pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_RECENT_FILES_NUMBER, 40));
     MRU.SetSize(iRecentFilesNumber);
     MRUDub.SetSize(iRecentFilesNumber);
     filePositions.SetMaxSize(iRecentFilesNumber);
