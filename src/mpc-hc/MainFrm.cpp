@@ -14747,8 +14747,8 @@ void CMainFrame::SetupRecentFilesSubMenu()
                 if (p.Find(_T("://")) > 0) {
                     p = UrlDecodeWithUTF8(UrlGetPathname(p));
                 }
-                if (p.GetLength() > 120) {
-                    p = p.Left(50) + _T(" *** ") + p.Right(65);
+                if (p.GetLength() > 150) {
+                    p = p.Left(60) + _T("~~~") + p.Right(87);
                 }
                 VERIFY(subMenu.AppendMenu(flags, id, p));
             }
