@@ -139,7 +139,12 @@ bool CYoutubeDLInstance::Run(CString url)
     DWORD exitcode;
     GetExitCodeProcess(proc_info.hProcess, &exitcode);
     if (exitcode) {
-        AfxMessageBox(err.GetBuffer(), MB_ICONERROR, 0);
+        if (err.IsEmpty()) {
+            err.Format(_T("An error occurred while running youtube-dl.exe\n\nprocess exitcode = %d"), exitcode);
+        } else {
+            err = _T("Youtube-dl.exe error message:\n\n") + err;
+        }
+        AfxMessageBox(err, MB_ICONERROR, 0);
         return false;
     }
 
