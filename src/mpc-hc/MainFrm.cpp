@@ -834,6 +834,7 @@ CMainFrame::CMainFrame()
     , currentSubLang(_T(""))
     , m_bToggleShader(false)
     , m_bToggleShaderScreenSpace(false)
+    , m_MPLSPlaylist()
 {
     // Don't let CFrameWnd handle automatically the state of the menu items.
     // This means that menu items without handlers won't be automatically
