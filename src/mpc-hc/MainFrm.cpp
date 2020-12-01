@@ -11421,7 +11421,7 @@ void CMainFrame::SetShaders(bool bSetPreResize/* = true*/, bool bSetPostResize/*
             } else {
                 preTarget = TARGET_FRAME;
             }
-            for (const auto& shader : s.m_Shaders.GetCurrentPreset().GetPreResize()) {
+            for (const auto& shader : s.m_Shaders.GetCurrentPreset().GetPreResize().ExpandMultiPassShaderList()) {
                 ShaderC* pShader = GetShader(shader.filePath, PShaderMode == 11);
                 if (pShader) {
                     CStringW label = pShader->label;
@@ -11431,7 +11431,7 @@ void CMainFrame::SetShaders(bool bSetPreResize/* = true*/, bool bSetPostResize/*
                     CStringA profile = pShader->profile;
                     CStringA srcdata = pShader->srcdata;
                     if (FAILED(m_pCAP3->AddPixelShader(preTarget, label, profile, srcdata))) {
-                        preFailed=true;
+                        preFailed = true;
                         m_pCAP3->ClearPixelShaders(preTarget);
                         break;
                     }
@@ -11440,7 +11440,7 @@ void CMainFrame::SetShaders(bool bSetPreResize/* = true*/, bool bSetPostResize/*
             }
         }
         if (bSetPostResize) {
-            for (const auto& shader : s.m_Shaders.GetCurrentPreset().GetPostResize()) {
+            for (const auto& shader : s.m_Shaders.GetCurrentPreset().GetPostResize().ExpandMultiPassShaderList()) {
                 ShaderC* pShader = GetShader(shader.filePath, PShaderMode == 11);
                 if (pShader) {
                     CStringW label = pShader->label;
@@ -11464,7 +11464,7 @@ void CMainFrame::SetShaders(bool bSetPreResize/* = true*/, bool bSetPostResize/*
         // supports shader part of ISubPicAllocatorPresenter2 interface) seems to ignore it altogether.
         m_pCAP2->SetPixelShader2(nullptr, nullptr, false);
         if (bSetPreResize) {
-            for (const auto& shader : s.m_Shaders.GetCurrentPreset().GetPreResize()) {
+            for (const auto& shader : s.m_Shaders.GetCurrentPreset().GetPreResize().ExpandMultiPassShaderList()) {
                 if (FAILED(m_pCAP2->SetPixelShader2(shader.GetCode(), nullptr, false))) {
                     preFailed = true;
                     m_pCAP2->SetPixelShader2(nullptr, nullptr, false);
@@ -11474,7 +11474,7 @@ void CMainFrame::SetShaders(bool bSetPreResize/* = true*/, bool bSetPostResize/*
         }
         m_pCAP2->SetPixelShader2(nullptr, nullptr, true);
         if (bSetPostResize) {
-            for (const auto& shader : s.m_Shaders.GetCurrentPreset().GetPostResize()) {
+            for (const auto& shader : s.m_Shaders.GetCurrentPreset().GetPostResize().ExpandMultiPassShaderList()) {
                 if (FAILED(m_pCAP2->SetPixelShader2(shader.GetCode(), nullptr, true))) {
                     postFailed = true;
                     m_pCAP2->SetPixelShader2(nullptr, nullptr, true);
@@ -11483,12 +11483,12 @@ void CMainFrame::SetShaders(bool bSetPreResize/* = true*/, bool bSetPostResize/*
             }
         }
     } else if (m_pCAP) {
-        // shouldn't happen, all knows renderers that support ISubPicAllocatorPresenter interface
+        // shouldn't happen, all known renderers that support ISubPicAllocatorPresenter interface
         // support ISubPicAllocatorPresenter2 as well, and it takes priority
         ASSERT(FALSE);
         m_pCAP->SetPixelShader(nullptr, nullptr);
         if (bSetPreResize) {
-            for (const auto& shader : s.m_Shaders.GetCurrentPreset().GetPreResize()) {
+            for (const auto& shader : s.m_Shaders.GetCurrentPreset().GetPreResize().ExpandMultiPassShaderList()) {
                 if (FAILED(m_pCAP->SetPixelShader(shader.GetCode(), nullptr))) {
                     preFailed = true;
                     m_pCAP->SetPixelShader(nullptr, nullptr);

@@ -158,6 +158,16 @@ bool CShaderListBox::DeleteCurrentShader()
 CString CShaderListBox::GetTitle(const Shader& shader)
 {
     CString ret = PathUtils::FileName(shader.filePath);
+    if (shader.filePath.Find(MULTIPASS_SUFFIX1) != -1) {
+        ShaderList sl;
+        CString passStr;
+        sl.push_back(shader);
+        size_t passes = sl.ExpandMultiPassShaderList().size();
+        if (passes > 1) {
+            passStr.Format(_T(" (%dP)"), passes);
+            ret.Replace(MULTIPASS_SUFFIX1, passStr);
+        }
+    }
     if (!PathUtils::IsFile(shader.filePath)) {
         ret += _T(" <not found!>"); // TODO: externalize this string and merge it with the one in PPageExternalFilters
     }
