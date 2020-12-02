@@ -505,6 +505,7 @@ public:
 public:
     bool Init(CSize size, const CRect& vidrect); // will call Deinit()
     void Deinit();
+    CString GetPath();
 
     DECLARE_IUNKNOWN
     STDMETHODIMP NonDelegatingQueryInterface(REFIID riid, void** ppv);

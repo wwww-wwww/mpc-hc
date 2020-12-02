@@ -244,6 +244,7 @@ public IPersist {
     STDMETHOD(SetStream)(int iStream) PURE;
     STDMETHOD(Reload)() PURE;
     STDMETHOD(SetSourceTargetInfo)(CString yuvMatrix, int targetBlackLevel, int targetWhiteLevel) PURE;
+    virtual CString GetPath() { return _T(""); }
 
     // TODO: get rid of IPersist to identify type and use only
     // interface functions to modify the settings of the substream

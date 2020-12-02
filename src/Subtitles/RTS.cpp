@@ -2900,6 +2900,11 @@ STDMETHODIMP_(POSITION) CRenderedTextSubtitle::GetStartPosition(REFERENCE_TIME r
     return GetNext((POSITION)(INT_PTR)iSegment);
 }
 
+CString CRenderedTextSubtitle::GetPath() {
+    if (m_provider == _T("Local") && !m_path.IsEmpty()) return m_path;
+    else return _T("");
+}
+
 STDMETHODIMP_(POSITION) CRenderedTextSubtitle::GetNext(POSITION pos)
 {
     __assume((INT_PTR)pos >= INT_MIN && (INT_PTR)pos <= INT_MAX);

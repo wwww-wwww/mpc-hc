@@ -523,7 +523,7 @@ bool CWebClientSocket::OnBrowser(CStringA& hdr, CStringA& body, CStringA& mime)
         }
     }
 
-    if (path.Find(_T("://")) >= 0) {
+    if (path.Find(_T("://")) > 1) {
         path.Empty();
     }
 

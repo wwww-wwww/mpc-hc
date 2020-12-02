@@ -67,9 +67,9 @@ private:
     void ResizeListColumn();
 
     void AddItem(CString fn, CAtlList<CString>* subs);
-    void AddItem(CAtlList<CString>& fns, CAtlList<CString>* subs, CString label = _T(""), CString ydl_src = _T(""));
+    void AddItem(CAtlList<CString>& fns, CAtlList<CString>* subs, CString label = _T(""), CString ydl_src = _T(""), CString cue = _T(""));
     void ParsePlayList(CString fn, CAtlList<CString>* subs, int redir_count = 0);
-    void ParsePlayList(CAtlList<CString>& fns, CAtlList<CString>* subs, int redir_count = 0, CString label = _T(""), CString ydl_src = _T(""));
+    void ParsePlayList(CAtlList<CString>& fns, CAtlList<CString>* subs, int redir_count = 0, CString label = _T(""), CString ydl_src = _T(""), CString cue = _T(""));
     void ResolveLinkFiles(CAtlList<CString>& fns);
 
     bool ParseBDMVPlayList(CString fn);
@@ -134,9 +134,9 @@ public:
     void Refresh();
     bool Empty();
 
-    void Open(CAtlList<CString>& fns, bool fMulti, CAtlList<CString>* subs = nullptr);
-    void Append(CAtlList<CString>& fns, bool fMulti, CAtlList<CString>* subs = nullptr, CString label = _T(""), CString ydl_src = _T(""));
-    void ReplaceCurrentItem(CAtlList<CString>& fns, CAtlList<CString>* subs = nullptr, CString label = _T(""), CString ydl_src = _T(""));
+    void Open(CAtlList<CString>& fns, bool fMulti, CAtlList<CString>* subs = nullptr, CString label = _T(""), CString ydl_src = _T(""), CString cue = _T(""));
+    void Append(CAtlList<CString>& fns, bool fMulti, CAtlList<CString>* subs = nullptr, CString label = _T(""), CString ydl_src = _T(""), CString cue = _T(""));
+    void ReplaceCurrentItem(CAtlList<CString>& fns, CAtlList<CString>* subs = nullptr, CString label = _T(""), CString ydl_src = _T(""), CString cue = _T(""));
 
     void Open(CStringW vdn, CStringW adn, int vinput, int vchannel, int ainput);
     void Append(CStringW vdn, CStringW adn, int vinput, int vchannel, int ainput);

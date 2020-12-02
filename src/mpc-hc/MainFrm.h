@@ -1178,6 +1178,9 @@ public:
     bool OpenBD(CString Path);
 
     bool GetDecoderType(CString& type) const;
+    void updateRecentFileListSub(CString fn);
+
+    RecentFileEntry m_current_rfe;
 
 private:
     bool CanSendToYoutubeDL(const CString url);

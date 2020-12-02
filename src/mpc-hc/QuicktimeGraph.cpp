@@ -486,7 +486,7 @@ bool CQuicktimeWindow::OpenMovie(CString fn)
         SetGWorld((CGrafPtr)GetHWNDPort(m_hWnd), nullptr);
     }
 
-    if (fn.Find(_T("://")) > 0) {
+    if (fn.Find(_T("://")) > 1) {
         Size mySize = fn.GetLength() + 1;
         Handle myHandle = NewHandleClear(mySize);
         if (!myHandle) {

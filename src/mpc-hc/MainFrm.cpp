@@ -833,6 +833,7 @@ CMainFrame::CMainFrame()
     , currentAudioLang(_T(""))
     , currentSubLang(_T(""))
     , m_bToggleShader(false)
+    , m_current_rfe()
     , m_bToggleShaderScreenSpace(false)
     , m_MPLSPlaylist()
 {
@@ -1116,11 +1117,11 @@ void CMainFrame::OnClose()
 
 LPCTSTR CMainFrame::GetRecentFile() const
 {
-    CRecentFileList& MRU = AfxGetAppSettings().MRU;
+    auto& MRU = AfxGetAppSettings().MRU;
     MRU.ReadList();
     for (int i = 0; i < MRU.GetSize(); i++) {
-        if (!MRU[i].IsEmpty()) {
-            return MRU[i].GetString();
+        if (MRU[i].fns.GetCount() > 0 && !MRU[i].fns.GetHead().IsEmpty()) {
+            return MRU[i].fns.GetHead();
         }
     }
     return nullptr;
@@ -4711,7 +4712,7 @@ void CMainFrame::OnFileSaveAs()
         return;
     }
 
-    if (pli->m_bYoutubeDL || in.Find(_T("://")) >= 0) {
+    if (pli->m_bYoutubeDL || in.Find(_T("://")) > 1) {
         // URL
         if (pli->m_bYoutubeDL) {
             out = _T("%(title)s.%(ext)s");
@@ -9358,7 +9359,7 @@ bool CMainFrame::CanSkipFromClosedFile() {
             CPlaylistItem* pli = m_wndPlaylistBar.GetCur();
             if (pli && !pli->m_fns.IsEmpty()) {
                 CString in = pli->m_fns.GetHead();
-                if (!(pli->m_bYoutubeDL || in.Find(_T("://")) >= 0)) {
+                if (!(pli->m_bYoutubeDL || in.Find(_T("://")) > 1)) {
                     return true;
                 }
             }
@@ -9981,41 +9982,50 @@ void CMainFrame::OnUpdateFavoritesFile(CCmdUI* pCmdUI)
 
 void CMainFrame::OnRecentFile(UINT nID)
 {
-    CString fn;
-    CRecentFileList& MRU = AfxGetAppSettings().MRU;
+    CAtlList<CString> fns;
+    auto& MRU = AfxGetAppSettings().MRU;
     MRU.ReadList();
+    RecentFileEntry r;
 
     // find corresponding item in MRU list, we can't directly use string from menu because it may have been shortened
     nID -= ID_RECENT_FILE_START;
     for (int i = 0; i < MRU.GetSize(); i++) {
-        if (!MRU[i].IsEmpty()) {
+        if (MRU[i].fns.GetCount() > 0 && !MRU[i].fns.GetHead().IsEmpty()) {
             if (nID > 0) {
                 nID--;
             }
             else {
-                fn = MRU[i];
+                r = MRU[i];
+                fns.AddHeadList(&r.fns);
                 break;
             }
         }
     }
-    if (fn.IsEmpty()) {
+    if (fns.GetCount() < 1 || fns.GetHead().IsEmpty()) {
         ASSERT(false);
         return;
     }
 
-    if (CanSendToYoutubeDL(fn)) {
+    if (fns.GetCount() == 1 && CanSendToYoutubeDL(r.fns.GetHead())) {
         SendMessage(WM_COMMAND, ID_FILE_CLOSEMEDIA);
-        if (ProcessYoutubeDLURL(fn, false)) {
+        if (ProcessYoutubeDLURL(fns.GetHead(), false)) {
             OpenCurPlaylistItem();
             return;
         }
     }
 
-    if (!m_wndPlaylistBar.SelectFileInPlaylist(fn)) {
-        CAtlList<CString> fns;
-        fns.AddTail(fn);
-        m_wndPlaylistBar.Open(fns, false);
+    CAtlList<CString> fnsl;
+    fnsl.AddHeadList(&fns);
+    CAtlList<CString> subs;
+    subs.AddHeadList(&r.subs);
+
+    if (!m_wndPlaylistBar.SelectFileInPlaylist(fns.GetHead())) {
+        m_wndPlaylistBar.Open(fnsl, false, &subs, r.title, _T(""), r.cue);
     }
+    else {
+        m_wndPlaylistBar.ReplaceCurrentItem(fnsl, &subs, r.title, _T(""), r.cue);
+    }
+
     OpenCurPlaylistItem();
 }
 
@@ -11802,11 +11812,47 @@ void CMainFrame::OpenFile(OpenFileData* pOFD)
 
         // We don't keep track of piped inputs since that hardly makes any sense
         if (s.fKeepHistory && fn.Find(_T("pipe:")) != 0 && pOFD->bAddToRecent) {
-            CRecentFileList* pMRU = bMainFile ? &s.MRU : &s.MRUDub;
-            pMRU->ReadList();
-            pMRU->Add(fn);
-            pMRU->WriteList();
-            SHAddToRecentDocs(SHARD_PATH, fn);
+            if (bMainFile) {
+                auto* pMRU = &s.MRU;
+                pMRU->ReadList();
+                RecentFileEntry r;
+                r.fns.AddTail(fn);
+                CPlaylistItem* m_pli = m_wndPlaylistBar.GetCur();
+                if (!m_pli->m_label.IsEmpty()) r.title = m_pli->m_label;
+                else {
+                    CString title;
+                    BeginEnumFilters(m_pGB, pEF, pBF) {
+                        if (CComQIPtr<IAMMediaContent, &IID_IAMMediaContent> pAMMC = pBF) {
+                            CComBSTR bstr;
+                            if (SUCCEEDED(pAMMC->get_Title(&bstr)) && bstr.Length()) {
+                                title = CString(bstr.m_str);
+                                break;
+                            }
+                        }
+                    }
+                    EndEnumFilters;
+                    if (!title.IsEmpty()) r.title = title;
+                }
+                if (!m_pli->m_bYoutubeDL && m_pli->m_fns.GetCount() > 1) {
+                    r.fns.RemoveAll();
+                    r.fns.AddHeadList(&m_pli->m_fns);
+                }
+                if (m_pli->m_cue) r.cue = m_pli->m_cue_filename;
+                if (m_pli->m_subs.GetCount() > 0) {
+                    r.subs.AddHeadList(&m_pli->m_subs);
+                }
+                m_current_rfe = r;
+                pMRU->Add(r);
+                pMRU->WriteList();
+                SHAddToRecentDocs(SHARD_PATH, fn);
+            }
+            else {
+                CRecentFileList* pMRU = &s.MRUDub;
+                pMRU->ReadList();
+                pMRU->Add(fn);
+                pMRU->WriteList();
+                SHAddToRecentDocs(SHARD_PATH, fn);
+            }
         }
 
         if (bMainFile) {
@@ -12009,7 +12055,7 @@ void CMainFrame::SetupCueChapters(CString fn) {
     }
 
     CString base;
-    bool isurl = fn.Find(_T("://")) > 0;
+    bool isurl = fn.Find(_T("://")) > 1;
     if (isurl) {
         int p = fn.Find(_T('?'));
         if (p > 0) {
@@ -12192,7 +12238,7 @@ void CMainFrame::OpenDVD(OpenDVDData* pODD)
     }
 
     if (s.fKeepHistory) {
-        CRecentFileList* pMRU = &s.MRU;
+        auto* pMRU = &s.MRU;
         pMRU->ReadList();
         pMRU->Add(pODD->title);
         pMRU->WriteList();
@@ -13612,7 +13658,7 @@ void CMainFrame::SendNowPlayingToSkype()
 
                 if (GetPlaybackMode() == PM_FILE) {
                     CString fn = label;
-                    if (!pli.m_bYoutubeDL && fn.Find(_T("://")) >= 0) {
+                    if (!pli.m_bYoutubeDL && fn.Find(_T("://")) > 1) {
                         int i = fn.Find('?');
                         if (i >= 0) {
                             fn = fn.Left(i);
@@ -14727,12 +14773,13 @@ void CMainFrame::SetupRecentFilesSubMenu()
     while (subMenu.RemoveMenu(0, MF_BYPOSITION));
 
     UINT id = ID_RECENT_FILE_START;
-    CRecentFileList& MRU = AfxGetAppSettings().MRU;
+    auto& s = AfxGetAppSettings();
+    auto& MRU = s.MRU;
     MRU.ReadList();
 
     bool bNoEmptyMRU = false;
     for (int i = 0; i < MRU.GetSize(); i++) {
-        if (!MRU[i].IsEmpty()) {
+        if (MRU[i].fns.GetCount() > 0 && !MRU[i].fns.GetHead().IsEmpty()) {
             bNoEmptyMRU = true;
             break;
         }
@@ -14743,13 +14790,32 @@ void CMainFrame::SetupRecentFilesSubMenu()
 
         for (int i = 0; i < MRU.GetSize(); i++) {
             UINT flags = MF_BYCOMMAND | MF_STRING | MF_ENABLED;
-            if (!MRU[i].IsEmpty()) {
-                CString p = MRU[i];
-                if (p.Find(_T("://")) > 0) {
-                    p = UrlDecodeWithUTF8(UrlGetPathname(p));
+            if (!MRU[i].fns.GetHead().IsEmpty()) {
+                CString p = MRU[i].cue.IsEmpty() ? MRU[i].fns.GetHead() : MRU[i].cue;
+                if (s.bUseTitleInRecentFileList && !MRU[i].title.IsEmpty()) {
+                    CString title(MRU[i].title);
+                    if (title.GetLength() > 100) {
+                        title = title.Left(40) + _T("~~~") + title.Right(57);
+                    }
+                    int targetlen = 150 - title.GetLength();
+                    if (p.Find(_T("://")) > 1)
+                        p.Format(_T("%s (%s)"), title, ShortenURL(p, targetlen, true));
+                    else {
+                        CString fn = PathUtils::StripPathOrUrl(p);
+                        if (fn.GetLength() > targetlen) { // If file name is too long, cut middle part.
+                            int l = fn.GetLength();
+                            fn.Format(_T("%s~~~%s"), fn.Left(l / 2 - 2 + (l % 2)), fn.Right(l / 2 - 1));
+                        }
+                        p.Format(_T("%s (%s)"), title, fn);
+                    }
                 }
-                if (p.GetLength() > 150) {
-                    p = p.Left(60) + _T("~~~") + p.Right(87);
+                else {
+                    if (p.Find(_T("://")) > 1) {
+                        p = ShortenURL(p, 150);
+                    }
+                    if (p.GetLength() > 150) {
+                        p.Format(_T("%s~~~%s"), p.Left(60), p.Right(87));
+                    }
                 }
                 VERIFY(subMenu.AppendMenu(flags, id, p));
             }
@@ -16286,6 +16352,15 @@ void CMainFrame::CloseMedia(bool bNextIsQueued/* = false*/)
 
         // abort finished, unset the flag
         m_fOpeningAborted = false;
+    }
+
+    CString path;
+    if (m_pCurrentSubInput.pSubStream.p != nullptr) {
+        path = m_pCurrentSubInput.pSubStream.p->GetPath();
+    }
+    auto& s = AfxGetAppSettings();
+    if (s.fKeepHistory) {
+        updateRecentFileListSub(path);
     }
 
     // we are on the way
@@ -18214,7 +18289,7 @@ CString CMainFrame::GetFileName()
                 path = pFN;
             }
         }
-        if (path.Find(_T("://")) != -1) path = UrlGetPathname(path);
+        if (path.Find(_T("://")) > 1) path = ShortenURL(path);
         return pli->m_bYoutubeDL ? path : PathUtils::StripPathOrUrl(path);
     }
     return _T("");
@@ -18629,9 +18704,12 @@ bool CMainFrame::ProcessYoutubeDLURL(CString url, bool append, bool replace)
         m_wndPlaylistBar.Empty();
     }
 
+    CString f_title;
+
     for (unsigned int i = 0; i < streams.GetCount(); i++) {
-        CString v_url = streams.GetAt(streams.FindIndex(i)).video_url;
-        CString a_url = streams.GetAt(streams.FindIndex(i)).audio_url;
+        auto stream = streams.GetAt(streams.FindIndex(i));
+        CString v_url = stream.video_url;
+        CString a_url = stream.audio_url;
         filenames.RemoveAll();
         if (!v_url.IsEmpty() && (!s.bYDLAudioOnly || a_url.IsEmpty())) {
             filenames.AddTail(v_url);
@@ -18640,18 +18718,56 @@ bool CMainFrame::ProcessYoutubeDLURL(CString url, bool append, bool replace)
         if (!a_url.IsEmpty()) {
             filenames.AddTail(a_url);
         }
+        CString title = stream.title;
+        CString seasonid;
+        if (stream.season_number != -1) {
+            seasonid.Format(_T("S%02d"), stream.season_number);
+        }
+        CString episodeid;
+        if (stream.episode_number != -1) {
+            episodeid.Format(_T("E%02d"), stream.episode_number);
+        }
+        CString epiid;
+        if (!seasonid.IsEmpty() || !episodeid.IsEmpty()) {
+            epiid.Format(_T("%s%s. "), seasonid, episodeid);
+        }
+        CString season;
+        if (!stream.season.IsEmpty()) {
+            season = stream.season + _T(" - ");
+        }
+        else if (!stream.series.IsEmpty()) {
+            season = stream.series + _T(" - ");
+        }
+        title.Format(_T("%s%s%s"), epiid, season, title);
+        if (i == 0) f_title = title;
+        int targetlen = title.GetLength() > 100 ? 50 : 150 - title.GetLength();
+        CString url2(url);
+        if (!stream.webpage_url.IsEmpty()) url2 = stream.webpage_url;
         if (replace) {
-            m_wndPlaylistBar.ReplaceCurrentItem(filenames, nullptr, streams.GetAt(streams.FindIndex(i)).title + " (" + url + ")", url);
+            m_wndPlaylistBar.ReplaceCurrentItem(filenames, nullptr, title + " (" + ShortenURL(url2, targetlen, true) + ")", url2);
             break;
         } else {
-            m_wndPlaylistBar.Append(filenames, false, nullptr, streams.GetAt(streams.FindIndex(i)).title + " (" + url + ")", url);
+            m_wndPlaylistBar.Append(filenames, false, nullptr, title + " (" + ShortenURL(url2, targetlen, true) + ")", url2);
         }
     }
 
     if (s.fKeepHistory) {
-        CRecentFileList* mru = &s.MRU;
+        auto* mru = &s.MRU;
         mru->ReadList();
-        mru->Add(url);
+        RecentFileEntry r;
+        r.fns.AddTail(url);
+        if (streams.GetCount() > 0) {
+            auto h = streams.GetHead();
+            if (!h.season.IsEmpty()) {
+                r.title = h.season;
+            }
+            else if (!h.series.IsEmpty()) {
+                r.title = h.series;
+            }
+            else r.title = f_title;
+        }
+        m_current_rfe = r;
+        mru->Add(r);
         mru->WriteList();
     }
 
@@ -18712,4 +18828,15 @@ void CMainFrame::OnMouseHWheel(UINT nFlags, short zDelta, CPoint pt) {
         return;
     }
     __super::OnMouseHWheel(nFlags, zDelta, pt);
+}
+
+void CMainFrame::updateRecentFileListSub(CString fn) {
+    auto& MRU = AfxGetAppSettings().MRU;
+    MRU.ReadList();
+    RecentFileEntry r = m_current_rfe;
+    bool found(r.subs.Find(fn));
+    if (!found && !fn.IsEmpty()) r.subs.AddTail(fn);
+    MRU.Add(r);
+    MRU.WriteList();
+    m_current_rfe = RecentFileEntry(); // Clear
 }

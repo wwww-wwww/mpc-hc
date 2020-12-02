@@ -331,7 +331,7 @@ CStringA GetContentType(CString fn, CAtlList<CString>* redir)
 
     fn.Trim();
 
-    if (fn.Find(_T("://")) >= 0) {
+    if (fn.Find(_T("://")) > 1) {
         isurl = true;
         url.CrackUrl(fn);
 

@@ -534,6 +534,8 @@ bool CPGSSubFile::Open(CString fn, CString name /*= _T("")*/, CString videoName 
         m_name = name;
     }
 
+    m_path = fn;
+
     try {
         CFile f;
         if (f.Open(fn, CFile::modeRead | CFile::shareDenyWrite)) {
@@ -549,6 +551,10 @@ bool CPGSSubFile::Open(CString fn, CString name /*= _T("")*/, CString videoName 
     }
 
     return bOpened;
+}
+
+CString CPGSSubFile::GetPath() {
+    return m_path;
 }
 
 void CPGSSubFile::ParseFile(CString fn)

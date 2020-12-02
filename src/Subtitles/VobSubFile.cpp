@@ -307,6 +307,7 @@ void CVobSubFile::TrimExtension(CString& fn)
 
 bool CVobSubFile::Open(CString fn)
 {
+    m_path = fn;
     TrimExtension(fn);
 
     do {
@@ -1336,6 +1337,10 @@ STDMETHODIMP_(POSITION) CVobSubFile::GetStartPosition(REFERENCE_TIME rt, double 
     }
 
     return (POSITION)(i + 1);
+}
+
+CString CVobSubFile::GetPath() {
+    return m_path;
 }
 
 STDMETHODIMP_(POSITION) CVobSubFile::GetNext(POSITION pos)
