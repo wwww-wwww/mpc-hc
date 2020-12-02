@@ -62,6 +62,8 @@ protected:
     CInterfaceList<IUnknown, &IID_IUnknown> m_pUnks;
     CAtlList<CFGFilter*> m_source, m_transform, m_override;
 
+    BOOL m_ignoreVideo;
+
     static bool CheckBytes(HANDLE hFile, CString chkbytes);
 
     HRESULT EnumSourceFilters(LPCWSTR lpcwstrFileName, CFGFilterList& fl);

@@ -55,6 +55,7 @@ class CNullAudioRenderer;
 CFGManager::CFGManager(LPCTSTR pName, LPUNKNOWN pUnk)
     : CUnknown(pName, pUnk)
     , m_dwRegister(0)
+    , m_ignoreVideo(false)
 {
     m_pUnkInner.CoCreateInstance(CLSID_FilterGraph, GetOwner());
     m_pFM.CoCreateInstance(CLSID_FilterMapper2);
@@ -916,12 +917,6 @@ STDMETHODIMP CFGManager::RenderFile(LPCWSTR lpcwstrFileName, LPCWSTR lpcwstrPlay
     HRESULT hr;
     HRESULT hrRFS = S_OK;
 
-    /*CComPtr<IBaseFilter> pBF;
-    if (FAILED(hr = AddSourceFilter(lpcwstrFile, lpcwstrFile, &pBF)))
-        return hr;
-
-    return ConnectFilter(pBF, nullptr);*/
-
     CFGFilterList fl;
     if (FAILED(hr = EnumSourceFilters(lpcwstrFileName, fl))) {
         return hr;
@@ -940,7 +935,15 @@ STDMETHODIMP CFGManager::RenderFile(LPCWSTR lpcwstrFileName, LPCWSTR lpcwstrPlay
             m_streampath.RemoveAll();
             m_deadends.RemoveAll();
 
+            if (m_ignoreVideo) {
+                CFGFilter* pFGF = DEBUG_NEW CFGFilterInternal<CNullVideoRenderer>(StrRes(IDS_PPAGE_OUTPUT_NULL_COMP), MERIT64_ABOVE_DSHOW + 3);
+                pFGF->AddType(MEDIATYPE_Video, MEDIASUBTYPE_NULL);
+                m_transform.AddTail(pFGF);
+            }
+
             if (SUCCEEDED(hr = ConnectFilter(pBF, nullptr))) {
+                // insert null video renderer on next RenderFile call which is used for audio dubs
+                m_ignoreVideo = True;
                 return hr;
             }
 
