@@ -218,6 +218,9 @@ struct YDLStreamDetails {
     int fps;
 };
 
+#define YDL_EXTRA_LOGGING 0
+#define YDL_LOG_URLS      1
+
 bool GetYDLStreamDetails(const Value& format, YDLStreamDetails& details, bool require_video, bool require_audio_only)
 {
     details.protocol = format.HasMember(_T("protocol")) && !format[_T("protocol")].IsNull() ? format[_T("protocol")].GetString() : nullptr;
@@ -228,45 +231,51 @@ bool GetYDLStreamDetails(const Value& format, YDLStreamDetails& details, bool re
         details.width     = format.HasMember(_T("width"))  && !format[_T("width")].IsNull()  ? format[_T("width")].GetInt() : 0;
         details.height    = format.HasMember(_T("height")) && !format[_T("height")].IsNull() ? format[_T("height")].GetInt() : 0;
         details.vcodec    = format.HasMember(_T("vcodec")) && !format[_T("vcodec")].IsNull() ? format[_T("vcodec")].GetString() : _T("none");
-        details.has_video = details.vcodec != _T("none");
+        details.has_video = details.vcodec != _T("none") || (details.width > 0) || (details.height > 0);
         details.acodec    = format.HasMember(_T("acodec")) && !format[_T("acodec")].IsNull() ? format[_T("acodec")].GetString() : _T("none");
         details.has_audio = details.acodec != _T("none");
-        if (details.has_video || details.has_audio) {
-            details.vbr = details.has_video && format.HasMember(_T("vbr")) && !format[_T("vbr")].IsNull() ? (int) format[_T("vbr")].GetFloat() : 0;
-            details.abr = details.has_audio && format.HasMember(_T("abr")) && !format[_T("abr")].IsNull() ? (int) format[_T("abr")].GetFloat() : 0;
-            if (details.vbr == 0 && details.has_video) {
-                details.vbr = format.HasMember(_T("tbr")) && !format[_T("tbr")].IsNull() ? (int) format[_T("tbr")].GetFloat() : 0;
-            }
-            if (details.abr == 0 && details.has_audio) {
-                details.abr = format.HasMember(_T("tbr")) && !format[_T("tbr")].IsNull() ? (int) format[_T("tbr")].GetFloat() : 0;
-            }
-        } else {
-            // format details unknown, make assumption
-            details.has_video = (details.width > 0) || (details.height > 0);
-            details.has_audio = true;
-        }
-        details.fps = details.has_video && format.HasMember(_T("fps")) && !format[_T("fps")].IsNull() ? format[_T("fps")].GetDouble() : 0;
 
-        if (require_video && !details.has_video || require_audio_only && (!details.has_audio || details.has_video)) return false;
+        if (!details.has_video && !details.has_audio) {
+            #if YDL_EXTRA_LOGGING
+            YDL_LOG(_T("ignore url without audio/video details = %s"), details.url);
+            #endif
+            return false;
+        }
+        if (require_video && !details.has_video) {
+            #if YDL_EXTRA_LOGGING
+            YDL_LOG(_T("ignore url because it has no video: %s"), details.url);
+            #endif
+            return false;
+        }
+        if (require_audio_only && (!details.has_audio || details.has_video)) {
+            #if YDL_EXTRA_LOGGING
+            YDL_LOG(_T("ignore url because it is not audio only (vcodec=%s): %s"), details.vcodec, details.url);
+            #endif
+            return false;
+        }
 
-        if (details.has_video) {
-            #if 0
-            YDL_LOG(_T("vcodec=%s width=%d height=%d fps=%d vbr=%d url=%s"), details.vcodec, details.width, details.height, details.fps, details.vbr, details.url);
-            #else
-            YDL_LOG(_T("vcodec=%s width=%d height=%d fps=%d vbr=%d"), details.vcodec, details.width, details.height, details.fps, details.vbr);
-            #endif
+        details.vbr = details.has_video && format.HasMember(_T("vbr")) && !format[_T("vbr")].IsNull() ? (int)format[_T("vbr")].GetFloat() : 0;
+        if (details.vbr == 0 && details.has_video) {
+            details.vbr = format.HasMember(_T("tbr")) && !format[_T("tbr")].IsNull() ? (int)format[_T("tbr")].GetFloat() : 0;
         }
-        else {
-            #if 0
-            YDL_LOG(_T("acodec=%s abr=%d url=%s"), details.acodec, details.abr, details.url);
-            #else
-            YDL_LOG(_T("acodec=%s abr=%d"), details.acodec, details.abr);
-            #endif
+        details.fps = format.HasMember(_T("fps")) && !format[_T("fps")].IsNull() ? (int)format[_T("fps")].GetDouble() : 0;
+        details.abr = details.has_audio && format.HasMember(_T("abr")) && !format[_T("abr")].IsNull() ? (int)format[_T("abr")].GetFloat() : 0;
+        if (details.abr == 0 && details.has_audio) {
+            details.abr = format.HasMember(_T("tbr")) && !format[_T("tbr")].IsNull() ? (int)format[_T("tbr")].GetFloat() : 0;
         }
+
+        #if YDL_LOG_URLS
+        YDL_LOG(_T("vcodec=%s width=%d height=%d fps=%d vbr=%d acodec=%s abr=%d url=%s"), details.vcodec, details.width, details.height, details.fps, details.vbr, details.acodec, details.abr, details.url);
+        #else
+        YDL_LOG(_T("vcodec=%s width=%d height=%d fps=%d vbr=%d acodec=%s abr=%d"), details.vcodec, details.width, details.height, details.fps, details.vbr, details.acodec, details.abr);
+        #endif
+
         return true;
     }
     else {
-        //YDL_LOG(_T("skip dash url = %s"), format[_T("url")].GetString());
+        #if 0
+        YDL_LOG(_T("ignore dash url = %s"), format[_T("url")].GetString());
+        #endif
     }
     return false;
 }
