@@ -256,4 +256,14 @@ namespace PathUtils
             }
         }
     }
+
+    bool IsURL(CString& fn)
+    {
+        return fn.Find(_T("://")) > 1;
+    }
+
+    bool IsFullFilePath(CString& fn)
+    {
+        return (fn.Find(_T(":")) > 0) && !IsURL(fn) || (fn.Find(_T("\\\\")) == 0);
+    }
 }

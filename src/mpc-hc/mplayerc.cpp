@@ -325,14 +325,13 @@ CStringA GetContentType(CString fn, CAtlList<CString>* redir)
 {
     CUrl url;
     CString ct, body;
-    BOOL isurl = false;
     BOOL ishttp = false;
     BOOL parsefile = false;
 
     fn.Trim();
 
-    if (fn.Find(_T("://")) > 1) {
-        isurl = true;
+    BOOL isurl = PathUtils::IsURL(fn);
+    if (isurl) {
         url.CrackUrl(fn);
 
         if (_tcsicmp(url.GetSchemeName(), _T("pnm")) == 0) {

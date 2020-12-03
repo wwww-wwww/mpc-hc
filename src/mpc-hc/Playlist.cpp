@@ -159,7 +159,7 @@ void CPlaylistItem::AutoLoadFiles()
 
     CString fn = m_fns.GetHead();
 
-    if (s.fAutoloadAudio && fn.Find(_T("://")) < 0) {
+    if (s.fAutoloadAudio && !PathUtils::IsURL(fn)) {
         int i = fn.ReverseFind('.');
         if (i > 0) {
             const CMediaFormats& mf = s.m_Formats;

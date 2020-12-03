@@ -29,6 +29,7 @@
 #include <vmr9.h>
 #include "moreuuids.h"
 #include "../SubPic/ISubPic.h"
+#include "PathUtils.h"
 
 
 // CPPageFileInfoDetails dialog
@@ -342,7 +343,7 @@ BOOL CPPageFileInfoDetails::OnInitDialog()
         m_icon.SetIcon(m_hIcon);
     }
 
-    if (m_path.Find(_T("://")) > 1) {
+    if (PathUtils::IsURL(m_path)) {
         m_displayFn = UrlDecodeWithUTF8(ShortenURL(m_fn));
     } else {
         m_displayFn = m_fn;

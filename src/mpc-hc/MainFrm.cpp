@@ -4712,7 +4712,7 @@ void CMainFrame::OnFileSaveAs()
         return;
     }
 
-    if (pli->m_bYoutubeDL || in.Find(_T("://")) > 1) {
+    if (pli->m_bYoutubeDL || PathUtils::IsURL(in)) {
         // URL
         if (pli->m_bYoutubeDL) {
             out = _T("%(title)s.%(ext)s");
@@ -9357,7 +9357,7 @@ bool CMainFrame::CanSkipFromClosedFile() {
             CPlaylistItem* pli = m_wndPlaylistBar.GetCur();
             if (pli && !pli->m_fns.IsEmpty()) {
                 CString in = pli->m_fns.GetHead();
-                if (!(pli->m_bYoutubeDL || in.Find(_T("://")) > 1)) {
+                if (!(pli->m_bYoutubeDL || PathUtils::IsURL(in))) {
                     return true;
                 }
             }
@@ -12053,7 +12053,7 @@ void CMainFrame::SetupCueChapters(CString fn) {
     }
 
     CString base;
-    bool isurl = fn.Find(_T("://")) > 1;
+    bool isurl = PathUtils::IsURL(fn);
     if (isurl) {
         int p = fn.Find(_T('?'));
         if (p > 0) {
@@ -13656,7 +13656,7 @@ void CMainFrame::SendNowPlayingToSkype()
 
                 if (GetPlaybackMode() == PM_FILE) {
                     CString fn = label;
-                    if (!pli.m_bYoutubeDL && fn.Find(_T("://")) > 1) {
+                    if (!pli.m_bYoutubeDL && PathUtils::IsURL(fn)) {
                         int i = fn.Find('?');
                         if (i >= 0) {
                             fn = fn.Left(i);
@@ -14796,9 +14796,9 @@ void CMainFrame::SetupRecentFilesSubMenu()
                         title = title.Left(40) + _T("~~~") + title.Right(57);
                     }
                     int targetlen = 150 - title.GetLength();
-                    if (p.Find(_T("://")) > 1)
+                    if (PathUtils::IsURL(p)) {
                         p.Format(_T("%s (%s)"), title, ShortenURL(p, targetlen, true));
-                    else {
+                    } else {
                         CString fn = PathUtils::StripPathOrUrl(p);
                         if (fn.GetLength() > targetlen) { // If file name is too long, cut middle part.
                             int l = fn.GetLength();
@@ -14808,7 +14808,7 @@ void CMainFrame::SetupRecentFilesSubMenu()
                     }
                 }
                 else {
-                    if (p.Find(_T("://")) > 1) {
+                    if (PathUtils::IsURL(p)) {
                         p = ShortenURL(p, 150);
                     }
                     if (p.GetLength() > 150) {
@@ -18287,7 +18287,9 @@ CString CMainFrame::GetFileName()
                 path = pFN;
             }
         }
-        if (path.Find(_T("://")) > 1) path = ShortenURL(path);
+        if (PathUtils::IsURL(path)) {
+            path = ShortenURL(path);
+        }
         return pli->m_bYoutubeDL ? path : PathUtils::StripPathOrUrl(path);
     }
     return _T("");

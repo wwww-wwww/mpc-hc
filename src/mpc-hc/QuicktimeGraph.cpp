@@ -29,6 +29,7 @@
 #include "mplayerc.h"
 #include "MainFrm.h"
 #include "DSUtil.h"
+#include "PathUtils.h"
 
 using namespace DSObjects;
 
@@ -486,7 +487,7 @@ bool CQuicktimeWindow::OpenMovie(CString fn)
         SetGWorld((CGrafPtr)GetHWNDPort(m_hWnd), nullptr);
     }
 
-    if (fn.Find(_T("://")) > 1) {
+    if (PathUtils::IsURL(fn)) {
         Size mySize = fn.GetLength() + 1;
         Handle myHandle = NewHandleClear(mySize);
         if (!myHandle) {
