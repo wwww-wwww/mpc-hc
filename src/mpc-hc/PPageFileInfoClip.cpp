@@ -147,7 +147,8 @@ BOOL CPPageFileInfoClip::OnInitDialog()
     m_fn.TrimRight('/');
     int i = std::max(m_fn.ReverseFind('\\'), m_fn.ReverseFind('/'));
     if (i >= 0 && i < m_fn.GetLength() - 1) {
-        m_location = m_fn.Left(i);
+        if (m_fn.Find(_T("://")) > 1) m_location = m_fn;
+        else m_location = m_fn.Left(i);
         m_fn = m_fn.Mid(i + 1);
 
         if (m_location.GetLength() == 2 && m_location[1] == ':') {
@@ -162,7 +163,7 @@ BOOL CPPageFileInfoClip::OnInitDialog()
 
     if (m_path.Find(_T("://")) > 1) {
         m_displayFn = UrlDecodeWithUTF8(ShortenURL(m_fn));
-        m_displayLocation = UrlDecodeWithUTF8(m_location);
+        m_displayLocation = m_location; // UrlDecodeWithUTF8 have bug now, URL may be changed because encoded special char be decoded.
     } else {
         m_displayFn = m_fn;
         m_displayLocation = m_location;
