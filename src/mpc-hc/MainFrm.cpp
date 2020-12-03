@@ -6752,7 +6752,6 @@ void CMainFrame::OnUpdateShaderToggle1(CCmdUI* pCmdUI)
 {
 	if (AfxGetAppSettings().m_Shaders.GetCurrentPreset().GetPreResize().empty()) {
 		pCmdUI->Enable(FALSE);
-		m_bToggleShader = false;
 		pCmdUI->SetCheck (0);
 	} else {
 		pCmdUI->Enable(TRUE);
@@ -6766,7 +6765,6 @@ void CMainFrame::OnUpdateShaderToggle2(CCmdUI* pCmdUI)
 
 	if (s.m_Shaders.GetCurrentPreset().GetPostResize().empty()) {
 		pCmdUI->Enable(FALSE);
-		m_bToggleShaderScreenSpace = false;
 		pCmdUI->SetCheck(0);
 	} else {
 		pCmdUI->Enable(TRUE);
