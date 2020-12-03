@@ -18730,17 +18730,25 @@ bool CMainFrame::ProcessYoutubeDLURL(CString url, bool append, bool replace)
             epiid.Format(_T("%s%s. "), seasonid, episodeid);
         }
         CString season;
-        if (!stream.season.IsEmpty()) {
-            season = stream.season + _T(" - ");
+        if (!stream.series.IsEmpty()) {
+            season = stream.series;
+            CString t(stream.season.Left(6));
+            if (!stream.season.IsEmpty() && (t.MakeLower() != _T("season") || stream.season_number == -1)) {
+                season += _T(" ") + stream.season;
+            }
+            season += _T(" - ");
         }
-        else if (!stream.series.IsEmpty()) {
-            season = stream.series + _T(" - ");
+        else if (!stream.season.IsEmpty()) {
+            CString t(stream.season.Left(6));
+            if (t.MakeLower() != _T("season") || stream.season_number == -1) {
+                season = stream.season + _T(" - ");
+            }
         }
         title.Format(_T("%s%s%s"), epiid, season, title);
         if (i == 0) f_title = title;
         int targetlen = title.GetLength() > 100 ? 50 : 150 - title.GetLength();
         CString url2(url);
-        if (!stream.webpage_url.IsEmpty()) url2 = stream.webpage_url;
+        if (streams.GetCount() > 1 && !stream.webpage_url.IsEmpty()) url2 = stream.webpage_url;
         if (replace) {
             m_wndPlaylistBar.ReplaceCurrentItem(filenames, nullptr, title + " (" + ShortenURL(url2, targetlen, true) + ")", url2);
             break;
@@ -18754,15 +18762,21 @@ bool CMainFrame::ProcessYoutubeDLURL(CString url, bool append, bool replace)
         mru->ReadList();
         RecentFileEntry r;
         r.fns.AddTail(url);
-        if (streams.GetCount() > 0) {
+        if (streams.GetCount() > 1) {
             auto h = streams.GetHead();
-            if (!h.season.IsEmpty()) {
+            if (!h.series.IsEmpty()) {
+                r.title = h.series;
+                if (!h.season.IsEmpty()) {
+                    r.title += _T(" - ") + h.season;
+                }
+            }
+            else if (!h.season.IsEmpty()) {
                 r.title = h.season;
             }
-            else if (!h.series.IsEmpty()) {
-                r.title = h.series;
-            }
             else r.title = f_title;
+        }
+        else if (streams.GetCount() == 1) {
+            r.title = f_title;
         }
         m_current_rfe = r;
         mru->Add(r);
