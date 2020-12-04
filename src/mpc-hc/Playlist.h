@@ -90,6 +90,7 @@ public:
     using CAtlList<CPlaylistItem>::IsEmpty;
     using CAtlList<CPlaylistItem>::MoveToHead;
     using CAtlList<CPlaylistItem>::MoveToTail;
+    using CAtlList<CPlaylistItem>::SetAt;
 
     CPlaylist(bool bShuffle = false);
     virtual ~CPlaylist();

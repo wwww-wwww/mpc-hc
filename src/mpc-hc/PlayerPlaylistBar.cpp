@@ -1131,6 +1131,16 @@ void CPlayerPlaylistBar::Randomize()
     SavePlaylist();
 }
 
+void CPlayerPlaylistBar::UpdateLabel(CString in) {
+    if (!m_pl.GetPos()) {
+        return;
+    }
+    CPlaylistItem& m = m_pl.GetAt(m_pl.GetPos());
+    m.m_label = in;
+    m_pl.SetAt(m_pl.GetPos(), m);
+    Refresh();
+}
+
 OpenMediaData* CPlayerPlaylistBar::GetCurOMD(REFERENCE_TIME rtStart)
 {
     CPlaylistItem* pli = GetCur();

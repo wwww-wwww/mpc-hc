@@ -130,6 +130,7 @@ public:
     void SetCurValid(bool fValid);
     void SetCurTime(REFERENCE_TIME rt);
     void Randomize();
+    void UpdateLabel(CString in);
 
     void Refresh();
     bool Empty();

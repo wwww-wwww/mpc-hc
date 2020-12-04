@@ -12850,6 +12850,25 @@ void CMainFrame::OpenSetupWindowTitle(bool reset /*= false*/)
                         title = pli->m_label;
                         use_label = true;
                     }
+                    if (!pli->m_bYoutubeDL) {
+                        CString temp;
+                        BeginEnumFilters(m_pGB, pEF, pBF) {
+                            if (CComQIPtr<IAMMediaContent, &IID_IAMMediaContent> pAMMC = pBF) {
+                                CComBSTR bstr;
+                                if (SUCCEEDED(pAMMC->get_Title(&bstr)) && bstr.Length()) {
+                                    temp = CString(bstr.m_str);
+                                    break;
+                                }
+                            }
+                        }
+                        EndEnumFilters;
+                        if (!temp.IsEmpty() && temp != pli->m_label) {
+                            title = temp;
+                            use_label = true;
+                            m_wndPlaylistBar.UpdateLabel(temp);
+                            m_current_rfe.title = temp;
+                        }
+                    }
                 }
                 if (!use_label) {
                     title = GetFileName();
