@@ -471,7 +471,7 @@ bool filterAudio(const Value& formats, YDLStreamDetails& ydl_sd)
     return found;
 }
 
-bool CYoutubeDLInstance::GetHttpStreams(CAtlList<YDLStreamURL>& streams)
+bool CYoutubeDLInstance::GetHttpStreams(CAtlList<YDLStreamURL>& streams, YDLPlaylistInfo& info)
 {
     CString url;
     CString extractor;
@@ -532,6 +532,11 @@ bool CYoutubeDLInstance::GetHttpStreams(CAtlList<YDLStreamURL>& streams)
             }
         }
     } else {
+        if (pJSON->d.HasMember(_T("id")) && !pJSON->d[_T("id")].IsNull()) info.id = pJSON->d[_T("id")].GetString();
+        if (pJSON->d.HasMember(_T("title")) && !pJSON->d[_T("title")].IsNull()) info.title = pJSON->d[_T("title")].GetString();
+        if (pJSON->d.HasMember(_T("uploader")) && !pJSON->d[_T("uploader")].IsNull()) info.uploader = pJSON->d[_T("uploader")].GetString();
+        if (pJSON->d.HasMember(_T("uploader_id")) && !pJSON->d[_T("uploader_id")].IsNull()) info.uploader_id = pJSON->d[_T("uploader_id")].GetString();
+        if (pJSON->d.HasMember(_T("uploader_url")) && !pJSON->d[_T("uploader_url")].IsNull()) info.uploader_url = pJSON->d[_T("uploader_url")].GetString();
         if (pJSON->d.HasMember(_T("entries"))) {
             YDL_LOG(_T("Parsing playlist"));
             const Value& entries = pJSON->d[_T("entries")];

@@ -18690,13 +18690,14 @@ bool CMainFrame::ProcessYoutubeDLURL(CString url, bool append, bool replace)
     CAtlList<CYoutubeDLInstance::YDLStreamURL> streams;
     CAtlList<CString> filenames;
     CYoutubeDLInstance ydl;
+    CYoutubeDLInstance::YDLPlaylistInfo listinfo;
 
     m_wndStatusBar.SetStatusMessage(ResStr(IDS_CONTROLS_YOUTUBEDL));
 
     if (!ydl.Run(url)) {
         return false;
     }
-    if (!ydl.GetHttpStreams(streams)) {
+    if (!ydl.GetHttpStreams(streams, listinfo)) {
         return false;
     }
 
@@ -18774,6 +18775,10 @@ bool CMainFrame::ProcessYoutubeDLURL(CString url, bool append, bool replace)
             }
             else if (!h.season.IsEmpty()) {
                 r.title = h.season;
+            }
+            else if (!listinfo.title.IsEmpty()) {
+                if (!listinfo.uploader.IsEmpty()) r.title.Format(_T("%s - %s"), listinfo.uploader, listinfo.title);
+                else r.title = listinfo.title;
             }
             else r.title = f_title;
         }

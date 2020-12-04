@@ -42,8 +42,16 @@ public:
         CString webpage_url;
     };
 
+    struct YDLPlaylistInfo {
+        CString id;
+        CString title;
+        CString uploader;
+        CString uploader_id;
+        CString uploader_url;
+    };
+
     bool Run(CString url);
-    bool GetHttpStreams(CAtlList<YDLStreamURL>& streams);
+    bool GetHttpStreams(CAtlList<YDLStreamURL>& streams, YDLPlaylistInfo& info);
 
 private:
     CUtf16JSON* pJSON;
