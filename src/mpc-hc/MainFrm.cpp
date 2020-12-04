@@ -4199,12 +4199,16 @@ void CMainFrame::OnFileOpenmedia()
 
     CAtlList<CString> filenames;
 
-    if (CanSendToYoutubeDL(dlg.GetFileNames().GetHead())
-            && ProcessYoutubeDLURL(dlg.GetFileNames().GetHead(), dlg.GetAppendToPlaylist())) {
-        if (!dlg.GetAppendToPlaylist()) {
-            OpenCurPlaylistItem();
+    if (CanSendToYoutubeDL(dlg.GetFileNames().GetHead())) {
+        if (ProcessYoutubeDLURL(dlg.GetFileNames().GetHead(), dlg.GetAppendToPlaylist())) {
+            if (!dlg.GetAppendToPlaylist()) {
+                OpenCurPlaylistItem();
+            }
+            return;
+        } else if (IsOnYDLWhitelist(dlg.GetFileNames().GetHead())) {
+            // don't bother trying to open this website URL directly
+            return;
         }
-        return;
     }
 
     filenames.AddHeadList(&dlg.GetFileNames());
@@ -4688,6 +4692,9 @@ void CMainFrame::OnDropFiles(CAtlList<CString>& slFiles, DROPEFFECT dropEffect)
             if (!bAppend) {
                 OpenCurPlaylistItem();
             }
+            return;
+        } else if (IsOnYDLWhitelist(slFiles.GetHead())) {
+            // don't bother trying to open this website URL directly
             return;
         }
     }
@@ -10008,6 +10015,9 @@ void CMainFrame::OnRecentFile(UINT nID)
         SendMessage(WM_COMMAND, ID_FILE_CLOSEMEDIA);
         if (ProcessYoutubeDLURL(fns.GetHead(), false)) {
             OpenCurPlaylistItem();
+            return;
+        } else if (IsOnYDLWhitelist(fns.GetHead())) {
+            // don't bother trying to open this website URL directly
             return;
         }
     }
@@ -18657,6 +18667,15 @@ static const CString ydl_blacklist[] = {
     _T("saunalahti.fi/")
 };
 
+bool CMainFrame::IsOnYDLWhitelist(CString url) {
+    for (int i = 0; i < _countof(ydl_whitelist); i++) {
+        if (url.Find(ydl_whitelist[i]) >= 0) {
+            return true;
+        }
+    }
+    return false;
+}
+
 bool CMainFrame::CanSendToYoutubeDL(const CString url)
 {
     if (url.Left(4).MakeLower() == _T("http") && AfxGetAppSettings().bUseYDL) {
@@ -18668,10 +18687,8 @@ bool CMainFrame::CanSendToYoutubeDL(const CString url)
         }
 
         // Whitelist: popular supported sites
-        for (int i = 0; i < _countof(ydl_whitelist); i++) {
-            if (url.Find(ydl_whitelist[i], 7) > 0) {
-                return true;
-            }
+        if (IsOnYDLWhitelist(url)) {
+            return true;
         }
 
         // Blacklist: unsupported sites where YDL causes an error or long delay
