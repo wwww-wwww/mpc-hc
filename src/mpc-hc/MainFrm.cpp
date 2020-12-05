@@ -11826,7 +11826,15 @@ void CMainFrame::OpenFile(OpenFileData* pOFD)
                 RecentFileEntry r;
                 r.fns.AddTail(fn);
                 CPlaylistItem* m_pli = m_wndPlaylistBar.GetCur();
-                if (!m_pli->m_label.IsEmpty()) r.title = m_pli->m_label;
+                if (!m_pli->m_label.IsEmpty()) {
+                    if (!m_pli->m_bYoutubeDL || fn == m_pli->m_ydlSourceURL) r.title = m_pli->m_label;
+                    else {
+                        CString videoName(m_pli->m_label);
+                        int m = m_pli->m_label.ReverseFind(*_T(" ("));
+                        if (m > 0) videoName = m_pli->m_label.Left(m);
+                        r.title = videoName;
+                    }
+                }
                 else {
                     CString title;
                     BeginEnumFilters(m_pGB, pEF, pBF) {
@@ -11844,6 +11852,10 @@ void CMainFrame::OpenFile(OpenFileData* pOFD)
                 if (!m_pli->m_bYoutubeDL && m_pli->m_fns.GetCount() > 1) {
                     r.fns.RemoveAll();
                     r.fns.AddHeadList(&m_pli->m_fns);
+                }
+                else if (m_pli->m_bYoutubeDL) {
+                    r.fns.RemoveAll();
+                    r.fns.AddTail(m_pli->m_ydlSourceURL);
                 }
                 if (m_pli->m_cue) r.cue = m_pli->m_cue_filename;
                 if (m_pli->m_subs.GetCount() > 0) {
