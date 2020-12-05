@@ -59,7 +59,11 @@ bool CYoutubeDLInstance::Run(CString url)
 
     YDL_LOG(url);
 
-    CString args = "youtube-dl -J \"" + url + "\"";
+    CString args = _T("youtube-dl -J --all-subs --no-warnings --youtube-skip-dash-manifest");
+    if (url.Find(_T("list=")) > 0) {
+        args.Append(_T(" --ignore-errors"));
+    }
+    args.Append(_T(" \"") + url + _T("\""));
 
     ZeroMemory(&proc_info, sizeof(PROCESS_INFORMATION));
     ZeroMemory(&startup_info, sizeof(STARTUPINFO));
@@ -135,10 +139,18 @@ bool CYoutubeDLInstance::Run(CString url)
     }
     buf_err[idx_err] = '\0';
 
-    CString err = buf_err;
     DWORD exitcode;
     GetExitCodeProcess(proc_info.hProcess, &exitcode);
+
+    CloseHandle(proc_info.hProcess);
+    CloseHandle(proc_info.hThread);
+    CloseHandle(hThreadOut);
+    CloseHandle(hThreadErr);
+    CloseHandle(hStdout_r);
+    CloseHandle(hStderr_r);
+
     if (exitcode) {
+        CString err = buf_err;
         if (err.IsEmpty()) {
             err.Format(_T("An error occurred while running youtube-dl.exe\n\nprocess exitcode = %d"), exitcode);
         } else {
@@ -151,13 +163,6 @@ bool CYoutubeDLInstance::Run(CString url)
         AfxMessageBox(err, MB_ICONERROR, 0);
         return false;
     }
-
-    CloseHandle(proc_info.hProcess);
-    CloseHandle(proc_info.hThread);
-    CloseHandle(hThreadOut);
-    CloseHandle(hThreadErr);
-    CloseHandle(hStdout_r);
-    CloseHandle(hStderr_r);
 
     return loadJSON();
 }
@@ -578,9 +583,15 @@ bool CYoutubeDLInstance::GetHttpStreams(CAtlList<YDLStreamURL>& streams, YDLPlay
 
 bool CYoutubeDLInstance::loadJSON()
 {
+    if (!buf_out) {
+        return false;
+    }
     //the JSON buffer is ASCII with Unicode encoded with escape characters
     pJSON->d.Parse<rapidjson::kParseDefaultFlags, rapidjson::ASCII<>>(buf_out);
     if (pJSON->d.HasParseError()) {
+        return false;
+    }
+    if (!pJSON->d.IsObject() || !pJSON->d.HasMember(_T("extractor"))) {
         return false;
     }
     bIsPlaylist = pJSON->d.FindMember(_T("entries")) != pJSON->d.MemberEnd();
