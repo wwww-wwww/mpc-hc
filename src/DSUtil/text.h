@@ -133,7 +133,7 @@ extern CStringA UrlEncode(const CStringA& strIn);
  */
 extern CStringA EscapeJSONString(const CStringA& str);
 extern CStringA UrlDecode(const CStringA& strIn);
-extern CStringW UrlDecodeWithUTF8(const CStringW in);
+extern CStringW UrlDecodeWithUTF8(const CStringW in, bool keepEncodedSpecialChar = false);
 extern CStringW URLGetHostName(const CStringW in);
 extern CStringW ShortenURL(const CStringW url, int targetLength = 100, bool returnHostnameIfTooLong = false);
 extern CStringA HtmlSpecialChars(CStringA str, bool bQuotes = false);

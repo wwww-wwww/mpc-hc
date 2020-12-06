@@ -123,19 +123,53 @@ CStringA UrlDecode(const CStringA& strIn)
     return strOut;
 }
 
-CStringW UrlDecodeWithUTF8(CString in) {
+CStringW UrlDecodeWithUTF8(CStringW in, bool keepEncodedSpecialChar) {
     TCHAR t[100];
     DWORD bufSize = _countof(t);
-    in.Replace(_T("+"), _T(" ")); //UrlUnescape does not deal with '+' properly
-    HRESULT result = UrlUnescape(in.GetBuffer(), t, &bufSize, URL_ESCAPE_AS_UTF8); //URL_ESCAPE_AS_UTF8 will work as URL_UNESCAPE_AS_UTF8 on windows 8+, otherwise it will just ignore utf-8
+    CString tem(in);
+    tem.Replace(_T("+"), _T(" ")); //UrlUnescape does not deal with '+' properly
+    if (keepEncodedSpecialChar) {
+        tem.Replace(_T("%25"), _T("%2525"));  // %
+        tem.Replace(_T("%3A"), _T("%253A"));
+        tem.Replace(_T("%3a"), _T("%253A"));
+        tem.Replace(_T("%2F"), _T("%252F"));
+        tem.Replace(_T("%2f"), _T("%252F"));
+        tem.Replace(_T("%3F"), _T("%253F"));
+        tem.Replace(_T("%3f"), _T("%253F"));
+        tem.Replace(_T("%23"), _T("%2523"));
+        tem.Replace(_T("%5B"), _T("%255B"));
+        tem.Replace(_T("%5b"), _T("%255B"));
+        tem.Replace(_T("%5D"), _T("%255D"));
+        tem.Replace(_T("%5d"), _T("%255D"));
+        tem.Replace(_T("%40"), _T("%2540"));
+        tem.Replace(_T("%21"), _T("%2521"));
+        tem.Replace(_T("%24"), _T("%2524"));
+        tem.Replace(_T("%26"), _T("%2526"));
+        tem.Replace(_T("%27"), _T("%2527"));
+        tem.Replace(_T("%28"), _T("%2528"));
+        tem.Replace(_T("%29"), _T("%2529"));
+        tem.Replace(_T("%2A"), _T("%252A"));
+        tem.Replace(_T("%2a"), _T("%252A"));
+        tem.Replace(_T("%2B"), _T("%252B"));
+        tem.Replace(_T("%2b"), _T("%252B"));
+        tem.Replace(_T("%2C"), _T("%252C"));
+        tem.Replace(_T("%2c"), _T("%252C"));
+        tem.Replace(_T("%3B"), _T("%253B"));
+        tem.Replace(_T("%3b"), _T("%253B"));
+        tem.Replace(_T("%3D"), _T("%253D"));
+        tem.Replace(_T("%3d"), _T("%253D"));
+        tem.Replace(_T("%20"), _T("%2520"));
+    }
+    HRESULT result = UrlUnescape(tem.GetBuffer(), t, &bufSize, URL_ESCAPE_AS_UTF8); //URL_ESCAPE_AS_UTF8 will work as URL_UNESCAPE_AS_UTF8 on windows 8+, otherwise it will just ignore utf-8
 
     if (result == E_POINTER) {
         std::shared_ptr<TCHAR[]> buffer(new TCHAR[bufSize]);
-        if (S_OK == UrlUnescape(in.GetBuffer(), buffer.get(), &bufSize, URL_ESCAPE_AS_UTF8)) {
+        if (S_OK == UrlUnescape(tem.GetBuffer(), buffer.get(), &bufSize, URL_ESCAPE_AS_UTF8)) {
             CString urlDecoded(buffer.get());
             return urlDecoded;
         }
-    } else {
+    }
+    else {
         CString urlDecoded(t);
         return urlDecoded;
     }

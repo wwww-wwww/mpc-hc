@@ -166,10 +166,11 @@ BOOL CPPageFileInfoClip::OnInitDialog()
 
     if (PathUtils::IsURL(m_path)) {
         m_displayFn = UrlDecodeWithUTF8(ShortenURL(m_fn));
+        m_displayLocation = UrlDecodeWithUTF8(m_location, true);
     } else {
         m_displayFn = m_fn;
+        m_displayLocation = m_location;
     }
-    m_displayLocation = m_location;
 
     m_tooltip.Create(this, TTS_NOPREFIX | TTS_ALWAYSTIP);
 
