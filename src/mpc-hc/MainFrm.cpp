@@ -8209,17 +8209,17 @@ void CMainFrame::SetPlayingRate(double rate)
     }
     HRESULT hr = E_FAIL;
     if (GetPlaybackMode() == PM_FILE) {
-        if (rate < 0.125) {
-            if (GetMediaState() != State_Paused) {
-                SendMessage(WM_COMMAND, ID_PLAY_PAUSE);
+        if (rate < 0.05) {
+            if (m_dSpeedRate > 0.05) {
+                rate = 0.05;
+            } else {
+                return;
             }
-            return;
-        } else {
-            if (GetMediaState() != State_Running) {
-                SendMessage(WM_COMMAND, ID_PLAY_PLAY);
-            }
-            hr = m_pMS->SetRate(rate);
         }
+        if (GetMediaState() != State_Running) {
+            SendMessage(WM_COMMAND, ID_PLAY_PLAY);
+        }
+        hr = m_pMS->SetRate(rate);
     } else if (GetPlaybackMode() == PM_DVD) {
         if (GetMediaState() != State_Running) {
             SendMessage(WM_COMMAND, ID_PLAY_PLAY);
@@ -8380,7 +8380,7 @@ void CMainFrame::OnUpdatePlayChangeRate(CCmdUI* pCmdUI)
             fEnable = true;
             if (fInc && m_dSpeedRate >= 128.0) {
                 fEnable = false;
-            } else if (!fInc && GetPlaybackMode() == PM_FILE && m_dSpeedRate < 0.125) {
+            } else if (!fInc && GetPlaybackMode() == PM_FILE && m_dSpeedRate <= 0.05) {
                 fEnable = false;
             } else if (!fInc && GetPlaybackMode() == PM_DVD && m_dSpeedRate <= -128.0) {
                 fEnable = false;
