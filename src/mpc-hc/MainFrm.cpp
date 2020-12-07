@@ -14862,6 +14862,7 @@ void CMainFrame::SetupRecentFilesSubMenu()
                         p.Format(_T("%s~~~%s"), p.Left(60), p.Right(87));
                     }
                 }
+                p.Replace(_T("&"), _T("&&"));
                 VERIFY(subMenu.AppendMenu(flags, id, p));
             }
             id++;
