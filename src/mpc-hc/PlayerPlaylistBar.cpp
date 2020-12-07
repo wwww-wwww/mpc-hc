@@ -738,7 +738,7 @@ bool CPlayerPlaylistBar::ParseMPCPlayList(CString fn)
 
     std::sort(idx.begin(), idx.end());
     for (int i : idx) {
-        m_pl.AddTail(pli[i]);
+        if (pli[i].m_fns.GetCount() > 0) m_pl.AddTail(pli[i]);
     }
 
     return !pli.IsEmpty();
