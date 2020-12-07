@@ -16181,7 +16181,7 @@ void CMainFrame::OpenCurPlaylistItem(REFERENCE_TIME rtStart, bool reopen)
         }
     }
 
-    if (reopen && pli.m_bYoutubeDL) {
+    if (pli.m_bYoutubeDL && (reopen || pli.m_fns.GetHead() == pli.m_ydlSourceURL)) {
         if (ProcessYoutubeDLURL(pli.m_ydlSourceURL, false, true)) {
             OpenCurPlaylistItem(rtStart, false);
             return;
