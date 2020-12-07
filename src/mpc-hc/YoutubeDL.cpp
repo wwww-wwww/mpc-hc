@@ -154,7 +154,7 @@ bool CYoutubeDLInstance::Run(CString url)
         if (err.IsEmpty()) {
             err.Format(_T("An error occurred while running youtube-dl.exe\n\nprocess exitcode = %d"), exitcode);
         } else {
-            if (err.Find(_T("ERROR: Unsupported URL")) > 0) {
+            if (err.Find(_T("ERROR: Unsupported URL")) >= 0) {
                 // abort without showing error message
                 return false;
             }
