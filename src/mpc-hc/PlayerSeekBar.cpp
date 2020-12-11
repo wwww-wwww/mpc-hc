@@ -160,7 +160,8 @@ void CPlayerSeekBar::CheckScrollDistance(CPoint point, REFERENCE_TIME minimum_du
     // While dragging m_rtPos doesn't get updated. So in that case seek after 5 seconds if mouse isn't moving.
     // If mouse pointer has moved, seek after 200ms and if at least minimum duration change.
     // Or after 1000ms if 1/5th of minimum duration change
-    if (ticks_since_last_seek >= 5000ULL || posdiff > 0 && (minimum_duration_change == 0 || ticks_since_last_seek >= 200ULL && posdiff >= minimum_duration_change || ticks_since_last_seek >= 1000ULL && posdiff >= minimum_duration_change/5)) {
+    // If minimum_duration_change == 0 (left mousebutton down) then seek after 400ms
+    if (ticks_since_last_seek >= 5000ULL || minimum_duration_change == 0 && ticks_since_last_seek >= 400ULL || posdiff > 0 && (ticks_since_last_seek >= 200ULL && posdiff >= minimum_duration_change || ticks_since_last_seek >= 1000ULL && posdiff >= minimum_duration_change/5)) {
         m_lastDragSeekTickCount = tickcount;
         m_rtHoverPos = m_rtPos;
         m_hoverPoint = point;
