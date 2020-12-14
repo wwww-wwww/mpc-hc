@@ -521,7 +521,7 @@ HRESULT CFGFilterVideoRenderer::Create(IBaseFilter** ppBF, CInterfaceList<IUnkno
 
     CheckPointer(*ppBF, E_FAIL);
 
-    if (m_clsid != CLSID_madVRAllocatorPresenter) {
+    if (m_clsid != CLSID_madVRAllocatorPresenter && m_clsid != CLSID_MPCVRAllocatorPresenter) {
         HookWorkAround10BitBug(*ppBF);
         m_bHas10BitWorkAround = true;
     }
