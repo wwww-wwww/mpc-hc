@@ -153,6 +153,9 @@ HRESULT CSubPicAllocatorPresenterImpl::AlphaBltSubPic(const CRect& windowRect,
 
 STDMETHODIMP_(void) CSubPicAllocatorPresenterImpl::SetVideoSize(CSize szVideo, CSize szAspectRatio /* = CSize(0, 0) */)
 {
+    if (szVideo.cx == 0) {
+        return;
+    }
     if (szAspectRatio.cx == 0) {
         szAspectRatio = szVideo;
     }
