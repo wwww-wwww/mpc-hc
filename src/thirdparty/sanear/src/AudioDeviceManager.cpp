@@ -189,14 +189,15 @@ namespace SaneAudioRenderer
             {
                 backend = std::make_shared<AudioDeviceBackend>();
 
+                LPWSTR pDeviceId = nullptr;
                 {
-                    LPWSTR pDeviceId = nullptr;
                     BOOL exclusive;
                     UINT32 buffer;
                     ThrowIfFailed(pSettings->GetOutputDevice(&pDeviceId, &exclusive, &buffer));
-                    std::unique_ptr<WCHAR, CoTaskMemFreeDeleter> holder(pDeviceId);
-
-                    backend->id = std::make_shared<std::wstring>(pDeviceId);
+                    if (pDeviceId) {
+                        std::unique_ptr<WCHAR, CoTaskMemFreeDeleter> holder(pDeviceId);
+                        backend->id = std::make_shared<std::wstring>(pDeviceId);
+                    }
                     backend->exclusive = !!exclusive;
                     backend->realtime = realtime;
                     backend->bufferDuration = buffer;
@@ -204,8 +205,19 @@ namespace SaneAudioRenderer
 
                 CreateAudioClient(pEnumerator, *backend);
 
-                if (!backend->audioClient)
-                    return E_FAIL;
+                if (!backend->audioClient) {
+                    if (pDeviceId && *pDeviceId!=0) {
+                        // failure with a chosen device, now try again with default audio device
+                        backend->id = nullptr;
+                        backend->bufferDuration = 200;
+                        CreateAudioClient(pEnumerator, *backend);
+                        if (!backend->audioClient) {
+                            return E_FAIL;
+                        }
+                    } else {
+                        return E_FAIL;
+                    }
+                }
 
                 WAVEFORMATEX* pFormat;
                 ThrowIfFailed(backend->audioClient->GetMixFormat(&pFormat));
