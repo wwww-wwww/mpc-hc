@@ -158,7 +158,7 @@ namespace SaneAudioRenderer
 
                 {
                     LPWSTR pDeviceId = nullptr;
-                    ThrowIfFailed(pSettings->GetOuputDevice(&pDeviceId, nullptr, nullptr));
+                    ThrowIfFailed(pSettings->GetOutputDevice(&pDeviceId, nullptr, nullptr));
                     std::unique_ptr<WCHAR, CoTaskMemFreeDeleter> holder(pDeviceId);
 
                     device.id = std::make_shared<std::wstring>(pDeviceId);
@@ -193,7 +193,7 @@ namespace SaneAudioRenderer
                     LPWSTR pDeviceId = nullptr;
                     BOOL exclusive;
                     UINT32 buffer;
-                    ThrowIfFailed(pSettings->GetOuputDevice(&pDeviceId, &exclusive, &buffer));
+                    ThrowIfFailed(pSettings->GetOutputDevice(&pDeviceId, &exclusive, &buffer));
                     std::unique_ptr<WCHAR, CoTaskMemFreeDeleter> holder(pDeviceId);
 
                     backend->id = std::make_shared<std::wstring>(pDeviceId);

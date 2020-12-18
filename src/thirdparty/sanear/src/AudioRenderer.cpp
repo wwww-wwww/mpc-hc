@@ -279,7 +279,7 @@ namespace SaneAudioRenderer
             return true;
 
         BOOL exclusive;
-        m_settings->GetOuputDevice(nullptr, &exclusive, nullptr);
+        m_settings->GetOutputDevice(nullptr, &exclusive, nullptr);
         BOOL bitstreamingAllowed = m_settings->GetAllowBitstreaming();
 
         if (!exclusive || !bitstreamingAllowed || live)
@@ -419,7 +419,7 @@ namespace SaneAudioRenderer
             {
                 LPWSTR pDeviceId = nullptr;
 
-                if (FAILED(m_settings->GetOuputDevice(&pDeviceId, &settingsDeviceExclusive, &settingsDeviceBuffer)))
+                if (FAILED(m_settings->GetOutputDevice(&pDeviceId, &settingsDeviceExclusive, &settingsDeviceBuffer)))
                     return;
 
                 settingsDeviceDefault = (!pDeviceId || !*pDeviceId);

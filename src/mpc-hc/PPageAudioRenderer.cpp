@@ -122,7 +122,7 @@ BOOL CPPageAudioRenderer::OnInitDialog()
     }
 
     CComHeapPtr<WCHAR> pDeviceId;
-    if (SUCCEEDED(s.sanear->GetOuputDevice(&pDeviceId, &m_bExclusiveMode, nullptr))) {
+    if (SUCCEEDED(s.sanear->GetOutputDevice(&pDeviceId, &m_bExclusiveMode, nullptr))) {
         if (!pDeviceId || pDeviceId[0] == '\0') {
             m_combo1.SetCurSel(0);
         } else {
@@ -174,8 +174,8 @@ BOOL CPPageAudioRenderer::OnApply()
     }
 
     UINT32 buffer;
-    s.sanear->GetOuputDevice(nullptr, nullptr, &buffer);
-    s.sanear->SetOuputDevice(deviceId, m_bExclusiveMode, buffer);
+    s.sanear->GetOutputDevice(nullptr, nullptr, &buffer);
+    s.sanear->SetOutputDevice(deviceId, m_bExclusiveMode, buffer);
 
     s.sanear->SetAllowBitstreaming(m_bAllowBitstreaming);
     s.sanear->SetCrossfeedSettings(m_slider1.GetPos(), m_slider2.GetPos());
