@@ -112,6 +112,7 @@ BOOL CPPageAudioRenderer::OnInitDialog()
     m_combo1.AddString(defaultString);
     m_deviceIds.emplace_back();
     m_combo1.SetItemData(0, 0);
+    m_combo1.SetCurSel(0);
 
     for (const auto& device : GetDevices()) {
         int idx = m_combo1.AddString(device.first);
@@ -123,9 +124,8 @@ BOOL CPPageAudioRenderer::OnInitDialog()
 
     CComHeapPtr<WCHAR> pDeviceId;
     if (SUCCEEDED(s.sanear->GetOutputDevice(&pDeviceId, &m_bExclusiveMode, nullptr))) {
-        if (!pDeviceId || pDeviceId[0] == '\0') {
-            m_combo1.SetCurSel(0);
-        } else {
+        if (pDeviceId && pDeviceId[0] != '\0') {
+            bool found = false;
             for (size_t i = 0; i < m_deviceIds.size(); i++) {
                 if (m_deviceIds[i] == pDeviceId) {
                     for (int j = 0; j < m_combo1.GetCount(); j++) {
@@ -133,8 +133,13 @@ BOOL CPPageAudioRenderer::OnInitDialog()
                             m_combo1.SetCurSel(j);
                         }
                     }
+                    found = true;
                     break;
                 }
+            }
+            if (!found) {
+                // device does not exist anymore or is invalid, reset to default
+                s.sanear->SetOutputDevice(nullptr, m_bExclusiveMode, 200);
             }
         }
     }
