@@ -53,6 +53,13 @@ else
   ver=${describe#*-}
   ver=${ver%-g*}
 
+  if [$hash = ""]; then
+    hash="0000000"
+  fi
+  if [$ver = ""]; then
+    ver=0
+  fi
+
   ver_additional=" ($hash)"
 
   # Get the current branch name
