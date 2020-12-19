@@ -2542,7 +2542,7 @@ CFGManagerDVD::CFGManagerDVD(LPCTSTR pName, LPUNKNOWN pUnk, HWND hWnd)
 
     // have to avoid the old video renderer
     if (s.iDSVideoRendererType == VIDRNDT_DS_OLDRENDERER) {
-        m_transform.AddTail(DEBUG_NEW CFGFilterVideoRenderer(m_hWnd, CLSID_OverlayMixer, L"Overlay Mixer", MERIT64_DO_USE));
+        m_transform.AddTail(DEBUG_NEW CFGFilterVideoRenderer(m_hWnd, CLSID_VMR9AllocatorPresenter, StrRes(IDS_PPAGE_OUTPUT_VMR9RENDERLESS), MERIT64(0x800001) + 0x101));
     }
 
     // elecard's decoder isn't suited for dvd playback (atm)
