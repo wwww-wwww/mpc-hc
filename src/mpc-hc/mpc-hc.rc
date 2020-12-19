@@ -410,26 +410,30 @@ BEGIN
     EDITTEXT        IDC_EDIT2,65,20,48,14,ES_RIGHT | ES_AUTOHSCROLL | ES_NUMBER
     EDITTEXT        IDC_EDIT3,118,20,48,14,ES_RIGHT | ES_AUTOHSCROLL | ES_NUMBER
     PUSHBUTTON      "Default",IDC_BUTTON1,203,20,65,14
-    CONTROL         "Fast seek (on keyframe)",IDC_FASTSEEK_CHECK,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,6,50,194,8
-    COMBOBOX        IDC_COMBO4,203,48,138,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-    CONTROL         "Show chapter marks in seek bar",IDC_CHECK2,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,6,65,343,8
+    CONTROL         "Fast seek (on keyframe)",IDC_FASTSEEK_CHECK,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,6,78,194,8
+    COMBOBOX        IDC_COMBO4,203,76,138,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    CONTROL         "Show chapter marks in seek bar",IDC_CHECK2,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,6,93,343,8
     CONTROL         "Display ""Now Playing"" information in Skype's mood message",IDC_CHECK4,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,6,94,343,8
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,6,122,343,8
     CONTROL         "Prevent minimizing the player when in fullscreen on a non default monitor",IDC_CHECK6,
-                    "Button",BS_AUTOCHECKBOX | BS_MULTILINE | WS_TABSTOP,6,108,343,17
+                    "Button",BS_AUTOCHECKBOX | BS_MULTILINE | WS_TABSTOP,6,136,343,17
     CONTROL         "Use enhanced taskbar features",IDC_CHECK_ENHANCED_TASKBAR,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,6,130,343,8
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,6,158,343,8
     CONTROL         "Open previous/next file in folder on ""Skip back/forward"" when there is only one item in playlist",IDC_CHECK7,
-                    "Button",BS_AUTOCHECKBOX | BS_VCENTER | BS_MULTILINE | WS_TABSTOP,6,150,348,18
-    CONTROL         "Show time tooltip:",IDC_CHECK8,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,6,179,162,8
-    COMBOBOX        IDC_COMBO3,203,176,138,64,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-    LTEXT           "OSD font:",IDC_STATIC,6,200,98,8
-    COMBOBOX        IDC_COMBO1,137,198,168,64,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
-    COMBOBOX        IDC_COMBO2,310,198,31,64,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+                    "Button",BS_AUTOCHECKBOX | BS_VCENTER | BS_MULTILINE | WS_TABSTOP,6,178,348,18
+    CONTROL         "Show time tooltip:",IDC_CHECK8,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,6,207,162,8
+    COMBOBOX        IDC_COMBO3,203,204,138,64,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "OSD font:",IDC_STATIC,6,228,98,8
+    COMBOBOX        IDC_COMBO1,137,226,168,64,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_COMBO2,310,226,31,64,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
     CONTROL         "Enable Logitech LCD support (experimental)",IDC_CHECK_LCD,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,6,141,343,10
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,6,169,343,10
     CONTROL         "Auto-hide the mouse pointer during playback in windowed mode",IDC_CHECK3,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,6,79,343,8
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,6,107,343,8
+    CONTROL         "Show preview on seek bar",IDC_SEEK_PREVIEW,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,6,47,167,8
+    LTEXT           "Preview width (% of screen width)",IDC_STATIC,6,60,178,8
+    EDITTEXT        IDC_EDIT4,203,56,40,14,ES_CENTER | ES_AUTOHSCROLL
+    CONTROL         "",IDC_SPIN2,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS | UDS_HOTTRACK,230,56,10,14
 END
 
 IDD_PPAGEEXTERNALFILTERS DIALOGEX 0, 0, 355, 289
@@ -494,7 +498,7 @@ BEGIN
     EDITTEXT        IDC_EDIT6,62,102,162,13,ES_AUTOHSCROLL | ES_READONLY | NOT WS_BORDER
     CONTROL         "",IDC_STATIC,"Static",SS_ETCHEDHORZ,10,117,268,1
     LTEXT           "Description:",IDC_STATIC,10,121,50,8
-    EDITTEXT        IDC_EDIT7,62,121,214,124,ES_AUTOVSCROLL | ES_MULTILINE | ES_READONLY
+    EDITTEXT        IDC_EDIT7,62,121,214,124,ES_MULTILINE | ES_AUTOVSCROLL | ES_READONLY
 END
 
 IDD_FILEMEDIAINFO DIALOGEX 0, 0, 284, 252
@@ -759,20 +763,20 @@ FONT 9, "Segoe UI", 400, 0, 0x1
 BEGIN
     GROUPBOX        "DirectShow Video",IDC_STATIC,6,6,342,52
     COMBOBOX        IDC_VIDRND_COMBO,12,19,331,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-    LTEXT           "DXVA", IDC_STATIC, 29, 41, 36, 8
-    ICON            "", IDC_VIDRND_DXVA_SUPPORT, 12, 40, 24, 20
-    LTEXT           "Subtitles", IDC_STATIC, 83, 41, 54, 8
-    ICON            "", IDC_VIDRND_SUBTITLE_SUPPORT, 65, 40, 24, 20
-    LTEXT           "Screenshot", IDC_STATIC, 155, 41, 54, 8
-    ICON            "", IDC_VIDRND_SAVEIMAGE_SUPPORT, 137, 40, 24, 20
-    LTEXT           "Shaders", IDC_STATIC, 227, 41, 42, 8
-    ICON            "", IDC_VIDRND_SHADER_SUPPORT, 209, 40, 24, 20
-    LTEXT           "Rotation", IDC_STATIC, 288, 41, 54, 8
-    ICON            "", IDC_VIDRND_ROTATION_SUPPORT, 270, 40, 24, 20
+    LTEXT           "DXVA",IDC_STATIC,29,41,36,8
+    ICON            "",IDC_VIDRND_DXVA_SUPPORT,12,40,24,20
+    LTEXT           "Subtitles",IDC_STATIC,83,41,54,8
+    ICON            "",IDC_VIDRND_SUBTITLE_SUPPORT,65,40,24,20
+    LTEXT           "Screenshot",IDC_STATIC,155,41,54,8
+    ICON            "",IDC_VIDRND_SAVEIMAGE_SUPPORT,137,40,24,20
+    LTEXT           "Shaders",IDC_STATIC,227,41,42,8
+    ICON            "",IDC_VIDRND_SHADER_SUPPORT,209,40,24,20
+    LTEXT           "Rotation",IDC_STATIC,288,41,54,8
+    ICON            "",IDC_VIDRND_ROTATION_SUPPORT,270,40,24,20
     GROUPBOX        "Audio Renderer",IDC_STATIC,6,60,342,36
     COMBOBOX        IDC_AUDRND_COMBO,12,74,331,46,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-    GROUPBOX        "Subtitle Renderer", IDC_STATIC, 6, 98, 342, 36
-    COMBOBOX        IDC_COMBO1, 12, 113, 331, 46, CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    GROUPBOX        "Subtitle Renderer",IDC_STATIC,6,98,342,36
+    COMBOBOX        IDC_COMBO1,12,113,331,46,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
     GROUPBOX        "VMR-9 (renderless) and EVR (CP) settings",IDC_STATIC,6,184,342,100
     RTEXT           "Surface:",IDC_STATIC,142,221,72,8
     COMBOBOX        IDC_DX_SURFACE,217,217,126,49,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
@@ -1253,6 +1257,7 @@ BEGIN
         VERTGUIDE, 203
         VERTGUIDE, 341
         HORZGUIDE, 20
+        HORZGUIDE, 70
     END
 
     IDD_PPAGEEXTERNALFILTERS, DIALOG
@@ -1690,21 +1695,21 @@ BEGIN
         MENUITEM SEPARATOR
         POPUP "&Playback Rate"
         BEGIN
-            MENUITEM "0.25 x"                   ID_PLAY_PLAYBACKRATE_025
-            MENUITEM "0.50 x"                   ID_PLAY_PLAYBACKRATE_050
-            MENUITEM "0.75 x"                   ID_PLAY_PLAYBACKRATE_075
-            MENUITEM "0.90 x"                   ID_PLAY_PLAYBACKRATE_090
-            MENUITEM "1.00 x"                   ID_PLAY_PLAYBACKRATE_100
-            MENUITEM "1.10 x"                   ID_PLAY_PLAYBACKRATE_110
-            MENUITEM "1.25 x"                   ID_PLAY_PLAYBACKRATE_125
-            MENUITEM "1.50 x"                   ID_PLAY_PLAYBACKRATE_150
-            MENUITEM "2.00 x"                   ID_PLAY_PLAYBACKRATE_200
-            MENUITEM "3.00 x"                   ID_PLAY_PLAYBACKRATE_300
-            MENUITEM "4.00 x"                   ID_PLAY_PLAYBACKRATE_400
-            MENUITEM "6.00 x"                   ID_PLAY_PLAYBACKRATE_600
-            MENUITEM "8.00 x"                   ID_PLAY_PLAYBACKRATE_800
-            MENUITEM "24 fps"                   ID_PLAY_PLAYBACKRATE_FPS24
-            MENUITEM "25 fps"                   ID_PLAY_PLAYBACKRATE_FPS25
+            MENUITEM "0.25 x",                      ID_PLAY_PLAYBACKRATE_025
+            MENUITEM "0.50 x",                      ID_PLAY_PLAYBACKRATE_050
+            MENUITEM "0.75 x",                      ID_PLAY_PLAYBACKRATE_075
+            MENUITEM "0.90 x",                      ID_PLAY_PLAYBACKRATE_090
+            MENUITEM "1.00 x",                      ID_PLAY_PLAYBACKRATE_100
+            MENUITEM "1.10 x",                      ID_PLAY_PLAYBACKRATE_110
+            MENUITEM "1.25 x",                      ID_PLAY_PLAYBACKRATE_125
+            MENUITEM "1.50 x",                      ID_PLAY_PLAYBACKRATE_150
+            MENUITEM "2.00 x",                      ID_PLAY_PLAYBACKRATE_200
+            MENUITEM "3.00 x",                      ID_PLAY_PLAYBACKRATE_300
+            MENUITEM "4.00 x",                      ID_PLAY_PLAYBACKRATE_400
+            MENUITEM "6.00 x",                      ID_PLAY_PLAYBACKRATE_600
+            MENUITEM "8.00 x",                      ID_PLAY_PLAYBACKRATE_800
+            MENUITEM "24 fps",                      ID_PLAY_PLAYBACKRATE_FPS24
+            MENUITEM "25 fps",                      ID_PLAY_PLAYBACKRATE_FPS25
         END
         MENUITEM "&Decrease Rate",              ID_PLAY_DECRATE
         MENUITEM "&Increase Rate",              ID_PLAY_INCRATE
@@ -2219,21 +2224,21 @@ BEGIN
             MENUITEM SEPARATOR
             POPUP "&Playback Rate"
             BEGIN
-                MENUITEM "0.25 x"                   ID_PLAY_PLAYBACKRATE_025
-                MENUITEM "0.50 x"                   ID_PLAY_PLAYBACKRATE_050
-                MENUITEM "0.75 x"                   ID_PLAY_PLAYBACKRATE_075
-                MENUITEM "0.90 x"                   ID_PLAY_PLAYBACKRATE_090
-                MENUITEM "1.00 x"                   ID_PLAY_PLAYBACKRATE_100
-                MENUITEM "1.10 x"                   ID_PLAY_PLAYBACKRATE_110
-                MENUITEM "1.25 x"                   ID_PLAY_PLAYBACKRATE_125
-                MENUITEM "1.50 x"                   ID_PLAY_PLAYBACKRATE_150
-                MENUITEM "2.00 x"                   ID_PLAY_PLAYBACKRATE_200
-                MENUITEM "3.00 x"                   ID_PLAY_PLAYBACKRATE_300
-                MENUITEM "4.00 x"                   ID_PLAY_PLAYBACKRATE_400
-                MENUITEM "6.00 x"                   ID_PLAY_PLAYBACKRATE_600
-                MENUITEM "8.00 x"                   ID_PLAY_PLAYBACKRATE_800
-                MENUITEM "24 fps"                   ID_PLAY_PLAYBACKRATE_FPS24
-                MENUITEM "25 fps"                   ID_PLAY_PLAYBACKRATE_FPS25
+                MENUITEM "0.25 x",                      ID_PLAY_PLAYBACKRATE_025
+                MENUITEM "0.50 x",                      ID_PLAY_PLAYBACKRATE_050
+                MENUITEM "0.75 x",                      ID_PLAY_PLAYBACKRATE_075
+                MENUITEM "0.90 x",                      ID_PLAY_PLAYBACKRATE_090
+                MENUITEM "1.00 x",                      ID_PLAY_PLAYBACKRATE_100
+                MENUITEM "1.10 x",                      ID_PLAY_PLAYBACKRATE_110
+                MENUITEM "1.25 x",                      ID_PLAY_PLAYBACKRATE_125
+                MENUITEM "1.50 x",                      ID_PLAY_PLAYBACKRATE_150
+                MENUITEM "2.00 x",                      ID_PLAY_PLAYBACKRATE_200
+                MENUITEM "3.00 x",                      ID_PLAY_PLAYBACKRATE_300
+                MENUITEM "4.00 x",                      ID_PLAY_PLAYBACKRATE_400
+                MENUITEM "6.00 x",                      ID_PLAY_PLAYBACKRATE_600
+                MENUITEM "8.00 x",                      ID_PLAY_PLAYBACKRATE_800
+                MENUITEM "24 fps",                      ID_PLAY_PLAYBACKRATE_FPS24
+                MENUITEM "25 fps",                      ID_PLAY_PLAYBACKRATE_FPS25
             END
             MENUITEM "&Decrease Rate",              ID_PLAY_DECRATE
             MENUITEM "&Increase Rate",              ID_PLAY_INCRATE
@@ -2480,9 +2485,17 @@ BEGIN
     IDS_PLAY_LOOPMODE_FILE  "File"
     IDS_SUBTITLES_DEFAULT_STYLE "&Default Style"
     IDS_PLAY_LOOPMODE_PLAYLIST "Playlist"
-    IDS_PLAY_LOOPMODE_AB    "A-B"
     IDS_FAVFILES            "Files"
     IDS_FAVDVDS             "DVDs"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_PLAYLOOPMODE_AB     "A-B Repeat: Reset Positions"
+    IDS_PLAY_LOOPMODE_AB    "A-B"
+    IDS_PLAYLOOPMODE_AB_MARK_A "A-B Repeat: Mark A Position"
+    IDS_PLAYLOOPMODE_AB_MARK_B "A-B Repeat: Mark B Position"
+    IDS_SNAPSHOT_SUBTITLES  "Include Subtitles"
 END
 
 STRINGTABLE
@@ -2501,9 +2514,6 @@ BEGIN
                             "If the rendering target is left undefined, SSA/ASS subtitles will be rendered relative to the video frame while all other text subtitles will be rendered relative to the window."
     IDS_PLAYLOOPMODE_PLAYLIST "Repeat Mode: Playlist"
     IDS_PLAYLOOPMODE_FILE   "Repeat Mode: File"
-    IDS_PLAYLOOPMODE_AB     "A-B Repeat: Reset Positions"
-    IDS_PLAYLOOPMODE_AB_MARK_A "A-B Repeat: Mark A Position"
-    IDS_PLAYLOOPMODE_AB_MARK_B "A-B Repeat: Mark B Position"
     IDS_PLAYLOOP_FOREVER_ON "Repeat Forever: On"
     IDS_PLAYLOOP_FOREVER_OFF "Repeat Forever: Off"
     IDS_PLAYLOOP_FOREVER    "Repeat Forever"
@@ -2651,6 +2661,7 @@ BEGIN
                             "This will fix the icons being incorrectly displayed after an update of the icon library.\nThe file associations will not be modified, only the corresponding icons will be refreshed."
     IDS_PPAGE_OUTPUT_OLDRENDERER "Old Video Renderer"
     IDS_PPAGE_OUTPUT_OVERLAYMIXER "Overlay Mixer Renderer"
+    IDS_ZOOM_25             "25%"
     IDS_PPAGE_OUTPUT_VMR9WINDOWED "Video Mixing Renderer 9 (windowed)"
     IDS_PPAGE_OUTPUT_VMR9RENDERLESS "Video Mixing Renderer 9 (renderless)"
     IDS_PPAGE_OUTPUT_EVR    "Enhanced Video Renderer"
@@ -2780,6 +2791,7 @@ BEGIN
     IDS_SRC_RFS             "Based on RARFileSource, doesn't support compressed files"
     IDS_INTERNAL_LAVF       "Uses LAV Filters"
     IDS_INTERNAL_LAVF_WMV   "Uses LAV Filters. Disabled by default since Microsoft filters are usually more stable for those formats.\nIf you choose to use the internal filters, enable them for both source and decoding to have a better playback experience."
+    IDS_AG_OPEN_FILE_LOCATION "Open File Location"
 END
 
 STRINGTABLE
@@ -2802,7 +2814,6 @@ STRINGTABLE
 BEGIN
     ID_PLAY_PLAY            "Play\nPlay"
     ID_PLAY_PAUSE           "Pause\nPause"
-    IDS_AG_OPEN_FILE_LOCATION "Open File Location"
     ID_PLAY_STOP            "Stop\nStop"
     ID_PLAY_FRAMESTEP       "Step\nStep"
     ID_PLAY_DECRATE         "Decrease speed\nDecrease speed"
@@ -3152,7 +3163,6 @@ BEGIN
     IDS_SUBDL_DLG_SUBS_AVAIL "%d subtitle(s) available."
     IDS_UPDATE_CONFIG_AUTO_CHECK 
                             "Do you want to check periodically for MPC-HC updates?\n\nThis feature can be disabled later from the Miscellaneous options page."
-    IDS_ZOOM_25             "25%"
     IDS_ZOOM_50             "50%"
     IDS_ZOOM_100            "100%"
     IDS_ZOOM_200            "200%"
@@ -3419,7 +3429,6 @@ BEGIN
     IDS_AG_TOGGLE_PLAYLIST  "Toggle Playlist Bar"
     IDS_AG_TOGGLE_CAPTURE   "Toggle Capture Bar"
     IDS_AG_TOGGLE_DEBUGSHADERS "Toggle Debug Shaders"
-    IDS_AG_ZOOM_25          "Zoom 25%"
     IDS_AG_ZOOM_50          "Zoom 50%"
     IDS_AG_ZOOM_100         "Zoom 100%"
     IDS_AG_ZOOM_200         "Zoom 200%"
@@ -3429,6 +3438,20 @@ BEGIN
     IDS_AG_VIDFRM_OUTSIDE   "VidFrm Outside"
     IDS_AG_PNS_RESET        "PnS Reset"
     IDS_AG_PNS_ROTATEX_P    "PnS Rotate X+"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_TIME_TOOLTIP_ABOVE  "Above seek bar"
+    IDS_TIME_TOOLTIP_BELOW  "Below seek bar"
+    IDS_VIDEO_STREAM        "Video: %s"
+    IDS_APPLY               "Apply"
+    IDS_CLEAR               "Clear"
+    IDS_CANCEL              "Cancel"
+    IDS_THUMB_THUMBNAILS    "Layout"
+    IDS_THUMB_PIXELS        "Pixels:"
+    IDS_TEXTFILE_ENC        "Encoding:"
+    IDS_AG_ZOOM_25          "Zoom 25%"
     IDS_AG_MOUSE_MODIFIER   "Mouse Modifier"
     IDS_AG_MOUSE_FS_MODIFIER "Mouse FS Modifier"
 END
@@ -3473,19 +3496,6 @@ BEGIN
     IDS_TOP_BACK_LEFT       "Top Back Left"
     IDS_TOP_BACK_CENTER     "Top Back Center"
     IDS_TOP_BACK_RIGHT      "Top Back Right"
-END
-
-STRINGTABLE
-BEGIN
-    IDS_TIME_TOOLTIP_ABOVE  "Above seek bar"
-    IDS_TIME_TOOLTIP_BELOW  "Below seek bar"
-    IDS_VIDEO_STREAM        "Video: %s"
-    IDS_APPLY               "Apply"
-    IDS_CLEAR               "Clear"
-    IDS_CANCEL              "Cancel"
-    IDS_THUMB_THUMBNAILS    "Layout"
-    IDS_THUMB_PIXELS        "Pixels:"
-    IDS_TEXTFILE_ENC        "Encoding:"
 END
 
 STRINGTABLE
@@ -3952,24 +3962,15 @@ BEGIN
                             "Modern seekbar height (at 96dpi, otherwise scaled)"
     IDS_PPAGEADVANCED_FULLSCREEN_DELAY 
                             "Delay before showing fullscreen video, to prevent visual glitches."
-    IDS_PPAGEADVANCED_SNAPSHOTSUBTITLES
-                            "Render subtitles onto screenshots"
+    IDS_PPAGEADVANCED_SNAPSHOTSUBTITLES "Render subtitles onto screenshots"
     IDS_PPAGEADVANCED_SNAPSHOTKEEPVIDEOEXTENSION 
                             "Keep video file extension as part of snapshot filenames (e.g., file.mkv.png)"
-    IDS_SNAPSHOT_SUBTITLES
-                            "Include Subtitles"
-    IDS_PRESIZE_SHADERS_ENABLED
-                            "Pre-Resize Pixel Shaders: on"
-    IDS_PRESIZE_SHADERS_DISABLED
-                            "Pre-Resize Pixel Shaders: off"
-    IDS_PRESIZE_SHADERS_TOGGLE
-                            "Enable Pre-Resize Pixel Shaders"
-    IDS_POSTSIZE_SHADERS_ENABLED
-                            "Post-Resize Pixel Shaders: on"
-    IDS_POSTSIZE_SHADERS_DISABLED
-                            "Post-Resize Pixel Shaders: off"
-    IDS_POSTSIZE_SHADERS_TOGGLE
-                            "Enable Post-Resize Pixel Shaders"
+    IDS_PRESIZE_SHADERS_ENABLED "Pre-Resize Pixel Shaders: on"
+    IDS_PRESIZE_SHADERS_DISABLED "Pre-Resize Pixel Shaders: off"
+    IDS_PRESIZE_SHADERS_TOGGLE "Enable Pre-Resize Pixel Shaders"
+    IDS_POSTSIZE_SHADERS_ENABLED "Post-Resize Pixel Shaders: on"
+    IDS_POSTSIZE_SHADERS_DISABLED "Post-Resize Pixel Shaders: off"
+    IDS_POSTSIZE_SHADERS_TOGGLE "Enable Post-Resize Pixel Shaders"
 END
 
 #endif    // English (United States) resources

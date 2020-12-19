@@ -799,6 +799,7 @@ CMainFrame::CMainFrame()
     , m_wndStatusBar(this)
     , m_wndSubresyncBar(this)
     , m_wndPlaylistBar(this)
+    , m_wndPreView(this)
     , m_wndCaptureBar(this)
     , m_wndNavigationBar(this)
     , m_pVideoWnd(nullptr)
@@ -837,6 +838,8 @@ CMainFrame::CMainFrame()
     , m_bToggleShaderScreenSpace(false)
     , m_MPLSPlaylist()
     , m_sydlLastProcessURL()
+    , m_bUseSeekPreview(false)
+
 {
     // Don't let CFrameWnd handle automatically the state of the menu items.
     // This means that menu items without handlers won't be automatically
@@ -927,6 +930,16 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
     }
     // Should never be RTLed
     m_wndView.ModifyStyleEx(WS_EX_LAYOUTRTL, WS_EX_NOINHERITLAYOUT);
+
+    // Create Preview Window
+    if (!m_wndPreView.CreateEx(WS_EX_TOPMOST, AfxRegisterWndClass(0), nullptr, WS_POPUP | WS_CLIPCHILDREN | WS_CLIPSIBLINGS, CRect(0, 0, 160, 109), this, 0)) {
+        TRACE(_T("Failed to create Preview Window"));
+        m_wndView.DestroyWindow();
+        return -1;
+    } else {
+        m_wndPreView.ShowWindow(SW_HIDE);
+        m_wndPreView.SetRelativeSize(AfxGetAppSettings().iSeekPreviewSize);
+    }
 
     // static bars
 
@@ -1086,6 +1099,8 @@ void CMainFrame::OnDestroy()
         }
         delete m_pFullscreenWnd;
     }
+
+	m_wndPreView.DestroyWindow();
 
     __super::OnDestroy();
 }
@@ -1696,6 +1711,7 @@ LRESULT CMainFrame::OnDpiChanged(WPARAM wParam, LPARAM lParam)
         MoveWindow(reinterpret_cast<RECT*>(lParam));
     }
     RecalcLayout();
+    m_wndPreView.ScaleFont();
     return 0;
 }
 
@@ -3752,6 +3768,17 @@ LRESULT CMainFrame::OnFilePostOpenmedia(WPARAM wParam, LPARAM lParam)
     if (GetPlaybackMode() != PM_DIGITAL_CAPTURE) {
         SendNowPlayingToSkype();
         SendNowPlayingToApi();
+    }
+
+    if (CanPreviewUse() && m_wndSeekBar.IsVisible()) {
+        CPoint point;
+        GetCursorPos(&point);
+
+        CRect rect;
+        m_wndSeekBar.GetWindowRect(&rect);
+        if (rect.PtInRect(point)) {
+            m_wndSeekBar.PreviewWindowShow();
+        }
     }
 
     return 0;
@@ -7867,6 +7894,12 @@ void CMainFrame::OnPlayStop()
             m_pDVDC->SetOption(DVD_ResetOnStop, TRUE);
             m_pMC->Stop();
             m_pDVDC->SetOption(DVD_ResetOnStop, FALSE);
+
+            if (m_bUseSeekPreview && m_pDVDC_preview) {
+                m_pDVDC_preview->SetOption(DVD_ResetOnStop, TRUE);
+                m_pMC_preview->Stop();
+                m_pDVDC_preview->SetOption(DVD_ResetOnStop, FALSE);
+            }
         } else if (GetPlaybackMode() == PM_DIGITAL_CAPTURE) {
             m_pMC->Stop();
             m_pDVBState->bActive = false;
@@ -10941,6 +10974,51 @@ void CMainFrame::MoveVideoWindow(bool fShowStats/* = false*/, bool bSetStoppedVi
     }
 }
 
+void CMainFrame::SetPreviewVideoPosition() {
+    if (m_bUseSeekPreview) {
+        CPoint point;
+        GetCursorPos(&point);
+        m_wndSeekBar.ScreenToClient(&point);
+        m_wndSeekBar.UpdateToolTipPosition(point);
+
+        CRect wr;
+        m_wndPreView.GetVideoRect(&wr);
+
+        const CSize ws(wr.Size());
+        int w = ws.cx;
+        int h = ws.cy;
+
+        const CSize arxy(GetVideoSize());
+        {
+            const int dh = ws.cy;
+            const int dw = MulDiv(dh, arxy.cx, arxy.cy);
+
+            int minw = dw;
+            int maxw = dw;
+            if (ws.cx < dw) {
+                minw = ws.cx;
+            } else if (ws.cx > dw) {
+                maxw = ws.cx;
+            }
+
+            const float scale = 1 / 3.0f;
+            w = minw + (maxw - minw) * scale;
+            h = MulDiv(w, arxy.cy, arxy.cx);
+        }
+
+        const CPoint pos(m_PosX * (wr.Width() * 3 - w) - wr.Width(), m_PosY * (wr.Height() * 3 - h) - wr.Height());
+        const CRect vr(pos, CSize(w, h));
+
+        if (m_pMFVDC_preview) {
+            m_pMFVDC_preview->SetVideoPosition(nullptr, wr);
+        }
+
+        m_pBV_preview->SetDefaultSourcePosition();
+        m_pBV_preview->SetDestinationPosition(vr.left, vr.top, vr.Width(), vr.Height());
+        m_pVW_preview->SetWindowPosition(wr.left, wr.top, wr.Width(), wr.Height());
+    }
+}
+
 void CMainFrame::HideVideoWindow(bool fHide)
 {
     CRect wr;
@@ -11590,6 +11668,15 @@ void CMainFrame::OpenCreateGraphObject(OpenMediaData* pOMD)
 
     const CAppSettings& s = AfxGetAppSettings();
 
+    m_pGB_preview = nullptr;
+    m_bUseSeekPreview = s.fSeekPreview;
+    if (OpenFileData* pFileData = dynamic_cast<OpenFileData*>(pOMD)) {
+        CString fn = pFileData->fns.GetHead();
+        if (!fn.IsEmpty() && (fn.Find(L"://") >= 0)) { // disable seek preview for streaming data.
+            m_bUseSeekPreview = false;
+        }
+    }
+
     if (auto pOpenFileData = dynamic_cast<OpenFileData*>(pOMD)) {
         engine_t engine = s.m_Formats.GetEngine(pOpenFileData->fns.GetHead());
 
@@ -11672,9 +11759,22 @@ void CMainFrame::OpenCreateGraphObject(OpenMediaData* pOMD)
 
         if (!m_fCustomGraph) {
             m_pGB = DEBUG_NEW CFGManagerPlayer(_T("CFGManagerPlayer"), nullptr, m_pVideoWnd->m_hWnd);
+
+            if (m_pGB && m_bUseSeekPreview) {
+                // build graph for preview
+                m_pGB_preview = DEBUG_NEW CFGManagerPlayer(L"CFGManagerPlayer", nullptr, m_wndPreView.GetVideoHWND(), true);
+            }
         }
     } else if (auto pOpenDVDData = dynamic_cast<OpenDVDData*>(pOMD)) {
         m_pGB = DEBUG_NEW CFGManagerDVD(_T("CFGManagerDVD"), nullptr, m_pVideoWnd->m_hWnd);
+
+        if (m_bUseSeekPreview) {
+            CString drive = pOpenDVDData->path.Left(2);
+            UINT type = GetDriveType(drive);
+            if (type != DRIVE_CDROM || IsDriveVirtual(drive)) { //no preview seeking for spinning disks
+                m_pGB_preview = DEBUG_NEW CFGManagerDVD(L"CFGManagerDVD", nullptr, m_wndPreView.GetVideoHWND(), true);
+            }
+        }
     } else if (auto pOpenDeviceData = dynamic_cast<OpenDeviceData*>(pOMD)) {
         if (s.iDefaultCaptureDevice == 1) {
             m_pGB = DEBUG_NEW CFGManagerBDA(_T("CFGManagerBDA"), nullptr, m_pVideoWnd->m_hWnd);
@@ -11687,6 +11787,10 @@ void CMainFrame::OpenCreateGraphObject(OpenMediaData* pOMD)
         throw (UINT)IDS_MAINFRM_80;
     }
 
+    if (!m_pGB_preview) {
+        m_bUseSeekPreview = false;
+    }
+
     m_pGB->AddToROT();
 
     m_pMC = m_pGB;
@@ -11696,6 +11800,19 @@ void CMainFrame::OpenCreateGraphObject(OpenMediaData* pOMD)
     m_pBV = m_pGB; // video
     m_pBA = m_pGB; // audio
     m_pFS = m_pGB;
+
+    if (m_bUseSeekPreview) {
+        m_pGB_preview->AddToROT();
+
+        m_pMC_preview = m_pGB_preview;
+        m_pME_preview = m_pGB_preview;
+        m_pMS_preview = m_pGB_preview; // general
+
+        m_pVW_preview = m_pGB_preview;
+        m_pBV_preview = m_pGB_preview;
+
+        m_pFS_preview = m_pGB_preview;
+    }
 
     if (!(m_pMC && m_pME && m_pMS)
             || !(m_pVW && m_pBV)
@@ -11735,6 +11852,121 @@ void CMainFrame::ShowMediaTypesDialog() {
         delete mediaTypesErrorDlg;
         mediaTypesErrorDlg = nullptr;
     }
+}
+
+HRESULT CMainFrame::PreviewWindowHide() {
+    HRESULT hr = S_OK;
+
+    if (!m_bUseSeekPreview) {
+        return E_FAIL;
+    }
+
+    if (m_wndPreView.IsWindowVisible()) {
+        // Disable animation
+        ANIMATIONINFO AnimationInfo;
+        AnimationInfo.cbSize = sizeof(ANIMATIONINFO);
+        ::SystemParametersInfo(SPI_GETANIMATION, sizeof(ANIMATIONINFO), &AnimationInfo, 0);
+        int WindowAnimationType = AnimationInfo.iMinAnimate;
+        AnimationInfo.iMinAnimate = 0;
+        ::SystemParametersInfo(SPI_SETANIMATION, sizeof(ANIMATIONINFO), &AnimationInfo, 0);
+
+        m_wndPreView.ShowWindow(SW_HIDE);
+
+        // Enable animation
+        AnimationInfo.iMinAnimate = WindowAnimationType;
+        ::SystemParametersInfo(SPI_SETANIMATION, sizeof(ANIMATIONINFO), &AnimationInfo, 0);
+
+        if (m_pGB_preview) {
+            m_pMC_preview->Pause();
+        }
+    }
+
+    return hr;
+}
+
+HRESULT CMainFrame::PreviewWindowShow(REFERENCE_TIME rtCur2) {
+    if (!CanPreviewUse()) {
+        return E_FAIL;
+    }
+
+    HRESULT hr = S_OK;
+    rtCur2 = GetClosestKeyFrame(rtCur2);
+
+    if (GetPlaybackMode() == PM_DVD && m_pDVDC_preview) {
+        DVD_PLAYBACK_LOCATION2 Loc, Loc2;
+        double fps = 0;
+
+        hr = m_pDVDI->GetCurrentLocation(&Loc);
+        if (FAILED(hr)) {
+            return hr;
+        }
+
+        hr = m_pDVDI_preview->GetCurrentLocation(&Loc2);
+
+        fps = Loc.TimeCodeFlags == DVD_TC_FLAG_25fps ? 25.0
+            : Loc.TimeCodeFlags == DVD_TC_FLAG_30fps ? 30.0
+            : Loc.TimeCodeFlags == DVD_TC_FLAG_DropFrame ? 29.97
+            : 25.0;
+
+        DVD_HMSF_TIMECODE dvdTo = RT2HMSF(rtCur2, fps);
+
+        if (FAILED(hr) || (Loc.TitleNum != Loc2.TitleNum)) {
+            hr = m_pDVDC_preview->PlayTitle(Loc.TitleNum, DVD_CMD_FLAG_Flush, nullptr);
+            if (FAILED(hr)) {
+                return hr;
+            }
+            m_pDVDC_preview->Resume(DVD_CMD_FLAG_Block | DVD_CMD_FLAG_Flush, nullptr);
+            if (SUCCEEDED(hr)) {
+                hr = m_pDVDC_preview->PlayAtTime(&dvdTo, DVD_CMD_FLAG_Flush, nullptr);
+                if (FAILED(hr)) {
+                    return hr;
+                }
+            } else {
+                hr = m_pDVDC_preview->PlayChapterInTitle(Loc.TitleNum, 1, DVD_CMD_FLAG_Block | DVD_CMD_FLAG_Flush, nullptr);
+                hr = m_pDVDC_preview->PlayAtTime(&dvdTo, DVD_CMD_FLAG_Flush, nullptr);
+                if (FAILED(hr)) {
+                    hr = m_pDVDC_preview->PlayAtTimeInTitle(Loc.TitleNum, &dvdTo, DVD_CMD_FLAG_Block | DVD_CMD_FLAG_Flush, nullptr);
+                    if (FAILED(hr)) {
+                        return hr;
+                    }
+                }
+            }
+        } else {
+            hr = m_pDVDC_preview->PlayAtTime(&dvdTo, DVD_CMD_FLAG_Flush, nullptr);
+            if (FAILED(hr)) {
+                return hr;
+            }
+        }
+
+        m_pDVDI_preview->GetCurrentLocation(&Loc2);
+
+        m_pMC_preview->Run();
+        Sleep(10);
+        m_pMC_preview->Pause();
+    } else if (GetPlaybackMode() == PM_FILE && m_pMS_preview) {
+        hr = m_pMS_preview->SetPositions(&rtCur2, AM_SEEKING_AbsolutePositioning, nullptr, AM_SEEKING_NoPositioning);
+    } else {
+        return E_FAIL;
+    }
+
+    if (FAILED(hr)) {
+        return hr;
+    }
+
+    /*
+    if (GetPlaybackMode() == PM_FILE) {
+        hr = pFS2 ? pFS2->Step(2, nullptr) : E_FAIL;
+        if (SUCCEEDED(hr)) {
+            Sleep(10);
+        }
+    }
+    */
+
+    if (!m_wndPreView.IsWindowVisible()) {
+        m_wndPreView.ShowWindow(SW_SHOWNOACTIVATE);
+    }
+
+    return hr;
 }
 
 // Called from GraphThread
@@ -11821,6 +12053,42 @@ void CMainFrame::OpenFile(OpenFileData* pOFD)
                 }
 
                 throw err;
+            }
+        }
+
+        if (m_bUseSeekPreview && bMainFile) {
+            bool bIsVideo = false;
+            BeginEnumFilters(m_pGB, pEF, pBF) {
+                // Checks if any Video Renderer is in the graph
+                if (IsVideoRenderer(pBF)) {
+                    bIsVideo = true;
+                    break;
+                }
+            }
+            EndEnumFilters;
+
+            if (!bIsVideo || FAILED(m_pGB_preview->RenderFile(fn, nullptr))) {
+                if (m_pGB_preview) {
+                    m_pMFVP_preview = nullptr;
+                    m_pMFVDC_preview = nullptr;
+
+                    m_pMC_preview.Release();
+                    m_pME_preview.Release();
+                    m_pMS_preview.Release();
+                    m_pVW_preview.Release();
+                    m_pBV_preview.Release();
+                    m_pFS_preview.Release();
+
+                    if (m_pDVDC_preview) {
+                        m_pDVDC_preview.Release();
+                        m_pDVDI_preview.Release();
+                    }
+
+                    m_pGB_preview->RemoveFromROT();
+                    m_pGB_preview.Release();
+                    m_pGB_preview = nullptr;
+                }
+                m_bUseSeekPreview = false;
             }
         }
 
@@ -12236,12 +12504,27 @@ void CMainFrame::OpenDVD(OpenDVDData* pODD)
         ShowMediaTypesDialog();
     }
 
+    if (SUCCEEDED(hr) && m_bUseSeekPreview) {
+        if (FAILED(hr = m_pGB_preview->RenderFile(pODD->path, nullptr))) {
+            m_bUseSeekPreview = false;
+        }
+    }
+
     BeginEnumFilters(m_pGB, pEF, pBF) {
         if ((m_pDVDC = pBF) && (m_pDVDI = pBF)) {
             break;
         }
     }
     EndEnumFilters;
+
+    if (m_bUseSeekPreview) {
+        BeginEnumFilters(m_pGB_preview, pEF, pBF) {
+            if ((m_pDVDC_preview = pBF) && (m_pDVDI_preview = pBF)) {
+                break;
+            }
+        }
+        EndEnumFilters;
+    }
 
     if (hr == E_INVALIDARG) {
         throw (UINT)IDS_MAINFRM_93;
@@ -12274,6 +12557,11 @@ void CMainFrame::OpenDVD(OpenDVDData* pODD)
     // TODO: resetdvd
     m_pDVDC->SetOption(DVD_ResetOnStop, FALSE);
     m_pDVDC->SetOption(DVD_HMSF_TimeCodeEvents, TRUE);
+
+    if (m_bUseSeekPreview && m_pDVDC_preview) {
+        m_pDVDC_preview->SetOption(DVD_ResetOnStop, FALSE);
+        m_pDVDC_preview->SetOption(DVD_HMSF_TimeCodeEvents, TRUE);
+    }
 
     if (s.idMenuLang) {
         m_pDVDC->SelectDefaultMenuLanguage(s.idMenuLang);
@@ -12616,6 +12904,11 @@ void CMainFrame::OpenSetupVideo()
         // 1. lets WM_SETCURSOR through (not needed as of now)
         // 2. allows CMouse::CursorOnWindow() to work with m_pVideoWnd
         pWnd->EnableWindow(FALSE);
+    }
+
+    if (m_bUseSeekPreview) {
+        m_pVW_preview->put_Owner((OAHWND)m_wndPreView.GetVideoHWND());
+        m_pVW_preview->put_WindowStyle(WS_CHILD | WS_CLIPSIBLINGS | WS_CLIPCHILDREN);
     }
 
     if (!m_fAudioOnly) {
@@ -13343,6 +13636,18 @@ bool CMainFrame::OpenMediaPrivate(CAutoPtr<OpenMediaData> pOMD)
         // COMMENTED OUT: does not work at this location, need to choose the correct mode (IMFVideoProcessor::SetVideoProcessorMode)
         //SetupEVRColorControl();
 
+        if (m_bUseSeekPreview) {
+            m_pGB_preview->FindInterface(IID_PPV_ARGS(&m_pMFVDC_preview), TRUE);
+            m_pGB_preview->FindInterface(IID_PPV_ARGS(&m_pMFVP_preview), TRUE);
+
+            if (m_pMFVDC_preview) {
+                RECT Rect;
+                m_wndPreView.GetClientRect(&Rect);
+                m_pMFVDC_preview->SetVideoWindow(m_wndPreView.GetVideoHWND());
+                m_pMFVDC_preview->SetVideoPosition(nullptr, &Rect);
+            }
+        }
+
         BeginEnumFilters(m_pGB, pEF, pBF) {
             if (m_pLN21 = pBF) {
                 m_pLN21->SetServiceState(s.fClosedCaptions ? AM_L21_CCSTATE_On : AM_L21_CCSTATE_Off);
@@ -13440,6 +13745,10 @@ bool CMainFrame::OpenMediaPrivate(CAutoPtr<OpenMediaData> pOMD)
         err = msg;
     } catch (UINT msg) {
         err.LoadString(msg);
+    }
+
+    if (m_bUseSeekPreview && m_pMC_preview) {
+        m_pMC_preview->Pause();
     }
 
     m_closingmsg = err;
@@ -13549,6 +13858,27 @@ void CMainFrame::CloseMediaPrivate()
     if (m_pGB) {
         m_pGB->RemoveFromROT();
         m_pGB.Release();
+    }
+
+    if (m_pGB_preview) {
+        PreviewWindowHide();
+        m_pMFVP_preview.Release();
+        m_pMFVDC_preview.Release();
+
+        m_pFS_preview.Release();
+        m_pMS_preview.Release();
+        m_pBV_preview.Release();
+        m_pVW_preview.Release();
+        m_pME_preview.Release();
+        m_pMC_preview.Release();
+
+        if (m_pDVDC_preview) {
+            m_pDVDC_preview.Release();
+            m_pDVDI_preview.Release();
+        }
+
+        m_pGB_preview->RemoveFromROT();
+        m_pGB_preview.Release();
     }
 
     m_pProv.Release();
@@ -15539,6 +15869,51 @@ bool CMainFrame::GetKeyFrame(REFERENCE_TIME rtTarget, REFERENCE_TIME rtMin, REFE
     return false;
 }
 
+bool CMainFrame::GetNeighbouringKeyFrames(REFERENCE_TIME rtTarget, std::pair<REFERENCE_TIME, REFERENCE_TIME>& keyframes) const {
+    bool ret = false;
+    REFERENCE_TIME rtLower, rtUpper;
+    if (!m_kfs.empty()) {
+        const auto cbegin = m_kfs.cbegin();
+        const auto cend = m_kfs.cend();
+        ASSERT(std::is_sorted(cbegin, cend));
+        auto upper = std::upper_bound(cbegin, cend, rtTarget);
+        if (upper == cbegin) {
+            // we assume that streams always start with keyframe
+            rtLower = *cbegin;
+            rtUpper = (++upper != cend) ? *upper : rtLower;
+        } else if (upper == cend) {
+            rtLower = rtUpper = *(--upper);
+        } else {
+            rtUpper = *upper;
+            rtLower = *(--upper);
+        }
+        ret = true;
+    } else {
+        rtLower = rtUpper = rtTarget;
+    }
+    keyframes = std::make_pair(rtLower, rtUpper);
+
+    return ret;
+}
+
+REFERENCE_TIME CMainFrame::GetClosestKeyFrame(REFERENCE_TIME rtTarget) {
+    REFERENCE_TIME rtStart, rtDuration;
+    m_wndSeekBar.GetRange(rtStart, rtDuration);
+    if (rtDuration && rtTarget >= rtDuration) {
+        return rtDuration;
+    }
+
+    LoadKeyFrames();
+
+    REFERENCE_TIME ret = rtTarget;
+    std::pair<REFERENCE_TIME, REFERENCE_TIME> keyframes;
+    if (GetNeighbouringKeyFrames(rtTarget, keyframes)) {
+        ret = (rtTarget - keyframes.first < keyframes.second - rtTarget) ? keyframes.first : keyframes.second;
+    }
+
+    return ret;
+}
+
 REFERENCE_TIME CMainFrame::GetClosestKeyFrame(REFERENCE_TIME rtTarget, REFERENCE_TIME rtMaxForwardDiff, REFERENCE_TIME rtMaxBackwardDiff) const
 {
     REFERENCE_TIME rtKeyframe;
@@ -16165,6 +16540,14 @@ void CMainFrame::SendStatusMessage(CString msg, int nTimeOut)
     m_timerOneTime.Subscribe(timerId, [this] { m_tempstatus_msg.Empty(); }, nTimeOut);
 
     m_Lcd.SetStatusMessage(msg, nTimeOut);
+}
+
+bool CMainFrame::CanPreviewUse() {
+    return (m_bUseSeekPreview
+        && m_eMediaLoadState == MLS::LOADED
+        && (GetPlaybackMode() == PM_DVD || GetPlaybackMode() == PM_FILE)
+        && !m_fAudioOnly
+        && AfxGetAppSettings().fSeekPreview);
 }
 
 void CMainFrame::OpenCurPlaylistItem(REFERENCE_TIME rtStart, bool reopen)
@@ -18897,6 +19280,21 @@ void CMainFrame::OnSettingChange(UINT uFlags, LPCTSTR lpszSection)
         }
         RecalcLayout();
     }
+}
+
+BOOL CMainFrame::OnMouseWheel(UINT nFlags, short zDelta, CPoint point) {
+    if (m_wndPreView.IsWindowVisible()) {
+
+        int seek =
+            nFlags == MK_SHIFT ? 10 :
+            nFlags == MK_CONTROL ? 1 : 5;
+
+        zDelta > 0 ? SetCursorPos(point.x + seek, point.y) :
+            zDelta < 0 ? SetCursorPos(point.x - seek, point.y) : SetCursorPos(point.x, point.y);
+
+        return 0;
+    }
+    return __super::OnMouseWheel(nFlags, zDelta, point);
 }
 
 void CMainFrame::OnMouseHWheel(UINT nFlags, short zDelta, CPoint pt) {

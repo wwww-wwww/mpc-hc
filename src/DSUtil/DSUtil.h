@@ -77,6 +77,7 @@ enum OpticalDiskType_t {
 extern OpticalDiskType_t GetOpticalDiskType(TCHAR drive, CAtlList<CString>& files);
 extern CString GetDriveLabel(TCHAR drive);
 extern CString GetDriveLabel(CPath path);
+bool IsDriveVirtual(CString drive);
 extern bool GetKeyFrames(CString fn, CUIntArray& kfs);
 extern DVD_HMSF_TIMECODE RT2HMSF(REFERENCE_TIME rt, double fps = 0.0); // used to remember the current position
 extern DVD_HMSF_TIMECODE RT2HMS(REFERENCE_TIME rt);

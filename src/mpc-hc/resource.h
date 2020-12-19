@@ -699,6 +699,7 @@
 #define IDC_ASSOCIATE_VIDEO_FORMATS     22083
 #define IDC_ASSOCIATE_AUDIO_FORMATS     22084
 #define IDC_CLEAR_ALL_ASSOCIATIONS      22085
+#define IDC_SEEK_PREVIEW                22086
 #define ID_SUB_DELAY_DOWN               24000
 #define ID_SUB_DELAY_UP                 24001
 #define IDS_MPLAYERC_104                24002
@@ -1648,7 +1649,6 @@
 #define IDS_POSTSIZE_SHADERS_DISABLED   57564
 #define IDS_POSTSIZE_SHADERS_TOGGLE     57565
 #define IDS_AG_POSTSIZE_SHADERS_TOGGLE  57566
-
 
 // Next default values for new objects
 // 

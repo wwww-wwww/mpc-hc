@@ -3008,7 +3008,7 @@ void AssFlatten(ASS_Image* image, SubPicDesc& spd, CRect &rcDirty) {
 STDMETHODIMP CRenderedTextSubtitle::Render(SubPicDesc& spd, REFERENCE_TIME rt, double fps, RECT& bbox)
 {
     CAutoLock cAutoLock(&renderLock);
-    TRACE(_T("render sub start: %lld\n"), rt);
+    //TRACE(_T("render sub start: %lld\n"), rt);
 
 #if USE_LIBASS
     if (m_assloaded) {
@@ -3049,7 +3049,7 @@ STDMETHODIMP CRenderedTextSubtitle::Render(SubPicDesc& spd, REFERENCE_TIME rt, d
     int segment;
     const STSSegment* stss = SearchSubs(rt, fps, &segment);
     if (!stss) {
-        TRACE(_T("render sub skipped: %lld\n"), rt);
+        //TRACE(_T("render sub skipped: %lld\n"), rt);
         return S_FALSE;
     }
 
@@ -3322,7 +3322,7 @@ STDMETHODIMP CRenderedTextSubtitle::Render(SubPicDesc& spd, REFERENCE_TIME rt, d
 
     bbox = bbox2;
 
-    TRACE(_T("render sub done: %lld\n"), rt);
+    //TRACE(_T("render sub done: %lld\n"), rt);
     return (subs.GetCount() && !bbox2.IsRectEmpty()) ? S_OK : S_FALSE;
 }
 

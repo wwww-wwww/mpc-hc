@@ -605,6 +605,9 @@
     <ClCompile Include="CMPCThemeInternalPropertyPageWnd.cpp">
       <Filter>MPCTheme</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerPreView.cpp">
+      <Filter>Toolbars</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AppSettings.h">
@@ -1142,6 +1145,9 @@
     <ClInclude Include="ColorProfileUtil.h" />
     <ClInclude Include="CMPCThemeInternalPropertyPageWnd.h">
       <Filter>MPCTheme</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerPreView.h">
+      <Filter>Toolbars</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

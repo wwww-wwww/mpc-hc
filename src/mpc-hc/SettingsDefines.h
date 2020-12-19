@@ -282,6 +282,9 @@
 
 #define IDS_RS_LCD_SUPPORT                  _T("LcdSupport")
 
+#define IDS_RS_SEEKPREVIEW                    _T("UseSeekPreview")
+#define IDS_RS_SEEKPREVIEW_SIZE               _T("SeekPreviewSize")
+
 #define IDS_RS_TOGGLESHADER                 _T("PreSizeShadersEnabled")
 #define IDS_RS_TOGGLESHADERSSCREENSPACE     _T("PostSizeShadersEnabled")
 

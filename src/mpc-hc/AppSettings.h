@@ -734,6 +734,8 @@ public:
     bool            fPreventMinimize;
     bool            bUseEnhancedTaskBar;
     bool            fLCDSupport;
+    bool            fSeekPreview;
+    int             iSeekPreviewSize;
     bool            fUseSearchInFolder;
     bool            fUseTimeTooltip;
     int             nTimeTooltipPosition;

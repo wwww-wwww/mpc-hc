@@ -49,8 +49,9 @@
 CList<const IBaseFilter*> CFGFilterLAV::s_instances;
 QWORD CFGFilterLAV::lav_version = 0;
 
-CFGFilterLAV::CFGFilterLAV(const CLSID& clsid, CString path, CStringW name, bool bAddLowMeritSuffix, UINT64 merit)
-    : CFGFilterFile(clsid, path, name + (bAddLowMeritSuffix ? LowMeritSuffix : L""), merit)
+CFGFilterLAV::CFGFilterLAV(const CLSID& clsid, CString path, CStringW name, bool bAddLowMeritSuffix, UINT64 merit, bool bIsPreview)   
+    : isPreview(bIsPreview)
+    , CFGFilterFile(clsid, path, name + (bAddLowMeritSuffix ? LowMeritSuffix : L""), merit)
 {
 }
 
@@ -147,7 +148,7 @@ CString CFGFilterLAV::GetVersion(LAVFILTER_TYPE filterType /*= INVALID*/)
     return version;
 }
 
-CFGFilterLAV* CFGFilterLAV::CreateFilter(LAVFILTER_TYPE filterType, UINT64 merit /*= MERIT64_DO_USE*/, bool bAddLowMeritSuffix /*= false*/)
+CFGFilterLAV* CFGFilterLAV::CreateFilter(LAVFILTER_TYPE filterType, UINT64 merit /*= MERIT64_DO_USE*/, bool bAddLowMeritSuffix /*= false*/, bool bIsPreview /*= false*/)
 {
     CFGFilterLAV* filter = nullptr;
 
@@ -155,16 +156,16 @@ CFGFilterLAV* CFGFilterLAV::CreateFilter(LAVFILTER_TYPE filterType, UINT64 merit
 
     switch (filterType) {
         case SPLITTER:
-            filter = DEBUG_NEW CFGFilterLAVSplitter(filterPath, merit, bAddLowMeritSuffix);
+            filter = DEBUG_NEW CFGFilterLAVSplitter(filterPath, merit, bAddLowMeritSuffix, bIsPreview);
             break;
         case SPLITTER_SOURCE:
-            filter = DEBUG_NEW CFGFilterLAVSplitterSource(filterPath, merit, bAddLowMeritSuffix);
+            filter = DEBUG_NEW CFGFilterLAVSplitterSource(filterPath, merit, bAddLowMeritSuffix, bIsPreview);
             break;
         case VIDEO_DECODER:
-            filter = DEBUG_NEW CFGFilterLAVVideo(filterPath, merit, bAddLowMeritSuffix);
+            filter = DEBUG_NEW CFGFilterLAVVideo(filterPath, merit, bAddLowMeritSuffix, bIsPreview);
             break;
         case AUDIO_DECODER:
-            filter = DEBUG_NEW CFGFilterLAVAudio(filterPath, merit, bAddLowMeritSuffix);
+            filter = DEBUG_NEW CFGFilterLAVAudio(filterPath, merit, bAddLowMeritSuffix, bIsPreview);
             break;
         default:
             ASSERT(FALSE); // This should never happen
@@ -173,6 +174,13 @@ CFGFilterLAV* CFGFilterLAV::CreateFilter(LAVFILTER_TYPE filterType, UINT64 merit
 
     return filter;
 }
+
+CFGFilterLAV* CFGFilterLAV::CreateFilterPreview(LAVFILTER_TYPE filterType, UINT64 merit /*= MERIT64_DO_USE*/, bool bAddLowMeritSuffix /*= false*/) {
+    CFGFilterLAV* filter = CreateFilter(filterType, merit, bAddLowMeritSuffix, true);
+
+    return filter;
+}
+
 
 bool CFGFilterLAV::IsInternalInstance(IBaseFilter* pBF, LAVFILTER_TYPE* pLAVFilterType /*= nullptr*/)
 {
@@ -250,8 +258,8 @@ HRESULT CFGFilterLAV::PropertyPageCallback(IBaseFilter* pBF)
 
 const CString CFGFilterLAVSplitterBase::filename = _T("LAVSplitter.ax");
 
-CFGFilterLAVSplitterBase::CFGFilterLAVSplitterBase(CString path, const CLSID& clsid, CStringW name, bool bAddLowMeritSuffix, UINT64 merit)
-    : CFGFilterLAV(clsid, path, name, bAddLowMeritSuffix, merit)
+CFGFilterLAVSplitterBase::CFGFilterLAVSplitterBase(CString path, const CLSID& clsid, CStringW name, bool bAddLowMeritSuffix, UINT64 merit, bool bIsPreview)
+    : CFGFilterLAV(clsid, path, name, bAddLowMeritSuffix, merit, bIsPreview)
 {
 }
 
@@ -267,10 +275,12 @@ HRESULT CFGFilterLAVSplitterBase::Create(IBaseFilter** ppBF, CInterfaceList<IUnk
             hr = pLAVFSettings->SetRuntimeConfig(TRUE);
 
             if (SUCCEEDED(hr)) {
-                Settings settings;
-                if (settings.GetSettings(pLAVFSettings)) { // Get default settings from LAVSplitter
-                    settings.LoadSettings(); // Load our current settings from registry/ini
-                    settings.SetSettings(pLAVFSettings); // Set our settings in LAVSplitter
+                if (!isPreview) {
+                    Settings settings;
+                    if (settings.GetSettings(pLAVFSettings)) { // Get default settings from LAVSplitter
+                        settings.LoadSettings(); // Load our current settings from registry/ini
+                        settings.SetSettings(pLAVFSettings); // Set our settings in LAVSplitter
+                    }
                 }
 
                 SetEnabledDisabledFormats(pLAVFSettings);
@@ -497,8 +507,8 @@ bool CFGFilterLAVSplitterBase::Settings::SetSettings(CComQIPtr<ILAVFSettings> pL
 // CFGFilterLAVSplitter
 //
 
-CFGFilterLAVSplitter::CFGFilterLAVSplitter(CString path, UINT64 merit /*= MERIT64_DO_USE*/, bool bAddLowMeritSuffix /*= false*/)
-    : CFGFilterLAVSplitterBase(path, GUID_LAVSplitter, L"LAV Splitter (internal)", bAddLowMeritSuffix, merit)
+CFGFilterLAVSplitter::CFGFilterLAVSplitter(CString path, UINT64 merit /*= MERIT64_DO_USE*/, bool bAddLowMeritSuffix /*= false*/, bool bIsPreview /*= false*/)
+    : CFGFilterLAVSplitterBase(path, GUID_LAVSplitter, L"LAV Splitter (internal)", bAddLowMeritSuffix, merit, bIsPreview)
 {
 }
 
@@ -506,8 +516,8 @@ CFGFilterLAVSplitter::CFGFilterLAVSplitter(CString path, UINT64 merit /*= MERIT6
 // CFGFilterLAVSplitterSource
 //
 
-CFGFilterLAVSplitterSource::CFGFilterLAVSplitterSource(CString path, UINT64 merit /*= MERIT64_DO_USE*/, bool bAddLowMeritSuffix /*= false*/)
-    : CFGFilterLAVSplitterBase(path, GUID_LAVSplitterSource, L"LAV Splitter Source (internal)", bAddLowMeritSuffix, merit)
+CFGFilterLAVSplitterSource::CFGFilterLAVSplitterSource(CString path, UINT64 merit /*= MERIT64_DO_USE*/, bool bAddLowMeritSuffix /*= false*/, bool bIsPreview /*= false*/)
+    : CFGFilterLAVSplitterBase(path, GUID_LAVSplitterSource, L"LAV Splitter Source (internal)", bAddLowMeritSuffix, merit, bIsPreview)
 {
 }
 
@@ -517,8 +527,8 @@ CFGFilterLAVSplitterSource::CFGFilterLAVSplitterSource(CString path, UINT64 meri
 
 const CString CFGFilterLAVVideo::filename = _T("LAVVideo.ax");
 
-CFGFilterLAVVideo::CFGFilterLAVVideo(CString path, UINT64 merit /*= MERIT64_DO_USE*/, bool bAddLowMeritSuffix /*= false*/)
-    : CFGFilterLAV(GUID_LAVVideo, path, L"LAV Video Decoder (internal)", bAddLowMeritSuffix, merit)
+CFGFilterLAVVideo::CFGFilterLAVVideo(CString path, UINT64 merit /*= MERIT64_DO_USE*/, bool bAddLowMeritSuffix /*= false*/, bool bIsPreview /*= false*/)
+    : CFGFilterLAV(GUID_LAVVideo, path, L"LAV Video Decoder (internal)", bAddLowMeritSuffix, merit, bIsPreview)
 {
 }
 
@@ -534,12 +544,13 @@ HRESULT CFGFilterLAVVideo::Create(IBaseFilter** ppBF, CInterfaceList<IUnknown, &
             hr = pLAVFSettings->SetRuntimeConfig(TRUE);
 
             if (SUCCEEDED(hr)) {
-                Settings settings;
-                if (settings.GetSettings(pLAVFSettings)) { // Get default settings from LAVVideo
-                    settings.LoadSettings(); // Load our current settings from registry/ini
-                    settings.SetSettings(pLAVFSettings); // Set our settings in LAVVideo
+                if (!isPreview) {
+                    Settings settings;
+                    if (settings.GetSettings(pLAVFSettings)) { // Get default settings from LAVVideo
+                        settings.LoadSettings(); // Load our current settings from registry/ini
+                        settings.SetSettings(pLAVFSettings); // Set our settings in LAVVideo
+                    }
                 }
-
                 // Keep track of LAVFilters instances in runtime mode
                 s_instances.AddTail(*ppBF);
             }
@@ -840,8 +851,8 @@ bool CFGFilterLAVVideo::Settings::SetSettings(CComQIPtr<ILAVVideoSettings> pLAVF
 
 const CString CFGFilterLAVAudio::filename = _T("LAVAudio.ax");
 
-CFGFilterLAVAudio::CFGFilterLAVAudio(CString path, UINT64 merit /*= MERIT64_DO_USE*/, bool bAddLowMeritSuffix /*= false*/)
-    : CFGFilterLAV(GUID_LAVAudio, path, L"LAV Audio Decoder (internal)", bAddLowMeritSuffix, merit)
+CFGFilterLAVAudio::CFGFilterLAVAudio(CString path, UINT64 merit /*= MERIT64_DO_USE*/, bool bAddLowMeritSuffix /*= false*/, bool bIsPreview /*= false*/)
+    : CFGFilterLAV(GUID_LAVAudio, path, L"LAV Audio Decoder (internal)", bAddLowMeritSuffix, merit, bIsPreview)
 {
 }
 
@@ -857,12 +868,13 @@ HRESULT CFGFilterLAVAudio::Create(IBaseFilter** ppBF, CInterfaceList<IUnknown, &
             hr = pLAVFSettings->SetRuntimeConfig(TRUE);
 
             if (SUCCEEDED(hr)) {
-                Settings settings;
-                if (settings.GetSettings(pLAVFSettings)) { // Get default settings from LAVAudio
-                    settings.LoadSettings(); // Load our current settings from registry/ini
-                    settings.SetSettings(pLAVFSettings); // Set our settings in LAVAudio
+                if (!isPreview) {
+                    Settings settings;
+                    if (settings.GetSettings(pLAVFSettings)) { // Get default settings from LAVAudio
+                        settings.LoadSettings(); // Load our current settings from registry/ini
+                        settings.SetSettings(pLAVFSettings); // Set our settings in LAVAudio
+                    }
                 }
-
                 // Keep track of LAVFilters instances in runtime mode
                 s_instances.AddTail(*ppBF);
             }

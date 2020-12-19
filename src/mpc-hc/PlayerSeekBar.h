@@ -42,6 +42,8 @@ private:
 
     CMainFrame* m_pMainFrame;
     REFERENCE_TIME m_rtStart, m_rtStop, m_rtPos;
+	REFERENCE_TIME m_pos_preview = 0;
+
     bool m_bEnabled;
     bool m_bHasDuration;
     REFERENCE_TIME m_rtHoverPos;
@@ -86,12 +88,13 @@ private:
     CRect GetInnerThumbRect(bool bEnabled, const CRect& thumbRect) const;
 
     void UpdateTooltip(const CPoint& point);
-    void UpdateToolTipPosition();
     void UpdateToolTipText();
+    void SetPosInternalPreview(const REFERENCE_TIME pos);
 
 public:
     void Enable(bool bEnable);
     void HideToolTip();
+    void UpdateToolTipPosition(CPoint point);
 
     void GetRange(REFERENCE_TIME& rtStart, REFERENCE_TIME& rtStop) const;
     void SetRange(REFERENCE_TIME rtStart, REFERENCE_TIME rtStop);
@@ -103,6 +106,9 @@ public:
     void RemoveChapters();
 
     bool DraggingThumb();
+    void PreviewWindowShow();
+    void MoveThumbPreview(const CPoint point);
+    REFERENCE_TIME CalculatePosition(const CPoint point);
 
 private:
     DECLARE_MESSAGE_MAP()
@@ -114,6 +120,7 @@ private:
     afx_msg void OnXButtonDown(UINT nFlags, UINT nButton, CPoint point);
     afx_msg void OnXButtonUp(UINT nFlags, UINT nButton, CPoint point);
     afx_msg void OnXButtonDblClk(UINT nFlags, UINT nButton, CPoint point);
+    afx_msg void OnMButtonDown(UINT nFlags, CPoint point);
     afx_msg void OnMouseMove(UINT nFlags, CPoint point);
     afx_msg BOOL OnEraseBkgnd(CDC* pDC);
     afx_msg BOOL OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message);

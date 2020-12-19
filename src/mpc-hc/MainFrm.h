@@ -38,6 +38,7 @@
 #include "PlayerSeekBar.h"
 #include "PlayerStatusBar.h"
 #include "PlayerSubresyncBar.h"
+#include "PlayerPreView.h"
 #include "PlayerToolBar.h"
 #include "SubtitleDlDlg.h"
 #include "SubtitleUpDlg.h"
@@ -223,6 +224,19 @@ private:
     CComQIPtr<IQualProp, &IID_IQualProp> m_pQP;
     CComQIPtr<IBufferInfo> m_pBI;
     CComQIPtr<IAMOpenProgress> m_pAMOP;
+    // SmarkSeek
+    CComPtr<IGraphBuilder2>         m_pGB_preview;
+    CComQIPtr<IMediaControl>        m_pMC_preview;
+    CComQIPtr<IMediaEventEx>        m_pME_preview;
+    CComQIPtr<IMediaSeeking>        m_pMS_preview;
+    CComQIPtr<IVideoWindow>         m_pVW_preview;
+    CComQIPtr<IBasicVideo>          m_pBV_preview;
+    CComQIPtr<IVideoFrameStep>      m_pFS_preview;
+    CComQIPtr<IDvdControl2>         m_pDVDC_preview;
+    CComQIPtr<IDvdInfo2>            m_pDVDI_preview; // VtX: usually not necessary but may sometimes be necessary.
+    CComPtr<IMFVideoDisplayControl> m_pMFVDC_preview;
+    CComPtr<IMFVideoProcessor>      m_pMFVP_preview;
+    //
     CComPtr<IVMRMixerControl9> m_pVMRMC;
     CComPtr<IMFVideoDisplayControl> m_pMFVDC;
     CComPtr<IMFVideoProcessor> m_pMFVP;
@@ -456,6 +470,7 @@ public:
     CControlBar* m_pLastBar;
 
 protected:
+    bool m_bUseSeekPreview;
     bool m_bFirstPlay;
     bool m_bOpeningInAutochangedMonitorMode;
     bool m_bPausedForAutochangeMonitorMode;
@@ -555,6 +570,8 @@ public:
     void ToggleFullscreen(bool fToNearest, bool fSwitchScreenResWhenHasTo);
     void ToggleD3DFullscreen(bool fSwitchScreenResWhenHasTo);
     void MoveVideoWindow(bool fShowStats = false, bool bSetStoppedVideoRect = false);
+    void SetPreviewVideoPosition();
+
     void RepaintVideo();
     void HideVideoWindow(bool fHide);
 
@@ -563,6 +580,8 @@ public:
     REFERENCE_TIME GetDur() const;
     bool GetKeyFrame(REFERENCE_TIME rtTarget, REFERENCE_TIME rtMin, REFERENCE_TIME rtMax, bool nearest, REFERENCE_TIME& keyframetime) const;
     REFERENCE_TIME GetClosestKeyFrame(REFERENCE_TIME rtTarget, REFERENCE_TIME rtMaxForwardDiff, REFERENCE_TIME rtMaxBackwardDiff) const;
+    bool GetNeighbouringKeyFrames(REFERENCE_TIME rtTarget, std::pair<REFERENCE_TIME, REFERENCE_TIME>& keyframes) const;
+    REFERENCE_TIME GetClosestKeyFrame(REFERENCE_TIME rtTarget);
     void SeekTo(REFERENCE_TIME rt, bool bShowOSD = true);
     void SetPlayingRate(double rate);
 
@@ -747,6 +766,7 @@ public:
     afx_msg void SaveAppSettings();
 
     afx_msg LRESULT OnNcHitTest(CPoint point);
+	afx_msg BOOL OnMouseWheel(UINT nFlags, short zDelta, CPoint pt);
 
     afx_msg void OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
 
@@ -1048,7 +1068,12 @@ public:
     CMPC_Lcd m_Lcd;
 
     // ==== Added by CASIMIR666
-    CWnd*           m_pVideoWnd;            // Current Video (main display screen or 2nd)
+    CWnd*       m_pVideoWnd;            // Current Video (main display screen or 2nd)
+    CPreView    m_wndPreView;           // SeekPreview
+    HRESULT PreviewWindowHide();
+    HRESULT PreviewWindowShow(REFERENCE_TIME rtCur2);
+    bool CanPreviewUse();
+
     CFullscreenWnd* m_pFullscreenWnd;
     CVMROSD     m_OSD;
     bool        m_bOSDDisplayTime;

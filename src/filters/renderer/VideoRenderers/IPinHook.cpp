@@ -151,8 +151,8 @@ static HRESULT(STDMETHODCALLTYPE* NewSegmentOrg)(IPinC* This, /* [in] */ REFEREN
 
 static HRESULT STDMETHODCALLTYPE NewSegmentMine(IPinC* This, /* [in] */ REFERENCE_TIME tStart, /* [in] */ REFERENCE_TIME tStop, /* [in] */ double dRate)
 {
-    g_tSegmentStart = tStart;
     if (g_pPinC == This) {
+        g_tSegmentStart = tStart;
         g_dRate = dRate;
     }
 
