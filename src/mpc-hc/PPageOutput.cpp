@@ -298,11 +298,13 @@ BOOL CPPageOutput::OnInitDialog()
         }
 
         CString sName(StrRes(resName));
-        if (!s.IsVideoRendererAvailable(nID)) {
-            sName.AppendFormat(_T("   %s"), ResStr(IDS_PPAGE_OUTPUT_UNAVAILABLE).GetString());
+        bool available = s.IsVideoRendererAvailable(nID);
+        if (m_iDSVideoRendererType == nID || available) {
+            if (!available) {
+                sName.AppendFormat(_T("   %s"), ResStr(IDS_PPAGE_OUTPUT_UNAVAILABLE).GetString());
+            }
+            m_iDSVideoRendererTypeCtrl.SetItemData(m_iDSVideoRendererTypeCtrl.AddString(sName), nID);
         }
-
-        m_iDSVideoRendererTypeCtrl.SetItemData(m_iDSVideoRendererTypeCtrl.AddString(sName), nID);
     };
 
     CComboBox& m_iDSVRTC = m_iDSVideoRendererTypeCtrl;
