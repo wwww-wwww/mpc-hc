@@ -12326,7 +12326,7 @@ void CMainFrame::SetupChapters()
     }
 
     CPlaylistItem* pli = m_wndPlaylistBar.GetCur();
-    if (pli->m_cue) {
+    if (pli && pli->m_cue) {
         SetupCueChapters(pli->m_cue_filename);
     }
 
