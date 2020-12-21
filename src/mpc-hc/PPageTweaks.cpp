@@ -192,11 +192,6 @@ BOOL CPPageTweaks::OnApply()
     s.nOSDSize = m_nOSDSize;
     m_FontType.GetLBText(m_FontType.GetCurSel(), s.strOSDFont);
 
-    s.fSeekPreview = !!m_fSeekPreview;
-    s.iSeekPreviewSize = m_iSeekPreviewSize;
-    s.bFastSeek = !!m_fFastSeek;
-    s.eFastSeekMethod = static_cast<decltype(s.eFastSeekMethod)>(m_FastSeekMethod.GetCurSel());
-
     s.bHideWindowedMousePointer = !!m_bHideWindowedMousePointer;
 
     s.fShowChapters = !!m_fShowChapters;
@@ -208,6 +203,14 @@ BOOL CPPageTweaks::OnApply()
         pFrame->CreateThumbnailToolbar();
     }
     pFrame->UpdateThumbarButton();
+
+    s.fSeekPreview = !!m_fSeekPreview;
+    if (s.iSeekPreviewSize != m_iSeekPreviewSize) {
+        s.iSeekPreviewSize = m_iSeekPreviewSize;
+        pFrame->m_wndPreView.SetRelativeSize(m_iSeekPreviewSize);
+    }
+    s.bFastSeek = !!m_fFastSeek;
+    s.eFastSeekMethod = static_cast<decltype(s.eFastSeekMethod)>(m_FastSeekMethod.GetCurSel());
 
     // There is no main frame when the option dialog is displayed stand-alone
     if (CMainFrame* pMainFrame = AfxGetMainFrame()) {
