@@ -16799,7 +16799,7 @@ void CMainFrame::CloseMedia(bool bNextIsQueued/* = false*/)
     OnPlayStop();
 
     // clear any active osd messages
-    m_OSD.ClearMessage();
+    //m_OSD.ClearMessage();
 
     // Ensure the dynamically added menu items are cleared and all references
     // on objects belonging to the DirectShow graph they might hold are freed.
