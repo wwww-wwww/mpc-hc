@@ -74,10 +74,6 @@ msgctxt "IDS_PLAY_LOOPMODE_PLAYLIST"
 msgid "Playlist"
 msgstr "Плейлист"
 
-msgctxt "IDS_PLAY_LOOPMODE_AB"
-msgid "A-B"
-msgstr "A-B"
-
 msgctxt "IDS_FAVFILES"
 msgid "Files"
 msgstr "Файлове"
@@ -85,6 +81,26 @@ msgstr "Файлове"
 msgctxt "IDS_FAVDVDS"
 msgid "DVDs"
 msgstr "DVD-та"
+
+msgctxt "IDS_PLAYLOOPMODE_AB"
+msgid "A-B Repeat: Reset Positions"
+msgstr "A-B Повторение: Изчисти позицийте"
+
+msgctxt "IDS_PLAY_LOOPMODE_AB"
+msgid "A-B"
+msgstr "A-B"
+
+msgctxt "IDS_PLAYLOOPMODE_AB_MARK_A"
+msgid "A-B Repeat: Mark A Position"
+msgstr "A-B Повторение: Маркирай позиция А"
+
+msgctxt "IDS_PLAYLOOPMODE_AB_MARK_B"
+msgid "A-B Repeat: Mark B Position"
+msgstr "A-B Повторение: Маркирай позиция В"
+
+msgctxt "IDS_SNAPSHOT_SUBTITLES"
+msgid "Include Subtitles"
+msgstr "Включи субтитри"
 
 msgctxt "IDS_INFOBAR_CHANNEL"
 msgid "Channel"
@@ -143,18 +159,6 @@ msgstr "Режим на повторение: Плейлист"
 msgctxt "IDS_PLAYLOOPMODE_FILE"
 msgid "Repeat Mode: File"
 msgstr "Режим на повторение: Файл"
-
-msgctxt "IDS_PLAYLOOPMODE_AB"
-msgid "A-B Repeat: Reset Positions"
-msgstr "A-B Повторение: Изчисти позицийте"
-
-msgctxt "IDS_PLAYLOOPMODE_AB_MARK_A"
-msgid "A-B Repeat: Mark A Position"
-msgstr "A-B Повторение: Маркирай позиция А"
-
-msgctxt "IDS_PLAYLOOPMODE_AB_MARK_B"
-msgid "A-B Repeat: Mark B Position"
-msgstr "A-B Повторение: Маркирай позиция В"
 
 msgctxt "IDS_PLAYLOOP_FOREVER_ON"
 msgid "Repeat Forever: On"
@@ -584,6 +588,10 @@ msgctxt "IDS_PPAGE_OUTPUT_OVERLAYMIXER"
 msgid "Overlay Mixer Renderer"
 msgstr "Overlay Mixer Renderer"
 
+msgctxt "IDS_ZOOM_25"
+msgid "25%"
+msgstr "25%"
+
 msgctxt "IDS_PPAGE_OUTPUT_VMR9WINDOWED"
 msgid "Video Mixing Renderer 9 (windowed)"
 msgstr "Video Mixing Renderer 9 (windowed)"
@@ -998,6 +1006,10 @@ msgstr ""
 "Ползва LAV Filters. Изключен по подразбиране защото филтрите на Microsoft обикновено за по-стабилни за тези формати.\n"
 "Ако изберете да ползвате вътрешните филтри включете двата и за източник и за декодиране за по-добро възпройзвеждане."
 
+msgctxt "IDS_AG_OPEN_FILE_LOCATION"
+msgid "Open File Location"
+msgstr "Отвори местоположението на файла"
+
 msgctxt "IDS_AG_TOGGLE_NAVIGATION"
 msgid "Toggle Navigation Bar"
 msgstr "Управление на лентата за навигация"
@@ -1065,10 +1077,6 @@ msgid ""
 msgstr ""
 "Пауза\n"
 "Пауза"
-
-msgctxt "IDS_AG_OPEN_FILE_LOCATION"
-msgid "Open File Location"
-msgstr "Отвори местоположението на файла"
 
 msgctxt "ID_PLAY_STOP"
 msgid ""
@@ -2104,10 +2112,6 @@ msgstr ""
 "\n"
 "Тази опция може да бъде изключена от страница ,,Разни\" на менюто с настройки. "
 
-msgctxt "IDS_ZOOM_25"
-msgid "25%"
-msgstr "25%"
-
 msgctxt "IDS_ZOOM_50"
 msgid "50%"
 msgstr "50%"
@@ -2914,10 +2918,6 @@ msgctxt "IDS_AG_TOGGLE_DEBUGSHADERS"
 msgid "Toggle Debug Shaders"
 msgstr "Управление на дебъг шейдъри"
 
-msgctxt "IDS_AG_ZOOM_25"
-msgid "Zoom 25%"
-msgstr "Увеличение 25%"
-
 msgctxt "IDS_AG_ZOOM_50"
 msgid "Zoom 50%"
 msgstr "Увеличение 50%"
@@ -2953,6 +2953,46 @@ msgstr "PnS Изчистване"
 msgctxt "IDS_AG_PNS_ROTATEX_P"
 msgid "PnS Rotate X+"
 msgstr "PnS Завъртане по X+"
+
+msgctxt "IDS_TIME_TOOLTIP_ABOVE"
+msgid "Above seek bar"
+msgstr "Над лентата за превъртане"
+
+msgctxt "IDS_TIME_TOOLTIP_BELOW"
+msgid "Below seek bar"
+msgstr "Под лентата за превъртане"
+
+msgctxt "IDS_VIDEO_STREAM"
+msgid "Video: %s"
+msgstr "Видео: %s"
+
+msgctxt "IDS_APPLY"
+msgid "Apply"
+msgstr "Потвърди"
+
+msgctxt "IDS_CLEAR"
+msgid "Clear"
+msgstr "Изчисти"
+
+msgctxt "IDS_CANCEL"
+msgid "Cancel"
+msgstr "Отказ"
+
+msgctxt "IDS_THUMB_THUMBNAILS"
+msgid "Layout"
+msgstr "Оформление"
+
+msgctxt "IDS_THUMB_PIXELS"
+msgid "Pixels:"
+msgstr "Пиксели:"
+
+msgctxt "IDS_TEXTFILE_ENC"
+msgid "Encoding:"
+msgstr "Кодиране:"
+
+msgctxt "IDS_AG_ZOOM_25"
+msgid "Zoom 25%"
+msgstr "Увеличение 25%"
 
 msgctxt "IDS_AG_MOUSE_MODIFIER"
 msgid "Mouse Modifier"
@@ -3065,42 +3105,6 @@ msgstr "Заден горен централен"
 msgctxt "IDS_TOP_BACK_RIGHT"
 msgid "Top Back Right"
 msgstr "Горен заден десен"
-
-msgctxt "IDS_TIME_TOOLTIP_ABOVE"
-msgid "Above seek bar"
-msgstr "Над лентата за превъртане"
-
-msgctxt "IDS_TIME_TOOLTIP_BELOW"
-msgid "Below seek bar"
-msgstr "Под лентата за превъртане"
-
-msgctxt "IDS_VIDEO_STREAM"
-msgid "Video: %s"
-msgstr "Видео: %s"
-
-msgctxt "IDS_APPLY"
-msgid "Apply"
-msgstr "Потвърди"
-
-msgctxt "IDS_CLEAR"
-msgid "Clear"
-msgstr "Изчисти"
-
-msgctxt "IDS_CANCEL"
-msgid "Cancel"
-msgstr "Отказ"
-
-msgctxt "IDS_THUMB_THUMBNAILS"
-msgid "Layout"
-msgstr "Оформление"
-
-msgctxt "IDS_THUMB_PIXELS"
-msgid "Pixels:"
-msgstr "Пиксели:"
-
-msgctxt "IDS_TEXTFILE_ENC"
-msgid "Encoding:"
-msgstr "Кодиране:"
 
 msgctxt "IDS_DISABLE_ALL_FILTERS"
 msgid "&Disable all filters"
@@ -4528,10 +4532,6 @@ msgid ""
 msgstr ""
 "Запази окончанието на видео файла като част от името на файла на снимката "
 "(т.е. файл.mkv.png)"
-
-msgctxt "IDS_SNAPSHOT_SUBTITLES"
-msgid "Include Subtitles"
-msgstr "Включи субтитри"
 
 msgctxt "IDS_PRESIZE_SHADERS_ENABLED"
 msgid "Pre-Resize Pixel Shaders: on"

@@ -74,10 +74,6 @@ msgctxt "IDS_PLAY_LOOPMODE_PLAYLIST"
 msgid "Playlist"
 msgstr "Lista izvođenja"
 
-msgctxt "IDS_PLAY_LOOPMODE_AB"
-msgid "A-B"
-msgstr ""
-
 msgctxt "IDS_FAVFILES"
 msgid "Files"
 msgstr "Datoteke"
@@ -85,6 +81,26 @@ msgstr "Datoteke"
 msgctxt "IDS_FAVDVDS"
 msgid "DVDs"
 msgstr "DVD-ovi"
+
+msgctxt "IDS_PLAYLOOPMODE_AB"
+msgid "A-B Repeat: Reset Positions"
+msgstr ""
+
+msgctxt "IDS_PLAY_LOOPMODE_AB"
+msgid "A-B"
+msgstr ""
+
+msgctxt "IDS_PLAYLOOPMODE_AB_MARK_A"
+msgid "A-B Repeat: Mark A Position"
+msgstr ""
+
+msgctxt "IDS_PLAYLOOPMODE_AB_MARK_B"
+msgid "A-B Repeat: Mark B Position"
+msgstr ""
+
+msgctxt "IDS_SNAPSHOT_SUBTITLES"
+msgid "Include Subtitles"
+msgstr ""
 
 msgctxt "IDS_INFOBAR_CHANNEL"
 msgid "Channel"
@@ -143,18 +159,6 @@ msgstr "Način ponavljanja: Lista izvođenja"
 msgctxt "IDS_PLAYLOOPMODE_FILE"
 msgid "Repeat Mode: File"
 msgstr "Način ponavljanja: Datoteka"
-
-msgctxt "IDS_PLAYLOOPMODE_AB"
-msgid "A-B Repeat: Reset Positions"
-msgstr ""
-
-msgctxt "IDS_PLAYLOOPMODE_AB_MARK_A"
-msgid "A-B Repeat: Mark A Position"
-msgstr ""
-
-msgctxt "IDS_PLAYLOOPMODE_AB_MARK_B"
-msgid "A-B Repeat: Mark B Position"
-msgstr ""
 
 msgctxt "IDS_PLAYLOOP_FOREVER_ON"
 msgid "Repeat Forever: On"
@@ -583,6 +587,10 @@ msgctxt "IDS_PPAGE_OUTPUT_OVERLAYMIXER"
 msgid "Overlay Mixer Renderer"
 msgstr "Overlay Mixer prikazivač"
 
+msgctxt "IDS_ZOOM_25"
+msgid "25%"
+msgstr ""
+
 msgctxt "IDS_PPAGE_OUTPUT_VMR9WINDOWED"
 msgid "Video Mixing Renderer 9 (windowed)"
 msgstr "Video Mixing prikazivač 9 (u prozoru)"
@@ -991,6 +999,10 @@ msgstr ""
 "Koristi LAV Filters. Onemogućeno po zadanoj postavci zato što su Microsoft filteri uobičajeno stabilniji za te formate.\n"
 "Ako odaberete ugrađene filtere omogućite ih i za izvor i dekodiranje kako bi imali bolje iskustvo reprodukcije."
 
+msgctxt "IDS_AG_OPEN_FILE_LOCATION"
+msgid "Open File Location"
+msgstr "Otvori mjesto datoteke"
+
 msgctxt "IDS_AG_TOGGLE_NAVIGATION"
 msgid "Toggle Navigation Bar"
 msgstr "Namjestiti navigacijsku traku"
@@ -1058,10 +1070,6 @@ msgid ""
 msgstr ""
 "Pauza\n"
 "Pauza"
-
-msgctxt "IDS_AG_OPEN_FILE_LOCATION"
-msgid "Open File Location"
-msgstr "Otvori mjesto datoteke"
 
 msgctxt "ID_PLAY_STOP"
 msgid ""
@@ -2090,10 +2098,6 @@ msgstr ""
 "\n"
 "Ovo svojstvo se može kasnije onemogućiti na stranici Razne postavke."
 
-msgctxt "IDS_ZOOM_25"
-msgid "25%"
-msgstr ""
-
 msgctxt "IDS_ZOOM_50"
 msgid "50%"
 msgstr "50%"
@@ -2898,10 +2902,6 @@ msgctxt "IDS_AG_TOGGLE_DEBUGSHADERS"
 msgid "Toggle Debug Shaders"
 msgstr "Namjestiti ispravljanje shadera"
 
-msgctxt "IDS_AG_ZOOM_25"
-msgid "Zoom 25%"
-msgstr ""
-
 msgctxt "IDS_AG_ZOOM_50"
 msgid "Zoom 50%"
 msgstr "Zumiraj 50%"
@@ -2937,6 +2937,46 @@ msgstr "Resetiraj PnS"
 msgctxt "IDS_AG_PNS_ROTATEX_P"
 msgid "PnS Rotate X+"
 msgstr "Rotiraj PnS X+"
+
+msgctxt "IDS_TIME_TOOLTIP_ABOVE"
+msgid "Above seek bar"
+msgstr "Iznad trake za pomicanje"
+
+msgctxt "IDS_TIME_TOOLTIP_BELOW"
+msgid "Below seek bar"
+msgstr "Ispod trake za pomicanje"
+
+msgctxt "IDS_VIDEO_STREAM"
+msgid "Video: %s"
+msgstr "Video: %s"
+
+msgctxt "IDS_APPLY"
+msgid "Apply"
+msgstr "Prihvati"
+
+msgctxt "IDS_CLEAR"
+msgid "Clear"
+msgstr "Očisti"
+
+msgctxt "IDS_CANCEL"
+msgid "Cancel"
+msgstr "Odustani"
+
+msgctxt "IDS_THUMB_THUMBNAILS"
+msgid "Layout"
+msgstr "Izgled"
+
+msgctxt "IDS_THUMB_PIXELS"
+msgid "Pixels:"
+msgstr "Pikseli:"
+
+msgctxt "IDS_TEXTFILE_ENC"
+msgid "Encoding:"
+msgstr "Kodiranje:"
+
+msgctxt "IDS_AG_ZOOM_25"
+msgid "Zoom 25%"
+msgstr ""
 
 msgctxt "IDS_AG_MOUSE_MODIFIER"
 msgid "Mouse Modifier"
@@ -3049,42 +3089,6 @@ msgstr "Vrh nazad sredina"
 msgctxt "IDS_TOP_BACK_RIGHT"
 msgid "Top Back Right"
 msgstr "Vrh nazad desno"
-
-msgctxt "IDS_TIME_TOOLTIP_ABOVE"
-msgid "Above seek bar"
-msgstr "Iznad trake za pomicanje"
-
-msgctxt "IDS_TIME_TOOLTIP_BELOW"
-msgid "Below seek bar"
-msgstr "Ispod trake za pomicanje"
-
-msgctxt "IDS_VIDEO_STREAM"
-msgid "Video: %s"
-msgstr "Video: %s"
-
-msgctxt "IDS_APPLY"
-msgid "Apply"
-msgstr "Prihvati"
-
-msgctxt "IDS_CLEAR"
-msgid "Clear"
-msgstr "Očisti"
-
-msgctxt "IDS_CANCEL"
-msgid "Cancel"
-msgstr "Odustani"
-
-msgctxt "IDS_THUMB_THUMBNAILS"
-msgid "Layout"
-msgstr "Izgled"
-
-msgctxt "IDS_THUMB_PIXELS"
-msgid "Pixels:"
-msgstr "Pikseli:"
-
-msgctxt "IDS_TEXTFILE_ENC"
-msgid "Encoding:"
-msgstr "Kodiranje:"
 
 msgctxt "IDS_DISABLE_ALL_FILTERS"
 msgid "&Disable all filters"
@@ -4473,10 +4477,6 @@ msgstr ""
 msgctxt "IDS_PPAGEADVANCED_SNAPSHOTKEEPVIDEOEXTENSION"
 msgid ""
 "Keep video file extension as part of snapshot filenames (e.g., file.mkv.png)"
-msgstr ""
-
-msgctxt "IDS_SNAPSHOT_SUBTITLES"
-msgid "Include Subtitles"
 msgstr ""
 
 msgctxt "IDS_PRESIZE_SHADERS_ENABLED"

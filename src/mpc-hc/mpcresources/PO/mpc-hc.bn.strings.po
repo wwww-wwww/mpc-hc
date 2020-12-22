@@ -73,10 +73,6 @@ msgctxt "IDS_PLAY_LOOPMODE_PLAYLIST"
 msgid "Playlist"
 msgstr "প্লেলিস্ট"
 
-msgctxt "IDS_PLAY_LOOPMODE_AB"
-msgid "A-B"
-msgstr ""
-
 msgctxt "IDS_FAVFILES"
 msgid "Files"
 msgstr "ফাইলসমূহ"
@@ -84,6 +80,26 @@ msgstr "ফাইলসমূহ"
 msgctxt "IDS_FAVDVDS"
 msgid "DVDs"
 msgstr "DVDসমূহ"
+
+msgctxt "IDS_PLAYLOOPMODE_AB"
+msgid "A-B Repeat: Reset Positions"
+msgstr ""
+
+msgctxt "IDS_PLAY_LOOPMODE_AB"
+msgid "A-B"
+msgstr ""
+
+msgctxt "IDS_PLAYLOOPMODE_AB_MARK_A"
+msgid "A-B Repeat: Mark A Position"
+msgstr ""
+
+msgctxt "IDS_PLAYLOOPMODE_AB_MARK_B"
+msgid "A-B Repeat: Mark B Position"
+msgstr ""
+
+msgctxt "IDS_SNAPSHOT_SUBTITLES"
+msgid "Include Subtitles"
+msgstr ""
 
 msgctxt "IDS_INFOBAR_CHANNEL"
 msgid "Channel"
@@ -142,18 +158,6 @@ msgstr "পুনরাবৃত্তির ধরন: প্লেলিস্
 msgctxt "IDS_PLAYLOOPMODE_FILE"
 msgid "Repeat Mode: File"
 msgstr "পুনরাবৃত্তির ধরন: ফাইল"
-
-msgctxt "IDS_PLAYLOOPMODE_AB"
-msgid "A-B Repeat: Reset Positions"
-msgstr ""
-
-msgctxt "IDS_PLAYLOOPMODE_AB_MARK_A"
-msgid "A-B Repeat: Mark A Position"
-msgstr ""
-
-msgctxt "IDS_PLAYLOOPMODE_AB_MARK_B"
-msgid "A-B Repeat: Mark B Position"
-msgstr ""
 
 msgctxt "IDS_PLAYLOOP_FOREVER_ON"
 msgid "Repeat Forever: On"
@@ -584,6 +588,10 @@ msgctxt "IDS_PPAGE_OUTPUT_OVERLAYMIXER"
 msgid "Overlay Mixer Renderer"
 msgstr "Overlay Mixer Renderer"
 
+msgctxt "IDS_ZOOM_25"
+msgid "25%"
+msgstr ""
+
 msgctxt "IDS_PPAGE_OUTPUT_VMR9WINDOWED"
 msgid "Video Mixing Renderer 9 (windowed)"
 msgstr "Video Mixing Renderer 9 (windowed)"
@@ -987,6 +995,10 @@ msgstr ""
 "LAV ফিল্টার ব্যবহার করে। ডিফল্ট সেটিংসমূহ অনুযায়ী নিষ্ক্রিয় ভাবে থাকে কারণ মাইক্রোসফট্‌ ফিল্টারসমূহ এই ধরনের ফাইলসমূহের জন্য সাধারণত অপেক্ষাকৃত সুস্থিত।\n"
 "আপনি যদি আভ্যন্তরীণ ফিল্টারসমূহ ব্যবহার করার জন্য নির্ধারণ করেন, তবে অপেক্ষাকৃত ভাল প্লেব্যাক অভিজ্ঞতার জন্য সেগুলো উৎস এবং ডিকোডিং উভয় ক্ষেতেই সক্রিয় করুন।"
 
+msgctxt "IDS_AG_OPEN_FILE_LOCATION"
+msgid "Open File Location"
+msgstr ""
+
 msgctxt "IDS_AG_TOGGLE_NAVIGATION"
 msgid "Toggle Navigation Bar"
 msgstr "ন্যাভিগেশন বার নিয়ন্ত্রণ"
@@ -1054,10 +1066,6 @@ msgid ""
 msgstr ""
 "প'জ করি\n"
 "প'জ করি"
-
-msgctxt "IDS_AG_OPEN_FILE_LOCATION"
-msgid "Open File Location"
-msgstr ""
 
 msgctxt "ID_PLAY_STOP"
 msgid ""
@@ -2094,10 +2102,6 @@ msgstr ""
 "\n"
 "এই বৈশিষ্ট্যটি পরবর্তীতে অপশনসমূহের বিবিধ পেইজ থেকে নিষ্ক্রিয় করা যাবে।"
 
-msgctxt "IDS_ZOOM_25"
-msgid "25%"
-msgstr ""
-
 msgctxt "IDS_ZOOM_50"
 msgid "50%"
 msgstr "৫০%"
@@ -2906,10 +2910,6 @@ msgctxt "IDS_AG_TOGGLE_DEBUGSHADERS"
 msgid "Toggle Debug Shaders"
 msgstr "ডিবাগ শেইডারসমূহ নিয়ন্ত্রণ"
 
-msgctxt "IDS_AG_ZOOM_25"
-msgid "Zoom 25%"
-msgstr ""
-
 msgctxt "IDS_AG_ZOOM_50"
 msgid "Zoom 50%"
 msgstr "জূম ৫০%"
@@ -2945,6 +2945,46 @@ msgstr "প্যানঅ্যান্ডস্ক্যান পুনর�
 msgctxt "IDS_AG_PNS_ROTATEX_P"
 msgid "PnS Rotate X+"
 msgstr "প্যানঅ্যান্ডস্ক্যান ঘূর্ণন X+"
+
+msgctxt "IDS_TIME_TOOLTIP_ABOVE"
+msgid "Above seek bar"
+msgstr "সীকবারের উপরে"
+
+msgctxt "IDS_TIME_TOOLTIP_BELOW"
+msgid "Below seek bar"
+msgstr "সীকবারের নিচে"
+
+msgctxt "IDS_VIDEO_STREAM"
+msgid "Video: %s"
+msgstr "ভিডিও: %s"
+
+msgctxt "IDS_APPLY"
+msgid "Apply"
+msgstr "প্রয়োগ করি"
+
+msgctxt "IDS_CLEAR"
+msgid "Clear"
+msgstr "খালি করি"
+
+msgctxt "IDS_CANCEL"
+msgid "Cancel"
+msgstr "বাতিল করি"
+
+msgctxt "IDS_THUMB_THUMBNAILS"
+msgid "Layout"
+msgstr "নকশার ধরন"
+
+msgctxt "IDS_THUMB_PIXELS"
+msgid "Pixels:"
+msgstr "পিক্সেলসংখ্যা:"
+
+msgctxt "IDS_TEXTFILE_ENC"
+msgid "Encoding:"
+msgstr "এনকোডিং:"
+
+msgctxt "IDS_AG_ZOOM_25"
+msgid "Zoom 25%"
+msgstr ""
 
 msgctxt "IDS_AG_MOUSE_MODIFIER"
 msgid "Mouse Modifier"
@@ -3059,42 +3099,6 @@ msgstr "উপরে পিছনে কেন্দ্রে"
 msgctxt "IDS_TOP_BACK_RIGHT"
 msgid "Top Back Right"
 msgstr "উপরে পিছনে ডানে"
-
-msgctxt "IDS_TIME_TOOLTIP_ABOVE"
-msgid "Above seek bar"
-msgstr "সীকবারের উপরে"
-
-msgctxt "IDS_TIME_TOOLTIP_BELOW"
-msgid "Below seek bar"
-msgstr "সীকবারের নিচে"
-
-msgctxt "IDS_VIDEO_STREAM"
-msgid "Video: %s"
-msgstr "ভিডিও: %s"
-
-msgctxt "IDS_APPLY"
-msgid "Apply"
-msgstr "প্রয়োগ করি"
-
-msgctxt "IDS_CLEAR"
-msgid "Clear"
-msgstr "খালি করি"
-
-msgctxt "IDS_CANCEL"
-msgid "Cancel"
-msgstr "বাতিল করি"
-
-msgctxt "IDS_THUMB_THUMBNAILS"
-msgid "Layout"
-msgstr "নকশার ধরন"
-
-msgctxt "IDS_THUMB_PIXELS"
-msgid "Pixels:"
-msgstr "পিক্সেলসংখ্যা:"
-
-msgctxt "IDS_TEXTFILE_ENC"
-msgid "Encoding:"
-msgstr "এনকোডিং:"
 
 msgctxt "IDS_DISABLE_ALL_FILTERS"
 msgid "&Disable all filters"
@@ -4460,10 +4464,6 @@ msgstr ""
 msgctxt "IDS_PPAGEADVANCED_SNAPSHOTKEEPVIDEOEXTENSION"
 msgid ""
 "Keep video file extension as part of snapshot filenames (e.g., file.mkv.png)"
-msgstr ""
-
-msgctxt "IDS_SNAPSHOT_SUBTITLES"
-msgid "Include Subtitles"
 msgstr ""
 
 msgctxt "IDS_PRESIZE_SHADERS_ENABLED"

@@ -77,10 +77,6 @@ msgctxt "IDS_PLAY_LOOPMODE_PLAYLIST"
 msgid "Playlist"
 msgstr "Lista odtwarzania"
 
-msgctxt "IDS_PLAY_LOOPMODE_AB"
-msgid "A-B"
-msgstr "A-B"
-
 msgctxt "IDS_FAVFILES"
 msgid "Files"
 msgstr "Pliki"
@@ -88,6 +84,26 @@ msgstr "Pliki"
 msgctxt "IDS_FAVDVDS"
 msgid "DVDs"
 msgstr "Płyty DVD"
+
+msgctxt "IDS_PLAYLOOPMODE_AB"
+msgid "A-B Repeat: Reset Positions"
+msgstr "Powtarzanie A-B: Zresetuj znaczniki"
+
+msgctxt "IDS_PLAY_LOOPMODE_AB"
+msgid "A-B"
+msgstr "A-B"
+
+msgctxt "IDS_PLAYLOOPMODE_AB_MARK_A"
+msgid "A-B Repeat: Mark A Position"
+msgstr "Powtarzanie A-B: Ustaw znacznik A"
+
+msgctxt "IDS_PLAYLOOPMODE_AB_MARK_B"
+msgid "A-B Repeat: Mark B Position"
+msgstr "Powtarzanie A-B: Ustaw znacznik B"
+
+msgctxt "IDS_SNAPSHOT_SUBTITLES"
+msgid "Include Subtitles"
+msgstr " Uwzględnij Napisy"
 
 msgctxt "IDS_INFOBAR_CHANNEL"
 msgid "Channel"
@@ -146,18 +162,6 @@ msgstr "Tryb Powtarzania: Lista odtwarzania"
 msgctxt "IDS_PLAYLOOPMODE_FILE"
 msgid "Repeat Mode: File"
 msgstr "Tryb Powtarzania: Plik"
-
-msgctxt "IDS_PLAYLOOPMODE_AB"
-msgid "A-B Repeat: Reset Positions"
-msgstr "Powtarzanie A-B: Zresetuj znaczniki"
-
-msgctxt "IDS_PLAYLOOPMODE_AB_MARK_A"
-msgid "A-B Repeat: Mark A Position"
-msgstr "Powtarzanie A-B: Ustaw znacznik A"
-
-msgctxt "IDS_PLAYLOOPMODE_AB_MARK_B"
-msgid "A-B Repeat: Mark B Position"
-msgstr "Powtarzanie A-B: Ustaw znacznik B"
 
 msgctxt "IDS_PLAYLOOP_FOREVER_ON"
 msgid "Repeat Forever: On"
@@ -588,6 +592,10 @@ msgctxt "IDS_PPAGE_OUTPUT_OVERLAYMIXER"
 msgid "Overlay Mixer Renderer"
 msgstr "Overlay Mixer Renderer"
 
+msgctxt "IDS_ZOOM_25"
+msgid "25%"
+msgstr "25%"
+
 msgctxt "IDS_PPAGE_OUTPUT_VMR9WINDOWED"
 msgid "Video Mixing Renderer 9 (windowed)"
 msgstr "Video Mixing Renderer 9 (windowed)"
@@ -1005,6 +1013,10 @@ msgstr ""
 "Używa LAV Filters. Domyślnie wyłączone, ponieważ filtry Microsoftu są zazwyczaj bardziej stabilne dla tych formatów.\n"
 "Jeżeli zdecydujesz się na używanie filtrów wewnętrznych zalecane jest aby włączyć zarówno filtr źródłowy oraz dekodujący dla najlepszej kompatybilności."
 
+msgctxt "IDS_AG_OPEN_FILE_LOCATION"
+msgid "Open File Location"
+msgstr "Otwórz lokalizację pliku"
+
 msgctxt "IDS_AG_TOGGLE_NAVIGATION"
 msgid "Toggle Navigation Bar"
 msgstr "Przełącz widoczność panelu nawigacji"
@@ -1073,10 +1085,6 @@ msgid ""
 msgstr ""
 "Wstrzymano\n"
 "Wstrzymaj odtwarzanie"
-
-msgctxt "IDS_AG_OPEN_FILE_LOCATION"
-msgid "Open File Location"
-msgstr "Otwórz lokalizację pliku"
 
 msgctxt "ID_PLAY_STOP"
 msgid ""
@@ -2110,10 +2118,6 @@ msgstr ""
 "\n"
 "Ta opcja może zostać później wyłączona w zakładce „Różne” w opcjach."
 
-msgctxt "IDS_ZOOM_25"
-msgid "25%"
-msgstr "25%"
-
 msgctxt "IDS_ZOOM_50"
 msgid "50%"
 msgstr "50%"
@@ -2926,10 +2930,6 @@ msgctxt "IDS_AG_TOGGLE_DEBUGSHADERS"
 msgid "Toggle Debug Shaders"
 msgstr "Przełącz debugowanie shaderów"
 
-msgctxt "IDS_AG_ZOOM_25"
-msgid "Zoom 25%"
-msgstr "Rozmiar okna 25%"
-
 msgctxt "IDS_AG_ZOOM_50"
 msgid "Zoom 50%"
 msgstr "Rozmiar okna 50%"
@@ -2965,6 +2965,46 @@ msgstr "Przywróć domyślne ustawienia skalowania i kadrowania "
 msgctxt "IDS_AG_PNS_ROTATEX_P"
 msgid "PnS Rotate X+"
 msgstr "Zwiększ kąt obrotu wokół osi X"
+
+msgctxt "IDS_TIME_TOOLTIP_ABOVE"
+msgid "Above seek bar"
+msgstr "Ponad paskiem postępu"
+
+msgctxt "IDS_TIME_TOOLTIP_BELOW"
+msgid "Below seek bar"
+msgstr "Poniżej paska postępu"
+
+msgctxt "IDS_VIDEO_STREAM"
+msgid "Video: %s"
+msgstr "Wideo: %s"
+
+msgctxt "IDS_APPLY"
+msgid "Apply"
+msgstr "Zastosuj"
+
+msgctxt "IDS_CLEAR"
+msgid "Clear"
+msgstr "Wyczyść"
+
+msgctxt "IDS_CANCEL"
+msgid "Cancel"
+msgstr "Anuluj"
+
+msgctxt "IDS_THUMB_THUMBNAILS"
+msgid "Layout"
+msgstr "Układ"
+
+msgctxt "IDS_THUMB_PIXELS"
+msgid "Pixels:"
+msgstr "Pikseli:"
+
+msgctxt "IDS_TEXTFILE_ENC"
+msgid "Encoding:"
+msgstr "Kodowanie znaków:"
+
+msgctxt "IDS_AG_ZOOM_25"
+msgid "Zoom 25%"
+msgstr "Rozmiar okna 25%"
 
 msgctxt "IDS_AG_MOUSE_MODIFIER"
 msgid "Mouse Modifier"
@@ -3077,42 +3117,6 @@ msgstr "Górny tylny środkowy"
 msgctxt "IDS_TOP_BACK_RIGHT"
 msgid "Top Back Right"
 msgstr "Górny tylny prawy"
-
-msgctxt "IDS_TIME_TOOLTIP_ABOVE"
-msgid "Above seek bar"
-msgstr "Ponad paskiem postępu"
-
-msgctxt "IDS_TIME_TOOLTIP_BELOW"
-msgid "Below seek bar"
-msgstr "Poniżej paska postępu"
-
-msgctxt "IDS_VIDEO_STREAM"
-msgid "Video: %s"
-msgstr "Wideo: %s"
-
-msgctxt "IDS_APPLY"
-msgid "Apply"
-msgstr "Zastosuj"
-
-msgctxt "IDS_CLEAR"
-msgid "Clear"
-msgstr "Wyczyść"
-
-msgctxt "IDS_CANCEL"
-msgid "Cancel"
-msgstr "Anuluj"
-
-msgctxt "IDS_THUMB_THUMBNAILS"
-msgid "Layout"
-msgstr "Układ"
-
-msgctxt "IDS_THUMB_PIXELS"
-msgid "Pixels:"
-msgstr "Pikseli:"
-
-msgctxt "IDS_TEXTFILE_ENC"
-msgid "Encoding:"
-msgstr "Kodowanie znaków:"
 
 msgctxt "IDS_DISABLE_ALL_FILTERS"
 msgid "&Disable all filters"
@@ -4556,10 +4560,6 @@ msgid ""
 msgstr ""
 "Zachowaj rozszerzenie pliku wideo jako część nazw plików snapshot (np. "
 "file.mkv.png) "
-
-msgctxt "IDS_SNAPSHOT_SUBTITLES"
-msgid "Include Subtitles"
-msgstr " Uwzględnij Napisy"
 
 msgctxt "IDS_PRESIZE_SHADERS_ENABLED"
 msgid "Pre-Resize Pixel Shaders: on"

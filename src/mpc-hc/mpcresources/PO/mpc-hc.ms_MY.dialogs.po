@@ -714,6 +714,14 @@ msgid "Auto-hide the mouse pointer during playback in windowed mode"
 msgstr ""
 "Sembunyi-sendiri penuding tetikus ketika main balik dalam mod bertetingkap"
 
+msgctxt "IDD_PPAGETWEAKS_IDC_SEEK_PREVIEW"
+msgid "Show preview on seek bar"
+msgstr ""
+
+msgctxt "IDD_PPAGETWEAKS_IDC_STATIC"
+msgid "Preview width (% of screen width)"
+msgstr ""
+
 msgctxt "IDD_PPAGEEXTERNALFILTERS_IDC_BUTTON1"
 msgid "Add Filter..."
 msgstr "Tambah Penapis..."

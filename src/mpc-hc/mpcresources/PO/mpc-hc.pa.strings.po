@@ -72,10 +72,6 @@ msgctxt "IDS_PLAY_LOOPMODE_PLAYLIST"
 msgid "Playlist"
 msgstr "ਪਲੇਅਲਿਸਟ"
 
-msgctxt "IDS_PLAY_LOOPMODE_AB"
-msgid "A-B"
-msgstr ""
-
 msgctxt "IDS_FAVFILES"
 msgid "Files"
 msgstr "ਫ਼ਾਈਲਾਂ"
@@ -83,6 +79,26 @@ msgstr "ਫ਼ਾਈਲਾਂ"
 msgctxt "IDS_FAVDVDS"
 msgid "DVDs"
 msgstr "DVD"
+
+msgctxt "IDS_PLAYLOOPMODE_AB"
+msgid "A-B Repeat: Reset Positions"
+msgstr ""
+
+msgctxt "IDS_PLAY_LOOPMODE_AB"
+msgid "A-B"
+msgstr ""
+
+msgctxt "IDS_PLAYLOOPMODE_AB_MARK_A"
+msgid "A-B Repeat: Mark A Position"
+msgstr ""
+
+msgctxt "IDS_PLAYLOOPMODE_AB_MARK_B"
+msgid "A-B Repeat: Mark B Position"
+msgstr ""
+
+msgctxt "IDS_SNAPSHOT_SUBTITLES"
+msgid "Include Subtitles"
+msgstr ""
 
 msgctxt "IDS_INFOBAR_CHANNEL"
 msgid "Channel"
@@ -137,18 +153,6 @@ msgstr ""
 
 msgctxt "IDS_PLAYLOOPMODE_FILE"
 msgid "Repeat Mode: File"
-msgstr ""
-
-msgctxt "IDS_PLAYLOOPMODE_AB"
-msgid "A-B Repeat: Reset Positions"
-msgstr ""
-
-msgctxt "IDS_PLAYLOOPMODE_AB_MARK_A"
-msgid "A-B Repeat: Mark A Position"
-msgstr ""
-
-msgctxt "IDS_PLAYLOOPMODE_AB_MARK_B"
-msgid "A-B Repeat: Mark B Position"
 msgstr ""
 
 msgctxt "IDS_PLAYLOOP_FOREVER_ON"
@@ -571,6 +575,10 @@ msgctxt "IDS_PPAGE_OUTPUT_OVERLAYMIXER"
 msgid "Overlay Mixer Renderer"
 msgstr "ਓਵਰਲੇਅ ਮਿਕਸਰ ਰੈਂਡਰਰ"
 
+msgctxt "IDS_ZOOM_25"
+msgid "25%"
+msgstr ""
+
 msgctxt "IDS_PPAGE_OUTPUT_VMR9WINDOWED"
 msgid "Video Mixing Renderer 9 (windowed)"
 msgstr "ਵਿਡੀਓ ਮਿਕਸਿੰਗ ਰੈਂਡਰਰ 9 (ਵਿੰਡੋਡ)"
@@ -928,6 +936,10 @@ msgid ""
 "If you choose to use the internal filters, enable them for both source and decoding to have a better playback experience."
 msgstr ""
 
+msgctxt "IDS_AG_OPEN_FILE_LOCATION"
+msgid "Open File Location"
+msgstr ""
+
 msgctxt "IDS_AG_TOGGLE_NAVIGATION"
 msgid "Toggle Navigation Bar"
 msgstr "ਨੇਵੀਗੇਸ਼ਨ ਪੱਟੀ ਬਦਲੋ"
@@ -983,10 +995,6 @@ msgid ""
 msgstr ""
 "ਵਿਰਾਮ\n"
 "ਵਿਰਾਮ"
-
-msgctxt "IDS_AG_OPEN_FILE_LOCATION"
-msgid "Open File Location"
-msgstr ""
 
 msgctxt "ID_PLAY_STOP"
 msgid ""
@@ -2002,10 +2010,6 @@ msgstr ""
 "\n"
 "ਇਹ ਫੀਚਰ ਨੂੰ ਫੁਟਕਲ ਚੋਣ ਸਫ਼ੇ ਤੋਂ ਕਿਸੇ ਵੀ ਸਮੇਂ ਬੰਦ ਕਰ ਸਕਦੇ ਹੋ।"
 
-msgctxt "IDS_ZOOM_25"
-msgid "25%"
-msgstr ""
-
 msgctxt "IDS_ZOOM_50"
 msgid "50%"
 msgstr "50%"
@@ -2800,10 +2804,6 @@ msgctxt "IDS_AG_TOGGLE_DEBUGSHADERS"
 msgid "Toggle Debug Shaders"
 msgstr "ਡੀਬੱਗ ਸ਼ੇਡਰ ਬਦਲੋ"
 
-msgctxt "IDS_AG_ZOOM_25"
-msgid "Zoom 25%"
-msgstr ""
-
 msgctxt "IDS_AG_ZOOM_50"
 msgid "Zoom 50%"
 msgstr "50% ਜ਼ੂਮ"
@@ -2838,6 +2838,46 @@ msgstr ""
 
 msgctxt "IDS_AG_PNS_ROTATEX_P"
 msgid "PnS Rotate X+"
+msgstr ""
+
+msgctxt "IDS_TIME_TOOLTIP_ABOVE"
+msgid "Above seek bar"
+msgstr ""
+
+msgctxt "IDS_TIME_TOOLTIP_BELOW"
+msgid "Below seek bar"
+msgstr ""
+
+msgctxt "IDS_VIDEO_STREAM"
+msgid "Video: %s"
+msgstr "ਵਿਡੀਓ: %s"
+
+msgctxt "IDS_APPLY"
+msgid "Apply"
+msgstr "ਲਾਗੂ ਕਰੋ"
+
+msgctxt "IDS_CLEAR"
+msgid "Clear"
+msgstr "ਸਾਫ਼ ਕਰੋ"
+
+msgctxt "IDS_CANCEL"
+msgid "Cancel"
+msgstr "ਰੱਦ ਕਰੋ"
+
+msgctxt "IDS_THUMB_THUMBNAILS"
+msgid "Layout"
+msgstr "ਲੇਆਉਟ"
+
+msgctxt "IDS_THUMB_PIXELS"
+msgid "Pixels:"
+msgstr "ਪਿਕਸਲ:"
+
+msgctxt "IDS_TEXTFILE_ENC"
+msgid "Encoding:"
+msgstr "ਇੰਕੋਡਿੰਗ:"
+
+msgctxt "IDS_AG_ZOOM_25"
+msgid "Zoom 25%"
 msgstr ""
 
 msgctxt "IDS_AG_MOUSE_MODIFIER"
@@ -2951,42 +2991,6 @@ msgstr ""
 msgctxt "IDS_TOP_BACK_RIGHT"
 msgid "Top Back Right"
 msgstr ""
-
-msgctxt "IDS_TIME_TOOLTIP_ABOVE"
-msgid "Above seek bar"
-msgstr ""
-
-msgctxt "IDS_TIME_TOOLTIP_BELOW"
-msgid "Below seek bar"
-msgstr ""
-
-msgctxt "IDS_VIDEO_STREAM"
-msgid "Video: %s"
-msgstr "ਵਿਡੀਓ: %s"
-
-msgctxt "IDS_APPLY"
-msgid "Apply"
-msgstr "ਲਾਗੂ ਕਰੋ"
-
-msgctxt "IDS_CLEAR"
-msgid "Clear"
-msgstr "ਸਾਫ਼ ਕਰੋ"
-
-msgctxt "IDS_CANCEL"
-msgid "Cancel"
-msgstr "ਰੱਦ ਕਰੋ"
-
-msgctxt "IDS_THUMB_THUMBNAILS"
-msgid "Layout"
-msgstr "ਲੇਆਉਟ"
-
-msgctxt "IDS_THUMB_PIXELS"
-msgid "Pixels:"
-msgstr "ਪਿਕਸਲ:"
-
-msgctxt "IDS_TEXTFILE_ENC"
-msgid "Encoding:"
-msgstr "ਇੰਕੋਡਿੰਗ:"
 
 msgctxt "IDS_DISABLE_ALL_FILTERS"
 msgid "&Disable all filters"
@@ -4343,10 +4347,6 @@ msgstr ""
 msgctxt "IDS_PPAGEADVANCED_SNAPSHOTKEEPVIDEOEXTENSION"
 msgid ""
 "Keep video file extension as part of snapshot filenames (e.g., file.mkv.png)"
-msgstr ""
-
-msgctxt "IDS_SNAPSHOT_SUBTITLES"
-msgid "Include Subtitles"
 msgstr ""
 
 msgctxt "IDS_PRESIZE_SHADERS_ENABLED"

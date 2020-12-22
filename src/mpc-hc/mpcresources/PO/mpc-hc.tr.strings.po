@@ -75,10 +75,6 @@ msgctxt "IDS_PLAY_LOOPMODE_PLAYLIST"
 msgid "Playlist"
 msgstr "Oynatma listesi"
 
-msgctxt "IDS_PLAY_LOOPMODE_AB"
-msgid "A-B"
-msgstr "A-B"
-
 msgctxt "IDS_FAVFILES"
 msgid "Files"
 msgstr "Dosya"
@@ -86,6 +82,26 @@ msgstr "Dosya"
 msgctxt "IDS_FAVDVDS"
 msgid "DVDs"
 msgstr "DVD"
+
+msgctxt "IDS_PLAYLOOPMODE_AB"
+msgid "A-B Repeat: Reset Positions"
+msgstr "A-B Tekrarla: Noktaları sıfırla"
+
+msgctxt "IDS_PLAY_LOOPMODE_AB"
+msgid "A-B"
+msgstr "A-B"
+
+msgctxt "IDS_PLAYLOOPMODE_AB_MARK_A"
+msgid "A-B Repeat: Mark A Position"
+msgstr "A-B Tekrarla: A noktasını işaretle"
+
+msgctxt "IDS_PLAYLOOPMODE_AB_MARK_B"
+msgid "A-B Repeat: Mark B Position"
+msgstr "A-B Tekrarla: B noktasını işaretle"
+
+msgctxt "IDS_SNAPSHOT_SUBTITLES"
+msgid "Include Subtitles"
+msgstr "Dahil altyazılar"
 
 msgctxt "IDS_INFOBAR_CHANNEL"
 msgid "Channel"
@@ -143,18 +159,6 @@ msgstr "Tekrarlama Yöntemi: Oynatma listesi"
 msgctxt "IDS_PLAYLOOPMODE_FILE"
 msgid "Repeat Mode: File"
 msgstr "Tekrarlama Yöntemi: Dosya"
-
-msgctxt "IDS_PLAYLOOPMODE_AB"
-msgid "A-B Repeat: Reset Positions"
-msgstr "A-B Tekrarla: Noktaları sıfırla"
-
-msgctxt "IDS_PLAYLOOPMODE_AB_MARK_A"
-msgid "A-B Repeat: Mark A Position"
-msgstr "A-B Tekrarla: A noktasını işaretle"
-
-msgctxt "IDS_PLAYLOOPMODE_AB_MARK_B"
-msgid "A-B Repeat: Mark B Position"
-msgstr "A-B Tekrarla: B noktasını işaretle"
 
 msgctxt "IDS_PLAYLOOP_FOREVER_ON"
 msgid "Repeat Forever: On"
@@ -582,6 +586,10 @@ msgctxt "IDS_PPAGE_OUTPUT_OVERLAYMIXER"
 msgid "Overlay Mixer Renderer"
 msgstr "Ters Süzme İşleyicisi"
 
+msgctxt "IDS_ZOOM_25"
+msgid "25%"
+msgstr "%25"
+
 msgctxt "IDS_PPAGE_OUTPUT_VMR9WINDOWED"
 msgid "Video Mixing Renderer 9 (windowed)"
 msgstr "Video Karıştırma İşleyicisi 9 (pencerede)"
@@ -983,6 +991,10 @@ msgstr ""
 "LAV Filters kullanılıyor. Microsoft süzgeçleri bu biçimler için daha kararlı olduğundan varsayılan olarak kapalı durumdadır.\n"
 "Dahili süzgeçleri kullanmak istiyorsanız, hem kaynak hem de kodlama bakımından daha iyi bir deneyim elde etmek açısından aktif hale getiriniz."
 
+msgctxt "IDS_AG_OPEN_FILE_LOCATION"
+msgid "Open File Location"
+msgstr "Dosya Konumunu Aç"
+
 msgctxt "IDS_AG_TOGGLE_NAVIGATION"
 msgid "Toggle Navigation Bar"
 msgstr "Yönetim Çubuğuna Geç"
@@ -1050,10 +1062,6 @@ msgid ""
 msgstr ""
 "Duraklat\n"
 "Duraklat"
-
-msgctxt "IDS_AG_OPEN_FILE_LOCATION"
-msgid "Open File Location"
-msgstr "Dosya Konumunu Aç"
 
 msgctxt "ID_PLAY_STOP"
 msgid ""
@@ -2088,10 +2096,6 @@ msgstr ""
 "\n"
 "Bu özelliği daha sonra ayarlar sayfasının Çeşitli kısmından kapatabilirsiniz."
 
-msgctxt "IDS_ZOOM_25"
-msgid "25%"
-msgstr "%25"
-
 msgctxt "IDS_ZOOM_50"
 msgid "50%"
 msgstr "%50"
@@ -2901,10 +2905,6 @@ msgctxt "IDS_AG_TOGGLE_DEBUGSHADERS"
 msgid "Toggle Debug Shaders"
 msgstr "Tonlama Hata Ayıklayıcısına geç"
 
-msgctxt "IDS_AG_ZOOM_25"
-msgid "Zoom 25%"
-msgstr "Zoom %25"
-
 msgctxt "IDS_AG_ZOOM_50"
 msgid "Zoom 50%"
 msgstr "%50 Küçült"
@@ -2940,6 +2940,46 @@ msgstr "SzT Sıfırla"
 msgctxt "IDS_AG_PNS_ROTATEX_P"
 msgid "PnS Rotate X+"
 msgstr "SzT Döndür X+"
+
+msgctxt "IDS_TIME_TOOLTIP_ABOVE"
+msgid "Above seek bar"
+msgstr "İlerleme Çubuğu üzerinde"
+
+msgctxt "IDS_TIME_TOOLTIP_BELOW"
+msgid "Below seek bar"
+msgstr "İlerleme Çubuğu altında"
+
+msgctxt "IDS_VIDEO_STREAM"
+msgid "Video: %s"
+msgstr "Video: %s"
+
+msgctxt "IDS_APPLY"
+msgid "Apply"
+msgstr "Uygula"
+
+msgctxt "IDS_CLEAR"
+msgid "Clear"
+msgstr "Temizle"
+
+msgctxt "IDS_CANCEL"
+msgid "Cancel"
+msgstr "İptal"
+
+msgctxt "IDS_THUMB_THUMBNAILS"
+msgid "Layout"
+msgstr "Düzen"
+
+msgctxt "IDS_THUMB_PIXELS"
+msgid "Pixels:"
+msgstr "Pikseller:"
+
+msgctxt "IDS_TEXTFILE_ENC"
+msgid "Encoding:"
+msgstr "Kodlama:"
+
+msgctxt "IDS_AG_ZOOM_25"
+msgid "Zoom 25%"
+msgstr "Zoom %25"
 
 msgctxt "IDS_AG_MOUSE_MODIFIER"
 msgid "Mouse Modifier"
@@ -3052,42 +3092,6 @@ msgstr "Üst Arka - Orta"
 msgctxt "IDS_TOP_BACK_RIGHT"
 msgid "Top Back Right"
 msgstr "Üst Arka Sağ"
-
-msgctxt "IDS_TIME_TOOLTIP_ABOVE"
-msgid "Above seek bar"
-msgstr "İlerleme Çubuğu üzerinde"
-
-msgctxt "IDS_TIME_TOOLTIP_BELOW"
-msgid "Below seek bar"
-msgstr "İlerleme Çubuğu altında"
-
-msgctxt "IDS_VIDEO_STREAM"
-msgid "Video: %s"
-msgstr "Video: %s"
-
-msgctxt "IDS_APPLY"
-msgid "Apply"
-msgstr "Uygula"
-
-msgctxt "IDS_CLEAR"
-msgid "Clear"
-msgstr "Temizle"
-
-msgctxt "IDS_CANCEL"
-msgid "Cancel"
-msgstr "İptal"
-
-msgctxt "IDS_THUMB_THUMBNAILS"
-msgid "Layout"
-msgstr "Düzen"
-
-msgctxt "IDS_THUMB_PIXELS"
-msgid "Pixels:"
-msgstr "Pikseller:"
-
-msgctxt "IDS_TEXTFILE_ENC"
-msgid "Encoding:"
-msgstr "Kodlama:"
 
 msgctxt "IDS_DISABLE_ALL_FILTERS"
 msgid "&Disable all filters"
@@ -4509,10 +4513,6 @@ msgid ""
 msgstr ""
 "Video dosyası uzantısını görüntü dosya adlarının bir parçası olarak tutun "
 "(ör. File.mkv.png)"
-
-msgctxt "IDS_SNAPSHOT_SUBTITLES"
-msgid "Include Subtitles"
-msgstr "Dahil altyazılar"
 
 msgctxt "IDS_PRESIZE_SHADERS_ENABLED"
 msgid "Pre-Resize Pixel Shaders: on"
