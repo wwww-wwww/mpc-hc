@@ -248,13 +248,13 @@ bool GetYDLStreamDetails(const Value& format, YDLStreamDetails& details, bool re
 
         if (require_video && !details.has_video) {
             #if YDL_EXTRA_LOGGING
-            YDL_LOG(_T("ignore url because it has no video: %s"), details.url);
+            YDL_LOG(_T("ignore url because it has no video: %s"), static_cast<LPCWSTR>(details.url));
             #endif
             return false;
         }
         if (require_audio_only && (details.has_video || !details.has_audio)) {
             #if YDL_EXTRA_LOGGING
-            YDL_LOG(_T("ignore url because it is not audio only (vcodec=%s): %s"), details.vcodec, details.url);
+            YDL_LOG(_T("ignore url because it is not audio only (vcodec=%s): %s"), static_cast<LPCWSTR>(details.vcodec), static_cast<LPCWSTR>(details.url));
             #endif
             return false;
         }
@@ -270,9 +270,9 @@ bool GetYDLStreamDetails(const Value& format, YDLStreamDetails& details, bool re
         }
 
         #if YDL_LOG_URLS
-        YDL_LOG(_T("vcodec=%s width=%d height=%d fps=%d vbr=%d acodec=%s abr=%d url=%s"), details.vcodec, details.width, details.height, details.fps, details.vbr, details.acodec, details.abr, details.url);
+        YDL_LOG(_T("vcodec=%s width=%d height=%d fps=%d vbr=%d acodec=%s abr=%d url=%s"), static_cast<LPCWSTR>(details.vcodec), details.width, details.height, details.fps, details.vbr, static_cast<LPCWSTR>(details.acodec), details.abr, static_cast<LPCWSTR>(details.url));
         #else
-        YDL_LOG(_T("vcodec=%s width=%d height=%d fps=%d vbr=%d acodec=%s abr=%d"), details.vcodec, details.width, details.height, details.fps, details.vbr, details.acodec, details.abr);
+        YDL_LOG(_T("vcodec=%s width=%d height=%d fps=%d vbr=%d acodec=%s abr=%d"), static_cast<LPCWSTR>(details.vcodec), details.width, details.height, details.fps, details.vbr, static_cast<LPCWSTR>(details.acodec), details.abr);
         #endif
 
         return true;

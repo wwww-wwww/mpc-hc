@@ -106,7 +106,7 @@ ShaderList ShaderList::ExpandMultiPassShaderList() const {
         while (morePasses) {
             if (multiPass) {
                 CString fpath;
-                fpath.Format(_T("%s_pass%d")SHADERS_EXT, prefix, pass++);
+                fpath.Format(_T("%s_pass%d")SHADERS_EXT, static_cast<LPCWSTR>(prefix), pass++);
                 if (PathUtils::IsFile(fpath)) {
                     Shader t(fpath);
                     ret.push_back(t);

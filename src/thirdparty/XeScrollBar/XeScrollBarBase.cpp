@@ -753,7 +753,7 @@ void CXeScrollBarBase::OnLButtonUp( UINT nFlags, CPoint point )
 
 	if( m_bDragging )					// Did we send any SB_THUMBTRACK messages?
 	{
-		SendScrollMsg( SB_THUMBPOSITION, m_nTrackPos );
+		SendScrollMsg( SB_THUMBPOSITION, (WORD)m_nTrackPos );
 		m_bDragging = FALSE;
 		RecalcRects();	// Reset thumb pos. to current scroll pos.
 	}
@@ -773,8 +773,8 @@ void CXeScrollBarBase::OnLButtonUp( UINT nFlags, CPoint point )
 /* remove restriction on vert scrollbar, as both are valid in win32 */
 BOOL CXeScrollBarBase::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt) {
     ASSERT(::IsWindow(m_hWnd));
-    short xPos = pt.x;
-    short yPos = pt.y;
+    //short xPos = pt.x;
+    //short yPos = pt.y;
 
     //if (!m_bHorizontal)	// Mouse wheel messages only apply to vertical scrollbar.
     //{
@@ -857,7 +857,7 @@ void CXeScrollBarBase::OnMouseMove( UINT nFlags, CPoint point )
 		{	// Send scroll message when user starts dragging
 			// OR when track pos has changed.
 			m_nTrackPos = nTrackPos;
-			SendScrollMsg( SB_THUMBTRACK, m_nTrackPos );
+			SendScrollMsg( SB_THUMBTRACK, (WORD)m_nTrackPos );
 			m_bNeedEndScroll = TRUE;
 		}
 	}
@@ -1029,7 +1029,7 @@ void CXeScrollBarBase::OnMenuCommands( UINT uID )
 		else if( nScrollHerePos > m_nMaxReportedPos )
 			nScrollHerePos = m_nMaxReportedPos;
 		m_nTrackPos = nScrollHerePos;
-		SendScrollMsg( SB_THUMBPOSITION, m_nTrackPos );
+		SendScrollMsg( SB_THUMBPOSITION, (WORD)m_nTrackPos );
 		SendScrollMsg( SB_ENDSCROLL );
 		break;
 	case XSB_IDM_SCR_TL:

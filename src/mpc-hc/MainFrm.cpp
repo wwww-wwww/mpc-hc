@@ -3806,11 +3806,13 @@ LRESULT CMainFrame::OnOpenMediaFailed(WPARAM wParam, LPARAM lParam)
         }
         if (m_wndPlaylistBar.GetCount() == 1) {
             if (m_nLastSkipDirection == ID_NAVIGATE_SKIPBACK) {
-                if (!(bOpenNextInPlaylist = SearchInDir(false, s.bLoopFolderOnPlayNextFile))) {
+                bOpenNextInPlaylist = SearchInDir(false, s.bLoopFolderOnPlayNextFile);
+                if (!bOpenNextInPlaylist) {
                     m_OSD.DisplayMessage(OSD_TOPLEFT, ResStr(IDS_FIRST_IN_FOLDER));
                 }
             } else if (m_nLastSkipDirection == ID_NAVIGATE_SKIPFORWARD) {
-                if (!(bOpenNextInPlaylist = SearchInDir(true, s.bLoopFolderOnPlayNextFile))) {
+                bOpenNextInPlaylist = SearchInDir(true, s.bLoopFolderOnPlayNextFile);
+                if (!bOpenNextInPlaylist) {
                     m_OSD.DisplayMessage(OSD_TOPLEFT, ResStr(IDS_LAST_IN_FOLDER));
                 }
             }
@@ -11420,17 +11422,17 @@ bool CMainFrame::SaveShaderFile(ShaderC* shader)
 {
 	CString path;
 	if (AfxGetMyApp()->GetAppSavePath(path)) {
-		path.AppendFormat(L"Shaders\\%s.hlsl", shader->label);
+		path.AppendFormat(L"Shaders\\%s.hlsl", static_cast<LPCWSTR>(shader->label));
 
 		CStdioFile file;
 		if (file.Open(path, CFile::modeWrite  | CFile::shareExclusive | CFile::typeText)) {
 			file.SetLength(0);
 
 			CString str;
-			str.Format(L"// $MinimumShaderProfile: %s\n", shader->profile);
-			file.WriteString(str);
+			str.Format(L"// $MinimumShaderProfile: %s\n", static_cast<LPCWSTR>(shader->profile));
+			file.WriteString(static_cast<LPCWSTR>(str));
 
-			file.WriteString(shader->srcdata);
+			file.WriteString(static_cast<LPCWSTR>(shader->srcdata));
 			file.Close();
 
 			// delete out-of-date data from the cache
@@ -15174,14 +15176,14 @@ void CMainFrame::SetupRecentFilesSubMenu()
                     }
                     int targetlen = 150 - title.GetLength();
                     if (PathUtils::IsURL(p)) {
-                        p.Format(_T("%s (%s)"), title, ShortenURL(p, targetlen, true));
+                        p.Format(_T("%s (%s)"), static_cast<LPCWSTR>(title), static_cast<LPCWSTR>(ShortenURL(p, targetlen, true)));
                     } else {
                         CString fn = PathUtils::StripPathOrUrl(p);
                         if (fn.GetLength() > targetlen) { // If file name is too long, cut middle part.
                             int l = fn.GetLength();
-                            fn.Format(_T("%s~~~%s"), fn.Left(l / 2 - 2 + (l % 2)), fn.Right(l / 2 - 1));
+                            fn.Format(_T("%s~~~%s"), static_cast<LPCWSTR>(fn.Left(l / 2 - 2 + (l % 2))), static_cast<LPCWSTR>(fn.Right(l / 2 - 1)));
                         }
-                        p.Format(_T("%s (%s)"), title, fn);
+                        p.Format(_T("%s (%s)"), static_cast<LPCWSTR>(title), static_cast<LPCWSTR>(fn));
                     }
                 }
                 else {
@@ -15189,7 +15191,7 @@ void CMainFrame::SetupRecentFilesSubMenu()
                         p = ShortenURL(p, 150);
                     }
                     if (p.GetLength() > 150) {
-                        p.Format(_T("%s~~~%s"), p.Left(60), p.Right(87));
+                        p.Format(_T("%s~~~%s"), static_cast<LPCWSTR>(p.Left(60)), static_cast<LPCWSTR>(p.Right(87)));
                     }
                 }
                 p.Replace(_T("&"), _T("&&"));
@@ -19171,7 +19173,7 @@ bool CMainFrame::ProcessYoutubeDLURL(CString url, bool append, bool replace)
         }
         CString epiid;
         if (!seasonid.IsEmpty() || !episodeid.IsEmpty()) {
-            epiid.Format(_T("%s%s. "), seasonid, episodeid);
+            epiid.Format(_T("%s%s. "), static_cast<LPCWSTR>(seasonid), static_cast<LPCWSTR>(episodeid));
         }
         CString season;
         if (!stream.series.IsEmpty()) {
@@ -19188,7 +19190,7 @@ bool CMainFrame::ProcessYoutubeDLURL(CString url, bool append, bool replace)
                 season = stream.season + _T(" - ");
             }
         }
-        title.Format(_T("%s%s%s"), epiid, season, title);
+        title.Format(_T("%s%s%s"), static_cast<LPCWSTR>(epiid), static_cast<LPCWSTR>(season), static_cast<LPCWSTR>(title));
         if (i == 0) f_title = title;
         int targetlen = title.GetLength() > 100 ? 50 : 150 - title.GetLength();
         CString url2(url);
@@ -19218,7 +19220,7 @@ bool CMainFrame::ProcessYoutubeDLURL(CString url, bool append, bool replace)
                 r.title = h.season;
             }
             else if (!listinfo.title.IsEmpty()) {
-                if (!listinfo.uploader.IsEmpty()) r.title.Format(_T("%s - %s"), listinfo.uploader, listinfo.title);
+                if (!listinfo.uploader.IsEmpty()) r.title.Format(_T("%s - %s"), static_cast<LPCWSTR>(listinfo.uploader), static_cast<LPCWSTR>(listinfo.title));
                 else r.title = listinfo.title;
             }
             else r.title = f_title;

@@ -476,11 +476,12 @@ class CAppSettings
         LPCTSTR m_section;
 
         int GetSize() {
-            return rfe_array.GetCount();
+            return (int)rfe_array.GetCount();
         }
 
         RecentFileEntry& operator[](int nIndex) {
-            if (nIndex >= 0 && nIndex < rfe_array.GetCount()) return rfe_array[nIndex];
+            ASSERT(nIndex >= 0 && nIndex < rfe_array.GetCount());
+            return rfe_array[nIndex];
         }
 
         void Remove(int nIndex);
