@@ -53,10 +53,10 @@ else
   ver=${describe#*-}
   ver=${ver%-g*}
 
-  if [$hash = ""]; then
+  if [[ -z "$hash" ]]; then
     hash="0000000"
   fi
-  if [$ver = ""]; then
+  if [[ -z "$ver" ]]; then
     ver=0
   fi
 
