@@ -42,8 +42,9 @@ EXIT /B
 
 
 :MissingVar
+copy /Y "build\version_rev_fallback.h" "build\version_rev.h"
 ECHO Not all build dependencies were found: Missing bash.exe in Git installation
 ECHO.
 ECHO See "docs\Compilation.md" for more information.
 ENDLOCAL
-EXIT /B 1
+EXIT /B
