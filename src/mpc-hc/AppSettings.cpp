@@ -81,6 +81,7 @@ CAppSettings::CAppSettings()
     , fGlobalMedia(false)
     , nLogoId(-1)
     , fLogoExternal(false)
+    , fLogoColorProfileEnabled(false)
     , fEnableWebServer(false)
     , nWebServerPort(13579)
     , nCmdlnWebServerPort(-1)
@@ -1059,6 +1060,7 @@ void CAppSettings::SaveSettings()
     pApp->WriteProfileString(IDS_R_SETTINGS, IDS_RS_LOGOFILE, strLogoFileName);
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_LOGOID, nLogoId);
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_LOGOEXT, fLogoExternal);
+    pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_LOGOCOLORPROFILE, fLogoColorProfileEnabled);
 
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_HIDECDROMSSUBMENU, fHideCDROMsSubMenu);
 
@@ -1779,6 +1781,7 @@ void CAppSettings::LoadSettings()
     strLogoFileName = pApp->GetProfileString(IDS_R_SETTINGS, IDS_RS_LOGOFILE);
     nLogoId = pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_LOGOID, -1);
     fLogoExternal = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_LOGOEXT, FALSE);
+    fLogoColorProfileEnabled = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_LOGOCOLORPROFILE, FALSE);
 
     fHideCDROMsSubMenu = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_HIDECDROMSSUBMENU, FALSE);
 

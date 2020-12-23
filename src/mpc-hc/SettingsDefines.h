@@ -182,6 +182,7 @@
 #define IDS_RS_RECENT_FILES_NUMBER          _T("RecentFilesNumber")
 #define IDS_RS_LOGOID                       _T("LogoID2")
 #define IDS_RS_LOGOEXT                      _T("LogoExt")
+#define IDS_RS_LOGOCOLORPROFILE             _T("LogoColorProfile")
 #define IDS_RS_TRAFILTERS                   _T("TraFilters")
 #define IDS_RS_COMPMONDESKARDIFF            _T("CompMonDeskARDiff")
 #define IDS_RS_HIDECDROMSSUBMENU            _T("HideCDROMsSubMenu")

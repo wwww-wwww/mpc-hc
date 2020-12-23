@@ -565,6 +565,7 @@ public:
     // Logo
     UINT            nLogoId;
     bool            fLogoExternal;
+    bool            fLogoColorProfileEnabled;
     CString         strLogoFileName;
 
     // Web Inteface
