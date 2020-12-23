@@ -1319,7 +1319,7 @@ msgstr "マウス ウィンドウ"
 
 msgctxt "IDS_AG_MOUSE_FS"
 msgid "Mouse Fullscreen"
-msgstr "マウス フルスクリーン"
+msgstr "マウス 全画面"
 
 msgctxt "IDS_AG_APP_COMMAND"
 msgid "App Command"
@@ -2568,6 +2568,8 @@ msgid ""
 "To load subtitles you have to change the video renderer type and reopen the file.\n"
 "- DirectShow: EVR (Custom Presenter), Sync, VMR-9 (renderless), madVR, MPC VR, or Haali VR"
 msgstr ""
+"字幕を読み込むには、ビデオ レンダラの種類を変更し、ファイルを開き直す必要があります。\n"
+"- DirectShow: EVR (カスタム プレゼンタ), 同期, VMR-9 (レンダーレス), madVR, MPC VR, または Haali VR"
 
 msgctxt "IDS_SUBTITLE_FILES_FILTER"
 msgid "Subtitle files"
@@ -2927,11 +2929,11 @@ msgstr "拡大 25%"
 
 msgctxt "IDS_AG_MOUSE_MODIFIER"
 msgid "Mouse Modifier"
-msgstr ""
+msgstr "マウス 修飾キー"
 
 msgctxt "IDS_AG_MOUSE_FS_MODIFIER"
 msgid "Mouse FS Modifier"
-msgstr ""
+msgstr "マウス 全画面 修飾キー"
 
 msgctxt "IDS_AG_VIDFRM_ZOOM1"
 msgid "VidFrm Zoom 1"
@@ -4440,24 +4442,24 @@ msgstr "スナップショットのファイル名に動画ファイルの拡張
 
 msgctxt "IDS_PRESIZE_SHADERS_ENABLED"
 msgid "Pre-Resize Pixel Shaders: on"
-msgstr ""
+msgstr "サイズ変更前のピクセル シェーダ: オン"
 
 msgctxt "IDS_PRESIZE_SHADERS_DISABLED"
 msgid "Pre-Resize Pixel Shaders: off"
-msgstr ""
+msgstr "サイズ変更前のピクセル シェーダ: オフ"
 
 msgctxt "IDS_PRESIZE_SHADERS_TOGGLE"
 msgid "Enable Pre-Resize Pixel Shaders"
-msgstr ""
+msgstr "サイズ変更前のピクセル シェーダを有効にする"
 
 msgctxt "IDS_POSTSIZE_SHADERS_ENABLED"
 msgid "Post-Resize Pixel Shaders: on"
-msgstr ""
+msgstr "サイズ変更後のピクセル シェーダ: オン"
 
 msgctxt "IDS_POSTSIZE_SHADERS_DISABLED"
 msgid "Post-Resize Pixel Shaders: off"
-msgstr ""
+msgstr "サイズ変更後のピクセル シェーダ: オフ"
 
 msgctxt "IDS_POSTSIZE_SHADERS_TOGGLE"
 msgid "Enable Post-Resize Pixel Shaders"
-msgstr ""
+msgstr "サイズ変更後のピクセル シェーダを有効にする"
