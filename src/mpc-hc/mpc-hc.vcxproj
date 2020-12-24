@@ -132,15 +132,6 @@
     <Link>
       <AdditionalDependencies>RARFileSource.res;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
-    <ClCompile>
-      <AdditionalIncludeDirectories>..\thirdparty\ZenLib\library\Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</SDLCheck>
-    </ClCompile>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="$(Configuration.Contains('Lite'))">
-    <Link>
-      <AdditionalDependencies>libass.lib;%(AdditionalDependencies)</AdditionalDependencies>
-    </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\thirdparty\MessageBoxDialog\MessageBoxDialog.cpp" />

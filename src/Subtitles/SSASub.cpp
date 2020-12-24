@@ -3,6 +3,7 @@
 #include "../../include/mpc-hc_config.h"
 
 #if USE_LIBASS
+#pragma comment( lib, "libass" )
 #include <ios>
 #include <algorithm>
 #include <fstream>
