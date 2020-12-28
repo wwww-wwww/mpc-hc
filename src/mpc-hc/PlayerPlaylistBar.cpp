@@ -406,7 +406,7 @@ bool CPlayerPlaylistBar::ParseBDMVPlayList(CString fn)
     Path.RemoveFileSpec();
     Path.RemoveFileSpec();
 
-    if (SUCCEEDED(ClipInfo.FindMainMovie(Path + L"\\", strPlaylistFile, MainPlaylist, ((CMainFrame*)GetParentFrame())->m_MPLSPlaylist))) {
+    if (SUCCEEDED(ClipInfo.FindMainMovie(Path + L"\\", strPlaylistFile, MainPlaylist, m_pMainFrame->m_MPLSPlaylist))) {
         CAtlList<CString> strFiles;
         strFiles.AddHead(strPlaylistFile);
         Append(strFiles, MainPlaylist.GetCount() > 1, nullptr);
