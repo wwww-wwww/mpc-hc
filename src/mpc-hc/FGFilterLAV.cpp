@@ -275,7 +275,9 @@ HRESULT CFGFilterLAVSplitterBase::Create(IBaseFilter** ppBF, CInterfaceList<IUnk
             hr = pLAVFSettings->SetRuntimeConfig(TRUE);
 
             if (SUCCEEDED(hr)) {
-                if (!isPreview) {
+                if (isPreview) {
+                    pLAVFSettings->SetMaxQueueSize(50);
+                } else {
                     Settings settings;
                     if (settings.GetSettings(pLAVFSettings)) { // Get default settings from LAVSplitter
                         settings.LoadSettings(); // Load our current settings from registry/ini
@@ -544,7 +546,9 @@ HRESULT CFGFilterLAVVideo::Create(IBaseFilter** ppBF, CInterfaceList<IUnknown, &
             hr = pLAVFSettings->SetRuntimeConfig(TRUE);
 
             if (SUCCEEDED(hr)) {
-                if (!isPreview) {
+                if (isPreview) {
+                    pLAVFSettings->SetNumThreads(2);
+                } else {
                     Settings settings;
                     if (settings.GetSettings(pLAVFSettings)) { // Get default settings from LAVVideo
                         settings.LoadSettings(); // Load our current settings from registry/ini
