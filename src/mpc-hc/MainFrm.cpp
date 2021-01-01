@@ -13165,56 +13165,38 @@ void CMainFrame::OpenSetupWindowTitle(bool reset /*= false*/)
             title = GetCaptureTitle();
         } else if (i == 1) { // Show filename or title
             if (GetPlaybackMode() == PM_FILE) {
-                bool use_label = false;
-                // always use playlist title in case of URLs
-                CPlaylistItem* pli = m_wndPlaylistBar.GetCur();
-                if (pli && !pli->m_fns.IsEmpty() && pli->m_fns.GetHead().Left(4) == _T("http")) {
-                    if (pli->m_label && !pli->m_label.IsEmpty()) {
-                        title = pli->m_label;
-                        use_label = true;
-                    }
-                    if (!pli->m_bYoutubeDL) {
-                        CString temp;
-                        BeginEnumFilters(m_pGB, pEF, pBF) {
-                            if (CComQIPtr<IAMMediaContent, &IID_IAMMediaContent> pAMMC = pBF) {
-                                CComBSTR bstr;
-                                if (SUCCEEDED(pAMMC->get_Title(&bstr)) && bstr.Length()) {
-                                    temp = CString(bstr.m_str);
-                                    break;
-                                }
-                            }
-                        }
-                        EndEnumFilters;
-                        if (!temp.IsEmpty() && temp != pli->m_label) {
-                            title = temp;
-                            use_label = true;
-                            m_wndPlaylistBar.UpdateLabel(temp);
-                            m_current_rfe.title = temp;
-                        }
-                    }
-                }
-                if (!use_label) {
-                    title = GetFileName();
+                bool has_title = false;
 
-                    if (s.fTitleBarTextTitle) {
-                        BeginEnumFilters(m_pGB, pEF, pBF) {
-                            if (CComQIPtr<IAMMediaContent, &IID_IAMMediaContent> pAMMC = pBF) {
-                                CComBSTR bstr;
-                                if (SUCCEEDED(pAMMC->get_Title(&bstr)) && bstr.Length()) {
-                                    title = CString(bstr.m_str);
-                                    break;
-                                }
-                            }
-                        }
-                        EndEnumFilters;
-                        if (!use_label && pli && !pli->m_fns.IsEmpty()) {
-                            if (pli->m_label && !pli->m_label.IsEmpty()) {
-                                title = pli->m_label;
-                                use_label = true;
+                if (s.fTitleBarTextTitle) {
+                    BeginEnumFilters(m_pGB, pEF, pBF) {
+                        if (CComQIPtr<IAMMediaContent, &IID_IAMMediaContent> pAMMC = pBF) {
+                            CComBSTR bstr;
+                            if (SUCCEEDED(pAMMC->get_Title(&bstr)) && bstr.Length()) {
+                                title = CString(bstr.m_str);
+                                has_title = true;
+                                break;
                             }
                         }
                     }
+                    EndEnumFilters;
                 }
+
+                if (!has_title) {
+                    CPlaylistItem* pli = m_wndPlaylistBar.GetCur();               
+                    if (pli && !pli->m_fns.IsEmpty() && pli->m_label && !pli->m_label.IsEmpty()) {
+                        if (s.fTitleBarTextTitle || pli->m_bYoutubeDL) {
+                            title = pli->m_label;
+                            has_title = true;
+                        }
+                    }
+                }
+
+                if (!has_title) {
+                    title = GetFileName();
+                    has_title = true;
+                }
+
+                m_current_rfe.title = title;
             } else if (GetPlaybackMode() == PM_DVD) {
                 title = _T("DVD");
                 CString path;
