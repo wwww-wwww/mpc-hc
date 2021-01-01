@@ -198,8 +198,8 @@ msgid "About"
 msgstr "关于"
 
 msgctxt "IDD_ABOUTBOX_IDC_AUTHORS_LINK"
-msgid "Copyright © 2002-2020 see Authors.txt"
-msgstr "版权所有 © 2002-2020 请查看 Authors.txt"
+msgid "Copyright 2002-2021 clsid2 and others"
+msgstr ""
 
 msgctxt "IDD_ABOUTBOX_IDC_STATIC"
 msgid ""

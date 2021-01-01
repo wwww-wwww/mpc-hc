@@ -206,8 +206,8 @@ msgid "About"
 msgstr "Hakkında"
 
 msgctxt "IDD_ABOUTBOX_IDC_AUTHORS_LINK"
-msgid "Copyright © 2002-2020 see Authors.txt"
-msgstr "Telif Hakkı © 2002-2020, Authors.txt dosyasına bakın"
+msgid "Copyright 2002-2021 clsid2 and others"
+msgstr ""
 
 msgctxt "IDD_ABOUTBOX_IDC_STATIC"
 msgid ""
