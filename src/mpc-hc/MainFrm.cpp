@@ -931,14 +931,16 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
     // Should never be RTLed
     m_wndView.ModifyStyleEx(WS_EX_LAYOUTRTL, WS_EX_NOINHERITLAYOUT);
 
+    const CAppSettings& s = AfxGetAppSettings();
+
     // Create Preview Window
-    if (!m_wndPreView.CreateEx(WS_EX_TOPMOST, AfxRegisterWndClass(0), nullptr, WS_POPUP | WS_CLIPCHILDREN | WS_CLIPSIBLINGS, CRect(0, 0, 160, 109), this, 0)) {
-        TRACE(_T("Failed to create Preview Window"));
-        m_wndView.DestroyWindow();
-        return -1;
-    } else {
-        m_wndPreView.ShowWindow(SW_HIDE);
-        m_wndPreView.SetRelativeSize(AfxGetAppSettings().iSeekPreviewSize);
+    if (s.fSeekPreview) {
+        if (m_wndPreView.CreateEx(WS_EX_TOPMOST, AfxRegisterWndClass(0), nullptr, WS_POPUP | WS_CLIPCHILDREN | WS_CLIPSIBLINGS, CRect(0, 0, 160, 109), this, 0)) {
+            m_wndPreView.ShowWindow(SW_HIDE);
+            m_wndPreView.SetRelativeSize(AfxGetAppSettings().iSeekPreviewSize);
+        } else {
+            TRACE(_T("Failed to create Preview Window"));
+        }
     }
 
     // static bars
@@ -1022,8 +1024,6 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
     m_dropTarget.Register(this);
 
-    const CAppSettings& s = AfxGetAppSettings();
-
     SetAlwaysOnTop(s.iOnTop);
 
     ShowTrayIcon(s.fTrayIcon);
@@ -1100,7 +1100,7 @@ void CMainFrame::OnDestroy()
         delete m_pFullscreenWnd;
     }
 
-	m_wndPreView.DestroyWindow();
+    m_wndPreView.DestroyWindow();
 
     __super::OnDestroy();
 }
@@ -11671,7 +11671,7 @@ void CMainFrame::OpenCreateGraphObject(OpenMediaData* pOMD)
     const CAppSettings& s = AfxGetAppSettings();
 
     m_pGB_preview = nullptr;
-    m_bUseSeekPreview = s.fSeekPreview;
+    m_bUseSeekPreview = s.fSeekPreview && ::IsWindow(m_wndPreView.m_hWnd);
     if (OpenFileData* pFileData = dynamic_cast<OpenFileData*>(pOMD)) {
         CString fn = pFileData->fns.GetHead();
         if (!fn.IsEmpty() && (fn.Find(L"://") >= 0)) { // disable seek preview for streaming data.
@@ -19285,7 +19285,7 @@ void CMainFrame::OnSettingChange(UINT uFlags, LPCTSTR lpszSection)
 }
 
 BOOL CMainFrame::OnMouseWheel(UINT nFlags, short zDelta, CPoint point) {
-    if (m_wndPreView.IsWindowVisible()) {
+    if (m_bUseSeekPreview && m_wndPreView.IsWindowVisible()) {
 
         int seek =
             nFlags == MK_SHIFT ? 10 :
