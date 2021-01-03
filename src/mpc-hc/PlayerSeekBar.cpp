@@ -392,7 +392,7 @@ void CPlayerSeekBar::UpdateToolTipPosition(CPoint point)
             }
         }
 
-        m_pMainFrame->m_wndPreView.SetWindowPos(nullptr, point.x, point.y, 0, 0, SWP_NOSIZE | SWP_NOZORDER | SWP_NOACTIVATE);
+        m_pMainFrame->m_wndPreView.SetWindowPos(&wndTopMost, point.x, point.y, 0, 0, SWP_NOSIZE | SWP_NOZORDER | SWP_NOACTIVATE);
     } else {
         CSize bubbleSize(m_tooltip.GetBubbleSize(&m_ti));
         CRect windowRect;

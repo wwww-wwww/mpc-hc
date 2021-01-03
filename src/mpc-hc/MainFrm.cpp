@@ -935,7 +935,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
     // Create Preview Window
     if (s.fSeekPreview) {
-        if (m_wndPreView.CreateEx(WS_EX_TOPMOST, AfxRegisterWndClass(0), nullptr, WS_POPUP | WS_CLIPCHILDREN | WS_CLIPSIBLINGS, CRect(0, 0, 160, 109), this, 0)) {
+        if (m_wndPreView.CreateEx(0, AfxRegisterWndClass(0), nullptr, WS_POPUP | WS_CLIPCHILDREN | WS_CLIPSIBLINGS, CRect(0, 0, 160, 109), this, 0)) {
             m_wndPreView.ShowWindow(SW_HIDE);
             m_wndPreView.SetRelativeSize(AfxGetAppSettings().iSeekPreviewSize);
         } else {
@@ -11873,6 +11873,7 @@ HRESULT CMainFrame::PreviewWindowHide() {
         ::SystemParametersInfo(SPI_SETANIMATION, sizeof(ANIMATIONINFO), &AnimationInfo, 0);
 
         m_wndPreView.ShowWindow(SW_HIDE);
+        m_wndPreView.SetWindowPos(&wndNoTopMost, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE);
 
         // Enable animation
         AnimationInfo.iMinAnimate = WindowAnimationType;
