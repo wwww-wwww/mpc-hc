@@ -64,6 +64,7 @@ CPPageFileInfoClip::CPPageFileInfoClip(CString path, IFilterGraph* pFG, IFileSou
             CComBSTR bstr;
             if (SUCCEEDED(pAMMC->get_Title(&bstr)) && bstr.Length()) {
                 m_clip = bstr.m_str;
+                m_clip.Trim();
                 bFound = true;
             }
             bstr.Empty();
@@ -84,7 +85,7 @@ CPPageFileInfoClip::CPPageFileInfoClip(CString path, IFilterGraph* pFG, IFileSou
             bstr.Empty();
             if (SUCCEEDED(pAMMC->get_Description(&bstr)) && bstr.Length()) {
                 m_desc = bstr.m_str;
-                m_desc.Replace(L"\r\n", L"\n"); //Relpace existing \r\n to \n
+                m_desc.Replace(L"\r\n", L"\n"); //Replace existing \r\n to \n
                 m_desc.Replace(L"\n", L"\r\n");
                 bFound = true;
             }

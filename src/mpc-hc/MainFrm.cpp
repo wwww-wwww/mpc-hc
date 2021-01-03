@@ -12117,7 +12117,8 @@ void CMainFrame::OpenFile(OpenFileData* pOFD)
                         if (CComQIPtr<IAMMediaContent, &IID_IAMMediaContent> pAMMC = pBF) {
                             CComBSTR bstr;
                             if (SUCCEEDED(pAMMC->get_Title(&bstr)) && bstr.Length()) {
-                                title = CString(bstr.m_str);
+                                title = bstr.m_str;
+                                title.Trim();
                                 break;
                             }
                         }
@@ -12985,6 +12986,7 @@ void CMainFrame::OpenSetupInfoBar(bool bClear /*= true*/)
             if (CComQIPtr<IAMMediaContent, &IID_IAMMediaContent> pAMMC = pBF) {
                 if (SUCCEEDED(pAMMC->get_Title(&bstr)) && bstr.Length()) {
                     title = bstr.m_str;
+                    title.Trim();
                 }
                 bstr.Empty();
                 if (SUCCEEDED(pAMMC->get_AuthorName(&bstr)) && bstr.Length()) {
@@ -13172,8 +13174,9 @@ void CMainFrame::OpenSetupWindowTitle(bool reset /*= false*/)
                         if (CComQIPtr<IAMMediaContent, &IID_IAMMediaContent> pAMMC = pBF) {
                             CComBSTR bstr;
                             if (SUCCEEDED(pAMMC->get_Title(&bstr)) && bstr.Length()) {
-                                title = CString(bstr.m_str);
-                                has_title = true;
+                                title = bstr.m_str;
+                                title.Trim();
+                                has_title = !title.IsEmpty();
                                 break;
                             }
                         }
