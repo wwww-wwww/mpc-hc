@@ -29,6 +29,8 @@
 #include "rapidjson/include/rapidjson/document.h"
 #include <wincrypt.h>
 
+#pragma warning(disable: 4244)
+
 #define LOG SUBTITLES_LOG
 #define LOG_NONE    _T("()")
 #define LOG_INPUT   _T("(\"%S\")")

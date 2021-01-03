@@ -5247,7 +5247,7 @@ void CMainFrame::SaveImage(LPCWSTR fn, bool displayed, bool includeSubtitles) {
     }
 
     if (hr == S_OK) {
-        SaveDIB(fn, dib.data(), dib.size());
+        SaveDIB(fn, dib.data(), (long)dib.size());
         m_OSD.DisplayMessage(OSD_TOPLEFT, ResStr(IDS_OSD_IMAGE_SAVED), 3000);
     } else {
         m_OSD.DisplayMessage(OSD_TOPLEFT, errmsg, 3000);
@@ -11004,11 +11004,11 @@ void CMainFrame::SetPreviewVideoPosition() {
             }
 
             const float scale = 1 / 3.0f;
-            w = minw + (maxw - minw) * scale;
+            w = int(minw + (maxw - minw) * scale);
             h = MulDiv(w, arxy.cy, arxy.cx);
         }
 
-        const CPoint pos(m_PosX * (wr.Width() * 3 - w) - wr.Width(), m_PosY * (wr.Height() * 3 - h) - wr.Height());
+        const CPoint pos(int(m_PosX * (wr.Width() * 3 - w) - wr.Width()), int(m_PosY * (wr.Height() * 3 - h) - wr.Height()));
         const CRect vr(pos, CSize(w, h));
 
         if (m_pMFVDC_preview) {
