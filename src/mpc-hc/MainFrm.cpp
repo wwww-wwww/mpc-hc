@@ -12106,7 +12106,7 @@ void CMainFrame::OpenFile(OpenFileData* pOFD)
                 RecentFileEntry r;
                 r.fns.AddTail(fn);
                 CPlaylistItem* m_pli = m_wndPlaylistBar.GetCur();
-                if (!m_pli->m_label.IsEmpty()) {
+                if (m_pli && !m_pli->m_label.IsEmpty()) {
                     if (m_pli->m_bYoutubeDL || PathUtils::StripPathOrUrl(fn) != m_pli->m_label) {
                         if (!m_pli->m_bYoutubeDL || fn == m_pli->m_ydlSourceURL) r.title = m_pli->m_label;
                         else {
@@ -12132,17 +12132,20 @@ void CMainFrame::OpenFile(OpenFileData* pOFD)
                     EndEnumFilters;
                     if (!title.IsEmpty()) r.title = title;
                 }
-                if (!m_pli->m_bYoutubeDL && m_pli->m_fns.GetCount() > 1) {
-                    r.fns.RemoveAll();
-                    r.fns.AddHeadList(&m_pli->m_fns);
-                }
-                else if (m_pli->m_bYoutubeDL) {
-                    r.fns.RemoveAll();
-                    r.fns.AddTail(m_pli->m_ydlSourceURL);
-                }
-                if (m_pli->m_cue) r.cue = m_pli->m_cue_filename;
-                if (m_pli->m_subs.GetCount() > 0) {
-                    r.subs.AddHeadList(&m_pli->m_subs);
+                if (m_pli) {
+                    if (!m_pli->m_bYoutubeDL && m_pli->m_fns.GetCount() > 1) {
+                        r.fns.RemoveAll();
+                        r.fns.AddHeadList(&m_pli->m_fns);
+                    } else if (m_pli->m_bYoutubeDL) {
+                        r.fns.RemoveAll();
+                        r.fns.AddTail(m_pli->m_ydlSourceURL);
+                    }
+                    if (m_pli->m_cue) {
+                        r.cue = m_pli->m_cue_filename;
+                    }
+                    if (m_pli->m_subs.GetCount() > 0) {
+                        r.subs.AddHeadList(&m_pli->m_subs);
+                    }
                 }
                 m_current_rfe = r;
                 pMRU->Add(r);
