@@ -141,6 +141,7 @@ extern CStringA HtmlSpecialCharsDecode(CStringA str);
 extern DWORD CharSetToCodePage(DWORD dwCharSet);
 extern CAtlList<CString>& MakeLower(CAtlList<CString>& sl);
 extern CAtlList<CString>& MakeUpper(CAtlList<CString>& sl);
+extern int LastIndexOfCString(const CString& text, const CString& pattern);
 
 CString FormatNumber(CString szNumber, bool bNoFractionalDigits = true);
 void GetLocaleString(LCID lcid, LCTYPE type, CString& output);

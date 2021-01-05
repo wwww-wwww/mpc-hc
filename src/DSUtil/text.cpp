@@ -337,3 +337,13 @@ void GetLocaleString(LCID lcid, LCTYPE type, CString& output) {
     int len = GetLocaleInfo(lcid, type, output.GetBuffer(256), 256);
     output.ReleaseBufferSetLength(std::max(len - 1, 0));
 }
+
+int LastIndexOfCString(const CString& text, const CString& pattern) {
+    int found = -1;
+    int next_pos = 0;
+    while (true) {
+        next_pos = text.Find(pattern, next_pos);
+        if (next_pos == -1) return found;
+        found = next_pos;
+    }
+}
