@@ -46,8 +46,7 @@ releases.
    pacman -S make pkg-config
    ```
    Note that this is the bare minimum, you can install more packages that can be useful to you.
-5. Download and extract MinGW to **`C:\MSYS64\mingw64\`** from <http://files.1f0.de/mingw/>
-   (you might use the one that ships with MSYS2, but we recommend this one)
+5. Download the latest mingw-w64-gcc package from <http://files.1f0.de/mingw/> and extract it to folder **`C:\MSYS64\mingw64`**
 6. It is recommended to add **`C:\MSYS64\mingw64\bin`** and **`C:\MSYS64\usr\bin`** to the %PATH% environment variable.
    Windows Control Panel > System > Advanced System Settings > Environment variables
    This allows you to run GCC and all other MSYS tools from the Windows command line.
@@ -62,14 +61,16 @@ Download YASM and save it as **yasm.exe** in **`C:\MSYS64\usr\bin`** (if using M
 
 ## Part E: Config file with paths
 
-Create a file named **build.user.bat** in the source code folder of MPC-HC (see part F). It should have the following contents (with paths adapted for your system):
+Create a file named **build.user.bat** in the source code folder of MPC-HC (see part F). It should have the following contents: (with paths adapted for your system!)
 
     ```bat
     @ECHO OFF
     SET "MSYSTEM=MINGW32"
+    REM This is the MSYS2 installation path:
     SET "MPCHC_MSYS=C:\MSYS"
-    SET "MPCHC_MINGW32=%MPCHC_MSYS%\mingw"
-    SET "MPCHC_MINGW64=%MPCHC_MINGW32%"
+    REM This is the MingW64 GCC installation path:
+    SET "MPCHC_MINGW32=C:\MSYS\mingw64"
+    SET "MPCHC_MINGW64=C:\MSYS\mingw64"
     REM You can set `MSYS2_PATH_TYPE` here or in environment variables so that Git is properly added to your `PATH`
     REM SET "MSYS2_PATH_TYPE=inherit"
     REM `MPCHC_GIT` is optional to set if you chose to add it in `PATH` when installing it and have set `MSYS2_PATH_TYPE`
