@@ -865,6 +865,7 @@ public:
 
     int nStreamPosPollerInterval;
     bool bShowLangInStatusbar;
+    bool bShowFPSInStatusbar;
 
     bool bAddLangCodeWhenSaveSubtitles;
     bool bUseTitleInRecentFileList;

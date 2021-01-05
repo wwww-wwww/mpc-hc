@@ -232,6 +232,7 @@ CAppSettings::CAppSettings()
     , bEnableCrashReporter(true)
     , nStreamPosPollerInterval(100)
     , bShowLangInStatusbar(false)
+    , bShowFPSInStatusbar(false)
     , bRenderSubtitlesUsingLibass(false)
     , bAddLangCodeWhenSaveSubtitles(true)
     , bUseTitleInRecentFileList(true)
@@ -1176,6 +1177,7 @@ void CAppSettings::SaveSettings()
 
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_TIME_REFRESH_INTERVAL, nStreamPosPollerInterval);
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_SHOW_LANG_STATUSBAR, bShowLangInStatusbar);
+    pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_SHOW_FPS_STATUSBAR, bShowFPSInStatusbar);
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_ADD_LANGCODE_WHEN_SAVE_SUBTITLES, bAddLangCodeWhenSaveSubtitles);
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_USE_TITLE_IN_RECENT_FILE_LIST, bUseTitleInRecentFileList);
 
@@ -1989,6 +1991,7 @@ void CAppSettings::LoadSettings()
 
     nStreamPosPollerInterval = pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_TIME_REFRESH_INTERVAL, 100);
     bShowLangInStatusbar = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_SHOW_LANG_STATUSBAR, FALSE);
+    bShowFPSInStatusbar = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_SHOW_FPS_STATUSBAR, FALSE);
 
     bAddLangCodeWhenSaveSubtitles = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_ADD_LANGCODE_WHEN_SAVE_SUBTITLES, TRUE);
     bUseTitleInRecentFileList = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_USE_TITLE_IN_RECENT_FILE_LIST, TRUE);

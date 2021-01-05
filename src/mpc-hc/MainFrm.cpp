@@ -3585,6 +3585,9 @@ void CMainFrame::OnUpdatePlayerStatus(CCmdUI* pCmdUI)
                     msg.Append(_T("]"));
                 }
             }
+            if (AfxGetAppSettings().bShowFPSInStatusbar && m_pCAP) {
+                msg.AppendFormat(_T("\u2001%.2lf fps (%.2lfx)"), m_pCAP->GetFPS(), m_dSpeedRate);
+            }
         }
 
         m_wndStatusBar.SetStatusMessage(msg);
