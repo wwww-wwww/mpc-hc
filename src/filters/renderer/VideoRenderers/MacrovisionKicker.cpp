@@ -71,6 +71,16 @@ STDMETHODIMP CMacrovisionKicker::Set(REFGUID PropSet, ULONG Id, LPVOID pInstance
 
 STDMETHODIMP CMacrovisionKicker::Get(REFGUID PropSet, ULONG Id, LPVOID pInstanceData, ULONG InstanceLength, LPVOID pPropertyData, ULONG DataLength, ULONG* pBytesReturned)
 {
+    if (PropSet == AM_KSPROPSETID_CopyProt) {
+        if (Id == AM_PROPERTY_COPY_ANALOG_COMPONENT) {
+            if (pPropertyData && DataLength >= sizeof(ULONG) && pBytesReturned) {
+                *(ULONG*)pPropertyData = FALSE;
+                *pBytesReturned = sizeof(ULONG);
+                return S_OK;
+            }
+            return E_INVALIDARG;
+        }
+    }
     if (CComQIPtr<IKsPropertySet> pKsPS = m_pInner) {
         return pKsPS->Get(PropSet, Id, pInstanceData, InstanceLength, pPropertyData, DataLength, pBytesReturned);
     }
