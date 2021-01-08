@@ -849,7 +849,7 @@ bool IsDriveVirtual(CString drive)
     CString subkey = _T("\\DosDevices\\") + drive;
 
     RegOpenKeyEx(HKEY_LOCAL_MACHINE, _T("SYSTEM\\MountedDevices"), 0, KEY_READ, &hkey);
-    if (hkey == INVALID_HANDLE_VALUE) return -1;
+    if (hkey == INVALID_HANDLE_VALUE) return 0;
     RegQueryValueEx(hkey, subkey, 0, &type, (BYTE*)data, &size);
 
     RegCloseKey(hkey);
@@ -1901,7 +1901,7 @@ CString NormalizeUnicodeStrForSearch(CString srcStr, LANGID langid) {
         _wcslwr_s_l(src, wcslen(src) + 1, locale);
     }
 
-    int dstLen = wcslen(src) * 4;
+    int dstLen = int(wcslen(src) * 4);
     wchar_t* dest = DEBUG_NEW wchar_t[dstLen];
 
     int cchActual = NormalizeString(NormalizationKD, src, -1, dest, dstLen);

@@ -134,7 +134,7 @@ HRESULT CMPCVRAllocatorPresenter::RenderEx3(REFERENCE_TIME rtStart,
 	if (!g_bExternalSubtitleTime) {
 		if (g_bExternalSubtitle && g_dRate != 0.0) {
 			const REFERENCE_TIME sampleTime = rtStart - g_tSegmentStart;
-			SetTime(g_tSegmentStart + sampleTime * g_dRate);
+			SetTime(REFERENCE_TIME(g_tSegmentStart + sampleTime * g_dRate));
 		} else {
 			SetTime(rtStart);
 		}
@@ -343,8 +343,8 @@ STDMETHODIMP CMPCVRAllocatorPresenter::AddPixelShader(int target, LPCWSTR name, 
 {
 	HRESULT hr = E_FAIL;
 
-	const int namesize = wcslen(name) * sizeof(wchar_t);
-	const int codesize = strlen(sourceCode);
+	const int namesize = (int) wcslen(name) * sizeof(wchar_t);
+	const int codesize = (int) strlen(sourceCode);
 
 	int iProfile = 0;
 	if (!strcmp(profile, "ps_2_0") || !strcmp(profile, "ps_2_a") || !strcmp(profile, "ps_2_b") || !strcmp(profile, "ps_3_0")) {
