@@ -4,16 +4,18 @@
 
 ### Visual Studio 2017/2019
 
-1. Install Visual Studio (any edition will work fine) with at minimum the following components:
-    Workloads:
-    Desktop Development with C++
-    Individual Components:
-    C++ x64/x86 build tools
-    MFC
-    ATL
+1. Install Visual Studio (any edition will work fine). Select at minimum the following components:
+    C++ core features
+    IntelliCode
+    Windows Universal C Runtime
     Windows Universal CRT SDK
-    Windows 8.1 SDK
+    C++ build tools (x86 & x64)
+    C++ ATL
+    C++ MFC
+    Windows 10 SDK (10.0.17763.0 or any other version)
 2. Install the DirectX SDK (June 2010) → <https://go.microsoft.com/fwlink/?LinkID=71193>
+3. Install the Windows 8.1 SDK → <https://go.microsoft.com/fwlink/p/?LinkId=323507>
+    When choosing which features to install you only need to select "Windows Software Development Kit".
 
 
 ## Part B: Install Python 2.7 (optional)
@@ -36,20 +38,22 @@ releases.
 
 1. Download MSYS2 from <http://www.msys2.org/>.
    If you are using a 64-bit Operating System, which you should be, get the 64-bit version.
-2. Install it on **`C:\MSYS64\`**. You can always install it somewhere else, but these instructions
-   assume the aforementioned place.
-3. Run `msys2_shell.bat` (if you didn't use the installer you must restart MSYS2 after first run).
-4. Install the needed software by running these commands:
+2. Install it to for example **`C:\MSYS64\`**. The installation path should be specified in your the build.user.bat configuration script that you will create later.
+3. Run `msys2_shell.bat`
+4. Install some additional required tools by running this command:
+   ```text
+   pacman -S make pkg-config diffutils
+   ```
+5. Then update all packages by running this command:
    ```text
    pacman -Syu
-   pacman -Su
-   pacman -S make pkg-config
    ```
-   Note that this is the bare minimum, you can install more packages that can be useful to you.
-5. Download the latest mingw-w64-gcc package from <http://files.1f0.de/mingw/> and extract it to folder **`C:\MSYS64\mingw64`**
-6. It is recommended to add **`C:\MSYS64\mingw64\bin`** and **`C:\MSYS64\usr\bin`** to the %PATH% environment variable.
+   When you are asked to restart MSYS, say yes. Start MSYS again and repeat the above command. Once everything is updated, you can close MSYS.
+6. Download the latest mingw-w64-gcc package from <http://files.1f0.de/mingw/> and extract it to folder **`C:\MSYS64\mingw64`**
+7. It is recommended to add **`C:\MSYS64\mingw64\bin`** and **`C:\MSYS64\usr\bin`** to the %PATH% environment variable.
    Windows Control Panel > System > Advanced System Settings > Environment variables
    This allows you to run GCC and all other MSYS tools from the Windows command line.
+   On Windows 10 you can access the legacy control panel by clicking on the Windows Start menu and typing `control.exe`
 
 
 ## Part D: Yasm
@@ -65,29 +69,27 @@ Create a file named **build.user.bat** in the source code folder of MPC-HC (see 
 
     ```bat
     @ECHO OFF
+    REM [Required for LAVFilters] MSYS2/MinGW paths:
+    SET "MPCHC_MSYS=C:\MSYS64"
+    SET "MPCHC_MINGW32=C:\MSYS64\mingw64"
+    SET "MPCHC_MINGW64=C:\MSYS64\mingw64"
     SET "MSYSTEM=MINGW32"
-    REM This is the MSYS2 installation path:
-    SET "MPCHC_MSYS=C:\MSYS"
-    REM This is the MingW64 GCC installation path:
-    SET "MPCHC_MINGW32=C:\MSYS\mingw64"
-    SET "MPCHC_MINGW64=C:\MSYS\mingw64"
-    REM You can set `MSYS2_PATH_TYPE` here or in environment variables so that Git is properly added to your `PATH`
-    REM SET "MSYS2_PATH_TYPE=inherit"
-    REM `MPCHC_GIT` is optional to set if you chose to add it in `PATH` when installing it and have set `MSYS2_PATH_TYPE`
+    SET "MSYS2_PATH_TYPE=inherit"
+    REM [Optional] Specify GIT location if it is not already set in %PATH%
     SET "MPCHC_GIT=C:\Program Files\Git"
-    REM Optional, if you plan to modify the translations, install Python 2.7 or set the variable to its path
+    REM [Optional] If you plan to modify the translations, install Python 2.7 and set the variable to its path
     SET "MPCHC_PYTHON=C:\Python27"
-    REM Optional, If you want to customize the Windows SDK version used, set the variable
+    REM [Optional] If you want to customize the Windows SDK version used, set this variable
     SET "MPCHC_WINSDK_VER=8.1"
     ```
 
 Notes:
 
-* For Visual Studio, we will try to detect the VS installation path automatically.  If that fails you need to specify the installation path yourself. For example:
+* For Visual Studio, we will try to detect the VS installation path automatically. If that fails you need to specify the installation path yourself. For example:
   ```
   SET "MPCHC_VS_PATH=%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Community\"
   ```
-* If you installed the MSYS/MinGW package in another directory you will have to use that path in the previous steps.
+* If you installed the MSYS package in another directory then make sure that you have set the correct paths in your `build.user.bat` file.
 * If you don't have Git installed then the build version will be inaccurate, the revision number will be a hard-coded as zero.
 
 

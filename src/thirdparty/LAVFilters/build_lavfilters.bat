@@ -27,7 +27,10 @@ SET "COMMON=%FILE_DIR%%ROOT_DIR%\common.bat"
 CALL "%COMMON%" :SubSetPath
 IF %ERRORLEVEL% NEQ 0 EXIT /B 1
 CALL "%COMMON%" :SubDoesExist gcc.exe
-IF %ERRORLEVEL% NEQ 0 EXIT /B 1
+IF %ERRORLEVEL% NEQ 0 (
+  ECHO ERROR: gcc.exe not found in your MinGW installation
+  EXIT /B 1
+)
 
 SET ARG=/%*
 SET ARG=%ARG:/=%
@@ -69,11 +72,18 @@ IF %ARGBC%   GTR 1 (GOTO UnsupportedSwitch) ELSE IF %ARGBC% == 0   (SET "RELEASE
 IF %ARGCOMP% GTR 1 (GOTO UnsupportedSwitch) ELSE IF %ARGCOMP% == 0 (SET "COMPILER=VS2019")
 
 IF NOT EXIST "%MPCHC_VS_PATH%" CALL "%COMMON%" :SubVSPath
-IF NOT EXIST "!MPCHC_VS_PATH!" GOTO MissingVar
-SET "TOOLSET=!MPCHC_VS_PATH!\Common7\Tools\vsdevcmd"
-SET "BIN_DIR=%ROOT_DIR%\bin"
+IF NOT EXIST "!MPCHC_VS_PATH!" (
+  ECHO ERROR: Visual Studio install path not found or invalid. You should add MPCHC_VS_PATH to build.user.bat
+  GOTO MissingVar
+)
 
-IF NOT EXIST "%TOOLSET%" GOTO MissingVar
+SET "TOOLSET=!MPCHC_VS_PATH!\Common7\Tools\vsdevcmd"
+IF NOT EXIST "%TOOLSET%" (
+  ECHO ERROR: Visual Studio tool path invalid
+  GOTO MissingVar
+)
+
+SET "BIN_DIR=%ROOT_DIR%\bin"
 
 CALL "%COMMON%" :SubParseConfig
 
