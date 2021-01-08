@@ -27,7 +27,6 @@
 #include "vd_asm.h"
 #include <intrin.h>
 
-#include "vd2/system/cpuaccel.h"
 #include "vd2/system/memory.h"
 #include "vd2/system/vdstl.h"
 
@@ -37,45 +36,6 @@
 #include "vd2/Kasumi/resample.h"
 
 #pragma warning(disable : 4799) // no emms... blahblahblah
-
-#if 0
-void VDCPUTest() {
-    SYSTEM_INFO si;
-
-    long lEnableFlags = CPUCheckForExtensions();
-
-    GetSystemInfo(&si);
-
-    if (si.wProcessorArchitecture == PROCESSOR_ARCHITECTURE_INTEL)
-        if (si.wProcessorLevel < 4)
-            lEnableFlags &= ~CPUF_SUPPORTS_FPU;     // Not strictly true, but very slow anyway
-
-    // Enable FPU support...
-
-    CPUEnableExtensions(lEnableFlags);
-
-    VDFastMemcpyAutodetect();
-}
-
-CCpuID g_cpuid;
-
-CCpuID::CCpuID()
-{
-    VDCPUTest();
-
-    long lEnableFlags = CPUGetEnabledExtensions();
-
-    int flags = 0;
-    flags |= !!(lEnableFlags & CPUF_SUPPORTS_MMX)           ? mmx       : 0;            // STD MMX
-    flags |= !!(lEnableFlags & CPUF_SUPPORTS_INTEGER_SSE)   ? ssemmx    : 0;            // SSE MMX
-    flags |= !!(lEnableFlags & CPUF_SUPPORTS_SSE)           ? ssefpu    : 0;            // STD SSE
-    flags |= !!(lEnableFlags & CPUF_SUPPORTS_SSE2)          ? sse2      : 0;            // SSE2
-    flags |= !!(lEnableFlags & CPUF_SUPPORTS_3DNOW)         ? _3dnow    : 0;            // 3DNow
-
-    // result
-    m_flags = (flag_t)flags;
-}
-#endif
 
 bool BitBltFromI420ToI420(int w, int h, BYTE* dsty, BYTE* dstu, BYTE* dstv, int dstpitch, BYTE* srcy, BYTE* srcu, BYTE* srcv, int srcpitch)
 {
