@@ -347,3 +347,10 @@ int LastIndexOfCString(const CString& text, const CString& pattern) {
         found = next_pos;
     }
 }
+
+bool IsNameSimilar(const CString& title, const CString& fileName) {
+    if (title.Left(25) == fileName.Left(25)) return true;
+    int m = fileName.ReverseFind(_T('.'));
+    if (m > -1 && title == fileName.Left(m)) return true;
+    return false;
+}

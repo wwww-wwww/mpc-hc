@@ -12107,7 +12107,7 @@ void CMainFrame::OpenFile(OpenFileData* pOFD)
                 r.fns.AddTail(fn);
                 CPlaylistItem* m_pli = m_wndPlaylistBar.GetCur();
                 if (m_pli && !m_pli->m_label.IsEmpty()) {
-                    if (m_pli->m_bYoutubeDL || PathUtils::StripPathOrUrl(fn).Left(25) != m_pli->m_label.Left(25)) {
+                    if (m_pli->m_bYoutubeDL || !IsNameSimilar(m_pli->m_label, PathUtils::StripPathOrUrl(fn))) {
                         if (!m_pli->m_bYoutubeDL || fn == m_pli->m_ydlSourceURL) r.title = m_pli->m_label;
                         else {
                             CString videoName(m_pli->m_label);
@@ -12130,7 +12130,7 @@ void CMainFrame::OpenFile(OpenFileData* pOFD)
                         }
                     }
                     EndEnumFilters;
-                    if (!title.IsEmpty()) r.title = title;
+                    if (!title.IsEmpty() && !IsNameSimilar(title, PathUtils::StripPathOrUrl(fn))) r.title = title;
                 }
                 if (m_pli) {
                     if (!m_pli->m_bYoutubeDL && m_pli->m_fns.GetCount() > 1) {
@@ -13205,7 +13205,7 @@ void CMainFrame::OpenSetupWindowTitle(bool reset /*= false*/)
 
                 CString fn = GetFileName();
 
-                if (has_title & title != fn) m_current_rfe.title = title;
+                if (has_title & !IsNameSimilar(title, fn)) m_current_rfe.title = title;
 
                 if (!has_title) {
                     title = fn;
