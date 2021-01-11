@@ -13690,15 +13690,23 @@ bool CMainFrame::OpenMediaPrivate(CAutoPtr<OpenMediaData> pOMD)
                 m_pMS->SetPositions(&rtPos, AM_SEEKING_AbsolutePositioning, nullptr, AM_SEEKING_NoPositioning);
             }
 
-            if (m_pCAP2 && m_pFSF) {
+            if (m_pFSF && (m_pCAP2 || m_pCAP3)) {
                 CComQIPtr<IBaseFilter> pBF = m_pFSF;
                 if (GetCLSID(pBF) == GUID_LAVSplitter || GetCLSID(pBF) == GUID_LAVSplitterSource) {
                     if (CComQIPtr<IPropertyBag> pPB = pBF) {
                         CComVariant var;
                         if (SUCCEEDED(pPB->Read(_T("rotation"), &var, nullptr)) && var.vt == VT_BSTR) {
-                            // We need to convert the angle to use trigonomeric conventions
-                            m_pCAP2->SetDefaultVideoAngle(Vector(0, 0, Vector::DegToRad((360 - _tcstol(var.bstrVal, nullptr, 10) % 360) % 360)));
+                            int rotatevalue = _wtoi(var.bstrVal);
+                            if (rotatevalue > 0 && rotatevalue < 360) {
+                                if (m_pCAP3) {
+                                    m_pCAP3->SetRotation(rotatevalue);
+                                } else {
+                                    // We need to convert the angle to use trigonomeric conventions
+                                    m_pCAP2->SetDefaultVideoAngle(Vector(0, 0, Vector::DegToRad(360 - rotatevalue)));
+                                }
+                            }
                         }
+                        var.Clear();
                     }
                 }
             }
