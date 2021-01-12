@@ -427,10 +427,11 @@ HRESULT CFGFilterFile::Create(IBaseFilter** ppBF, CInterfaceList<IUnknown, &IID_
 // CFGFilterVideoRenderer
 //
 
-CFGFilterVideoRenderer::CFGFilterVideoRenderer(HWND hWnd, const CLSID& clsid, CStringW name, UINT64 merit)
+CFGFilterVideoRenderer::CFGFilterVideoRenderer(HWND hWnd, const CLSID& clsid, CStringW name, UINT64 merit, bool preview)
     : CFGFilter(clsid, name, merit)
     , m_hWnd(hWnd)
     , m_bHas10BitWorkAround(false)
+    , m_bIsPreview(preview)
 {
     AddType(MEDIATYPE_Video, MEDIASUBTYPE_NULL);
 }
@@ -521,7 +522,7 @@ HRESULT CFGFilterVideoRenderer::Create(IBaseFilter** ppBF, CInterfaceList<IUnkno
 
     CheckPointer(*ppBF, E_FAIL);
 
-    if (m_clsid != CLSID_madVRAllocatorPresenter && m_clsid != CLSID_MPCVRAllocatorPresenter) {
+    if (!m_bIsPreview && (m_clsid == CLSID_EnhancedVideoRenderer || m_clsid == CLSID_EVRAllocatorPresenter || m_clsid == CLSID_SyncAllocatorPresenter || m_clsid == CLSID_VMR9AllocatorPresenter)) {
         HookWorkAround10BitBug(*ppBF);
         m_bHas10BitWorkAround = true;
     }
