@@ -486,6 +486,7 @@ protected:
     double m_dSpeedRate;
     double m_ZoomX, m_ZoomY, m_PosX, m_PosY;
     int m_AngleX, m_AngleY, m_AngleZ;
+    int m_iDefRotation;
 
     // Operations
     bool OpenMediaPrivate(CAutoPtr<OpenMediaData> pOMD);

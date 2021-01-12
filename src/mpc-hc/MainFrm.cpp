@@ -780,6 +780,7 @@ CMainFrame::CMainFrame()
     , m_AngleX(0)
     , m_AngleY(0)
     , m_AngleZ(0)
+    , m_iDefRotation(0)
     , m_pGraphThread(nullptr)
     , m_bOpenedThroughThread(false)
     , m_evOpenPrivateFinished(FALSE, TRUE)
@@ -7479,12 +7480,11 @@ void CMainFrame::OnUpdateViewPanNScanPresets(CCmdUI* pCmdUI)
 bool CMainFrame::PerformFlipRotate()
 {
     HRESULT hr = E_NOTIMPL;
-
+    // Note: m_AngleZ is counterclockwise, so value 270 means rotated 90 degrees clockwise
     if (m_pCAP3) {
         bool isFlip   = m_AngleX == 180;
         bool isMirror = m_AngleY == 180;
-        // both rotate counterclockwise
-        int rotation = (m_AngleZ != 0) ? 360 - m_AngleZ: m_AngleZ;
+        int rotation = (360 - m_AngleZ + m_iDefRotation) % 360;
         if (m_pMVRS) {
             // MadVR: does not support mirror, instead of flip we rotate 180 degrees
             hr = m_pCAP3->SetRotation(isFlip ? (rotation + 180) % 360 : rotation);
@@ -7497,6 +7497,7 @@ bool CMainFrame::PerformFlipRotate()
             }
         }
     } else if (m_pCAP) {
+        // default angle has already been set, so only apply custom angle
         hr = m_pCAP->SetVideoAngle(Vector(Vector::DegToRad(m_AngleX), Vector::DegToRad(m_AngleY), Vector::DegToRad(m_AngleZ)));
     }
 
@@ -7579,6 +7580,7 @@ void CMainFrame::OnViewRotate(UINT nID)
     ASSERT(m_AngleZ >= 0);
 
     if (PerformFlipRotate()) {
+        // FIXME: do proper resizing of the window after rotate
         if (!m_pMVRC) {
             MoveVideoWindow();
         }
@@ -13535,6 +13537,7 @@ bool CMainFrame::OpenMediaPrivate(CAutoPtr<OpenMediaData> pOMD)
     auto& s = AfxGetAppSettings();
 
     m_fValidDVDOpen = false;
+    m_iDefRotation = 0;
 
     OpenFileData* pFileData = dynamic_cast<OpenFileData*>(pOMD.m_p);
     OpenDVDData* pDVDData = dynamic_cast<OpenDVDData*>(pOMD.m_p);
@@ -13697,11 +13700,11 @@ bool CMainFrame::OpenMediaPrivate(CAutoPtr<OpenMediaData> pOMD)
                         CComVariant var;
                         if (SUCCEEDED(pPB->Read(_T("rotation"), &var, nullptr)) && var.vt == VT_BSTR) {
                             int rotatevalue = _wtoi(var.bstrVal);
-                            if (rotatevalue > 0 && rotatevalue < 360) {
+                            if (rotatevalue == 90 || rotatevalue == 180 || rotatevalue == 270) {
+                                m_iDefRotation = rotatevalue;
                                 if (m_pCAP3) {
                                     m_pCAP3->SetRotation(rotatevalue);
                                 } else {
-                                    // We need to convert the angle to use trigonomeric conventions
                                     m_pCAP2->SetDefaultVideoAngle(Vector(0, 0, Vector::DegToRad(360 - rotatevalue)));
                                 }
                             }
