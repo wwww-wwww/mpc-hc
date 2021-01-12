@@ -548,6 +548,8 @@ HRESULT CFGFilterLAVVideo::Create(IBaseFilter** ppBF, CInterfaceList<IUnknown, &
             if (SUCCEEDED(hr)) {
                 if (isPreview) {
                     pLAVFSettings->SetNumThreads(2);
+                    pLAVFSettings->SetPixelFormat(LAVOutPixFmt_P010, false);
+                    pLAVFSettings->SetPixelFormat(LAVOutPixFmt_P016, false);
                 } else {
                     Settings settings;
                     if (settings.GetSettings(pLAVFSettings)) { // Get default settings from LAVVideo
