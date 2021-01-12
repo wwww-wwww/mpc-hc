@@ -100,7 +100,7 @@ BOOL CPPageOutput::OnInitDialog()
 
     SetHandCursor(m_hWnd, IDC_AUDRND_COMBO);
 
-    const CAppSettings& s = AfxGetAppSettings();
+    CAppSettings& s = AfxGetAppSettings();
     const CRenderersSettings& r = s.m_RenderersSettings;
 
     m_iDSVideoRendererType  = s.iDSVideoRendererType;
@@ -202,6 +202,10 @@ BOOL CPPageOutput::OnInitDialog()
     m_iAudioRendererTypeCtrl.AddString(Cbstr);
     if (s.strAudioRendererDisplayName == AUDRNDT_INTERNAL && m_iAudioRendererType == 0) {
         m_iAudioRendererType = m_iAudioRendererTypeCtrl.GetCount() - 1;
+    }
+    // check if renderer wasn't in the list of available ones
+    if (m_iAudioRendererType == 0 && !s.strAudioRendererDisplayName.IsEmpty()) {
+        s.strAudioRendererDisplayName = _T("");
     }
 
     CorrectComboListWidth(m_iAudioRendererTypeCtrl);
