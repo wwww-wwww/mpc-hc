@@ -13,10 +13,10 @@
 #include "CMPCThemeWin10Api.h"
 #undef SubclassWindow
 
-CBrush CMPCThemeUtil::contentBrush = CBrush();
-CBrush CMPCThemeUtil::windowBrush = CBrush();
-CBrush CMPCThemeUtil::controlAreaBrush = CBrush();
-CBrush CMPCThemeUtil::W10DarkThemeFileDialogInjectedBGBrush = CBrush();
+CBrush CMPCThemeUtil::contentBrush;
+CBrush CMPCThemeUtil::windowBrush;
+CBrush CMPCThemeUtil::controlAreaBrush;
+CBrush CMPCThemeUtil::W10DarkThemeFileDialogInjectedBGBrush;
 
 CMPCThemeUtil::CMPCThemeUtil()
 {

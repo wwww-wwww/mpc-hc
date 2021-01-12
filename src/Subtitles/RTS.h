@@ -226,7 +226,7 @@ public:
     CClipper(CStringW str, const CSize& size, double scalex, double scaley, bool inverse, const CPoint& cpOffset,
              RenderingCaches& renderingCaches);
 
-    void CClipper::SetEffect(const Effect& effect, int effectType) {
+    void SetEffect(const Effect& effect, int effectType) {
         m_effectType = effectType;
         m_effect = effect;
     }

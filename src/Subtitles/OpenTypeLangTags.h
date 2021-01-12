@@ -9,7 +9,7 @@ public:
     typedef char HintStr[OTLangHintLen + 1];
     typedef struct OpenTypeLangTag {
         HintStr lang;
-        wchar_t* langDescription;
+        const wchar_t* langDescription;
     } T;
     static OpenTypeLangTag OpenTypeLangTags[763];
 };

@@ -231,7 +231,7 @@ namespace SaneAudioRenderer
             assert(!chunk.IsEmpty() && OutputFormat != inputFormat);
 
             DspChunk outputChunk(OutputFormat, chunk.GetChannelCount(), chunk.GetFrameCount(), chunk.GetRate());
-            auto outputData = reinterpret_cast<DspFormatTraits<OutputFormat>::SampleType*>(outputChunk.GetData());
+            auto outputData = reinterpret_cast<typename DspFormatTraits<OutputFormat>::SampleType*>(outputChunk.GetData());
 
             switch (inputFormat)
             {
