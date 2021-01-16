@@ -1423,6 +1423,7 @@ void CFGManagerCustom::InsertLAVSplitterSource(bool IsPreview)
         pFGLAVSplitterSource->m_chkbytes.AddTail(_T("4,12,ffffffff00000000ffffffff,77696465027fe3706d646174")); // wide ? mdat
         pFGLAVSplitterSource->m_chkbytes.AddTail(_T("3,3,,000001")); // raw mpeg4 video
         pFGLAVSplitterSource->m_extensions.AddTail(_T(".mov"));
+        pFGLAVSplitterSource->m_extensions.AddTail(_T(".mp4"));
         pFGLAVSplitterSource->AddEnabledFormat("mp4");
     }
 #endif
@@ -1460,6 +1461,7 @@ void CFGManagerCustom::InsertLAVSplitterSource(bool IsPreview)
 #if INTERNAL_SOURCEFILTER_MATROSKA
     if (src[SRC_MATROSKA] || IsPreview) {
         pFGLAVSplitterSource->m_chkbytes.AddTail(_T("0,4,,1A45DFA3"));
+        pFGLAVSplitterSource->m_extensions.AddTail(_T(".mkv"));
         pFGLAVSplitterSource->AddEnabledFormat("matroska");
     }
 #endif
