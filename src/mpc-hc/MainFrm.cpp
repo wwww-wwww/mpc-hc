@@ -4667,6 +4667,13 @@ BOOL IsSubtitleFilename(CString filename)
     return IsSubtitleExtension(ext);
 }
 
+BOOL IsAudioFilename(CString filename)
+{
+    const CMediaFormats& mf = AfxGetAppSettings().m_Formats;
+    CString ext = CPath(filename).GetExtension().MakeLower();
+    return mf.FindExt(ext, true);
+}
+
 void CMainFrame::OnDropFiles(CAtlList<CString>& slFiles, DROPEFFECT dropEffect)
 {
     SetForegroundWindow();
@@ -11679,7 +11686,8 @@ void CMainFrame::OpenCreateGraphObject(OpenMediaData* pOMD)
     m_bUseSeekPreview = s.fSeekPreview && ::IsWindow(m_wndPreView.m_hWnd);
     if (OpenFileData* pFileData = dynamic_cast<OpenFileData*>(pOMD)) {
         CString fn = pFileData->fns.GetHead();
-        if (!fn.IsEmpty() && (fn.Find(L"://") >= 0)) { // disable seek preview for streaming data.
+        if (!fn.IsEmpty() && ((fn.Find(L"://") >= 0) || IsAudioFilename(fn))) {
+            // disable seek preview for streaming data and audio files
             m_bUseSeekPreview = false;
         }
     }
