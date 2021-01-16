@@ -10267,7 +10267,7 @@ void CMainFrame::SetDefaultFullscreenState()
         POSITION pos = s.slFiles.GetHeadPosition();
         while (pos) {
             CString fpath = s.slFiles.GetNext(pos);
-            CString ext = fpath.Mid(fpath.ReverseFind('.'));
+            CString ext = fpath.Mid(fpath.ReverseFind('.') + 1);
             if (!mf.FindExt(ext, true)) {
                 clGoFullscreen = true;
                 break;
