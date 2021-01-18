@@ -1901,9 +1901,9 @@ void CMainFrame::OnTimer(UINT_PTR nIDEvent)
                 switch (GetPlaybackMode()) {
                     case PM_FILE:
                         g_bExternalSubtitleTime = false;
-                        if (m_pMS) {
+                        if (m_pGB && m_pMS) {
                             m_pMS->GetCurrentPosition(&rtNow);
-                            if (!m_pMS) return; // can happen very rarely due to race condition
+                            if (!m_pGB || !m_pMS) return; // can happen very rarely due to race condition
                             m_pMS->GetDuration(&rtDur);
 
                             if (abRepeatPositionBEnabled && rtNow >= abRepeatPositionB) {
