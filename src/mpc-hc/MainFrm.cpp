@@ -13600,13 +13600,17 @@ bool CMainFrame::OpenMediaPrivate(CAutoPtr<OpenMediaData> pOMD)
             throw (UINT)IDS_INVALID_PARAMS_ERROR;
         }
 
-        m_pCAP3 = nullptr;
-        m_pCAP2 = nullptr;
-        m_pCAP = nullptr;
+        m_pCAP3  = nullptr;
+        m_pCAP2  = nullptr;
+        m_pCAP   = nullptr;
+        m_pVMRWC = nullptr;
+        m_pVMRMC = nullptr;
+        m_pMFVDC = nullptr;
+        m_pMFVP  = nullptr;
 
-        CComPtr<IVMRMixerBitmap9>    pVMB;
-        CComPtr<IMFVideoMixerBitmap> pMFVMB;
-        CComPtr<IMadVRTextOsd>       pMVTO;
+        CComPtr<IVMRMixerBitmap9>    pVMB   = nullptr;
+        CComPtr<IMFVideoMixerBitmap> pMFVMB = nullptr;
+        CComPtr<IMadVRTextOsd>       pMVTO  = nullptr;
 
         m_pGB->FindInterface(IID_PPV_ARGS(&m_pCAP), TRUE);
         m_pGB->FindInterface(IID_PPV_ARGS(&m_pCAP2), TRUE);
@@ -13615,6 +13619,7 @@ bool CMainFrame::OpenMediaPrivate(CAutoPtr<OpenMediaData> pOMD)
         m_pGB->FindInterface(IID_PPV_ARGS(&m_pVMRMC), TRUE);
         m_pGB->FindInterface(IID_PPV_ARGS(&pVMB), TRUE);
         m_pGB->FindInterface(IID_PPV_ARGS(&pMFVMB), TRUE);
+
         m_pMVRC = m_pCAP;
         m_pMVRI = m_pCAP;
         m_pMVRS = m_pCAP;
