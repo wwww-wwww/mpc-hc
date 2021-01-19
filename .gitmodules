@@ -22,9 +22,6 @@
 [submodule "tinyxml2"]
 	path = src/thirdparty/tinyxml2/library
 	url = https://github.com/leethomason/tinyxml2.git
-[submodule "XmlRpc4Win"]
-	path = src/thirdparty/XmlRpc4Win
-	url = https://github.com/drtimcooper/XmlRpc4Win.git
 [submodule "src/thirdparty/minhook/minhook"]
 	path = src/thirdparty/minhook/minhook
 	url = https://github.com/TsudaKageyu/minhook.git
