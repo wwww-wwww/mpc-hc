@@ -175,7 +175,7 @@ void CPPageAdvanced::InitSettings()
     addBoolItem(SNAPSHOTKEEPVIDEOEXTENSION, IDS_RS_SNAPSHOTKEEPVIDEOEXTENSION, true, s.bSnapShotKeepVideoExtension, StrRes(IDS_PPAGEADVANCED_SNAPSHOTKEEPVIDEOEXTENSION));
     addIntItem(STREAMPOSPOLLER_INTERVAL, IDS_RS_TIME_REFRESH_INTERVAL, 100, s.nStreamPosPollerInterval, std::make_pair(40, 500), _T("Refresh interval (in milliseconds) of time in status bar"));
     addBoolItem(LANG_STATUSBAR, IDS_RS_SHOW_LANG_STATUSBAR, false, s.bShowLangInStatusbar, _T("Display current audio and subtitle language in status bar"));
-    addBoolItem(LANG_STATUSBAR, IDS_RS_SHOW_FPS_STATUSBAR, false, s.bShowFPSInStatusbar, _T("Display current fps and rate in status bar"));
+    addBoolItem(FPS_STATUSBAR, IDS_RS_SHOW_FPS_STATUSBAR, false, s.bShowFPSInStatusbar, _T("Display current fps and rate in status bar"));
     addBoolItem(ADD_LANGCODE_WHEN_SAVE_SUBTITLES, IDS_RS_ADD_LANGCODE_WHEN_SAVE_SUBTITLES, true, s.bAddLangCodeWhenSaveSubtitles, _T("When save the subtitles file, the language code (if available) text will be added to suggested file name by default."));
     addBoolItem(USE_TITLE_IN_RECENT_FILE_LIST, IDS_RS_USE_TITLE_IN_RECENT_FILE_LIST, true, s.bUseTitleInRecentFileList, _T("Use title in recent file list."));
 }
