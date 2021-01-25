@@ -60,6 +60,7 @@ public:
 	// IFileSourceFilter interface
 	STDMETHODIMP Load (LPCOLESTR lpwszFileName, const AM_MEDIA_TYPE *pmt);
 	STDMETHODIMP GetCurFile (LPOLESTR *ppszFileName, AM_MEDIA_TYPE *pmt);
+    void SetPreviewFile(std::wstring previewFileEntry);
 
 private:
 	static void UpdateArchiveName (wchar_t *ext, size_t len, int volume, bool new_numbering);
@@ -70,6 +71,7 @@ private:
 	CCritSec m_lock;
 	LPWSTR m_file_name;
 	CRFSFile *m_file;
+    std::wstring previewFileEntry;
 
 	static const std::vector<std::wstring> s_file_types;
 };

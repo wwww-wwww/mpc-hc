@@ -412,6 +412,12 @@ HRESULT CFGManager::AddSourceFilter(CFGFilter* pFGF, LPCWSTR lpcwstrFileName, LP
         return E_NOINTERFACE;
     }
 
+    if (pFGF->GetCLSID() == __uuidof(CRARFileSource) && m_bIsPreview && entryRFS.GetLength() > 0) {
+        CComPtr<CRARFileSource> rfs = static_cast<CRARFileSource*>(pBF.p);
+        std::wstring previewFileEntry(entryRFS.GetBuffer());
+        rfs->SetPreviewFile(previewFileEntry);
+    }
+
     if (FAILED(hr = AddFilter(pBF, lpcwstrFilterName))) {
         return hr;
     }
@@ -920,6 +926,13 @@ STDMETHODIMP CFGManager::Render(IPin* pPinOut)
     CAutoLock cAutoLock(this);
 
     return RenderEx(pPinOut, 0, nullptr);
+}
+
+HRESULT CFGManager::RenderRFSFileEntry(LPCWSTR lpcwstrFileName, LPCWSTR lpcwstrPlayList, CStringW entryRFS){
+    if (m_bIsPreview) {
+        this->entryRFS = entryRFS;
+    }
+    return RenderFile(lpcwstrFileName, lpcwstrPlayList);
 }
 
 STDMETHODIMP CFGManager::RenderFile(LPCWSTR lpcwstrFileName, LPCWSTR lpcwstrPlayList)

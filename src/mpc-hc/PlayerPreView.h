@@ -25,52 +25,50 @@ class CMainFrame;
 
 // CPreView
 
-class CPreView : public CWnd
-{
-	DECLARE_DYNAMIC(CPreView)
+class CPreView : public CWnd {
+    DECLARE_DYNAMIC(CPreView)
 
 private:
-	CMainFrame* m_pMainFrame;
+    CMainFrame* m_pMainFrame;
 
-	int m_border = 2;
+    int m_border = 2;
 
-	int m_caption = 20;
-	int m_relativeSize = 15;
+    int m_caption = 20;
+    int m_relativeSize = 15;
 
-	CString	m_tooltipstr;
-	CWnd	m_view;
-	CRect	m_videorect;
+    CString	m_tooltipstr;
+    CWnd	m_view;
+    CRect	m_videorect;
 
-	CFont m_font;
+    CFont m_font;
 
-	struct t_color {
-		int R1, G1, B1;
-		int R2, G2, B2;
-	};
-	COLORREF m_crText;
+    struct t_color {
+        int R1, G1, B1;
+        int R2, G2, B2;
+    };
+    COLORREF m_crText;
 
 public:
-	CPreView(CMainFrame* pMainFrame);
-	virtual ~CPreView() = default;
+    CPreView(CMainFrame* pMainFrame);
+    virtual ~CPreView() = default;
 
-	virtual BOOL SetWindowTextW(LPCWSTR lpString);
+    virtual BOOL SetWindowTextW(LPCWSTR lpString);
 
-	void SetRelativeSize(int relativesize) { m_relativeSize = relativesize; }
-	void GetVideoRect(LPRECT lpRect);
-	HWND GetVideoHWND();
+    void SetRelativeSize(int relativesize) { m_relativeSize = relativesize; }
+    void GetVideoRect(LPRECT lpRect);
+    HWND GetVideoHWND();
 
-	void SetWindowSize();
+    void SetWindowSize();
 
-	void ScaleFont();
-	void SetColor();
+    void ScaleFont();
+    void SetColor();
 
 protected:
-	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
+    virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 
-	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
-	afx_msg void OnPaint();
-	afx_msg void OnShowWindow(BOOL bShow, UINT nStatus);
+    afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+    afx_msg void OnPaint();
+    afx_msg void OnShowWindow(BOOL bShow, UINT nStatus);
 
-	DECLARE_MESSAGE_MAP()
-public:
+    DECLARE_MESSAGE_MAP()
 };

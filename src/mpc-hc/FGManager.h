@@ -117,9 +117,11 @@ protected:
 	//
 	HWND m_hWnd;
 	bool m_bIsPreview;
+    CStringW entryRFS;
 public:
 	CFGManager(LPCTSTR pName, LPUNKNOWN pUnk, HWND hWnd = 0, bool IsPreview = false);
     virtual ~CFGManager();
+    HRESULT RenderRFSFileEntry(LPCWSTR lpcwstrFileName, LPCWSTR lpcwstrPlayList, CStringW entryRFS);
 
     DECLARE_IUNKNOWN;
     STDMETHODIMP NonDelegatingQueryInterface(REFIID riid, void** ppv);

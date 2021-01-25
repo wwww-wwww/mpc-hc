@@ -12073,17 +12073,40 @@ void CMainFrame::OpenFile(OpenFileData* pOFD)
         }
 
         if (m_bUseSeekPreview && bMainFile) {
-            bool bIsVideo = false;
+            bool bIsVideo = false, isRFS = false;
+            CStringW entryRFS;
             BeginEnumFilters(m_pGB, pEF, pBF) {
                 // Checks if any Video Renderer is in the graph
                 if (IsVideoRenderer(pBF)) {
                     bIsVideo = true;
-                    break;
+                    if (isRFS) break;
                 }
+                CLSID clsid2;
+                if (S_OK == pBF->GetClassID(&clsid2) && clsid2 == __uuidof(CRARFileSource)) {
+                    CComQIPtr<IFileSourceFilter> pFSF = pBF;
+                    if (pFSF) {
+                        WCHAR* pFN = nullptr;
+                        AM_MEDIA_TYPE mt;
+                        if (SUCCEEDED(pFSF->GetCurFile(&pFN, &mt)) && pFN && *pFN) {
+                            isRFS = true;
+                            entryRFS = pFN;
+                            CoTaskMemFree(pFN);
+                        }
+                    }
+                }
+                if (isRFS && bIsVideo) break;
             }
             EndEnumFilters;
 
-            if (!bIsVideo || FAILED(m_pGB_preview->RenderFile(fn, nullptr))) {
+            HRESULT previewHR;
+            if (isRFS) {
+                CComPtr<CFGManager> fgm = static_cast<CFGManager*>(m_pGB_preview.p);
+                previewHR = fgm->RenderRFSFileEntry(fn, nullptr, entryRFS);
+            } else {
+                previewHR = m_pGB_preview->RenderFile(fn, nullptr);
+            }
+
+            if (!bIsVideo || FAILED(previewHR)) {
                 if (m_pGB_preview) {
                     m_pMFVP_preview = nullptr;
                     m_pMFVDC_preview = nullptr;

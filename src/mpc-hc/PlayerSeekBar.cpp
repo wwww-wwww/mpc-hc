@@ -955,10 +955,7 @@ void CPlayerSeekBar::PreviewWindowShow() {
             GetCursorPos(&point);
             ScreenToClient(&point);
             MoveThumbPreview(point);
-            CRect r;
-            m_pMainFrame->m_wndPreView.GetClientRect(r);
-            m_pMainFrame->m_wndPreView.InvalidateRect(r);
-        }
+        } 
         m_pMainFrame->PreviewWindowShow(m_pos_preview);
     }
 }

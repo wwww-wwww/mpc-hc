@@ -425,6 +425,9 @@ INT_PTR CALLBACK CRARFileSource::DlgFileList (HWND hwndDlg, UINT uMsg, WPARAM wP
 	return FALSE;
 }
 
+void CRARFileSource::SetPreviewFile(std::wstring previewFileEntry) {
+    this->previewFileEntry = previewFileEntry;
+}
 //  IFileSourceFilter methods
 
 STDMETHODIMP CRARFileSource::Load (LPCOLESTR lpwszFileName, const AM_MEDIA_TYPE *pmt)
@@ -473,12 +476,24 @@ STDMETHODIMP CRARFileSource::Load (LPCOLESTR lpwszFileName, const AM_MEDIA_TYPE 
 	}
 	else
 	{
-#ifdef STANDALONE_FILTER
-		m_file = (CRFSFile *) DialogBoxParam (g_hInst, MAKEINTRESOURCE(IDD_FILELIST), 0, DlgFileList, (LPARAM) &file_list);
-#else
-		m_file = (CRFSFile *) DialogBoxParam (GetModuleHandle(NULL), MAKEINTRESOURCE(IDD_FILELIST), 0, DlgFileList, (LPARAM) &file_list);
-#endif
+        if (previewFileEntry.length() > 0) {
+            CRFSFile* file = file_list.First();
 
+            while (file) {
+                if (previewFileEntry == file->filename) {
+                    m_file = file;
+                    break;
+                }
+                file = file_list.Next(file);
+            }
+
+        } else {
+#ifdef STANDALONE_FILTER
+            m_file = (CRFSFile*)DialogBoxParam(g_hInst, MAKEINTRESOURCE(IDD_FILELIST), 0, DlgFileList, (LPARAM)&file_list);
+#else
+            m_file = (CRFSFile*)DialogBoxParam(GetModuleHandle(NULL), MAKEINTRESOURCE(IDD_FILELIST), 0, DlgFileList, (LPARAM)&file_list);
+#endif
+        }
 		if (!m_file)
 		{
 			file_list.Clear ();
