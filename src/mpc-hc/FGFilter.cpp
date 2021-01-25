@@ -483,9 +483,9 @@ HRESULT CFGFilterVideoRenderer::Create(IBaseFilter** ppBF, CInterfaceList<IUnkno
                 CComPtr<IMFVideoDisplayControl> pMFVDC;
                 if (SUCCEEDED(pMFGS->GetService(MR_VIDEO_RENDER_SERVICE, IID_PPV_ARGS(&pMFVDC)))) {
                     pMFVDC->SetVideoWindow(m_hWnd);
-                }
-                if (m_bIsPreview) {
-                    pMFVDC->SetRenderingPrefs(MFVideoRenderPrefs_DoNotRepaintOnStop);
+                    if (m_bIsPreview) {
+                        pMFVDC->SetRenderingPrefs(MFVideoRenderPrefs_DoNotRepaintOnStop);
+                    }
                 }
             }
         }
