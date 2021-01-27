@@ -11029,6 +11029,10 @@ void CMainFrame::SetPreviewVideoPosition() {
         if (m_pMFVDC_preview) {
             m_pMFVDC_preview->SetVideoPosition(nullptr, wr);
         }
+        if (m_pVMR9C_preview) {
+            m_pVMR9C_preview->SetVideoPosition(nullptr, wr);
+            m_pVMR9C_preview->SetAspectRatioMode(VMR9ARMode_LetterBox);
+        }
 
         m_pBV_preview->SetDefaultSourcePosition();
         m_pBV_preview->SetDestinationPosition(vr.left, vr.top, vr.Width(), vr.Height());
@@ -11982,7 +11986,9 @@ HRESULT CMainFrame::PreviewWindowShow(REFERENCE_TIME rtCur2) {
     */
 
     if (!m_wndPreView.IsWindowVisible()) {
+        m_wndPreView.SetRelativeSize(AfxGetAppSettings().iSeekPreviewSize);
         m_wndPreView.ShowWindow(SW_SHOWNOACTIVATE);
+        m_wndPreView.SetWindowSize();
     }
 
     return hr;
@@ -12113,6 +12119,7 @@ void CMainFrame::OpenFile(OpenFileData* pOFD)
                 if (m_pGB_preview) {
                     m_pMFVP_preview = nullptr;
                     m_pMFVDC_preview = nullptr;
+                    m_pVMR9C_preview = nullptr;
 
                     m_pMC_preview.Release();
                     m_pME_preview.Release();
@@ -13679,6 +13686,7 @@ bool CMainFrame::OpenMediaPrivate(CAutoPtr<OpenMediaData> pOMD)
         if (m_bUseSeekPreview) {
             m_pGB_preview->FindInterface(IID_PPV_ARGS(&m_pMFVDC_preview), TRUE);
             m_pGB_preview->FindInterface(IID_PPV_ARGS(&m_pMFVP_preview), TRUE);
+            m_pGB_preview->FindInterface(IID_PPV_ARGS(&m_pVMR9C_preview), TRUE);
 
             if (m_pMFVDC_preview) {
                 RECT Rect;
@@ -13912,6 +13920,7 @@ void CMainFrame::CloseMediaPrivate()
         PreviewWindowHide();
         m_pMFVP_preview.Release();
         m_pMFVDC_preview.Release();
+        m_pVMR9C_preview.Release();
 
         m_pFS_preview.Release();
         m_pMS_preview.Release();

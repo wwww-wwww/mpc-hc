@@ -235,6 +235,7 @@ private:
     CComQIPtr<IDvdControl2>         m_pDVDC_preview;
     CComQIPtr<IDvdInfo2>            m_pDVDI_preview; // VtX: usually not necessary but may sometimes be necessary.
     CComPtr<IMFVideoDisplayControl> m_pMFVDC_preview;
+    CComPtr<IVMRWindowlessControl9> m_pVMR9C_preview;
     CComPtr<IMFVideoProcessor>      m_pMFVP_preview;
     //
     CComPtr<IVMRMixerControl9> m_pVMRMC;

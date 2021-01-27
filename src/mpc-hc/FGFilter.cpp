@@ -488,6 +488,18 @@ HRESULT CFGFilterVideoRenderer::Create(IBaseFilter** ppBF, CInterfaceList<IUnkno
                     }
                 }
             }
+        } else if (m_clsid == CLSID_VideoMixingRenderer9) {
+            if (m_bIsPreview) {
+                CComQIPtr<IVMRFilterConfig9> pConfig = pBF;
+
+                if (pConfig) {
+                    pConfig->SetRenderingMode(VMR9Mode_Windowless);
+                    CComQIPtr<IVMRWindowlessControl9> pControl = pBF;
+                    if (pControl) {
+                        pControl->SetVideoClippingWindow(m_hWnd);
+                    }
+                }
+            }
         }
 
         BeginEnumPins(pBF, pEP, pPin) {
