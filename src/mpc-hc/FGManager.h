@@ -117,7 +117,7 @@ protected:
 	//
 	HWND m_hWnd;
 	bool m_bIsPreview;
-    CStringW entryRFS;
+    CStringW m_entryRFS;
 public:
 	CFGManager(LPCTSTR pName, LPUNKNOWN pUnk, HWND hWnd = 0, bool IsPreview = false);
     virtual ~CFGManager();
