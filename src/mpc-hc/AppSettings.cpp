@@ -2368,9 +2368,11 @@ void CAppSettings::ParseCommandLine(CAtlList<CString>& cmdln)
                 fShowDebugInfo = true;
             } else if (sw == _T("nocrashreporter")) {
 #if USE_DRDUMP_CRASH_REPORTER
-                CrashReporter::Disable();
+                if (CrashReporter::IsEnabled()) {
+                    CrashReporter::Disable();
+                    MPCExceptionHandler::Enable();
+                }
 #endif
-                MPCExceptionHandler::Enable();
             } else if (sw == _T("audiorenderer") && pos) {
                 SetAudioRenderer(_ttoi(cmdln.GetNext(pos)));
             } else if (sw == _T("shaderpreset") && pos) {

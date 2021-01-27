@@ -197,6 +197,9 @@ public:
     virtual int ExitInstance() override;
 
 public:
+    void SetClosingState();
+
+public:
     DECLARE_MESSAGE_MAP()
     afx_msg void OnAppAbout();
     afx_msg void OnFileExit();

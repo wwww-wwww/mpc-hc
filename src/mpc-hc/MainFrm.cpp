@@ -1129,6 +1129,9 @@ void CMainFrame::OnClose()
     s.UIceClient.DisConnect();
 
     SendAPICommand(CMD_DISCONNECT, L"\0");  // according to CMD_NOTIFYENDOFSTREAM (ctrl+f it here), you're not supposed to send NULL here
+
+    AfxGetMyApp()->SetClosingState();
+
     __super::OnClose();
 }
 

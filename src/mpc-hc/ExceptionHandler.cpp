@@ -23,6 +23,7 @@
 #include <windows.h>
 #include <psapi.h>
 #include <inttypes.h>
+#include "mplayerc.h"
 
 #ifndef _DEBUG
 
@@ -178,8 +179,13 @@ void HandleAccessViolation(LPEXCEPTION_POINTERS exceptionInfo)
 
 LONG WINAPI UnhandledException(LPEXCEPTION_POINTERS exceptionInfo)
 {
-    switch (exceptionInfo->ExceptionRecord->ExceptionCode) {
+#if 1
+    if (AfxGetMyApp()->m_fClosingState) {
+        return EXCEPTION_EXECUTE_HANDLER;
+    }
+#endif
 
+    switch (exceptionInfo->ExceptionRecord->ExceptionCode) {
         case EXCEPTION_ACCESS_VIOLATION:
             HandleAccessViolation(exceptionInfo);
             break;

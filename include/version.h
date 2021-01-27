@@ -40,7 +40,9 @@
 #endif
 #endif
 
-#ifndef NO_VERSION_REV_NEEDED
+#ifdef NO_VERSION_REV_NEEDED
+#define MPC_VERSION_REV 0
+#else
 #include "../build/version_rev.h"
 #endif
 
@@ -48,15 +50,11 @@
 #define MPC_VERSION_MINOR       9
 #define MPC_VERSION_PATCH       8
 
-#ifndef NO_VERSION_REV_NEEDED
-
 #if MPC_VERSION_REV > 0
 #define MPC_NIGHTLY_RELEASE     1
 #else
 #define MPC_NIGHTLY_RELEASE     0
 #endif
-
-#endif // NO_VERSION_REV_NEEDED
 
 #define MPC_COMP_NAME_STR       _T("MPC-HC Team")
 #define MPC_COPYRIGHT_STR       _T("Copyright 2002-2021 clsid2 and others")

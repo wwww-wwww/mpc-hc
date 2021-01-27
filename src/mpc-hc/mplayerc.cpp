@@ -47,6 +47,7 @@
 #include "ExceptionHandler.h"
 #include "FGFilterLAV.h"
 #include "CMPCThemeMsgBox.h"
+#include "version.h"
 
 HICON LoadIcon(CString fn, bool bSmallIcon, DpiHelper* pDpiHelper/* = nullptr*/)
 {
@@ -1496,6 +1497,16 @@ BOOL RegQueryBoolValue(HKEY hKeyRoot, LPCWSTR lpSubKey, LPCWSTR lpValuename, BOO
     return result;
 }
 
+#if USE_DRDUMP_CRASH_REPORTER
+void DisableCrashReporter()
+{
+    if (CrashReporter::IsEnabled()) {
+        CrashReporter::Disable();
+        MPCExceptionHandler::Enable();
+    }
+}
+#endif
+
 BOOL CMPlayerCApp::InitInstance()
 {
     // Remove the working directory from the search path to work around the DLL preloading vulnerability
@@ -1814,9 +1825,8 @@ BOOL CMPlayerCApp::InitInstance()
     m_s->LoadSettings(); // read settings
 
     #if !defined(_DEBUG) && USE_DRDUMP_CRASH_REPORTER
-    if (!m_s->bEnableCrashReporter && CrashReporter::IsEnabled()) {
-        CrashReporter::Disable();
-        MPCExceptionHandler::Enable();
+    if (!m_s->bEnableCrashReporter) {
+        DisableCrashReporter();
     }
     #endif
 
@@ -2143,9 +2153,16 @@ void CMPlayerCApp::OnAppAbout()
     aboutDlg.DoModal();
 }
 
-void CMPlayerCApp::OnFileExit()
+void CMPlayerCApp::SetClosingState()
 {
     m_fClosingState = true;
+#if USE_DRDUMP_CRASH_REPORTER & (MPC_VERSION_REV < 50)
+    DisableCrashReporter();
+#endif
+}
+
+void CMPlayerCApp::OnFileExit()
+{
     OnAppExit();
 }
 
