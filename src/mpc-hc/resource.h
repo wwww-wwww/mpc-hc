@@ -1030,8 +1030,6 @@
 #define ID_VIEW_RESET_DEFAULT           33292
 #define ID_VIEW_RESET_OPTIMAL           33293
 #define IDS_AG_EDL_SAVE                 33294
-#define ID_RECENT_FILE_START            33300
-#define ID_RECENT_FILE_END              33399
 #define IDC_RESETDEVICE                 33400
 #define IDS_NAVIGATE_TUNERSCAN          33401
 #define IDS_SUBTITLES_ERROR             33402
@@ -1075,6 +1073,8 @@
 #define ID_PLAY_REPEAT_AB_MARK_A        33454
 #define IDS_AG_MOUSE_FS_MODIFIER        33454
 #define ID_PLAY_REPEAT_AB_MARK_B        33455
+#define ID_RECENT_FILE_START            34000
+#define ID_RECENT_FILE_END              34999
 #define IDS_MFMT_AVI                    39001
 #define IDS_MFMT_MPEG                   39002
 #define IDS_MFMT_MPEGTS                 39003
