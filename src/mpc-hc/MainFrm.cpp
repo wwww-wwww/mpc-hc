@@ -18019,6 +18019,9 @@ HRESULT CMainFrame::CreateThumbnailToolbar()
             // Reselect the old objects back into their DCs
             sourceDC.SelectObject(oldSourceDCObj);
             destDC.SelectObject(oldDestDCObj);
+
+            sourceDC.DeleteDC();
+            destDC.DeleteDC();
         }
 
         CImageList imageList;

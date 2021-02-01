@@ -32,14 +32,16 @@ void CMPCThemeGroupBox::OnPaint()
         CString text;
         GetWindowText(text);
 
+        CFont* font = GetFont();
+        CSize cs = CMPCThemeUtil::GetTextSize(_T("W"), hDC, font);
+        ::ReleaseDC(NULL, hDC);
+
         CBrush fb;
         fb.CreateSolidBrush(CMPCTheme::GroupBoxBorderColor);
         rborder = r;
-
-        CFont* font = GetFont();
-        CSize cs = CMPCThemeUtil::GetTextSize(_T("W"), hDC, font);
         rborder.top += cs.cy / 2;
         dc.FrameRect(rborder, &fb);
+
         if (!text.IsEmpty()) {
 
             COLORREF oldClr = dc.SetTextColor(CMPCTheme::TextFGColor);
@@ -56,7 +58,6 @@ void CMPCThemeGroupBox::OnPaint()
             dc.SetTextColor(oldClr);
             dc.SetBkColor(oldBkClr);
         }
-
     } else {
         __super::OnPaint();
     }

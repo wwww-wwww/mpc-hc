@@ -93,7 +93,6 @@ void CMPCThemeStatic::OnNcPaint()
         rect.OffsetRect(-rect.left, -rect.top);
         DWORD type = GetStyle() & SS_TYPEMASK;
 
-
         if (SS_ETCHEDHORZ == type || SS_ETCHEDVERT == type) { //etched lines assumed
             rect.DeflateRect(0, 0, 1, 1); //make it thinner
             CBrush brush(CMPCTheme::StaticEtchedColor);
@@ -103,6 +102,8 @@ void CMPCThemeStatic::OnNcPaint()
             pDC->FrameRect(rect, &brush);
         } else { //not supported yet
         }
+
+        ReleaseDC(pDC);
     } else {
         CStatic::OnNcPaint();
     }

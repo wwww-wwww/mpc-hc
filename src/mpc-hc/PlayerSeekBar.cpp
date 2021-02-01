@@ -69,9 +69,11 @@ BOOL CPlayerSeekBar::Create(CWnd* pParentWnd)
     }
 
     if (!AppIsThemeLoaded()) {
-        if (CMPCThemeUtil::getFontByType(mpcThemeFont, GetWindowDC(), GetParent(), CMPCThemeUtil::MessageFont)) {
+        CDC* pDC = GetWindowDC();
+        if (CMPCThemeUtil::getFontByType(mpcThemeFont, pDC, GetParent(), CMPCThemeUtil::MessageFont)) {
             SetFont(&mpcThemeFont);
         }
+        ReleaseDC(pDC);
     }
 
     // Should never be RTLed
@@ -267,9 +269,6 @@ void CPlayerSeekBar::CreateThumb(bool bEnabled, CDC& parentDC)
             CBrush b(bkg);
             pThumb->FillRect(&r, &b);
         }
-
-
-
     } else {
         ASSERT(FALSE);
     }
