@@ -14,7 +14,7 @@ struct MenuObject {
 
 class CMPCThemeMenu : public CMenu
 {
-    DECLARE_DYNCREATE(CMPCThemeMenu)
+    DECLARE_DYNAMIC(CMPCThemeMenu)
 public:
     CMPCThemeMenu();
     virtual ~CMPCThemeMenu();
@@ -54,6 +54,6 @@ protected:
     static int separatorHeight;
     static int postTextSpacing;
     static int accelSpacing;
-    HBRUSH bgBrush;
+    static HBRUSH bgBrush;
 };
 
