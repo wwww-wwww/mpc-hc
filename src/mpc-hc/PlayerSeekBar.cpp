@@ -241,9 +241,10 @@ void CPlayerSeekBar::CreateThumb(bool bEnabled, CDC& parentDC)
         r.MoveToXY(0, 0);
         CRect ri(GetInnerThumbRect(bEnabled, r));
 
-        CBitmap bmp;
+        CBitmap bmp, *oldBMP;
         VERIFY(bmp.CreateCompatibleBitmap(&parentDC, r.Width(), r.Height()));
-        VERIFY(pThumb->SelectObject(bmp));
+        oldBMP = (CBitmap*)pThumb->SelectObject(bmp);
+        VERIFY(oldBMP);
 
         if (AppIsThemeLoaded()) {
             //just a rectangle, we will draw from scratch
@@ -269,6 +270,8 @@ void CPlayerSeekBar::CreateThumb(bool bEnabled, CDC& parentDC)
             CBrush b(bkg);
             pThumb->FillRect(&r, &b);
         }
+        pThumb->SelectObject(oldBMP);
+        bmp.DeleteObject();
     } else {
         ASSERT(FALSE);
     }
@@ -600,10 +603,12 @@ void CPlayerSeekBar::OnPaint()
             CBrush fb;
             fb.CreateSolidBrush(CMPCTheme::NoBorderColor);
             dc.FrameRect(r, &fb);
+            fb.DeleteObject();
 
             CRgn rg;
             VERIFY(rg.CreateRectRgnIndirect(&r));
             ExtSelectClipRgn(dc, rg, RGN_XOR);
+            rg.DeleteObject();
 
             m_lastThumbRect = r;
         } else {
@@ -658,6 +663,7 @@ void CPlayerSeekBar::OnPaint()
             CBrush fb;
             fb.CreateSolidBrush(CMPCTheme::NoBorderColor);
             dc.FrameRect(&r, &fb);
+            fb.DeleteObject();
             dc.ExcludeClipRect(&r);
         }
 

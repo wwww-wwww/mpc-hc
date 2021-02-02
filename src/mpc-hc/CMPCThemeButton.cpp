@@ -123,6 +123,8 @@ void CMPCThemeButton::drawButtonBase(CDC* pDC, CRect rect, CString strText, bool
 
         pDC->SetTextColor(oldTextFGColor);
         pDC->SetBkMode(nMode);
+        fb.DeleteObject();
+        fb2.DeleteObject();
     }
 }
 

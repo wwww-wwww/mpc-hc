@@ -54,5 +54,6 @@ protected:
     static int separatorHeight;
     static int postTextSpacing;
     static int accelSpacing;
+    HBRUSH bgBrush;
 };
 

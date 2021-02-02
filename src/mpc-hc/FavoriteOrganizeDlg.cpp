@@ -198,8 +198,10 @@ void CFavoriteOrganizeDlg::OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStr
             CBrush b1, b2;
             b1.CreateSolidBrush(0xf1dacc);
             pDC->FillRect(rcItem, &b1);
+            b1.DeleteObject();
             b2.CreateSolidBrush(0xc56a31);
             pDC->FrameRect(rcItem, &b2);
+            b2.DeleteObject();
         }
     } else {
         if (AppIsThemeLoaded()) {

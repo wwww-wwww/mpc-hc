@@ -430,6 +430,8 @@ void CMPCThemePlayerListCtrl::drawItem(CDC* pDC, int nItem, int nSubItem)
                     dcMem.LineTo(rGrid.right, rGrid.top);
 
                     dcMem.SelectObject(oldPen);
+                    gridPenV.DeleteObject();
+                    gridPenH.DeleteObject();
                 }
             }
 
@@ -539,6 +541,7 @@ BOOL CMPCThemePlayerListCtrl::OnEraseBkgnd(CDC* pDC)
                 }
             }
             pDC->SelectObject(oldPen);
+            gridPen.DeleteObject();
         }
         pDC->RestoreDC(dcState);
     } else {

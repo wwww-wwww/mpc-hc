@@ -79,6 +79,7 @@ void CMPCThemeToolTipCtrl::paintTT(CDC& dc, CMPCThemeToolTipCtrl* tt)
     CBrush fb;
     fb.CreateSolidBrush(CMPCTheme::TooltipBorderColor);
     dc.FrameRect(r, &fb);
+    fb.DeleteObject();
     COLORREF oldClr = dc.SetTextColor(CMPCTheme::TextFGColor);
     drawText(dc, tt, r, false);
     dc.SetTextColor(oldClr);

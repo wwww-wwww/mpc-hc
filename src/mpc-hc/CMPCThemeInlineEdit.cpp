@@ -10,6 +10,7 @@ CMPCThemeInlineEdit::CMPCThemeInlineEdit()
 
 CMPCThemeInlineEdit::~CMPCThemeInlineEdit()
 {
+    m_brBkgnd.DeleteObject();
 }
 BEGIN_MESSAGE_MAP(CMPCThemeInlineEdit, CEdit)
     ON_WM_CTLCOLOR_REFLECT()

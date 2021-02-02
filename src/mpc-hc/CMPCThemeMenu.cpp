@@ -22,7 +22,8 @@ int CMPCThemeMenu::separatorHeight;
 int CMPCThemeMenu::postTextSpacing;
 int CMPCThemeMenu::accelSpacing;
 
-CMPCThemeMenu::CMPCThemeMenu()
+CMPCThemeMenu::CMPCThemeMenu():
+    bgBrush(nullptr)
 {
 }
 
@@ -44,6 +45,7 @@ CMPCThemeMenu::~CMPCThemeMenu()
     for (u_int i = 0; i < allocatedMenus.size(); i++) {
         delete allocatedMenus[i];
     }
+    ::DeleteObject(bgBrush);
 }
 
 void CMPCThemeMenu::initDimensions()
@@ -181,7 +183,8 @@ void CMPCThemeMenu::fulfillThemeReqs(bool isMenubar)
         MenuInfo.cbSize = sizeof(MENUINFO);
         MenuInfo.fMask = MIM_BACKGROUND | MIM_STYLE | MIM_APPLYTOSUBMENUS;
         MenuInfo.dwStyle = oldInfo.dwStyle;
-        MenuInfo.hbrBack = ::CreateSolidBrush(CMPCTheme::MenuBGColor);
+        bgBrush = ::CreateSolidBrush(CMPCTheme::MenuBGColor);
+        MenuInfo.hbrBack = bgBrush;
         SetMenuInfo(&MenuInfo);
 
         int iMaxItems = GetMenuItemCount();
@@ -486,8 +489,8 @@ void CMPCThemeMenu::MeasureItem(LPMEASUREITEMSTRUCT lpMeasureItemStruct)
 {
     initDimensions();
 
-    HWND hWnd = AfxGetMainWnd()->GetSafeHwnd();
-    HDC hDC = ::GetDC(hWnd);
+    HWND mainWnd = AfxGetMainWnd()->GetSafeHwnd();
+    HDC hDC = ::GetDC(mainWnd);
     MenuObject* mo = (MenuObject*)lpMeasureItemStruct->itemData;
 
     if (mo->isSeparator) {
@@ -511,7 +514,7 @@ void CMPCThemeMenu::MeasureItem(LPMEASUREITEMSTRUCT lpMeasureItemStruct)
             }
         }
     }
-    ::ReleaseDC(hWnd, hDC);
+    ::ReleaseDC(mainWnd, hDC);
 }
 
 CMPCThemeMenu* CMPCThemeMenu::GetSubMenu(int nPos)

@@ -188,6 +188,7 @@ void CMPCThemeComboBox::OnPaint()
 
         rBorder = r;
         dc.FrameRect(rBorder, &fb);
+        fb.DeleteObject();
     } else {
         CComboBox::OnPaint();
     }

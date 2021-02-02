@@ -82,6 +82,7 @@ void CMPCThemeTabCtrl::doDrawItem(int nItem, CRect rText, bool isSelected, CDC* 
         pDC->LineTo(rBorder.right, rightY); //non-inclusive
 
         pDC->SelectObject(oldPen);
+        borderPen.DeleteObject();
 
         CPoint ptCursor;
         ::GetCursorPos(&ptCursor);
@@ -153,6 +154,7 @@ void CMPCThemeTabCtrl::OnPaint()
         dc.FrameRect(rContent, &CMPCThemeUtil::windowBrush);
         rContent.InflateRect(1, 1);
         dc.FrameRect(rContent, &contentFrameBrush);
+        contentBrush.DeleteObject();
 
         dc.SetTextColor(oldTextColor);
         dc.SetBkColor(oldBkColor);

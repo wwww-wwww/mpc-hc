@@ -44,6 +44,7 @@ void CMPCThemeMaskedEdit::OnNcPaint()
         brush.CreateSolidBrush(CMPCTheme::EditBorderColor);
 
         dc.FrameRect(&rect, &brush);
+        brush.DeleteObject();
     } else {
         __super::OnNcPaint();
     }

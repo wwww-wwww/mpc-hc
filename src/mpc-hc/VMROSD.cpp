@@ -87,6 +87,13 @@ CVMROSD::~CVMROSD()
 {
     Stop();
     m_memDC.DeleteDC();
+    m_penBorder.DeleteObject();
+    m_penCursor.DeleteObject();
+    m_brushBack.DeleteObject();
+    m_brushBar.DeleteObject();
+    m_brushChapter.DeleteObject();
+    m_debugBrushBack.DeleteObject();
+    m_debugPenBorder.DeleteObject();
 }
 
 void CVMROSD::SetSize(const CRect& wndRect, const CRect& videoRect)

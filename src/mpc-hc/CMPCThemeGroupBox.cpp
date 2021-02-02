@@ -58,6 +58,8 @@ void CMPCThemeGroupBox::OnPaint()
             dc.SetTextColor(oldClr);
             dc.SetBkColor(oldBkClr);
         }
+        fb.DeleteObject();
+        ::ReleaseDC(NULL, hDC);
     } else {
         __super::OnPaint();
     }

@@ -153,6 +153,7 @@ void CVolumeCtrl::OnNMCustomdraw(NMHDR* pNMHDR, LRESULT* pResult)
                             CBrush fb;
                             fb.CreateSolidBrush(CMPCTheme::NoBorderColor);
                             dc.FrameRect(r, &fb);
+                            fb.DeleteObject();
                         } else {
                             r.DeflateRect(0, dpiWindow.ScaleFloorY(3), 0, dpiWindow.ScaleFloorY(2));
                             CRect filledRect, unfilledRect;
@@ -168,6 +169,7 @@ void CVolumeCtrl::OnNMCustomdraw(NMHDR* pNMHDR, LRESULT* pResult)
                             CBrush fb;
                             fb.CreateSolidBrush(CMPCTheme::NoBorderColor);
                             dc.FrameRect(r, &fb);
+                            fb.DeleteObject();
                         }
                     } else {
                         CPen shadow;
@@ -181,6 +183,8 @@ void CVolumeCtrl::OnNMCustomdraw(NMHDR* pNMHDR, LRESULT* pResult)
                         dc.SelectObject(&shadow);
                         dc.LineTo(pNMCD->rc.right, pNMCD->rc.top);
                         dc.SelectObject(old);
+                        shadow.DeleteObject();
+                        light.DeleteObject();
                     }
 
                     dc.Detach();
@@ -206,6 +210,7 @@ void CVolumeCtrl::OnNMCustomdraw(NMHDR* pNMHDR, LRESULT* pResult)
                             }
                             fb.CreateSolidBrush(CMPCTheme::NoBorderColor);
                             dc.FrameRect(r, &fb);
+                            fb.DeleteObject();
                         }
                     } else {
 

@@ -165,8 +165,8 @@ void CMPCThemeScrollBar::DrawScrollBar(CDC* pDC)
                     ASSERT(FALSE);  // Unknown state!
             }
             brushButton.CreateSolidBrush(buttonClr);
-
             dcMem.FillRect(butRect, &brushButton);
+            brushButton.DeleteObject();
 
             if (m_bHorizontal) {
                 if (nElem == eTLbutton) { //top or left
@@ -208,12 +208,14 @@ void CMPCThemeScrollBar::DrawScrollBar(CDC* pDC)
                     ASSERT(FALSE);  // Unknown state!
             }
             dcMem.FillRect(butRect, &brushThumb);
+            brushThumb.DeleteObject();
         }
     }
 
     pDC->BitBlt(0, 0, rcC.Width(), rcC.Height(), &dcMem, 0, 0, SRCCOPY);
 
     dcMem.SelectObject(pOldBm);
+    bmMem.DeleteObject();
 }
 
 void CMPCThemeScrollBar::SendScrollMsg(WORD wSBcode, WORD wHiWPARAM /*= 0*/)

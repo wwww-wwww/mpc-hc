@@ -145,6 +145,7 @@ void CMPCThemeHeaderCtrl::drawItem(int nItem, CRect rText, CDC* pDC)
 
     pDC->SetTextColor(oldTextColor);
     pDC->SetBkColor(oldBkColor);
+    gridPen.DeleteObject();
 }
 
 /* custom draw doesn't handle empty areas! code is no longer used in favor of OnPaint() */

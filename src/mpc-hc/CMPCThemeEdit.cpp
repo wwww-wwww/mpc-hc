@@ -86,6 +86,7 @@ void CMPCThemeEdit::OnNcPaint()
             if (nullptr != buddy) {
                 buddy->Invalidate();
             }
+            brush.DeleteObject();
         }
 
     } else {

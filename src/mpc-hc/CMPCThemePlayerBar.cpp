@@ -97,16 +97,18 @@ void CMPCThemePlayerBar::NcPaintGripper(CDC* pDC, CRect rcClient)   //derived fr
     brush.CreatePatternBrush(&patternBMP);
 
     CDC dcMemory;
-    CBitmap gb;
+    CBitmap gb, *tb;
     CRect memRect(0, 0, gripper.Width(), gripper.Height());
     gb.CreateCompatibleBitmap(pDC, memRect.right, memRect.bottom);
     dcMemory.CreateCompatibleDC(pDC);
-    dcMemory.SelectObject(&gb);
+    tb = (CBitmap*)dcMemory.SelectObject(&gb);
     dcMemory.SetTextColor(CMPCTheme::WindowBGColor);
     dcMemory.SetBkColor(CMPCTheme::GripperPatternColor);
     dcMemory.FillRect(memRect, &brush);
 
     pDC->BitBlt(gripper.left, gripper.top, gripper.Width(), gripper.Height(), &dcMemory, 0, 0, SRCCOPY);
+    dcMemory.SelectObject(tb);
+    gb.DeleteObject();
 
     paintHideButton(pDC, m_biHide);
 }

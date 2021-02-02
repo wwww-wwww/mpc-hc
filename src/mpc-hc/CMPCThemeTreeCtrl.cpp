@@ -23,6 +23,7 @@ CMPCThemeTreeCtrl::~CMPCThemeTreeCtrl()
     if (nullptr != themedSBHelper) {
         delete themedSBHelper;
     }
+    m_brBkgnd.DeleteObject();
 }
 
 BOOL CMPCThemeTreeCtrl::PreCreateWindow(CREATESTRUCT& cs)
