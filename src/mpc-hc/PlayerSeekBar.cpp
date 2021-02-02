@@ -241,10 +241,9 @@ void CPlayerSeekBar::CreateThumb(bool bEnabled, CDC& parentDC)
         r.MoveToXY(0, 0);
         CRect ri(GetInnerThumbRect(bEnabled, r));
 
-        CBitmap bmp, *oldBMP;
+        CBitmap bmp;
         VERIFY(bmp.CreateCompatibleBitmap(&parentDC, r.Width(), r.Height()));
-        oldBMP = (CBitmap*)pThumb->SelectObject(bmp);
-        VERIFY(oldBMP);
+        VERIFY(pThumb->SelectObject(bmp));
 
         if (AppIsThemeLoaded()) {
             //just a rectangle, we will draw from scratch
@@ -270,8 +269,6 @@ void CPlayerSeekBar::CreateThumb(bool bEnabled, CDC& parentDC)
             CBrush b(bkg);
             pThumb->FillRect(&r, &b);
         }
-        pThumb->SelectObject(oldBMP);
-        bmp.DeleteObject();
     } else {
         ASSERT(FALSE);
     }
