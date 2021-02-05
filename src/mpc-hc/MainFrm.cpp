@@ -18239,6 +18239,11 @@ void CMainFrame::enableFileDialogHook(CMPCThemeUtil* helper)
 
 LRESULT CMainFrame::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 {
+    if (!m_hWnd) {
+        ASSERT(false);
+        return 0;
+    }
+
     if ((message == WM_COMMAND) && (THBN_CLICKED == HIWORD(wParam))) {
         int const wmId = LOWORD(wParam);
         switch (wmId) {
