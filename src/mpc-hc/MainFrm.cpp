@@ -840,7 +840,9 @@ CMainFrame::CMainFrame()
     , m_MPLSPlaylist()
     , m_sydlLastProcessURL()
     , m_bUseSeekPreview(false)
-
+    , queuedSeek({0,0,false})
+    , lastSeekStart(0)
+    , lastSeekFinish(0)
 {
     // Don't let CFrameWnd handle automatically the state of the menu items.
     // This means that menu items without handlers won't be automatically
@@ -2359,6 +2361,10 @@ void CMainFrame::OnTimer(UINT_PTR nIDEvent)
         break;
         case TIMER_32HZ:
             m_timer32Hz.NotifySubscribers();
+            break;
+        case TIMER_DELAYEDSEEK:
+            KillTimer(TIMER_DELAYEDSEEK);
+            SeekTo(queuedSeek.rtPos, queuedSeek.bShowOSD);
             break;
         default:
             if (nIDEvent >= TIMER_ONETIME_START && nIDEvent <= TIMER_ONETIME_END) {
@@ -8019,6 +8025,8 @@ void CMainFrame::OnPlayFramestep(UINT nID)
         return;
     }
 
+    KillTimerDelayedSeek();
+
     m_OSD.EnableShowMessage(false);
     if (m_fQuicktimeGraph) {
         if (GetMediaState() != State_Paused) {
@@ -8085,7 +8093,7 @@ void CMainFrame::OnPlayFramestep(UINT nID)
         }
 
         rtCurPos += (nID == ID_PLAY_FRAMESTEP) ? rtAvgTimePerFrame : -rtAvgTimePerFrame;
-        SeekTo(rtCurPos);
+        DoSeekTo(rtCurPos, false);
     }
     m_OSD.EnableShowMessage();
 }
@@ -8196,8 +8204,17 @@ void CMainFrame::SetTimersPlay()
     SetTimer(TIMER_STATS, 1000, nullptr);
 }
 
+void CMainFrame::KillTimerDelayedSeek()
+{
+    if (queuedSeek.seekTime > 0) {
+        KillTimer(TIMER_DELAYEDSEEK);
+        queuedSeek = { 0, 0, false };
+    }
+}
+
 void CMainFrame::KillTimersStop()
 {
+    KillTimerDelayedSeek();
     KillTimer(TIMER_STREAMPOSPOLLER2);
     if (KillTimer(TIMER_STREAMPOSPOLLER)) {
         ASSERT(streampospoller_active);
@@ -15952,6 +15969,31 @@ REFERENCE_TIME CMainFrame::GetClosestKeyFramePreview(REFERENCE_TIME rtTarget) co
 
 void CMainFrame::SeekTo(REFERENCE_TIME rtPos, bool bShowOSD /*= true*/)
 {
+    if (m_pMS == nullptr) {
+        return;
+    }
+    ASSERT(lastSeekFinish >= lastSeekStart); // ToDo: remove lastSeekStart variable if no regressions show up
+    ULONGLONG curTime = GetTickCount64();
+    ULONGLONG ticksSinceLastSeek = curTime - lastSeekFinish;
+    ULONGLONG mindelay = (lastSeekFinish - lastSeekStart) > 40ULL ? 100ULL : 40ULL;
+    //ASSERT(rtPos != queuedSeek.rtPos || queuedSeek.seekTime == 0 || (curTime < queuedSeek.seekTime + 500ULL));
+
+    if (ticksSinceLastSeek < mindelay) {
+        //TRACE(_T("Delay seek: %lu %lu\n"), rtPos, ticksSinceLastSeek);
+        queuedSeek = { rtPos, curTime, bShowOSD };
+        SetTimer(TIMER_DELAYEDSEEK, (UINT) (mindelay * 1.25 - ticksSinceLastSeek), nullptr);
+    } else {
+        KillTimerDelayedSeek();
+        lastSeekStart = curTime;
+        DoSeekTo(rtPos, bShowOSD);
+        lastSeekFinish = GetTickCount64();
+    }
+}
+
+void CMainFrame::DoSeekTo(REFERENCE_TIME rtPos, bool bShowOSD /*= true*/)
+{
+    //TRACE(_T("DoSeekTo: %lu\n"), rtPos);
+
     ASSERT(m_pMS != nullptr);
     if (m_pMS == nullptr) {
         return;
@@ -15993,6 +16035,7 @@ void CMainFrame::SeekTo(REFERENCE_TIME rtPos, bool bShowOSD /*= true*/)
             SendMessage(WM_COMMAND, ID_PLAY_PAUSE);
         }
 
+        //SleepEx(5000, False); // artificial slow seek for testing purposes
         m_pMS->SetPositions(&rtPos, AM_SEEKING_AbsolutePositioning, nullptr, AM_SEEKING_NoPositioning);
         UpdateChapterInInfoBar();
     } else if (GetPlaybackMode() == PM_DVD && m_iDVDDomain == DVD_DOMAIN_Title) {
