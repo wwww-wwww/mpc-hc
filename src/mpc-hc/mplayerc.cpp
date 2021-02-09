@@ -458,7 +458,7 @@ CStringA GetContentType(CString fn, CAtlList<CString>* redir)
                 body += str;
             }
 
-            if (body.GetLength() >= 8) {
+            if (ct.IsEmpty() && body.GetLength() >= 8) {
                 CStringA str = TToA(body);
                 if (!strncmp((LPCSTR)str, ".ra", 3)) {
                     return "audio/x-pn-realaudio";
@@ -471,10 +471,9 @@ CStringA GetContentType(CString fn, CAtlList<CString>* redir)
                 }
             }
 
-            if (redir
-                    && (ct == _T("audio/x-scpls") || ct == _T("audio/scpls")
+            if (redir && ( ct == _T("audio/x-scpls") || ct == _T("audio/scpls")
                         || ct == _T("audio/x-mpegurl") || ct == _T("audio/mpegurl")
-                        || ct == _T("text/plain"))) {
+                        || ct == _T("video/x-ms-asf") || ct == _T("text/plain"))) {
                 while (body.GetLength() < 64 * 1024) { // should be enough for a playlist...
                     CStringA str;
                     str.ReleaseBuffer(s.Receive(str.GetBuffer(256), 256)); // SOCKET_ERROR == -1, also suitable for ReleaseBuffer
