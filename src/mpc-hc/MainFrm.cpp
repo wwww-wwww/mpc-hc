@@ -12414,11 +12414,7 @@ void CMainFrame::SetupCueChapters(CString fn) {
     if (!f.Open(fn) || !f.ReadString(str)) {
         return;
     }
-
     f.Seek(0, CFile::SeekPosition::begin);
-    if (f.GetEncoding() == CTextFile::DEFAULT_ENCODING) {
-        f.SetEncoding(CTextFile::ANSI);
-    }
 
     CString base;
     bool isurl = PathUtils::IsURL(fn);

@@ -383,6 +383,7 @@ BOOL CTextFile::ReadString(CStringA& str)
                     }
                 } else {
                     bValid = false;
+                    TRACE(_T("Invalid UTF8 character found\n"));
                 }
 
                 if (!bValid) {
@@ -409,8 +410,9 @@ BOOL CTextFile::ReadString(CStringA& str)
                     }
                 }
             } else {
+                TRACE(_T("Fallback to ANSI encoding\n"));
                 // Switch to text and read again
-                m_encoding = DEFAULT_ENCODING;
+                m_encoding = ANSI;
                 // Stop using the buffer
                 m_posInBuffer = m_nInBuffer = 0;
 
@@ -600,6 +602,7 @@ BOOL CTextFile::ReadString(CStringW& str)
                     }
                 } else {
                     bValid = false;
+                    TRACE(_T("Invalid UTF8 character found\n"));
                 }
 
                 if (!bValid) {
@@ -626,8 +629,9 @@ BOOL CTextFile::ReadString(CStringW& str)
                     }
                 }
             } else {
+                TRACE(_T("Fallback to ANSI encoding\n"));
                 // Switch to text and read again
-                m_encoding = DEFAULT_ENCODING;
+                m_encoding = ANSI;
                 // Stop using the buffer
                 m_posInBuffer = m_nInBuffer = 0;
 

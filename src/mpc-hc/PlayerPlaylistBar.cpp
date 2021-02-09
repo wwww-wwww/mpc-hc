@@ -424,11 +424,7 @@ bool CPlayerPlaylistBar::ParseCUESheet(CString fn) {
     if (!f.Open(fn) || !f.ReadString(str)) {
         return false;
     }
-
     f.Seek(0, CFile::SeekPosition::begin);
-    if (f.GetEncoding() == CTextFile::DEFAULT_ENCODING) {
-        f.SetEncoding(CTextFile::ANSI);
-    }
 
     CString base;
     bool isurl = PathUtils::IsURL(fn);
@@ -591,10 +587,6 @@ bool CPlayerPlaylistBar::ParseM3UPlayList(CString fn) {
         f.Seek(0, CFile::SeekPosition::begin);
     }
 
-    if (f.GetEncoding() == CTextFile::DEFAULT_ENCODING) {
-        f.SetEncoding(CTextFile::ANSI);
-    }
-
     CString base;
     bool isurl = PathUtils::IsURL(fn);
     if (isurl) {
@@ -685,10 +677,6 @@ bool CPlayerPlaylistBar::ParseMPCPlayList(CString fn)
     CWebTextFile f(CTextFile::UTF8);
     if (!f.Open(fn) || !f.ReadString(str) || str != _T("MPCPLAYLIST")) {
         return false;
-    }
-
-    if (f.GetEncoding() == CTextFile::DEFAULT_ENCODING) {
-        f.SetEncoding(CTextFile::ANSI);
     }
 
     CPath base(fn);
