@@ -35,7 +35,7 @@ public:
     };
 
 private:
-    enc m_encoding, m_defaultencoding;
+    enc m_encoding, m_defaultencoding, m_fallbackencoding;
     int m_offset;
     ULONGLONG m_posInFile;
     CAutoVectorPtr<char> m_buffer;
@@ -49,6 +49,7 @@ public:
     virtual bool Save(LPCTSTR lpszFileName, enc e /*= DEFAULT_ENCODING*/);
 
     void SetEncoding(enc e);
+    void SetFallbackEncoding(enc e);
     enc GetEncoding();
     bool IsUnicode();
 

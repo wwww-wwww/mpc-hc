@@ -421,6 +421,7 @@ bool CPlayerPlaylistBar::ParseCUESheet(CString fn) {
     int cue_index(0);
 
     CWebTextFile f(CTextFile::UTF8);
+    f.SetFallbackEncoding(CTextFile::ANSI);
     if (!f.Open(fn) || !f.ReadString(str)) {
         return false;
     }
@@ -576,6 +577,7 @@ bool CPlayerPlaylistBar::ParseM3UPlayList(CString fn) {
     std::vector<int> idx;
 
     CWebTextFile f(CTextFile::UTF8);
+    f.SetFallbackEncoding(CTextFile::ANSI);
     if (!f.Open(fn) || !f.ReadString(str)) {
         return false;
     }
@@ -675,6 +677,7 @@ bool CPlayerPlaylistBar::ParseMPCPlayList(CString fn)
     std::vector<int> idx;
 
     CWebTextFile f(CTextFile::UTF8);
+    f.SetFallbackEncoding(CTextFile::ANSI);
     if (!f.Open(fn) || !f.ReadString(str) || str != _T("MPCPLAYLIST")) {
         return false;
     }

@@ -12411,6 +12411,7 @@ void CMainFrame::SetupCueChapters(CString fn) {
     CPlaylistItem* pli = m_wndPlaylistBar.GetCur();
 
     CWebTextFile f(CTextFile::UTF8);
+    f.SetFallbackEncoding(CTextFile::ANSI);
     if (!f.Open(fn) || !f.ReadString(str)) {
         return;
     }

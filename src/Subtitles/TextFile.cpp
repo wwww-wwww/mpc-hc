@@ -31,6 +31,7 @@
 CTextFile::CTextFile(enc e)
     : m_encoding(e)
     , m_defaultencoding(e)
+    , m_fallbackencoding(DEFAULT_ENCODING)
     , m_offset(0)
     , m_posInFile(0)
     , m_posInBuffer(0)
@@ -126,6 +127,11 @@ bool CTextFile::Save(LPCTSTR lpszFileName, enc e)
 void CTextFile::SetEncoding(enc e)
 {
     m_encoding = e;
+}
+
+void CTextFile::SetFallbackEncoding(enc e)
+{
+    m_fallbackencoding = e;
 }
 
 CTextFile::enc CTextFile::GetEncoding()
@@ -410,9 +416,8 @@ BOOL CTextFile::ReadString(CStringA& str)
                     }
                 }
             } else {
-                TRACE(_T("Fallback to ANSI encoding\n"));
                 // Switch to text and read again
-                m_encoding = ANSI;
+                m_encoding = m_fallbackencoding;
                 // Stop using the buffer
                 m_posInBuffer = m_nInBuffer = 0;
 
@@ -629,9 +634,8 @@ BOOL CTextFile::ReadString(CStringW& str)
                     }
                 }
             } else {
-                TRACE(_T("Fallback to ANSI encoding\n"));
                 // Switch to text and read again
-                m_encoding = ANSI;
+                m_encoding = m_fallbackencoding;
                 // Stop using the buffer
                 m_posInBuffer = m_nInBuffer = 0;
 
