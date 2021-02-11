@@ -149,6 +149,13 @@ bool CYoutubeDLInstance::Run(CString url)
     CloseHandle(hStdout_r);
     CloseHandle(hStderr_r);
 
+    // parse output
+    if (exitcode == 0 || exitcode == 1) {
+        if (loadJSON()) {
+            return true;
+        }
+    }
+
     if (exitcode) {
         CString err = buf_err;
         if (err.IsEmpty()) {
@@ -161,10 +168,8 @@ bool CYoutubeDLInstance::Run(CString url)
             err = _T("Youtube-dl.exe error message:\n\n") + err;
         }
         AfxMessageBox(err, MB_ICONERROR, 0);
-        return false;
     }
-
-    return loadJSON();
+    return false;
 }
 
 DWORD WINAPI CYoutubeDLInstance::BuffOutThread(void* ydl_inst)
