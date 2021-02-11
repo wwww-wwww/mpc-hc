@@ -30,6 +30,7 @@ public:
     void enableFlickerHelper();
     static void drawText(CDC& dc, CMPCThemeToolTipCtrl* tt, CRect& rect, bool calcRect = false);
     static void paintTT(CDC& dc, CMPCThemeToolTipCtrl* tt);
+    void SetHoverPosition(CWnd* parent);
     DECLARE_MESSAGE_MAP()
     afx_msg void OnPaint();
     afx_msg BOOL OnEraseBkgnd(CDC* pDC);

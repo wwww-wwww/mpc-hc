@@ -82,7 +82,11 @@ CDebugShadersDlg::CDebugShadersDlg()
     CString oldpath = pApp->GetProfileString(IDS_R_DEBUG_SHADERS, IDS_RS_DEBUG_SHADERS_LASTFILE);
     if (!oldpath.IsEmpty()) {
         ASSERT(m_Shaders.GetCount() == 0);
-        int sel = m_Shaders.AddString(oldpath);
+        Shader t;
+        t.filePath = oldpath;
+        m_list.clear();
+        m_list.push_back(t);
+        int sel = AppendShader(0, oldpath);
         if (sel >= 0) {
             VERIFY(m_Shaders.SetCurSel(sel) != CB_ERR);
         } else {
@@ -101,8 +105,7 @@ CDebugShadersDlg::CDebugShadersDlg()
     // Otherwise it's triggered by OnListRefresh()
     int sel = m_Shaders.GetCurSel();
     if (sel != CB_ERR) {
-        CString path;
-        m_Shaders.GetLBText(sel, path);
+        CString path = GetShaderPath(sel);
         ASSERT(!path.IsEmpty());
         if (oldpath == path) {
             UpdateNotifierState();
@@ -120,6 +123,16 @@ CDebugShadersDlg::CDebugShadersDlg()
         }
         VERIFY(pApp->WriteProfileInt(IDS_R_DEBUG_SHADERS, IDS_RS_DEBUG_SHADERS_FIRSTRUN, 0));
     }
+
+    if (AppIsThemeLoaded()) {
+        themedToolTip.Create(this, TTS_NOPREFIX | TTS_ALWAYSTIP);
+        themedToolTip.Activate(TRUE);
+        themedToolTip.SetDelayTime(TTDT_AUTOPOP, 10000);
+        //must add manually the ones we support.
+        themedToolTip.AddTool(GetDlgItem(IDC_COMBO1), LPSTR_TEXTCALLBACK);
+    } else {
+        EnableToolTips(TRUE);
+    }
 }
 
 BOOL CDebugShadersDlg::DestroyWindow()
@@ -129,7 +142,7 @@ BOOL CDebugShadersDlg::DestroyWindow()
     CString path;
     int sel = m_Shaders.GetCurSel();
     if (sel != CB_ERR) {
-        m_Shaders.GetLBText(sel, path);
+        path = GetShaderPath(sel);
     }
     VERIFY(AfxGetApp()->WriteProfileString(IDS_R_DEBUG_SHADERS, IDS_RS_DEBUG_SHADERS_LASTFILE, path));
     return __super::DestroyWindow();
@@ -148,13 +161,45 @@ void CDebugShadersDlg::EventCallback(MpcEvent ev)
     }
 }
 
+BOOL CDebugShadersDlg::OnToolTipNotify(UINT id, NMHDR* pNMHDR, LRESULT* pResult) {
+    TOOLTIPTEXT* pTTT = (TOOLTIPTEXT*)pNMHDR;
+
+    UINT_PTR nID = pNMHDR->idFrom;
+    if (pTTT->uFlags & TTF_IDISHWND) {
+        nID = ::GetDlgCtrlID((HWND)nID);
+    }
+
+    bool bRet = false;
+
+    static CString strTipText;
+
+    switch (nID) {
+    case IDC_COMBO1:
+        int sel = m_Shaders.GetCurSel();
+        if (sel != CB_ERR) {
+            strTipText = GetShaderPath(sel);
+        }
+        if (AppIsThemeLoaded()) {
+            themedToolTip.SetHoverPosition(&m_Shaders);
+        }
+
+        bRet = true;
+        break;
+    }
+
+    if (bRet) {
+        pTTT->lpszText = (LPWSTR)(LPCWSTR)strTipText;
+    }
+
+    return bRet;
+}
+
 FileChangeNotifier::FileSet CDebugShadersDlg::GetWatchedList()
 {
     FileChangeNotifier::FileSet ret;
     int sel = m_Shaders.GetCurSel();
     if (sel != CB_ERR) {
-        CString path;
-        m_Shaders.GetLBText(sel, path);
+        CString path = GetShaderPath(sel);
         ret.insert(path);
     }
     return ret;
@@ -177,15 +222,16 @@ void CDebugShadersDlg::OnListRefresh()
     CString path;
     int oldSel = m_Shaders.GetCurSel();
     if (oldSel != CB_ERR) {
-        m_Shaders.GetLBText(oldSel, path);
+        path = GetShaderPath(oldSel);
         ASSERT(!path.IsEmpty());
     }
-    ShaderList list = ShaderList::GetDefaultShaders();
-    list.insert(list.cend(), s.m_ShadersExtraList.cbegin(), s.m_ShadersExtraList.cend());
+    m_list = ShaderList::GetDefaultShaders();
+    m_list.insert(m_list.cend(), s.m_ShadersExtraList.cbegin(), s.m_ShadersExtraList.cend());
     m_Shaders.ResetContent();
-    for (const auto& shader : list) {
+    for (std::size_t i = 0; i != m_list.size(); ++i) {
+        const auto& shader = m_list[i];
         ASSERT(!shader.filePath.IsEmpty());
-        int idx = m_Shaders.InsertString(-1, shader.filePath);
+        int idx = AppendShader(i, shader.filePath);
         if (idx >= 0) {
             if (shader.filePath == path) {
                 VERIFY(m_Shaders.SetCurSel(idx) != CB_ERR);
@@ -203,6 +249,17 @@ void CDebugShadersDlg::OnListRefresh()
     }
 }
 
+int CDebugShadersDlg::AppendShader(int loc, CString filePath) {
+    int idx = m_Shaders.InsertString(-1, PathUtils::BaseName(filePath));
+    m_Shaders.SetItemData(idx, loc);
+    return idx;
+}
+
+CString CDebugShadersDlg::GetShaderPath(int loc) {
+    int curIndex = m_Shaders.GetItemData(loc);
+    return m_list[curIndex].filePath;
+}
+
 void CDebugShadersDlg::DoDataExchange(CDataExchange* pDX)
 {
     CModelessDialog::DoDataExchange(pDX);
@@ -210,6 +267,15 @@ void CDebugShadersDlg::DoDataExchange(CDataExchange* pDX)
     DDX_Control(pDX, IDC_EDIT1, m_DebugInfo);
     DDX_Radio(pDX, IDC_RADIO1, m_iVersion);
     fulfillThemeReqs();
+}
+
+BOOL CDebugShadersDlg::PreTranslateMessage(MSG* pMsg) {
+    if (AppIsThemeLoaded()) {
+        if (IsWindow(themedToolTip)) {
+            themedToolTip.RelayEvent(pMsg);
+        }
+    }
+    return __super::PreTranslateMessage(pMsg);
 }
 
 void CDebugShadersDlg::OnTimer(UINT_PTR nIDEvent)
@@ -230,9 +296,8 @@ void CDebugShadersDlg::OnRecompileShader()
     }
     int sel = m_Shaders.GetCurSel();
     if (sel != CB_ERR) {
-        Shader shader;
-        m_Shaders.GetLBText(sel, shader.filePath);
-        if (PathUtils::IsFile(shader.filePath)) {
+        CString filePath = GetShaderPath(sel);
+        if (PathUtils::IsFile(filePath)) {
             CStringA profile;
             switch (m_iVersion) {
                 case ps_2_0:
@@ -253,7 +318,7 @@ void CDebugShadersDlg::OnRecompileShader()
                     break;
             }
             CString disasm, compilerMsg;
-            if (SUCCEEDED(m_Compiler.CompileShaderFromFile(shader.filePath, "main", profile,
+            if (SUCCEEDED(m_Compiler.CompileShaderFromFile(filePath, "main", profile,
                                                            D3DCOMPILE_DEBUG, nullptr, &disasm, &compilerMsg))) {
                 if (!compilerMsg.IsEmpty()) {
                     compilerMsg += _T("\n");
@@ -287,6 +352,7 @@ void CDebugShadersDlg::OnVersionClicked()
 
 BEGIN_MESSAGE_MAP(CDebugShadersDlg, CModelessDialog)
     ON_WM_TIMER()
+    ON_NOTIFY_EX(TTN_NEEDTEXT, 0, OnToolTipNotify)
     ON_CBN_SELCHANGE(IDC_COMBO1, OnSelChange)
     ON_BN_CLICKED(IDC_RADIO1, OnVersionClicked)
     ON_BN_CLICKED(IDC_RADIO2, OnVersionClicked)

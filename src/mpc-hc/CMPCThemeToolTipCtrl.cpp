@@ -228,3 +228,23 @@ void CMPCThemeToolTipCtrl::OnWindowPosChanging(WINDOWPOS* lpwndpos)
         }
     }
 }
+
+//tooltip rules for how to hover on parent window
+//by default tooltipctrl will simply hover at the mouse position,
+//unlike the tooltips created with EnableTooltips which have special behaviors
+//supports COMBOBOX for now--add others as necessary
+void CMPCThemeToolTipCtrl::SetHoverPosition(CWnd* parent) {
+    CRect parentRect, ttRect;
+    parent->GetWindowRect(parentRect);
+    TCHAR windowClass[MAX_PATH];
+    ::GetClassName(parent->GetSafeHwnd(), windowClass, _countof(windowClass));
+    if (0 == _tcsicmp(windowClass, WC_COMBOBOX)) {
+        GetWindowRect(ttRect);
+        int centerOffset = (parentRect.left + parentRect.right - ttRect.left - ttRect.right) / 2;
+        ttRect.right += centerOffset;
+        ttRect.left += centerOffset;
+        ttRect.bottom += (parentRect.bottom - ttRect.top);
+        ttRect.top = parentRect.bottom;
+        MoveWindow(ttRect);
+    }
+}

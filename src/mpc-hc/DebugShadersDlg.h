@@ -28,6 +28,7 @@
 #include "TimerWrappers.h"
 #include "CMPCThemeComboBox.h"
 #include "CMPCThemeEdit.h"
+#include "CMPCThemeToolTipCtrl.h"
 
 class CModelessDialog : public CMPCThemeResizableDialog
 {
@@ -66,6 +67,7 @@ protected:
     CMPCThemeComboBox m_Shaders;
     CMPCThemeEdit m_DebugInfo;
     CPixelShaderCompiler m_Compiler;
+    ShaderList m_list;
 
     EventClient m_eventc;
     void EventCallback(MpcEvent ev);
@@ -75,13 +77,19 @@ protected:
 
     void ShaderFileChangedCooldownCallback();
     void OnListRefresh();
+    int AppendShader(int loc, CString filePath);
+    CString GetShaderPath(int loc);
 
     virtual void DoDataExchange(CDataExchange* pDX) override;
-    void OnTimer(UINT_PTR nIDEvent);
 
-    void OnRecompileShader();
-    void OnSelChange();
-    void OnVersionClicked();
+    //replaces tooltip from EnableTooltips()
+    CMPCThemeToolTipCtrl themedToolTip;
+    BOOL PreTranslateMessage(MSG* pMsg);
 
     DECLARE_MESSAGE_MAP()
+    afx_msg BOOL OnToolTipNotify(UINT id, NMHDR* pNMHDR, LRESULT* pResult);
+    afx_msg void OnTimer(UINT_PTR nIDEvent);
+    afx_msg void OnRecompileShader();
+    afx_msg void OnSelChange();
+    afx_msg void OnVersionClicked();
 };
