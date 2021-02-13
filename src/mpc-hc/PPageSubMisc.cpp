@@ -328,13 +328,3 @@ int CALLBACK CPPageSubMisc::SortCompare(LPARAM lParam1, LPARAM lParam2, LPARAM l
     size_t right = ((SubtitlesProvider*)list.GetItemData((int)lParam2))->Index();
     return int(left - right);
 }
-
-BOOL CPPageSubMisc::PreTranslateMessage(MSG* pMsg)
-{
-    if (AppIsThemeLoaded()) {
-        if (IsWindow(themedToolTip)) {
-            themedToolTip.RelayEvent(pMsg);
-        }
-    }
-    return __super::PreTranslateMessage(pMsg);
-}

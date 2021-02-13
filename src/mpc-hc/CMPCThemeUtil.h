@@ -3,8 +3,10 @@
 #include "mplayerc.h"
 #include <afxcmn.h>
 #include "CMPCTheme.h"
+#include "CMPCThemeToolTipCtrl.h"
 
 class CMPCThemeTitleBarControlButton;
+
 class CMPCThemeUtil
 {
 public:
@@ -27,6 +29,12 @@ protected:
     void initHelperObjects(CWnd* wnd);
     void makeThemed(CWnd* pObject, CWnd* tChild);
 
+    //replaces tooltip from EnableTooltips()
+    CMPCThemeToolTipCtrl themedDialogToolTip;
+    CDialog* themedDialogToolTipParent;
+    void EnableThemedDialogTooltips(CDialog* wnd);
+    void PlaceThemedDialogTooltip(UINT_PTR nID);
+    void RelayThemedDialogTooltip(MSG* pMsg);
 public:
     static bool getFontByFace(CFont& font, CDC* pDC, CWnd *wnd, wchar_t* fontName, int size, LONG weight = FW_REGULAR);
     static bool getFixedFont(CFont& font, CDC* pDC, CWnd* wnd);

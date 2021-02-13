@@ -123,16 +123,7 @@ CDebugShadersDlg::CDebugShadersDlg()
         }
         VERIFY(pApp->WriteProfileInt(IDS_R_DEBUG_SHADERS, IDS_RS_DEBUG_SHADERS_FIRSTRUN, 0));
     }
-
-    if (AppIsThemeLoaded()) {
-        themedToolTip.Create(this, TTS_NOPREFIX | TTS_ALWAYSTIP);
-        themedToolTip.Activate(TRUE);
-        themedToolTip.SetDelayTime(TTDT_AUTOPOP, 10000);
-        //must add manually the ones we support.
-        themedToolTip.AddTool(GetDlgItem(IDC_COMBO1), LPSTR_TEXTCALLBACK);
-    } else {
-        EnableToolTips(TRUE);
-    }
+    EnableThemedDialogTooltips(this);
 }
 
 BOOL CDebugShadersDlg::DestroyWindow()
@@ -179,16 +170,13 @@ BOOL CDebugShadersDlg::OnToolTipNotify(UINT id, NMHDR* pNMHDR, LRESULT* pResult)
         if (sel != CB_ERR) {
             strTipText = GetShaderPath(sel);
         }
-        if (AppIsThemeLoaded()) {
-            themedToolTip.SetHoverPosition(&m_Shaders);
-        }
-
         bRet = true;
         break;
     }
 
     if (bRet) {
         pTTT->lpszText = (LPWSTR)(LPCWSTR)strTipText;
+        PlaceThemedDialogTooltip(nID);
     }
 
     return bRet;
@@ -269,12 +257,9 @@ void CDebugShadersDlg::DoDataExchange(CDataExchange* pDX)
     fulfillThemeReqs();
 }
 
-BOOL CDebugShadersDlg::PreTranslateMessage(MSG* pMsg) {
-    if (AppIsThemeLoaded()) {
-        if (IsWindow(themedToolTip)) {
-            themedToolTip.RelayEvent(pMsg);
-        }
-    }
+BOOL CDebugShadersDlg::PreTranslateMessage(MSG* pMsg)
+{
+    RelayThemedDialogTooltip(pMsg);
     return __super::PreTranslateMessage(pMsg);
 }
 

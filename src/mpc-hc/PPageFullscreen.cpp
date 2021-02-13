@@ -332,7 +332,7 @@ BOOL CPPageFullscreen::OnInitDialog()
 
     ModesUpdate();
 
-    EnableToolTips(TRUE);
+    EnableThemedDialogTooltips(this);
 
     UpdateData(FALSE);
 
@@ -723,6 +723,10 @@ BOOL CPPageFullscreen::OnToolTipNotify(UINT id, NMHDR* pNMH, LRESULT* pResult)
         case IDC_COMBO2:
             bRet = FillComboToolTip(m_hidePolicy, pTTT);
             break;
+    }
+
+    if (bRet) {
+        PlaceThemedDialogTooltip(nID);
     }
 
     return bRet;

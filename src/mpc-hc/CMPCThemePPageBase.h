@@ -17,5 +17,6 @@ public:
 protected:
     virtual BOOL OnInitDialog();
     void SetMPCThemeButtonIcon(UINT nIDButton, UINT nIDIcon, ImageGrayer::mpcColorStyle colorStyle = ImageGrayer::mpcMono);
+    BOOL PreTranslateMessage(MSG* pMsg);
 };
 

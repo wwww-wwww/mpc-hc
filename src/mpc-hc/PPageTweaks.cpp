@@ -165,7 +165,7 @@ BOOL CPPageTweaks::OnInitDialog()
     m_FontSize.SetCurSel(iSel - 10);
 
     CreateToolTip();
-    EnableToolTips(TRUE);
+    EnableThemedDialogTooltips(this);
 
     UpdateData(FALSE);
 
@@ -287,6 +287,10 @@ BOOL CPPageTweaks::OnToolTipNotify(UINT id, NMHDR* pNMH, LRESULT* pResult)
         case IDC_COMBO4:
             bRet = FillComboToolTip(m_FastSeekMethod, pTTT);
             break;
+    }
+
+    if (bRet) {
+        PlaceThemedDialogTooltip(nID);
     }
 
     return bRet;

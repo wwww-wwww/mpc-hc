@@ -79,7 +79,6 @@ protected:
     virtual BOOL OnApply();
 
     DECLARE_MESSAGE_MAP()
-    CMPCThemeToolTipCtrl themedToolTip;
 public:
     afx_msg void OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
     afx_msg void OnBnClickedRadio12(UINT nID);
@@ -91,5 +90,4 @@ public:
     afx_msg void OnBalanceTextDblClk();
     afx_msg BOOL OnToolTipNotify(UINT id, NMHDR* pNMHDR, LRESULT* pResult);
     virtual void OnCancel();
-    BOOL PreTranslateMessage(MSG* pMsg);
 };

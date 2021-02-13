@@ -65,3 +65,8 @@ HBRUSH CMPCThemePPageBase::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
         return __super::OnCtlColor(pDC, pWnd, nCtlColor);
     }
 }
+
+BOOL CMPCThemePPageBase::PreTranslateMessage(MSG* pMsg) {
+    RelayThemedDialogTooltip(pMsg);
+    return __super::PreTranslateMessage(pMsg);
+}

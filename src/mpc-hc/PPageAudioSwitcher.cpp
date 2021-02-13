@@ -176,17 +176,7 @@ BOOL CPPageAudioSwitcher::OnInitDialog()
         //      m_list.SetColumnWidth(i, m_list.GetColumnWidth(i)*8/10);
     }
 
-    if (AppIsThemeLoaded()) {
-        themedToolTip.Create(this, TTS_NOPREFIX | TTS_ALWAYSTIP);
-        themedToolTip.Activate(TRUE);
-        themedToolTip.SetDelayTime(TTDT_AUTOPOP, 10000);
-        //must add manually the ones we support.
-        themedToolTip.AddTool(GetDlgItem(IDC_SLIDER1), LPSTR_TEXTCALLBACK);
-        themedToolTip.AddTool(GetDlgItem(IDC_EDIT2), LPSTR_TEXTCALLBACK);
-        themedToolTip.AddTool(GetDlgItem(IDC_SPIN2), LPSTR_TEXTCALLBACK);
-    } else {
-        EnableToolTips(TRUE);
-    }
+    EnableThemedDialogTooltips(this);
     m_tooltip.Create(this);
     m_tooltip.Activate(TRUE);
 
@@ -427,6 +417,7 @@ BOOL CPPageAudioSwitcher::OnToolTipNotify(UINT id, NMHDR* pNMHDR, LRESULT* pResu
 
     if (bRet) {
         pTTT->lpszText = (LPWSTR)(LPCWSTR)strTipText;
+        PlaceThemedDialogTooltip(nID);
     }
 
     return bRet;
@@ -441,14 +432,4 @@ void CPPageAudioSwitcher::OnCancel()
     }
 
     __super::OnCancel();
-}
-
-BOOL CPPageAudioSwitcher::PreTranslateMessage(MSG* pMsg)
-{
-    if (AppIsThemeLoaded()) {
-        if (IsWindow(themedToolTip)) {
-            themedToolTip.RelayEvent(pMsg);
-        }
-    }
-    return __super::PreTranslateMessage(pMsg);
 }

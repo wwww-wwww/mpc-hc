@@ -186,15 +186,7 @@ BOOL CPPageSubtitles::OnInitDialog()
 
     UpdateData(FALSE);
 
-    if (AppIsThemeLoaded()) {
-        themedToolTip.Create(this, TTS_NOPREFIX | TTS_ALWAYSTIP);
-        themedToolTip.Activate(TRUE);
-        themedToolTip.SetDelayTime(TTDT_AUTOPOP, 10000);
-        //must add manually the ones we support.
-        themedToolTip.AddTool(GetDlgItem(IDC_EDIT4), LPSTR_TEXTCALLBACK);
-    } else {
-        EnableToolTips(TRUE);
-    }
+    EnableThemedDialogTooltips(this);
     CreateToolTip();
 
     return TRUE;  // return TRUE unless you set the focus to a control
@@ -299,15 +291,9 @@ BOOL CPPageSubtitles::OnToolTipNotify(UINT id, NMHDR* pNMHDR, LRESULT* pResult)
             break;
     }
 
-    return bRet;
-}
-
-BOOL CPPageSubtitles::PreTranslateMessage(MSG* pMsg)
-{
-    if (AppIsThemeLoaded()) {
-        if (IsWindow(themedToolTip)) {
-            themedToolTip.RelayEvent(pMsg);
-        }
+    if (bRet) {
+        PlaceThemedDialogTooltip(nID);
     }
-    return __super::PreTranslateMessage(pMsg);
+
+    return bRet;
 }

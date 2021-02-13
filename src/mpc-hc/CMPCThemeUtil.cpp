@@ -18,7 +18,8 @@ CBrush CMPCThemeUtil::windowBrush;
 CBrush CMPCThemeUtil::controlAreaBrush;
 CBrush CMPCThemeUtil::W10DarkThemeFileDialogInjectedBGBrush;
 
-CMPCThemeUtil::CMPCThemeUtil()
+CMPCThemeUtil::CMPCThemeUtil():
+    themedDialogToolTipParent(nullptr)
 {
 }
 
@@ -150,6 +151,45 @@ void CMPCThemeUtil::makeThemed(CWnd* pObject, CWnd* tChild)
 {
     allocatedWindows.push_back(pObject);
     pObject->SubclassWindow(tChild->GetSafeHwnd());
+}
+
+void CMPCThemeUtil::EnableThemedDialogTooltips(CDialog* wnd)
+{
+    if (AppIsThemeLoaded()) {
+        if (themedDialogToolTip.m_hWnd) {
+            themedDialogToolTip.DestroyWindow();
+        }
+        themedDialogToolTipParent = wnd;
+        themedDialogToolTip.Create(wnd, TTS_NOPREFIX | TTS_ALWAYSTIP);
+        themedDialogToolTip.Activate(TRUE);
+        themedDialogToolTip.SetDelayTime(TTDT_AUTOPOP, 10000);
+        //must add manually the ones we support.
+        CWnd* pChild = wnd->GetWindow(GW_CHILD);
+        while (pChild) {
+            themedDialogToolTip.AddTool(pChild, LPSTR_TEXTCALLBACK);
+            pChild = pChild->GetNextWindow(); //increment before any unsubclassing
+        }
+    } else {
+        wnd->EnableToolTips(TRUE);
+    }
+
+}
+
+void CMPCThemeUtil::PlaceThemedDialogTooltip(UINT_PTR nID)
+{
+    if (AppIsThemeLoaded() && IsWindow(themedDialogToolTip)) {
+        if (::IsWindow(themedDialogToolTipParent->GetSafeHwnd())) {
+            CWnd* controlWnd = themedDialogToolTipParent->GetDlgItem(nID);
+            themedDialogToolTip.SetHoverPosition(controlWnd);
+        }
+    }
+}
+
+void CMPCThemeUtil::RelayThemedDialogTooltip(MSG* pMsg)
+{
+    if (AppIsThemeLoaded() && IsWindow(themedDialogToolTip)) {
+        themedDialogToolTip.RelayEvent(pMsg);
+    }
 }
 
 LRESULT CALLBACK wndProcFileDialog(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)

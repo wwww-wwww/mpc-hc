@@ -48,7 +48,6 @@ private:
     BOOL m_bAllowDroppingSubpic;
     int m_nSubDelayStep;
     BOOL m_bSubtitleARCompensation;
-    CMPCThemeToolTipCtrl themedToolTip;
 
 public:
     CPPageSubtitles();
@@ -70,5 +69,4 @@ protected:
     afx_msg void OnUpdateAllowDroppingSubpic(CCmdUI* pCmdUI);
     afx_msg void OnSubDelayStep();
     afx_msg BOOL OnToolTipNotify(UINT id, NMHDR* pNMHDR, LRESULT* pResult);
-    BOOL PreTranslateMessage(MSG* pMsg);
 };

@@ -66,10 +66,6 @@ private:
 
     // tooltip for slidercontrol
     CToolTipCtrl m_tooltip;
-
-    //replaces tooltip from EnableTooltips()
-    CMPCThemeToolTipCtrl themedToolTip;
-
 public:
     CPPageAudioSwitcher(IFilterGraph* pFG);
     virtual ~CPPageAudioSwitcher();
@@ -95,5 +91,4 @@ protected:
     afx_msg void OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
     afx_msg BOOL OnToolTipNotify(UINT id, NMHDR* pNMHDR, LRESULT* pResult);
     virtual void OnCancel();
-    BOOL PreTranslateMessage(MSG* pMsg);
 };

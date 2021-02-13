@@ -82,8 +82,6 @@ protected:
 
     virtual void DoDataExchange(CDataExchange* pDX) override;
 
-    //replaces tooltip from EnableTooltips()
-    CMPCThemeToolTipCtrl themedToolTip;
     BOOL PreTranslateMessage(MSG* pMsg);
 
     DECLARE_MESSAGE_MAP()

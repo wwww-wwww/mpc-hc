@@ -391,7 +391,7 @@ BOOL CPPageCapture::OnInitDialog()
 
     SaveFoundDevices(); // Save (new) devices to ensure that comboboxes reflect actual settings.
 
-    EnableToolTips(TRUE);
+    EnableThemedDialogTooltips(this);
 
     return TRUE;
 }
@@ -482,6 +482,10 @@ BOOL CPPageCapture::OnToolTipNotify(UINT id, NMHDR* pNMH, LRESULT* pResult)
         case IDC_COMBO7:
             bRet = FillComboToolTip(m_cbStopFilterGraph, pTTT);
             break;
+    }
+
+    if (bRet) {
+        PlaceThemedDialogTooltip(nID);
     }
 
     return bRet;
