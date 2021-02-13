@@ -5510,6 +5510,14 @@ void CMainFrame::SaveThumbnails(LPCTSTR fn)
         rts.CreateDefaultStyle(0);
         rts.m_dstScreenSize.SetSize(width, height);
         STSStyle* style = DEBUG_NEW STSStyle();
+        // Use System UI font.
+        CFont tempFont;
+        CMPCThemeUtil::getFontByType(tempFont, nullptr, nullptr, CMPCThemeUtil::MessageFont);
+        LOGFONT lf;
+        if (tempFont.GetLogFont(&lf)) {
+            CString fontName(lf.lfFaceName);
+            style->fontName = fontName;
+        }
         style->marginRect.SetRect(margin * 2, margin * 2, margin * 2, height - infoheight - margin);
         rts.AddStyle(_T("thumbs"), style);
 
@@ -5520,9 +5528,14 @@ void CMainFrame::SaveThumbnails(LPCTSTR fn)
 
         DVD_HMSF_TIMECODE hmsf = RT2HMS_r(rtDur);
 
-        CPath path(m_wndPlaylistBar.GetCurFileName());
-        path.StripPath();
-        CStringW fnp = (LPCTSTR)path;
+        CString title;
+
+        CPlaylistItem* pli = m_wndPlaylistBar.GetCur();
+        if (pli && pli->m_bYoutubeDL && !pli->m_fns.IsEmpty() && pli->m_label && !pli->m_label.IsEmpty()) {
+            title = pli->m_label;
+        } else {
+            title = GetFileName();
+        }
 
         CStringW fs;
         WIN32_FIND_DATA wfd;
@@ -5545,7 +5558,7 @@ void CMainFrame::SaveThumbnails(LPCTSTR fn)
         }
 
         str.Format(IDS_THUMBNAILS_INFO_HEADER,
-                   fnp.GetString(), fs.GetString(), szVideo.cx, szVideo.cy, ar.GetString(), hmsf.bHours, hmsf.bMinutes, hmsf.bSeconds);
+                   title.GetString(), fs.GetString(), szVideo.cx, szVideo.cy, ar.GetString(), hmsf.bHours, hmsf.bMinutes, hmsf.bSeconds);
         rts.Add(str, true, 0, 1, _T("thumbs"));
 
         rts.Render(spd, 0, 25, bbox);
