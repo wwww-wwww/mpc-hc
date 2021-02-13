@@ -24,7 +24,7 @@
 #include <tchar.h>
 #include <algorithm>
 #include <d3d9.h>
-#include <d3dx9.h>
+#include "d3dx9/d3dx9.h"
 #include "D3DFont.h"
 #include "../../../DSUtil/DSUtil.h"
 

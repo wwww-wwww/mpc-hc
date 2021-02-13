@@ -27,7 +27,7 @@
 #include "../../../DSUtil/WinapiFunc.h"
 #include <d3d9.h>
 #include <dxva2api.h>
-#include <d3dx9.h>
+#include "d3dx9/d3dx9.h"
 
 #define VMRBITMAP_UPDATE 0x80000000
 #define MAX_PICTURE_SLOTS (60 + 2) // Last 2 for pixels shader!

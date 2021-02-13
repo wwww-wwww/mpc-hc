@@ -29,7 +29,7 @@
 #include <strsafe.h> // Required in CGenlock
 #include <videoacc.h>
 #include <d3d9.h>
-#include <d3dx9.h>
+#include "d3dx9/d3dx9.h"
 #include <vmr9.h>
 #include <evr.h>
 #include <Mferror.h>
