@@ -58,7 +58,7 @@ clean() {
   cd ${FFMPEG_BUILD_PATH}
   echo Cleaning...
   if [ -f ffbuild/config.mak ]; then
-    make distclean > /dev/null 2>&1
+    rm -r ${FFMPEG_BUILD_PATH}
   fi
   cd ${BASEDIR}
 }
