@@ -43,6 +43,7 @@ private:
     CMainFrame* m_pMainFrame;
     REFERENCE_TIME m_rtStart, m_rtStop, m_rtPos;
 	REFERENCE_TIME m_pos_preview = 0;
+    LONG m_last_pointx_preview = 0;
 
     bool m_bEnabled;
     bool m_bHasDuration;
@@ -89,7 +90,6 @@ private:
 
     void UpdateTooltip(const CPoint& point);
     void UpdateToolTipText();
-    void SetPosInternalPreview(const REFERENCE_TIME pos);
 
 public:
     void Enable(bool bEnable);
@@ -106,9 +106,7 @@ public:
     void RemoveChapters();
 
     bool DraggingThumb();
-    void PreviewWindowShow();
-    void MoveThumbPreview(const CPoint point);
-    REFERENCE_TIME CalculatePosition(const CPoint point);
+    void PreviewWindowShow(const CPoint point);
 
 private:
     DECLARE_MESSAGE_MAP()

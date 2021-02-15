@@ -181,16 +181,6 @@ long CPlayerSeekBar::ChannelPointFromPosition(REFERENCE_TIME rtPos) const
     return ret;
 }
 
-void CPlayerSeekBar::SetPosInternalPreview(const REFERENCE_TIME pos)
-{
-	if (m_pos_preview == pos) {
-		return;
-	}
-
-	m_pos_preview = std::clamp(pos, 0LL, m_rtStop);
-}
-
-
 REFERENCE_TIME CPlayerSeekBar::PositionFromClientPoint(const CPoint& point) const
 {
     REFERENCE_TIME rtRet = -1;
@@ -839,8 +829,8 @@ void CPlayerSeekBar::OnMouseMove(UINT nFlags, CPoint point)
     const OAFilterState fs = m_pMainFrame->GetMediaState();
     if (fs != -1) {
         if (m_pMainFrame->CanPreviewUse()) {
-            MoveThumbPreview(point);
             UpdateToolTipPosition(point);
+            PreviewWindowShow(point);            
         }
     } else {
         m_pMainFrame->PreviewWindowHide();
@@ -881,7 +871,7 @@ void CPlayerSeekBar::OnTimer(UINT_PTR nIDEvent)
                 VERIFY(SetTimer(TIMER_SHOWHIDE_TOOLTIP, m_pMainFrame->CanPreviewUse() ? 10 : TOOLTIP_HIDE_TIMEOUT, nullptr));
             } else if (m_tooltipState == TOOLTIP_VISIBLE) {
                 HideToolTip();
-                PreviewWindowShow();
+                PreviewWindowShow(point);
                 ASSERT(!m_bIgnoreLastTooltipPoint);
                 KillTimer(TIMER_SHOWHIDE_TOOLTIP);
             } else {
@@ -918,43 +908,21 @@ void CPlayerSeekBar::OnCaptureChanged(CWnd* pWnd)
     }
 }
 
-REFERENCE_TIME CPlayerSeekBar::CalculatePosition(const CPoint point) {
-    REFERENCE_TIME pos = -1;
-    const CRect r = GetChannelRect();
-
-    if (point.x < r.left) {
-        pos = 0;
-    } else if (point.x >= r.right) {
-        pos = m_rtStop;
-    } else if (m_rtStop > 0) {
-        const LONG w = r.right - r.left;
-        pos = (m_rtStop * (point.x - r.left) + (w / 2)) / w;
-    }
-
-    return pos;
-}
-
-void CPlayerSeekBar::MoveThumbPreview(const CPoint point) {
-    REFERENCE_TIME pos = CalculatePosition(point);
-
-    if (pos >= 0) {
-        if (GetKeyState(VK_SHIFT) >= 0) {
-            pos = m_pMainFrame->GetClosestKeyFramePreview(pos);
+void CPlayerSeekBar::PreviewWindowShow(CPoint point) {
+    if (point.x != m_last_pointx_preview) {
+        m_last_pointx_preview = point.x;
+        if (m_pMainFrame->CanPreviewUse()) {
+            REFERENCE_TIME newpos = std::clamp(PositionFromClientPoint(point), 0LL, m_rtStop);
+            if (newpos != m_pos_preview) {
+                if (GetKeyState(VK_SHIFT) >= 0) {
+                    newpos = m_pMainFrame->GetClosestKeyFramePreview(newpos);
+                }
+            }
+            if (newpos != m_pos_preview || !m_pMainFrame->m_wndPreView.IsWindowVisible()) {
+                m_pos_preview = newpos;
+                m_pMainFrame->PreviewWindowShow(m_pos_preview);
+            }
         }
-
-        SetPosInternalPreview(pos);
-    }
-}
-
-void CPlayerSeekBar::PreviewWindowShow() {
-    if (m_pMainFrame->CanPreviewUse()) {
-        if (!m_pMainFrame->m_wndPreView.IsWindowVisible()) {
-            CPoint point;
-            GetCursorPos(&point);
-            ScreenToClient(&point);
-            MoveThumbPreview(point);
-        } 
-        m_pMainFrame->PreviewWindowShow(m_pos_preview);
     }
 }
 

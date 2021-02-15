@@ -3790,7 +3790,7 @@ LRESULT CMainFrame::OnFilePostOpenmedia(WPARAM wParam, LPARAM lParam)
         CRect rect;
         m_wndSeekBar.GetWindowRect(&rect);
         if (rect.PtInRect(point)) {
-            m_wndSeekBar.PreviewWindowShow();
+            m_wndSeekBar.PreviewWindowShow(point);
         }
     }
 
@@ -11943,8 +11943,6 @@ HRESULT CMainFrame::PreviewWindowShow(REFERENCE_TIME rtCur2) {
     }
 
     HRESULT hr = S_OK;
-    rtCur2 = GetClosestKeyFramePreview(rtCur2);
-
     if (GetPlaybackMode() == PM_DVD && m_pDVDC_preview) {
         DVD_PLAYBACK_LOCATION2 Loc, Loc2;
         double fps = 0;
@@ -15967,14 +15965,7 @@ REFERENCE_TIME CMainFrame::GetClosestKeyFrame(REFERENCE_TIME rtTarget, REFERENCE
 
 REFERENCE_TIME CMainFrame::GetClosestKeyFramePreview(REFERENCE_TIME rtTarget) const
 {
-    REFERENCE_TIME rtKeyframe = 0;
-    REFERENCE_TIME rtMin = std::max(rtTarget - 200000000LL, 0LL);
-    REFERENCE_TIME rtMax = std::min(rtTarget + 200000000LL, GetDur());
-
-    if (GetKeyFrame(rtTarget, rtMin, rtMax, true, rtKeyframe)) {
-        return rtKeyframe;
-    }
-    return rtTarget;
+    return GetClosestKeyFrame(rtTarget, 200000000LL, 200000000LL);
 }
 
 void CMainFrame::SeekTo(REFERENCE_TIME rtPos, bool bShowOSD /*= true*/)
