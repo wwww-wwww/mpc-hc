@@ -1535,7 +1535,6 @@ BEGIN
         MENUITEM "Pla&ylist",                   ID_VIEW_PLAYLIST
         MENUITEM "Captu&re",                    ID_VIEW_CAPTURE
         MENUITEM "Na&vigation",                 ID_VIEW_NAVIGATION
-        MENUITEM "&Debug Shaders",              ID_VIEW_DEBUGSHADERS
         MENUITEM "Dark Theme (restart)",        ID_VIEW_MPCTHEME
         POPUP "&Presets..."
         BEGIN
@@ -1936,7 +1935,6 @@ BEGIN
             MENUITEM "Pla&ylist",                   ID_VIEW_PLAYLIST
             MENUITEM "Captu&re",                    ID_VIEW_CAPTURE
             MENUITEM "Na&vigation",                 ID_VIEW_NAVIGATION
-            MENUITEM "&Debug Shaders",              ID_VIEW_DEBUGSHADERS
             MENUITEM "Dark Theme (restart)",        ID_VIEW_MPCTHEME
             POPUP "&Presets..."
             BEGIN
@@ -2064,7 +2062,6 @@ BEGIN
             MENUITEM "Pla&ylist",                   ID_VIEW_PLAYLIST
             MENUITEM "Captu&re",                    ID_VIEW_CAPTURE
             MENUITEM "Na&vigation",                 ID_VIEW_NAVIGATION
-            MENUITEM "&Debug Shaders",              ID_VIEW_DEBUGSHADERS
             MENUITEM "Dark Theme (restart)",        ID_VIEW_MPCTHEME
             POPUP "&Presets..."
             BEGIN
