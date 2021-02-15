@@ -1535,13 +1535,14 @@ BEGIN
         MENUITEM "Pla&ylist",                   ID_VIEW_PLAYLIST
         MENUITEM "Captu&re",                    ID_VIEW_CAPTURE
         MENUITEM "Na&vigation",                 ID_VIEW_NAVIGATION
-        MENUITEM "Dark Theme (restart)",        ID_VIEW_MPCTHEME
         POPUP "&Presets..."
         BEGIN
             MENUITEM "&Minimal",                    ID_VIEW_PRESETS_MINIMAL
             MENUITEM "&Compact",                    ID_VIEW_PRESETS_COMPACT
             MENUITEM "&Normal",                     ID_VIEW_PRESETS_NORMAL
         END
+        MENUITEM SEPARATOR
+        MENUITEM "Dark Theme (restart)", ID_VIEW_MPCTHEME
         MENUITEM SEPARATOR
         MENUITEM "F&ull Screen",                ID_VIEW_FULLSCREEN
         POPUP "&Zoom"
@@ -1935,13 +1936,14 @@ BEGIN
             MENUITEM "Pla&ylist",                   ID_VIEW_PLAYLIST
             MENUITEM "Captu&re",                    ID_VIEW_CAPTURE
             MENUITEM "Na&vigation",                 ID_VIEW_NAVIGATION
-            MENUITEM "Dark Theme (restart)",        ID_VIEW_MPCTHEME
             POPUP "&Presets..."
             BEGIN
                 MENUITEM "&Minimal",                    ID_VIEW_PRESETS_MINIMAL
                 MENUITEM "&Compact",                    ID_VIEW_PRESETS_COMPACT
                 MENUITEM "&Normal",                     ID_VIEW_PRESETS_NORMAL
             END
+            MENUITEM SEPARATOR
+            MENUITEM "Dark Theme (restart)", ID_VIEW_MPCTHEME
         END
         POPUP "R&enderer Settings"
         BEGIN
@@ -2062,13 +2064,14 @@ BEGIN
             MENUITEM "Pla&ylist",                   ID_VIEW_PLAYLIST
             MENUITEM "Captu&re",                    ID_VIEW_CAPTURE
             MENUITEM "Na&vigation",                 ID_VIEW_NAVIGATION
-            MENUITEM "Dark Theme (restart)",        ID_VIEW_MPCTHEME
             POPUP "&Presets..."
             BEGIN
                 MENUITEM "&Minimal",                    ID_VIEW_PRESETS_MINIMAL
                 MENUITEM "&Compact",                    ID_VIEW_PRESETS_COMPACT
                 MENUITEM "&Normal",                     ID_VIEW_PRESETS_NORMAL
             END
+            MENUITEM SEPARATOR
+            MENUITEM "Dark Theme (restart)", ID_VIEW_MPCTHEME
             MENUITEM SEPARATOR
             MENUITEM "F&ull Screen",                ID_VIEW_FULLSCREEN
             POPUP "&Zoom"
