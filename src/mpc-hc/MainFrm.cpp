@@ -2624,12 +2624,6 @@ void CMainFrame::GraphEventComplete()
         bBreak = !!(s.nCLSwitches & CLSW_AFTERPLAYBACK_MASK);
     }
 
-    // TODO: Update when Auto Upload is finalised
-    //if (!m_pSubStreams.IsEmpty() && s.fEnableSubtitles && s.bAutoUploadSubtitles
-    //        && m_pCAP && m_pCAP->GetSubtitleDelay() == 0) {
-    //    m_pSubtitlesProviders->Upload();
-    //}
-
     if (abRepeatPositionAEnabled || abRepeatPositionBEnabled) {
         PerformABRepeat();
     } else if (s.fLoopForever || m_nLoops < s.nLoops) {
