@@ -1427,6 +1427,7 @@
 #define IDS_NAVIGATE_TITLES             41464
 #define IDS_NAVIGATE_CHANNELS           41465
 #define IDS_PPAGE_OUTPUT_MPCVR          41466
+#define IDS_PPAGE_OUTPUT_VMR7           41467
 #define IDS_PPAGE_CAPTURE_FG0           57345
 #define IDS_PPAGE_CAPTURE_FG1           57346
 #define IDS_PPAGE_CAPTURE_FG2           57347

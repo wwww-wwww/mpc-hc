@@ -2685,6 +2685,7 @@ BEGIN
     IDS_NAVIGATE_TITLES     "&Titles"
     IDS_NAVIGATE_CHANNELS   "&Channels"
     IDS_PPAGE_OUTPUT_MPCVR  "MPC Video Renderer"
+    IDS_PPAGE_OUTPUT_VMR7   "Video Mixing Renderer 7"
 END
 
 STRINGTABLE
