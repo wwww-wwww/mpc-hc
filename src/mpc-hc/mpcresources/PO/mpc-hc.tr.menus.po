@@ -9,7 +9,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2020-08-09 19:14:33+0000\n"
+"POT-Creation-Date: 2020-12-21 18:32:11+0000\n"
 "PO-Revision-Date: 2020-01-02 07:46+0000\n"
 "Last-Translator: Mücahid Aksel <mucahidaksel@gmail.com>, 2020\n"
 "Language-Team: Turkish (https://www.transifex.com/mpchc/teams/106126/tr/)\n"
@@ -29,7 +29,7 @@ msgstr "&Hızlı Dosya Aç..."
 
 msgctxt "ID_FILE_OPENMEDIA"
 msgid "&Open File/URL..."
-msgstr "&Dosya Aç..."
+msgstr "&Dosya/URL Aç..."
 
 msgctxt "ID_FILE_OPENDVDBD"
 msgid "Open &DVD/BD..."
@@ -209,7 +209,7 @@ msgstr "&İstatistikleri Göster"
 
 msgctxt "ID_VIEW_OSD_DISPLAY_TIME"
 msgid "Display Current T&ime"
-msgstr "Geçerli Süreyi G&öster"
+msgstr "Güncel Süreyi G&öster"
 
 msgctxt "ID_VIEW_OSD_SHOW_FILENAME"
 msgid "Show &File Name"
@@ -217,7 +217,7 @@ msgstr "Dosya &Adını Göster"
 
 msgctxt "POPUP"
 msgid "&Output Range"
-msgstr "&Çıkış Aralığı"
+msgstr "&Çıktı Aralığı"
 
 msgctxt "ID_VIEW_EVROUTPUTRANGE_0_255"
 msgid "&0 - 255"
@@ -241,7 +241,7 @@ msgstr "Tam ekran D3D &arabirim desteği"
 
 msgctxt "ID_VIEW_HIGHCOLORRESOLUTION"
 msgid "10-bit &RGB Output"
-msgstr "10-bit &RGB Çıkışı"
+msgstr "10-bit &RGB Çıktısı"
 
 msgctxt "ID_VIEW_FORCEINPUTHIGHCOLORRESOLUTION"
 msgid "Force 10-bit RGB &Input"
@@ -309,7 +309,7 @@ msgstr "K&aranlık (2.4 Karşıtlık)"
 
 msgctxt "POPUP"
 msgid "&Rendering Intent"
-msgstr "&Çevirme Yöntemi"
+msgstr "&İşleyici Yöntemi (Niyeti)"
 
 msgctxt "ID_VIEW_CM_INTENT_PERCEPTUAL"
 msgid "&Perceptual"
@@ -373,11 +373,11 @@ msgstr "S&ıfırla"
 
 msgctxt "ID_VIEW_RESET_DEFAULT"
 msgid "Reset to &default renderer settings"
-msgstr "Varsayılan &çevirici ayarlarına dön"
+msgstr "Varsayılan &işleyici ayarlarına dön"
 
 msgctxt "ID_VIEW_RESET_OPTIMAL"
 msgid "Reset to &optimal renderer settings"
-msgstr "Tavsiye &edilen çevirici ayarlarına dön"
+msgstr "Tavsiye &edilen işleyici ayarlarına dön"
 
 msgctxt "POPUP"
 msgid "Video &Frame"
@@ -593,75 +593,75 @@ msgstr "Oynatma hızı"
 
 msgctxt "ID_PLAY_PLAYBACKRATE_025"
 msgid "0.25 x"
-msgstr ""
+msgstr "x 0,25"
 
 msgctxt "ID_PLAY_PLAYBACKRATE_050"
 msgid "0.50 x"
-msgstr ""
+msgstr "x 0,50"
 
 msgctxt "ID_PLAY_PLAYBACKRATE_075"
 msgid "0.75 x"
-msgstr ""
+msgstr "x 0,75"
 
 msgctxt "ID_PLAY_PLAYBACKRATE_090"
 msgid "0.90 x"
-msgstr ""
+msgstr "x 0,90"
 
 msgctxt "ID_PLAY_PLAYBACKRATE_100"
 msgid "1.00 x"
-msgstr ""
+msgstr "x 1,00"
 
 msgctxt "ID_PLAY_PLAYBACKRATE_110"
 msgid "1.10 x"
-msgstr ""
+msgstr "x 1,10"
 
 msgctxt "ID_PLAY_PLAYBACKRATE_125"
 msgid "1.25 x"
-msgstr ""
+msgstr "x 1,25"
 
 msgctxt "ID_PLAY_PLAYBACKRATE_150"
 msgid "1.50 x"
-msgstr ""
+msgstr "x 1,50"
 
 msgctxt "ID_PLAY_PLAYBACKRATE_200"
 msgid "2.00 x"
-msgstr ""
+msgstr "x 2,00"
 
 msgctxt "ID_PLAY_PLAYBACKRATE_300"
 msgid "3.00 x"
-msgstr ""
+msgstr "x 3,00"
 
 msgctxt "ID_PLAY_PLAYBACKRATE_400"
 msgid "4.00 x"
-msgstr ""
+msgstr "x 4,00"
 
 msgctxt "ID_PLAY_PLAYBACKRATE_600"
 msgid "6.00 x"
-msgstr ""
+msgstr "x 6,00"
 
 msgctxt "ID_PLAY_PLAYBACKRATE_800"
 msgid "8.00 x"
-msgstr ""
+msgstr "x 8,00"
 
 msgctxt "ID_PLAY_PLAYBACKRATE_FPS24"
 msgid "24 fps"
-msgstr ""
+msgstr "24 Fps"
 
 msgctxt "ID_PLAY_PLAYBACKRATE_FPS25"
 msgid "25 fps"
-msgstr ""
+msgstr "25 Fps"
 
 msgctxt "ID_PLAY_DECRATE"
 msgid "&Decrease Rate"
-msgstr "&Oranı Azalt"
+msgstr "Hızı Azalt"
 
 msgctxt "ID_PLAY_INCRATE"
 msgid "&Increase Rate"
-msgstr "&Oranı Arttır"
+msgstr "Hızı Arttır"
 
 msgctxt "ID_PLAY_RESETRATE"
 msgid "R&eset Rate"
-msgstr "Or&anı Sıfırla"
+msgstr "Hızı Sıfırla"
 
 msgctxt "ID_FILTERS"
 msgid "&Filters"
@@ -717,7 +717,7 @@ msgstr "E&kranı Kapat"
 
 msgctxt "ID_AFTERPLAYBACK_EXIT"
 msgid "&Exit"
-msgstr "&Çıkış"
+msgstr "&Çık"
 
 msgctxt "ID_AFTERPLAYBACK_STANDBY"
 msgid "&Stand By"
@@ -741,7 +741,7 @@ msgstr "&Bilgisayarı Kilitle"
 
 msgctxt "POPUP"
 msgid "&Navigate"
-msgstr "&Yönetim"
+msgstr "&Gezinti"
 
 msgctxt "ID_NAVIGATE_SKIPBACK"
 msgid "&Previous"
