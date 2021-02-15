@@ -15922,6 +15922,9 @@ bool CMainFrame::GetKeyFrame(REFERENCE_TIME rtTarget, REFERENCE_TIME rtMin, REFE
             }
         } else {
             keyframetime = *foundkeyframe;
+            if (keyframetime == rtTarget) {
+                return true;
+            }
             if (keyframetime > rtMax) {
                 // use preceding keyframe
                 keyframetime = *(--foundkeyframe);
