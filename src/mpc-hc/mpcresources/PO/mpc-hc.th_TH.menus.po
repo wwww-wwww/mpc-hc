@@ -141,14 +141,6 @@ msgctxt "ID_VIEW_NAVIGATION"
 msgid "Na&vigation"
 msgstr "การ&นำทาง"
 
-msgctxt "ID_VIEW_DEBUGSHADERS"
-msgid "&Debug Shaders"
-msgstr "&ดีบักเฉดเดอร์"
-
-msgctxt "ID_VIEW_MPCTHEME"
-msgid "Dark Theme (restart)"
-msgstr ""
-
 msgctxt "POPUP"
 msgid "&Presets..."
 msgstr "&ค่าสำเร็จรูป..."
@@ -164,6 +156,10 @@ msgstr "&กะทัดรัด"
 msgctxt "ID_VIEW_PRESETS_NORMAL"
 msgid "&Normal"
 msgstr "&ปกติ"
+
+msgctxt "ID_VIEW_MPCTHEME"
+msgid "Dark Theme (restart)"
+msgstr ""
 
 msgctxt "ID_VIEW_FULLSCREEN"
 msgid "F&ull Screen"

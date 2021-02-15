@@ -142,14 +142,6 @@ msgctxt "ID_VIEW_NAVIGATION"
 msgid "Na&vigation"
 msgstr "Նա&վարկում"
 
-msgctxt "ID_VIEW_DEBUGSHADERS"
-msgid "&Debug Shaders"
-msgstr "&Վրիպազերծում"
-
-msgctxt "ID_VIEW_MPCTHEME"
-msgid "Dark Theme (restart)"
-msgstr ""
-
 msgctxt "POPUP"
 msgid "&Presets..."
 msgstr "&Նախակայումներ..."
@@ -165,6 +157,10 @@ msgstr "&Սեղմ"
 msgctxt "ID_VIEW_PRESETS_NORMAL"
 msgid "&Normal"
 msgstr "&Սովորական"
+
+msgctxt "ID_VIEW_MPCTHEME"
+msgid "Dark Theme (restart)"
+msgstr ""
 
 msgctxt "ID_VIEW_FULLSCREEN"
 msgid "F&ull Screen"

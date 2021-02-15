@@ -141,14 +141,6 @@ msgctxt "ID_VIEW_NAVIGATION"
 msgid "Na&vigation"
 msgstr "Περιήγηση"
 
-msgctxt "ID_VIEW_DEBUGSHADERS"
-msgid "&Debug Shaders"
-msgstr "Εντοπισμός σ&φαλμάτων σκιάσεων"
-
-msgctxt "ID_VIEW_MPCTHEME"
-msgid "Dark Theme (restart)"
-msgstr ""
-
 msgctxt "POPUP"
 msgid "&Presets..."
 msgstr "Π&ροεπιλογές εμφάνισης..."
@@ -164,6 +156,10 @@ msgstr "&Συμπαγής"
 msgctxt "ID_VIEW_PRESETS_NORMAL"
 msgid "&Normal"
 msgstr "&Κανονική"
+
+msgctxt "ID_VIEW_MPCTHEME"
+msgid "Dark Theme (restart)"
+msgstr ""
 
 msgctxt "ID_VIEW_FULLSCREEN"
 msgid "F&ull Screen"

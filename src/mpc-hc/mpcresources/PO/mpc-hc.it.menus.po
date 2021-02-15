@@ -142,14 +142,6 @@ msgctxt "ID_VIEW_NAVIGATION"
 msgid "Na&vigation"
 msgstr "Navigazione"
 
-msgctxt "ID_VIEW_DEBUGSHADERS"
-msgid "&Debug Shaders"
-msgstr "&Debug Shaders"
-
-msgctxt "ID_VIEW_MPCTHEME"
-msgid "Dark Theme (restart)"
-msgstr "Tema Scuro (richiede riavvio)"
-
 msgctxt "POPUP"
 msgid "&Presets..."
 msgstr "Interfaccia..."
@@ -165,6 +157,10 @@ msgstr "Compatta"
 msgctxt "ID_VIEW_PRESETS_NORMAL"
 msgid "&Normal"
 msgstr "Normale"
+
+msgctxt "ID_VIEW_MPCTHEME"
+msgid "Dark Theme (restart)"
+msgstr "Tema Scuro (richiede riavvio)"
 
 msgctxt "ID_VIEW_FULLSCREEN"
 msgid "F&ull Screen"

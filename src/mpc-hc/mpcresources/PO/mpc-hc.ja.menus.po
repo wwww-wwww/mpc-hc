@@ -143,14 +143,6 @@ msgctxt "ID_VIEW_NAVIGATION"
 msgid "Na&vigation"
 msgstr "ナビゲーション(&V)"
 
-msgctxt "ID_VIEW_DEBUGSHADERS"
-msgid "&Debug Shaders"
-msgstr "シェーダ デバッガ(&D)"
-
-msgctxt "ID_VIEW_MPCTHEME"
-msgid "Dark Theme (restart)"
-msgstr "ダーク テーマ (再起動)"
-
 msgctxt "POPUP"
 msgid "&Presets..."
 msgstr "プリセット(&P)..."
@@ -166,6 +158,10 @@ msgstr "コンパクト(&C)"
 msgctxt "ID_VIEW_PRESETS_NORMAL"
 msgid "&Normal"
 msgstr "標準(&N)"
+
+msgctxt "ID_VIEW_MPCTHEME"
+msgid "Dark Theme (restart)"
+msgstr "ダーク テーマ (再起動)"
 
 msgctxt "ID_VIEW_FULLSCREEN"
 msgid "F&ull Screen"

@@ -142,14 +142,6 @@ msgctxt "ID_VIEW_NAVIGATION"
 msgid "Na&vigation"
 msgstr "&Nabigazioa"
 
-msgctxt "ID_VIEW_DEBUGSHADERS"
-msgid "&Debug Shaders"
-msgstr "Garbike&ta Itzalak"
-
-msgctxt "ID_VIEW_MPCTHEME"
-msgid "Dark Theme (restart)"
-msgstr "Azalgai Iluna (berrabiarazi)"
-
 msgctxt "POPUP"
 msgid "&Presets..."
 msgstr "Aurrezar&penak..."
@@ -165,6 +157,10 @@ msgstr "&Trinko"
 msgctxt "ID_VIEW_PRESETS_NORMAL"
 msgid "&Normal"
 msgstr "&Arrunt"
+
+msgctxt "ID_VIEW_MPCTHEME"
+msgid "Dark Theme (restart)"
+msgstr "Azalgai Iluna (berrabiarazi)"
 
 msgctxt "ID_VIEW_FULLSCREEN"
 msgid "F&ull Screen"
