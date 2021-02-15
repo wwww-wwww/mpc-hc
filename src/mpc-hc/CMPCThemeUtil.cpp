@@ -163,11 +163,11 @@ void CMPCThemeUtil::EnableThemedDialogTooltips(CDialog* wnd)
         themedDialogToolTip.Create(wnd, TTS_NOPREFIX | TTS_ALWAYSTIP);
         themedDialogToolTip.Activate(TRUE);
         themedDialogToolTip.SetDelayTime(TTDT_AUTOPOP, 10000);
-        //must add manually the ones we support.
+        //enable tooltips for all child windows
         CWnd* pChild = wnd->GetWindow(GW_CHILD);
         while (pChild) {
             themedDialogToolTip.AddTool(pChild, LPSTR_TEXTCALLBACK);
-            pChild = pChild->GetNextWindow(); //increment before any unsubclassing
+            pChild = pChild->GetNextWindow();
         }
     } else {
         wnd->EnableToolTips(TRUE);
