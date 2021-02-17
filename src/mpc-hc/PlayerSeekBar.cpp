@@ -307,8 +307,9 @@ void CPlayerSeekBar::UpdateTooltip(const CPoint& point)
     CRect clientRect;
     GetClientRect(&clientRect);
 
-    if (!m_bHasDuration || !clientRect.PtInRect(point)) {
+    if (!m_bHasDuration || !clientRect.PtInRect(point) || DraggingThumb()) {
         HideToolTip();
+        m_pMainFrame->PreviewWindowHide();
         return;
     }
 
@@ -909,7 +910,7 @@ void CPlayerSeekBar::OnCaptureChanged(CWnd* pWnd)
 }
 
 void CPlayerSeekBar::PreviewWindowShow(CPoint point) {
-    if (point.x != m_last_pointx_preview) {
+    if (point.x != m_last_pointx_preview && !DraggingThumb()) {
         m_last_pointx_preview = point.x;
         if (m_pMainFrame->CanPreviewUse()) {
             REFERENCE_TIME newpos = std::clamp(PositionFromClientPoint(point), 0LL, m_rtStop);
