@@ -4,13 +4,14 @@
 # Translators:
 # MPC HC <adiposegithub@gmail.com>, 2020
 # Zyz696 Paga, 2020
+# Felipefpl, 2021
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2020-11-01 23:45:42+0000\n"
+"POT-Creation-Date: 2021-02-15 14:52:58+0000\n"
 "PO-Revision-Date: 2020-01-02 07:46+0000\n"
-"Last-Translator: Zyz696 Paga, 2020\n"
+"Last-Translator: Felipefpl, 2021\n"
 "Language-Team: Portuguese (Brazil) (https://www.transifex.com/mpchc/teams/106126/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -666,7 +667,7 @@ msgstr "Renderizador de Vídeo MPC"
 
 msgctxt "IDS_PPAGE_OUTPUT_VMR7"
 msgid "Video Mixing Renderer 7"
-msgstr ""
+msgstr "Renderizador de Mistura de Vídeo 7"
 
 msgctxt "IDD_PPAGEACCELTBL"
 msgid "Player::Keys"
@@ -2640,6 +2641,8 @@ msgid ""
 "To load subtitles you have to change the video renderer type and reopen the file.\n"
 "- DirectShow: EVR (Custom Presenter), Sync, VMR-9 (renderless), madVR, MPC VR, or Haali VR"
 msgstr ""
+"Pra carregar as legendas você tem que mudar o tipo de renderizador de vídeo e re-abrir o arquivo.\n"
+"- DirectShow: EVR (Apresentador Personalizado), Sync, VMR-9 (sem renderizador), madVR, MPC VR ou Haali VR"
 
 msgctxt "IDS_SUBTITLE_FILES_FILTER"
 msgid "Subtitle files"
@@ -3000,11 +3003,11 @@ msgstr "Zoom 25%"
 
 msgctxt "IDS_AG_MOUSE_MODIFIER"
 msgid "Mouse Modifier"
-msgstr ""
+msgstr "Modificador do Mouse"
 
 msgctxt "IDS_AG_MOUSE_FS_MODIFIER"
 msgid "Mouse FS Modifier"
-msgstr ""
+msgstr "Modificador FS do Mouse"
 
 msgctxt "IDS_AG_VIDFRM_ZOOM1"
 msgid "VidFrm Zoom 1"
@@ -4544,27 +4547,27 @@ msgstr ""
 
 msgctxt "IDS_PRESIZE_SHADERS_ENABLED"
 msgid "Pre-Resize Pixel Shaders: on"
-msgstr ""
+msgstr "Pré-Redimensionar os Shaders dos Pixels: ligado"
 
 msgctxt "IDS_PRESIZE_SHADERS_DISABLED"
 msgid "Pre-Resize Pixel Shaders: off"
-msgstr ""
+msgstr "Pré-Redimensionar os Shaders dos Pixels: desligado"
 
 msgctxt "IDS_PRESIZE_SHADERS_TOGGLE"
 msgid "Enable Pre-Resize Pixel Shaders"
-msgstr ""
+msgstr "Ativar o Pré-Redimensionamento dos Shaders dos Pixels"
 
 msgctxt "IDS_POSTSIZE_SHADERS_ENABLED"
 msgid "Post-Resize Pixel Shaders: on"
-msgstr ""
+msgstr "Pós-Redimensionar os Shaders dos Pixels: ligado"
 
 msgctxt "IDS_POSTSIZE_SHADERS_DISABLED"
 msgid "Post-Resize Pixel Shaders: off"
-msgstr ""
+msgstr "Pós-Redimensionar os Shaders dos Pixels: desligado"
 
 msgctxt "IDS_POSTSIZE_SHADERS_TOGGLE"
 msgid "Enable Post-Resize Pixel Shaders"
-msgstr ""
+msgstr "Ativar o Pós-Redimensionamento dos Shaders dos Pixels"
 
 msgctxt "IDS_PPAGEADVANCED_TIME_REFRESH_INTERVAL"
 msgid "Refresh interval (in milliseconds) of time in status bar"

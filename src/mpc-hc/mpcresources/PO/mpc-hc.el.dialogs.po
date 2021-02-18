@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2020-12-21 18:32:11+0000\n"
+"POT-Creation-Date: 2021-01-01 17:21:26+0000\n"
 "PO-Revision-Date: 2020-01-02 07:46+0000\n"
 "Last-Translator: geogeo.gr <geogeo.gr@gmail.com>, 2021\n"
 "Language-Team: Greek (https://www.transifex.com/mpchc/teams/106126/el/)\n"
@@ -206,7 +206,7 @@ msgstr "Περί"
 
 msgctxt "IDD_ABOUTBOX_IDC_AUTHORS_LINK"
 msgid "Copyright 2002-2021 clsid2 and others"
-msgstr ""
+msgstr "Copyright © 2002-2021 clsid2 και άλλοι"
 
 msgctxt "IDD_ABOUTBOX_IDC_STATIC"
 msgid ""
@@ -1149,7 +1149,7 @@ msgstr "Εύρεση..."
 
 msgctxt "IDD_PPAGELOGO_IDC_CHECK1"
 msgid "Apply Monitor Color Profile"
-msgstr ""
+msgstr "Εφαρμογή προφίλ χρωμάτων οθόνης"
 
 msgctxt "IDD_PPAGEOUTPUT_IDC_STATIC"
 msgid "DirectShow Video"

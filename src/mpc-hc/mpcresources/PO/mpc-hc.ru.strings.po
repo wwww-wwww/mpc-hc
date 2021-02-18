@@ -4,14 +4,14 @@
 # Translators:
 # MPC HC <adiposegithub@gmail.com>, 2020
 # Alexandr Stankovich <sanekst00@yandex.ru>, 2020
-# CoolCmd, 2020
+# CoolCmd, 2021
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2020-11-01 23:45:42+0000\n"
+"POT-Creation-Date: 2021-02-17 23:32:57+0000\n"
 "PO-Revision-Date: 2020-01-02 07:46+0000\n"
-"Last-Translator: CoolCmd, 2020\n"
+"Last-Translator: CoolCmd, 2021\n"
 "Language-Team: Russian (https://www.transifex.com/mpchc/teams/106126/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -666,7 +666,7 @@ msgstr "MPC Video Renderer"
 
 msgctxt "IDS_PPAGE_OUTPUT_VMR7"
 msgid "Video Mixing Renderer 7"
-msgstr ""
+msgstr "Video Mixing Renderer 7"
 
 msgctxt "IDD_PPAGEACCELTBL"
 msgid "Player::Keys"
@@ -1980,11 +1980,11 @@ msgstr "Воспроизведение BD"
 
 msgctxt "IDS_OSD_DISPLAY_RENDERER_STATS"
 msgid "OSD: Display Renderer Statistics"
-msgstr "OSD: Показать статистику рендера"
+msgstr "OSD: Отображать статистику рендера"
 
 msgctxt "IDS_OSD_RESET_RENDERER_STATS"
 msgid "OSD: Reset Renderer Statistics"
-msgstr "OSD: Сброс статистики рендера"
+msgstr "OSD: Сбросить статистику рендера"
 
 msgctxt "IDD_PPAGESUBMISC"
 msgid "Subtitles::Misc"
@@ -2318,7 +2318,7 @@ msgstr "Вкл/откл субтитры (DVD)"
 
 msgctxt "IDS_OSD_DISPLAY_CURRENT_TIME"
 msgid "OSD: Display Current Time"
-msgstr "OSD: Отображение текущего времени"
+msgstr "OSD: Отображать текущее время"
 
 msgctxt "IDS_PPAGEWEBSERVER_0"
 msgid "Select the directory"
@@ -2627,7 +2627,7 @@ msgid ""
 "- DirectShow: EVR (Custom Presenter), Sync, VMR-9 (renderless), madVR, MPC VR, or Haali VR"
 msgstr ""
 "Чтобы загрузить субтитры, вы должны изменить тип рендера видео и снова открыть файл.\n"
-"- DirectShow: EVR (Custom Presenter), Sync, VMR-9 (renderless), madVR, MPC VR, or Haali VR"
+"- DirectShow: EVR (Custom Presenter), Sync, VMR-9 (renderless), madVR, MPC VR или Haali VR"
 
 msgctxt "IDS_SUBTITLE_FILES_FILTER"
 msgid "Subtitle files"
@@ -3985,7 +3985,7 @@ msgstr "/webport N\tИспользовать веб-интерфейс по сп
 
 msgctxt "IDS_CMD_DEBUG"
 msgid "/debug\t\tShow debug information in OSD"
-msgstr "/debug\t\tПоказать информацию об отладке в экранном меню"
+msgstr "/debug\t\tПоказать отладочную информацию в экранном меню"
 
 msgctxt "IDS_CMD_NOCRASHREPORTER"
 msgid "/nocrashreporter\tDisable the crash reporter"
@@ -4557,22 +4557,24 @@ msgstr "Включить пиксельные шейдеры post-resize"
 
 msgctxt "IDS_PPAGEADVANCED_TIME_REFRESH_INTERVAL"
 msgid "Refresh interval (in milliseconds) of time in status bar"
-msgstr ""
+msgstr "Интервал обновления времени (в миллисекундах) в строке состояния"
 
 msgctxt "IDS_PPAGEADVANCED_SHOW_LANG_STATUSBAR"
 msgid "Display current audio and subtitle language in status bar"
-msgstr ""
+msgstr "Отображать в строке состояния текущий язык аудио и субтитров"
 
 msgctxt "IDS_PPAGEADVANCED_SHOW_FPS_STATUSBAR"
 msgid "Display current fps and rate in status bar"
-msgstr ""
+msgstr "Отображать в строке состояния текущую частоту кадров и скорость"
 
 msgctxt "IDS_PPAGEADVANCED_ADD_LANGCODE_WHEN_SAVE_SUBTITLES"
 msgid ""
 "When save the subtitles file, the language code (if available) text will be "
 "added to suggested file name by default."
 msgstr ""
+"При сохранении субтитров в файл, добавлять код языка (если есть) в "
+"предлагаемое имя файла."
 
 msgctxt "IDS_PPAGEADVANCED_USE_TITLE_IN_RECENT_FILE_LIST"
 msgid "Use title in recent file list."
-msgstr ""
+msgstr "Использовать заголовок в списке недавно открытых файлов."
