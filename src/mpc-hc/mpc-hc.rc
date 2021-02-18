@@ -16,7 +16,7 @@
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
 LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
-#pragma code_page(1252)
+#pragma code_page(65001) // UTF-8
 
 #ifdef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
@@ -45,7 +45,7 @@ BEGIN
     "\r\n"
     "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)\r\n"
     "LANGUAGE 9, 1\r\n"
-    "#pragma code_page(1252)\r\n"
+    "#pragma code_page(65001)\r\n"
     "#include ""afxres.rc""     // Standard components\r\n"
     "#include ""res\\mpc-hc.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
     "#endif\0"
@@ -669,7 +669,7 @@ BEGIN
     LTEXT           "Spacing",IDC_STATIC,12,61,67,8
     EDITTEXT        IDC_EDIT3,84,59,42,13,ES_RIGHT | ES_AUTOHSCROLL
     CONTROL         "",IDC_SPIN3,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS,112,59,14,13
-    LTEXT           "Angle (z,°)",IDC_STATIC,12,82,67,8
+    LTEXT           "Angle (z,Â°)",IDC_STATIC,12,82,67,8
     EDITTEXT        IDC_EDIT4,84,79,42,13,ES_RIGHT | ES_AUTOHSCROLL | ES_NUMBER
     CONTROL         "",IDC_SPIN10,"msctls_updown32",UDS_WRAP | UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS,112,79,14,13
     LTEXT           "Scale (x,%)",IDC_STATIC,12,102,67,8
@@ -3763,7 +3763,7 @@ BEGIN
     IDS_AFTERPLAYBACK_DONOTHING "After Playback: Do nothing"
     IDS_OSD_BRIGHTNESS      "Brightness: %s"
     IDS_OSD_CONTRAST        "Contrast: %s"
-    IDS_OSD_HUE             "Hue: %s°"
+    IDS_OSD_HUE             "Hue: %sÂ°"
     IDS_OSD_SATURATION      "Saturation: %s"
     IDS_OSD_RESET_COLOR     "Color settings restored"
     IDS_OSD_NO_COLORCONTROL "Color control is not supported"
