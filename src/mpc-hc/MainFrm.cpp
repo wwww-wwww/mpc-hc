@@ -5563,7 +5563,7 @@ void CMainFrame::SaveThumbnails(LPCTSTR fn)
     if (bWasStopped) {
         OnPlayStop();
     } else {
-        SeekTo(rtPos);
+        DoSeekTo(rtPos, false);
     }
 
     m_OSD.DisplayMessage(OSD_TOPLEFT, ResStr(IDS_OSD_THUMBS_SAVED), 3000);
@@ -9278,7 +9278,7 @@ bool CMainFrame::SeekToFileChapter(int iChapter, bool bRelative /*= false*/)
         REFERENCE_TIME rtStart, rtStop;
         m_wndSeekBar.GetRange(rtStart, rtStop);
         if (iChapter >= 0 && DWORD(iChapter) < nChapters && SUCCEEDED(m_pCB->ChapGet(iChapter, &rt, &name)) && rt < rtStop) {
-            SeekTo(rt, false);
+            DoSeekTo(rt, false);
             SendStatusMessage(ResStr(IDS_AG_CHAPTER2) + CString(name), 3000);
             ret = true;
 
@@ -9528,7 +9528,7 @@ void CMainFrame::OnNavigateGoto()
         return;
     }
 
-    SeekTo(dlg.m_time);
+    DoSeekTo(dlg.m_time);
 }
 
 void CMainFrame::OnUpdateNavigateGoto(CCmdUI* pCmdUI)
