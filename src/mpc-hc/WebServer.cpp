@@ -136,6 +136,7 @@ void CWebServer::Init()
     m_downloads["/img/vbs.png"] = IDF_VBS_PNG;
     m_downloads["/javascript.js"] = IDF_JAVASCRIPT;
 
+#if 0
     CRegKey key;
     CString str(_T("MIME\\Database\\Content Type"));
     if (ERROR_SUCCESS == key.Open(HKEY_CLASSES_ROOT, str, KEY_READ)) {
@@ -151,16 +152,20 @@ void CWebServer::Init()
             }
         }
     }
+#endif
 
+    m_mimes[".bmp"] = "image/bmp";
     m_mimes[".css"] = "text/css";
     m_mimes[".gif"] = "image/gif";
+    m_mimes[".htm"] = "text/html";
     m_mimes[".html"] = "text/html";
     m_mimes[".jpeg"] = "image/jpeg";
     m_mimes[".jpg"] = "image/jpeg";
     m_mimes[".js"] = "text/javascript";
+    m_mimes[".json"] = "text/plain";
     m_mimes[".png"] = "image/png";
     m_mimes[".txt"] = "text/plain";
-    m_mimes[".ico"] = "image/vnd.microsoft.icon";
+    m_mimes[".ico"] = "image/x-icon";
 }
 
 DWORD WINAPI CWebServer::StaticThreadProc(LPVOID lpParam)
@@ -329,7 +334,9 @@ void CWebServer::OnRequest(CWebClientSocket* pClient, CStringA& hdr, CStringA& b
     if (ext.IsEmpty()) {
         mime = "text/html";
     } else {
-        m_mimes.Lookup(ext, mime);
+        if (!m_mimes.Lookup(ext, mime)) {
+            mime = "none";
+        }
     }
 
     hdr = "HTTP/1.0 200 OK\r\n";
