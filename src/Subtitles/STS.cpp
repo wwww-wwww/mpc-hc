@@ -196,6 +196,19 @@ CHtmlColorMap::CHtmlColorMap()
 
 const CHtmlColorMap g_colors;
 
+static CStringW SSAColorTag(CStringW arg, CStringW ctag = L"c") {
+    DWORD val, color;
+    if (g_colors.Lookup(CString(arg), val)) {
+        color = (DWORD)val;
+    } else if ((color = wcstol(arg, nullptr, 16)) == 0) {
+        color = 0x00ffffff;    // default is white
+    }
+    CStringW tmp;
+    tmp.Format(L"%02x%02x%02x", color & 0xff, (color >> 8) & 0xff, (color >> 16) & 0xff);
+    return CStringW(L"{\\" + ctag + L"&H") + tmp + L"&}";
+}
+
+
 //
 
 const BYTE CharSetList[] = {
@@ -487,6 +500,8 @@ static CStringW WebVTT2SSA(CStringW str)
         str.Replace(L"</b>", L"{\\b}");
         str.Replace(L"<u>", L"{\\u1}");
         str.Replace(L"</u>", L"{\\u}");
+        str.Replace(L"<font color=", L"{c}");
+        str.Replace(L"</i>", L"{\\i}");
     }
     if (str.Find(L'&') >= 0) {
         str.Replace(L"&lt;", L"<");
@@ -551,6 +566,24 @@ static bool OpenVTT(CTextFile* file, CSimpleTextSubtitle& ret, int CharSet) {
                 if (tmp.Find(L'<') >= 0) {
                     CW2CW pszConvertedAnsiString(tmp);
                     std::wstring stdTmp(pszConvertedAnsiString);
+                    std::wregex clrrgx(LR"(<c.([a-z]*).bg_([a-z]*)>([^<]*)</c[.\w\d]*>)");
+                    std::wregex clrrgx2(LR"(<c.([a-z]*)>([^<]*)</c[.\w\d]*>)");
+                    std::wsmatch match;
+
+                    if (std::regex_search(stdTmp, match, clrrgx)) {
+                        std::wstring clr = match[1];
+                        std::wstring bgclr = match[2];
+                        std::wstring text = match[3];
+                        CStringW ssaClrTag = SSAColorTag(clr.c_str());
+                        CStringW ssaBGClrTag = SSAColorTag(bgclr.c_str(),L"3c");
+                        stdTmp = ssaClrTag + ssaBGClrTag + text.c_str();
+                    } else if (std::regex_search(stdTmp, match, clrrgx2)) {
+                        std::wstring clr = match[1];
+                        std::wstring text = match[3];
+                        CStringW ssaClrTag = SSAColorTag(clr.c_str());
+                        stdTmp = ssaClrTag + text.c_str();
+                    }
+
                     // remove tags we don't support
                     stdTmp = std::regex_replace(stdTmp, std::wregex(L"<c[.\\w\\d]*>"), L"");
                     stdTmp = std::regex_replace(stdTmp, std::wregex(L"</c[.\\w\\d]*>"), L"");
@@ -1152,17 +1185,11 @@ static CStringW SMI2SSA(CStringW str, int CharSet)
                         continue;
                     }
 
-                    DWORD val;
-                    if (g_colors.Lookup(CString(arg), val)) {
-                        color = (DWORD)val;
-                    } else if ((color = wcstol(arg, nullptr, 16)) == 0) {
-                        color = 0x00ffffff;    // default is white
-                    }
+                    CStringW colorTag = SSAColorTag(arg);
 
-                    arg.Format(L"%02x%02x%02x", color & 0xff, (color >> 8) & 0xff, (color >> 16) & 0xff);
-                    lstr.Insert(k + l + chars_inserted, CStringW(L"{\\c&H") + arg + L"&}");
-                    str.Insert(k + l + chars_inserted, CStringW(L"{\\c&H") + arg + L"&}");
-                    chars_inserted += 5 + arg.GetLength() + 2;
+                    lstr.Insert(k + l + chars_inserted, colorTag);
+                    str.Insert(k + l + chars_inserted, colorTag);
+                    chars_inserted += 5 + colorTag.GetLength() + 2;
                 }
             }
         }
