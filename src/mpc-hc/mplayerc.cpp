@@ -1838,12 +1838,18 @@ BOOL CMPlayerCApp::InitInstance()
 
     AfxEnableControlContainer();
 
-    CMainFrame* pFrame = DEBUG_NEW CMainFrame;
-    m_pMainWnd = pFrame;
-    if (!pFrame || !pFrame->LoadFrame(IDR_MAINFRAME, WS_OVERLAPPEDWINDOW | FWS_ADDTOTITLE, nullptr, nullptr)) {
-        MessageBox(nullptr, ResStr(IDS_FRAME_INIT_FAILED), m_pszAppName, MB_ICONERROR | MB_OK);
+    CMainFrame* pFrame;
+    try {
+        pFrame = DEBUG_NEW CMainFrame;
+        if (!pFrame || !pFrame->LoadFrame(IDR_MAINFRAME, WS_OVERLAPPEDWINDOW | FWS_ADDTOTITLE, nullptr, nullptr)) {
+            MessageBox(nullptr, ResStr(IDS_FRAME_INIT_FAILED), m_pszAppName, MB_ICONERROR | MB_OK);
+            return FALSE;
+        }
+    } catch (...) {
         return FALSE;
     }
+
+    m_pMainWnd = pFrame;
     pFrame->m_controls.LoadState();
     pFrame->SetDefaultWindowRect((m_s->nCLSwitches & CLSW_MONITOR) ? m_s->iMonitor : 0);
     if (!m_s->slFiles.IsEmpty()) {
