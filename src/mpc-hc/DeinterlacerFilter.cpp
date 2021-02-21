@@ -41,7 +41,7 @@ HRESULT CDeinterlacerFilter::CheckConnect(PIN_DIRECTION dir, IPin* pPin)
 HRESULT CDeinterlacerFilter::CheckInputType(const CMediaType* mtIn)
 {
     BITMAPINFOHEADER bih;
-    if (!ExtractBIH(mtIn, &bih) /*|| bih.biHeight <= 0*/ || bih.biHeight <= 288) {
+    if (!ExtractBIH(mtIn, &bih) || bih.biWidth == 0 || bih.biHeight <= 288) {
         return E_FAIL;
     }
 
