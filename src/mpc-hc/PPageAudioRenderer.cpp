@@ -81,6 +81,8 @@ void CPPageAudioRenderer::DoDataExchange(CDataExchange* pDX)
     DDX_Check(pDX, IDC_CHECK2, m_bAllowBitstreaming);
     DDX_Check(pDX, IDC_CHECK3, m_bCrossfeedEnabled);
     DDX_Check(pDX, IDC_CHECK4, m_bIgnoreSystemChannelMixer);
+    DDX_Check(pDX, IDC_CHECK5, m_bIsEnabled);
+    
     DDX_Control(pDX, IDC_COMBO1, m_combo1);
     DDX_Control(pDX, IDC_SLIDER1, m_slider1);
     DDX_Control(pDX, IDC_SLIDER2, m_slider2);
@@ -99,6 +101,16 @@ BEGIN_MESSAGE_MAP(CPPageAudioRenderer, CMPCThemePPageBase)
     ON_UPDATE_COMMAND_UI(IDC_STATIC3, OnUpdateCrossfeedGroup)
     ON_UPDATE_COMMAND_UI(IDC_SLIDER2, OnUpdateCrossfeedGroup)
     ON_UPDATE_COMMAND_UI(IDC_STATIC4, OnUpdateCrossfeedLevelLabel)
+
+    ON_UPDATE_COMMAND_UI(IDC_COMBO1, OnUpdateInternalAudioEnabled)
+    ON_UPDATE_COMMAND_UI(IDC_CHECK1, OnUpdateInternalAudioEnabled)
+    ON_UPDATE_COMMAND_UI(IDC_CHECK3, OnUpdateInternalAudioEnabled)
+    ON_UPDATE_COMMAND_UI(IDC_CHECK4, OnUpdateInternalAudioEnabled)
+    ON_UPDATE_COMMAND_UI(IDC_STATIC5, OnUpdateInternalAudioEnabled)
+    ON_UPDATE_COMMAND_UI(IDC_STATIC6, OnUpdateInternalAudioEnabled)
+    ON_UPDATE_COMMAND_UI(IDC_STATIC7, OnUpdateInternalAudioEnabled)
+    ON_UPDATE_COMMAND_UI(IDC_STATIC8, OnUpdateInternalAudioEnabled)
+
 END_MESSAGE_MAP()
 
 BOOL CPPageAudioRenderer::OnInitDialog()
@@ -159,6 +171,7 @@ BOOL CPPageAudioRenderer::OnInitDialog()
     m_slider1.SetPos(crossfeedCuttoffFrequency);
     m_slider2.SetPos(crossfeedLevel);
 
+    CheckEnabled();
     UpdateData(FALSE);
 
     return TRUE;
@@ -186,6 +199,7 @@ BOOL CPPageAudioRenderer::OnApply()
     s.sanear->SetCrossfeedSettings(m_slider1.GetPos(), m_slider2.GetPos());
     s.sanear->SetCrossfeedEnabled(m_bCrossfeedEnabled);
     s.sanear->SetIgnoreSystemChannelMixer(m_bIgnoreSystemChannelMixer);
+    CheckEnabled();
 
     return __super::OnApply();
 }
@@ -218,12 +232,16 @@ void CPPageAudioRenderer::OnJMeierButton()
 
 void CPPageAudioRenderer::OnUpdateAllowBitstreamingCheckbox(CCmdUI* pCmdUI)
 {
-    pCmdUI->Enable(IsDlgButtonChecked(IDC_CHECK1));
+    pCmdUI->Enable(IsDlgButtonChecked(IDC_CHECK1) && m_bIsEnabled);
 }
 
 void CPPageAudioRenderer::OnUpdateCrossfeedGroup(CCmdUI* pCmdUI)
 {
-    pCmdUI->Enable(IsDlgButtonChecked(IDC_CHECK3));
+    pCmdUI->Enable(IsDlgButtonChecked(IDC_CHECK3) && m_bIsEnabled);
+}
+
+void CPPageAudioRenderer::OnUpdateInternalAudioEnabled(CCmdUI* pCmdUI) {
+    pCmdUI->Enable(m_bIsEnabled);
 }
 
 void CPPageAudioRenderer::OnUpdateCrossfeedCutoffLabel(CCmdUI* pCmdUI)
@@ -241,4 +259,9 @@ void CPPageAudioRenderer::OnUpdateCrossfeedLevelLabel(CCmdUI* pCmdUI)
     CString label;
     label.Format(_T("%d.%d dB"), pos / 10, pos % 10);
     pCmdUI->SetText(label);
+}
+
+void CPPageAudioRenderer::CheckEnabled() {
+    const auto& s = AfxGetAppSettings();
+    m_bIsEnabled = (s.SelectedAudioRenderer() == AUDRNDT_INTERNAL);
 }

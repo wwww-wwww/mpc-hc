@@ -49,6 +49,9 @@ protected:
     void OnUpdateCrossfeedGroup(CCmdUI* pCmdUI);
     void OnUpdateCrossfeedCutoffLabel(CCmdUI* pCmdUI);
     void OnUpdateCrossfeedLevelLabel(CCmdUI* pCmdUI);
+    void OnUpdateInternalAudioEnabled(CCmdUI* pCmdUI);
+
+    void CheckEnabled();
 
     DECLARE_MESSAGE_MAP()
 
@@ -58,6 +61,7 @@ protected:
     BOOL m_bAllowBitstreaming;
     BOOL m_bCrossfeedEnabled;
     BOOL m_bIgnoreSystemChannelMixer;
+    BOOL m_bIsEnabled;
 
     CMPCThemeComboBox m_combo1;
     CMPCThemeSliderCtrl m_slider1;

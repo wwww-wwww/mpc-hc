@@ -17,6 +17,7 @@ CMPCThemeGroupBox::~CMPCThemeGroupBox()
 
 BEGIN_MESSAGE_MAP(CMPCThemeGroupBox, CStatic)
     ON_WM_PAINT()
+    ON_WM_ENABLE()
 END_MESSAGE_MAP()
 
 
@@ -43,8 +44,14 @@ void CMPCThemeGroupBox::OnPaint()
         dc.FrameRect(rborder, &fb);
 
         if (!text.IsEmpty()) {
-
-            COLORREF oldClr = dc.SetTextColor(CMPCTheme::TextFGColor);
+            COLORREF oldClr;
+            //see https://stackoverflow.com/questions/26481189/how-to-make-the-group-box-text-to-be-disabled-when-group-box-is-disabled
+            //even if common controls doesn't always honor disabled group boxes, we can in the themed version
+            if (IsWindowEnabled()) { 
+                oldClr = dc.SetTextColor(CMPCTheme::TextFGColor);
+            } else {
+                oldClr = dc.SetTextColor(CMPCTheme::ContentTextDisabledFGColorFade);
+            }
             COLORREF oldBkClr = dc.SetBkColor(CMPCTheme::WindowBGColor);
             CFont* pOldFont = dc.SelectObject(font);
 
@@ -62,5 +69,17 @@ void CMPCThemeGroupBox::OnPaint()
         ::ReleaseDC(NULL, hDC);
     } else {
         __super::OnPaint();
+    }
+}
+
+void CMPCThemeGroupBox::OnEnable(BOOL bEnable) {
+    if (AppIsThemeLoaded()) {
+        SetRedraw(FALSE);
+        __super::OnEnable(bEnable);
+        SetRedraw(TRUE);
+        Invalidate(); //WM_PAINT not handled when enabling/disabling
+        RedrawWindow();
+    } else {
+        __super::OnEnable(bEnable);
     }
 }
