@@ -346,7 +346,7 @@ namespace SaneAudioRenderer
             m_device->Stop();
         }
 
-        assert(m_state != State_Paused);
+        //assert(m_state != State_Paused);
         m_state = State_Paused;
     }
 
