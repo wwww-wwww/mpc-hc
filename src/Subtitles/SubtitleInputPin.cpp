@@ -356,7 +356,7 @@ void  CSubtitleInputPin::DecodeSamples()
 
                 if (pSample) {
                     REFERENCE_TIME rtSampleInvalidate = DecodeSample(pSample);
-                    if (rtSampleInvalidate >= 0 && (rtSampleInvalidate < rtInvalidate || rtInvalidate < 0)) {
+                    if (rtSampleInvalidate >= 0 && (rtSampleInvalidate < rtInvalidate /*|| rtInvalidate < 0*/)) {
                         rtInvalidate = rtSampleInvalidate;
                     }
                 } else { // marker for end of stream
@@ -371,7 +371,7 @@ void  CSubtitleInputPin::DecodeSamples()
         }
 
         if (rtInvalidate >= 0) {
-            TRACE(_T("NewSegment: InvalidateSubtitle(%I64d, ...)\n"), rtInvalidate);
+            TRACE(_T("NewSegment: InvalidateSubtitle %.3f\n"), double(rtInvalidate) / 10000000.0);
             // IMPORTANT: m_pSubLock must not be locked when calling this
             InvalidateSubtitle(rtInvalidate, m_pSubStream);
         }
