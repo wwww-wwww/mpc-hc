@@ -10398,13 +10398,12 @@ void CMainFrame::SetPlaybackMode(int iNewStatus)
 
 CSize CMainFrame::GetVideoSize() const
 {
-    const CAppSettings& s = AfxGetAppSettings();
-
     CSize ret;
     if (GetLoadState() != MLS::LOADED || m_fAudioOnly) {
         return ret;
     }
 
+    const CAppSettings& s = AfxGetAppSettings();
     CSize videoSize, preferedAR;
 
     if (m_pCAP) {
@@ -10412,7 +10411,7 @@ CSize CMainFrame::GetVideoSize() const
         preferedAR = m_pCAP->GetVideoSize(s.fKeepAspectRatio);
     } else if (m_pMFVDC) {
         m_pMFVDC->GetNativeVideoSize(&videoSize, &preferedAR);   // TODO : check AR !!
-    } else {
+    } else if (m_pBV) {
         m_pBV->GetVideoSize(&videoSize.cx, &videoSize.cy);
 
         long arx = 0, ary = 0;
