@@ -1873,8 +1873,8 @@ void CAppSettings::LoadSettings()
 
     fSeekPreview = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_SEEKPREVIEW, FALSE);
     iSeekPreviewSize = pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_SEEKPREVIEW_SIZE, 15);
-    if (iSeekPreviewSize < 10 || iSeekPreviewSize > 30) iSeekPreviewSize = 15;
-
+    if (iSeekPreviewSize < 10) iSeekPreviewSize = 10;
+    if (iSeekPreviewSize > 40) iSeekPreviewSize = 40;
 
     // Save analog capture settings
     iDefaultCaptureDevice = pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_DEFAULT_CAPTURE, 0);
