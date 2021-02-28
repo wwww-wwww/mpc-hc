@@ -94,7 +94,8 @@ void CPlayerToolBar::LoadToolbarImage()
 {
     // We are currently not aware of any cases where the scale factors are different
     float dpiScaling = (float)std::min(m_pMainFrame->m_dpi.ScaleFactorX(), m_pMainFrame->m_dpi.ScaleFactorY());
-    float defaultToolbarScaling = AfxGetAppSettings().nDefaultToolbarSize / 16.0f;
+    int targetsize = int(dpiScaling * AfxGetAppSettings().nDefaultToolbarSize);
+    float svgscale = targetsize / 16.0f;
 
     CImage image, themedImage, origImage;
     m_pButtonsImages.reset();
@@ -108,7 +109,7 @@ void CPlayerToolBar::LoadToolbarImage()
         toolbarImageLoaded = true;
     }
 
-    if (toolbarImageLoaded || (!AfxGetAppSettings().bUseLegacyToolbar && SUCCEEDED(SVGImage::Load(IDF_SVG_TOOLBAR, origImage, dpiScaling * defaultToolbarScaling)))) {
+    if (toolbarImageLoaded || (!AfxGetAppSettings().bUseLegacyToolbar && SUCCEEDED(SVGImage::Load(IDF_SVG_TOOLBAR, origImage, svgscale)))) {
         if (AppIsThemeLoaded() && colorToolbar == false) {
             ImageGrayer::UpdateColor(origImage, themedImage, false, ImageGrayer::mpcMono);
             image = themedImage;
