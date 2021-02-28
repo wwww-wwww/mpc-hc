@@ -292,6 +292,11 @@ HRESULT CRARFileSource::ScanArchive(wchar_t* archive_name, CRFSList<CRFSFile>* f
             return E_FAIL;
         }
 
+        if (rarArchive.Encrypted) {
+            ErrorMsg(0, L"Encrypted RAR volumes are not supported.");
+            return RFS_E_ENCRYPTED;
+        }
+
         if (!redirectedToFirstVolume && !rarArchive.FirstVolume) {
             if (rarArchive.NewNumbering && nullptr != wcsstr(archive_name,L".part")) { //verify ".part" exists in case the files have been renamed
                 wchar* Num = GetVolNumPart(archive_name); //last digit of vol num
@@ -318,11 +323,6 @@ HRESULT CRARFileSource::ScanArchive(wchar_t* archive_name, CRFSList<CRFSFile>* f
             break; //we have redirected once, or we already have the first volume, so exit the loop now
         }
     } while (redirectedToFirstVolume); //only loop if we are redirecting to the first volume
-
-    if (rarArchive.Encrypted) {
-        ErrorMsg(0, L"Encrypted RAR volumes are not supported.");
-        return RFS_E_ENCRYPTED;
-    }
 
     size_t bytesRead;
     do {
