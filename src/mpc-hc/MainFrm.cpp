@@ -15930,10 +15930,10 @@ bool CMainFrame::GetKeyFrame(REFERENCE_TIME rtTarget, REFERENCE_TIME rtMin, REFE
                     const auto& s = AfxGetAppSettings();
                     if (s.eFastSeekMethod == s.FASTSEEK_NEAREST_KEYFRAME) {
                         // use closest keyframe
-                        REFERENCE_TIME tmp_time = *(--foundkeyframe);
-                        if ((rtMin <= tmp_time)) {
-                            if ((rtMax - keyframetime) > (keyframetime - tmp_time)) {
-                                keyframetime = tmp_time;
+                        REFERENCE_TIME prev_keyframetime = *(--foundkeyframe);
+                        if ((prev_keyframetime >= rtMin)) {
+                            if ((keyframetime - rtTarget) > (rtTarget - prev_keyframetime)) {
+                                keyframetime = prev_keyframetime;
                             }
                         }
                     }
@@ -15949,9 +15949,13 @@ bool CMainFrame::GetKeyFrame(REFERENCE_TIME rtTarget, REFERENCE_TIME rtMin, REFE
 
 REFERENCE_TIME CMainFrame::GetClosestKeyFrame(REFERENCE_TIME rtTarget, REFERENCE_TIME rtMaxForwardDiff, REFERENCE_TIME rtMaxBackwardDiff) const
 {
+    if (rtTarget < 0LL) return 0LL;
+    REFERENCE_TIME duration = GetDur();
+    if (rtTarget > duration) rtTarget = duration;
+
     REFERENCE_TIME rtKeyframe;
     REFERENCE_TIME rtMin = std::max(rtTarget - rtMaxBackwardDiff, 0LL);
-    REFERENCE_TIME rtMax = std::min(rtTarget + rtMaxForwardDiff, GetDur());
+    REFERENCE_TIME rtMax = std::min(rtTarget + rtMaxForwardDiff, duration);
 
     if (GetKeyFrame(rtTarget, rtMin, rtMax, true, rtKeyframe)) {
         return rtKeyframe;
