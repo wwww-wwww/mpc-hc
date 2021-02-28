@@ -24,6 +24,8 @@
 #include "PlayerPreView.h"
 #include "CMPCTheme.h"
 
+#define PREVIEW_TOOLTIP_BOTTOM 1
+
 // CPrevView
 
 CPreView::CPreView(CMainFrame* pMainFrame)
@@ -90,9 +92,14 @@ int CPreView::OnCreate(LPCREATESTRUCT lpCreateStruct) {
     }
 
     m_videorect.left = (m_border + 1);
-    m_videorect.top = (m_caption + 1);
     m_videorect.right = rc.right - (m_border + 1);
-    m_videorect.bottom = rc.bottom - (m_border + 1);
+    if (PREVIEW_TOOLTIP_BOTTOM) { //bottom tooltip
+        m_videorect.top = (m_border + 1);
+        m_videorect.bottom = rc.bottom - (m_caption + 1);
+    } else {
+        m_videorect.top = (m_caption + 1);
+        m_videorect.bottom = rc.bottom - (m_border + 1);
+    }
 
     if (!m_view.Create(nullptr, nullptr, WS_CHILD | WS_VISIBLE, m_videorect, this, 0)) {
         return -1;
@@ -137,24 +144,41 @@ void CPreView::OnPaint() {
     mdc.FillSolidRect(0, 0, 1, rcBar.Height() - 1, frameLight); //left border
     mdc.FillSolidRect(rcBar.right - 1, 0, 1, rcBar.Height(), frameShadow); //right border
 
+    CRect rtime(rcBar);
+    if (PREVIEW_TOOLTIP_BOTTOM) {
+        rtime.top = rcBar.Height() - m_caption - 1;
+        rtime.bottom = rcBar.Height() - 2;
+    } else {
+        rtime.top = 0;
+        rtime.bottom = m_caption;
+    }
+
     if (AfxGetAppSettings().bMPCTheme) {
-        mdc.FillSolidRect(1, 1, rcBar.Width()-2, 1, CMPCTheme::TooltipBorderColor);
+        mdc.FillSolidRect(1, 1, rcBar.Width() - 2, 1, CMPCTheme::TooltipBorderColor);
         mdc.FillSolidRect(1, rcBar.Height() - 2, rcBar.Width() - 2, 1, CMPCTheme::TooltipBorderColor);
         mdc.FillSolidRect(1, 1, 1, rcBar.Height() - 2, CMPCTheme::TooltipBorderColor);
         mdc.FillSolidRect(rcBar.right - 2, 1, 1, rcBar.Height() - 2, CMPCTheme::TooltipBorderColor);
-        mdc.FillSolidRect(1, m_caption, rcBar.Width() - 2, 1, CMPCTheme::TooltipBorderColor); //caption bottom border
+        if (PREVIEW_TOOLTIP_BOTTOM) {
+            mdc.FillSolidRect(1, rtime.top, rcBar.Width() - 2, 1, CMPCTheme::TooltipBorderColor); //caption top border
+        } else {
+            mdc.FillSolidRect(1, rtime.bottom, rcBar.Width() - 2, 1, CMPCTheme::TooltipBorderColor); //caption bottom border
+        }
     } else {
-        mdc.FillSolidRect(m_border, m_caption, rcBar.Width() - 2 * m_border, 1, frameShadow); //video top border
-        mdc.FillSolidRect(m_border, rcBar.Height() - m_border - 1, rcBar.Width() - 2 * m_border, 1, frameLight); //video bottom border
-        mdc.FillSolidRect(m_border, m_caption, 1, rcBar.Height() - m_border - m_caption, frameShadow); //video left border
-        mdc.FillSolidRect(rcBar.right - m_border - 1, m_caption, 1, rcBar.Height() - m_border - m_caption, frameLight); //video right border
+        if (PREVIEW_TOOLTIP_BOTTOM) {
+            mdc.FillSolidRect(m_border, m_border, rcBar.Width() - 2 * m_border, 1, frameShadow); //video top border
+            mdc.FillSolidRect(m_border, rcBar.Height() - m_caption - 1, rcBar.Width() - 2 * m_border, 1, frameLight); //video bottom border
+            mdc.FillSolidRect(m_border, m_border, 1, rcBar.Height() - m_border - m_caption, frameShadow); //video left border
+            mdc.FillSolidRect(rcBar.right - m_border - 1, m_border + 1, 1, rcBar.Height() - m_border - m_caption - 1, frameLight); //video right border
+        } else {
+            mdc.FillSolidRect(m_border, m_caption, rcBar.Width() - 2 * m_border, 1, frameShadow); //video top border
+            mdc.FillSolidRect(m_border, rcBar.Height() - m_border - 1, rcBar.Width() - 2 * m_border, 1, frameLight); //video bottom border
+            mdc.FillSolidRect(m_border, m_caption, 1, rcBar.Height() - m_border - m_caption, frameShadow); //video left border
+            mdc.FillSolidRect(rcBar.right - m_border - 1, m_caption + 1, 1, rcBar.Height() - m_border - m_caption, frameLight); //video right border
+        }
     }
 
     // text
     mdc.SelectObject(&m_font);
-    CRect rtime(rcBar);
-    rtime.top = 0;
-    rtime.bottom = m_caption;
     mdc.SetTextColor(m_crText);
     mdc.DrawTextW(m_tooltipstr, m_tooltipstr.GetLength(), &rtime, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
 
@@ -196,7 +220,11 @@ void CPreView::SetWindowSize() {
 
         GetClientRect(&rc);
         m_videorect.right = rc.right - (m_border + 1);
-        m_videorect.bottom = rc.bottom - (m_border + 1);
+        if (PREVIEW_TOOLTIP_BOTTOM) { //bottom tooltip
+            m_videorect.bottom = rc.bottom - (m_caption + 1);
+        } else {
+            m_videorect.bottom = rc.bottom - (m_border + 1);
+        }
 
         m_view.SetWindowPos(nullptr, 0, 0, m_videorect.Width(), m_videorect.Height(), SWP_NOMOVE | SWP_NOZORDER | SWP_NOACTIVATE);
     }
