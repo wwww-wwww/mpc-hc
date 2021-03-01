@@ -38,7 +38,13 @@ BOOL CPreView::SetWindowTextW(LPCWSTR lpString) {
     CRect rect;
     GetClientRect(&rect);
 
-    rect.bottom = m_caption;
+    if (PREVIEW_TOOLTIP_BOTTOM) {
+        rect.top = rect.bottom - m_caption - m_border;
+        rect.bottom = rect.bottom - m_border;
+    } else {
+        rect.top = m_border;
+        rect.bottom = m_caption + m_border;
+    }
     rect.left += 10;
     rect.right -= 10;
 
