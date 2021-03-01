@@ -90,6 +90,7 @@ private:
 
     void UpdateTooltip(const CPoint& point);
     void UpdateToolTipText();
+    void GenerateToolTipText(REFERENCE_TIME rtPos);
 
 public:
     void Enable(bool bEnable);
@@ -107,6 +108,7 @@ public:
 
     bool DraggingThumb();
     void PreviewWindowShow(const CPoint point);
+    void UpdateToolTipTextPreview(REFERENCE_TIME rtPos);
 
 private:
     DECLARE_MESSAGE_MAP()

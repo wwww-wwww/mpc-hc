@@ -335,11 +335,11 @@ void CPlayerSeekBar::UpdateTooltip(const CPoint& point)
             ASSERT(!m_bIgnoreLastTooltipPoint);
             if (point != m_tooltipPoint) {
                 m_tooltipPoint = point;
-                UpdateToolTipText();
                 if (!m_pMainFrame->CanPreviewUse()) {
+                    UpdateToolTipText();
                     UpdateToolTipPosition(point);
+                    VERIFY(SetTimer(TIMER_SHOWHIDE_TOOLTIP, TOOLTIP_HIDE_TIMEOUT, nullptr));
                 }
-                VERIFY(SetTimer(TIMER_SHOWHIDE_TOOLTIP, m_pMainFrame->CanPreviewUse() ? 10 : TOOLTIP_HIDE_TIMEOUT, nullptr));
             }
             break;
         default:
@@ -398,22 +398,21 @@ void CPlayerSeekBar::UpdateToolTipPosition(CPoint point)
     }
 }
 
-void CPlayerSeekBar::UpdateToolTipText()
+void CPlayerSeekBar::GenerateToolTipText(REFERENCE_TIME rtPos)
 {
     ASSERT(m_bHasDuration);
-    REFERENCE_TIME rtNow = PositionFromClientPoint(m_tooltipPoint);
 
     CString time;
     GUID timeFormat = m_pMainFrame->GetTimeFormat();
     if (timeFormat == TIME_FORMAT_MEDIA_TIME) {
-        DVD_HMSF_TIMECODE tcNow = RT2HMS_r(rtNow);
+        DVD_HMSF_TIMECODE tcNow = RT2HMS_r(rtPos);
         if (tcNow.bHours > 0) {
             time.Format(_T("%02u:%02u:%02u"), tcNow.bHours, tcNow.bMinutes, tcNow.bSeconds);
         } else {
             time.Format(_T("%02u:%02u"), tcNow.bMinutes, tcNow.bSeconds);
         }
     } else if (timeFormat == TIME_FORMAT_FRAME) {
-        time.Format(_T("%I64d"), rtNow);
+        time.Format(_T("%I64d"), rtPos);
     } else {
         ASSERT(FALSE);
     }
@@ -422,7 +421,7 @@ void CPlayerSeekBar::UpdateToolTipText()
     {
         CAutoLock lock(&m_csChapterBag);
         if (m_pChapterBag) {
-            REFERENCE_TIME rt = rtNow;
+            REFERENCE_TIME rt = rtPos;
             m_pChapterBag->ChapLookup(&rt, &chapterName);
         }
     }
@@ -432,13 +431,23 @@ void CPlayerSeekBar::UpdateToolTipText()
     } else {
         m_tooltipText.Format(_T("%s - %s"), time.GetString(), static_cast<LPCTSTR>(chapterName));
     }
+}
 
-    if (!m_pMainFrame->CanPreviewUse()) {
-        m_ti.lpszText = (LPTSTR)(LPCTSTR)m_tooltipText;
-        m_tooltip.SetToolInfo(&m_ti);
-    } else {
-        m_pMainFrame->m_wndPreView.SetWindowTextW(m_tooltipText);
-    }
+void CPlayerSeekBar::UpdateToolTipText()
+{
+    ASSERT(m_bHasDuration);
+    REFERENCE_TIME rtPos = PositionFromClientPoint(m_tooltipPoint);
+    GenerateToolTipText(rtPos);
+    
+    m_ti.lpszText = (LPTSTR)(LPCTSTR)m_tooltipText;
+    m_tooltip.SetToolInfo(&m_ti);
+}
+
+void CPlayerSeekBar::UpdateToolTipTextPreview(REFERENCE_TIME rtPos)
+{
+    ASSERT(m_bHasDuration);
+    GenerateToolTipText(rtPos);
+    m_pMainFrame->m_wndPreView.SetWindowTextW(m_tooltipText);
 }
 
 void CPlayerSeekBar::Enable(bool bEnable)
@@ -921,6 +930,7 @@ void CPlayerSeekBar::PreviewWindowShow(CPoint point) {
             }
             if (newpos != m_pos_preview || !m_pMainFrame->m_wndPreView.IsWindowVisible()) {
                 m_pos_preview = newpos;
+                UpdateToolTipTextPreview(m_pos_preview);
                 m_pMainFrame->PreviewWindowShow(m_pos_preview);
             }
         }
