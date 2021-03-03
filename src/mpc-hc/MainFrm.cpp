@@ -3472,7 +3472,7 @@ void CMainFrame::OnUpdatePlayerStatus(CCmdUI* pCmdUI)
             }
 
             CComPtr<IPin> pPin;
-            if (SUCCEEDED(m_pCGB->FindPin(m_wndCaptureBar.m_capdlg.m_pDst, PINDIR_INPUT, nullptr, nullptr, FALSE, 0, &pPin))) {
+            if (m_pCGB && SUCCEEDED(m_pCGB->FindPin(m_wndCaptureBar.m_capdlg.m_pDst, PINDIR_INPUT, nullptr, nullptr, FALSE, 0, &pPin))) {
                 LONGLONG size = 0;
                 if (CComQIPtr<IStream> pStream = pPin) {
                     pStream->Commit(STGC_DEFAULT);
