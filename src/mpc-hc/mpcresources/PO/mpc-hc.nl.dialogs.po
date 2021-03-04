@@ -6,13 +6,14 @@
 # xknat <321knat@gmail.com>, 2020
 # mark van tilburg <markvantilburg@gmail.com>, 2020
 # Renz Straatman <renz75@outlook.com>, 2020
+# Arne Bezuijen <transifex@arnage.nl>, 2021
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2020-09-30 15:29:35+0000\n"
+"POT-Creation-Date: 2021-02-23 16:03:02+0000\n"
 "PO-Revision-Date: 2020-01-02 07:46+0000\n"
-"Last-Translator: Renz Straatman <renz75@outlook.com>, 2020\n"
+"Last-Translator: Arne Bezuijen <transifex@arnage.nl>, 2021\n"
 "Language-Team: Dutch (https://www.transifex.com/mpchc/teams/106126/nl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -716,11 +717,11 @@ msgstr "Muisaanwijzer automatisch verbergen bij afspelen in venster"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_SEEK_PREVIEW"
 msgid "Show preview on seek bar"
-msgstr ""
+msgstr "Laat voorbeeld zien op zoekbalk"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_STATIC"
 msgid "Preview width (% of screen width)"
-msgstr ""
+msgstr "Voorbeeld breedte (% van scherm breedte)"
 
 msgctxt "IDD_PPAGEEXTERNALFILTERS_IDC_BUTTON1"
 msgid "Add Filter..."
@@ -1853,4 +1854,4 @@ msgstr ""
 
 msgctxt "IDD_PPAGEDPICALC_IDC_STATIC2"
 msgid "Autoplay"
-msgstr ""
+msgstr "Automatisch afspelen"

@@ -10,7 +10,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2020-09-30 15:29:35+0000\n"
+"POT-Creation-Date: 2021-02-23 16:03:02+0000\n"
 "PO-Revision-Date: 2020-01-02 07:46+0000\n"
 "Last-Translator: Mücahid Aksel <mucahidaksel@gmail.com>, 2020\n"
 "Language-Team: Turkish (https://www.transifex.com/mpchc/teams/106126/tr/)\n"
@@ -46,7 +46,7 @@ msgstr "Ses"
 
 msgctxt "IDD_CAPTURE_DLG_IDC_STATIC"
 msgid "Output"
-msgstr "Çıkış"
+msgstr "Çıktı"
 
 msgctxt "IDD_CAPTURE_DLG_IDC_CHECK1"
 msgid "Record Video"
@@ -114,11 +114,11 @@ msgstr "Özel kanal adreslemesini kullan"
 
 msgctxt "IDD_PPAGEAUDIOSWITCHER_IDC_STATIC1"
 msgid "Speaker configuration for"
-msgstr "Hoparlör sayısını ve çıkışını :"
+msgstr "Hoparlör sayısını ve çıkışını:"
 
 msgctxt "IDD_PPAGEAUDIOSWITCHER_IDC_STATIC2"
 msgid "input channels:"
-msgstr "kanallı olarak ayarla"
+msgstr "kanal olarak ayarla"
 
 msgctxt "IDD_PPAGEAUDIOSWITCHER_IDC_STATIC3"
 msgid "Hold shift for immediate changes when clicking something"
@@ -150,8 +150,8 @@ msgid ""
 "Enter two numbers to jump to a specified frame, the first is the frame "
 "number, the second is the frame rate."
 msgstr ""
-"Belirtilmiş bir görüntüye atlamak için iki sayı giriniz; ilki çerçeve "
-"sayısı, ikincisi çerçeve oranı içindir."
+"Belirtilmiş bir görüntüye atlamak için iki sayı giriniz; ilki kare sayısı, "
+"ikincisi görüntü hızı içindir."
 
 msgctxt "IDD_GOTO_DLG_IDC_STATIC"
 msgid "Frame"
@@ -213,7 +213,7 @@ msgctxt "IDD_ABOUTBOX_IDC_STATIC"
 msgid ""
 "This program is freeware and released under the GNU General Public License."
 msgstr ""
-"Bu program ücretsiz bir yazılımdır ve (GNU) Genel Kamu Lisansı altında "
+"Bu program özgür bir yazılımdır ve Genel Kamu Lisansı (GNU) altında "
 "yayınlanmıştır."
 
 msgctxt "IDD_ABOUTBOX_IDC_STATIC"
@@ -300,7 +300,7 @@ msgstr "Diğer"
 
 msgctxt "IDD_PPAGEPLAYER_IDC_CHECK3"
 msgid "Tray icon"
-msgstr "Saat simgesinde göster"
+msgstr "Simge durumunda göster"
 
 msgctxt "IDD_PPAGEPLAYER_IDC_SHOW_OSD"
 msgid "Show OSD (requires restart)"
@@ -312,7 +312,7 @@ msgstr "Boyutlandırırken pencere oranlarını sınırla"
 
 msgctxt "IDD_PPAGEPLAYER_IDC_CHECK12"
 msgid "Snap to desktop edges"
-msgstr "Masaüstü kenarlarına uyarla"
+msgstr "Masaüstü kenarlarına yapış"
 
 msgctxt "IDD_PPAGEPLAYER_IDC_CHECK8"
 msgid "Store settings in .ini file"
@@ -328,7 +328,7 @@ msgstr "İşlem önceliğini normalden yüksek tut"
 
 msgctxt "IDD_PPAGEPLAYER_IDC_CHECK14"
 msgid "Enable cover-art support"
-msgstr "Albüm kapağı desteğini kullan"
+msgstr "Kapak resmi desteğini etkinleştir"
 
 msgctxt "IDD_PPAGEPLAYER_IDC_STATIC"
 msgid "History"
@@ -476,7 +476,7 @@ msgstr "Altyazılar:"
 
 msgctxt "IDD_PPAGEPLAYBACK_IDC_STATIC"
 msgid "Audio:"
-msgstr "Ses :"
+msgstr "Ses:"
 
 msgctxt "IDD_PPAGEPLAYBACK_IDC_CHECK4"
 msgid "Allow overriding external splitter choice"
@@ -492,7 +492,7 @@ msgstr "Süzgeç grafiği kurulumu için oynatıcı önceliğini kullan"
 
 msgctxt "IDD_PPAGEPLAYBACK_IDC_CHECK6"
 msgid "Report pins which fail to render"
-msgstr "Çevrilemeyen ilişkilendirmeleri rapor et"
+msgstr "Video işleyicisinin başarısız olduğu işlemleri rapor et"
 
 msgctxt "IDD_PPAGEPLAYBACK_IDC_CHECK2"
 msgid "Auto-load audio files"
@@ -560,7 +560,7 @@ msgstr "En fazla doku çözünürlüğü:"
 
 msgctxt "IDD_PPAGESUBTITLES_IDC_CHECK_NO_SUB_ANIM"
 msgid "Never animate the subtitles"
-msgstr "Altyazıları hareketlendirme"
+msgstr "Altyazıları asla hareketlendirme"
 
 msgctxt "IDD_PPAGESUBTITLES_IDC_STATIC5"
 msgid "Render at"
@@ -576,7 +576,7 @@ msgstr "Hareketlendirmeyi %"
 
 msgctxt "IDD_PPAGESUBTITLES_IDC_STATIC8"
 msgid "% of the video frame rate"
-msgstr "oranında video çerçevesine uygula"
+msgstr "oranında video görüntü hızına uygula"
 
 msgctxt "IDD_PPAGESUBTITLES_IDC_CHECK_ALLOW_DROPPING_SUBPIC"
 msgid "Allow dropping some subpictures if the queue is running late"
@@ -630,7 +630,7 @@ msgstr "Y&önetici olarak çalıştır"
 
 msgctxt "IDD_PPAGEFORMATS_IDC_BUTTON7"
 msgid "Set as &default program"
-msgstr "V&arsayılan uygulama olarak kullan"
+msgstr "V&arsayılan uygulama olarak ayarla"
 
 msgctxt "IDD_PPAGEFORMATS_IDC_STATIC"
 msgid "Explorer Context Menu"
@@ -678,7 +678,7 @@ msgstr "Hızlı oynatma (çerçeve içinde)"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_CHECK2"
 msgid "Show chapter marks in seek bar"
-msgstr "Bölüm izlerini oynatma çubuğunda göster"
+msgstr "Bölüm işaretlerini ilerleme çubuğunda göster"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_CHECK4"
 msgid "Display \"Now Playing\" information in Skype's mood message"
@@ -698,7 +698,7 @@ msgid ""
 "Open previous/next file in folder on \"Skip back/forward\" when there is "
 "only one item in playlist"
 msgstr ""
-"Oynatma listesinde tek nesne varken \"Geri/ileri git\" tuşuyla "
+"Oynatma listesinde tek medya varken \"Önceki / Sonraki bölüm\" tuşuyla "
 "önceki/sonraki dosyayı aç"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_CHECK8"
@@ -711,7 +711,7 @@ msgstr "OSD yazı tipi:"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_CHECK_LCD"
 msgid "Enable Logitech LCD support (experimental)"
-msgstr "Logitech LCD desteğini kullan (önerilmez)"
+msgstr "Logitech LCD desteğini kullan (deneysel)"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_CHECK3"
 msgid "Auto-hide the mouse pointer during playback in windowed mode"
@@ -719,11 +719,11 @@ msgstr "Pencere kipinde oynatırken fare imlecini otomatik gizle"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_SEEK_PREVIEW"
 msgid "Show preview on seek bar"
-msgstr ""
+msgstr "İlerleme çubuğunda önizleme göster"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_STATIC"
 msgid "Preview width (% of screen width)"
-msgstr ""
+msgstr "Önizleme boyutu (ekran genişliğinin yüzdesi)"
 
 msgctxt "IDD_PPAGEEXTERNALFILTERS_IDC_BUTTON1"
 msgid "Add Filter..."
@@ -1071,7 +1071,7 @@ msgstr "Aşağı"
 
 msgctxt "IDD_PPAGESUBSTYLE_IDC_CHECK_RELATIVETO"
 msgid "Position subtitles relative to the video frame"
-msgstr "Altyazıları video çerçevesine bağla"
+msgstr "Altyazıları video karesine göre konumlandırın"
 
 msgctxt "IDD_PPAGESUBSTYLE_IDC_STATIC"
 msgid "Colors && Transparency"
@@ -1168,7 +1168,7 @@ msgstr "Ekran görüntüsü"
 
 msgctxt "IDD_PPAGEOUTPUT_IDC_STATIC"
 msgid "Shaders"
-msgstr "Tonlamalar"
+msgstr "Tonlayıcılar"
 
 msgctxt "IDD_PPAGEOUTPUT_IDC_STATIC"
 msgid "Rotation"
@@ -1184,7 +1184,7 @@ msgstr "Altyazı İşleyicisi"
 
 msgctxt "IDD_PPAGEOUTPUT_IDC_STATIC"
 msgid "VMR-9 (renderless) and EVR (CP) settings"
-msgstr "VKI-9 (çevrilmeden) ve GVI (CP) ayarları"
+msgstr "VKI-9 (işleyicisiz) ve EVR (CP) ayarları"
 
 msgctxt "IDD_PPAGEOUTPUT_IDC_STATIC"
 msgid "Surface:"
@@ -1228,7 +1228,7 @@ msgstr "Bağlantı noktasını dinle:"
 
 msgctxt "IDD_PPAGEWEBSERVER_IDC_STATIC1"
 msgid "Launch in web browser..."
-msgstr "İnternet tarayıcısında çalıştır..."
+msgstr "İnternet tarayıcısında başlatın..."
 
 msgctxt "IDD_PPAGEWEBSERVER_IDC_CHECK3"
 msgid "Enable compression"
@@ -1368,7 +1368,7 @@ msgstr "Dışa aktar"
 
 msgctxt "IDD_PPAGEMISC_IDC_EXPORT_KEYS"
 msgid "Export keys"
-msgstr "Tuş Seç. Ver"
+msgstr "Tuş Ayarlarını Aktar"
 
 msgctxt "IDD_TUNER_SCAN_CAPTION"
 msgid "Tuner scan"
@@ -1388,7 +1388,7 @@ msgstr "Frek. Başı"
 
 msgctxt "IDD_TUNER_SCAN_IDC_STATIC"
 msgid "Bandwidth"
-msgstr "Bant aralığı"
+msgstr "Bant genişliği"
 
 msgctxt "IDD_TUNER_SCAN_IDC_STATIC"
 msgid "Freq. End"
@@ -1444,7 +1444,7 @@ msgstr "Ülke"
 
 msgctxt "IDD_PPAGECAPTURE_IDC_STATIC"
 msgid "Digital settings (BDA)"
-msgstr "Sayısal yayın ayarları (BDA)"
+msgstr "Dijital yayın ayarları (BDA)"
 
 msgctxt "IDD_PPAGECAPTURE_IDC_STATIC4"
 msgid "Network Provider"
@@ -1656,7 +1656,7 @@ msgid ""
 "Shaders contain special effects which can be added to the video rendering "
 "process."
 msgstr ""
-"Tonlamalar, video çözücü işlemine eklenebilecek özel efektleri içerirler."
+"Tonlayıcılar, video çözücü işlemine eklenebilecek özel efektleri içerirler."
 
 msgctxt "IDD_PPAGESHADERS_IDC_BUTTON12"
 msgid "Add shader file"

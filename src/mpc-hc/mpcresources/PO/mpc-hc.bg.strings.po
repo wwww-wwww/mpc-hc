@@ -3,14 +3,14 @@
 # This file is distributed under the same license as the MPC-HC package.
 # Translators:
 # Симеон Цветков <sicvetkov@uni-sofia.bg>, 2020
-# astankov84 <astankov84@gmail.com>, 2020
+# Андрей Станков <astankov84@gmail.com>, 2021
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2020-11-01 23:45:42+0000\n"
+"POT-Creation-Date: 2021-02-17 23:32:57+0000\n"
 "PO-Revision-Date: 2020-01-02 07:46+0000\n"
-"Last-Translator: astankov84 <astankov84@gmail.com>, 2020\n"
+"Last-Translator: Андрей Станков <astankov84@gmail.com>, 2021\n"
 "Language-Team: Bulgarian (https://www.transifex.com/mpchc/teams/106126/bg/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -666,7 +666,7 @@ msgstr "MPC Video Renderer"
 
 msgctxt "IDS_PPAGE_OUTPUT_VMR7"
 msgid "Video Mixing Renderer 7"
-msgstr ""
+msgstr "Video Mixing Renderer 7"
 
 msgctxt "IDD_PPAGEACCELTBL"
 msgid "Player::Keys"
@@ -943,7 +943,7 @@ msgstr "Забавяне (мсек)"
 
 msgctxt "IDS_SPEEDSTEP_AUTO"
 msgid "Auto"
-msgstr "Автоматично"
+msgstr "Автом."
 
 msgctxt "IDS_EXPORT_SETTINGS_NO_KEYS"
 msgid "There are no customized keys to export."
@@ -4565,22 +4565,24 @@ msgstr "Разреши шейдъри след оразмеряване"
 
 msgctxt "IDS_PPAGEADVANCED_TIME_REFRESH_INTERVAL"
 msgid "Refresh interval (in milliseconds) of time in status bar"
-msgstr ""
+msgstr "Интервал на обновяване на статус лентата (в милисекунди)"
 
 msgctxt "IDS_PPAGEADVANCED_SHOW_LANG_STATUSBAR"
 msgid "Display current audio and subtitle language in status bar"
-msgstr ""
+msgstr "Покажи текущия език на субтитрите и аудиото в статус лентата"
 
 msgctxt "IDS_PPAGEADVANCED_SHOW_FPS_STATUSBAR"
 msgid "Display current fps and rate in status bar"
-msgstr ""
+msgstr "Покажи кадрите в сек. и скоростта на възпр. в статус лентата"
 
 msgctxt "IDS_PPAGEADVANCED_ADD_LANGCODE_WHEN_SAVE_SUBTITLES"
 msgid ""
 "When save the subtitles file, the language code (if available) text will be "
 "added to suggested file name by default."
 msgstr ""
+"Когато се запазва файл със субтитри езиковия код (ако е наличен) ще бъде "
+"добавен към предложеното име на файла по подразбиране."
 
 msgctxt "IDS_PPAGEADVANCED_USE_TITLE_IN_RECENT_FILE_LIST"
 msgid "Use title in recent file list."
-msgstr ""
+msgstr "Ползвай заглавието в списъка със скорошни файлове."

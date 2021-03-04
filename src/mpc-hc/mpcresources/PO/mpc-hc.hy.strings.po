@@ -2,18 +2,20 @@
 # Copyright (C) 2002 - 2017 see Authors.txt
 # This file is distributed under the same license as the MPC-HC package.
 # Translators:
-# Hrant Ohanyan <h.ohanyan@haysoft.org>, 2014-2016
+# MPC HC <adiposegithub@gmail.com>, 2020
+# Hrant Ohanyan <h.ohanyan@haysoft.org>, 2020
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2017-08-01 20:44:32+0000\n"
-"PO-Revision-Date: 2017-08-01 20:56+0000\n"
-"Last-Translator: kasper93\n"
-"Language-Team: Armenian (http://www.transifex.com/mpc-hc/mpc-hc/language/hy/)\n"
-"Language: hy\n"
+"POT-Creation-Date: 2021-02-17 23:32:57+0000\n"
+"PO-Revision-Date: 2020-01-02 07:46+0000\n"
+"Last-Translator: Hrant Ohanyan <h.ohanyan@haysoft.org>, 2020\n"
+"Language-Team: Armenian (https://www.transifex.com/mpchc/teams/106126/hy/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: hy\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgctxt "IDS_INFOBAR_LOCATION"
@@ -334,7 +336,7 @@ msgid ""
 "Please, reinstall MPC-HC to get \"mpciconlib.dll\"."
 msgstr ""
 "Պատկերների շտեմարանը՝ \"mpciconlib.dll\", բացակայում է։\n"
-"Ֆայլերի ասոցիացումների համար կօգտագործվի վերարտադրիչի հիմնական պատկերը։\n"
+"Ֆայլերի ասոցիացումների համար կօգտագործվի նվագարկիչի հիմնական պատկերը։\n"
 "Վերատեղակայեք MPC-HC-ն՝ ունենալու համար \"mpciconlib.dll\"-ն։"
 
 msgctxt "IDS_SUBDL_DLG_FILENAME_COL"
@@ -1234,7 +1236,7 @@ msgstr "Նշել չափը Ամենա-Լայնէկրան,%.3f,%.3f,%.3f,%.3f"
 
 msgctxt "IDS_PLAYLIST_HIDEFS"
 msgid "&Hide on Fullscreen"
-msgstr "Թաքցնել, եթե ամբողջ էկրանով է"
+msgstr "&Թաքցնել, եթե լիաէկրան է"
 
 msgctxt "IDS_CONTROLS_STOPPED"
 msgid "Stopped"
@@ -1322,7 +1324,7 @@ msgstr "Մկնիկի պատուհանը"
 
 msgctxt "IDS_AG_MOUSE_FS"
 msgid "Mouse Fullscreen"
-msgstr "Մկնիկով ամբողջ էկրանով"
+msgstr "Մկնիկով լիաէկրան"
 
 msgctxt "IDS_AG_APP_COMMAND"
 msgid "App Command"

@@ -4,15 +4,15 @@
 # Translators:
 # MPC HC <adiposegithub@gmail.com>, 2020
 # Nagy Imre <nagyimre1980@gmail.com>, 2020
-# Péter P <patkos96@gmail.com>, 2020
 # Peter Gyetvai <gyetpet@mailbox.org>, 2020
+# Péter Patkós <patkos96@gmail.com>, 2021
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2020-11-01 23:45:42+0000\n"
+"POT-Creation-Date: 2021-02-17 23:32:57+0000\n"
 "PO-Revision-Date: 2020-01-02 07:46+0000\n"
-"Last-Translator: Peter Gyetvai <gyetpet@mailbox.org>, 2020\n"
+"Last-Translator: Péter Patkós <patkos96@gmail.com>, 2021\n"
 "Language-Team: Hungarian (https://www.transifex.com/mpchc/teams/106126/hu/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -102,7 +102,7 @@ msgstr "A-B ismétlés: B pozíció megjelölése"
 
 msgctxt "IDS_SNAPSHOT_SUBTITLES"
 msgid "Include Subtitles"
-msgstr ""
+msgstr "Feliratok engedélyezése"
 
 msgctxt "IDS_INFOBAR_CHANNEL"
 msgid "Channel"
@@ -293,11 +293,11 @@ msgstr "Betűtípus"
 
 msgctxt "IDS_DVD_NAV_SOME_PINS_ERROR"
 msgid "Failed to render some of the pins of the DVD Navigator filter"
-msgstr ""
+msgstr "Nem sikerült a DVD navigátor szűrő gombjainak feldolgozása"
 
 msgctxt "IDS_DVD_INTERFACES_ERROR"
 msgid "Failed to query the needed interfaces for DVD playback"
-msgstr ""
+msgstr "Nem sikerült a DVD lejátszáshoz szükséges kezelőfelületek lekérdezése"
 
 msgctxt "IDS_CAPTURE_LIVE"
 msgid "Live"
@@ -411,7 +411,7 @@ msgstr "Rendszer alapértelmezés"
 
 msgctxt "IDS_GRAPH_INTERFACES_ERROR"
 msgid "Failed to query the needed interfaces for playback"
-msgstr ""
+msgstr "Nem sikerült a lejátszáshoz szükséges kezelőfelület lekérdezése"
 
 msgctxt "IDS_GRAPH_TARGET_WND_ERROR"
 msgid "Could not set target window for graph notification"
@@ -419,7 +419,7 @@ msgstr ""
 
 msgctxt "IDS_DVD_NAV_ALL_PINS_ERROR"
 msgid "Failed to render all pins of the DVD Navigator filter"
-msgstr ""
+msgstr "Nem sikerült a DVD navigátor szűrő gombjainak feldolgozása"
 
 msgctxt "IDS_PLAYLIST_OPEN"
 msgid "&Open"
@@ -570,6 +570,8 @@ msgid ""
 "This will fix the icons being incorrectly displayed after an update of the icon library.\n"
 "The file associations will not be modified, only the corresponding icons will be refreshed."
 msgstr ""
+"Ez a művelet kijavítja az ikonkönyvtár frissítése után helytelenül megjelenő ikonokat.\n"
+"A fájltársítások nem fognak módosulni, kizárólag a hozzájuk tartozó ikonok frissülnek."
 
 msgctxt "IDS_PPAGE_OUTPUT_OLDRENDERER"
 msgid "Old Video Renderer"
@@ -581,15 +583,15 @@ msgstr "Overlay Mixer Renderer"
 
 msgctxt "IDS_ZOOM_25"
 msgid "25%"
-msgstr ""
+msgstr "25%"
 
 msgctxt "IDS_PPAGE_OUTPUT_VMR9WINDOWED"
 msgid "Video Mixing Renderer 9 (windowed)"
-msgstr "Video Mixing Renderer 9 (windowed)"
+msgstr "Video Mixing Renderer 9 (ablakos)"
 
 msgctxt "IDS_PPAGE_OUTPUT_VMR9RENDERLESS"
 msgid "Video Mixing Renderer 9 (renderless)"
-msgstr "Video Mixing Renderer 9 (renderless)"
+msgstr "Video Mixing Renderer 9 (feldolgozatlan)"
 
 msgctxt "IDS_PPAGE_OUTPUT_EVR"
 msgid "Enhanced Video Renderer"
@@ -694,6 +696,9 @@ msgid ""
 "Default video renderer filter for DirectShow. Others will fall back to this "
 "one when they can't be loaded for some reason."
 msgstr ""
+"Alapértelmezett DirectShow videófeldogozó szűrő. Ha valamilyen okból "
+"kifolyólag nem sikerül betölteni az egyéb feldolgozókat, erre fognak "
+"visszaváltani."
 
 msgctxt "IDC_DSOLD"
 msgid ""
@@ -724,6 +729,9 @@ msgid ""
 "never use Overlay rendering and because of this it may be a little slower "
 "than Overlay mixer."
 msgstr ""
+"Kizárólag akkor elérhető, ha telepítve van a DirectX 9. Nagyon stabil, de "
+"nem használja az overlay feldolgót, emiatt lassabb lehet az Overlay "
+"keverőnél."
 
 msgctxt "IDC_DSVMR9REN"
 msgid ""
@@ -736,6 +744,8 @@ msgctxt "IDC_DSDXR"
 msgid ""
 "Same as the VMR-9 (renderless), but uses a true two-pass bicubic resizer."
 msgstr ""
+"Megegyezik a VMR-9-el (ablakos), de valódi kétlépéses bicubic újraméretezést"
+" használ."
 
 msgctxt "IDC_DSNULL_COMP"
 msgid ""
@@ -764,6 +774,7 @@ msgstr ""
 msgctxt "IDC_DSMADVR"
 msgid "High-quality renderer, requires a GPU that supports D3D9 or later."
 msgstr ""
+"Magas minőségű feldolgozó, D3D9 vagy magasabb szintű támogatást igényel."
 
 msgctxt "IDC_DSSYNC"
 msgid ""
@@ -822,6 +833,7 @@ msgstr ""
 msgctxt "IDC_DSMPCVR"
 msgid "High-quality renderer, requires a GPU that supports D3D9 or later."
 msgstr ""
+"Magas minőségű feldolgozó, D3D9 vagy magasabb szintű támogatást igényel."
 
 msgctxt "IDS_PPAGE_OUTPUT_SYNC"
 msgid "Sync Renderer"
@@ -941,6 +953,8 @@ msgstr "Csökkenti a képszakadást, de az eszköztár nem jeleníthető meg."
 msgctxt "IDC_DSVMR9ALTERNATIVEVSYNC"
 msgid "Reduces tearing by bypassing the default VSync built into D3D."
 msgstr ""
+"Csökketni a képszakadást az alapértelmezett függőleges szinkronizáció "
+"megkerülésével."
 
 msgctxt "IDS_NAVIGATE_TUNERSCAN"
 msgid "Tuner scan"
@@ -1750,7 +1764,7 @@ msgstr "Soha ne mutassa"
 
 msgctxt "IDS_PPAGEFULLSCREEN_SHOWMOVED"
 msgid "Show when moving the cursor, hide after:"
-msgstr ""
+msgstr "Megjelenítés a kurzor mozgatása közben, elrejtés ha:"
 
 msgctxt "IDS_PPAGEFULLSCREEN_SHOHHOVERED"
 msgid "Show when hovering control, hide after:"
@@ -2937,7 +2951,7 @@ msgstr "Kódolás:"
 
 msgctxt "IDS_AG_ZOOM_25"
 msgid "Zoom 25%"
-msgstr ""
+msgstr "Nagyítás 25%"
 
 msgctxt "IDS_AG_MOUSE_MODIFIER"
 msgid "Mouse Modifier"
@@ -3373,15 +3387,15 @@ msgstr "Bemenet típusa: SDTV PAL"
 
 msgctxt "IDS_OSD_RS_AMBIENT_LIGHT_BRIGHT"
 msgid "Ambient Light: Bright (2.2 Gamma)"
-msgstr ""
+msgstr "Környezeti fényerő: Világos (2.2 Gamma)"
 
 msgctxt "IDS_OSD_RS_AMBIENT_LIGHT_DIM"
 msgid "Ambient Light: Dim (2.35 Gamma)"
-msgstr ""
+msgstr "Környezeti fényerő: halvány(2.35 Gamma)"
 
 msgctxt "IDS_OSD_RS_AMBIENT_LIGHT_DARK"
 msgid "Ambient Light: Dark (2.4 Gamma)"
-msgstr ""
+msgstr "Környezeti fényerő: Sötét (2.4 Gamma)"
 
 msgctxt "IDS_OSD_RS_REND_INTENT_PERCEPT"
 msgid "Rendering Intent: Perceptual"
@@ -4213,7 +4227,7 @@ msgstr ""
 
 msgctxt "IDS_CONTROLS_YOUTUBEDL"
 msgid "Calling youtube-dl..."
-msgstr ""
+msgstr "youtube-dll hívása..."
 
 msgctxt "IDS_VERTICAL_ALIGN_VIDEO_TOP"
 msgid "Align Top"
@@ -4269,7 +4283,7 @@ msgstr ""
 
 msgctxt "IDS_PPAGEADVANCED_SAVEIMAGE_POSITION"
 msgid "Include video position in filename"
-msgstr ""
+msgstr "Videópozíció feltüntetése a fájlnévben"
 
 msgctxt "IDS_PPAGEADVANCED_SAVEIMAGE_CURRENTTIME"
 msgid "Include current time in filename"

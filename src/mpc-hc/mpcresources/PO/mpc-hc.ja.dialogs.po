@@ -9,7 +9,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2021-01-01 17:21:26+0000\n"
+"POT-Creation-Date: 2021-02-23 16:03:02+0000\n"
 "PO-Revision-Date: 2020-01-02 07:46+0000\n"
 "Last-Translator: ever_green, 2021\n"
 "Language-Team: Japanese (https://www.transifex.com/mpchc/teams/106126/ja/)\n"
@@ -368,7 +368,7 @@ msgstr "常に既定の場所を開く:"
 
 msgctxt "IDD_PPAGEDVD_IDC_STATIC"
 msgid "Preferred language for DVD Navigator and the external OGM Splitter"
-msgstr "DVD ナビゲータおよび外部 OGM スプリッタの優先言語"
+msgstr "DVD ナビゲータと外部 OGM スプリッタの優先言語"
 
 msgctxt "IDD_PPAGEDVD_IDC_RADIO3"
 msgid "Menu"
@@ -1576,7 +1576,7 @@ msgstr "スキャン"
 
 msgctxt "IDD_PPAGESUBMISC_IDC_CHECK1"
 msgid "Prefer forced and/or default subtitles tracks"
-msgstr "強制字幕トラックおよびまたは既定の字幕トラックを優先する"
+msgstr "強制字幕トラックや既定の字幕トラックを優先する"
 
 msgctxt "IDD_PPAGESUBMISC_IDC_CHECK2"
 msgid "Prefer external subtitles over embedded subtitles"
@@ -1596,7 +1596,7 @@ msgstr "リセット"
 
 msgctxt "IDD_PPAGESUBMISC_IDC_STATIC"
 msgid "Online search, download and upload subtitles"
-msgstr "字幕のオンライン検索, ダウンロードおよびアップロード"
+msgstr "字幕のオンライン検索, ダウンロードとアップロード"
 
 msgctxt "IDD_PPAGESUBMISC_IDC_CHECK4"
 msgid "Automatically search and download subtitles if none are found locally"
