@@ -374,20 +374,22 @@ BOOL CPPageFullscreen::OnApply()
     s.autoChangeFSMode.uDelay = m_uAutoChangeFullscrResDelay;
 
     m_autoChangeFSModes.clear();
-    for (int nItem = 0, count = m_list.GetItemCount(); nItem < count; nItem++) {
-        double dFRStart, dFRStop;
-        int msAudioDelay;
-        if (nItem == 0) { // Special case for default mode
-            dFRStart = 0.0;
-            dFRStop = 0.0;
-            msAudioDelay = s.iAudioTimeShift;
-        } else {
-            dFRStart = _tcstod(m_list.GetItemText(nItem, COL_FRAMERATE_START), nullptr);
-            dFRStop = _tcstod(m_list.GetItemText(nItem, COL_FRAMERATE_STOP), nullptr);
-            msAudioDelay = _tcstol(m_list.GetItemText(nItem, COL_AUDIO_DELAY), nullptr, 10);
-        }
+    if (!m_displayModes.empty()) {
+        for (int nItem = 0, count = m_list.GetItemCount(); nItem < count; nItem++) {
+            double dFRStart, dFRStop;
+            int msAudioDelay;
+            if (nItem == 0) { // Special case for default mode
+                dFRStart = 0.0;
+                dFRStop = 0.0;
+                msAudioDelay = s.iAudioTimeShift;
+            } else {
+                dFRStart = _tcstod(m_list.GetItemText(nItem, COL_FRAMERATE_START), nullptr);
+                dFRStop = _tcstod(m_list.GetItemText(nItem, COL_FRAMERATE_STOP), nullptr);
+                msAudioDelay = _tcstol(m_list.GetItemText(nItem, COL_AUDIO_DELAY), nullptr, 10);
+            }
 
-        m_autoChangeFSModes.emplace_back(!!m_list.GetCheck(nItem), dFRStart, dFRStop, msAudioDelay, m_displayModes[m_list.GetItemData(nItem)]);
+            m_autoChangeFSModes.emplace_back(!!m_list.GetCheck(nItem), dFRStart, dFRStop, msAudioDelay, m_displayModes[m_list.GetItemData(nItem)]);
+        }
     }
     s.autoChangeFSMode.modes = m_autoChangeFSModes;
 
