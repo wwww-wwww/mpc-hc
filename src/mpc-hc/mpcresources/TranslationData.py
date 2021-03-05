@@ -28,7 +28,7 @@ def xstr(s):
 
 
 def detectEncoding(filename):
-    encoding = 'utf-8'
+    encoding = 'utf_16_le'
 
     with codecs.open(filename, 'rb') as f:
         bytes = min(32, os.path.getsize(filename))
