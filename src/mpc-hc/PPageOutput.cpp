@@ -26,6 +26,7 @@
 #include "Monitors.h"
 #include "MPCPngImage.h"
 #include <WinapiFunc.h>
+#include "PPageAudioRenderer.h"
 
 // CPPageOutput dialog
 
@@ -54,6 +55,18 @@ CPPageOutput::~CPPageOutput()
 {
     DestroyIcon(m_tick);
     DestroyIcon(m_cross);
+}
+
+void CPPageOutput::UpdateAudioRenderer(CString audioRendererStr)
+{
+    for (int i = 0; i < m_AudioRendererDisplayNames.GetCount(); i++) {
+        if (m_AudioRendererDisplayNames[i] == audioRendererStr) {
+            if (i != m_iAudioRendererType) {
+                m_iAudioRendererType = i;
+            }
+            break;
+        }
+    }
 }
 
 void CPPageOutput::DoDataExchange(CDataExchange* pDX)
@@ -86,6 +99,7 @@ void CPPageOutput::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(CPPageOutput, CMPCThemePPageBase)
     ON_CBN_SELCHANGE(IDC_VIDRND_COMBO, &CPPageOutput::OnDSRendererChange)
+    ON_CBN_SELCHANGE(IDC_AUDRND_COMBO, &CPPageOutput::OnAudioRendererChange)
     ON_CBN_SELCHANGE(IDC_COMBO1, &CPPageOutput::OnSubtitleRendererChange)
     ON_CBN_SELCHANGE(IDC_DX_SURFACE, &CPPageOutput::OnSurfaceChange)
     ON_BN_CLICKED(IDC_D3D9DEVICE, OnD3D9DeviceCheck)
@@ -613,6 +627,15 @@ void CPPageOutput::OnDSRendererChange()
 
     UpdateSubtitleRendererList();
     UpdateSubtitleSupport();
+    SetModified();
+}
+
+void CPPageOutput::OnAudioRendererChange() {
+    UpdateData();
+    CPPageAudioRenderer* pAR = static_cast<CPPageAudioRenderer*>(FindSiblingPage(RUNTIME_CLASS(CPPageAudioRenderer)));
+    if (pAR) { //audio renderer page visible, so we have to update the checkbox
+        pAR->SetEnabled(m_AudioRendererDisplayNames[m_iAudioRendererType] == AUDRNDT_INTERNAL);
+    }
     SetModified();
 }
 

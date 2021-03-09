@@ -1129,7 +1129,7 @@ BEGIN
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,16,181,312,10
     GROUPBOX        "Note",IDC_STATIC7,8,208,338,58
     LTEXT           "To minimize audio distortion, it is recommended to keep player volume at around 85% when playing loud lossy-encoded content.",IDC_STATIC8,24,222,314,33
-    CONTROL         "Internal Audio Renderer Enabled",IDC_CHECK5,"Button",BS_AUTOCHECKBOX | WS_DISABLED | WS_TABSTOP,7,10,180,12
+    CONTROL         "Internal Audio Renderer Enabled",IDC_CHECK5,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,10,180,12
 END
 
 IDD_SAVEIMAGEDIALOGTEMPL DIALOGEX 0, 0, 304, 20

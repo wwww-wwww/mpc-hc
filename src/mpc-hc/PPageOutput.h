@@ -61,6 +61,8 @@ public:
     CPPageOutput();
     virtual ~CPPageOutput();
 
+    void UpdateAudioRenderer(CString audioRendererStr);
+
     // Dialog Data
     enum { IDD = IDD_PPAGEOUTPUT };
     int m_iDSVideoRendererType;
@@ -89,6 +91,7 @@ protected:
 public:
     afx_msg void OnSurfaceChange();
     afx_msg void OnDSRendererChange();
+    afx_msg void OnAudioRendererChange();
     afx_msg void OnSubtitleRendererChange();
     afx_msg void OnFullscreenCheck();
     afx_msg void OnD3D9DeviceCheck();

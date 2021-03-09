@@ -27,11 +27,13 @@
 
 class CPPageAudioRenderer : public CMPCThemePPageBase
 {
+    DECLARE_DYNAMIC(CPPageAudioRenderer)
 public:
 
     CPPageAudioRenderer();
 
     enum { IDD = IDD_PPAGEAUDIORENDERER };
+    void SetEnabled(bool enabled);
 
 protected:
 
@@ -44,14 +46,13 @@ protected:
 
     void OnCMoyButton();
     void OnJMeierButton();
+    void OnClickInternalAudioRenderer();
 
     void OnUpdateAllowBitstreamingCheckbox(CCmdUI* pCmdUI);
     void OnUpdateCrossfeedGroup(CCmdUI* pCmdUI);
     void OnUpdateCrossfeedCutoffLabel(CCmdUI* pCmdUI);
     void OnUpdateCrossfeedLevelLabel(CCmdUI* pCmdUI);
     void OnUpdateInternalAudioEnabled(CCmdUI* pCmdUI);
-
-    void CheckEnabled();
 
     DECLARE_MESSAGE_MAP()
 
@@ -62,6 +63,7 @@ protected:
     BOOL m_bCrossfeedEnabled;
     BOOL m_bIgnoreSystemChannelMixer;
     BOOL m_bIsEnabled;
+    CString curAudioRenderer;
 
     CMPCThemeComboBox m_combo1;
     CMPCThemeSliderCtrl m_slider1;

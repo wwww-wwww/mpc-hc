@@ -28,6 +28,7 @@
 #include <Mmdeviceapi.h>
 #include <sanear/src/Settings.h>
 #include "AppSettings.h"
+#include "PPageOutput.h"
 
 namespace
 {
@@ -65,12 +66,14 @@ namespace
     }
 }
 
+IMPLEMENT_DYNAMIC(CPPageAudioRenderer, CMPCThemePPageBase)
 CPPageAudioRenderer::CPPageAudioRenderer()
     : CMPCThemePPageBase(IDD, IDD_PPAGEAUDIORENDERER)
     , m_bExclusiveMode(FALSE)
     , m_bAllowBitstreaming(TRUE)
     , m_bCrossfeedEnabled(FALSE)
     , m_bIgnoreSystemChannelMixer(TRUE)
+    , curAudioRenderer()
 {
 }
 
@@ -102,6 +105,7 @@ BEGIN_MESSAGE_MAP(CPPageAudioRenderer, CMPCThemePPageBase)
     ON_UPDATE_COMMAND_UI(IDC_SLIDER2, OnUpdateCrossfeedGroup)
     ON_UPDATE_COMMAND_UI(IDC_STATIC4, OnUpdateCrossfeedLevelLabel)
 
+    ON_BN_CLICKED(IDC_CHECK5, OnClickInternalAudioRenderer)
     ON_UPDATE_COMMAND_UI(IDC_COMBO1, OnUpdateInternalAudioEnabled)
     ON_UPDATE_COMMAND_UI(IDC_CHECK1, OnUpdateInternalAudioEnabled)
     ON_UPDATE_COMMAND_UI(IDC_CHECK3, OnUpdateInternalAudioEnabled)
@@ -171,7 +175,9 @@ BOOL CPPageAudioRenderer::OnInitDialog()
     m_slider1.SetPos(crossfeedCuttoffFrequency);
     m_slider2.SetPos(crossfeedLevel);
 
-    CheckEnabled();
+    curAudioRenderer = s.SelectedAudioRenderer();
+    m_bIsEnabled = (curAudioRenderer == AUDRNDT_INTERNAL);
+
     UpdateData(FALSE);
 
     return TRUE;
@@ -199,7 +205,7 @@ BOOL CPPageAudioRenderer::OnApply()
     s.sanear->SetCrossfeedSettings(m_slider1.GetPos(), m_slider2.GetPos());
     s.sanear->SetCrossfeedEnabled(m_bCrossfeedEnabled);
     s.sanear->SetIgnoreSystemChannelMixer(m_bIgnoreSystemChannelMixer);
-    CheckEnabled();
+    AfxGetAppSettings().strAudioRendererDisplayName = curAudioRenderer;
 
     return __super::OnApply();
 }
@@ -214,6 +220,28 @@ void CPPageAudioRenderer::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScroll
     if (pScrollBar && (*pScrollBar == m_slider1 || *pScrollBar == m_slider2)) {
         SetModified(TRUE);
     }
+}
+
+void CPPageAudioRenderer::OnClickInternalAudioRenderer()
+{
+    auto& s = AfxGetAppSettings();
+    UpdateData(TRUE);
+    if (m_bIsEnabled) { //we just enabled it, force to internal
+        curAudioRenderer = AUDRNDT_INTERNAL;
+    } else { //we just disabled it, force to last used
+        if (s.SelectedAudioRenderer() != AUDRNDT_INTERNAL) {
+            curAudioRenderer = s.SelectedAudioRenderer();
+        } else { //unless it was already set to internal before, now unchecking it means "use default"
+            curAudioRenderer = _T("");
+        }
+    }
+
+    CPPageOutput* po = static_cast<CPPageOutput*>(FindSiblingPage(RUNTIME_CLASS(CPPageOutput)));
+    if (po) { //output page visible, so we have to update the dropdown
+        po->UpdateAudioRenderer(curAudioRenderer);
+    }
+
+    SetModified(TRUE);
 }
 
 void CPPageAudioRenderer::OnCMoyButton()
@@ -244,6 +272,10 @@ void CPPageAudioRenderer::OnUpdateInternalAudioEnabled(CCmdUI* pCmdUI) {
     pCmdUI->Enable(m_bIsEnabled);
 }
 
+void CPPageAudioRenderer::SetEnabled(bool enabled) {
+    m_bIsEnabled = enabled;
+}
+
 void CPPageAudioRenderer::OnUpdateCrossfeedCutoffLabel(CCmdUI* pCmdUI)
 {
     OnUpdateCrossfeedGroup(pCmdUI);
@@ -259,9 +291,4 @@ void CPPageAudioRenderer::OnUpdateCrossfeedLevelLabel(CCmdUI* pCmdUI)
     CString label;
     label.Format(_T("%d.%d dB"), pos / 10, pos % 10);
     pCmdUI->SetText(label);
-}
-
-void CPPageAudioRenderer::CheckEnabled() {
-    const auto& s = AfxGetAppSettings();
-    m_bIsEnabled = (s.SelectedAudioRenderer() == AUDRNDT_INTERNAL);
 }
