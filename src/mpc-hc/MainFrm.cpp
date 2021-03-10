@@ -11917,6 +11917,9 @@ HRESULT CMainFrame::PreviewWindowHide() {
 
         m_wndPreView.ShowWindow(SW_HIDE);
         m_wndPreView.SetWindowPos(&wndNoTopMost, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE);
+        if (AfxGetAppSettings().iOnTop) {
+            SetWindowPos(&wndTopMost, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE);
+        }
 
         // Enable animation
         AnimationInfo.iMinAnimate = WindowAnimationType;
