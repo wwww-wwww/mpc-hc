@@ -215,7 +215,9 @@ void CPreView::SetWindowSize() {
     // the preview size should not be larger than half size of the main window, but not less than 160
     w = std::max(160, std::min(w, wr.Width() / 2));
 
-    int h = (w - ((m_border + 1) * 2)) * 9 / 16;
+    CSize vs = m_pMainFrame->GetVideoSize();
+
+    int h = (w - ((m_border + 1) * 2)) * vs.cy / vs.cx;
     h += (m_caption + 1);
     h += (m_border + 1);
 
