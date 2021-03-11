@@ -564,8 +564,8 @@ static bool OpenVTT(CTextFile* file, CSimpleTextSubtitle& ret, int CharSet) {
                 if (tmp.Find(L'<') >= 0) {
                     CW2CW pszConvertedAnsiString(tmp);
                     std::wstring stdTmp(pszConvertedAnsiString);
-                    std::wregex clrrgx(LR"(<c.([a-z]*).bg_([a-z]*)>([^<]*)</c[.\w\d]*>)");
-                    std::wregex clrrgx2(LR"(<c.([a-z]*)>([^<]*)</c[.\w\d]*>)");
+                    std::wregex clrrgx(LR"(<c\.([a-z]*)\.bg_([a-z]*)>([^<]*)</c[\.\w\d]*>)");
+                    std::wregex clrrgx2(LR"(<c\.([a-z]*)>([^<]*)</c[\.\w\d]*>)");
                     std::wsmatch match;
 
                     if (std::regex_search(stdTmp, match, clrrgx)) {
@@ -577,7 +577,7 @@ static bool OpenVTT(CTextFile* file, CSimpleTextSubtitle& ret, int CharSet) {
                         stdTmp = ssaClrTag + ssaBGClrTag + text.c_str();
                     } else if (std::regex_search(stdTmp, match, clrrgx2)) {
                         std::wstring clr = match[1];
-                        std::wstring text = match[3];
+                        std::wstring text = match[2];
                         CStringW ssaClrTag = SSAColorTag(clr.c_str());
                         stdTmp = ssaClrTag + text.c_str();
                     }
