@@ -1222,7 +1222,9 @@ bool CPlayerPlaylistBar::DeleteFileInPlaylist(POSITION pos, bool recycle)
             m_pl.GetNext(nextpos);
         }
         // remove selected from playlist
-        m_list.DeleteItem(FindItem(pos));
+        int listPos = FindItem(pos);
+        m_list.DeleteItem(listPos);
+        m_list.RedrawItems(listPos, m_list.GetItemCount() - 1);
         m_pl.RemoveAt(pos);
         SavePlaylist();
         if (isplaying) {
