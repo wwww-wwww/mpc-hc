@@ -26,6 +26,7 @@
 #include "../DSUtil/DSUtil.h"
 
 #define SUBPIC_TRACE_LEVEL 0
+#define SUBPIC_TRACE_DROP  0
 
 #define RT2SEC(x) (double(x) / 10000000.0)
 
@@ -486,7 +487,7 @@ bool CSubPicQueue::EnqueueSubPic(CComPtr<ISubPic>& pSubPic, bool bBlocking)
 
     if (canAddToQueue()) {
         if (m_bInvalidate && pSubPic->GetStop() > m_rtInvalidate) {
-#if SUBPIC_TRACE_LEVEL > 1
+#if SUBPIC_TRACE_LEVEL > 1 | SUBPIC_TRACE_DROP
             TRACE(_T("Subtitle Renderer Thread: Dropping rendered subpic because of invalidation\n"));
 #endif
         } else {
@@ -580,7 +581,7 @@ DWORD CSubPicQueue::ThreadProc()
                 }
 
                 // Check that we aren't late already...
-                if (rtCurrent < rtStop) {
+                if (rtCurrent <= rtStop) {
                     bool bIsAnimated = pSubPicProvider->IsAnimated(pos) && !bDisableAnim;
                     bool bStopRendering = false;
 
@@ -665,8 +666,8 @@ DWORD CSubPicQueue::ThreadProc()
                         }
 
                         if (m_rtNow > rtCurrent) {
-#if SUBPIC_TRACE_LEVEL > 0
-                            TRACE(_T("Subtitle Renderer Thread: the queue is late, trying to catch up...\n"));
+#if SUBPIC_TRACE_LEVEL > 0 | SUBPIC_TRACE_DROP
+                            TRACE(_T("Subtitle Renderer Thread: the queue is late, rtCurrent = %.03f rtNow = %.03f \n"), RT2SEC(rtCurrent), RT2SEC(m_rtNow));
 #endif
                             rtCurrent = m_rtNow;
                         }
@@ -676,8 +677,8 @@ DWORD CSubPicQueue::ThreadProc()
                         break;
                     }
                 } else {
-#if SUBPIC_TRACE_LEVEL > 0
-                    TRACE(_T("Subtitle Renderer Thread: the queue is late, trying to catch up...\n"));
+#if SUBPIC_TRACE_LEVEL > 0 | SUBPIC_TRACE_DROP
+                    TRACE(_T("Subtitle Renderer Thread: the queue is late, rtCurrent = %.03f rtStart = %.03f rtStop = %.03f\n"), RT2SEC(rtCurrent), RT2SEC(rtStart), RT2SEC(rtStop));
 #endif
                 }
             }
