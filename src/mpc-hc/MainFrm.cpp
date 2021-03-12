@@ -4815,7 +4815,7 @@ void CMainFrame::OnFileSaveAs()
     CSaveDlg dlg(in, p);
     dlg.DoModal();
 
-    if (fs == State_Running) {
+    if (m_pMC && fs == State_Running) {
         m_pMC->Run();
     }
 }
