@@ -356,7 +356,7 @@ void  CSubtitleInputPin::DecodeSamples()
 
                 if (pSample) {
                     REFERENCE_TIME rtSampleInvalidate = DecodeSample(pSample);
-                    if (rtSampleInvalidate >= 0 && (rtSampleInvalidate < rtInvalidate /*|| rtInvalidate < 0*/)) {
+                    if (rtSampleInvalidate >= 0 && (rtSampleInvalidate < rtInvalidate || rtInvalidate < 0)) {
                         rtInvalidate = rtSampleInvalidate;
                     }
                 } else { // marker for end of stream
