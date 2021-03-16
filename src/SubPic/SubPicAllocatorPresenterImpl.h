@@ -108,6 +108,7 @@ public:
     STDMETHODIMP SetPixelShader(LPCSTR pSrcData, LPCSTR pTarget) { return E_NOTIMPL; }
     STDMETHODIMP_(bool) ResetDevice() { return false; }
     STDMETHODIMP_(bool) DisplayChange() { return false; }
+    STDMETHODIMP_(void) GetPosition(RECT* windowRect, RECT* videoRect) { *windowRect = m_windowRect; *videoRect = m_videoRect; }
 
     // ISubPicAllocatorPresenter2
 

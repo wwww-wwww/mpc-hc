@@ -1704,12 +1704,16 @@ void CRenderedTextSubtitle::OnChanged()
 
 bool CRenderedTextSubtitle::Init(CSize size, const CRect& vidrect)
 {
-    Deinit();
-
-    m_size = CSize(size.cx * 8, size.cy * 8);
-    m_vidrect = CRect(vidrect.left * 8, vidrect.top * 8, vidrect.right * 8, vidrect.bottom * 8);
-
-    m_sla.Empty();
+    CAutoLock cAutoLock(&renderLock);
+    CRect newVidRect = CRect(vidrect.left * 8, vidrect.top * 8, vidrect.right * 8, vidrect.bottom * 8);
+    CSize newSize = CSize(size.cx * 8, size.cy * 8);
+    if (m_size != newSize || m_vidrect != newVidRect) {
+        TRACE(_T("Change RTS sizes: %dx%d | %dx%d\n"), size.cx, size.cy, vidrect.Width(), vidrect.Height());
+        Deinit();
+        m_size = newSize;
+        m_vidrect = newVidRect;
+        m_sla.Empty();
+    }
 
     return true;
 }
@@ -1861,8 +1865,10 @@ void CRenderedTextSubtitle::ParsePolygon(CSubtitle* sub, CStringW str, STSStyle&
 bool CRenderedTextSubtitle::ParseSSATag(SSATagsList& tagsList, const CStringW& str)
 {
     if (m_renderingCaches.SSATagsCache.Lookup(str, tagsList)) {
+        //TRACE(_T("ParseSSATag (cached): %s\n"), str.GetString());
         return true;
     }
+    //TRACE(_T("ParseSSATag: %s\n"), str.GetString());
 
     int nTags = 0, nUnrecognizedTags = 0;
     tagsList.reset(DEBUG_NEW CAtlList<SSATag>());
@@ -2743,8 +2749,8 @@ CSubtitle* CRenderedTextSubtitle::GetSubtitle(int entry)
     sub->m_wrapStyle = m_defaultWrapStyle;
     sub->m_fAnimated = false;
     sub->m_relativeTo = stss.relativeTo;
-    sub->m_scalex = m_dstScreenSize.cx > 0 ? double((sub->m_relativeTo == STSStyle::VIDEO) ? m_vidrect.Width() : m_size.cx) / (m_dstScreenSize.cx * 8.0) : 1.0;
-    sub->m_scaley = m_dstScreenSize.cy > 0 ? double((sub->m_relativeTo == STSStyle::VIDEO) ? m_vidrect.Height() : m_size.cy) / (m_dstScreenSize.cy * 8.0) : 1.0;
+    sub->m_scalex = m_dstScreenSize.cx > 0 && m_vidrect.Width()  > 0 ? double((sub->m_relativeTo == STSStyle::VIDEO) ? m_vidrect.Width()  : m_size.cx) / (m_dstScreenSize.cx * 8.0) : 1.0;
+    sub->m_scaley = m_dstScreenSize.cy > 0 && m_vidrect.Height() > 0 ? double((sub->m_relativeTo == STSStyle::VIDEO) ? m_vidrect.Height() : m_size.cy) / (m_dstScreenSize.cy * 8.0) : 1.0;
 
     const STSEntry& stse = GetAt(entry);
     CRect marginRect = stse.marginRect;
@@ -3042,9 +3048,7 @@ STDMETHODIMP CRenderedTextSubtitle::Render(SubPicDesc& spd, REFERENCE_TIME rt, d
 
     CRect bbox2(0, 0, 0, 0);
 
-    if (m_size != CSize(spd.w * 8, spd.h * 8) || m_vidrect != CRect(spd.vidrect.left * 8, spd.vidrect.top * 8, spd.vidrect.right * 8, spd.vidrect.bottom * 8)) {
-        Init(CSize(spd.w, spd.h), spd.vidrect);
-    }
+    Init(CSize(spd.w, spd.h), spd.vidrect);
 
     int segment;
     const STSSegment* stss = SearchSubs(rt, fps, &segment);

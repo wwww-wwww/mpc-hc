@@ -7757,6 +7757,18 @@ void CMainFrame::OnPlayPlay()
 
         if (bVideoWndNeedReset) {
             MoveVideoWindow(false, true);
+
+            if (!m_fEndOfStream && m_pCAP) {
+                // if we have just opened a file, set sizes in the subtitle renderer, so that they are already known when parsing
+                CLSID clsid;
+                if (m_pCurrentSubInput.pSubStream && SUCCEEDED(m_pCurrentSubInput.pSubStream->GetClassID(&clsid)) && clsid == __uuidof(CRenderedTextSubtitle)) {
+                    CRenderedTextSubtitle* pRTS = (CRenderedTextSubtitle*)(ISubStream*)m_pCurrentSubInput.pSubStream;
+
+                    CRect windowRect, videoRect;
+                    m_pCAP->GetPosition(windowRect, videoRect);
+                    pRTS->Init(windowRect.Size(), videoRect);
+                }
+            }
         }
 
         // Restart playback
@@ -11079,9 +11091,9 @@ void CMainFrame::HideVideoWindow(bool fHide)
         wr -= r.TopLeft();
     }
 
-    CRect vr = CRect(0, 0, 0, 0);
     if (m_pCAP) {
         if (fHide) {
+            CRect vr = CRect(0, 0, 0, 0);
             m_pCAP->SetPosition(vr, vr);    // hide
         } else {
             m_pCAP->SetPosition(wr, wr);    // show
