@@ -248,7 +248,7 @@ STDMETHODIMP CSubtitleInputPin::NewSegment(REFERENCE_TIME tStart, REFERENCE_TIME
         pRLECodedSubtitle->NewSegment(tStart, tStop, dRate);
     }
 
-    TRACE(_T("NewSegment: InvalidateSubtitle(%I64d, ...)\n"), tStart);
+    TRACE(_T("NewSegment: InvalidateSubtitle %.3f\n"), RT2SEC(tStart));
     // IMPORTANT: m_pSubLock must not be locked when calling this
     InvalidateSubtitle(tStart, m_pSubStream);
 
@@ -371,7 +371,7 @@ void  CSubtitleInputPin::DecodeSamples()
         }
 
         if (rtInvalidate >= 0) {
-            TRACE(_T("NewSegment: InvalidateSubtitle %.3f\n"), double(rtInvalidate) / 10000000.0);
+            //TRACE(_T("NewSegment: InvalidateSubtitle %.3f\n"), double(rtInvalidate) / 10000000.0);
             // IMPORTANT: m_pSubLock must not be locked when calling this
             InvalidateSubtitle(rtInvalidate, m_pSubStream);
         }

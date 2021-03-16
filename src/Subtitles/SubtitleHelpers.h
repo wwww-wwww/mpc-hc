@@ -28,6 +28,8 @@
 #define RT2MS(t)        ((t) / 10000)
 #define UNITS_FLOAT     (10000000.0)
 
+#define RT2SEC(x) (double(x) / 10000000.0)
+
 namespace Subtitle
 {
     enum SubType {
