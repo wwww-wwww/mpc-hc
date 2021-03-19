@@ -444,6 +444,7 @@ CString CMediaTypeEx::GetSubtitleCodecName(const GUID& subtype)
         names[MEDIASUBTYPE_VOBSUB] = _T("VobSub");
         names[MEDIASUBTYPE_DVB_SUBTITLES] = _T("DVB Subtitles");
         names[MEDIASUBTYPE_DVD_SUBPICTURE] = _T("DVD Subtitles");
+        names[MEDIASUBTYPE_WEBVTT] = _T("WebVTT");
     }
 
     if (names.Lookup(subtype, str)) {

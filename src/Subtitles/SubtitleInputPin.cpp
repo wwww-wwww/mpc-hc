@@ -74,9 +74,7 @@ CSubtitleInputPin::~CSubtitleInputPin()
 HRESULT CSubtitleInputPin::CheckMediaType(const CMediaType* pmt)
 {
     return pmt->majortype == MEDIATYPE_Text && (pmt->subtype == MEDIASUBTYPE_NULL || pmt->subtype == FOURCCMap((DWORD)0))
-           || pmt->majortype == MEDIATYPE_Subtitle && pmt->subtype == MEDIASUBTYPE_UTF8
-           || pmt->majortype == MEDIATYPE_Subtitle && (pmt->subtype == MEDIASUBTYPE_SSA || pmt->subtype == MEDIASUBTYPE_ASS || pmt->subtype == MEDIASUBTYPE_ASS2)
-           || pmt->majortype == MEDIATYPE_Subtitle && (pmt->subtype == MEDIASUBTYPE_VOBSUB)
+           || pmt->majortype == MEDIATYPE_Subtitle && (pmt->subtype == MEDIASUBTYPE_UTF8 || pmt->subtype == MEDIASUBTYPE_SSA || pmt->subtype == MEDIASUBTYPE_ASS || pmt->subtype == MEDIASUBTYPE_ASS2 || pmt->subtype == MEDIASUBTYPE_VOBSUB || pmt->subtype == MEDIASUBTYPE_WEBVTT)
            || IsRLECodedSub(pmt)
            ? S_OK
            : E_FAIL;
@@ -132,6 +130,7 @@ HRESULT CSubtitleInputPin::CompleteConnect(IPin* pReceivePin)
 
         if (m_mt.subtype == MEDIASUBTYPE_UTF8
                 /*|| m_mt.subtype == MEDIASUBTYPE_USF*/
+                || m_mt.subtype == MEDIASUBTYPE_WEBVTT
                 || m_mt.subtype == MEDIASUBTYPE_SSA
                 || m_mt.subtype == MEDIASUBTYPE_ASS
                 || m_mt.subtype == MEDIASUBTYPE_ASS2) {
@@ -231,6 +230,7 @@ STDMETHODIMP CSubtitleInputPin::NewSegment(REFERENCE_TIME tStart, REFERENCE_TIME
             || m_mt.majortype == MEDIATYPE_Subtitle
             && (m_mt.subtype == MEDIASUBTYPE_UTF8
                 /*|| m_mt.subtype == MEDIASUBTYPE_USF*/
+                || m_mt.subtype == MEDIASUBTYPE_WEBVTT
                 || m_mt.subtype == MEDIASUBTYPE_SSA
                 || m_mt.subtype == MEDIASUBTYPE_ASS
                 || m_mt.subtype == MEDIASUBTYPE_ASS2)) {
@@ -442,7 +442,7 @@ REFERENCE_TIME CSubtitleInputPin::DecodeSample(const std::unique_ptr<SubtitleSam
             }
         }
     } else if (m_mt.majortype == MEDIATYPE_Subtitle) {
-        if (m_mt.subtype == MEDIASUBTYPE_UTF8) {
+        if (m_mt.subtype == MEDIASUBTYPE_UTF8 || m_mt.subtype == MEDIASUBTYPE_WEBVTT) {
             CRenderedTextSubtitle* pRTS = (CRenderedTextSubtitle*)(ISubStream*)m_pSubStream;
 
             CStringW str = UTF8To16(CStringA((LPCSTR)pSample->data.data(), (int)pSample->data.size()));
