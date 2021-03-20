@@ -491,15 +491,19 @@ static CStringW SubRipper2SSA(CStringW str)
     return str;
 }
 
-static CStringW WebVTT2SSA(CStringW str)
+static void WebVTTCueStrip(CStringW& str)
 {
-    if (str.Left(6) == _T("align:")) {
-        int p = str.Find(L'\n');
-        if (p > 0) {
+    int p = str.Find(L'\n');
+    if (p > 0) {
+        if (str.Left(6) == _T("align:") || str.Left(9) == _T("position:") || str.Left(9) == _T("vertical:") || str.Left(5) == _T("line:") || str.Left(5) == _T("size:")) {
             str.Delete(0, p);
             str.TrimLeft();
         }
     }
+}
+
+static void WebVTT2SSA(CStringW& str)
+{
     if (str.Find(L'<') >= 0) {
         str.Replace(L"<i>", L"{\\i1}");
         str.Replace(L"</i>", L"{\\i}");
@@ -547,7 +551,6 @@ static CStringW WebVTT2SSA(CStringW str)
         str.Replace(L"&rlm;", L"");
         str.Replace(L"&amp;", L"&");
     }
-    return str;
 }
 
 static bool OpenVTT(CTextFile* file, CSimpleTextSubtitle& ret, int CharSet) {
@@ -598,7 +601,8 @@ static bool OpenVTT(CTextFile* file, CSimpleTextSubtitle& ret, int CharSet) {
                 if (tmp.IsEmpty()) {
                     break;
                 }
-                str += WebVTT2SSA(tmp) + '\n';
+                WebVTT2SSA(tmp);
+                str += tmp + '\n';
             }
 
             ret.Add(str,
@@ -2161,7 +2165,8 @@ void CSimpleTextSubtitle::Add(CStringW str, bool fUnicode, REFERENCE_TIME start,
     }
     //TRACE(_T("CSimpleTextSubtitle::Add = %s\n"), str.GetString());
     if (m_subtitleType == Subtitle::VTT) {
-        str = WebVTT2SSA(str);
+        WebVTTCueStrip(str);
+        WebVTT2SSA(str);
         if (str.IsEmpty()) return;
     }
 
