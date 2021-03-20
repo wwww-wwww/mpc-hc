@@ -5,17 +5,17 @@
 ### Visual Studio 2019 (or 2017)
 
 1. Install Visual Studio (any edition will work fine). Select at minimum the following components:
-    C++ core features
-    IntelliCode
-    Windows Universal C Runtime
-    Windows Universal CRT SDK
-    C++ build tools (x86 & x64)
-    C++ ATL
-    C++ MFC
-    Windows 10 SDK (10.0.17763.0 or any other version)
+    - C++ core features
+    - IntelliCode
+    - Windows Universal C Runtime
+    - Windows Universal CRT SDK
+    - C++ build tools (x86 & x64)
+    - C++ ATL
+    - C++ MFC
+    - Windows 10 SDK (10.0.17763.0 or any other version)
 2. Install the Windows 8.1 SDK → <https://go.microsoft.com/fwlink/p/?LinkId=323507>
-    When choosing which features to install you only need to select "Windows Software Development Kit".
-    Alternatively you can use Windows 10 SDK, but then resulting binaries will require at least Windows 7 SP1, so you lose compatibility with Vista and 7 RTM.
+    - When choosing which features to install you only need to select "Windows Software Development Kit".
+    - Alternatively you can use Windows 10 SDK, but then resulting binaries will require at least Windows 7 SP1, so you lose compatibility with Vista and 7 RTM.
 
 
 ## Part B: Install Python 3 (optional)
@@ -103,34 +103,34 @@ Choose `Use Git from the Windows command prompt`. This isn't mandatory, so if yo
 
 Use Git to clone MPC-HC's repository to **C:\mpc-hc** (or anywhere else you like).
 
-    1. Install Git
-    2. Run these commands:
+1. Install Git
+2. Run these commands:
 
-        ```text
-        git clone --recursive https://github.com/clsid2/mpc-hc.git
-        ```
+    ```text
+    git clone --recursive https://github.com/clsid2/mpc-hc.git
+    ```
 
-        or
+    or
 
-        ```text
-        git clone https://github.com/clsid2/mpc-hc.git
-        git submodule update --init --recursive
-        ```
+    ```text
+    git clone https://github.com/clsid2/mpc-hc.git
+    git submodule update --init --recursive
+    ```
 
-        If a submodule update fails, try running:
+    If a submodule update fails, try running:
 
-        ```text
-        git submodule foreach --recursive git fetch --tags
-        ```
+    ```text
+    git submodule foreach --recursive git fetch --tags
+    ```
 
-        then run the update again
+    then run the update again
 
-        ```text
-        git submodule update --init --recursive
-        ```
+    ```text
+    git submodule update --init --recursive
+    ```
 
-        Note that you can add `-b master` to the `git clone` command if you want to get the latest
-        stable version instead of the latest development version
+Note that you can add `-b master` to the `git clone` command if you want to get the latest
+stable version instead of the latest development version
         
 ## Part G: Compiling the MPC-HC source
 
