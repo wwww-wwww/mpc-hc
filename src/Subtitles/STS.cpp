@@ -493,6 +493,13 @@ static CStringW SubRipper2SSA(CStringW str)
 
 static CStringW WebVTT2SSA(CStringW str)
 {
+    if (str.Left(6) == _T("align:")) {
+        int p = str.Find(L'\n');
+        if (p > 0) {
+            str.Delete(0, p);
+            str.TrimLeft();
+        }
+    }
     if (str.Find(L'<') >= 0) {
         str.Replace(L"<i>", L"{\\i1}");
         str.Replace(L"</i>", L"{\\i}");
