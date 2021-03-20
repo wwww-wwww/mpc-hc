@@ -501,6 +501,37 @@ static CStringW WebVTT2SSA(CStringW str)
         str.Replace(L"<u>", L"{\\u1}");
         str.Replace(L"</u>", L"{\\u}");
     }
+    if (str.Find(L'<') >= 0) {
+        CW2CW pszConvertedAnsiString(str);
+        std::wstring stdTmp(pszConvertedAnsiString);
+        std::wregex clrrgx(LR"(<c\.([a-z]*)\.bg_([a-z]*)>([^<]*)</c[\.\w\d]*>)");
+        std::wregex clrrgx2(LR"(<c\.([a-z]*)>([^<]*)</c[\.\w\d]*>)");
+        std::wsmatch match;
+
+        if (std::regex_search(stdTmp, match, clrrgx)) {
+            std::wstring clr = match[1];
+            std::wstring bgclr = match[2];
+            std::wstring text = match[3];
+            CStringW ssaClrTag = SSAColorTag(clr.c_str());
+            CStringW ssaBGClrTag = SSAColorTag(bgclr.c_str(), L"3c");
+            stdTmp = ssaClrTag + ssaBGClrTag + text.c_str();
+        } else if (std::regex_search(stdTmp, match, clrrgx2)) {
+            std::wstring clr = match[1];
+            std::wstring text = match[2];
+            CStringW ssaClrTag = SSAColorTag(clr.c_str());
+            stdTmp = ssaClrTag + text.c_str();
+        }
+
+        // remove tags we don't support
+        stdTmp = std::regex_replace(stdTmp, std::wregex(L"<c[.\\w\\d]*>"), L"");
+        stdTmp = std::regex_replace(stdTmp, std::wregex(L"</c[.\\w\\d]*>"), L"");
+        stdTmp = std::regex_replace(stdTmp, std::wregex(L"<\\d\\d:\\d\\d:\\d\\d.\\d\\d\\d>"), L"");
+        stdTmp = std::regex_replace(stdTmp, std::wregex(L"<v[ .][^>]*>"), L"");
+        stdTmp = std::regex_replace(stdTmp, std::wregex(L"</v>"), L"");
+        stdTmp = std::regex_replace(stdTmp, std::wregex(L"<lang[^>]*>"), L"");
+        stdTmp = std::regex_replace(stdTmp, std::wregex(L"</lang>"), L"");
+        str = stdTmp.c_str();
+    }
     if (str.Find(L'&') >= 0) {
         str.Replace(L"&lt;", L"<");
         str.Replace(L"&gt;", L">");
@@ -560,39 +591,6 @@ static bool OpenVTT(CTextFile* file, CSimpleTextSubtitle& ret, int CharSet) {
                 if (tmp.IsEmpty()) {
                     break;
                 }
-
-                if (tmp.Find(L'<') >= 0) {
-                    CW2CW pszConvertedAnsiString(tmp);
-                    std::wstring stdTmp(pszConvertedAnsiString);
-                    std::wregex clrrgx(LR"(<c\.([a-z]*)\.bg_([a-z]*)>([^<]*)</c[\.\w\d]*>)");
-                    std::wregex clrrgx2(LR"(<c\.([a-z]*)>([^<]*)</c[\.\w\d]*>)");
-                    std::wsmatch match;
-
-                    if (std::regex_search(stdTmp, match, clrrgx)) {
-                        std::wstring clr = match[1];
-                        std::wstring bgclr = match[2];
-                        std::wstring text = match[3];
-                        CStringW ssaClrTag = SSAColorTag(clr.c_str());
-                        CStringW ssaBGClrTag = SSAColorTag(bgclr.c_str(),L"3c");
-                        stdTmp = ssaClrTag + ssaBGClrTag + text.c_str();
-                    } else if (std::regex_search(stdTmp, match, clrrgx2)) {
-                        std::wstring clr = match[1];
-                        std::wstring text = match[2];
-                        CStringW ssaClrTag = SSAColorTag(clr.c_str());
-                        stdTmp = ssaClrTag + text.c_str();
-                    }
-
-                    // remove tags we don't support
-                    stdTmp = std::regex_replace(stdTmp, std::wregex(L"<c[.\\w\\d]*>"), L"");
-                    stdTmp = std::regex_replace(stdTmp, std::wregex(L"</c[.\\w\\d]*>"), L"");
-                    stdTmp = std::regex_replace(stdTmp, std::wregex(L"<\\d\\d:\\d\\d:\\d\\d.\\d\\d\\d>"), L"");
-                    stdTmp = std::regex_replace(stdTmp, std::wregex(L"<v[ .][^>]*>"), L"");
-                    stdTmp = std::regex_replace(stdTmp, std::wregex(L"</v>"), L"");
-                    stdTmp = std::regex_replace(stdTmp, std::wregex(L"<lang[^>]*>"), L"");
-                    stdTmp = std::regex_replace(stdTmp, std::wregex(L"</lang>"), L"");
-                    tmp = stdTmp.c_str();
-                }
-
                 str += WebVTT2SSA(tmp) + '\n';
             }
 
@@ -2153,6 +2151,11 @@ void CSimpleTextSubtitle::Add(CStringW str, bool fUnicode, REFERENCE_TIME start,
     FastTrim(str);
     if (str.IsEmpty() || start > end) {
         return;
+    }
+    //TRACE(_T("CSimpleTextSubtitle::Add = %s\n"), str.GetString());
+    if (m_subtitleType == Subtitle::VTT) {
+        str = WebVTT2SSA(str);
+        if (str.IsEmpty()) return;
     }
 
     str.Remove('\r');
