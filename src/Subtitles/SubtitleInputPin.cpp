@@ -229,7 +229,7 @@ STDMETHODIMP CSubtitleInputPin::NewSegment(REFERENCE_TIME tStart, REFERENCE_TIME
     CAutoLock cAutoLock(&m_csReceive);
 
     InvalidateSamples();
-
+  
     if (m_mt.majortype == MEDIATYPE_Text
             || m_mt.majortype == MEDIATYPE_Subtitle
             && (m_mt.subtype == MEDIASUBTYPE_UTF8
@@ -238,10 +238,15 @@ STDMETHODIMP CSubtitleInputPin::NewSegment(REFERENCE_TIME tStart, REFERENCE_TIME
                 || m_mt.subtype == MEDIASUBTYPE_SSA
                 || m_mt.subtype == MEDIASUBTYPE_ASS
                 || m_mt.subtype == MEDIASUBTYPE_ASS2)) {
-        CAutoLock cAutoLock2(m_pSubLock);
-        CRenderedTextSubtitle* pRTS = (CRenderedTextSubtitle*)(ISubStream*)m_pSubStream;
-        pRTS->RemoveAll();
-        pRTS->CreateSegments();
+        if (m_mt.subtype != MEDIASUBTYPE_WEBVTT) {
+            // WebVTT can be read as one big blob of data during pin connection, instead of as samples during playback.
+            // This depends on how it is being demuxed. So both situations need to be handled.
+            // Don't remove existing data in case of WebVTT. Instead we check for duplicates in CSimpleTextSubtitle::Add()
+            CAutoLock cAutoLock2(m_pSubLock);
+            CRenderedTextSubtitle* pRTS = (CRenderedTextSubtitle*)(ISubStream*)m_pSubStream;
+            pRTS->RemoveAll();
+            pRTS->CreateSegments();
+        }
     } else if (m_mt.majortype == MEDIATYPE_Subtitle && (m_mt.subtype == MEDIASUBTYPE_VOBSUB)) {
         CAutoLock cAutoLock2(m_pSubLock);
         CVobSubStream* pVSS = (CVobSubStream*)(ISubStream*)m_pSubStream;
@@ -471,9 +476,7 @@ REFERENCE_TIME CSubtitleInputPin::DecodeSample(const std::unique_ptr<SubtitleSam
         } else if (m_mt.subtype == MEDIASUBTYPE_SSA || m_mt.subtype == MEDIASUBTYPE_ASS || m_mt.subtype == MEDIASUBTYPE_ASS2) {
             CRenderedTextSubtitle* pRTS = (CRenderedTextSubtitle*)(ISubStream*)m_pSubStream;
 
-            LPCSTR data = (LPCSTR)pSample->data.data();
-            int dataSize = (int)pSample->data.size();
-            CStringW str = UTF8To16(CStringA(data, dataSize));
+            CStringW str = UTF8To16(CStringA((LPCSTR)pSample->data.data(), (int)pSample->data.size()));
             FastTrim(str);
             if (!str.IsEmpty()) {
                 STSEntry stse;

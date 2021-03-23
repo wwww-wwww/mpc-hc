@@ -2163,7 +2163,7 @@ void CSimpleTextSubtitle::Add(CStringW str, bool fUnicode, REFERENCE_TIME start,
     if (str.IsEmpty() || start > end) {
         return;
     }
-    //TRACE(_T("CSimpleTextSubtitle::Add = %s\n"), str.GetString());
+    //TRACE(_T("CSimpleTextSubtitle::Add (%d) = %s\n"), m_segments.GetCount(), str.GetString());
     if (m_subtitleType == Subtitle::VTT) {
         WebVTTCueStrip(str);
         WebVTT2SSA(str);
@@ -2189,7 +2189,7 @@ void CSimpleTextSubtitle::Add(CStringW str, bool fUnicode, REFERENCE_TIME start,
     sub.end = end;
     sub.readorder = readorder < 0 ? (int)GetCount() : readorder;
 
-    int n = (int)__super::Add(sub);
+    int n = __super::GetCount();
 
     // Entries with a null duration don't belong to any segments since
     // they are not to be rendered. We choose not to skip them completely
@@ -2203,6 +2203,7 @@ void CSimpleTextSubtitle::Add(CStringW str, bool fUnicode, REFERENCE_TIME start,
     size_t segmentsCount = m_segments.GetCount();
 
     if (segmentsCount == 0) { // First segment
+        n = (int)__super::Add(sub);
         STSSegment stss(start, end);
         stss.subs.Add(n);
         m_segments.Add(stss);
@@ -2210,6 +2211,14 @@ void CSimpleTextSubtitle::Add(CStringW str, bool fUnicode, REFERENCE_TIME start,
         STSSegment* segmentsStart = m_segments.GetData();
         STSSegment* segmentsEnd   = segmentsStart + segmentsCount;
         STSSegment* segment = std::lower_bound(segmentsStart, segmentsEnd, start, SegmentCompStart);
+
+        if (m_subtitleType == Subtitle::VTT && start == segment->start && end == segment->end) {
+            // ToDo: compare new sub with existing one to verify if it is really a duplicate
+            //TRACE(_T("Dropping duplicate WebVTT sub (n=%d)\n"), n);
+            return;
+        }
+
+        n = (int)__super::Add(sub);
 
         size_t i = segment - segmentsStart;
         if (i > 0 && m_segments[i - 1].end > start) {
