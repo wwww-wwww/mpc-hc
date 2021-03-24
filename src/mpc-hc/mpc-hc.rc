@@ -1052,28 +1052,28 @@ IDD_PPAGESHADERS DIALOGEX 0, 0, 355, 289
 STYLE DS_SETFONT | WS_CHILD
 FONT 9, "Segoe UI", 400, 0, 0x1
 BEGIN
-    LTEXT           "Shaders contain special effects which can be added to the video rendering process.",IDC_STATIC,5,5,346,16
-    LISTBOX         IDC_LIST1,5,29,209,128,LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
-    PUSHBUTTON      "Add shader file",IDC_BUTTON12,5,161,108,14
+    LTEXT           "Shaders contain special effects which can be added to the video rendering process.",IDC_STATIC,6,6,343,16
+    LISTBOX         IDC_LIST1,6,29,208,128,LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "Add shader file",IDC_BUTTON12,6,161,107,14
     PUSHBUTTON      "Remove",IDC_BUTTON13,118,161,96,14
-    PUSHBUTTON      "Add to pre-resize",IDC_BUTTON1,221,29,130,14
-    PUSHBUTTON      "Add to post-resize",IDC_BUTTON2,221,50,130,14
-    GROUPBOX        "Shader presets",IDC_STATIC,221,72,130,106
-    COMBOBOX        IDC_COMBO1,230,89,108,16,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "Add to pre-resize",IDC_BUTTON1,221,29,128,14
+    PUSHBUTTON      "Add to post-resize",IDC_BUTTON2,221,50,128,14
+    GROUPBOX        "Shader presets",IDC_STATIC,221,72,128,106
+    COMBOBOX        IDC_COMBO1,230,89,110,16,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
     PUSHBUTTON      "Load",IDC_BUTTON3,230,110,67,14
     PUSHBUTTON      "Save",IDC_BUTTON4,230,132,67,14
     PUSHBUTTON      "Delete",IDC_BUTTON5,230,154,67,14
-    GROUPBOX        "Active pre-resize shaders",IDC_STATIC,5,205,170,84
+    GROUPBOX        "Active pre-resize shaders",IDC_STATIC,6,205,169,84
     LISTBOX         IDC_LIST2,12,215,139,68,LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
     PUSHBUTTON      "",IDC_BUTTON6,153,215,17,14,BS_BITMAP | BS_FLAT
     PUSHBUTTON      "",IDC_BUTTON7,153,232,17,14,BS_BITMAP | BS_FLAT
     PUSHBUTTON      "",IDC_BUTTON8,153,249,17,14,BS_BITMAP | BS_FLAT
-    GROUPBOX        "Active post-resize shaders",IDC_STATIC,180,205,170,84
-    LISTBOX         IDC_LIST3,187,215,139,68,LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
-    PUSHBUTTON      "",IDC_BUTTON9,328,215,17,14,BS_BITMAP | BS_FLAT
-    PUSHBUTTON      "",IDC_BUTTON10,328,232,17,14,BS_BITMAP | BS_FLAT
-    PUSHBUTTON      "",IDC_BUTTON11,328,249,17,14,BS_BITMAP | BS_FLAT
-    LTEXT           "MPC-VR does not support pre-resize shaders. It will run them after resize, before the post-resize shaders.",IDC_STATIC5,6,180,344,17
+    GROUPBOX        "Active post-resize shaders",IDC_STATIC,180,205,169,84
+    LISTBOX         IDC_LIST3,186,215,139,68,LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "",IDC_BUTTON9,327,215,17,14,BS_BITMAP | BS_FLAT
+    PUSHBUTTON      "",IDC_BUTTON10,327,232,17,14,BS_BITMAP | BS_FLAT
+    PUSHBUTTON      "",IDC_BUTTON11,327,249,17,14,BS_BITMAP | BS_FLAT
+    LTEXT           "MPC-VR does not support pre-resize shaders. It will run them after resize, before the post-resize shaders.",IDC_STATIC5,6,180,343,17
 END
 
 IDD_DEBUGSHADERS_DLG DIALOGEX 0, 0, 373, 290
