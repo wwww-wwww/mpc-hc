@@ -502,7 +502,7 @@ static void WebVTTCueStrip(CStringW& str)
     }
 }
 
-static void WebVTT2SSA(CStringW& str)
+static void WebVTT2SSA(CStringW& str, CStringW& cueTags)
 {
     if (str.Find(L'<') >= 0) {
         str.Replace(L"<i>", L"{\\i1}");
@@ -551,10 +551,32 @@ static void WebVTT2SSA(CStringW& str)
         str.Replace(L"&rlm;", L"");
         str.Replace(L"&amp;", L"&");
     }
+
+    if (!cueTags.IsEmpty()) {
+        CW2CW pszConvertedAnsiString(cueTags);
+        std::wstring stdTmp(pszConvertedAnsiString);
+        std::wregex alignRegex(L"align:(start|left|center|middle|end|right)");
+        std::wsmatch match;
+
+        if (std::regex_search(stdTmp, match, alignRegex)) {
+            if (match[1] == L"start" || match[1] == L"left") {
+                str = L"{\\an1}" + str;
+            } else if (match[1] == L"center" || match[1] == L"middle") {
+                str = L"{\\an2}" + str;
+            } else {
+                str = L"{\\an3}" + str;
+            }
+        }
+    }
+}
+
+static void WebVTT2SSA(CStringW& str) {
+    CStringW discard;
+    WebVTT2SSA(str, discard);
 }
 
 static bool OpenVTT(CTextFile* file, CSimpleTextSubtitle& ret, int CharSet) {
-    CStringW buff, start, end;
+    CStringW buff, start, end, cueTags;
 
     file->ReadString(buff);
     if (buff.Left(6).Compare(L"WEBVTT") != 0) {
@@ -576,21 +598,23 @@ static bool OpenVTT(CTextFile* file, CSimpleTextSubtitle& ret, int CharSet) {
     };
 
 
+    CStringW lastStr, lastBuff;
     while (file->ReadString(buff)) {
         FastTrimRight(buff);
         if (buff.IsEmpty()) {
             continue;
         }
         int len = buff.GetLength();
-        int c = swscanf_s(buff, L"%s --> %s", start.GetBuffer(len), len, end.GetBuffer(len), len);
+        cueTags = L"";
+        int c = swscanf_s(buff, L"%s --> %s %[^\n]s", start.GetBuffer(len), len, end.GetBuffer(len), len, cueTags.GetBuffer(len), len);
         start.ReleaseBuffer();
         end.ReleaseBuffer();
-
+        cueTags.ReleaseBuffer();
 
         int hh1, mm1, ss1, ms1, hh2, mm2, ss2, ms2;
 
         //very lazy: if we found a cue we will process it.  everything else gets skipped for now
-        if (c == 2
+        if ((c == 2 || c == 3) //either start/end or start/end/cuetags
             && readTimeCode(start, hh1, mm1, ss1, ms1)
             && readTimeCode(end, hh2, mm2, ss2, ms2)) {
 
@@ -601,14 +625,19 @@ static bool OpenVTT(CTextFile* file, CSimpleTextSubtitle& ret, int CharSet) {
                 if (tmp.IsEmpty()) {
                     break;
                 }
-                WebVTT2SSA(tmp);
+                WebVTT2SSA(tmp, cueTags);
                 str += tmp + '\n';
             }
 
-            ret.Add(str,
-                file->IsUnicode(),
-                MS2RT((((hh1 * 60i64 + mm1) * 60i64) + ss1) * 1000i64 + ms1),
-                MS2RT((((hh2 * 60i64 + mm2) * 60i64) + ss2) * 1000i64 + ms2));
+            if (lastStr != str || lastBuff != buff) { //discard repeated subs
+                ret.Add(str,
+                    file->IsUnicode(),
+                    MS2RT((((hh1 * 60i64 + mm1) * 60i64) + ss1) * 1000i64 + ms1),
+                    MS2RT((((hh2 * 60i64 + mm2) * 60i64) + ss2) * 1000i64 + ms2));
+            }
+
+            lastStr = str;
+            lastBuff = buff;
         } else {
             continue;
         }
