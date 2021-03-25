@@ -743,6 +743,7 @@ bool CAppSettings::IsSubtitleRendererSupported(SubtitleRenderer eSubtitleRendere
                 case VIDRNDT_DS_EVR_CUSTOM:
                 case VIDRNDT_DS_SYNC:
                 case VIDRNDT_DS_MADVR:
+                case VIDRNDT_DS_MPCVR:
                     return true;
             }
             break;
