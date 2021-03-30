@@ -16697,6 +16697,13 @@ void CMainFrame::OpenMedia(CAutoPtr<OpenMediaData> pOMD)
         }
     }
 
+    // Wait a little so we can maybe avoid having to close previous media while graph is still being created
+    int wait = 3000;
+    while (GetLoadState() == MLS::LOADING && wait > 0) {
+        SleepEx(200, false);
+        wait -= 200;
+    }
+
     if (m_bSettingUpMenus) {
         SleepEx(500, false);
         ASSERT(!m_bSettingUpMenus);
