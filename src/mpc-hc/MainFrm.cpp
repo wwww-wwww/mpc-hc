@@ -761,6 +761,8 @@ CMainFrame::CMainFrame()
     , m_lCurrentChapter(0)
     , m_lChapterStartTime(0xFFFFFFFF)
     , m_eMediaLoadState(MLS::CLOSED)
+    , m_bSettingUpMenus(false)
+    , m_bOpenMediaActive(false)
     , streampospoller_active(false)
     , m_fFullScreen(false)
     , m_fFirstFSAfterLaunchOnFS(false)
@@ -3611,6 +3613,8 @@ LRESULT CMainFrame::OnFilePostOpenmedia(WPARAM wParam, LPARAM lParam)
     auto& s = AfxGetAppSettings();
 
     // from this on
+    m_bOpenMediaActive = false;
+    m_bSettingUpMenus = true;
     SetLoadState(MLS::LOADED);
 
     // destroy invisible top-level d3dfs window if there is no video renderer
@@ -3787,6 +3791,8 @@ LRESULT CMainFrame::OnFilePostOpenmedia(WPARAM wParam, LPARAM lParam)
             m_wndSeekBar.PreviewWindowShow(point);
         }
     }
+
+    m_bSettingUpMenus = false;
 
     return 0;
 }
@@ -16675,8 +16681,6 @@ void CMainFrame::AddCurDevToPlaylist()
 
 void CMainFrame::OpenMedia(CAutoPtr<OpenMediaData> pOMD)
 {
-    const auto& s = AfxGetAppSettings();
-
     auto pFileData = dynamic_cast<const OpenFileData*>(pOMD.m_p);
     //auto pDVDData = dynamic_cast<const OpenDVDData*>(pOMD.m_p);
     auto pDeviceData = dynamic_cast<const OpenDeviceData*>(pOMD.m_p);
@@ -16692,6 +16696,14 @@ void CMainFrame::OpenMedia(CAutoPtr<OpenMediaData> pOMD)
             return;
         }
     }
+
+    if (m_bSettingUpMenus) {
+        SleepEx(500, false);
+        ASSERT(!m_bSettingUpMenus);
+    }
+
+    ASSERT(!m_bOpenMediaActive);
+    m_bOpenMediaActive = true;
 
     // close the current graph before opening new media
     if (GetLoadState() != MLS::CLOSED) {
@@ -16741,6 +16753,8 @@ void CMainFrame::OpenMedia(CAutoPtr<OpenMediaData> pOMD)
 
     // we hereby proclaim
     SetLoadState(MLS::LOADING);
+
+    const auto& s = AfxGetAppSettings();
 
     // use the graph thread only for some media types
     bool bDirectShow = pFileData && !pFileData->fns.IsEmpty() && s.m_Formats.GetEngine(pFileData->fns.GetHead()) == DirectShow;
@@ -16807,10 +16821,17 @@ bool CMainFrame::DisplayChange()
 
 void CMainFrame::CloseMedia(bool bNextIsQueued/* = false*/)
 {
+    TRACE(_T("CMainFrame::CloseMedia\n"));
+
     if (GetLoadState() == MLS::CLOSING || GetLoadState() == MLS::CLOSED) {
         // double close, should be prevented
         ASSERT(FALSE);
         return;
+    }
+
+    if (m_bSettingUpMenus) {
+        SleepEx(500, false);
+        ASSERT(!m_bSettingUpMenus);
     }
 
     // delay showing auto-hidden controls if new media is queued
@@ -16821,7 +16842,10 @@ void CMainFrame::CloseMedia(bool bNextIsQueued/* = false*/)
     }
 
     // abort if loading
+    bool bGraphTerminated = false;
     if (GetLoadState() == MLS::LOADING) {
+        TRACE(_T("Media is still loading. Aborting graph.\n"));
+
         // should be possible only in graph thread
         ASSERT(m_bOpenedThroughThread);
 
@@ -16847,6 +16871,7 @@ void CMainFrame::CloseMedia(bool bNextIsQueued/* = false*/)
             ASSERT(FALSE);
             ENSURE(TerminateThread(m_pGraphThread->m_hThread, DWORD_ERROR));
             // then we recreate graph thread
+            bGraphTerminated = true;
             m_pGraphThread = (CGraphThread*)AfxBeginThread(RUNTIME_CLASS(CGraphThread));
             m_pGraphThread->SetMainFrame(this);
         }
@@ -16876,6 +16901,7 @@ void CMainFrame::CloseMedia(bool bNextIsQueued/* = false*/)
     }
 
     // we are on the way
+    m_bSettingUpMenus = true;
     SetLoadState(MLS::CLOSING);
 
     // stop the graph before destroying it
@@ -16893,11 +16919,13 @@ void CMainFrame::CloseMedia(bool bNextIsQueued/* = false*/)
     SetupVideoStreamsSubMenu();
     SetupJumpToSubMenus();
 
+    m_bSettingUpMenus = false;
+
     m_pSubtitlesProviders->Abort(SubtitlesThreadType(STT_SEARCH | STT_DOWNLOAD));
     m_wndSubtitlesDownloadDialog.DoClear();
 
     // initiate graph destruction
-    if (m_pGraphThread && m_bOpenedThroughThread) {
+    if (m_pGraphThread && m_bOpenedThroughThread && !bGraphTerminated) {
         // either opening or closing has to be blocked to prevent reentering them, closing is the better choice
         VERIFY(m_evClosePrivateFinished.Reset());
         VERIFY(m_pGraphThread->PostThreadMessage(CGraphThread::TM_CLOSE, 0, 0));
@@ -16922,6 +16950,8 @@ void CMainFrame::CloseMedia(bool bNextIsQueued/* = false*/)
 
     // graph is destroyed, update stuff
     OnFilePostClosemedia(bNextIsQueued);
+
+    TRACE(_T("Close media completed\n"));
 }
 
 void CMainFrame::StartTunerScan(CAutoPtr<TunerScanData> pTSD)

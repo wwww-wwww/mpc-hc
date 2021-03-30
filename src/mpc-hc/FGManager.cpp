@@ -1027,9 +1027,11 @@ STDMETHODIMP CFGManager::SetLogFile(DWORD_PTR hFile)
 STDMETHODIMP CFGManager::Abort()
 {
     if (!m_pUnkInner) {
+        ASSERT(false);
         return E_UNEXPECTED;
     }
 
+    // FIXME: this can hang
     CAutoLock cAutoLock(this);
 
     return CComQIPtr<IFilterGraph2>(m_pUnkInner)->Abort();
@@ -1344,14 +1346,13 @@ STDMETHODIMP CFGManager::AddToROT()
 
 STDMETHODIMP CFGManager::RemoveFromROT()
 {
-    CAutoLock cAutoLock(this);
-
-    HRESULT hr;
-
     if (!m_dwRegister) {
         return S_FALSE;
     }
 
+    CAutoLock cAutoLock(this);
+
+    HRESULT hr;
     CComPtr<IRunningObjectTable> pROT;
     if (SUCCEEDED(hr = GetRunningObjectTable(0, &pROT))
             && SUCCEEDED(hr = pROT->Revoke(m_dwRegister))) {
