@@ -437,13 +437,13 @@ msgctxt "IDD_PPAGEPLAYBACK_IDC_RADIO1"
 msgid "Play"
 msgstr "ਚਲਾਓ"
 
-msgctxt "IDD_PPAGEPLAYBACK_IDC_STATIC1"
-msgid "time(s)"
-msgstr "ਵਾਰ"
-
 msgctxt "IDD_PPAGEPLAYBACK_IDC_RADIO2"
 msgid "Repeat forever"
 msgstr "ਹਮੇਸ਼ਾ ਦੁਹਰਾਓ"
+
+msgctxt "IDD_PPAGEPLAYBACK_IDC_STATIC1"
+msgid "time(s)"
+msgstr "ਵਾਰ"
 
 msgctxt "IDD_PPAGEPLAYBACK_IDC_STATIC"
 msgid "Repeat mode:"

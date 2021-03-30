@@ -441,13 +441,13 @@ msgctxt "IDD_PPAGEPLAYBACK_IDC_RADIO1"
 msgid "Play"
 msgstr "נגן"
 
-msgctxt "IDD_PPAGEPLAYBACK_IDC_STATIC1"
-msgid "time(s)"
-msgstr "מספר פעמים"
-
 msgctxt "IDD_PPAGEPLAYBACK_IDC_RADIO2"
 msgid "Repeat forever"
 msgstr "חזרה ללא הפסק"
+
+msgctxt "IDD_PPAGEPLAYBACK_IDC_STATIC1"
+msgid "time(s)"
+msgstr "מספר פעמים"
 
 msgctxt "IDD_PPAGEPLAYBACK_IDC_STATIC"
 msgid "Repeat mode:"

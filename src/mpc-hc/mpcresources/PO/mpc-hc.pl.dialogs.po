@@ -447,13 +447,13 @@ msgctxt "IDD_PPAGEPLAYBACK_IDC_RADIO1"
 msgid "Play"
 msgstr "Odtwarzaj"
 
-msgctxt "IDD_PPAGEPLAYBACK_IDC_STATIC1"
-msgid "time(s)"
-msgstr "raz(y)"
-
 msgctxt "IDD_PPAGEPLAYBACK_IDC_RADIO2"
 msgid "Repeat forever"
 msgstr "Ciągłe"
+
+msgctxt "IDD_PPAGEPLAYBACK_IDC_STATIC1"
+msgid "time(s)"
+msgstr "raz(y)"
 
 msgctxt "IDD_PPAGEPLAYBACK_IDC_STATIC"
 msgid "Repeat mode:"

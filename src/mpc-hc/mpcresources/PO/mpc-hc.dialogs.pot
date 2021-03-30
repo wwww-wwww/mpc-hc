@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2021-03-24 19:52:12+0000\n"
+"POT-Creation-Date: 2021-03-30 17:20:49+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -432,12 +432,12 @@ msgctxt "IDD_PPAGEPLAYBACK_IDC_RADIO1"
 msgid "Play"
 msgstr ""
 
-msgctxt "IDD_PPAGEPLAYBACK_IDC_STATIC1"
-msgid "time(s)"
-msgstr ""
-
 msgctxt "IDD_PPAGEPLAYBACK_IDC_RADIO2"
 msgid "Repeat forever"
+msgstr ""
+
+msgctxt "IDD_PPAGEPLAYBACK_IDC_STATIC1"
+msgid "time(s)"
 msgstr ""
 
 msgctxt "IDD_PPAGEPLAYBACK_IDC_STATIC"

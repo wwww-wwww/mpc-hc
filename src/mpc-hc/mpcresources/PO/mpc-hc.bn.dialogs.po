@@ -444,13 +444,13 @@ msgctxt "IDD_PPAGEPLAYBACK_IDC_RADIO1"
 msgid "Play"
 msgstr "প্লে করা হবে"
 
-msgctxt "IDD_PPAGEPLAYBACK_IDC_STATIC1"
-msgid "time(s)"
-msgstr "বার"
-
 msgctxt "IDD_PPAGEPLAYBACK_IDC_RADIO2"
 msgid "Repeat forever"
 msgstr "পুনরায় চলতেই থাকবে"
+
+msgctxt "IDD_PPAGEPLAYBACK_IDC_STATIC1"
+msgid "time(s)"
+msgstr "বার"
 
 msgctxt "IDD_PPAGEPLAYBACK_IDC_STATIC"
 msgid "Repeat mode:"
