@@ -51,7 +51,6 @@ public:
     int m_iLoopForever;
     int m_iLoopMode;
     CMPCThemeComboBox m_LoopMode;
-    CMPCThemeEdit m_loopnumctrl;
     int m_nLoops;
     int m_iAfterPlayback;
     int m_iZoomLevel;

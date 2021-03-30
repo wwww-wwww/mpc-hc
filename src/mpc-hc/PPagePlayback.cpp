@@ -67,7 +67,6 @@ void CPPagePlayback::DoDataExchange(CDataExchange* pDX)
     DDX_Slider(pDX, IDC_SLIDER1, m_nVolume);
     DDX_Slider(pDX, IDC_SLIDER2, m_nBalance);
     DDX_Radio(pDX, IDC_RADIO1, m_iLoopForever);
-    DDX_Control(pDX, IDC_EDIT1, m_loopnumctrl);
     DDX_Text(pDX, IDC_EDIT1, m_nLoops);
     DDX_CBIndex(pDX, IDC_COMBO2, m_iAfterPlayback);
     DDX_CBIndex(pDX, IDC_COMBO1, m_iZoomLevel);
