@@ -1526,6 +1526,7 @@ HRESULT CDX9RenderingEngine::TextureCopy(IDirect3DTexture9* pTexture)
 
     hr = m_pD3DDev->SetTexture(0, pTexture);
 
+    // use D3DTEXF_LINEAR here if wanting to support hw linear sampling in pixel shaders
     return TextureBlt(m_pD3DDev, v, D3DTEXF_POINT);
 }
 
