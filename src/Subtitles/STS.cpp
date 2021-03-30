@@ -1214,8 +1214,6 @@ static CStringW SMI2SSA(CStringW str, int CharSet)
                     break;
                 }
                 if (arg.Find(L"color=") == 0) {
-                    DWORD color;
-
                     arg = arg.Mid(6);   // delete "color="
                     if (arg.IsEmpty()) {
                         continue;
@@ -2218,7 +2216,7 @@ void CSimpleTextSubtitle::Add(CStringW str, bool fUnicode, REFERENCE_TIME start,
     sub.end = end;
     sub.readorder = readorder < 0 ? (int)GetCount() : readorder;
 
-    int n = __super::GetCount();
+    int n = (int)__super::GetCount();
 
     // Entries with a null duration don't belong to any segments since
     // they are not to be rendered. We choose not to skip them completely
