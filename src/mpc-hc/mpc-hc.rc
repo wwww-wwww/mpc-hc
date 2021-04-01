@@ -404,35 +404,35 @@ IDD_PPAGETWEAKS DIALOGEX 0, 0, 355, 289
 STYLE DS_SETFONT | WS_CHILD
 FONT 9, "Segoe UI", 400, 0, 0x1
 BEGIN
-    GROUPBOX        "Jump distances (small, medium, large in ms)",IDC_STATIC,6,6,335,36
+    GROUPBOX        "Jump distances (small, medium, large in ms)",IDC_STATIC,6,6,343,36
     EDITTEXT        IDC_EDIT1,12,20,48,14,ES_RIGHT | ES_AUTOHSCROLL | ES_NUMBER
     EDITTEXT        IDC_EDIT2,65,20,48,14,ES_RIGHT | ES_AUTOHSCROLL | ES_NUMBER
     EDITTEXT        IDC_EDIT3,118,20,48,14,ES_RIGHT | ES_AUTOHSCROLL | ES_NUMBER
     PUSHBUTTON      "Default",IDC_BUTTON1,203,20,65,14
+    CONTROL         "Show preview on seek bar",IDC_SEEK_PREVIEW,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,6,47,193,8
+    LTEXT           "Preview width (% of screen width)",IDC_STATIC,6,60,193,8
+    EDITTEXT        IDC_EDIT4,203,57,40,14,ES_CENTER | ES_AUTOHSCROLL
+    CONTROL         "",IDC_SPIN2,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS | UDS_HOTTRACK,230,56,10,14
     CONTROL         "Fast seek (on keyframe)",IDC_FASTSEEK_CHECK,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,6,78,194,8
-    COMBOBOX        IDC_COMBO4,203,76,138,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_COMBO4,203,76,146,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
     CONTROL         "Show chapter marks in seek bar",IDC_CHECK2,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,6,93,343,8
-    CONTROL         "Display ""Now Playing"" information in Skype's mood message",IDC_CHECK4,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,6,123,343,8
-    CONTROL         "Prevent minimizing the player when in fullscreen on a non default monitor",IDC_CHECK6,
-                    "Button",BS_AUTOCHECKBOX | BS_MULTILINE | WS_TABSTOP,6,168,343,17
-    CONTROL         "Use enhanced taskbar features",IDC_CHECK_ENHANCED_TASKBAR,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,6,138,343,8
-    CONTROL         "Open previous/next file in folder on ""Skip back/forward"" when there is only one item in playlist",IDC_CHECK7,
-                    "Button",BS_AUTOCHECKBOX | BS_VCENTER | BS_MULTILINE | WS_TABSTOP,6,183,343,17
-    CONTROL         "Show time tooltip:",IDC_CHECK8,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,6,207,162,8
-    COMBOBOX        IDC_COMBO3,203,204,138,64,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-    LTEXT           "OSD font:",IDC_STATIC,6,228,98,8
-    COMBOBOX        IDC_COMBO1,137,226,168,64,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
-    COMBOBOX        IDC_COMBO2,310,226,31,64,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-    CONTROL         "Enable Logitech LCD support (experimental)",IDC_CHECK_LCD,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,6,153,343,10
     CONTROL         "Auto-hide the mouse pointer during playback in windowed mode",IDC_CHECK3,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,6,108,343,8
-    CONTROL         "Show preview on seek bar",IDC_SEEK_PREVIEW,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,6,47,167,8
-    LTEXT           "Preview width (% of screen width)",IDC_STATIC,6,60,178,8
-    EDITTEXT        IDC_EDIT4,203,56,40,14,ES_CENTER | ES_AUTOHSCROLL
-    CONTROL         "",IDC_SPIN2,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS | UDS_HOTTRACK,230,56,10,14
+    CONTROL         "Display ""Now Playing"" information in Skype's mood message",IDC_CHECK4,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,6,123,343,8
+    CONTROL         "Use enhanced taskbar features",IDC_CHECK_ENHANCED_TASKBAR,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,6,138,343,8
+    CONTROL         "Enable Logitech LCD support (experimental)",IDC_CHECK_LCD,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,6,153,343,8
+    CONTROL         "Prevent minimizing the player when in fullscreen on a non default monitor",IDC_CHECK6,
+                    "Button",BS_AUTOCHECKBOX | BS_TOP | BS_MULTILINE | WS_TABSTOP,6,168,343,16
+    CONTROL         "Open previous/next file in folder on ""Skip back/forward"" when there is only one item in playlist",IDC_CHECK7,
+                    "Button",BS_AUTOCHECKBOX | BS_TOP | BS_MULTILINE | WS_TABSTOP,6,184,343,16
+    CONTROL         "Show time tooltip:",IDC_CHECK8,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,6,210,193,8
+    COMBOBOX        IDC_COMBO3,203,207,146,64,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "OSD font:",IDC_STATIC,6,227,135,8
+    COMBOBOX        IDC_COMBO1,145,225,168,61,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_COMBO2,318,225,31,61,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
 END
 
 IDD_PPAGEEXTERNALFILTERS DIALOGEX 0, 0, 355, 289
