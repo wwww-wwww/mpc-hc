@@ -27,11 +27,15 @@
 [Messages]
 ; Arabic
 ar.WelcomeLabel2=سوف يتم تثبيت [name] على جهازك.%n%nيستحسن - قبل الاستمرار - إغلاق كافة البرامج المفتوحة 
-ar.WinVersionTooLowError=[name] requires Windows Vista or newer to run.
+ar.WinVersionTooLowError=[name] يتطلب Windows Vista او أحدث لتشغيله
 
 ; Belarusian
 be.WelcomeLabel2=Зараз на ваш камп'ютар будзе ўсталявана праграма [name].%n%nПерш чым працягнуць, рэкамендуецца закрыць усе астатнія праграмы.
 be.WinVersionTooLowError=[name] requires Windows Vista or newer to run.
+
+; Bulgarian
+bg.WelcomeLabel2=Приложението [name] ще бъде инсталирано на този компютър.%n%nПрепоръчва се да затворите всички други приложения преди да продължите.
+bg.WinVersionTooLowError=[name] изисква Windows Vista или по-нова версия за да се изпълни.
 
 ; Bengali
 bn.WelcomeLabel2=এর মাধ্যমে আপনার কম্পিউটারে [name] ইনস্টল করা হবে। %n%nপ্রক্রিয়াটি চালিয়ে যাওয়ার পূর্বে অন্যান্য সকল অ্যাপ্লিকেশন বন্ধ করার পরামর্শ দেয়া যাচ্ছে।
@@ -67,7 +71,7 @@ en_GB.WinVersionTooLowError=[name] requires Windows Vista or newer to run.
 
 ; Spanish
 es.WelcomeLabel2=Esto instalará [name] en el equipo.%n%nSe recomienda que cierre el resto de las aplicaciones antes de continuar.
-es.WinVersionTooLowError=[name] requires Windows Vista or newer to run.
+es.WinVersionTooLowError=[nombre] Para ejecutar se requiere Windows Vista o superior
 
 ; Basque
 eu.WelcomeLabel2=Honek [name] zure ordenagailuan ezarriko du.%n%nGomendatzen da beste aplikazio guztiak istea jarraitu aurretik.
@@ -91,15 +95,15 @@ he.WinVersionTooLowError=[name] requires Windows Vista or newer to run.
 
 ; Croatian
 hr.WelcomeLabel2=Ovo će instalirati [name] na vaše računalo.%n%nPreporučeno je da zatvorite sve otvorene programe prije nego nastavite.
-hr.WinVersionTooLowError=[name] requires Windows Vista or newer to run.
+hr.WinVersionTooLowError=[name] zahtjeva Windows Vista ili novije za rad.
 
 ; Hungarian
 hu.WelcomeLabel2=Ez telepíteni fogja a(z) [name]-t a számítógépére.%n%nAjánlott, hogy minden más alkalmazást zárjon be a folytatás előtt.
-hu.WinVersionTooLowError=[name] requires Windows Vista or newer to run.
+hu.WinVersionTooLowError=[name] használatához Windows Vista vagy újabb operácios rendszer használata szükséges.
 
 ; Armenian (Armenia)
 hy.WelcomeLabel2=[name]-ը կտեղադրվի ձեր համակարգչում։%n%nԽորհուրդ ենք տալիս փակել մյուս բոլոր ծրագրերը։
-hy.WinVersionTooLowError=[name] requires Windows Vista or newer to run.
+hy.WinVersionTooLowError=[name]-ը պահանաջում է Windows Vista կամ ավելի նորը:
 
 ; Indonesian
 id.WelcomeLabel2=Ini akan memasang [name] di komputer Anda.%n%nSangat disarankan untuk menutup semua aplikasi lain sebelum melanjutkan.
@@ -107,10 +111,10 @@ id.WinVersionTooLowError=[name] membutuhkan Windows Vista atau lebih baru untuk 
 
 ; Italian
 it.WelcomeLabel2=Questo installerà [name] sul tuo computer.%n%nE' consigliato chiudere tutte le altre applicazioni prima di continuare.
-it.WinVersionTooLowError=[name] requires Windows Vista or newer to run.
+it.WinVersionTooLowError=[name] richiede per l'esecuzione Windows Vista o versioni successive.
 
 ; Japanese
-ja.WelcomeLabel2=このプログラムはご使用のコンピュータ上に [name] をインストールします。%n%nセットアップを続行する前に他のすべてのアプリケーションを閉じることを推奨します。
+ja.WelcomeLabel2=これにより、コンピュータに [name] がインストールされます。%n%n続行する前に他のすべてのアプリケーションを閉じることを推奨します。
 ja.WinVersionTooLowError=[name] を実行するには Windows Vista 以降が必要です。
 
 ; Korean
@@ -123,19 +127,23 @@ lt.WinVersionTooLowError=[name] requires Windows Vista or newer to run.
 
 ; Malay (Malaysia)
 ms_MY.WelcomeLabel2=Ini akan memasang [name] ke dalam komputer anda.%n%nDisarankan anda tutup semua aplikasi lain sebelum diteruskan.
-ms_MY.WinVersionTooLowError=[name] requires Windows Vista or newer to run.
+ms_MY.WinVersionTooLowError=[name] memerlukan Windows Vista atau yang lebih baharu untuk dijalankan.
 
 ; Dutch (Neutral)
 nl.WelcomeLabel2=Dit programma zal [name] op uw computer installeren.%n%nHet is aanbevolen dat u alle andere toepassingen sluit voordat u verder gaat.
-nl.WinVersionTooLowError=[name] vereist Windows Vista of hoger om uit te voeren.
+nl.WinVersionTooLowError=[name] vereist Windows Vista of hoger.
 
 ; Polish
 pl.WelcomeLabel2=Zostanie zainstalowane [name] na Twoim komputerze.%n%nZaleca się zamknięcie wszystkich innych aplikacji przed kontynuowaniem.
 pl.WinVersionTooLowError=[name] wymaga systemu Windows Vista lub nowszego do uruchomienia.
 
 ; Portuguese (Brazil)
-pt_BR.WelcomeLabel2=Isto instalará o [name] no seu computador.%n%nÉ recomendável que você feche todos os outros programas antes de continuar.
-pt_BR.WinVersionTooLowError=[name] requer Windows Vista ou posterior para rodar.
+pt_BR.WelcomeLabel2=Isto instalará o [name] no seu computador.%n%nÉ recomendado que você feche todos os outros aplicativos antes de continuar.
+pt_BR.WinVersionTooLowError=O [name] requer Windows Vista ou mais novo pra rodar.
+
+; Portuguese (Portugal)
+pt_PT.WelcomeLabel2=Isto irá instalar o [name] no seu computador.%n%nÉ recomendado que feche todas as aplicações antes de continuar.
+pt_PT.WinVersionTooLowError=[name] requer Windows Vista ou superior para ser executado.
 
 ; Romanian
 ro.WelcomeLabel2=Se va instala [name] pe calculatorul dumneavoastră.%n%nEste recomandat să închideți toate celelalte aplicații înainte de a continua.
@@ -143,7 +151,7 @@ ro.WinVersionTooLowError=[name] necesită Windows Vista sau mai nou pentru a rul
 
 ; Russian
 ru.WelcomeLabel2=Эта программа установит [name] на ваш компьютер.%n%nПеред тем, как продолжить, рекомендуется закрыть все прочие приложения.
-ru.WinVersionTooLowError=[name] requires Windows Vista or newer to run.
+ru.WinVersionTooLowError=Для запуска [name] требуется Windows Vista или выше.
 
 ; Slovak
 sk.WelcomeLabel2=Teraz sa nainštaluje [name] do Vášho počítača.%n%nPredtým než budete pokračovať, odporúčame ukončiť všetky ostatné programy.
@@ -159,7 +167,7 @@ sr.WinVersionTooLowError=[name] requires Windows Vista or newer to run.
 
 ; Swedish
 sv.WelcomeLabel2=Detta kommer att installera [name] på din dator.%n%nDet rekommenderas att du stänger alla andra program innan du fortsätter.
-sv.WinVersionTooLowError=[name] requires Windows Vista or newer to run.
+sv.WinVersionTooLowError=[namn] kräver Windows Vista eller nyare för att köras.
 
 ; Thai (Thailand)
 th_TH.WelcomeLabel2=สิ่งนี้จะติดตั้ง [name] บนคอมพิวเตอร์ของคุณ%n%nขอแนะนำให้คุณปิดโปรแกรมอื่นๆ ก่อนทำขั้นตอนต่อไป
@@ -167,7 +175,7 @@ th_TH.WinVersionTooLowError=[name] requires Windows Vista or newer to run.
 
 ; Turkish
 tr.WelcomeLabel2=[name] medya oynatıcısı programı bilgisayarınıza kurulacaktır.%n%nKuruluma geçmeden önce tüm açık uygulamaları kapatmanızı öneriyoruz.
-tr.WinVersionTooLowError=[name] requires Windows Vista or newer to run.
+tr.WinVersionTooLowError=[name] programını çalıştırmak için Windows Vista veya daha yeni bir sürüm gerekiyor.
 
 ; Tatar
 tt.WelcomeLabel2=Программа сезнең санакка [name] урнаштырачак.%n%nДәвам итү алдыннан барлык башка эшлекле кушымталарны ябарга кирәк.
@@ -179,15 +187,15 @@ uk.WinVersionTooLowError=[name] requires Windows Vista or newer to run.
 
 ; Vietnamese
 vi.WelcomeLabel2=Chuẩn bị cài đặt [name] vào máy tính của bạn.%n%nĐề nghị bạn đóng tất cả các ứng dụng khác trước khi tiếp tục.
-vi.WinVersionTooLowError=[name] requires Windows Vista or newer to run.
+vi.WinVersionTooLowError=[name] yêu cầu Windows Vista hoặc mới hơn để chạy.
 
 ; Chinese (P.R.C.)
 zh_CN.WelcomeLabel2=这将安装 [name] 到您的计算机中。%n%n建议您在继续之前关闭所有其它的应用程序。
-zh_CN.WinVersionTooLowError=[name] requires Windows Vista or newer to run.
+zh_CN.WinVersionTooLowError=[name] 需要运行在Windows Vista或更新版本的Windows系统上
 
 ; Chinese (Taiwan)
 zh_TW.WelcomeLabel2=這將會安裝 [name] 在您的電腦中。%n%n建議您關閉所有其它應用程式後再繼續。
-zh_TW.WinVersionTooLowError=[name] requires Windows Vista or newer to run.
+zh_TW.WinVersionTooLowError=[name] 需要 Windows Vista 或更新版才能執行。
 
 
 [CustomMessages]
@@ -199,7 +207,7 @@ ar.msg_DeleteSettings=هل تريد حذف إعدادات ضبظ البرنام�
 #if defined(sse2_required)
 ar.msg_simd_sse2=هذه النسخة من البرنامج تتطلب معالج يدعم خاصية SSE2.%n%nمعالج جهازك لايحمل هذه المتطلبات.
 #endif
-ar.run_DownloadToolbarImages=زُر صفحتنا في الويكي لتحميل صور شريط الأدوات
+ar.run_DownloadToolbarImages=قم بزيارة صفحتنا في الويكي لتحميل صور شريط الأدوات
 ar.tsk_AllUsers=لجميع المستخدمين
 ar.tsk_CurrentUser=للمستخدم الحالي فقط
 ar.tsk_Other=مهام أخرى:
@@ -224,6 +232,23 @@ be.tsk_ResetSettings=Скінуць налады
 be.types_DefaultInstallation=Усталяванне па змаўчанні
 be.types_CustomInstallation=Адвольнае ўсталяванне
 be.ViewChangelog=Праглядзець спіс зменаў
+
+; Bulgarian
+bg.langid=00001026
+bg.comp_mpciconlib=Библиотека с икони
+bg.comp_mpcresources=Преводи
+bg.msg_DeleteSettings=Искате ли да изтриете и настройките на MPC-HC?%n%nАко планирате да инсталирате отново MPC-HC, това не е необходимо.
+#if defined(sse2_required)
+bg.msg_simd_sse2=Тази компилация на MPC-HC изисква процесор с поддръжка на SSE2.%n%nПроцесорът ви не поддържа SSE2.
+#endif
+bg.run_DownloadToolbarImages=Посетете нашата Wiki страница за да изтеглите изображения за лентата с инструменти
+bg.tsk_AllUsers=За всички потребители
+bg.tsk_CurrentUser=Само за текущия потребител
+bg.tsk_Other=Други задачи:
+bg.tsk_ResetSettings=Изчисти настройките
+bg.types_DefaultInstallation=Инсталация по подразбиране
+bg.types_CustomInstallation=Инсталация по избор
+bg.ViewChangelog=Преглед на промените
 
 ; Bengali
 bn.langid=00001093
@@ -313,7 +338,7 @@ da.ViewChangelog=Vis ændringslog
 ; German (Neutral)
 de.langid=00001031
 de.comp_mpciconlib=Icon-Bibliothek
-de.comp_mpcresources=Übersetzungen (u.a. deutsch)
+de.comp_mpcresources=Übersetzungen (u.a. Deutsch)
 de.msg_DeleteSettings=Bei Neuinstallation des MPC-HC können verbliebene Einstellungen problemlos übernommen werden.%n%nEinstellungen auch entfernen?
 #if defined(sse2_required)
 de.msg_simd_sse2=Die verwendete CPU muss SSE2 unterstützen.
@@ -325,7 +350,7 @@ de.tsk_Other=Weitere Aufgaben:
 de.tsk_ResetSettings=Einstellungen zurücksetzen
 de.types_DefaultInstallation=Standard-Installation
 de.types_CustomInstallation=Benutzerdefinierte Installation
-de.ViewChangelog=Changelog anzeigen
+de.ViewChangelog=Änderungsprotokoll anzeigen
 
 ; Greek (Greece)
 el.langid=00001032
@@ -427,7 +452,7 @@ fr.tsk_Other=Autres tâches :
 fr.tsk_ResetSettings=Réinitialisation des paramètres
 fr.types_DefaultInstallation=Installation par défaut
 fr.types_CustomInstallation=Installation personnalisée
-fr.ViewChangelog=Voir la liste des changements
+fr.ViewChangelog=Visualiser le journal des modifications
 
 ; Galician
 gl.langid=00001110
@@ -510,7 +535,7 @@ hy.tsk_AllUsers=Բոլորի համար
 hy.tsk_CurrentUser=Միայն ընթացիկ օգտվողի համար
 hy.tsk_Other=Լրացուցիչ.
 hy.tsk_ResetSettings=Վերակայել կարգավորումները
-hy.types_DefaultInstallation=Տեղադրել ըստ լռելյայնի
+hy.types_DefaultInstallation=Սկզբնադիր տեղադրում
 hy.types_CustomInstallation=Հարմարեցված տեղակայում
 hy.ViewChangelog=Փոփոխությունների ցանկը
 
@@ -552,9 +577,9 @@ it.ViewChangelog=Visualizza Changelog
 ja.langid=00001041
 ja.comp_mpciconlib=アイコン ライブラリ
 ja.comp_mpcresources=翻訳
-ja.msg_DeleteSettings=MPC-HC の設定を削除してもよろしいですか？%n%nMPC-HC を再度インストールする場合、設定を削除する必要はありません。
+ja.msg_DeleteSettings=MPC-HC の設定も削除しますか？%n%nMPC-HC を再インストールする予定がある場合、設定を削除する必要はありません。
 #if defined(sse2_required)
-ja.msg_simd_sse2=MPC-HC のこのビルドには SSE2 拡張機能をサポートする CPU が必要です。%n%nご使用の CPU はこれらの機能を備えていません。
+ja.msg_simd_sse2=MPC-HC のこのビルドは、SSE2 拡張サポートを備えた CPU を必要とします。%n%nCPU にこれらの機能はありません。
 #endif
 ja.run_DownloadToolbarImages=Wiki ページに移動してツール バーの画像をダウンロードする
 ja.tsk_AllUsers=すべてのユーザーにインストールする
@@ -618,8 +643,8 @@ ms_MY.ViewChangelog=Lihat Log Perubahan
 
 ; Dutch (Neutral)
 nl.langid=00001043
-nl.comp_mpciconlib=Iconen bibliotheek
-nl.comp_mpcresources=Talen
+nl.comp_mpciconlib=Iconenbibliotheek
+nl.comp_mpcresources=Vertalingen
 nl.msg_DeleteSettings=Wilt u ook de instellingen van MPC-HC verwijderen?%n%nAls u van plan bent MPC-HC opnieuw te gaan installeren is dit niet nodig.
 #if defined(sse2_required)
 nl.msg_simd_sse2=Deze versie van MPC-HC heeft een processor nodig die SSE2 ondersteunt.%n%nUw processor ondersteunt dit niet.
@@ -631,7 +656,7 @@ nl.tsk_Other=Andere taken:
 nl.tsk_ResetSettings=Instellingen resetten
 nl.types_DefaultInstallation=Standaard installatie
 nl.types_CustomInstallation=Aangepaste installatie
-nl.ViewChangelog=Toon wijziging geschiedenis
+nl.ViewChangelog=Toon changelog
 
 ; Polish
 pl.langid=00001045
@@ -652,20 +677,37 @@ pl.ViewChangelog=Pokaż zmiany
 
 ; Portuguese (Brazil)
 pt_BR.langid=00001046
-pt_BR.comp_mpciconlib=Biblioteca de ícones
+pt_BR.comp_mpciconlib=Biblioteca de Ícones
 pt_BR.comp_mpcresources=Traduções
-pt_BR.msg_DeleteSettings=Gostaria de excluir as configurações do MPC-HC?%n%nSe planeja instalar o MPC-HC novamente, você não precisa excluí-las.
+pt_BR.msg_DeleteSettings=Você também quer apagar as configurações do MPC-HC?%n%nSe você planeja instalar o MPC-HC de novo então você não tem que apagá-las.
 #if defined(sse2_required)
-pt_BR.msg_simd_sse2=Esta versão do MPC-HC necessita uma CPU com suporte a extensões SSE2.%n%nSua CPU não tem esse suporte.
+pt_BR.msg_simd_sse2=Este build do MPC-HC requer uma CPU com suporte pra extensão SSE2.%n%nSua CPU não tem essas capacidades.
 #endif
-pt_BR.run_DownloadToolbarImages=Visite nossa página Wiki para baixar imagens de barra de ferramentas
-pt_BR.tsk_AllUsers=Para todos os usuários
-pt_BR.tsk_CurrentUser=Para o usuário atual somente
+pt_BR.run_DownloadToolbarImages=Visite nossa página do Wiki pra baixar imagens da barra de ferramentas
+pt_BR.tsk_AllUsers=Pra todos os usuários
+pt_BR.tsk_CurrentUser=Só para o usuário atual
 pt_BR.tsk_Other=Outras tarefas:
-pt_BR.tsk_ResetSettings=Reiniciar as configurações
+pt_BR.tsk_ResetSettings=Resetar configurações
 pt_BR.types_DefaultInstallation=Instalação padrão
 pt_BR.types_CustomInstallation=Instalação personalizada
-pt_BR.ViewChangelog=Ver registro de alterações
+pt_BR.ViewChangelog=Visualizar Changelog
+
+; Portuguese (Portugal)
+pt_PT.langid=00001046
+pt_PT.comp_mpciconlib=Biblioteca de ícones
+pt_PT.comp_mpcresources=Traduções
+pt_PT.msg_DeleteSettings=Pretende também eliminar as definições do MPC-HC?%n%nSe planeia instalar o MPC-HC outra vez, então não necessita de as eliminar.
+#if defined(sse2_required)
+pt_PT.msg_simd_sse2=Esta compilação do MPC-HC requer um processador com suporte para o SSE2.%n%nO seu processador não contém esta capacidade.
+#endif
+pt_PT.run_DownloadToolbarImages=Visite o nosso Wiki para descarregar imagens de barra de ferramentas
+pt_PT.tsk_AllUsers=Para todos os utilizadores
+pt_PT.tsk_CurrentUser=Para o utilizador atual apenas
+pt_PT.tsk_Other=Outras tarefas:
+pt_PT.tsk_ResetSettings=Reiniciar definições
+pt_PT.types_DefaultInstallation=Instalação por defeito
+pt_PT.types_CustomInstallation=Instalação personalizada
+pt_PT.ViewChangelog=Ver Changelog
 
 ; Romanian
 ro.langid=00001048
@@ -686,13 +728,13 @@ ro.ViewChangelog=Vezi istoricul modificărilor
 
 ; Russian
 ru.langid=00001049
-ru.comp_mpciconlib=Библиотека значков
+ru.comp_mpciconlib=Библиотека иконок
 ru.comp_mpcresources=Локализации
 ru.msg_DeleteSettings=Желаете ли вы также удалить настройки MPC-HC?%n%nЕсли вы собираетесь установить MPC-HC повторно, их не нужно удалять.
 #if defined(sse2_required)
 ru.msg_simd_sse2=Для этой сборки MPC-HC необходим процессор с поддержкой SSE2-инструкций.%n%nВаш процессор не соответствует данным требованиям.
 #endif
-ru.run_DownloadToolbarImages=Посетить нашу вики для загрузии темы панели инструментов
+ru.run_DownloadToolbarImages=Посетить нашу вики для загрузки темы панели инструментов
 ru.tsk_AllUsers=Для всех пользователей
 ru.tsk_CurrentUser=Только для текущего пользователя
 ru.tsk_Other=Другие задачи:
@@ -754,13 +796,13 @@ sr.ViewChangelog=Погледај евиденцију промена
 
 ; Swedish
 sv.langid=00001053
-sv.comp_mpciconlib=Ikonbibliotek
+sv.comp_mpciconlib=Ikon bibliotek
 sv.comp_mpcresources=Översättningar
 sv.msg_DeleteSettings=Vill du också ta bort inställningarna för MPC-HC?%n%nOm du planerar att installera MPC-HC igen så behöver du inte ta bort dem.
 #if defined(sse2_required)
 sv.msg_simd_sse2=Denna version av MPC-HC kräver en processor med stöd för SSE2.%n%nDin processor saknar detta stöd.
 #endif
-sv.run_DownloadToolbarImages=Besök vår Wiki för att ladda ned verktygsfältsbilder
+sv.run_DownloadToolbarImages=Besök vår Wiki för att ladda ned verktygsfälts bilder
 sv.tsk_AllUsers=För alla användare
 sv.tsk_CurrentUser=Endast för den aktuella användaren
 sv.tsk_Other=Andra uppgifter:
@@ -792,7 +834,7 @@ tr.comp_mpciconlib=Simge Kütüphanesi
 tr.comp_mpcresources=Çeviriler
 tr.msg_DeleteSettings=MPC-HC ayarlarını da silmek istiyor musunuz?%n%nMPC-HC 'yi tekrar yüklemeyi planlıyorsanız, bu ayarları silmemenizi öneririz.
 #if defined(sse2_required)
-tr.msg_simd_sse2=Bu MPC-HC sürümü, SSE2 eklentisi destekleyen bir işlemci gerektirmektedir.%n%nİşlemciniz malesef bu özelliği desteklemiyor.
+tr.msg_simd_sse2=Bu MPC-HC sürümü, SSE2 özelliği destekleyen bir işlemci gerektirmektedir.%n%nİşlemciniz malesef bu özelliği desteklemiyor.
 #endif
 tr.run_DownloadToolbarImages=Araç çubuğu simgelerini indirmek için Wiki sayfamızı ziyaret edebilirsiniz
 tr.tsk_AllUsers=Tüm kullanıcılar için
