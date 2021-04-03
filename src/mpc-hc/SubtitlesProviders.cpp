@@ -793,6 +793,7 @@ void SubtitlesTask::ThreadProc()
     }
 
     m_pMainFrame->m_pSubtitlesProviders->RemoveTask(this);
+    delete this;
 }
 
 /******************************************************************************

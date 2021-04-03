@@ -430,7 +430,6 @@ public:
         if(!m_pTasks.empty()) {
             m_pTasks.remove(pTask);
         }
-        delete pTask;
     }
 
     void MoveUp(size_t nIndex) {
