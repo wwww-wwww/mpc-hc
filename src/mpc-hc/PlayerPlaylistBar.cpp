@@ -351,7 +351,7 @@ void CPlayerPlaylistBar::ParsePlayList(CAtlList<CString>& fns, CAtlList<CString>
     } else if (ct == "application/x-cue-sheet") {
         ParseCUESheet(fns.GetHead());
         return;
-    } else if (ct == "audio/x-mpegurl") {
+    } else if (ct == "audio/x-mpegurl" || ct == "audio/mpegurl") {
         if (!PathUtils::IsURL(fns.GetHead())) { // prefer opening M3U URLs directly with LAV Splitter
             if (ParseM3UPlayList(fns.GetHead())) {
                 return; //we have handled this one. if parse fails it should fall through to AddItem below

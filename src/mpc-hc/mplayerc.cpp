@@ -330,7 +330,6 @@ CStringA GetContentType(CString fn, CAtlList<CString>* redir)
     CString content, body, urlredirect;
     BOOL ishttp = false;
     BOOL parsefile = false;
-    BOOL redirected = false;
 
     fn.Trim();
 
@@ -407,12 +406,21 @@ CStringA GetContentType(CString fn, CAtlList<CString>* redir)
                     //CString	strStatus;
                     //httpFile->QueryInfo(HTTP_QUERY_STATUS_TEXT, strStatus);	// Status String - eg OK, Not Found
                     url_fail = true;
-                    httpFile->Close(); // Close() isn't called by the destructor
-                    delete httpFile;
-                    return "";
+            }
+
+            if (url_fail) {
+                httpFile->Close(); // Close() isn't called by the destructor
+                delete httpFile;
+                return "";
             }
 
             httpFile->QueryInfo(HTTP_QUERY_CONTENT_TYPE, content);	// Content-Type - eg text/html
+
+            if (content == _T("audio/x-mpegurl") || content == _T("audio/mpegurl")) {
+                httpFile->Close();
+                delete httpFile;
+                return TToA(content);
+            }
 
             // Partial download of response body to further identify content types
             UINT br = 0;
@@ -444,21 +452,15 @@ CStringA GetContentType(CString fn, CAtlList<CString>* redir)
                 }
 
                 if (exit) {
-                    if (redirected) {
-                        if (0 == redir->GetCount()) {
-                            redir->AddTail(urlredirect);
-                        }
-                    }
-                    httpFile->Close(); // Close() isn't called by the destructor
+                    httpFile->Close();
                     delete httpFile;
                     return cnt;
                 }
             }
 
-            // Resume partial download of response body in cases it's a playlist
+            // Resume partial download of response body in case it's a playlist
             buffer[0] = '\0';
             if (redir && (content == _T("audio/x-scpls") || content == _T("audio/scpls")
-                || content == _T("audio/x-mpegurl") || content == _T("audio/mpegurl")
                 || content == _T("video/x-ms-asf") || content == _T("text/plain")
                 || content == _T("application/octet-stream") || content == _T("application/pls+xml"))) {
                 while (body.GetLength() < 128 * 1024) { // should be enough for a playlist...
@@ -471,7 +473,7 @@ CStringA GetContentType(CString fn, CAtlList<CString>* redir)
                 }
             }
 
-            httpFile->Close(); // Close() isn't called by the destructor
+            httpFile->Close();
             delete httpFile;
         }
     }
@@ -527,11 +529,13 @@ CStringA GetContentType(CString fn, CAtlList<CString>* redir)
             // File1=...\n
             res.emplace_back(_T("file\\d+\\s*=\\s*[\"]*([^\n\"]+)"), reFlags);
         }
+        /*
         else if (content == _T("audio/x-mpegurl") || content == _T("audio/mpegurl")) {
             // #comment
             // ...
             res.emplace_back(_T("[^#][^\n]+"), reFlags);
         }
+        */
         else if (content == _T("audio/x-pn-realaudio")) {
             // rtsp://...
             res.emplace_back(_T("rtsp://[^\n]+"), reFlags);
@@ -549,8 +553,6 @@ CStringA GetContentType(CString fn, CAtlList<CString>* redir)
 
     return TToA(content);
 }
-
-
 
 WORD AssignedToCmd(UINT keyOrMouseValue, bool bIsFullScreen, bool bCheckMouse)
 {
