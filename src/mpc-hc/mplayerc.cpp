@@ -333,6 +333,7 @@ CStringA GetContentType(CString fn, CAtlList<CString>* redir)
     BOOL redirected = false;
 
     fn.Trim();
+
     // Get content type based on the URI scheme
     BOOL isurl = PathUtils::IsURL(fn);
     if (isurl) {
@@ -349,16 +350,14 @@ CStringA GetContentType(CString fn, CAtlList<CString>* redir)
         if (_tcsicmp(url.GetSchemeName(), _T("http")) == 0) {
             ishttp = true;
         }
-
-        if (_tcsicmp(url.GetSchemeName(), _T("https")) == 0) {
+        else if (_tcsicmp(url.GetSchemeName(), _T("https")) == 0) {
             ishttp = true;
         }
-
-        if (!ishttp) {
-            url_fail = true; // Unsupported URI scheme
+        else {
             return "";
         }
     }
+
     // Get content type by getting the header response from server
     if (ishttp) {
         CInternetSession internet;
@@ -462,7 +461,7 @@ CStringA GetContentType(CString fn, CAtlList<CString>* redir)
                 || content == _T("audio/x-mpegurl") || content == _T("audio/mpegurl")
                 || content == _T("video/x-ms-asf") || content == _T("text/plain")
                 || content == _T("application/octet-stream") || content == _T("application/pls+xml"))) {
-                while (body.GetLength() < 64 * 1024) { // should be enough for a playlist...
+                while (body.GetLength() < 128 * 1024) { // should be enough for a playlist...
                     br = httpFile->Read(buffer, 256);
                     if (br == 0) {
                         break;
