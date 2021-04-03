@@ -402,7 +402,7 @@ CStringA GetContentType(CString fn, CAtlList<CString>* redir)
                 case HTTP_STATUS_NOT_MODIFIED:        // 304  if-modified-since was not modified
                 case HTTP_STATUS_USE_PROXY:           // 305  redirection to proxy, location header specifies proxy to use
                 case HTTP_STATUS_REDIRECT_KEEP_VERB:  // 307  HTTP/1.1: keep same verb
-                case HTTP_STATUS_PERMANENT_REDIRECT:  // 308  Object permanently moved keep verb
+                case 308/*HTTP_STATUS_PERMANENT_REDIRECT*/:  // 308  Object permanently moved keep verb
                     break;
                 default:
                     //CString	strStatus;
