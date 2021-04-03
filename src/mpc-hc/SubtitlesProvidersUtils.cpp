@@ -822,13 +822,13 @@ UINT64 SubtitlesProvidersUtils::GenerateOSHash(SubtitlesInfo& pFileInfo)
             for (int i = 0; i < PROBE_SIZE / sizeof(UINT64); ++i) {
                 fileHash += buffer[i];
             }
-        } else { return errval; }
+        } else { std::free(buffer); return errval; }
         position = std::max(0ui64, pFileInfo.fileSize - PROBE_SIZE);
         if (SUCCEEDED(pFileInfo.pAsyncReader->SyncRead(position, PROBE_SIZE, (BYTE*)buffer))) {
             for (int i = 0; i < PROBE_SIZE / sizeof(UINT64); ++i) {
                 fileHash += buffer[i];
             }
-        } else { return errval; }
+        } else { std::free(buffer); return errval; }
     } else {
         CFile file;
         CFileException fileException;
@@ -838,14 +838,15 @@ UINT64 SubtitlesProvidersUtils::GenerateOSHash(SubtitlesInfo& pFileInfo)
                 for (int i = 0; i < PROBE_SIZE / sizeof(UINT64); ++i) {
                     fileHash += buffer[i];
                 }
-            } else { return errval; }
+            } else { std::free(buffer); return errval; }
             file.Seek(std::max(0ui64, pFileInfo.fileSize - PROBE_SIZE), CFile::begin);
             if (file.Read(buffer, PROBE_SIZE)) {
                 for (int i = 0; i < PROBE_SIZE / sizeof(UINT64); ++i) {
                     fileHash += buffer[i];
                 }
-            } else { return errval; }
+            } else { std::free(buffer); return errval; }
         }
     }
+    std::free(buffer);
     return fileHash;
 }
