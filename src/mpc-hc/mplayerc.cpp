@@ -416,11 +416,13 @@ CStringA GetContentType(CString fn, CAtlList<CString>* redir)
 
             httpFile->QueryInfo(HTTP_QUERY_CONTENT_TYPE, content);	// Content-Type - eg text/html
 
+            /*
             if (content == _T("audio/x-mpegurl") || content == _T("audio/mpegurl")) {
                 httpFile->Close();
                 delete httpFile;
                 return TToA(content);
             }
+            */
 
             // Partial download of response body to further identify content types
             UINT br = 0;
@@ -529,13 +531,11 @@ CStringA GetContentType(CString fn, CAtlList<CString>* redir)
             // File1=...\n
             res.emplace_back(_T("file\\d+\\s*=\\s*[\"]*([^\n\"]+)"), reFlags);
         }
-        /*
         else if (content == _T("audio/x-mpegurl") || content == _T("audio/mpegurl")) {
             // #comment
             // ...
             res.emplace_back(_T("[^#][^\n]+"), reFlags);
         }
-        */
         else if (content == _T("audio/x-pn-realaudio")) {
             // rtsp://...
             res.emplace_back(_T("rtsp://[^\n]+"), reFlags);
