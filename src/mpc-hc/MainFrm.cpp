@@ -18392,7 +18392,7 @@ LRESULT CMainFrame::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
                 bCallOurProc = !m_pMVRSR->ParentWindowProc(m_hWnd, message, &wParam, &lParam, &ret);
         }
     }
-    if (bCallOurProc) {
+    if (bCallOurProc && m_hWnd) {
         ret = __super::WindowProc(message, wParam, lParam);
     }
 
