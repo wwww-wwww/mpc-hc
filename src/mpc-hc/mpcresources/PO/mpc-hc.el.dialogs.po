@@ -670,6 +670,14 @@ msgctxt "IDD_PPAGETWEAKS_IDC_BUTTON1"
 msgid "Default"
 msgstr "Προεπιλογή"
 
+msgctxt "IDD_PPAGETWEAKS_IDC_SEEK_PREVIEW"
+msgid "Show preview on seek bar"
+msgstr "Εμφάνιση προεπισκόπησης στη γραμμή αναζήτησης"
+
+msgctxt "IDD_PPAGETWEAKS_IDC_STATIC"
+msgid "Preview width (% of screen width)"
+msgstr "Πλάτος προεπισκόπησης (% του πλάτους της οθόνης)"
+
 msgctxt "IDD_PPAGETWEAKS_IDC_FASTSEEK_CHECK"
 msgid "Fast seek (on keyframe)"
 msgstr "Γρήγορη αναζήτηση (σε βασικό καρέ)"
@@ -678,9 +686,22 @@ msgctxt "IDD_PPAGETWEAKS_IDC_CHECK2"
 msgid "Show chapter marks in seek bar"
 msgstr "Εμφάνιση σημάνσεων κεφαλαίων στη γραμμή αναζήτησης"
 
+msgctxt "IDD_PPAGETWEAKS_IDC_CHECK3"
+msgid "Auto-hide the mouse pointer during playback in windowed mode"
+msgstr ""
+"Αυτόματη απόκρυψη του ποντικιού κατά την αναπαραγωγή σε λειτουργία παραθύρου"
+
 msgctxt "IDD_PPAGETWEAKS_IDC_CHECK4"
 msgid "Display \"Now Playing\" information in Skype's mood message"
 msgstr "Αποστολή πληροφορίας \"Αναπαραγωγή τώρα\" σε μήνυμα διάθεσης του Skype"
+
+msgctxt "IDD_PPAGETWEAKS_IDC_CHECK_ENHANCED_TASKBAR"
+msgid "Use enhanced taskbar features"
+msgstr "Χρήση βελτιωμένων δυνατοτήτων γραμμής εργασιών"
+
+msgctxt "IDD_PPAGETWEAKS_IDC_CHECK_LCD"
+msgid "Enable Logitech LCD support (experimental)"
+msgstr "Ενεργοποίηση υποστήριξης Logitech LCD (πειραματικά)"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_CHECK6"
 msgid ""
@@ -688,10 +709,6 @@ msgid ""
 msgstr ""
 "Αποτροπή ελαχιστοποίησης στην προβολή πλήρους οθόνης σε μη προεπιλεγμένη "
 "οθόνη"
-
-msgctxt "IDD_PPAGETWEAKS_IDC_CHECK_ENHANCED_TASKBAR"
-msgid "Use enhanced taskbar features"
-msgstr "Χρήση βελτιωμένων δυνατοτήτων γραμμής εργασιών"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_CHECK7"
 msgid ""
@@ -709,23 +726,6 @@ msgstr "Χρήση συμβουλής χρόνου:"
 msgctxt "IDD_PPAGETWEAKS_IDC_STATIC"
 msgid "OSD font:"
 msgstr "Γραμματοσειρά OSD:"
-
-msgctxt "IDD_PPAGETWEAKS_IDC_CHECK_LCD"
-msgid "Enable Logitech LCD support (experimental)"
-msgstr "Ενεργοποίηση υποστήριξης Logitech LCD (πειραματικά)"
-
-msgctxt "IDD_PPAGETWEAKS_IDC_CHECK3"
-msgid "Auto-hide the mouse pointer during playback in windowed mode"
-msgstr ""
-"Αυτόματη απόκρυψη του ποντικιού κατά την αναπαραγωγή σε λειτουργία παραθύρου"
-
-msgctxt "IDD_PPAGETWEAKS_IDC_SEEK_PREVIEW"
-msgid "Show preview on seek bar"
-msgstr "Εμφάνιση προεπισκόπησης στη γραμμή αναζήτησης"
-
-msgctxt "IDD_PPAGETWEAKS_IDC_STATIC"
-msgid "Preview width (% of screen width)"
-msgstr "Πλάτος προεπισκόπησης (% του πλάτους της οθόνης)"
 
 msgctxt "IDD_PPAGEEXTERNALFILTERS_IDC_BUTTON1"
 msgid "Add Filter..."
