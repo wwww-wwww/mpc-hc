@@ -1759,6 +1759,14 @@ static bool OpenSubStationAlpha(CTextFile* file, CSimpleTextSubtitle& ret, int C
             try {
                 ret.m_sYCbCrMatrix = GetStrW(pszBuff, nBuffLength);
             } catch (...) {}
+        } else if (entry == L"format") {
+            // ToDo: Parse this line and use it to correctly parse following style and dialogue lines
+            // Currently the contents of the format lines are assumed to have a standard string value based on script version.
+            if (version < 5 && CString(pszBuff).Find(_T("Layer,") >= 0)) {
+                version = 5;
+            }
+        } else {
+            TRACE(_T("Ignoring unknown SSA entry: %s\n"), entry);
         }
     }
 
