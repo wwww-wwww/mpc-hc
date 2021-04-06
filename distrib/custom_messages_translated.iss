@@ -34,8 +34,8 @@ be.WelcomeLabel2=Зараз на ваш камп'ютар будзе ўстал�
 be.WinVersionTooLowError=[name] requires Windows Vista or newer to run.
 
 ; Bulgarian
-bg.WelcomeLabel2=Приложението [name] ще бъде инсталирано на този компютър.%n%nПрепоръчва се да затворите всички други приложения преди да продължите.
-bg.WinVersionTooLowError=[name] изисква Windows Vista или по-нова версия за да се изпълни.
+;bg.WelcomeLabel2=Приложението [name] ще бъде инсталирано на този компютър.%n%nПрепоръчва се да затворите всички други приложения преди да продължите.
+;bg.WinVersionTooLowError=[name] изисква Windows Vista или по-нова версия за да се изпълни.
 
 ; Bengali
 bn.WelcomeLabel2=এর মাধ্যমে আপনার কম্পিউটারে [name] ইনস্টল করা হবে। %n%nপ্রক্রিয়াটি চালিয়ে যাওয়ার পূর্বে অন্যান্য সকল অ্যাপ্লিকেশন বন্ধ করার পরামর্শ দেয়া যাচ্ছে।
@@ -142,8 +142,8 @@ pt_BR.WelcomeLabel2=Isto instalará o [name] no seu computador.%n%nÉ recomendad
 pt_BR.WinVersionTooLowError=O [name] requer Windows Vista ou mais novo pra rodar.
 
 ; Portuguese (Portugal)
-pt_PT.WelcomeLabel2=Isto irá instalar o [name] no seu computador.%n%nÉ recomendado que feche todas as aplicações antes de continuar.
-pt_PT.WinVersionTooLowError=[name] requer Windows Vista ou superior para ser executado.
+;pt_PT.WelcomeLabel2=Isto irá instalar o [name] no seu computador.%n%nÉ recomendado que feche todas as aplicações antes de continuar.
+;pt_PT.WinVersionTooLowError=[name] requer Windows Vista ou superior para ser executado.
 
 ; Romanian
 ro.WelcomeLabel2=Se va instala [name] pe calculatorul dumneavoastră.%n%nEste recomandat să închideți toate celelalte aplicații înainte de a continua.
@@ -234,21 +234,21 @@ be.types_CustomInstallation=Адвольнае ўсталяванне
 be.ViewChangelog=Праглядзець спіс зменаў
 
 ; Bulgarian
-bg.langid=00001026
-bg.comp_mpciconlib=Библиотека с икони
-bg.comp_mpcresources=Преводи
-bg.msg_DeleteSettings=Искате ли да изтриете и настройките на MPC-HC?%n%nАко планирате да инсталирате отново MPC-HC, това не е необходимо.
+;bg.langid=00001026
+;bg.comp_mpciconlib=Библиотека с икони
+;bg.comp_mpcresources=Преводи
+;bg.msg_DeleteSettings=Искате ли да изтриете и настройките на MPC-HC?%n%nАко планирате да инсталирате отново MPC-HC, това не е необходимо.
 #if defined(sse2_required)
-bg.msg_simd_sse2=Тази компилация на MPC-HC изисква процесор с поддръжка на SSE2.%n%nПроцесорът ви не поддържа SSE2.
+;bg.msg_simd_sse2=Тази компилация на MPC-HC изисква процесор с поддръжка на SSE2.%n%nПроцесорът ви не поддържа SSE2.
 #endif
-bg.run_DownloadToolbarImages=Посетете нашата Wiki страница за да изтеглите изображения за лентата с инструменти
-bg.tsk_AllUsers=За всички потребители
-bg.tsk_CurrentUser=Само за текущия потребител
-bg.tsk_Other=Други задачи:
-bg.tsk_ResetSettings=Изчисти настройките
-bg.types_DefaultInstallation=Инсталация по подразбиране
-bg.types_CustomInstallation=Инсталация по избор
-bg.ViewChangelog=Преглед на промените
+;bg.run_DownloadToolbarImages=Посетете нашата Wiki страница за да изтеглите изображения за лентата с инструменти
+;bg.tsk_AllUsers=За всички потребители
+;bg.tsk_CurrentUser=Само за текущия потребител
+;bg.tsk_Other=Други задачи:
+;bg.tsk_ResetSettings=Изчисти настройките
+;bg.types_DefaultInstallation=Инсталация по подразбиране
+;bg.types_CustomInstallation=Инсталация по избор
+;bg.ViewChangelog=Преглед на промените
 
 ; Bengali
 bn.langid=00001093
@@ -693,21 +693,21 @@ pt_BR.types_CustomInstallation=Instalação personalizada
 pt_BR.ViewChangelog=Visualizar Changelog
 
 ; Portuguese (Portugal)
-pt_PT.langid=00001046
-pt_PT.comp_mpciconlib=Biblioteca de ícones
-pt_PT.comp_mpcresources=Traduções
-pt_PT.msg_DeleteSettings=Pretende também eliminar as definições do MPC-HC?%n%nSe planeia instalar o MPC-HC outra vez, então não necessita de as eliminar.
+;pt_PT.langid=00001046
+;pt_PT.comp_mpciconlib=Biblioteca de ícones
+;pt_PT.comp_mpcresources=Traduções
+;pt_PT.msg_DeleteSettings=Pretende também eliminar as definições do MPC-HC?%n%nSe planeia instalar o MPC-HC outra vez, então não necessita de as eliminar.
 #if defined(sse2_required)
-pt_PT.msg_simd_sse2=Esta compilação do MPC-HC requer um processador com suporte para o SSE2.%n%nO seu processador não contém esta capacidade.
+;pt_PT.msg_simd_sse2=Esta compilação do MPC-HC requer um processador com suporte para o SSE2.%n%nO seu processador não contém esta capacidade.
 #endif
-pt_PT.run_DownloadToolbarImages=Visite o nosso Wiki para descarregar imagens de barra de ferramentas
-pt_PT.tsk_AllUsers=Para todos os utilizadores
-pt_PT.tsk_CurrentUser=Para o utilizador atual apenas
-pt_PT.tsk_Other=Outras tarefas:
-pt_PT.tsk_ResetSettings=Reiniciar definições
-pt_PT.types_DefaultInstallation=Instalação por defeito
-pt_PT.types_CustomInstallation=Instalação personalizada
-pt_PT.ViewChangelog=Ver Changelog
+;pt_PT.run_DownloadToolbarImages=Visite o nosso Wiki para descarregar imagens de barra de ferramentas
+;pt_PT.tsk_AllUsers=Para todos os utilizadores
+;pt_PT.tsk_CurrentUser=Para o utilizador atual apenas
+;pt_PT.tsk_Other=Outras tarefas:
+;pt_PT.tsk_ResetSettings=Reiniciar definições
+;pt_PT.types_DefaultInstallation=Instalação por defeito
+;pt_PT.types_CustomInstallation=Instalação personalizada
+;pt_PT.ViewChangelog=Ver Changelog
 
 ; Romanian
 ro.langid=00001048
