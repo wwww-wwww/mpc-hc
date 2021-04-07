@@ -391,7 +391,7 @@ STDMETHODIMP_(bool) CSubPicQueue::LookupSubPic(REFERENCE_TIME rtNow, bool bAdvis
                 }
                 pSubPicProviderWithSharedLock->Unlock();
 
-                if (!bStopSearch) {
+                if (!bStopSearch && m_settings.nSize) {
                     std::unique_lock<std::mutex> lock(m_mutexQueue);
 
                     auto queueReady = [this, rtNow]() {
@@ -399,7 +399,8 @@ STDMETHODIMP_(bool) CSubPicQueue::LookupSubPic(REFERENCE_TIME rtNow, bool bAdvis
                                || (!m_queue.IsEmpty() && m_queue.GetTail()->GetStop() > rtNow);
                     };
 
-                    m_condQueueReady.wait(lock, queueReady);
+                    std::chrono::milliseconds timeoutPeriod(250);
+                    m_condQueueReady.wait_for(lock, timeoutPeriod, queueReady);
                 }
             }
         } else {
