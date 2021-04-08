@@ -281,6 +281,7 @@
     </ClCompile>
     <ClCompile Include="RealMediaGraph.cpp" />
     <ClCompile Include="RealMediaWindowlessSite.cpp" />
+    <ClCompile Include="RegexUtil.cpp" />
     <ClCompile Include="RegFilterChooserDlg.cpp" />
     <ClCompile Include="SaveDlg.cpp" />
     <ClCompile Include="SaveImageDialog.cpp" />
@@ -471,6 +472,7 @@
     </ClInclude>
     <ClInclude Include="RealMediaGraph.h" />
     <ClInclude Include="RealMediaWindowlessSite.h" />
+    <ClInclude Include="RegexUtil.h" />
     <ClInclude Include="RegFilterChooserDlg.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="SaveDlg.h" />
