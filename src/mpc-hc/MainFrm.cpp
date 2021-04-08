@@ -775,8 +775,8 @@ CMainFrame::CMainFrame()
     , m_iDVDDomain(DVD_DOMAIN_Stop)
     , m_iDVDTitle(0)
     , m_dSpeedRate(1.0)
-    , m_ZoomX(1)
-    , m_ZoomY(1)
+    , m_ZoomX(1.0)
+    , m_ZoomY(1.0)
     , m_PosX(0.5)
     , m_PosY(0.5)
     , m_AngleX(0)
@@ -3865,8 +3865,11 @@ void CMainFrame::OnFilePostClosemedia(bool bNextIsQueued/* = false*/)
     m_nCurSubtitle = -1;
     m_lSubtitleShift = 0;
 
-    if (!AfxGetAppSettings().fSavePnSZoom) {
+    CAppSettings& s = AfxGetAppSettings();
+    if (!s.fSavePnSZoom) {
         m_AngleX = m_AngleY = m_AngleZ = 0;
+        m_ZoomX = m_ZoomY = 1.0;
+        m_PosX = m_PosY = 0.5;
     }
 
     if (m_closingmsg.IsEmpty()) {
@@ -3894,7 +3897,7 @@ void CMainFrame::OnFilePostClosemedia(bool bNextIsQueued/* = false*/)
         RecalcLayout();
     }
 
-    if (AfxGetAppSettings().fEnableEDLEditor) {
+    if (s.fEnableEDLEditor) {
         m_wndEditListEditor.CloseFile();
     }
 
@@ -3916,7 +3919,7 @@ void CMainFrame::OnFilePostClosemedia(bool bNextIsQueued/* = false*/)
         OpenSetupWindowTitle(true);
     }
 
-    SetAlwaysOnTop(AfxGetAppSettings().iOnTop);
+    SetAlwaysOnTop(s.iOnTop);
 
     SendNowPlayingToSkype();
 
