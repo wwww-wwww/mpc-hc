@@ -18426,20 +18426,18 @@ bool CMainFrame::IsAeroSnapped()
 UINT CMainFrame::OnPowerBroadcast(UINT nPowerEvent, LPARAM nEventData)
 {
     static BOOL bWasPausedBeforeSuspention;
-    OAFilterState mediaState;
 
     switch (nPowerEvent) {
         case PBT_APMSUSPEND:            // System is suspending operation.
             TRACE(_T("OnPowerBroadcast - suspending\n"));   // For user tracking
             bWasPausedBeforeSuspention = FALSE;             // Reset value
-            mediaState = GetMediaState();
 
-            if (mediaState == State_Running) {
+            if (GetMediaState() == State_Running) {
                 bWasPausedBeforeSuspention = TRUE;
                 SendMessage(WM_COMMAND, ID_PLAY_PAUSE);     // Pause
             }
             break;
-        case PBT_APMRESUMEAUTOMATIC:    // Operation is resuming automatically from a low-power state. This message is sent every time the system resumes.
+        case PBT_APMRESUMESUSPEND:     // System is resuming operation
             TRACE(_T("OnPowerBroadcast - resuming\n"));     // For user tracking
 
             // Resume if we paused before suspension.
