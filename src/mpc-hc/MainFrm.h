@@ -379,6 +379,7 @@ private:
     int m_nVolumeBeforeFrameStepping;
 
     bool m_fEndOfStream;
+    ULONGLONG m_dwLastPause;
 
     bool m_bRememberFilePos;
 

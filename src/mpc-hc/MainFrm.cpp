@@ -3040,6 +3040,7 @@ LRESULT CMainFrame::OnResetDevice(WPARAM wParam, LPARAM lParam)
 
     if (fs == State_Running && m_pMC) {
         m_pMC->Run();
+        m_dwLastPause = 0;
 
         // When restarting DVB capture, we need to set again the channel.
         if (GetPlaybackMode() == PM_DIGITAL_CAPTURE) {
@@ -7739,6 +7740,11 @@ void CMainFrame::OnPlayPlay()
         if (GetPlaybackMode() == PM_FILE) {
             if (m_fEndOfStream) {
                 SendMessage(WM_COMMAND, ID_PLAY_STOP);
+            } else {
+                // after long pause (10min) or hibernation, perform a seek to current position first, to prevent potential hang on some systems (due to gpu driver issues?)
+                if (m_dwLastPause && m_wndSeekBar.HasDuration() && (GetTickCount64() - m_dwLastPause >= 10*60*1000)) {
+                    DoSeekTo(m_wndSeekBar.GetPos(), False);
+                }
             }
             m_pMS->SetRate(m_dSpeedRate);
         } else if (GetPlaybackMode() == PM_DVD) {
@@ -7776,6 +7782,7 @@ void CMainFrame::OnPlayPlay()
         }
 
         // Restart playback
+        m_dwLastPause = 0;
         m_pMC->Run();
 
         if (m_fFrameSteppingActive) {
@@ -7848,6 +7855,7 @@ void CMainFrame::OnPlayPauseI()
                 || GetPlaybackMode() == PM_DVD
                 || GetPlaybackMode() == PM_ANALOG_CAPTURE) {
             m_pMC->Pause();
+            m_dwLastPause = GetTickCount64();
         } else {
             ASSERT(FALSE);
         }
@@ -16828,6 +16836,8 @@ void CMainFrame::CloseMedia(bool bNextIsQueued/* = false*/)
 {
     TRACE(_T("CMainFrame::CloseMedia\n"));
 
+    m_dwLastPause = 0;
+
     if (GetLoadState() == MLS::CLOSING || GetLoadState() == MLS::CLOSED) {
         // double close, should be prevented
         ASSERT(FALSE);
@@ -18439,6 +18449,9 @@ UINT CMainFrame::OnPowerBroadcast(UINT nPowerEvent, LPARAM nEventData)
             break;
         case PBT_APMRESUMESUSPEND:     // System is resuming operation
             TRACE(_T("OnPowerBroadcast - resuming\n"));     // For user tracking
+
+            // force seek to current position when resuming playback to re-initialize the video decoder
+            m_dwLastPause = 1;
 
             // Resume if we paused before suspension.
             if (bWasPausedBeforeSuspention) {
