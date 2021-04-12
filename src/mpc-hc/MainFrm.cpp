@@ -16928,11 +16928,13 @@ void CMainFrame::CloseMedia(bool bNextIsQueued/* = false*/)
     // Ensure the dynamically added menu items are cleared and all references
     // on objects belonging to the DirectShow graph they might hold are freed.
     // Note that we need to be in closing state already when doing that
-    SetupFiltersSubMenu();
-    SetupAudioSubMenu();
-    SetupSubtitlesSubMenu();
-    SetupVideoStreamsSubMenu();
-    SetupJumpToSubMenus();
+    if (m_hWnd) {
+        SetupFiltersSubMenu();
+        SetupAudioSubMenu();
+        SetupSubtitlesSubMenu();
+        SetupVideoStreamsSubMenu();
+        SetupJumpToSubMenus();
+    }
 
     m_bSettingUpMenus = false;
 
