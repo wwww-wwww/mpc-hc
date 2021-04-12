@@ -752,6 +752,7 @@ CMainFrame::CMainFrame()
     , m_rtStepForwardStart(0)
     , m_nVolumeBeforeFrameStepping(0)
     , m_fEndOfStream(false)
+    , m_dwLastPause(0)
     , m_bRememberFilePos(false)
     , m_dwLastRun(0)
     , m_bBuffering(false)
@@ -7743,6 +7744,7 @@ void CMainFrame::OnPlayPlay()
             } else {
                 // after long pause (10min) or hibernation, perform a seek to current position first, to prevent potential hang on some systems (due to gpu driver issues?)
                 if (m_dwLastPause && m_wndSeekBar.HasDuration() && (GetTickCount64() - m_dwLastPause >= 10*60*1000)) {
+                    streampospoller_active = true;
                     DoSeekTo(m_wndSeekBar.GetPos(), False);
                 }
             }
