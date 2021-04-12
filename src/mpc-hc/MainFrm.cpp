@@ -2029,7 +2029,7 @@ void CMainFrame::OnTimer(UINT_PTR nIDEvent)
                     case PM_FILE:
                     // no break
                     case PM_DVD:
-                        if (m_bOSDDisplayTime) {
+                        if (m_bOSDDisplayTime && m_OSD.GetShowMessage()) {
                             m_OSD.DisplayMessage(OSD_TOPLEFT, m_wndStatusBar.GetStatusTimer());
                         }
                         break;
@@ -2041,7 +2041,7 @@ void CMainFrame::OnTimer(UINT_PTR nIDEvent)
                             REFERENCE_TIME rtNow = REFERENCE_TIME(tNow - NowNext.startTime) * 10000000;
                             REFERENCE_TIME rtDur = REFERENCE_TIME(NowNext.duration) * 10000000;
                             m_wndStatusBar.SetStatusTimer(rtNow, rtDur, false, TIME_FORMAT_MEDIA_TIME);
-                            if (m_bOSDDisplayTime) {
+                            if (m_bOSDDisplayTime && m_OSD.GetShowMessage()) {
                                 m_OSD.DisplayMessage(OSD_TOPLEFT, m_wndStatusBar.GetStatusTimer());
                             }
                         } else {
@@ -7808,37 +7808,39 @@ void CMainFrame::OnPlayPlay()
 
     SetupEVRColorControl(); // can be configured when streaming begins
 
-    CString strOSD;
-    CString strPlay(StrRes(ID_PLAY_PLAY));
-    int i = strPlay.Find(_T("\n"));
-    if (i > 0) {
-        strPlay.Delete(i, strPlay.GetLength() - i);
-    }
-
-    if (m_bFirstPlay) {
-        m_bFirstPlay = false;
-
-        if (GetPlaybackMode() == PM_FILE) {
-            if (!m_LastOpenBDPath.IsEmpty()) {
-                strOSD.LoadString(IDS_PLAY_BD);
-            } else {
-                strOSD = GetFileName();
-                if (!strOSD.IsEmpty() && !m_wndPlaylistBar.GetCur()->m_bYoutubeDL) {
-                    strOSD.TrimRight('/');
-                    strOSD.Replace('\\', '/');
-                    strOSD = strOSD.Mid(strOSD.ReverseFind('/') + 1);
-                }
-            }
-        } else if (GetPlaybackMode() == PM_DVD) {
-            strOSD.LoadString(IDS_PLAY_DVD);
+    if (m_OSD.GetShowMessage()) {
+        CString strOSD;
+        CString strPlay(StrRes(ID_PLAY_PLAY));
+        int i = strPlay.Find(_T("\n"));
+        if (i > 0) {
+            strPlay.Delete(i, strPlay.GetLength() - i);
         }
-    }
 
-    if (strOSD.IsEmpty()) {
-        strOSD = strPlay;
-    }
-    if (GetPlaybackMode() != PM_DIGITAL_CAPTURE) {
-        m_OSD.DisplayMessage(OSD_TOPLEFT, strOSD, 3000);
+        if (m_bFirstPlay) {
+            m_bFirstPlay = false;
+
+            if (GetPlaybackMode() == PM_FILE) {
+                if (!m_LastOpenBDPath.IsEmpty()) {
+                    strOSD.LoadString(IDS_PLAY_BD);
+                } else {
+                    strOSD = GetFileName();
+                    if (!strOSD.IsEmpty() && !m_wndPlaylistBar.GetCur()->m_bYoutubeDL) {
+                        strOSD.TrimRight('/');
+                        strOSD.Replace('\\', '/');
+                        strOSD = strOSD.Mid(strOSD.ReverseFind('/') + 1);
+                    }
+                }
+            } else if (GetPlaybackMode() == PM_DVD) {
+                strOSD.LoadString(IDS_PLAY_DVD);
+            }
+        }
+
+        if (strOSD.IsEmpty()) {
+            strOSD = strPlay;
+        }
+        if (GetPlaybackMode() != PM_DIGITAL_CAPTURE) {
+            m_OSD.DisplayMessage(OSD_TOPLEFT, strOSD, 3000);
+        }
     }
 }
 
