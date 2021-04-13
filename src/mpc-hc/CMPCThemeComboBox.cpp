@@ -17,10 +17,12 @@ BEGIN_MESSAGE_MAP(CMPCThemeComboBox, CComboBox)
     ON_WM_ERASEBKGND()
 END_MESSAGE_MAP()
 
-CMPCThemeComboBox::CMPCThemeComboBox()
+CMPCThemeComboBox::CMPCThemeComboBox(bool commongPropPageChild)
+    :CComboBox(),
+    isHover(false),
+    isThemedDropDown(false),
+    isCommongPropPageChild(commongPropPageChild)
 {
-    isHover = false;
-    isThemedDropDown = false;
 }
 
 void CMPCThemeComboBox::doDraw(CDC& dc, CString strText, CRect rText, COLORREF bkColor, COLORREF fgColor, bool drawDotted)
@@ -54,6 +56,15 @@ CMPCThemeComboBox::~CMPCThemeComboBox()
 {
 }
 
+//lavfilters common property pages don't send us control color messages, so we inject a wndproc to catch them
+static WNDPROC OldControlProc;
+LRESULT CALLBACK wndProcCombo(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
+    if (WM_CTLCOLORLISTBOX == uMsg) {
+        return (LRESULT)CMPCThemeUtil::getCtlColor(hWnd, (HDC)wParam, CTLCOLOR_LISTBOX);
+    }
+    return ::CallWindowProc(OldControlProc, hWnd, uMsg, wParam, lParam);
+}
+
 void CMPCThemeComboBox::themeDropDown()
 {
     if (AppIsThemeLoaded()) {
@@ -61,6 +72,9 @@ void CMPCThemeComboBox::themeDropDown()
             COMBOBOXINFO info = { sizeof(COMBOBOXINFO) };
             if (GetComboBoxInfo(&info)) {
                 SetWindowTheme(info.hwndList, L"DarkMode_Explorer", NULL);
+                if (isCommongPropPageChild) {
+                    OldControlProc = (WNDPROC)SetWindowLongPtr(m_hWnd, GWLP_WNDPROC, (LONG_PTR)wndProcCombo);
+                }
                 isThemedDropDown = true;
             }
         }

@@ -11,6 +11,7 @@
 #include "CMPCThemeTitleBarControlButton.h"
 #include "CMPCThemeInternalPropertyPageWnd.h"
 #include "CMPCThemeWin10Api.h"
+#include "CMPCThemeComPropertyPage.h"
 #undef SubclassWindow
 
 CBrush CMPCThemeUtil::contentBrush;
@@ -35,7 +36,7 @@ void CMPCThemeUtil::fulfillThemeReqs(CWnd* wnd)
 {
     if (AppIsThemeLoaded()) {
 
-        initHelperObjects(wnd);
+        initHelperObjects();
 
         CWnd* pChild = wnd->GetWindow(GW_CHILD);
         while (pChild) {
@@ -109,7 +110,8 @@ void CMPCThemeUtil::fulfillThemeReqs(CWnd* wnd)
                     CMPCThemeDialog* pObject = DEBUG_NEW CMPCThemeDialog();
                     makeThemed(pObject, tChild);
                 } else if (0 == _tcsicmp(windowClass, WC_COMBOBOX)) {
-                    CMPCThemeComboBox* pObject = DEBUG_NEW CMPCThemeComboBox();
+                    bool commonPropPage = (nullptr != DYNAMIC_DOWNCAST(CMPCThemeComPropertyPage, wnd->GetParent()));
+                    CMPCThemeComboBox* pObject = DEBUG_NEW CMPCThemeComboBox(commonPropPage);
                     makeThemed(pObject, tChild);
                 } else if (0 == _tcsicmp(windowClass, TRACKBAR_CLASS)) {
                     CMPCThemeSliderCtrl* pObject = DEBUG_NEW CMPCThemeSliderCtrl();
@@ -131,7 +133,7 @@ void CMPCThemeUtil::fulfillThemeReqs(CWnd* wnd)
     }
 }
 
-void CMPCThemeUtil::initHelperObjects(CWnd* wnd)
+void CMPCThemeUtil::initHelperObjects()
 {
     if (contentBrush.m_hObject == nullptr) {
         contentBrush.CreateSolidBrush(CMPCTheme::ContentBGColor);
@@ -209,7 +211,7 @@ LRESULT CALLBACK wndProcFileDialog(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM l
 void CMPCThemeUtil::subClassFileDialog(CWnd* wnd, HWND hWnd, bool findSink)
 {
     if (AfxGetAppSettings().bWindows10DarkThemeActive) {
-        initHelperObjects(wnd);
+        initHelperObjects();
         HWND pChild = ::GetWindow(hWnd, GW_CHILD);
 
         while (pChild) {
@@ -354,6 +356,7 @@ void CMPCThemeUtil::enableFileDialogHook()
 
 HBRUSH CMPCThemeUtil::getCtlColorFileDialog(HDC hDC, UINT nCtlColor)
 {
+    initHelperObjects();
     if (CTLCOLOR_EDIT == nCtlColor) {
         ::SetTextColor(hDC, CMPCTheme::W10DarkThemeFileDialogInjectedTextColor);
         ::SetBkColor(hDC, CMPCTheme::W10DarkThemeFileDialogInjectedBGColor);
@@ -370,6 +373,24 @@ HBRUSH CMPCThemeUtil::getCtlColorFileDialog(HDC hDC, UINT nCtlColor)
         return NULL;
     }
 }
+
+HBRUSH CMPCThemeUtil::getCtlColor(HWND hWnd, HDC hDC, UINT nCtlColor)
+{
+    if (AppIsThemeLoaded()) {
+        initHelperObjects();
+        if (CTLCOLOR_LISTBOX == nCtlColor) {
+            ::SetTextColor(hDC, CMPCTheme::TextFGColor);
+            ::SetBkColor(hDC, CMPCTheme::ContentBGColor);
+            return contentBrush;
+        } else {
+            ::SetTextColor(hDC, CMPCTheme::TextFGColor);
+            ::SetBkColor(hDC, CMPCTheme::WindowBGColor);
+            return windowBrush;
+        }
+    }
+    return nullptr;
+}
+
 
 HBRUSH CMPCThemeUtil::getCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 {
