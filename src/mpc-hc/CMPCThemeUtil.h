@@ -17,7 +17,6 @@ public:
     void enableFileDialogHook();
 
     static HBRUSH getCtlColorFileDialog(HDC hDC, UINT nCtlColor);
-    static HBRUSH getCtlColor(HWND hwnd, HDC hDC, UINT nCtlColor);
     static HBRUSH getCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
     static bool MPCThemeEraseBkgnd(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
     void subClassFileDialog(CWnd* wnd, HWND hwnd, bool findSink = true);

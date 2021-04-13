@@ -7,10 +7,9 @@ class CMPCThemeComboBox :
 private:
     bool isHover;
     bool isThemedDropDown;
-    bool isCommongPropPageChild;
     CBrush bgBrush;
 public:
-    CMPCThemeComboBox(bool commongPropPageChild = false);
+    CMPCThemeComboBox();
     void doDraw(CDC& dc, CString strText, CRect r, COLORREF bkColor, COLORREF fgColor, bool drawDotted);
     virtual ~CMPCThemeComboBox();
     void themeDropDown();

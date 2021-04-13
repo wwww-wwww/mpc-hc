@@ -11,7 +11,6 @@
 #include "CMPCThemeTitleBarControlButton.h"
 #include "CMPCThemeInternalPropertyPageWnd.h"
 #include "CMPCThemeWin10Api.h"
-#include "CMPCThemeComPropertyPage.h"
 #undef SubclassWindow
 
 CBrush CMPCThemeUtil::contentBrush;
@@ -110,8 +109,7 @@ void CMPCThemeUtil::fulfillThemeReqs(CWnd* wnd)
                     CMPCThemeDialog* pObject = DEBUG_NEW CMPCThemeDialog();
                     makeThemed(pObject, tChild);
                 } else if (0 == _tcsicmp(windowClass, WC_COMBOBOX)) {
-                    bool commonPropPage = (nullptr != DYNAMIC_DOWNCAST(CMPCThemeComPropertyPage, wnd->GetParent()));
-                    CMPCThemeComboBox* pObject = DEBUG_NEW CMPCThemeComboBox(commonPropPage);
+                    CMPCThemeComboBox* pObject = DEBUG_NEW CMPCThemeComboBox();
                     makeThemed(pObject, tChild);
                 } else if (0 == _tcsicmp(windowClass, TRACKBAR_CLASS)) {
                     CMPCThemeSliderCtrl* pObject = DEBUG_NEW CMPCThemeSliderCtrl();
@@ -374,27 +372,10 @@ HBRUSH CMPCThemeUtil::getCtlColorFileDialog(HDC hDC, UINT nCtlColor)
     }
 }
 
-HBRUSH CMPCThemeUtil::getCtlColor(HWND hWnd, HDC hDC, UINT nCtlColor)
-{
-    if (AppIsThemeLoaded()) {
-        initHelperObjects();
-        if (CTLCOLOR_LISTBOX == nCtlColor) {
-            ::SetTextColor(hDC, CMPCTheme::TextFGColor);
-            ::SetBkColor(hDC, CMPCTheme::ContentBGColor);
-            return contentBrush;
-        } else {
-            ::SetTextColor(hDC, CMPCTheme::TextFGColor);
-            ::SetBkColor(hDC, CMPCTheme::WindowBGColor);
-            return windowBrush;
-        }
-    }
-    return nullptr;
-}
-
-
 HBRUSH CMPCThemeUtil::getCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 {
     if (AppIsThemeLoaded()) {
+        initHelperObjects();
         LRESULT lResult;
         if (pWnd->SendChildNotifyLastMsg(&lResult)) {
             return (HBRUSH)lResult;
