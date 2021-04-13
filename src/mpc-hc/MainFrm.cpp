@@ -16663,7 +16663,7 @@ void CMainFrame::OpenCurPlaylistItem(REFERENCE_TIME rtStart, bool reopen)
         }
     }
 
-    if (pli.m_bYoutubeDL && (reopen || pli.m_fns.GetHead() == pli.m_ydlSourceURL)) {
+    if (pli.m_bYoutubeDL && (reopen || pli.m_fns.GetHead() == pli.m_ydlSourceURL && m_sydlLastProcessURL != pli.m_ydlSourceURL)) {
         if (ProcessYoutubeDLURL(pli.m_ydlSourceURL, false, true)) {
             OpenCurPlaylistItem(rtStart, false);
             return;
@@ -19334,13 +19334,22 @@ bool CMainFrame::ProcessYoutubeDLURL(CString url, bool append, bool replace)
         title.Format(_T("%s%s%s"), static_cast<LPCWSTR>(epiid), static_cast<LPCWSTR>(season), static_cast<LPCWSTR>(title));
         if (i == 0) f_title = title;
         int targetlen = title.GetLength() > 100 ? 50 : 150 - title.GetLength();
-        CString url2(url);
-        if (streams.GetCount() > 1 && !stream.webpage_url.IsEmpty()) url2 = stream.webpage_url;
+        CString short_url;
+        if (streams.GetCount() > 1 && !stream.webpage_url.IsEmpty()) {
+            short_url = ShortenURL(stream.webpage_url, targetlen, true);
+        } else {
+            short_url = ShortenURL(url, targetlen, true);
+        }
+        CString ydl_src = url;
+        if (url == filenames.GetHead()) {
+            // Processed URL is same as input, can happen for DASH manifest files. Clear source URL to avoid reprocessing.
+            ydl_src = _T("");
+        }
         if (replace) {
-            m_wndPlaylistBar.ReplaceCurrentItem(filenames, nullptr, title + " (" + ShortenURL(url2, targetlen, true) + ")", url2);
+            m_wndPlaylistBar.ReplaceCurrentItem(filenames, nullptr, title + " (" + short_url + ")", ydl_src);
             break;
         } else {
-            m_wndPlaylistBar.Append(filenames, false, nullptr, title + " (" + ShortenURL(url2, targetlen, true) + ")", url2);
+            m_wndPlaylistBar.Append(filenames, false, nullptr, title + " (" + short_url + ")", ydl_src);
         }
     }
 
