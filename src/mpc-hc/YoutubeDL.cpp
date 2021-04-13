@@ -238,6 +238,8 @@ struct YDLStreamDetails {
 
 bool GetYDLStreamDetails(const Value& format, YDLStreamDetails& details, bool require_video, bool require_audio_only)
 {
+    details = {_T(""), _T(""), 0, 0, _T(""), _T(""), _T(""), false, false, 0, 0, 0 };
+
     details.protocol = format.HasMember(_T("protocol")) && !format[_T("protocol")].IsNull() ? format[_T("protocol")].GetString() : nullptr;
     if (details.protocol && details.protocol != _T("http_dash_segments")) {
         details.url       = format[_T("url")].GetString();
@@ -245,11 +247,18 @@ bool GetYDLStreamDetails(const Value& format, YDLStreamDetails& details, bool re
 
         details.width     = format.HasMember(_T("width"))  && !format[_T("width")].IsNull()  ? format[_T("width")].GetInt() : 0;
         details.height    = format.HasMember(_T("height")) && !format[_T("height")].IsNull() ? format[_T("height")].GetInt() : 0;
-        details.vcodec    = format.HasMember(_T("vcodec")) && !format[_T("vcodec")].IsNull() ? format[_T("vcodec")].GetString() : _T("none");
-        details.has_video = details.vcodec != _T("none") || (details.width > 0) || (details.height > 0);
-        details.acodec    = format.HasMember(_T("acodec")) && !format[_T("acodec")].IsNull() ? format[_T("acodec")].GetString() : _T("none");
-        details.has_audio = details.acodec != _T("none");
-        details.format    = format.HasMember(_T("format")) && !format[_T("format")].IsNull() ? format[_T("format")].GetString() : _T("none");
+        details.vcodec    = format.HasMember(_T("vcodec")) && !format[_T("vcodec")].IsNull() ? format[_T("vcodec")].GetString() : _T("");
+        details.acodec    = format.HasMember(_T("acodec")) && !format[_T("acodec")].IsNull() ? format[_T("acodec")].GetString() : _T("");
+        details.format    = format.HasMember(_T("format")) && !format[_T("format")].IsNull() ? format[_T("format")].GetString() : _T("");
+
+        details.has_audio = !details.acodec.IsEmpty() && details.acodec != _T("None");
+        details.has_video = !details.vcodec.IsEmpty() && details.vcodec != _T("None") || (details.width > 0) || (details.height > 0);
+
+        // make assumption
+        if (!details.has_video && !details.has_audio) {
+            details.has_video = true;
+            details.has_audio = true;
+        }
 
         if (require_video && !details.has_video) {
             #if YDL_EXTRA_LOGGING
