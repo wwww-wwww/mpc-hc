@@ -2660,7 +2660,9 @@ LRESULT CMainFrame::OnGraphNotify(WPARAM wParam, LPARAM lParam)
     LONG_PTR evParam1, evParam2;
     while (!AfxGetMyApp()->m_fClosingState && m_pME && SUCCEEDED(m_pME->GetEvent(&evCode, &evParam1, &evParam2, 0))) {
 #ifdef _DEBUG
-        TRACE(_T("--> CMainFrame::OnGraphNotify on thread: %lu; event: 0x%08x (%ws)\n"), GetCurrentThreadId(), evCode, GetEventString(evCode));
+        if (evCode != EC_DVD_CURRENT_HMSF_TIME) {
+            TRACE(_T("--> CMainFrame::OnGraphNotify on thread: %lu; event: 0x%08x (%ws)\n"), GetCurrentThreadId(), evCode, GetEventString(evCode));
+        }
 #endif
         CString str;
 
@@ -3807,6 +3809,8 @@ LRESULT CMainFrame::OnOpenMediaFailed(WPARAM wParam, LPARAM lParam)
 
     bool bOpenNextInPlaylist = false;
     bool bAfterPlaybackEvent = false;
+
+    m_bOpenMediaActive = false;
 
     if (wParam == PM_FILE) {
         auto* pli = m_wndPlaylistBar.GetCur();
