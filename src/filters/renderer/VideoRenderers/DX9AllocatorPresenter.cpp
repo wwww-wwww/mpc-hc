@@ -167,9 +167,7 @@ CDX9AllocatorPresenter::CDX9AllocatorPresenter(HWND hWnd, bool bFullscreen, HRES
         (FARPROC&)m_pD3DXCreateFont             = GetProcAddress(hDll, "D3DXCreateFontW");
         (FARPROC&)m_pD3DXCreateSprite           = GetProcAddress(hDll, "D3DXCreateSprite");
     } else {
-        _Error += _T("The installed DirectX End-User Runtime is outdated. Please download and install the ");
-        _Error += MPC_DX_SDK_MONTH _T(" ") MAKE_STR(MPC_DX_SDK_YEAR);
-        _Error += _T(" release or newer in order for MPC-HC to function properly.\n");
+        _Error += _T("Your system is missing the file d3dx9_43.dll\n\nTo acquire this file you must install \"DirectX End-User Runtime\" or update your MPC-HC installation.");
     }
 
     m_hDWMAPI = LoadLibrary(L"dwmapi.dll");
