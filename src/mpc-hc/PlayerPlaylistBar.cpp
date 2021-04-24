@@ -237,9 +237,8 @@ static bool SearchFiles(CString mask, CAtlList<CString>& sl)
     CMediaFormats& mf = AfxGetAppSettings().m_Formats;
 
     WIN32_FILE_ATTRIBUTE_DATA fad;
-    bool fFilterKnownExts = (GetFileAttributesEx(mask, GetFileExInfoStandard, &fad)
-                             && (fad.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY));
-    if (fFilterKnownExts) {
+    bool isDir = (GetFileAttributesEx(mask, GetFileExInfoStandard, &fad) && (fad.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY));
+    if (isDir) {
         mask = CString(mask).TrimRight(_T("\\/")) + _T("\\*.*");
     }
 
@@ -259,7 +258,7 @@ static bool SearchFiles(CString mask, CAtlList<CString>& sl)
                 CString ext = fn.Mid(fn.ReverseFind('.')).MakeLower();
                 CString path = dir + fd.cFileName;
 
-                if (!fFilterKnownExts || mf.FindExt(ext)) {
+                if (!isDir || mf.FindExt(ext)) {
                     for (size_t i = 0; i < mf.GetCount(); i++) {
                         CMediaFormatCategory& mfc = mf.GetAt(i);
                         /* playlist files are skipped when playing the contents of an entire directory */
@@ -273,18 +272,10 @@ static bool SearchFiles(CString mask, CAtlList<CString>& sl)
             } while (FindNextFile(h, &fd));
 
             FindClose(h);
-
-            if (sl.IsEmpty() && mask.Find(_T(":\\")) == 1) {
-                if (OpticalDisk_VideoCD == GetOpticalDiskType(mask[0], sl)) {
-                    sl.RemoveAll(); // need to open VideoCD as disk
-                }
-            }
         }
     }
 
-    return (sl.GetCount() > 1
-            || sl.GetCount() == 1 && sl.GetHead().CompareNoCase(mask)
-            || sl.IsEmpty() && mask.FindOneOf(_T("?*")) >= 0);
+    return (!sl.IsEmpty() || mask.FindOneOf(_T("?*")) >= 0);
 }
 
 void CPlayerPlaylistBar::ParsePlayList(CString fn, CAtlList<CString>* subs, int redir_count)
@@ -321,18 +312,22 @@ void CPlayerPlaylistBar::ParsePlayList(CAtlList<CString>& fns, CAtlList<CString>
         return;
     }
 
-    ResolveLinkFiles(fns);
+    if (redir_count == 0) {
+        ResolveLinkFiles(fns);
 
-    CAtlList<CString> sl;
-    if (SearchFiles(fns.GetHead(), sl)) {
-        if (sl.GetCount() > 1) {
-            subs = nullptr;
+        CAtlList<CString> sl;
+        if (SearchFiles(fns.GetHead(), sl)) {
+            if (sl.GetCount() > 0) {
+                if (sl.GetCount() > 1) {
+                    subs = nullptr;
+                }
+                POSITION pos = sl.GetHeadPosition();
+                while (pos) {
+                    ParsePlayList(sl.GetNext(pos), subs, redir_count + 1);
+                }
+            }
+            return;
         }
-        POSITION pos = sl.GetHeadPosition();
-        while (pos) {
-            ParsePlayList(sl.GetNext(pos), subs, redir_count + 1);
-        }
-        return;
     }
 
     CAtlList<CString> redir;
@@ -340,7 +335,7 @@ void CPlayerPlaylistBar::ParsePlayList(CAtlList<CString>& fns, CAtlList<CString>
     if (!redir.IsEmpty()) {
         POSITION pos = redir.GetHeadPosition();
         while (pos) {
-            ParsePlayList(sl.GetNext(pos), subs, redir_count + 1);
+            ParsePlayList(redir.GetNext(pos), subs, redir_count + 1);
         }
         return;
     }
