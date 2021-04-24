@@ -121,7 +121,7 @@ DECLARE_INTERFACE_IID_(IAMLine21Decoder_2, IAMLine21Decoder, "6E8D4A21-310C-11d0
 #define MIN_LOGO_WIDTH 304
 #define MIN_LOGO_HEIGHT 171
 
-#define PREV_CHAP_THRESHOLD 5
+#define PREV_CHAP_THRESHOLD 2
 
 static UINT s_uTaskbarRestart = RegisterWindowMessage(_T("TaskbarCreated"));
 static UINT WM_NOTIFYICON = RegisterWindowMessage(_T("MYWM_NOTIFYICON"));
@@ -9295,12 +9295,12 @@ bool CMainFrame::SeekToFileChapter(int iChapter, bool bRelative /*= false*/)
                     // have passed since the beginning of the current chapter else restart it
                     rt -= PREV_CHAP_THRESHOLD * 10000000;
                     iChapter = 0;
-                } else if (iChapter > 0) {
-                    iChapter = 1;
+                    iChapter = m_pCB->ChapLookupPrevious(&rt, nullptr);
+                } else {
+                    iChapter = m_pCB->ChapLookupNext(&rt, nullptr);
                 }
-                iChapter = m_pCB->ChapLookup(&rt, nullptr) + iChapter;
             } else {
-                iChapter = -1;
+                return false;
             }
         }
 
