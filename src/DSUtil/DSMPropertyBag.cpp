@@ -434,7 +434,7 @@ STDMETHODIMP_(long) IDSMChapterBagImpl::ChapLookup(REFERENCE_TIME* prt, BSTR* pp
     else {
         // assume first entry is best, find better match
         for (size_t i = 1; i < m_chapters.GetCount(); ++i) {
-            if (*prt >= m_chapters[i].rt && m_chapters[i].rt > m_chapters[result].rt) {
+            if (*prt >= m_chapters[i].rt && m_chapters[i].rt >= m_chapters[result].rt) {
                 result = i;
             }
         }
