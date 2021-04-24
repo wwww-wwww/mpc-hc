@@ -9283,8 +9283,6 @@ bool CMainFrame::SeekToFileChapter(int iChapter, bool bRelative /*= false*/)
         return false;
     }
 
-    SetupChapters();
-
     bool ret = false;
 
     if (DWORD nChapters = m_pCB->ChapGetCount()) {
