@@ -315,6 +315,7 @@ private:
     double GetZoomAutoFitScale(bool bLargerOnly = false);
 
     void SetAlwaysOnTop(int iOnTop);
+    bool WindowExpectedOnTop();
 
     // dynamic menus
 
