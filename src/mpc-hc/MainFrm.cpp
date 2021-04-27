@@ -3730,6 +3730,10 @@ LRESULT CMainFrame::OnFilePostOpenmedia(WPARAM wParam, LPARAM lParam)
         ZoomVideoWindow();
     }
 
+    if (s.fLaunchfullscreen && !m_fFullScreen && !m_fAudioOnly) {
+        OnViewFullscreen();
+    }
+
     // Add temporary flag to allow EC_VIDEO_SIZE_CHANGED event to stabilize window size
     // for 5 seconds since playback starts
     m_bAllowWindowZoom = true;

@@ -1962,7 +1962,7 @@ void CAppSettings::LoadSettings()
     bAllowInaccurateFastseek = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_ALLOW_INACCURATE_FASTSEEK, TRUE);
     bLoopFolderOnPlayNextFile = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_LOOP_FOLDER_NEXT_FILE, FALSE);
 
-    if (fLaunchfullscreen) {
+    if (fLaunchfullscreen && slFiles.GetCount() > 0) {
         nCLSwitches |= CLSW_FULLSCREEN;
     }
 
