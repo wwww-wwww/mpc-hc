@@ -98,6 +98,8 @@ private:
     void OnDropFiles(CAtlList<CString>& slFiles, DROPEFFECT) override;
     DROPEFFECT OnDropAccept(COleDataObject*, DWORD, CPoint) override;
 
+    CString m_playListPath;
+
 public:
     CPlayerPlaylistBar(CMainFrame* pMainFrame);
     virtual ~CPlayerPlaylistBar();

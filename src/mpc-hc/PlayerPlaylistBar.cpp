@@ -841,6 +841,13 @@ void CPlayerPlaylistBar::Open(CAtlList<CString>& fns, bool fMulti, CAtlList<CStr
     ResolveLinkFiles(fns);
     Empty();
     Append(fns, fMulti, subs, label, ydl_src, cue);
+    CString ext = CPath(fns.GetHead()).GetExtension().MakeLower();
+    if (!fMulti && (ext == _T(".mpcpl"))) {
+        m_playListPath = fns.GetHead();
+    }
+    else {
+        m_playListPath.Empty();
+    }
 }
 
 void CPlayerPlaylistBar::Append(CAtlList<CString>& fns, bool fMulti, CAtlList<CString>* subs, CString label, CString ydl_src, CString cue)
@@ -1864,6 +1871,7 @@ void CPlayerPlaylistBar::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
         M_SHOWFOLDER,
         M_ADDFOLDER,
         M_RECYCLE,
+        M_SAVE,
         M_SAVEAS,
         M_SORTBYNAME,
         M_SORTBYPATH,
@@ -1888,6 +1896,9 @@ void CPlayerPlaylistBar::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
     m.AppendMenu(MF_STRING | ((!bOnItem || !bIsLocalFile) ? (MF_DISABLED | MF_GRAYED) : MF_ENABLED), M_RECYCLE, ResStr(IDS_FILE_RECYCLE));
     m.AppendMenu(MF_STRING | ((!bOnItem || !bIsLocalFile) ? (MF_DISABLED | MF_GRAYED) : MF_ENABLED), M_ADDFOLDER, ResStr(IDS_PLAYLIST_ADDFOLDER));
     m.AppendMenu(MF_SEPARATOR);
+    if (!m_playListPath.IsEmpty()) {
+        m.AppendMenu(MF_STRING | (!m_pl.GetCount() ? (MF_DISABLED | MF_GRAYED) : MF_ENABLED), M_SAVE, ResStr(IDS_PLAYLIST_SAVE));
+    }
     m.AppendMenu(MF_STRING | (!m_pl.GetCount() ? (MF_DISABLED | MF_GRAYED) : MF_ENABLED), M_SAVEAS, ResStr(IDS_PLAYLIST_SAVEAS));
     m.AppendMenu(MF_SEPARATOR);
     m.AppendMenu(MF_STRING | (!m_pl.GetCount() ? (MF_DISABLED | MF_GRAYED) : MF_ENABLED), M_SORTBYNAME, ResStr(IDS_PLAYLIST_SORTBYLABEL));
@@ -2050,6 +2061,10 @@ void CPlayerPlaylistBar::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
             }
             break;
         }
+        case M_SAVE: {
+            SaveMPCPlayList(m_playListPath, CTextFile::UTF8, false);
+            break;
+        }
         case M_SAVEAS: {
             CSaveTextFileDialog fd(
                 CTextFile::DEFAULT_ENCODING, nullptr, nullptr,
@@ -2132,6 +2147,7 @@ void CPlayerPlaylistBar::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
 
             if (idx == 1) {
                 SaveMPCPlayList(path, encoding, fRemovePath);
+                m_playListPath = (LPCTSTR)path;
                 break;
             }
 
