@@ -1328,21 +1328,48 @@ bool UnloadUnusedExternalObjects()
     return s_extObjs.IsEmpty();
 }
 
+void ExtendMaxPathLengthIfNeeded(CString& path, int max_length /*= MAX_PATH*/)
+{
+    if (path.GetLength() > max_length && path.Find(_T("\\\\?\\")) < 0) {
+        path = _T("\\\\?\\") + path;
+    }
+}
+
+void ShortenLongPath(CString& path)
+{
+    if (path.GetLength() > MAX_PATH && path.Find(_T("\\\\?\\")) < 0) {
+        CString longpath = _T("\\\\?\\") + path;
+        TCHAR* buffer = new TCHAR[MAX_PATH];
+        long length = GetShortPathName(longpath, buffer, MAX_PATH);
+        if (length > 0 && length < MAX_PATH) {
+            path = buffer;
+            path.Replace(_T("\\\\?\\"), _T(""));
+            delete[] buffer;
+        }
+    }
+}
+
 CString MakeFullPath(LPCTSTR path)
 {
     CString full(path);
     full.Replace('/', '\\');
 
-    CString fn;
-    fn.ReleaseBuffer(GetModuleFileName(AfxGetInstanceHandle(), fn.GetBuffer(MAX_PATH), MAX_PATH));
-    CPath p(fn);
+    if (full.GetLength() > MAX_PATH) {
+        return full;
+    }
 
     if (full.GetLength() >= 2 && full[0] == '\\') {
         if (full[1] != '\\') {
+            CString fn;
+            fn.ReleaseBuffer(GetModuleFileName(AfxGetInstanceHandle(), fn.GetBuffer(MAX_PATH), MAX_PATH));
+            CPath p(fn);
             p.StripToRoot();
             full = CString(p) + full.Mid(1);
         }
     } else if (full.Find(_T(":\\")) < 0) {
+        CString fn;
+        fn.ReleaseBuffer(GetModuleFileName(AfxGetInstanceHandle(), fn.GetBuffer(MAX_PATH), MAX_PATH));
+        CPath p(fn);
         p.RemoveFileSpec();
         p.AddBackslash();
         full = CString(p) + full;

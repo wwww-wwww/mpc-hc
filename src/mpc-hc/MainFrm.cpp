@@ -16921,14 +16921,11 @@ void CMainFrame::CloseMedia(bool bNextIsQueued/* = false*/)
         m_fOpeningAborted = false;
     }
 
-    CString path;
-    if (m_pCurrentSubInput.pSubStream.p != nullptr) {
-        path = m_pCurrentSubInput.pSubStream.p->GetPath();
-    }
     auto& s = AfxGetAppSettings();
     if (s.fKeepHistory) {
-        updateRecentFileListSub(path);
+        updateRecentFileListSub();
     }
+    m_current_rfe = RecentFileEntry(); // Clear
 
     // we are on the way
     m_bSettingUpMenus = true;
@@ -19469,13 +19466,20 @@ void CMainFrame::OnMouseHWheel(UINT nFlags, short zDelta, CPoint pt) {
     __super::OnMouseHWheel(nFlags, zDelta, pt);
 }
 
-void CMainFrame::updateRecentFileListSub(CString fn) {
-    auto& MRU = AfxGetAppSettings().MRU;
-    MRU.ReadList();
-    RecentFileEntry r = m_current_rfe;
-    bool found(r.subs.Find(fn));
-    if (!found && !fn.IsEmpty()) r.subs.AddTail(fn);
-    MRU.Add(r);
-    MRU.WriteList();
-    m_current_rfe = RecentFileEntry(); // Clear
+void CMainFrame::updateRecentFileListSub() {
+    if (m_pCurrentSubInput.pSubStream) {
+        CString subpath = m_pCurrentSubInput.pSubStream->GetPath();
+        if (!subpath.IsEmpty()) {
+            bool found = m_current_rfe.subs.Find(subpath);
+            if (!found) {
+                RecentFileEntry r = m_current_rfe;
+                r.subs.AddTail(subpath);
+                auto& MRU = AfxGetAppSettings().MRU;
+                MRU.ReadList();
+
+                MRU.Add(r);
+                MRU.WriteList();
+            }            
+        }
+    }
 }

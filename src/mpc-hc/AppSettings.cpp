@@ -2568,49 +2568,14 @@ void CAppSettings::CRecentFileListWithMoreInfo::Add(LPCTSTR fn) {
 }
 
 void CAppSettings::CRecentFileListWithMoreInfo::Add(RecentFileEntry r) {
-    if (m_maxSize <= 0) return;
-    POSITION p(r.fns.GetHeadPosition());
-    while (p != nullptr) {
-        POSITION p2(p);
-        CString fn = r.fns.GetNext(p);
-        CString t(fn);
-        if (t.MakeLower().Find(_T("@device:")) >= 0) {
-            r.fns.RemoveAt(p2);
-            continue;
-        }
-        if (!PathUtils::IsURL(fn)) {
-            fn = MakeFullPath(fn);
-            r.fns.SetAt(p2, fn);
-        }
+    if (m_maxSize <= 0 || r.fns.GetCount() < 1) {
+        return;
     }
-    if (!r.cue.IsEmpty()) {
-        CString t(r.cue);
-        if (t.MakeLower().Find(_T("@device:")) >= 0) {
-            r.cue = _T("");
-        }
-        if (!PathUtils::IsURL(r.cue)) {
-            r.cue = MakeFullPath(r.cue);
-        }
+    if (CString(r.fns.GetHead()).MakeLower().Find(_T("@device:")) >= 0) {
+        return;
     }
-    if (r.subs.GetCount() > 0) {
-        p = r.subs.GetHeadPosition();
-        while (p != nullptr) {
-            POSITION p2(p);
-            CString fn = r.subs.GetNext(p);
-            CString t(fn);
-            if (t.MakeLower().Find(_T("@device:")) >= 0) {
-                r.subs.RemoveAt(p2);
-                continue;
-            }
-            if (!PathUtils::IsURL(fn)) {
-                fn = MakeFullPath(fn);
-                r.subs.SetAt(p2, fn);
-            }
-        }
-    }
-    if (r.fns.GetCount() < 1)return;
-    int i = 0;
-    for (; i < rfe_array.GetCount(); i++) {
+
+    for (int i = 0; i < rfe_array.GetCount(); i++) {
         if (r == rfe_array[i]) {
             Remove(i);
             break;

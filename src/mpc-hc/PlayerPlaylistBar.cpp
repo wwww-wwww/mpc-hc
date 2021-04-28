@@ -236,6 +236,9 @@ static bool SearchFiles(CString mask, CAtlList<CString>& sl)
 
     CMediaFormats& mf = AfxGetAppSettings().m_Formats;
 
+    // support very long paths
+    ExtendMaxPathLengthIfNeeded(mask, MAX_PATH - 4);
+
     WIN32_FILE_ATTRIBUTE_DATA fad;
     bool isDir = (GetFileAttributesEx(mask, GetFileExInfoStandard, &fad) && (fad.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY));
     if (isDir) {
@@ -254,15 +257,15 @@ static bool SearchFiles(CString mask, CAtlList<CString>& sl)
                 }
 
                 CString fn = fd.cFileName;
-                //CString ext = fn.Mid(fn.ReverseFind('.')+1).MakeLower();
                 CString ext = fn.Mid(fn.ReverseFind('.')).MakeLower();
-                CString path = dir + fd.cFileName;
 
                 if (!isDir || mf.FindExt(ext)) {
                     for (size_t i = 0; i < mf.GetCount(); i++) {
                         CMediaFormatCategory& mfc = mf.GetAt(i);
                         /* playlist files are skipped when playing the contents of an entire directory */
                         if ((mfc.FindExt(ext)) && (mf[i].GetLabel().CompareNoCase(_T("pls")) != 0)) {
+                            CString path = dir + fn;
+                            ExtendMaxPathLengthIfNeeded(path);
                             sl.AddTail(path);
                             break;
                         }
