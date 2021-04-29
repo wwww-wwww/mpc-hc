@@ -294,7 +294,7 @@ bool Rasterizer::PartialEndPath(HDC hdc, long dx, long dy)
 
         nPoints = GetPath(hdc, nullptr, nullptr, 0);
 
-        if (!nPoints) {
+        if (nPoints < 1) {
             return true;
         }
 
