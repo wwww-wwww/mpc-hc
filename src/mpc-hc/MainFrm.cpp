@@ -10080,8 +10080,9 @@ void CMainFrame::PlayFavoriteFile(CString fav)
 
     SendMessage(WM_COMMAND, ID_FILE_CLOSEMEDIA);
 
-    if (!CanSendToYoutubeDL(args.GetHead())
-            || !ProcessYoutubeDLURL(args.GetHead(), false)) {
+    if (!m_wndPlaylistBar.SelectFileInPlaylist(args.GetHead()) &&
+        (!CanSendToYoutubeDL(args.GetHead()) ||
+         !ProcessYoutubeDLURL(args.GetHead(), false))) {
         m_wndPlaylistBar.Open(args, false);
     }
 

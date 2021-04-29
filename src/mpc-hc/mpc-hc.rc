@@ -2617,6 +2617,7 @@ BEGIN
     IDS_PLAYLIST_REMOVE     "&Remove"
     IDS_PLAYLIST_CLEAR      "C&lear"
     IDS_PLAYLIST_COPYTOCLIPBOARD "&Copy to clipboard"
+    IDS_PLAYLIST_SAVE       "Sa&ve"
     IDS_PLAYLIST_SAVEAS     "&Save As..."
     IDS_PLAYLIST_SORTBYLABEL "Sort by &label"
     IDS_PLAYLIST_SORTBYPATH "Sort by &path"
