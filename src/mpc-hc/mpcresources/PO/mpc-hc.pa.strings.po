@@ -439,6 +439,10 @@ msgctxt "IDS_PLAYLIST_COPYTOCLIPBOARD"
 msgid "&Copy to clipboard"
 msgstr "ਕਲਿੱਪਬੋਰਡ ਵਿੱਚ ਕਾਪੀ ਕਰੋ(&C)"
 
+msgctxt "IDS_PLAYLIST_SAVE"
+msgid "Sa&ve"
+msgstr ""
+
 msgctxt "IDS_PLAYLIST_SAVEAS"
 msgid "&Save As..."
 msgstr "...ਇੰਝ ਸੰਭਾਲੋ(&S)"

@@ -447,6 +447,10 @@ msgctxt "IDS_PLAYLIST_COPYTOCLIPBOARD"
 msgid "&Copy to clipboard"
 msgstr "&Copy to clipboard"
 
+msgctxt "IDS_PLAYLIST_SAVE"
+msgid "Sa&ve"
+msgstr ""
+
 msgctxt "IDS_PLAYLIST_SAVEAS"
 msgid "&Save As..."
 msgstr "&Save As..."

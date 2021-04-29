@@ -435,6 +435,10 @@ msgctxt "IDS_PLAYLIST_COPYTOCLIPBOARD"
 msgid "&Copy to clipboard"
 msgstr "클립보드에 복사(&C)"
 
+msgctxt "IDS_PLAYLIST_SAVE"
+msgid "Sa&ve"
+msgstr ""
+
 msgctxt "IDS_PLAYLIST_SAVEAS"
 msgid "&Save As..."
 msgstr "저장(&S)..."
