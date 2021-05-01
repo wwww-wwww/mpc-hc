@@ -262,11 +262,13 @@ static bool SearchFiles(CString mask, CAtlList<CString>& sl)
                 if (!isDir || mf.FindExt(ext)) {
                     for (size_t i = 0; i < mf.GetCount(); i++) {
                         CMediaFormatCategory& mfc = mf.GetAt(i);
-                        /* playlist files are skipped when playing the contents of an entire directory */
-                        if ((mfc.FindExt(ext)) && (mf[i].GetLabel().CompareNoCase(_T("pls")) != 0)) {
-                            CString path = dir + fn;
-                            ExtendMaxPathLengthIfNeeded(path);
-                            sl.AddTail(path);
+                        if (mfc.FindExt(ext)) {
+                            /* playlist and cue files should be ignored when playing the contents of an entire directory */
+                            if (mf[i].GetLabel() != _T("pls") && ext != _T(".cue") && ext != _T(".m3u") && ext != _T(".m3u8") && ext != _T(".mpcpl") && ext != _T(".pls")) {
+                                CString path = dir + fn;
+                                ExtendMaxPathLengthIfNeeded(path);
+                                sl.AddTail(path);
+                            }
                             break;
                         }
                     }
