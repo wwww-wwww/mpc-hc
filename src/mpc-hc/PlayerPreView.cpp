@@ -216,6 +216,10 @@ void CPreView::SetWindowSize() {
     w = std::max(160, std::min(w, wr.Width() / 2));
 
     CSize vs = m_pMainFrame->GetVideoSize();
+    if (vs.cx == 0) {
+        vs.cx = 160;
+        vs.cy = 90;
+    }
 
     int h = (w - ((m_border + 1) * 2)) * vs.cy / vs.cx;
     h += (m_caption + 1);
