@@ -11760,21 +11760,21 @@ void CMainFrame::OpenCreateGraphObject(OpenMediaData* pOMD)
         engine_t engine = s.m_Formats.GetEngine(pOpenFileData->fns.GetHead());
 
 #ifndef _WIN64
-        CStringA ct = GetContentType(pOpenFileData->fns.GetHead());
+        CString ct = GetContentType(pOpenFileData->fns.GetHead());
 
-        if (ct == "application/x-shockwave-flash") {
+        if (ct == _T("application/x-shockwave-flash")) {
             engine = ShockWave;
-        } else if (ct == "audio/x-pn-realaudio"
-                   || ct == "audio/x-pn-realaudio-plugin"
-                   || ct == "audio/x-realaudio-secure"
-                   || ct == "video/vnd.rn-realvideo-secure"
-                   || ct == "application/vnd.rn-realmedia"
-                   || ct.Find("vnd.rn-") >= 0
-                   || ct.Find("realaudio") >= 0
-                   || ct.Find("realvideo") >= 0) {
+        } else if (ct == _T("audio/x-pn-realaudio")
+                   || ct == _T("audio/x-pn-realaudio-plugin")
+                   || ct == _T("audio/x-realaudio-secure")
+                   || ct == _T("video/vnd.rn-realvideo-secure")
+                   || ct == _T("application/vnd.rn-realmedia")
+                   || ct.Find(_T("vnd.rn-")) >= 0
+                   || ct.Find(_T("realaudio")) >= 0
+                   || ct.Find(_T("realvideo")) >= 0) {
             engine = RealMedia;
         }
-        else if (ct == "application/x-quicktimeplayer") {
+        else if (ct == _T("application/x-quicktimeplayer")) {
             engine = QuickTime;
         }
 #endif

@@ -234,7 +234,7 @@ bool LoadResource(UINT resid, CStringA& str, LPCTSTR restype)
     return true;
 }
 
-static bool FindRedir(const CUrl& src, CString ct, const CString& body, CAtlList<CString>& urls, const std::vector<std::wregex>& res)
+static bool FindRedir(const CUrl& src,const CString& body, CAtlList<CString>& urls, const std::vector<std::wregex>& res)
 {
     bool bDetectHLS = false;
     for (const auto re : res) {
@@ -277,7 +277,7 @@ static bool FindRedir(const CUrl& src, CString ct, const CString& body, CAtlList
     return !urls.IsEmpty();
 }
 
-static bool FindRedir(const CString& fn, CString ct, CAtlList<CString>& fns, const std::vector<std::wregex>& res)
+static bool FindRedir(const CString& fn, CAtlList<CString>& fns, const std::vector<std::wregex>& res)
 {
     CString body;
 
@@ -323,37 +323,51 @@ static bool FindRedir(const CString& fn, CString ct, CAtlList<CString>& fns, con
 }
 
 
-CStringA GetContentType(CString fn, CAtlList<CString>* redir)
+CString GetContentType(CString fn, CAtlList<CString>* redir)
 {
-    BOOL url_fail = false;
+    fn.Trim();
+    if (fn.IsEmpty()) {
+        return "";
+    }
+
     CUrl url;
-    CString content, body, urlredirect;
+    CString content, body;
+    BOOL url_fail = false;
     BOOL ishttp = false;
     BOOL parsefile = false;
-
-    fn.Trim();
+    BOOL isurl = PathUtils::IsURL(fn);
 
     // Get content type based on the URI scheme
-    BOOL isurl = PathUtils::IsURL(fn);
     if (isurl) {
         url.CrackUrl(fn);
 
         if (_tcsicmp(url.GetSchemeName(), _T("pnm")) == 0) {
             return "audio/x-pn-realaudio";
         }
-
         if (_tcsicmp(url.GetSchemeName(), _T("mms")) == 0) {
             return "video/x-ms-asf";
         }
-
-        if (_tcsicmp(url.GetSchemeName(), _T("http")) == 0) {
+        if (_tcsicmp(url.GetSchemeName(), _T("http")) == 0 || _tcsicmp(url.GetSchemeName(), _T("https")) == 0) {
             ishttp = true;
-        }
-        else if (_tcsicmp(url.GetSchemeName(), _T("https")) == 0) {
-            ishttp = true;
-        }
-        else {
+        } else {
             return "";
+        }
+    }
+
+    CString ext = CPath(fn).GetExtension().MakeLower();
+
+    // no further analysis needed if known audio/video extension and points directly to a file
+    if (!ext.IsEmpty() && (!isurl || fn.FindOneOf(_T("?#")) < 0)) {
+        if (ext == _T(".bdmv")) {
+            return _T("application/x-bdmv-playlist");
+        } else if (ext == _T(".swf")) {
+            return _T("application/x-shockwave-flash");
+        } else if (ext == _T(".mpcpl")) {
+            return _T("application/x-mpc-playlist");
+        } else if (ext == _T(".mp3") || ext == _T(".m4a") || ext == _T(".aac") || ext == _T(".flac") || ext == _T(".mka") || ext == _T(".ogg") || ext == _T(".opus")) {
+            return _T("");
+        } else if (ext == _T(".mp4") || ext == _T(".m4v") || ext == _T(".mov") || ext == _T(".mkv") || ext == _T(".webm") || ext == _T(".avi") || ext == _T(".wmv") || ext == _T(".mpg") || ext == _T(".mpeg") || ext == _T(".flv") || ext == _T(".ogm") || ext == _T(".m2ts") || ext == _T(".ts")) {
+            return _T("");
         }
     }
 
@@ -374,7 +388,7 @@ CStringA GetContentType(CString fn, CAtlList<CString>* redir)
         {
             pEx->Delete(); // DO NOTHING : Compromise...If we are faced with a playlist and only one URL fails, everything fails...
             url_fail = true; // Timeout has most likely occured, server unreachable
-            return "";
+            return _T("");
         }
 
         if (httpFile) {
@@ -411,61 +425,47 @@ CStringA GetContentType(CString fn, CAtlList<CString>* redir)
             if (url_fail) {
                 httpFile->Close(); // Close() isn't called by the destructor
                 delete httpFile;
-                return "";
+                return _T("");
             }
 
             httpFile->QueryInfo(HTTP_QUERY_CONTENT_TYPE, content);	// Content-Type - eg text/html
 
-            /*
-            if (content == _T("audio/x-mpegurl") || content == _T("audio/mpegurl")) {
-                httpFile->Close();
-                delete httpFile;
-                return TToA(content);
-            }
-            */
-
             // Partial download of response body to further identify content types
-            UINT br = 0;
-            char buffer[513] = "";
-            while (body.GetLength() < 256) {
-                br = httpFile->Read(buffer, 256);
-                if (br == 0) {
-                    break;
+            if (content.IsEmpty()) {
+                UINT br = 0;
+                char buffer[513] = "";
+                while (body.GetLength() < 256) {
+                    br = httpFile->Read(buffer, 256);
+                    if (br == 0) {
+                        break;
+                    }
+                    buffer[br] = '\0';
+                    body += buffer;
                 }
-                buffer[br] = '\0';
-                body += buffer;
-            }
+                if (body.GetLength() >= 8) {
+                    BOOL exit = false;
+                    if (!wcsncmp((LPCWSTR)body, _T(".ra"), 3)) {
+                        content = _T("audio/x-pn-realaudio");
+                        exit = true;
+                    } else if (!wcsncmp((LPCWSTR)body, _T(".RMF"), 4)) {
+                        content = _T("audio/x-pn-realaudio");
+                        exit = true;
+                    }
 
-            if (content.IsEmpty() && body.GetLength() >= 8) {
-                CStringA str = TToA(body);
-                CStringA cnt;
-                BOOL exit = false;
-                if (!strncmp((LPCSTR)str, ".ra", 3)) {
-                    cnt = "audio/x-pn-realaudio";
-                    exit = true;
-                }
-                else if (!strncmp((LPCSTR)str, ".RMF", 4)) {
-                    cnt = "audio/x-pn-realaudio";
-                    exit = true;
-                }
-                else if (*(DWORD*)(LPCSTR)str == 0x75b22630) {
-                    cnt = "video/x-ms-wmv";
-                    exit = true;
-                }
-
-                if (exit) {
-                    httpFile->Close();
-                    delete httpFile;
-                    return cnt;
+                    if (exit) {
+                        httpFile->Close();
+                        delete httpFile;
+                        return content;
+                    }
                 }
             }
-
-            // Resume partial download of response body in case it's a playlist
-            buffer[0] = '\0';
+            // Download larger piece of response body in case it's a playlist
             if (redir && (content == _T("audio/x-scpls") || content == _T("audio/scpls")
                 || content == _T("video/x-ms-asf") || content == _T("text/plain")
                 || content == _T("application/octet-stream") || content == _T("application/pls+xml"))) {
-                while (body.GetLength() < 128 * 1024) { // should be enough for a playlist...
+                UINT br = 0;
+                char buffer[513] = "";
+                while (body.GetLength() < 64 * 1024) { // should be enough for a playlist...
                     br = httpFile->Read(buffer, 256);
                     if (br == 0) {
                         break;
@@ -481,9 +481,7 @@ CStringA GetContentType(CString fn, CAtlList<CString>* redir)
     }
 
     // If content type is empty, plain text or octet-stream (weird server!) GUESS by extension if it exists.....
-    if (!fn.IsEmpty() && (content.IsEmpty() || content == _T("text/plain") || content == _T("application/octet-stream"))) {
-        CPath p(fn);
-        CString ext = p.GetExtension().MakeLower();
+    if (content.IsEmpty() || content == _T("text/plain") || content == _T("application/octet-stream")) {
         if (ext == _T(".mpcpl")) {
             content = _T("application/x-mpc-playlist");
         }
@@ -509,7 +507,6 @@ CStringA GetContentType(CString fn, CAtlList<CString>* redir)
         }
         else if (ext == _T(".qtl")) {
             content = _T("application/x-quicktimeplayer");
-            parsefile = true;
         }
         else if (ext == _T(".ram")) {
             content = _T("audio/x-pn-realaudio");
@@ -531,11 +528,6 @@ CStringA GetContentType(CString fn, CAtlList<CString>* redir)
             // File1=...\n
             res.emplace_back(_T("file\\d+\\s*=\\s*[\"]*([^\n\"]+)"), reFlags);
         }
-        else if (content == _T("audio/x-mpegurl") || content == _T("audio/mpegurl")) {
-            // #comment
-            // ...
-            res.emplace_back(_T("[^#][^\n]+"), reFlags);
-        }
         else if (content == _T("audio/x-pn-realaudio")) {
             // rtsp://...
             res.emplace_back(_T("rtsp://[^\n]+"), reFlags);
@@ -543,15 +535,16 @@ CStringA GetContentType(CString fn, CAtlList<CString>* redir)
             res.emplace_back(_T("http://[^\n]+"), reFlags);
         }
 
-        if (isurl) {
-            FindRedir(url, content, body, *redir, res);
-        }
-        else {
-            FindRedir(fn, content, *redir, res);
+        if (res.size()) {
+            if (isurl) {
+                FindRedir(url, body, *redir, res);
+            } else {
+                FindRedir(fn, *redir, res);
+            }
         }
     }
 
-    return TToA(content);
+    return content;
 }
 
 WORD AssignedToCmd(UINT keyOrMouseValue, bool bIsFullScreen, bool bCheckMouse)

@@ -285,6 +285,7 @@ static bool SearchFiles(CString mask, CAtlList<CString>& sl)
 
 void CPlayerPlaylistBar::ParsePlayList(CString fn, CAtlList<CString>* subs, int redir_count)
 {
+    TRACE(fn + _T("\n"));
     CAtlList<CString> sl;
     sl.AddTail(fn);
     ParsePlayList(sl, subs, redir_count);
@@ -336,7 +337,7 @@ void CPlayerPlaylistBar::ParsePlayList(CAtlList<CString>& fns, CAtlList<CString>
     }
 
     CAtlList<CString> redir;
-    CStringA ct = GetContentType(fns.GetHead(), &redir);
+    CString ct = GetContentType(fns.GetHead(), &redir);
     if (!redir.IsEmpty()) {
         POSITION pos = redir.GetHeadPosition();
         while (pos) {
@@ -345,22 +346,23 @@ void CPlayerPlaylistBar::ParsePlayList(CAtlList<CString>& fns, CAtlList<CString>
         return;
     }
 
-    if (ct == "application/x-mpc-playlist") {
+    if (ct == _T("application/x-mpc-playlist")) {
         ParseMPCPlayList(fns.GetHead());
         return;
-    } else if (ct == "application/x-cue-sheet") {
+    } else if (ct == _T("application/x-cue-sheet")) {
         ParseCUESheet(fns.GetHead());
         return;
-    } else if (ct == "audio/x-mpegurl" || ct == "audio/mpegurl") {
-        if (!PathUtils::IsURL(fns.GetHead())) { // prefer opening M3U URLs directly with LAV Splitter
-            if (ParseM3UPlayList(fns.GetHead())) {
-                return; //we have handled this one. if parse fails it should fall through to AddItem below
-            }
+    } else if (ct == _T("audio/x-mpegurl") || ct == _T("audio/mpegurl")) {
+        if (ParseM3UPlayList(fns.GetHead())) {
+            /* We have handled this one. If parsing fails it should fall through to AddItem below.
+               It returns false for HLS playlists, since we want those to be handled directly by LAV Splitter.
+            */
+            return;
         }
     } else {
 #if INTERNAL_SOURCEFILTER_MPEG
         const CAppSettings& s = AfxGetAppSettings();
-        if (ct == "application/x-bdmv-playlist" && (s.SrcFilters[SRC_MPEG] || s.SrcFilters[SRC_MPEGTS])) {
+        if (ct == _T("application/x-bdmv-playlist") && (s.SrcFilters[SRC_MPEG] || s.SrcFilters[SRC_MPEGTS])) {
             ParseBDMVPlayList(fns.GetHead());
             return;
         }
@@ -648,7 +650,11 @@ bool CPlayerPlaylistBar::ParseM3UPlayList(CString fn) {
                     continue; // discard invalid EXTINF line
                 }
             }
-            else {
+            else if (str.Find(_T("#EXT-X-STREAM-INF")) == 0 || str.Find(_T("#EXT-X-TARGETDURATION")) == 0 || str.Find(_T("#EXT-X-MEDIA-SEQUENCE")) == 0) {
+                // HTTP Live Stream, let LAV Splitter handle this
+                return false;
+            }
+            else {                
                 continue; // ignore this line
             }
         }
