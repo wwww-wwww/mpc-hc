@@ -905,7 +905,6 @@
 #define IDS_AG_CHAPTER                  33078
 #define IDS_AG_OUT_OF_MEMORY            33081
 #define IDS_MAINFRM_77                  33082
-#define IDS_MAINFRM_78                  33083
 #define IDS_MAINFRM_80                  33084
 #define IDS_MAINFRM_81                  33085
 #define IDS_MAINFRM_82                  33086
