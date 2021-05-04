@@ -3537,7 +3537,7 @@ STRINGTABLE
 BEGIN
     IDS_MFMT_MOV            "QuickTime Movie"
     IDS_MFMT_3GP            "3GP"
-    IDS_MFMT_3G2            "3G2"
+    IDS_MFMT_3GA            "3GA"
     IDS_MFMT_FLV            "Flash Video"
     IDS_MFMT_OGM            "Ogg Media"
     IDS_MFMT_RM             "Real Media"

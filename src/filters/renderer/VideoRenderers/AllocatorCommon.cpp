@@ -23,8 +23,6 @@
 #include "../DSUtil/DSUtil.h"
 
 #include "VMR9AllocatorPresenter.h"
-#include "RM9AllocatorPresenter.h"
-#include "QT9AllocatorPresenter.h"
 #include "DXRAllocatorPresenter.h"
 #include "madVRAllocatorPresenter.h"
 #include "EVRAllocatorPresenter.h"
@@ -55,10 +53,6 @@ HRESULT CreateAP9(const CLSID& clsid, HWND hWnd, bool bFullscreen, ISubPicAlloca
 
     if (IsEqualCLSID(clsid, CLSID_VMR9AllocatorPresenter)) {
         *ppAP = DEBUG_NEW CVMR9AllocatorPresenter(hWnd, bFullscreen, hr, Error);
-    } else if (IsEqualCLSID(clsid, CLSID_RM9AllocatorPresenter)) {
-        *ppAP = DEBUG_NEW CRM9AllocatorPresenter(hWnd, bFullscreen, hr, Error);
-    } else if (IsEqualCLSID(clsid, CLSID_QT9AllocatorPresenter)) {
-        *ppAP = DEBUG_NEW CQT9AllocatorPresenter(hWnd, bFullscreen, hr, Error);
     } else if (IsEqualCLSID(clsid, CLSID_DXRAllocatorPresenter)) {
         *ppAP = DEBUG_NEW CDXRAllocatorPresenter(hWnd, hr, Error);
     } else if (IsEqualCLSID(clsid, CLSID_madVRAllocatorPresenter)) {

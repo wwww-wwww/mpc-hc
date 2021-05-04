@@ -1084,7 +1084,7 @@
 #define IDS_MFMT_MP4                    39007
 #define IDS_MFMT_MOV                    39008
 #define IDS_MFMT_3GP                    39009
-#define IDS_MFMT_3G2                    39010
+#define IDS_MFMT_3GA                    39010
 #define IDS_MFMT_FLV                    39011
 #define IDS_MFMT_OGM                    39012
 #define IDS_MFMT_RM                     39013

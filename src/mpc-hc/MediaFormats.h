@@ -28,20 +28,15 @@
 class CMediaFormatCategory
 {
 protected:
-    CString m_label, m_description, m_specreqnote;
+    CString m_label, m_description;
     CAtlList<CString> m_exts, m_backupexts;
     bool m_fAudioOnly;
-    engine_t m_engine;
     bool m_fAssociable;
 
 public:
     CMediaFormatCategory();
-    CMediaFormatCategory(
-        CString label, CString description, CAtlList<CString>& exts, bool fAudioOnly = false,
-        CString specreqnote = _T(""), engine_t e = DirectShow, bool fAssociable = true);
-    CMediaFormatCategory(
-        CString label, CString description, CString exts, bool fAudioOnly = false,
-        CString specreqnote = _T(""), engine_t e = DirectShow, bool fAssociable = true);
+    CMediaFormatCategory(CString label, CString description, CAtlList<CString>& exts, bool fAudioOnly = false, bool fAssociable = true);
+    CMediaFormatCategory(CString label, CString description, CString exts, bool fAudioOnly = false, bool fAssociable = true);
     virtual ~CMediaFormatCategory();
 
     void UpdateData(bool fSave);
@@ -61,14 +56,11 @@ public:
 
     CString GetDescription() const { return m_description; }
     CString GetFilter() const;
-    CString GetExts(bool fAppendEngine = false) const;
-    CString GetExtsWithPeriod(bool fAppendEngine = false) const;
-    CString GetBackupExtsWithPeriod(bool fAppendEngine = false) const;
-    CString GetSpecReqNote() const { return m_specreqnote; }
+    CString GetExts() const;
+    CString GetExtsWithPeriod() const;
+    CString GetBackupExtsWithPeriod() const;
     bool IsAudioOnly() const { return m_fAudioOnly; }
     bool IsAssociable() const { return m_fAssociable; }
-    engine_t GetEngineType() const { return m_engine; }
-    void SetEngineType(engine_t e) { m_engine = e; }
 };
 
 class CMediaFormats : public CAtlArray<CMediaFormatCategory>

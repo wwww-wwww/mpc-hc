@@ -505,9 +505,6 @@ CString GetContentType(CString fn, CAtlList<CString>* redir)
         else if (ext == _T(".swf")) {
             content = _T("application/x-shockwave-flash");
         }
-        else if (ext == _T(".qtl")) {
-            content = _T("application/x-quicktimeplayer");
-        }
         else if (ext == _T(".ram")) {
             content = _T("audio/x-pn-realaudio");
             parsefile = true;

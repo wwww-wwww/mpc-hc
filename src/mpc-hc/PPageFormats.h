@@ -55,7 +55,7 @@ private:
     CMediaFormats m_mf;
     bool m_bHaveRegisteredCategory;
 
-    enum { COL_CATEGORY, COL_ENGINE };
+    enum { COL_CATEGORY };
 
     int IsCheckedMediaCategory(int iItem);
     void SetCheckedMediaCategory(int iItem, int fChecked);
@@ -84,9 +84,6 @@ protected:
     afx_msg void OnMediaCategoryClicked(NMHDR* pNMHDR, LRESULT* pResult);
     afx_msg void OnMediaCategoryKeyDown(NMHDR* pNMHDR, LRESULT* pResult);
     afx_msg void OnMediaCategorySelected(NMHDR* pNMHDR, LRESULT* pResult);
-    afx_msg void OnBeginEditMediaCategoryEngine(NMHDR* pNMHDR, LRESULT* pResult);
-    afx_msg void OnEditMediaCategoryEngine(NMHDR* pNMHDR, LRESULT* pResult);
-    afx_msg void OnEndEditMediaCategoryEngine(NMHDR* pNMHDR, LRESULT* pResult);
     afx_msg void OnAssociateAllFormats();
     afx_msg void OnAssociateVideoFormatsOnly();
     afx_msg void OnAssociateAudioFormatsOnly();

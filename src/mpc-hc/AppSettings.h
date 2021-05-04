@@ -802,7 +802,6 @@ public:
     bool            bHighPrecisionTimer;
     bool            fLastFullScreen;
 
-    bool            fIntRealMedia;
     bool            fEnableEDLEditor;
 
     HWND            hMasterWnd;

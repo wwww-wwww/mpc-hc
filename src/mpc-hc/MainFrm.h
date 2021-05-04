@@ -370,7 +370,7 @@ private:
     int m_iStreamPosPollerInterval;
 
     bool m_fCustomGraph;
-    bool m_fRealMediaGraph, m_fShockwaveGraph, m_fQuicktimeGraph;
+    bool m_fShockwaveGraph;
 
     CComPtr<ISubClock> m_pSubClock;
 

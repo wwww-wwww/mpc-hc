@@ -111,9 +111,6 @@ BEGIN_MESSAGE_MAP(CPPageFormats, CMPCThemePPageBase)
     ON_NOTIFY(NM_CLICK, IDC_LIST1, OnMediaCategoryClicked)
     ON_NOTIFY(LVN_KEYDOWN, IDC_LIST1, OnMediaCategoryKeyDown)
     ON_NOTIFY(LVN_ITEMCHANGED, IDC_LIST1, OnMediaCategorySelected)
-    ON_NOTIFY(LVN_BEGINLABELEDIT, IDC_LIST1, OnBeginEditMediaCategoryEngine)
-    ON_NOTIFY(LVN_DOLABELEDIT, IDC_LIST1, OnEditMediaCategoryEngine)
-    ON_NOTIFY(LVN_ENDLABELEDIT, IDC_LIST1, OnEndEditMediaCategoryEngine)
     ON_BN_CLICKED(IDC_BUTTON2, OnBnClickedResetExtensionsList)
     ON_BN_CLICKED(IDC_BUTTON_EXT_SET, OnBnClickedSetExtensionsList)
     ON_BN_CLICKED(IDC_BUTTON1, OnBnRunAsAdmin)
@@ -152,12 +149,6 @@ void CPPageFormats::LoadSettings()
 
         int iItem = m_list.InsertItem(i, label);
         m_list.SetItemData(iItem, i);
-        engine_t e = m_mf[i].GetEngineType();
-        m_list.SetItemText(iItem, COL_ENGINE,
-                           e == DirectShow ? _T("DirectShow") :
-                           e == RealMedia ? _T("RealMedia") :
-                           e == QuickTime ? _T("QuickTime") :
-                           e == ShockWave ? _T("ShockWave") : _T("-"));
 
         CFileAssoc::reg_state_t state = s.fileAssoc.IsRegistered(m_mf[i]);
         if (!m_bHaveRegisteredCategory && state != CFileAssoc::NOT_REGISTERED) {
@@ -169,8 +160,6 @@ void CPPageFormats::LoadSettings()
             fSetContextFiles = TRUE;
         }
     }
-
-    m_list.SetColumnWidth(COL_ENGINE, LVSCW_AUTOSIZE_USEHEADER);
 
     m_list.SetSelectionMark(0);
     m_list.SetItemState(0, LVIS_SELECTED, LVIS_SELECTED);
@@ -196,9 +185,7 @@ BOOL CPPageFormats::OnInitDialog()
     //m_list.SetExtendedStyle(m_list.GetExtendedStyle() | LVS_EX_FULLROWSELECT);
     m_list.setAdditionalStyles(LVS_EX_FULLROWSELECT);
 
-
-    m_list.InsertColumn(COL_CATEGORY, _T("Category"), LVCFMT_LEFT, 290);
-    m_list.InsertColumn(COL_ENGINE, _T("Engine"), LVCFMT_RIGHT, 50);
+    m_list.InsertColumn(COL_CATEGORY, _T("Category"), LVCFMT_LEFT, 350);
 
     // We don't use m_onoff.Create(IDB_CHECKBOX, 12, 3, 0xffffff) since
     // we want to load the bitmap directly from the main executable.
@@ -367,66 +354,6 @@ void CPPageFormats::OnMediaCategorySelected(NMHDR* pNMHDR, LRESULT* pResult)
     }
 
     *pResult = 0;
-}
-
-void CPPageFormats::OnBeginEditMediaCategoryEngine(NMHDR* pNMHDR, LRESULT* pResult)
-{
-    LV_DISPINFO* pDispInfo = (LV_DISPINFO*)pNMHDR;
-    LV_ITEM* pItem = &pDispInfo->item;
-
-    *pResult = FALSE;
-
-    if (pItem->iItem >= 0 && pItem->iSubItem == COL_ENGINE) {
-        if (m_bInsufficientPrivileges) {
-            CMPCThemeMsgBox::MessageBox(this, ResStr(IDS_CANNOT_CHANGE_FORMAT));
-            // This isn't technically true, because we have access,
-            // but we enforce user to use elevated window for consistency
-        } else {
-            *pResult = TRUE;
-        }
-    }
-}
-
-void CPPageFormats::OnEditMediaCategoryEngine(NMHDR* pNMHDR, LRESULT* pResult)
-{
-    LV_DISPINFO* pDispInfo = (LV_DISPINFO*)pNMHDR;
-    LV_ITEM* pItem = &pDispInfo->item;
-
-    *pResult = FALSE;
-
-    if (pItem->iItem >= 0 && pItem->iSubItem == COL_ENGINE) {
-        const CMediaFormatCategory& mfc = m_mf[m_list.GetItemData(pItem->iItem)];
-
-        CAtlList<CString> sl;
-        sl.AddTail(_T("DirectShow"));
-        sl.AddTail(_T("RealMedia"));
-        sl.AddTail(_T("QuickTime"));
-        sl.AddTail(_T("ShockWave"));
-
-        int nSel = (int)mfc.GetEngineType();
-
-        m_list.ShowInPlaceComboBox(pItem->iItem, pItem->iSubItem, sl, nSel);
-
-        *pResult = TRUE;
-    }
-}
-
-void CPPageFormats::OnEndEditMediaCategoryEngine(NMHDR* pNMHDR, LRESULT* pResult)
-{
-    LV_DISPINFO* pDispInfo = (LV_DISPINFO*)pNMHDR;
-    LV_ITEM* pItem = &pDispInfo->item;
-
-    *pResult = FALSE;
-
-    if (m_list.m_fInPlaceDirty && pItem->iItem >= 0 && pItem->iSubItem == COL_ENGINE && pItem->lParam >= 0) {
-        CMediaFormatCategory& mfc = m_mf[m_list.GetItemData(pItem->iItem)];
-
-        mfc.SetEngineType((engine_t)pItem->lParam);
-        m_list.SetItemText(pItem->iItem, pItem->iSubItem, pItem->pszText);
-        *pResult = TRUE;
-
-        SetModified();
-    }
 }
 
 void CPPageFormats::SetSelectionAllFormats(bool bSelect)

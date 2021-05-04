@@ -65,9 +65,7 @@
     <ClCompile Include="OuterVMR.cpp" />
     <ClCompile Include="PixelShaderCache.cpp" />
     <ClCompile Include="PixelShaderCompiler.cpp" />
-    <ClCompile Include="QT9AllocatorPresenter.cpp" />
     <ClCompile Include="RenderersSettings.cpp" />
-    <ClCompile Include="RM9AllocatorPresenter.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
@@ -94,9 +92,7 @@
     <ClInclude Include="OuterVMR.h" />
     <ClInclude Include="PixelShaderCache.h" />
     <ClInclude Include="PixelShaderCompiler.h" />
-    <ClInclude Include="QT9AllocatorPresenter.h" />
     <ClInclude Include="RenderersSettings.h" />
-    <ClInclude Include="RM9AllocatorPresenter.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="SyncAllocatorPresenter.h" />
     <ClInclude Include="SyncRenderer.h" />

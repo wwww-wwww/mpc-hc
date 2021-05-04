@@ -210,7 +210,6 @@ CAppSettings::CAppSettings()
     , fRemainingTime(false)
     , bHighPrecisionTimer(false)
     , fLastFullScreen(false)
-    , fIntRealMedia(false)
     , fEnableEDLEditor(false)
     , hMasterWnd(nullptr)
     , bHideWindowedControls(false)
@@ -1011,8 +1010,6 @@ void CAppSettings::SaveSettings()
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_LASTFULLSCREEN, fLastFullScreen);
     // CASIMIR666 : end of new settings
 
-    pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_INTREALMEDIA, fIntRealMedia);
-
     pApp->WriteProfileString(IDS_R_SETTINGS _T("\\") IDS_RS_PNSPRESETS, nullptr, nullptr);
     for (INT_PTR i = 0, j = m_pnspresets.GetCount(); i < j; i++) {
         CString str;
@@ -1677,7 +1674,6 @@ void CAppSettings::LoadSettings()
     // External filters
     LoadExternalFilters(m_filters);
 
-    fIntRealMedia = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_INTREALMEDIA, FALSE);
     m_pnspresets.RemoveAll();
 
     for (int i = 0; i < (ID_PANNSCAN_PRESETS_END - ID_PANNSCAN_PRESETS_START); i++) {
