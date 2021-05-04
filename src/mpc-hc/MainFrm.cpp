@@ -4718,10 +4718,11 @@ void CMainFrame::OnDropFiles(CAtlList<CString>& slFiles, DROPEFFECT dropEffect)
     POSITION pos = slFiles.GetHeadPosition();
     while (pos) {
         SubtitleInput subInput;
+        POSITION curpos = pos;
         subfile = slFiles.GetNext(pos);
         if (IsSubtitleFilename(subfile)) {
             // remove subtitle file from list
-            slFiles.RemoveHeadNoReturn();
+            slFiles.RemoveAt(curpos);
             // try to load it
             if (!bAppend && m_pCAP && GetLoadState() == MLS::LOADED && !IsPlaybackCaptureMode() && !m_fAudioOnly && LoadSubtitle(subfile, &subInput, False)) {
                 if (onlysubs && !subInputSelected.pSubStream) {
