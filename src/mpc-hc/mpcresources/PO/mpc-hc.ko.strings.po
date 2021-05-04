@@ -2563,12 +2563,8 @@ msgid "Out of memory"
 msgstr "메모리 없음"
 
 msgctxt "IDS_MAINFRM_77"
-msgid "Error: Adobe Flash Player for Internet Explorer is required"
-msgstr "에러: IE를 위한 Flash 기능이 필요합니다."
-
-msgctxt "IDS_MAINFRM_78"
-msgid "QuickTime not yet supported for X64 (apple library not available)"
-msgstr "QuickTime은 아직 X64를 지원하지 않습니다."
+msgid "Error: Requires Adobe Flash Player for IE with killswitch patch"
+msgstr ""
 
 msgctxt "IDS_MAINFRM_80"
 msgid "Failed to create the filter graph object"
@@ -3090,9 +3086,9 @@ msgctxt "IDS_MFMT_3GP"
 msgid "3GP"
 msgstr "3GP"
 
-msgctxt "IDS_MFMT_3G2"
-msgid "3G2"
-msgstr "3G2"
+msgctxt "IDS_MFMT_3GA"
+msgid "3GA"
+msgstr ""
 
 msgctxt "IDS_MFMT_FLV"
 msgid "Flash Video"

@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2021-04-29 18:42:45+0000\n"
+"POT-Creation-Date: 2021-05-04 16:20:41+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2519,11 +2519,7 @@ msgid "Out of memory"
 msgstr ""
 
 msgctxt "IDS_MAINFRM_77"
-msgid "Error: Adobe Flash Player for Internet Explorer is required"
-msgstr ""
-
-msgctxt "IDS_MAINFRM_78"
-msgid "QuickTime not yet supported for X64 (apple library not available)"
+msgid "Error: Requires Adobe Flash Player for IE with killswitch patch"
 msgstr ""
 
 msgctxt "IDS_MAINFRM_80"
@@ -3044,8 +3040,8 @@ msgctxt "IDS_MFMT_3GP"
 msgid "3GP"
 msgstr ""
 
-msgctxt "IDS_MFMT_3G2"
-msgid "3G2"
+msgctxt "IDS_MFMT_3GA"
+msgid "3GA"
 msgstr ""
 
 msgctxt "IDS_MFMT_FLV"

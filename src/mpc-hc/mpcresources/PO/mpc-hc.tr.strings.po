@@ -2662,13 +2662,8 @@ msgid "Out of memory"
 msgstr "Yetersiz hafıza"
 
 msgctxt "IDS_MAINFRM_77"
-msgid "Error: Adobe Flash Player for Internet Explorer is required"
-msgstr "Hata: Internet Explorer için Adobe Flash Oynatıcısı gerekiyor"
-
-msgctxt "IDS_MAINFRM_78"
-msgid "QuickTime not yet supported for X64 (apple library not available)"
+msgid "Error: Requires Adobe Flash Player for IE with killswitch patch"
 msgstr ""
-"QuickTime, henüz X64 sistemleri desteklemiyor (apple kütüphanesi geçersiz)"
 
 msgctxt "IDS_MAINFRM_80"
 msgid "Failed to create the filter graph object"
@@ -3190,9 +3185,9 @@ msgctxt "IDS_MFMT_3GP"
 msgid "3GP"
 msgstr "3GP"
 
-msgctxt "IDS_MFMT_3G2"
-msgid "3G2"
-msgstr "3G2"
+msgctxt "IDS_MFMT_3GA"
+msgid "3GA"
+msgstr ""
 
 msgctxt "IDS_MFMT_FLV"
 msgid "Flash Video"

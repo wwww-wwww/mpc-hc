@@ -2634,14 +2634,8 @@ msgid "Out of memory"
 msgstr "Нема меморије"
 
 msgctxt "IDS_MAINFRM_77"
-msgid "Error: Adobe Flash Player for Internet Explorer is required"
-msgstr "Грешка: потребан је Adobe Flash Player за Internet Explorer"
-
-msgctxt "IDS_MAINFRM_78"
-msgid "QuickTime not yet supported for X64 (apple library not available)"
+msgid "Error: Requires Adobe Flash Player for IE with killswitch patch"
 msgstr ""
-"Системи са 64 бита још увек не подржавају QuickTime (Apple-ова библиотека "
-"није доступна)"
 
 msgctxt "IDS_MAINFRM_80"
 msgid "Failed to create the filter graph object"
@@ -3163,9 +3157,9 @@ msgctxt "IDS_MFMT_3GP"
 msgid "3GP"
 msgstr "3GP"
 
-msgctxt "IDS_MFMT_3G2"
-msgid "3G2"
-msgstr "3G2"
+msgctxt "IDS_MFMT_3GA"
+msgid "3GA"
+msgstr ""
 
 msgctxt "IDS_MFMT_FLV"
 msgid "Flash Video"

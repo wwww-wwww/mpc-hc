@@ -2581,12 +2581,8 @@ msgid "Out of memory"
 msgstr "記憶體不足"
 
 msgctxt "IDS_MAINFRM_77"
-msgid "Error: Adobe Flash Player for Internet Explorer is required"
-msgstr "錯誤: 需要 Internet Explorer 用的 Flash"
-
-msgctxt "IDS_MAINFRM_78"
-msgid "QuickTime not yet supported for X64 (apple library not available)"
-msgstr "QuickTime 尚未支援 X64 (沒有 Apple 的函式庫)"
+msgid "Error: Requires Adobe Flash Player for IE with killswitch patch"
+msgstr ""
 
 msgctxt "IDS_MAINFRM_80"
 msgid "Failed to create the filter graph object"
@@ -3108,9 +3104,9 @@ msgctxt "IDS_MFMT_3GP"
 msgid "3GP"
 msgstr "3GP"
 
-msgctxt "IDS_MFMT_3G2"
-msgid "3G2"
-msgstr "3G2"
+msgctxt "IDS_MFMT_3GA"
+msgid "3GA"
+msgstr ""
 
 msgctxt "IDS_MFMT_FLV"
 msgid "Flash Video"

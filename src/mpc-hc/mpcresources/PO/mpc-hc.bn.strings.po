@@ -2663,12 +2663,8 @@ msgid "Out of memory"
 msgstr "পর্যাপ্ত ম্যামরি নেই"
 
 msgctxt "IDS_MAINFRM_77"
-msgid "Error: Adobe Flash Player for Internet Explorer is required"
-msgstr "সমস্যা: IEএর জন্য Flash প্লেয়ার প্রয়োজন"
-
-msgctxt "IDS_MAINFRM_78"
-msgid "QuickTime not yet supported for X64 (apple library not available)"
-msgstr "QuickTime এখনও X64 সমর্থন করে না (apple লাইব্রেরি পাওয়া যাচ্ছে না)"
+msgid "Error: Requires Adobe Flash Player for IE with killswitch patch"
+msgstr ""
 
 msgctxt "IDS_MAINFRM_80"
 msgid "Failed to create the filter graph object"
@@ -3192,9 +3188,9 @@ msgctxt "IDS_MFMT_3GP"
 msgid "3GP"
 msgstr "3GP"
 
-msgctxt "IDS_MFMT_3G2"
-msgid "3G2"
-msgstr "3G2"
+msgctxt "IDS_MFMT_3GA"
+msgid "3GA"
+msgstr ""
 
 msgctxt "IDS_MFMT_FLV"
 msgid "Flash Video"
