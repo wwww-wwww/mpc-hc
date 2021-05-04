@@ -355,19 +355,31 @@ CString GetContentType(CString fn, CAtlList<CString>* redir)
     }
 
     CString ext = CPath(fn).GetExtension().MakeLower();
+    int p = ext.FindOneOf(_T("?#"));
+    if (p > 0) {
+        ext = ext.Left(p);
+    }
 
     // no further analysis needed if known audio/video extension and points directly to a file
-    if (!ext.IsEmpty() && (!isurl || fn.FindOneOf(_T("?#")) < 0)) {
-        if (ext == _T(".bdmv")) {
-            return _T("application/x-bdmv-playlist");
-        } else if (ext == _T(".swf")) {
-            return _T("application/x-shockwave-flash");
-        } else if (ext == _T(".mpcpl")) {
-            return _T("application/x-mpc-playlist");
+    if (!ext.IsEmpty()) {
+        if (ext == _T(".mp4") || ext == _T(".m4v") || ext == _T(".mov") || ext == _T(".mkv") || ext == _T(".webm") || ext == _T(".avi") || ext == _T(".wmv") || ext == _T(".mpg") || ext == _T(".mpeg") || ext == _T(".flv") || ext == _T(".ogm") || ext == _T(".m2ts") || ext == _T(".ts")) {
+            content = _T("video");
         } else if (ext == _T(".mp3") || ext == _T(".m4a") || ext == _T(".aac") || ext == _T(".flac") || ext == _T(".mka") || ext == _T(".ogg") || ext == _T(".opus")) {
-            return _T("");
-        } else if (ext == _T(".mp4") || ext == _T(".m4v") || ext == _T(".mov") || ext == _T(".mkv") || ext == _T(".webm") || ext == _T(".avi") || ext == _T(".wmv") || ext == _T(".mpg") || ext == _T(".mpeg") || ext == _T(".flv") || ext == _T(".ogm") || ext == _T(".m2ts") || ext == _T(".ts")) {
-            return _T("");
+            content = _T("audio");
+        } else if (ext == _T(".mpcpl")) {
+            content = _T("application/x-mpc-playlist");
+        } else if (ext == _T(".m3u") || ext == _T(".m3u8")) {
+            content = _T("audio/x-mpegurl");
+        } else if (ext == _T(".bdmv")) {
+            content = _T("application/x-bdmv-playlist");
+        } else if (ext == _T(".cue")) {
+            content = _T("application/x-cue-sheet");
+        } else if (ext == _T(".swf")) {
+            content = _T("application/x-shockwave-flash");
+        }
+
+        if (!content.IsEmpty()) {
+            return content;
         }
     }
 
@@ -386,9 +398,9 @@ CString GetContentType(CString fn, CAtlList<CString>* redir)
         }
         catch (CInternetException* pEx)
         {
-            pEx->Delete(); // DO NOTHING : Compromise...If we are faced with a playlist and only one URL fails, everything fails...
+            pEx->Delete();
             url_fail = true; // Timeout has most likely occured, server unreachable
-            return _T("");
+            return content;
         }
 
         if (httpFile) {
@@ -425,13 +437,21 @@ CString GetContentType(CString fn, CAtlList<CString>* redir)
             if (url_fail) {
                 httpFile->Close(); // Close() isn't called by the destructor
                 delete httpFile;
-                return _T("");
+                return content;
             }
 
-            httpFile->QueryInfo(HTTP_QUERY_CONTENT_TYPE, content);	// Content-Type - eg text/html
+            if (content.IsEmpty()) {
+                httpFile->QueryInfo(HTTP_QUERY_CONTENT_TYPE, content);	// Content-Type - eg text/html
+            }
+
+            long contentsize = 0;
+            CString contentlength = _T("");
+            if (httpFile->QueryInfo(HTTP_QUERY_CONTENT_LENGTH, contentlength)) {
+                contentsize = _ttol(contentlength);
+            }           
 
             // Partial download of response body to further identify content types
-            if (content.IsEmpty()) {
+            if (content.IsEmpty() && contentsize < 256*1024) {
                 UINT br = 0;
                 char buffer[513] = "";
                 while (body.GetLength() < 256) {
@@ -460,7 +480,7 @@ CString GetContentType(CString fn, CAtlList<CString>* redir)
                 }
             }
             // Download larger piece of response body in case it's a playlist
-            if (redir && (content == _T("audio/x-scpls") || content == _T("audio/scpls")
+            if (redir && contentsize < 256*1024 && (content == _T("audio/x-scpls") || content == _T("audio/scpls")
                 || content == _T("video/x-ms-asf") || content == _T("text/plain")
                 || content == _T("application/octet-stream") || content == _T("application/pls+xml"))) {
                 UINT br = 0;
@@ -482,30 +502,13 @@ CString GetContentType(CString fn, CAtlList<CString>* redir)
 
     // If content type is empty, plain text or octet-stream (weird server!) GUESS by extension if it exists.....
     if (content.IsEmpty() || content == _T("text/plain") || content == _T("application/octet-stream")) {
-        if (ext == _T(".mpcpl")) {
-            content = _T("application/x-mpc-playlist");
-        }
-        else if (ext == _T(".cue")) {
-            content = _T("application/x-cue-sheet");
-        }
-        else if (ext == _T(".pls")) {
+        if (ext == _T(".pls")) {
             content = _T("audio/x-scpls");
             parsefile = true;
-        }
-        else if (ext == _T(".m3u") || ext == _T(".m3u8")) {
-            content = _T("audio/x-mpegurl");
-        }
-        else if (ext == _T(".bdmv")) {
-            content = _T("application/x-bdmv-playlist");
-        }
-        else if (ext == _T(".asx")) {
+        } else if (ext == _T(".asx")) {
             content = _T("video/x-ms-asf");
             parsefile = true;
-        }
-        else if (ext == _T(".swf")) {
-            content = _T("application/x-shockwave-flash");
-        }
-        else if (ext == _T(".ram")) {
+        } else if (ext == _T(".ram")) {
             content = _T("audio/x-pn-realaudio");
             parsefile = true;
         }
