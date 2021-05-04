@@ -2591,8 +2591,7 @@ void CAppSettings::CRecentFileListWithMoreInfo::Add(RecentFileEntry r) {
 void CAppSettings::CRecentFileListWithMoreInfo::ReadList() {
     rfe_array.RemoveAll();
     auto pApp = AfxGetMyApp();
-    int i = 1;
-    for (; i <= m_maxSize; i++) {
+    for (int i = 1; i <= m_maxSize; i++) {
         CString t;
         t.Format(_T("File%d"), i);
         CString fn = pApp->GetProfileString(m_section, t);
@@ -2627,12 +2626,10 @@ void CAppSettings::CRecentFileListWithMoreInfo::ReadList() {
 void CAppSettings::CRecentFileListWithMoreInfo::WriteList() {
     auto pApp = AfxGetMyApp();
     pApp->WriteProfileString(m_section, nullptr, nullptr);
-    int i = 1;
-    int m = rfe_array.GetCount() > m_maxSize ? m_maxSize : (int)rfe_array.GetCount();
-    for (; i <= m; i++) {
-        auto& r = rfe_array[i - 1];
+    for (size_t i = 1; i <= rfe_array.GetCount() && i <= m_maxSize; i++) {
+        auto& r = rfe_array.GetAt(i - 1);
         CString t;
-        t.Format(_T("File%d"), i);
+        t.Format(_T("File%zu"), i);
         pApp->WriteProfileString(m_section, t, r.fns.GetHead());
         if (r.fns.GetCount() > 1) {
             int k = 2;
@@ -2640,17 +2637,17 @@ void CAppSettings::CRecentFileListWithMoreInfo::WriteList() {
             r.fns.GetNext(p);
             while (p != nullptr) {
                 CString fn = r.fns.GetNext(p);
-                t.Format(_T("File%d,%d"), i, k);
+                t.Format(_T("File%zu,%d"), i, k);
                 pApp->WriteProfileString(m_section, t, fn);
                 k++;
             }
         }
         if (!r.title.IsEmpty()) {
-            t.Format(_T("Title%d"), i);
+            t.Format(_T("Title%zu"), i);
             pApp->WriteProfileString(m_section, t, r.title);
         }
         if (!r.cue.IsEmpty()) {
-            t.Format(_T("Cue%d"), i);
+            t.Format(_T("Cue%zu"), i);
             pApp->WriteProfileString(m_section, t, r.cue);
         }
         if (r.subs.GetCount() > 0) {
@@ -2658,7 +2655,7 @@ void CAppSettings::CRecentFileListWithMoreInfo::WriteList() {
             POSITION p(r.subs.GetHeadPosition());
             while (p != nullptr) {
                 CString fn = r.subs.GetNext(p);
-                t.Format(_T("Sub%d,%d"), i, k);
+                t.Format(_T("Sub%zu,%d"), i, k);
                 pApp->WriteProfileString(m_section, t, fn);
                 k++;
             }

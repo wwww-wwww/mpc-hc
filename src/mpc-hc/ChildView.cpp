@@ -155,17 +155,17 @@ void CChildView::LoadImgInternal(HGDIOBJ hImg)
     if (!bHaveLogo && !m_bCustomImgLoaded) {
         s.fLogoExternal = false;               // use the built-in logo instead
         s.strLogoFileName.Empty();             // clear logo file name
-        UINT useLogoId = s.nLogoId;
-        if ((UINT) - 1 == useLogoId) { //if the user has never chosen a logo, we can try loading a theme default logo
+        int useLogoId = s.nLogoId;
+        if (useLogoId == -1) { // if the user has never chosen a logo, we can try loading a theme default logo
             if (AppIsThemeLoaded()) {
                 useLogoId = CMPCThemeUtil::defaultLogo();
             } else {
                 useLogoId = DEF_LOGO;
             }
         }
-        if (!m_img.Load(useLogoId)) {          // try the latest selected build-in logo
-            s.nLogoId = (UINT) - 1; //-1 == never selected, will default
-            m_img.Load(DEF_LOGO);  // if fail then use the default logo, should and must never fail
+        if (!m_img.Load(useLogoId)) { // try the latest selected build-in logo
+            s.nLogoId = -1;           // upon failure, use default
+            m_img.Load(DEF_LOGO);
         }
     }
 

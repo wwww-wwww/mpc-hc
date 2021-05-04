@@ -563,7 +563,7 @@ public:
     bool            fGlobalMedia;
 
     // Logo
-    UINT            nLogoId;
+    int             nLogoId;
     bool            fLogoExternal;
     BOOL            fLogoColorProfileEnabled;
     CString         strLogoFileName;

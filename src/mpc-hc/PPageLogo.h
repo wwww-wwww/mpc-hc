@@ -31,7 +31,7 @@ class CPPageLogo : public CMPCThemePPageBase
     DECLARE_DYNAMIC(CPPageLogo)
 
 private:
-    CList<UINT> m_logoids;
+    CList<int> m_logoids;
     POSITION m_logoidpos;
     CMPCPngImage m_logo;
     void GetDataFromRes();
