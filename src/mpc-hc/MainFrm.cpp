@@ -13743,15 +13743,18 @@ bool CMainFrame::OpenMediaPrivate(CAutoPtr<OpenMediaData> pOMD)
                 }
             }
         }
+        checkAborted();
 
         if (m_pCAP && s.IsISRAutoLoadEnabled() && !m_fAudioOnly) {
             if (s.fDisableInternalSubtitles) {
                 m_pSubStreams.RemoveAll(); // Needs to be replaced with code that checks for forced subtitles.
             }
             m_posFirstExtSub = nullptr;
-            POSITION pos = pOMD->subs.GetHeadPosition();
-            while (pos) {
-                LoadSubtitle(pOMD->subs.GetNext(pos), nullptr, true);
+            if (!pOMD->subs.IsEmpty()) {
+                POSITION pos = pOMD->subs.GetHeadPosition();
+                while (pos) {
+                    LoadSubtitle(pOMD->subs.GetNext(pos), nullptr, true);
+                }
             }
         }
         checkAborted();
