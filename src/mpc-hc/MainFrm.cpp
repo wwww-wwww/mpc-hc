@@ -4425,7 +4425,6 @@ BOOL CMainFrame::OnCopyData(CWnd* pWnd, COPYDATASTRUCT* pCDS)
         PathUtils::ParseDirs(sl);
 
         bool fMulti = sl.GetCount() > 1;
-        bool fYoutubeDL = CanSendToYoutubeDL(sl.GetHead());
 
         if (!fMulti) {
             sl.AddTailList(&s.slDubs);
@@ -4449,14 +4448,17 @@ BOOL CMainFrame::OnCopyData(CWnd* pWnd, COPYDATASTRUCT* pCDS)
             }
             m_dwLastRun = GetTickCount64();
 
-            if ((s.nCLSwitches & CLSW_ADD) && !IsPlaylistEmpty()) {
-                bool r = false;
-                if (fYoutubeDL) {
-                    r = ProcessYoutubeDLURL(sl.GetHead(), true);
+            if ((s.nCLSwitches & CLSW_ADD) && !IsPlaylistEmpty()) {             
+                POSITION pos2 = sl.GetHeadPosition();
+                while (pos2) {
+                    CString fn = sl.GetNext(pos2);
+                    if (!CanSendToYoutubeDL(fn) || !ProcessYoutubeDLURL(fn, true)) {
+                        CAtlList<CString> sl2;
+                        sl2.AddHead(fn);
+                        m_wndPlaylistBar.Append(sl2, false, &s.slSubs);
+                    }
                 }
-                if (!r) { //not an http link, or youtube-dl unavailable
-                    m_wndPlaylistBar.Append(sl, fMulti, &s.slSubs);
-                }
+
                 applyRandomizeSwitch();
 
                 if (s.nCLSwitches & (CLSW_OPEN | CLSW_PLAY)) {
@@ -4467,13 +4469,22 @@ BOOL CMainFrame::OnCopyData(CWnd* pWnd, COPYDATASTRUCT* pCDS)
                 //SendMessage(WM_COMMAND, ID_FILE_CLOSEMEDIA);
                 fSetForegroundWindow = true;
 
-                bool r = false;
-                if (fYoutubeDL) {
-                    r = ProcessYoutubeDLURL(sl.GetHead(), false);
+                bool first = true;
+                POSITION pos2 = sl.GetHeadPosition();
+                while (pos2) {
+                    CString fn = sl.GetNext(pos2);
+                    if (!CanSendToYoutubeDL(fn) || !ProcessYoutubeDLURL(fn, !first)) {
+                        CAtlList<CString> sl2;
+                        sl2.AddHead(fn);
+                        if (first) {
+                            m_wndPlaylistBar.Open(sl2, false, &s.slSubs);
+                        } else {
+                            m_wndPlaylistBar.Append(sl2, false, &s.slSubs);
+                        }
+                    }
+                    first = false;
                 }
-                if (!r) { //not an http link or youtube-dl unavailable
-                    m_wndPlaylistBar.Open(sl, fMulti, &s.slSubs);
-                }
+
                 applyRandomizeSwitch();
                 m_wndPlaylistBar.SetFirst();
                 OpenCurPlaylistItem((s.nCLSwitches & CLSW_STARTVALID) ? s.rtStart : 0);
