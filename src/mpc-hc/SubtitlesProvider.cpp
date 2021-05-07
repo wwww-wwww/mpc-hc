@@ -41,12 +41,6 @@
 #define GUESSED_NAME_POSTFIX " (*)"
 #define CheckAbortAndReturn() { if (IsAborting()) return SR_ABORTED; }
 
-// Uncomment define to compile the temporarily disabled subtitles providers.
-// Subtitles providers are disabled in case their API ceases to work.
-// In case the API is not restored in due time, the provider will eventually
-// be removed from mpc-hc. Upon removal, also remove icon resources.
-//#define MPCHC_DISABLED_SUBTITLES_PROVIDER
-
 using namespace SubtitlesProvidersUtils;
 
 class LanguageDownloadException : public std::exception
@@ -61,13 +55,9 @@ void SubtitlesProviders::RegisterProviders()
 {
     Register<OpenSubtitles>(this);
     Register<podnapisi>(this);
-#ifdef MPCHC_DISABLED_SUBTITLES_PROVIDER
-    Register<titlovi>(this);
-#endif // MPCHC_DISABLED_SUBTITLES_PROVIDER
+#ifdef INCLUDE_SUBDB
     Register<SubDB>(this);
-#ifdef MPCHC_DISABLED_SUBTITLES_PROVIDER
-    Register<ysubs>(this);
-#endif // MPCHC_DISABLED_SUBTITLES_PROVIDER
+#endif
     Register<Napisy24>(this);
 }
 
@@ -535,6 +525,7 @@ bool OpenSubtitles::NeedLogin()
 }
 
 
+#ifdef INCLUDE_SUBDB
 /******************************************************************************
 ** SubDB
 ******************************************************************************/
@@ -668,6 +659,7 @@ const std::set<std::string>& SubDB::Languages() const
 #endif
     return result;
 }
+#endif
 
 /******************************************************************************
 ** podnapisi
@@ -907,272 +899,6 @@ const std::set<std::string>& podnapisi::Languages() const
     });
     return result;
 }
-
-#ifdef MPCHC_DISABLED_SUBTITLES_PROVIDER
-/******************************************************************************
-** titlovi
-******************************************************************************/
-
-/*
- x-dev_api_id=
- uiculture=hr,rs,si,ba,en,mk
- language=hr,rs,sr,si,ba,en,mk
- keyword=
- year=
- mt=numeric value representing type of subtitle (Movie / TV show / documentary 1, 2, 3)
- season=numeric value representing season
- episode=numeric value representing season episode
- forcefilename=true (default is false) return direct download link
-*/
-
-SRESULT titlovi::Search(const SubtitlesInfo& pFileInfo)
-{
-    // Need to filter not supported languages, because their API returns .hr language otherwise.
-    auto selectedLanguages = LanguagesISO6391();
-    bool userSelectedLanguage = !selectedLanguages.empty();
-    const auto languagesIntersection = GetLanguagesIntersection(std::move(selectedLanguages));
-    std::string KEY = "WC1ERVYtREVTS1RPUF9maWUyYS1hMVJzYS1hSHc0UA==";
-    std::string url(StringFormat("http://api.titlovi.com/xml_get_api.ashx?x-dev_api_id=%s&uiculture=en&forcefilename=true", Base64::decode(KEY).c_str()));
-    url += "&mt=" + (pFileInfo.seasonNumber != -1 ? std::to_string(2) : std::to_string(1));
-    url += "&keyword=" + UrlEncode(pFileInfo.title.c_str());
-    url += (pFileInfo.seasonNumber != -1 ? "&season=" + std::to_string(pFileInfo.seasonNumber) : "");
-    url += (pFileInfo.episodeNumber != -1 ? "&episode=" + std::to_string(pFileInfo.episodeNumber) : "");
-    url += (pFileInfo.year != -1 ? "&year=" + std::to_string(pFileInfo.year) : "");
-    url += (userSelectedLanguage ? "&language=" + JoinContainer(languagesIntersection, ",") : "");
-    LOG(LOG_INPUT, url.c_str());
-
-    std::string data;
-    SRESULT searchResult = DownloadInternal(url, "", data);
-
-    tinyxml2::XMLDocument dxml;
-    if (dxml.Parse(data.c_str()) == tinyxml2::XMLError::XML_SUCCESS) {
-
-        auto GetChildElementText = [&](tinyxml2::XMLElement * pElement, const char* value) -> std::string {
-            std::string str;
-            auto pChildElement = pElement->FirstChildElement(value);
-
-            if (pChildElement != nullptr)
-            {
-                auto pText = pChildElement->GetText();
-                if (pText != nullptr) {
-                    str = pText;
-                }
-            }
-            return str;
-        };
-
-        auto pRootElmt = dxml.FirstChildElement("subtitles");
-
-        if (pRootElmt) {
-            int num = pRootElmt->IntAttribute("resultsCount");
-
-            if (num > 0/* && num < 50*/) {
-                auto pSubtitleElmt = pRootElmt->FirstChildElement();
-
-                while (pSubtitleElmt) {
-                    SubtitlesInfo pSubtitlesInfo;
-
-                    pSubtitlesInfo.title = GetChildElementText(pSubtitleElmt, "title");
-                    pSubtitlesInfo.languageCode = GetChildElementText(pSubtitleElmt, "language");
-
-                    for (const auto& language : titlovi_languages) {
-                        if (pSubtitlesInfo.languageCode == language.code) {
-                            pSubtitlesInfo.languageCode = language.name;
-                        }
-                    }
-
-                    pSubtitlesInfo.languageName = UTF16To8(ISOLang::ISO639XToLanguage(pSubtitlesInfo.languageCode.c_str()));
-                    auto releaseNames = StringTokenize(GetChildElementText(pSubtitleElmt, "release"), "/");
-                    pSubtitlesInfo.releaseNames = { releaseNames.begin(), releaseNames.end() };
-                    pSubtitlesInfo.imdbid = GetChildElementText(pSubtitleElmt, "imdbId");
-                    pSubtitlesInfo.frameRate = atof(GetChildElementText(pSubtitleElmt, "fps").c_str());
-                    pSubtitlesInfo.year = atoi(GetChildElementText(pSubtitleElmt, "year").c_str());
-                    pSubtitlesInfo.discNumber = atoi(GetChildElementText(pSubtitleElmt, "cd").c_str());
-                    pSubtitlesInfo.discCount = pSubtitlesInfo.discNumber;
-                    pSubtitlesInfo.downloadCount = atoi(GetChildElementText(pSubtitleElmt, "downloads").c_str());
-
-                    auto pSubtitleChildElmt = pSubtitleElmt->FirstChildElement("urls");
-                    if (pSubtitleChildElmt) {
-                        auto pURLElement = pSubtitleChildElmt->FirstChildElement("url");
-                        while (pURLElement) {
-                            if (pURLElement->Attribute("what", "download")) {
-                                pSubtitlesInfo.url = pURLElement->GetText();
-                            }
-                            if (pURLElement->Attribute("what", "direct")) {
-                                pSubtitlesInfo.id = pURLElement->GetText();
-                            }
-                            pURLElement = pURLElement->NextSiblingElement();
-                        }
-                    }
-
-                    if ((pSubtitleChildElmt = pSubtitleElmt->FirstChildElement("TVShow")) != nullptr) {
-                        pSubtitlesInfo.seasonNumber = atoi(GetChildElementText(pSubtitleChildElmt, "season").c_str());
-                        pSubtitlesInfo.episodeNumber = atoi(GetChildElementText(pSubtitleChildElmt, "episode").c_str());
-                    }
-
-                    pSubtitlesInfo.fileName = pSubtitlesInfo.title + " " + std::to_string(pSubtitlesInfo.year);
-                    if (pSubtitlesInfo.seasonNumber > 0) {
-                        pSubtitlesInfo.fileName += StringFormat(" S%02d", pSubtitlesInfo.seasonNumber);
-                    }
-                    if (pSubtitlesInfo.episodeNumber > 0) {
-                        pSubtitlesInfo.fileName += StringFormat("%sE%02d", (pSubtitlesInfo.seasonNumber > 0) ? "" : " ", pSubtitlesInfo.episodeNumber);
-                    }
-
-                    bool found = false;
-                    for (const auto& str : pSubtitlesInfo.releaseNames) {
-                        if (pFileInfo.fileName.find(str) != std::string::npos) {
-                            pSubtitlesInfo.fileName += " " + str;
-                            found = true;
-                            break;
-                        }
-                    }
-
-                    if (!found && !pSubtitlesInfo.releaseNames.empty()) {
-                        pSubtitlesInfo.fileName += " " + pSubtitlesInfo.releaseNames.front();
-                    }
-                    pSubtitlesInfo.fileName += GUESSED_NAME_POSTFIX;
-
-                    Set(pSubtitlesInfo);
-                    pSubtitleElmt = pSubtitleElmt->NextSiblingElement();
-                }
-            }
-        }
-    }
-    return searchResult;
-}
-
-SRESULT titlovi::Download(SubtitlesInfo& pSubtitlesInfo)
-{
-    LOG(LOG_INPUT, pSubtitlesInfo.id.c_str());
-    return DownloadInternal(pSubtitlesInfo.id, "", pSubtitlesInfo.fileContents);
-}
-
-const std::set<std::string>& titlovi::Languages() const
-{
-    static std::once_flag initialized;
-    static std::set<std::string> result;
-
-    std::call_once(initialized, [this]() {
-        for (const auto& iter : titlovi_languages) {
-            if (strlen(iter.name)) {
-                result.emplace(iter.name);
-            }
-        }
-    });
-    return result;
-}
-
-/******************************************************************************
-** ysubs
-******************************************************************************/
-
-SRESULT ysubs::Search(const SubtitlesInfo& pFileInfo)
-{
-    SRESULT searchResult = SR_UNDEFINED;
-    using namespace rapidjson;
-
-    if (pFileInfo.year && pFileInfo.seasonNumber == -1 && pFileInfo.episodeNumber == -1) {
-        std::string urlApi(StringFormat("https://yts.ag/api/v2/list_movies.json?query_term=%s", UrlEncode(pFileInfo.title.c_str())));
-        LOG(LOG_INPUT, urlApi.c_str());
-
-        std::string data;
-        searchResult = DownloadInternal(urlApi, "", data);
-
-        Document d;
-        if (d.ParseInsitu(&data[0]).HasParseError()) {
-            return SR_FAILED;
-        }
-
-        auto root = d.FindMember("data");
-        if (root != d.MemberEnd()) {
-            auto iter = root->value.FindMember("movies");
-            if ((iter != root->value.MemberEnd()) && (iter->value.IsArray())) {
-                std::set<std::string> imdb_ids;
-                for (auto elem = iter->value.Begin(); elem != iter->value.End(); ++elem) {
-                    std::string imdb = elem->FindMember("imdb_code")->value.GetString();
-                    if (imdb_ids.find(imdb) == imdb_ids.end()) {
-                        imdb_ids.insert(imdb);
-
-                        std::string urlSubs(StringFormat("http://api.ysubs.com/subs/%s", imdb.c_str()));
-                        LOG(LOG_INPUT, urlSubs.c_str());
-
-                        std::string data1;
-                        searchResult = DownloadInternal(urlSubs, "", data1);
-                        Document d1;
-                        if (d1.ParseInsitu(&data1[0]).HasParseError()) {
-                            return SR_FAILED;
-                        }
-
-                        auto iter1 = d1.FindMember("subs");
-                        if (iter1 != d1.MemberEnd()) {
-                            iter1 = iter1->value.FindMember(imdb.c_str());
-                            if (iter1 != d1.MemberEnd()) {
-                                for (auto elem1 = iter1->value.MemberBegin(); elem1 != iter1->value.MemberEnd(); ++elem1) {
-                                    std::string lang = elem1->name.GetString();
-                                    std::string lang_code;
-                                    for (const auto& language : ysubs_languages) {
-                                        if (lang == language.name) {
-                                            lang_code = language.code;
-                                        }
-                                    }
-                                    if (CheckLanguage(lang_code)) {
-                                        for (auto elem2 = elem1->value.Begin(); elem2 != elem1->value.End(); ++elem2) {
-                                            SubtitlesInfo pSubtitlesInfo;
-
-                                            pSubtitlesInfo.title = elem->FindMember("title")->value.GetString();
-                                            pSubtitlesInfo.languageCode = lang_code;
-                                            pSubtitlesInfo.languageName = UTF16To8(ISOLang::ISO639XToLanguage(pSubtitlesInfo.languageCode.c_str()));
-                                            pSubtitlesInfo.releaseNames.emplace_back("YIFY");
-                                            pSubtitlesInfo.imdbid = imdb;
-                                            pSubtitlesInfo.year = elem->FindMember("year")->value.GetInt();
-                                            pSubtitlesInfo.discNumber = 1;
-                                            pSubtitlesInfo.discCount = 1;
-
-                                            pSubtitlesInfo.url = "http://www.yifysubtitles.com/movie-imdb/" + imdb;
-                                            std::string str = elem2->FindMember("url")->value.GetString();
-                                            pSubtitlesInfo.id = "http://www.yifysubtitles.com" + str;
-                                            pSubtitlesInfo.hearingImpaired = elem2->FindMember("hi")->value.GetInt();
-                                            pSubtitlesInfo.corrected = elem2->FindMember("rating")->value.GetInt();
-
-                                            pSubtitlesInfo.fileName = pFileInfo.fileName;
-                                            pSubtitlesInfo.fileName += GUESSED_NAME_POSTFIX;
-
-                                            Set(pSubtitlesInfo);
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    return searchResult;
-}
-
-SRESULT ysubs::Download(SubtitlesInfo& pSubtitlesInfo)
-{
-    LOG(LOG_INPUT, pSubtitlesInfo.id.c_str());
-    return DownloadInternal(pSubtitlesInfo.id, "", pSubtitlesInfo.fileContents);
-}
-
-const std::set<std::string>& ysubs::Languages() const
-{
-    static std::once_flag initialized;
-    static std::set<std::string> result;
-
-    std::call_once(initialized, [this]() {
-        for (const auto& iter : ysubs_languages) {
-            if (strlen(iter.code)) {
-                result.emplace(iter.code);
-            }
-        }
-    });
-    return result;
-}
-#endif // MPCHC_DISABLED_SUBTITLES_PROVIDER
 
 /******************************************************************************
 ** Napisy24

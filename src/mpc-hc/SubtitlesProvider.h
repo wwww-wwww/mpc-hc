@@ -25,6 +25,13 @@
 
 #include "XmlRpc4Win/TimXmlRpc.h"
 
+ // Uncomment defines to include the disabled subtitles providers.
+ // Subtitles providers are disabled in case their API ceases to work.
+ // In case the API is not restored in due time, the provider will eventually
+ // be removed from mpc-hc. Upon removal, also remove icon resources.
+
+ //#define INCLUDE_SUBDB
+
 #define DEFINE_SUBTITLESPROVIDER_BEGIN(P, U, I, F)                                     \
 class P final : public SubtitlesProvider {                                             \
 public:                                                                                \
@@ -61,6 +68,7 @@ std::unique_ptr<XmlRpcClient> xmlrpc;
 XmlRpcValue token;
 DEFINE_SUBTITLESPROVIDER_END
 
+#ifdef INCLUDE_SUBDB
 DEFINE_SUBTITLESPROVIDER_BEGIN(SubDB, "http://api.thesubdb.com", IDI_SUBDB, SPF_HASH | SPF_UPLOAD)
 SRESULT Hash(SubtitlesInfo& pFileInfo) override;
 SRESULT Upload(const SubtitlesInfo& pSubtitlesInfo) override;
@@ -70,19 +78,12 @@ std::string UserAgent() const override
                                                  VersionInfo::GetVersionString().GetString());
 }
 DEFINE_SUBTITLESPROVIDER_END
+#endif
 
 DEFINE_SUBTITLESPROVIDER_BEGIN(podnapisi, "https://www.podnapisi.net", IDI_PODNAPISI, SPF_SEARCH)
 SRESULT Login(const std::string& sUserName, const std::string& sPassword) override;
 SRESULT Hash(SubtitlesInfo& pFileInfo) override;
 DEFINE_SUBTITLESPROVIDER_END
-
-#ifdef MPCHC_DISABLED_SUBTITLES_PROVIDER
-DEFINE_SUBTITLESPROVIDER_BEGIN(titlovi, "http://www.titlovi.com", IDI_TITLOVI, SPF_SEARCH)
-DEFINE_SUBTITLESPROVIDER_END
-
-DEFINE_SUBTITLESPROVIDER_BEGIN(ysubs, "http://www.yifysubtitles.com", IDI_YSUBS, SPF_SEARCH)
-DEFINE_SUBTITLESPROVIDER_END
-#endif // MPCHC_DISABLED_SUBTITLES_PROVIDER
 
 DEFINE_SUBTITLESPROVIDER_BEGIN(Napisy24, "https://napisy24.pl/", IDI_N24, SPF_HASH | SPF_SEARCH)
 SRESULT Hash(SubtitlesInfo& pFileInfo) override;
@@ -113,31 +114,3 @@ static const struct {
     { /*54*/ "id", "Indonesian" },              { /*55*/ "ms", "Malay" },                  { /*56*/ "si", "Sinhala" },
     { /*57*/ "kl", "Greenlandic" },             { /*58*/ "kk", "Kazakh" },                 { /*59*/ "bn", "Bengali" },
 };
-
-#ifdef MPCHC_DISABLED_SUBTITLES_PROVIDER
-static const struct {
-    const char* code;
-    const char* name;
-} titlovi_languages[] = {
-    { "hr", "hr" }, { "sr", "sr" }, { "rs", "sr" }, { "si", "sl" }, { "ba", "bs" }, { "en", "en" }, { "mk", "mk" },
-};
-
-static const struct {
-    const char* code;
-    const char* name;
-} ysubs_languages[] = {
-    { "sq", "albanian" },                       { "ar", "arabic" },                        { "bn", "bengali" },
-    { "pb", "brazilian-portuguese" },           { "bg", "bulgarian" },                     { "zh", "chinese" },
-    { "hr", "croatian" },                       { "cs", "czech" },                         { "da", "danish" },
-    { "nl", "dutch" },                          { "en", "english" },                       { "fa", "farsi-persian" },
-    { "fi", "finnish" },                        { "fr", "french" },                        { "de", "german" },
-    { "el", "greek" },                          { "he", "hebrew" },                        { "hu", "hungarian" },
-    { "id", "indonesian" },                     { "it", "italian" },                       { "ja", "japanese" },
-    { "ko", "korean" },                         { "lt", "lithuanian" },                    { "mk", "macedonian" },
-    { "ms", "malay" },                          { "no", "norwegian" },                     { "pl", "polish" },
-    { "pt", "portuguese" },                     { "ro", "romanian" },                      { "ru", "russian" },
-    { "sr", "serbian" },                        { "sl", "slovenian" },                     { "es", "spanish" },
-    { "sv", "swedish" },                        { "th", "thai" },                          { "tr", "turkish" },
-    { "ur", "urdu" },                           { "vi", "vietnamese" },
-};
-#endif // MPCHC_DISABLED_SUBTITLES_PROVIDER
