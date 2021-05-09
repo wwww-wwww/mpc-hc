@@ -508,7 +508,7 @@ REFERENCE_TIME CSubtitleInputPin::DecodeSample(const std::unique_ptr<SubtitleSam
 
 #if USE_LIBASS
                 if (pRTS->m_assloaded) {
-                    ass_process_chunk(pRTS->m_track.get(), (char*)data, dataSize, pSample->rtStart / 10000, (pSample->rtStop - pSample->rtStart) / 10000);
+                    ass_process_chunk(pRTS->m_track.get(), (char *)pSample->data.data(), (int)pSample->data.size(), pSample->rtStart / 10000, (pSample->rtStop - pSample->rtStart) / 10000);
                 }
 #endif
             }

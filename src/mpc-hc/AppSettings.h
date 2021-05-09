@@ -20,6 +20,7 @@
  */
 
 #pragma once
+#include "mpc-hc_config.h"
 #include "../Subtitles/STS.h"
 #include "../filters/switcher/AudioSwitcher/AudioSwitcher.h"
 #include "../thirdparty/sanear/src/Interfaces.h"
