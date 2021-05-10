@@ -117,6 +117,7 @@
     <ClInclude Include="harfbuzz\src\hb-ot-shape-complex-myanmar-machine.hh" />
     <ClInclude Include="harfbuzz\src\hb-ot-shape-complex-myanmar.hh" />
     <ClInclude Include="harfbuzz\src\hb-ot-shape-complex-use-machine.hh" />
+    <ClInclude Include="harfbuzz\src\hb-ot-shape-complex-use-table.hh" />
     <ClInclude Include="harfbuzz\src\hb-ot-shape-complex-use.hh" />
     <ClInclude Include="harfbuzz\src\hb-ot-shape-complex-vowel-constraints.hh" />
     <ClInclude Include="harfbuzz\src\hb-ot-shape-complex.hh" />
@@ -187,8 +188,8 @@
     <ClCompile Include="harfbuzz\src\hb-ot-shape-complex-indic.cc" />
     <ClCompile Include="harfbuzz\src\hb-ot-shape-complex-khmer.cc" />
     <ClCompile Include="harfbuzz\src\hb-ot-shape-complex-myanmar.cc" />
+    <ClCompile Include="harfbuzz\src\hb-ot-shape-complex-syllabic.cc" />
     <ClCompile Include="harfbuzz\src\hb-ot-shape-complex-thai.cc" />
-    <ClCompile Include="harfbuzz\src\hb-ot-shape-complex-use-table.cc" />
     <ClCompile Include="harfbuzz\src\hb-ot-shape-complex-use.cc" />
     <ClCompile Include="harfbuzz\src\hb-ot-shape-complex-vowel-constraints.cc" />
     <ClCompile Include="harfbuzz\src\hb-ot-shape-fallback.cc" />
