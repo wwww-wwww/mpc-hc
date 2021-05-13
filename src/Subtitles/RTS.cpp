@@ -2582,7 +2582,7 @@ bool CRenderedTextSubtitle::ParseHtmlTag(CSubtitle* sub, CStringW str, STSStyle&
         str = str.Mid(i + 1);
     }
 
-    if (tag == L"text") {
+    if (tag == L"text" || tag == L"span") {
         ;
     } else if (tag == L"b" || tag == L"strong") {
         style.fontWeight = !fClosing ? FW_BOLD : org.fontWeight;
