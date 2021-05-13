@@ -52,7 +52,7 @@ CMediaFormatCategory::CMediaFormatCategory(CString label, CString description, C
     ExplodeMin(exts, m_exts, ' ');
     POSITION pos = m_exts.GetHeadPosition();
     while (pos) {
-        m_exts.GetNext(pos).TrimLeft('.');
+        m_exts.GetNext(pos).TrimLeft(_T('.'));
     }
 
     m_backupexts.AddTailList(&m_exts);
@@ -107,6 +107,7 @@ void CMediaFormatCategory::SetExts(CAtlList<CString>& exts)
 
 void CMediaFormatCategory::SetExts(CString exts)
 {
+    exts.Remove(_T('.'));
     m_exts.RemoveAll();
     ExplodeMin(exts, m_exts, ' ');
 }
