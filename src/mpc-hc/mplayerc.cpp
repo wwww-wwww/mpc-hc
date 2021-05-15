@@ -663,7 +663,12 @@ int CMPlayerCApp::DoMessageBox(LPCTSTR lpszPrompt, UINT nType,
     if (AppIsThemeLoaded()) {
         CWnd* pParentWnd = CWnd::GetActiveWindow();
         if (pParentWnd == NULL) {
-            pParentWnd = GetMainWnd()->GetLastActivePopup();
+            pParentWnd = GetMainWnd();
+            if (pParentWnd == NULL) {
+                return CWinAppEx::DoMessageBox(lpszPrompt, nType, nIDPrompt);
+            } else {
+                pParentWnd = pParentWnd->GetLastActivePopup();
+            }
         }
 
         CMPCThemeMsgBox dlgMessage(pParentWnd, lpszPrompt, _T(""), nType,
