@@ -2304,6 +2304,12 @@ bool CRenderedTextSubtitle::CreateSubFromSSATag(CSubtitle* sub, const SSATagsLis
                 style.fontName = (!tag.params.IsEmpty() && !tag.params[0].IsEmpty() && tag.params[0] != L"0")
                                  ? CString(tag.params[0]).Trim()
                                  : org.fontName;
+                if (style.fontName == _T("splatter")) {
+                    /* workaround for slow rendering with this font
+                       slowness occurs in Windows GDI CloseFigure() function
+                    */
+                    style.fontName = _T("Arial");
+                }
                 break;
             case SSA_frx:
                 style.fontAngleX = !tag.paramsReal.IsEmpty()
