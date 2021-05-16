@@ -19,6 +19,8 @@
 */
 #pragma once
 #include "stdafx.h"
+#include "rapidjson/include/rapidjson/document.h"
+typedef rapidjson::GenericValue<rapidjson::UTF16<>> Value;
 
 struct  CUtf16JSON;
 
@@ -28,7 +30,16 @@ public:
     CYoutubeDLInstance();
     ~CYoutubeDLInstance();
 
-    struct YDLStreamURL {
+    struct YDLSubInfo {
+        CString lang;
+        CString ext;
+        CString url;
+        CString data;
+        bool isAutomaticCaptions = false;
+    };
+
+    class YDLStreamURL {
+    public:
         CString video_url;
         CString audio_url;
         CString title;
@@ -40,6 +51,35 @@ public:
         int episode_number = -1;
         CString episode_id;
         CString webpage_url;
+        CAtlList<YDLSubInfo> subtitles;
+        YDLStreamURL() :
+            video_url(),
+            audio_url(),
+            title(),
+            season(),
+            series(),
+            season_number(-1),
+            season_id(),
+            episode(),
+            episode_number(-1),
+            episode_id(),
+            webpage_url(),
+            subtitles() {}
+        YDLStreamURL(const YDLStreamURL& r) :
+            video_url(r.video_url),
+            audio_url(r.audio_url),
+            title(r.title),
+            season(r.season),
+            series(r.series),
+            season_number(r.season_number),
+            season_id(r.season_id),
+            episode(r.episode),
+            episode_number(r.episode_number),
+            episode_id(r.episode_id),
+            webpage_url(r.webpage_url) {
+            subtitles.RemoveAll();
+            subtitles.AddHeadList(&r.subtitles);
+        }
     };
 
     struct YDLPlaylistInfo {
@@ -52,6 +92,7 @@ public:
 
     bool Run(CString url);
     bool GetHttpStreams(CAtlList<YDLStreamURL>& streams, YDLPlaylistInfo& info);
+    static bool isPrefer(CAtlList<CString>& list, CString& lang);
 
 private:
     CUtf16JSON* pJSON;
@@ -65,6 +106,7 @@ private:
     DWORD capacity_out, capacity_err;
 
     bool loadJSON();
+    void loadSub(const Value& obj, CAtlList<YDLSubInfo>& subs, bool isAutomaticCaptions = false);
     static DWORD WINAPI BuffOutThread(void* ydl_inst);
     static DWORD WINAPI BuffErrThread(void* ydl_inst);
 };

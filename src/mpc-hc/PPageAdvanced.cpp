@@ -178,6 +178,9 @@ void CPPageAdvanced::InitSettings()
     addBoolItem(FPS_STATUSBAR, IDS_RS_SHOW_FPS_STATUSBAR, false, s.bShowFPSInStatusbar, StrRes(IDS_PPAGEADVANCED_SHOW_FPS_STATUSBAR));
     addBoolItem(ADD_LANGCODE_WHEN_SAVE_SUBTITLES, IDS_RS_ADD_LANGCODE_WHEN_SAVE_SUBTITLES, true, s.bAddLangCodeWhenSaveSubtitles, StrRes(IDS_PPAGEADVANCED_ADD_LANGCODE_WHEN_SAVE_SUBTITLES));
     addBoolItem(USE_TITLE_IN_RECENT_FILE_LIST, IDS_RS_USE_TITLE_IN_RECENT_FILE_LIST, true, s.bUseTitleInRecentFileList, StrRes(IDS_PPAGEADVANCED_USE_TITLE_IN_RECENT_FILE_LIST));
+    addBoolItem(USE_SUBS_FROM_YDL, IDS_RS_USE_SUBS_FROM_YDL, true, s.bUseSubsFromYDL, _T("Use subtitles from Youtube-DL."));
+    addCStringItem(YDL_SUBS_PREFERENCE, IDS_RS_YDL_SUBS_PREFERENCE, _T(""), s.sYDLSubsPreference, _T("The subtitles' language preference when reading subtitles from Youtube-DL.\nIf empty, program will read all subtitles from Youtube-DL.\nExample: en zh ja"));
+    addBoolItem(USE_AUTOMATIC_CAPTIONS, IDS_RS_USE_AUTOMATIC_CAPTIONS, false, s.bUseAutomaticCaptions, _T("Use automatic captions from Youtube-DL."));
 }
 
 BOOL CPPageAdvanced::OnApply()

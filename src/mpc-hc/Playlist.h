@@ -22,6 +22,7 @@
 #pragma once
 
 #include <afxcoll.h>
+#include "YoutubeDL.h"
 
 
 class CPlaylistItem
@@ -48,6 +49,7 @@ public:
     CString m_cue_filename;
     int m_cue_index;
     CString m_cover;
+    CAtlList<CYoutubeDLInstance::YDLSubInfo> m_ydl_subs;
 
     bool m_fInvalid;
 

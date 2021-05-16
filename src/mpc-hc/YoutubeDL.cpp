@@ -23,8 +23,6 @@
 #include "mplayerc.h"
 #include "logger.h"
 
-typedef rapidjson::GenericValue<rapidjson::UTF16<>> Value;
-
 struct CUtf16JSON {
     rapidjson::GenericDocument<rapidjson::UTF16<>> d;
 };
@@ -56,10 +54,15 @@ bool CYoutubeDLInstance::Run(CString url)
     PROCESS_INFORMATION proc_info;
     STARTUPINFO startup_info;
     SECURITY_ATTRIBUTES sec_attrib;
+    auto& s = AfxGetAppSettings();
 
     YDL_LOG(url);
 
-    CString args = _T("youtube-dl -J --all-subs --no-warnings --youtube-skip-dash-manifest");
+    CString args = _T("youtube-dl -J --no-warnings --youtube-skip-dash-manifest");
+    if (s.bUseSubsFromYDL) {
+        args.Append(_T(" --all-subs"));
+        if (s.bUseAutomaticCaptions) args.Append(_T(" --write-auto-sub --write-sub"));
+    }
     if (url.Find(_T("list=")) > 0) {
         args.Append(_T(" --ignore-errors"));
     }
@@ -564,6 +567,8 @@ bool CYoutubeDLInstance::GetHttpStreams(CAtlList<YDLStreamURL>& streams, YDLPlay
         if (pJSON->d.HasMember(_T("episode_number")) && !pJSON->d[_T("episode_number")].IsNull()) stream.episode_number = pJSON->d[_T("episode_number")].GetInt();
         if (pJSON->d.HasMember(_T("episode_id")) && !pJSON->d[_T("episode_id")].IsNull()) stream.episode_id = pJSON->d[_T("episode_id")].GetString();
         if (pJSON->d.HasMember(_T("webpage_url")) && !pJSON->d[_T("webpage_url")].IsNull()) stream.webpage_url = pJSON->d[_T("webpage_url")].GetString();
+        if (s.bUseSubsFromYDL && pJSON->d.HasMember(_T("subtitles")) && !pJSON->d[_T("subtitles")].IsNull() && pJSON->d[_T("subtitles")].IsObject()) loadSub(pJSON->d[_T("subtitles")], stream.subtitles);
+        if (s.bUseSubsFromYDL && s.bUseAutomaticCaptions && pJSON->d.HasMember(_T("automatic_captions")) && !pJSON->d[_T("automatic_captions")].IsNull() && pJSON->d[_T("automatic_captions")].IsObject()) loadSub(pJSON->d[_T("automatic_captions")], stream.subtitles, true);
 
         if (filterVideo(pJSON->d[_T("formats")], ydl_sd, s.iYDLMaxHeight, s.bYDLAudioOnly, s.iYDLVideoFormat)) {
             stream.video_url = ydl_sd.url;
@@ -612,6 +617,12 @@ bool CYoutubeDLInstance::GetHttpStreams(CAtlList<YDLStreamURL>& streams, YDLPlay
                     if (entry.HasMember(_T("episode_number")) && !entry[_T("episode_number")].IsNull()) stream.episode_number = entry[_T("episode_number")].GetInt();
                     if (entry.HasMember(_T("episode_id")) && !entry[_T("episode_id")].IsNull()) stream.episode_id = entry[_T("episode_id")].GetString();
                     if (entry.HasMember(_T("webpage_url")) && !entry[_T("webpage_url")].IsNull()) stream.webpage_url = entry[_T("webpage_url")].GetString();
+                    if (s.bUseSubsFromYDL && entry.HasMember(_T("subtitles")) && !entry[_T("subtitles")].IsNull() && entry[_T("subtitles")].IsObject()) {
+                        loadSub(entry[_T("subtitles")], stream.subtitles);
+                    }
+                    if (s.bUseSubsFromYDL && s.bUseAutomaticCaptions && entry.HasMember(_T("automatic_captions")) && !entry[_T("automatic_captions")].IsNull() && entry[_T("automatic_captions")].IsObject()) {
+                        loadSub(entry[_T("automatic_captions")], stream.subtitles);
+                    }
                     if (ydl_sd.has_video && !ydl_sd.has_audio && entry.HasMember(_T("formats")) && !entry[_T("formats")].IsNull()) {
                         if (filterAudio(entry[_T("formats")], ydl_sd)) {
                             stream.audio_url = ydl_sd.url;
@@ -647,4 +658,42 @@ bool CYoutubeDLInstance::loadJSON()
     }
     bIsPlaylist = pJSON->d.FindMember(_T("entries")) != pJSON->d.MemberEnd();
     return true;
+}
+
+void CYoutubeDLInstance::loadSub(const Value& obj, CAtlList<YDLSubInfo>& subs, bool isAutomaticCaptions /*= false*/) {
+    auto& s = AfxGetAppSettings();
+    CAtlList<CString> prefrelist;
+    if (!s.sYDLSubsPreference.IsEmpty()) {
+        if (s.sYDLSubsPreference.Find(_T(',')) != -1) ExplodeMin(s.sYDLSubsPreference, prefrelist, ',');
+        else ExplodeMin(s.sYDLSubsPreference, prefrelist, ' ');
+    }
+    if (!isAutomaticCaptions) subs.RemoveAll();
+    for (Value::ConstMemberIterator iter = obj.MemberBegin(); iter != obj.MemberEnd(); ++iter) {
+        CString lang(iter->name.GetString());
+        if (!s.sYDLSubsPreference.IsEmpty() && !isPrefer(prefrelist, lang)) continue;
+        if (iter->value.IsArray()) {
+            const Value& arr = obj[(LPCTSTR)lang];
+            for (int i = 0; i < arr.Size(); i++) {
+                const Value& dict = arr[i];
+                YDLSubInfo sub;
+                sub.isAutomaticCaptions = isAutomaticCaptions;
+                sub.lang = lang;
+                if (dict.HasMember(_T("ext")) && !dict[_T("ext")].IsNull()) sub.ext = dict[_T("ext")].GetString();
+                if (dict.HasMember(_T("url")) && !dict[_T("url")].IsNull()) sub.url = dict[_T("url")].GetString();
+                if (dict.HasMember(_T("data")) && !dict[_T("data")].IsNull() && dict[_T("data")].IsString()) sub.data = dict[_T("data")].GetString();
+                if (!sub.url.IsEmpty() || !sub.data.IsEmpty()) {
+                    if (sub.ext.IsEmpty() || sub.ext == _T("vtt") || sub.ext == _T("ass") || sub.ext == _T("srt")) subs.AddTail(sub);
+                }
+            }
+        }
+    }
+}
+
+bool CYoutubeDLInstance::isPrefer(CAtlList<CString>& list, CString& lang) {
+    POSITION pos = list.GetHeadPosition();
+    while (pos) {
+        CString la = list.GetNext(pos);
+        if (lang.Left(la.GetLength()) == la) return true;
+    }
+    return false;
 }

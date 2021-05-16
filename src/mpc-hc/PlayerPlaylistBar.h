@@ -28,6 +28,7 @@
 #include "DropTarget.h"
 #include "../Subtitles/TextFile.h"
 #include "CMPCThemeInlineEdit.h"
+#include "YoutubeDL.h"
 
 
 class OpenMediaData;
@@ -67,9 +68,9 @@ private:
     void ResizeListColumn();
 
     void AddItem(CString fn, CAtlList<CString>* subs);
-    void AddItem(CAtlList<CString>& fns, CAtlList<CString>* subs, CString label = _T(""), CString ydl_src = _T(""), CString cue = _T(""));
+    void AddItem(CAtlList<CString>& fns, CAtlList<CString>* subs, CString label = _T(""), CString ydl_src = _T(""), CString cue = _T(""), CAtlList<CYoutubeDLInstance::YDLSubInfo>* ydl_subs = nullptr);
     void ParsePlayList(CString fn, CAtlList<CString>* subs, int redir_count = 0);
-    void ParsePlayList(CAtlList<CString>& fns, CAtlList<CString>* subs, int redir_count = 0, CString label = _T(""), CString ydl_src = _T(""), CString cue = _T(""));
+    void ParsePlayList(CAtlList<CString>& fns, CAtlList<CString>* subs, int redir_count = 0, CString label = _T(""), CString ydl_src = _T(""), CString cue = _T(""), CAtlList<CYoutubeDLInstance::YDLSubInfo>* ydl_subs = nullptr);
     void ResolveLinkFiles(CAtlList<CString>& fns);
 
     bool ParseBDMVPlayList(CString fn);
@@ -138,8 +139,8 @@ public:
     bool Empty();
 
     void Open(CAtlList<CString>& fns, bool fMulti, CAtlList<CString>* subs = nullptr, CString label = _T(""), CString ydl_src = _T(""), CString cue = _T(""));
-    void Append(CAtlList<CString>& fns, bool fMulti, CAtlList<CString>* subs = nullptr, CString label = _T(""), CString ydl_src = _T(""), CString cue = _T(""));
-    void ReplaceCurrentItem(CAtlList<CString>& fns, CAtlList<CString>* subs = nullptr, CString label = _T(""), CString ydl_src = _T(""), CString cue = _T(""));
+    void Append(CAtlList<CString>& fns, bool fMulti, CAtlList<CString>* subs = nullptr, CString label = _T(""), CString ydl_src = _T(""), CString cue = _T(""), CAtlList<CYoutubeDLInstance::YDLSubInfo>* ydl_subs = nullptr);
+    void ReplaceCurrentItem(CAtlList<CString>& fns, CAtlList<CString>* subs = nullptr, CString label = _T(""), CString ydl_src = _T(""), CString cue = _T(""), CAtlList<CYoutubeDLInstance::YDLSubInfo>* ydl_subs = nullptr);
 
     void Open(CStringW vdn, CStringW adn, int vinput, int vchannel, int ainput);
     void Append(CStringW vdn, CStringW adn, int vinput, int vchannel, int ainput);

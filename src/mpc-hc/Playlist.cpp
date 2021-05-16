@@ -47,6 +47,7 @@ CPlaylistItem::CPlaylistItem()
     , m_cue_filename(_T(""))
     , m_cue_index(0)
     , m_cover(_T(""))
+    , m_ydl_subs()
 {
     m_id = m_globalid++;
 }
@@ -84,6 +85,8 @@ CPlaylistItem& CPlaylistItem::operator=(const CPlaylistItem& pli)
         m_cue_filename = pli.m_cue_filename;
         m_cue_index = pli.m_cue_index;
         m_cover = pli.m_cover;
+        m_ydl_subs.RemoveAll();
+        m_ydl_subs.AddHeadList(&pli.m_ydl_subs);
     }
     return *this;
 }

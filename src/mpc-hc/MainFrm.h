@@ -605,6 +605,7 @@ public:
     int SetupSubtitleStreams();
 
     bool LoadSubtitle(CString fn, SubtitleInput* pSubInput = nullptr, bool bAutoLoad = false);
+    bool LoadSubtitle(CYoutubeDLInstance::YDLSubInfo& sub);
     bool SetSubtitle(int i, bool bIsOffset = false, bool bDisplayMessage = false);
     void SetSubtitle(const SubtitleInput& subInput, bool skip_lcid = false);
     void ToggleSubtitleOnOff(bool bDisplayMessage = false);

@@ -35,6 +35,8 @@
 #include <regex>
 #include "SSASub.h"
 #include "../mpc-hc/RegexUtil.h"
+#include "../mpc-hc/SubtitlesProvidersUtils.h"
+#include "../DSUtil/ISOLang.h"
 
 struct htmlcolor {
     LPCTSTR name;
@@ -3069,6 +3071,53 @@ bool CSimpleTextSubtitle::Open(CString fn, int CharSet, CString name, CString vi
     }
 
     return Open(&f, CharSet, name);
+}
+
+bool CSimpleTextSubtitle::Open(BYTE* data, int length, int CharSet, CString provider, CString lang, CString ext) {
+    Empty();
+
+    m_provider = provider;
+    CString name;
+    name.Format(_T("%s.%s"), lang, ext);
+    CW2A temp(lang);
+    m_lcid = ISOLang::ISO6391ToLcid(temp);
+    return Open(data, length, CharSet, name);
+}
+
+bool CSimpleTextSubtitle::Open(CString data, CTextFile::enc SaveCharSet, int ReadCharSet, CString provider, CString lang, CString ext) {
+    Empty();
+
+    m_provider = provider;
+    CString name;
+    name.Format(_T("%s.%s"), lang, ext);
+    CW2A temp(lang);
+    m_lcid = ISOLang::ISO6391ToLcid(temp);
+    TCHAR path[MAX_PATH];
+    if (!GetTempPath(MAX_PATH, path)) {
+        return false;
+    }
+
+    TCHAR fn[MAX_PATH];
+    if (!GetTempFileName(path, _T("vs"), 0, fn)) {
+        return false;
+    }
+
+    CTextFile f;
+    if (!f.Save(fn, SaveCharSet)) {
+        return false;
+    }
+
+    f.WriteString(data);
+    f.Flush();
+    f.Close();
+
+    bool fRet = Open(fn, ReadCharSet, name);
+
+    _tremove(fn);
+
+    m_path = _T("");
+
+    return fRet;
 }
 
 bool CSimpleTextSubtitle::Open(CTextFile* f, int CharSet, CString name) {

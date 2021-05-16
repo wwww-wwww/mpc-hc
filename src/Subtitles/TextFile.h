@@ -43,6 +43,8 @@ private:
     LONGLONG m_posInBuffer, m_nInBuffer;
 
 public:
+    using CFile::Flush;
+    using CFile::Close;
     CTextFile(enc e = DEFAULT_ENCODING);
 
     virtual bool Open(LPCTSTR lpszFileName);

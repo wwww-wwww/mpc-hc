@@ -161,7 +161,7 @@ void CPlayerPlaylistBar::AddItem(CString fn, CAtlList<CString>* subs)
     AddItem(sl, subs);
 }
 
-void CPlayerPlaylistBar::AddItem(CAtlList<CString>& fns, CAtlList<CString>* subs, CString label, CString ydl_src, CString cue)
+void CPlayerPlaylistBar::AddItem(CAtlList<CString>& fns, CAtlList<CString>* subs, CString label, CString ydl_src, CString cue, CAtlList<CYoutubeDLInstance::YDLSubInfo>* ydl_subs)
 {
     CPlaylistItem pli;
 
@@ -199,10 +199,14 @@ void CPlayerPlaylistBar::AddItem(CAtlList<CString>& fns, CAtlList<CString>* subs
         pli.m_cue_filename = cue;
     }
 
+    if (ydl_subs) {
+        pli.m_ydl_subs.AddTailList(ydl_subs);
+    }
+
     m_pl.AddTail(pli);
 }
 
-void CPlayerPlaylistBar::ReplaceCurrentItem(CAtlList<CString>& fns, CAtlList<CString>* subs, CString label, CString ydl_src, CString cue)
+void CPlayerPlaylistBar::ReplaceCurrentItem(CAtlList<CString>& fns, CAtlList<CString>* subs, CString label, CString ydl_src, CString cue, CAtlList<CYoutubeDLInstance::YDLSubInfo>* ydl_subs)
 {
     CPlaylistItem* pli = GetCur();
     if (pli == nullptr) {
@@ -219,6 +223,10 @@ void CPlayerPlaylistBar::ReplaceCurrentItem(CAtlList<CString>& fns, CAtlList<CSt
         pli->m_bYoutubeDL = !ydl_src.IsEmpty();
         pli->m_cue = !cue.IsEmpty();
         pli->m_cue_filename = cue;
+        pli->m_ydl_subs.RemoveAll();
+        if (ydl_subs) {
+            pli->m_ydl_subs.AddTailList(ydl_subs);
+        }
 
         Refresh();
         SavePlaylist();
@@ -308,7 +316,7 @@ void CPlayerPlaylistBar::ResolveLinkFiles(CAtlList<CString>& fns)
     }
 }
 
-void CPlayerPlaylistBar::ParsePlayList(CAtlList<CString>& fns, CAtlList<CString>* subs, int redir_count, CString label, CString ydl_src, CString cue)
+void CPlayerPlaylistBar::ParsePlayList(CAtlList<CString>& fns, CAtlList<CString>* subs, int redir_count, CString label, CString ydl_src, CString cue, CAtlList<CYoutubeDLInstance::YDLSubInfo>* ydl_subs)
 {
     if (fns.IsEmpty()) {
         return;
@@ -369,7 +377,7 @@ void CPlayerPlaylistBar::ParsePlayList(CAtlList<CString>& fns, CAtlList<CString>
 #endif
     }
 
-    AddItem(fns, subs, label, ydl_src, cue);
+    AddItem(fns, subs, label, ydl_src, cue, ydl_subs);
 }
 
 static CString CombinePath(CString base, CString fn, bool base_is_url)
@@ -741,6 +749,16 @@ bool CPlayerPlaylistBar::ParseMPCPlayList(CString fn)
                 pli[i].m_cue_index = _ttoi(value);
             } else if (key == _T("cover")) {
                 pli[i].m_cover = value;
+            } else if (key == _T("ydl_sub") || key == _T("ydl_auto_sub")) {
+                CAtlList<CString> li;
+                Explode(value, li, ',', 3);
+                if (li.GetCount() != 3) continue;
+                CYoutubeDLInstance::YDLSubInfo s;
+                if (key == _T("ydl_auto_sub")) s.isAutomaticCaptions = true;
+                s.lang = li.RemoveHead();
+                s.ext = li.RemoveHead();
+                s.url = li.RemoveHead();
+                if (!s.lang.IsEmpty() && !s.url.IsEmpty()) pli[i].m_ydl_subs.AddTail(s);
             }
         }
     }
@@ -812,6 +830,17 @@ bool CPlayerPlaylistBar::SaveMPCPlayList(CString fn, CTextFile::enc e, bool fRem
             if (!pli.m_cover.IsEmpty()) {
                 f.WriteString(idx + _T(",cover,") + pli.m_cover + _T("\n"));
             }
+            if (pli.m_ydl_subs.GetCount() > 0) {
+                POSITION pos3 = pli.m_ydl_subs.GetHeadPosition();
+                while (pos3) {
+                    CYoutubeDLInstance::YDLSubInfo s = pli.m_ydl_subs.GetNext(pos3);
+                    if (!s.data.IsEmpty()) continue;
+                    CString t;
+                    CString t2 = s.isAutomaticCaptions ? _T("ydl_auto_sub") : _T("ydl_sub");
+                    t.Format(_T("%d,%s,%s,%s,%s\n"), i, t2, s.lang, s.ext, s.url);
+                    f.WriteString(t);
+                }
+            }
         } else if (pli.m_type == CPlaylistItem::device && pli.m_fns.GetCount() == 2) {
             f.WriteString(idx + _T(",video,") + pli.m_fns.GetHead() + _T("\n"));
             f.WriteString(idx + _T(",audio,") + pli.m_fns.GetTail() + _T("\n"));
@@ -858,7 +887,7 @@ void CPlayerPlaylistBar::Open(CAtlList<CString>& fns, bool fMulti, CAtlList<CStr
     }
 }
 
-void CPlayerPlaylistBar::Append(CAtlList<CString>& fns, bool fMulti, CAtlList<CString>* subs, CString label, CString ydl_src, CString cue)
+void CPlayerPlaylistBar::Append(CAtlList<CString>& fns, bool fMulti, CAtlList<CString>* subs, CString label, CString ydl_src, CString cue, CAtlList<CYoutubeDLInstance::YDLSubInfo>* ydl_subs)
 {
     POSITION posFirstAdded = m_pl.GetTailPosition();
     int iFirstAdded = (int)m_pl.GetCount();
@@ -870,7 +899,7 @@ void CPlayerPlaylistBar::Append(CAtlList<CString>& fns, bool fMulti, CAtlList<CS
             ParsePlayList(fns.GetNext(pos), nullptr);
         }
     } else {
-        ParsePlayList(fns, subs, 0, label, ydl_src, cue);
+        ParsePlayList(fns, subs, 0, label, ydl_src, cue, ydl_subs);
     }
 
     Refresh();
