@@ -13770,7 +13770,7 @@ bool CMainFrame::OpenMediaPrivate(CAutoPtr<OpenMediaData> pOMD)
             }
 
             auto* pli = m_wndPlaylistBar.GetCur();
-            if (s.bUseSubsFromYDL && pli != nullptr && pli->m_bYoutubeDL) {
+            if (pli != nullptr && pli->m_bYoutubeDL && !s.sYDLSubsPreference.IsEmpty()) {
                 POSITION pos2 = pli->m_ydl_subs.GetHeadPosition();
                 while (pos2) {
                     CYoutubeDLInstance::YDLSubInfo ydlsub = pli->m_ydl_subs.GetNext(pos2);

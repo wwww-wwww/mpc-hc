@@ -59,7 +59,7 @@ bool CYoutubeDLInstance::Run(CString url)
     YDL_LOG(url);
 
     CString args = _T("youtube-dl -J --no-warnings --youtube-skip-dash-manifest");
-    if (s.bUseSubsFromYDL) {
+    if (!s.sYDLSubsPreference.IsEmpty()) {
         args.Append(_T(" --all-subs"));
         if (s.bUseAutomaticCaptions) args.Append(_T(" --write-auto-sub --write-sub"));
     }
@@ -568,12 +568,14 @@ bool CYoutubeDLInstance::GetHttpStreams(CAtlList<YDLStreamURL>& streams, YDLPlay
         if (pJSON->d.HasMember(_T("episode_id")) && !pJSON->d[_T("episode_id")].IsNull()) stream.episode_id = pJSON->d[_T("episode_id")].GetString();
         if (pJSON->d.HasMember(_T("webpage_url")) && !pJSON->d[_T("webpage_url")].IsNull()) stream.webpage_url = pJSON->d[_T("webpage_url")].GetString();
 
-        if (s.bUseSubsFromYDL && pJSON->d.HasMember(_T("subtitles")) && !pJSON->d[_T("subtitles")].IsNull() && pJSON->d[_T("subtitles")].IsObject()) {
-            loadSub(pJSON->d[_T("subtitles")], stream.subtitles);
-        }
-        if (s.bUseSubsFromYDL && s.bUseAutomaticCaptions) {
-            if (pJSON->d.HasMember(_T("automatic_captions")) && !pJSON->d[_T("automatic_captions")].IsNull() && pJSON->d[_T("automatic_captions")].IsObject()) {
-                loadSub(pJSON->d[_T("automatic_captions")], stream.subtitles, true);
+        if (!s.sYDLSubsPreference.IsEmpty()) {
+            if (pJSON->d.HasMember(_T("subtitles")) && !pJSON->d[_T("subtitles")].IsNull() && pJSON->d[_T("subtitles")].IsObject()) {
+                loadSub(pJSON->d[_T("subtitles")], stream.subtitles);
+            }
+            if (s.bUseAutomaticCaptions) {
+                if (pJSON->d.HasMember(_T("automatic_captions")) && !pJSON->d[_T("automatic_captions")].IsNull() && pJSON->d[_T("automatic_captions")].IsObject()) {
+                    loadSub(pJSON->d[_T("automatic_captions")], stream.subtitles, true);
+                }
             }
         }
 
@@ -624,11 +626,13 @@ bool CYoutubeDLInstance::GetHttpStreams(CAtlList<YDLStreamURL>& streams, YDLPlay
                     if (entry.HasMember(_T("episode_number")) && !entry[_T("episode_number")].IsNull()) stream.episode_number = entry[_T("episode_number")].GetInt();
                     if (entry.HasMember(_T("episode_id")) && !entry[_T("episode_id")].IsNull()) stream.episode_id = entry[_T("episode_id")].GetString();
                     if (entry.HasMember(_T("webpage_url")) && !entry[_T("webpage_url")].IsNull()) stream.webpage_url = entry[_T("webpage_url")].GetString();
-                    if (s.bUseSubsFromYDL && entry.HasMember(_T("subtitles")) && !entry[_T("subtitles")].IsNull() && entry[_T("subtitles")].IsObject()) {
-                        loadSub(entry[_T("subtitles")], stream.subtitles);
-                    }
-                    if (s.bUseSubsFromYDL && s.bUseAutomaticCaptions && entry.HasMember(_T("automatic_captions")) && !entry[_T("automatic_captions")].IsNull() && entry[_T("automatic_captions")].IsObject()) {
-                        loadSub(entry[_T("automatic_captions")], stream.subtitles);
+                    if (!s.sYDLSubsPreference.IsEmpty()) {
+                        if (entry.HasMember(_T("subtitles")) && !entry[_T("subtitles")].IsNull() && entry[_T("subtitles")].IsObject()) {
+                            loadSub(entry[_T("subtitles")], stream.subtitles);
+                        }
+                        if (s.bUseAutomaticCaptions && entry.HasMember(_T("automatic_captions")) && !entry[_T("automatic_captions")].IsNull() && entry[_T("automatic_captions")].IsObject()) {
+                            loadSub(entry[_T("automatic_captions")], stream.subtitles);
+                        }
                     }
                     if (ydl_sd.has_video && !ydl_sd.has_audio && entry.HasMember(_T("formats")) && !entry[_T("formats")].IsNull()) {
                         if (filterAudio(entry[_T("formats")], ydl_sd)) {
