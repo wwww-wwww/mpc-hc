@@ -567,8 +567,15 @@ bool CYoutubeDLInstance::GetHttpStreams(CAtlList<YDLStreamURL>& streams, YDLPlay
         if (pJSON->d.HasMember(_T("episode_number")) && !pJSON->d[_T("episode_number")].IsNull()) stream.episode_number = pJSON->d[_T("episode_number")].GetInt();
         if (pJSON->d.HasMember(_T("episode_id")) && !pJSON->d[_T("episode_id")].IsNull()) stream.episode_id = pJSON->d[_T("episode_id")].GetString();
         if (pJSON->d.HasMember(_T("webpage_url")) && !pJSON->d[_T("webpage_url")].IsNull()) stream.webpage_url = pJSON->d[_T("webpage_url")].GetString();
-        if (s.bUseSubsFromYDL && pJSON->d.HasMember(_T("subtitles")) && !pJSON->d[_T("subtitles")].IsNull() && pJSON->d[_T("subtitles")].IsObject()) loadSub(pJSON->d[_T("subtitles")], stream.subtitles);
-        if (s.bUseSubsFromYDL && s.bUseAutomaticCaptions && pJSON->d.HasMember(_T("automatic_captions")) && !pJSON->d[_T("automatic_captions")].IsNull() && pJSON->d[_T("automatic_captions")].IsObject()) loadSub(pJSON->d[_T("automatic_captions")], stream.subtitles, true);
+
+        if (s.bUseSubsFromYDL && pJSON->d.HasMember(_T("subtitles")) && !pJSON->d[_T("subtitles")].IsNull() && pJSON->d[_T("subtitles")].IsObject()) {
+            loadSub(pJSON->d[_T("subtitles")], stream.subtitles);
+        }
+        if (s.bUseSubsFromYDL && s.bUseAutomaticCaptions) {
+            if (pJSON->d.HasMember(_T("automatic_captions")) && !pJSON->d[_T("automatic_captions")].IsNull() && pJSON->d[_T("automatic_captions")].IsObject()) {
+                loadSub(pJSON->d[_T("automatic_captions")], stream.subtitles, true);
+            }
+        }
 
         if (filterVideo(pJSON->d[_T("formats")], ydl_sd, s.iYDLMaxHeight, s.bYDLAudioOnly, s.iYDLVideoFormat)) {
             stream.video_url = ydl_sd.url;
@@ -662,15 +669,22 @@ bool CYoutubeDLInstance::loadJSON()
 
 void CYoutubeDLInstance::loadSub(const Value& obj, CAtlList<YDLSubInfo>& subs, bool isAutomaticCaptions /*= false*/) {
     auto& s = AfxGetAppSettings();
-    CAtlList<CString> prefrelist;
+    CAtlList<CString> preferlist;
     if (!s.sYDLSubsPreference.IsEmpty()) {
-        if (s.sYDLSubsPreference.Find(_T(',')) != -1) ExplodeMin(s.sYDLSubsPreference, prefrelist, ',');
-        else ExplodeMin(s.sYDLSubsPreference, prefrelist, ' ');
+        if (s.sYDLSubsPreference.Find(_T(',')) != -1) {
+            ExplodeMin(s.sYDLSubsPreference, preferlist, ',');
+        } else {
+            ExplodeMin(s.sYDLSubsPreference, preferlist, ' ');
+        }
     }
-    if (!isAutomaticCaptions) subs.RemoveAll();
+    if (!isAutomaticCaptions) {
+        subs.RemoveAll();
+    }
     for (Value::ConstMemberIterator iter = obj.MemberBegin(); iter != obj.MemberEnd(); ++iter) {
         CString lang(iter->name.GetString());
-        if (!s.sYDLSubsPreference.IsEmpty() && !isPrefer(prefrelist, lang)) continue;
+        if (!preferlist.IsEmpty() && !isPrefer(preferlist, lang)) {
+            continue;
+        }
         if (iter->value.IsArray()) {
             const Value& arr = obj[(LPCTSTR)lang];
             for (int i = 0; i < arr.Size(); i++) {
@@ -678,11 +692,19 @@ void CYoutubeDLInstance::loadSub(const Value& obj, CAtlList<YDLSubInfo>& subs, b
                 YDLSubInfo sub;
                 sub.isAutomaticCaptions = isAutomaticCaptions;
                 sub.lang = lang;
-                if (dict.HasMember(_T("ext")) && !dict[_T("ext")].IsNull()) sub.ext = dict[_T("ext")].GetString();
-                if (dict.HasMember(_T("url")) && !dict[_T("url")].IsNull()) sub.url = dict[_T("url")].GetString();
-                if (dict.HasMember(_T("data")) && !dict[_T("data")].IsNull() && dict[_T("data")].IsString()) sub.data = dict[_T("data")].GetString();
+                if (dict.HasMember(_T("ext")) && !dict[_T("ext")].IsNull()) {
+                    sub.ext = dict[_T("ext")].GetString();
+                }
+                if (dict.HasMember(_T("url")) && !dict[_T("url")].IsNull()) {
+                    sub.url = dict[_T("url")].GetString();
+                }
+                if (dict.HasMember(_T("data")) && !dict[_T("data")].IsNull() && dict[_T("data")].IsString()) {
+                    sub.data = dict[_T("data")].GetString();
+                }
                 if (!sub.url.IsEmpty() || !sub.data.IsEmpty()) {
-                    if (sub.ext.IsEmpty() || sub.ext == _T("vtt") || sub.ext == _T("ass") || sub.ext == _T("srt")) subs.AddTail(sub);
+                    if (sub.ext.IsEmpty() || sub.ext == _T("vtt") || sub.ext == _T("ass") || sub.ext == _T("srt")) {
+                        subs.AddTail(sub);
+                    }
                 }
             }
         }

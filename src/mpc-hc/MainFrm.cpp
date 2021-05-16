@@ -13773,8 +13773,10 @@ bool CMainFrame::OpenMediaPrivate(CAutoPtr<OpenMediaData> pOMD)
             if (s.bUseSubsFromYDL && pli != nullptr && pli->m_bYoutubeDL) {
                 POSITION pos2 = pli->m_ydl_subs.GetHeadPosition();
                 while (pos2) {
-                    CYoutubeDLInstance::YDLSubInfo sub = pli->m_ydl_subs.GetNext(pos2);
-                    if (!sub.isAutomaticCaptions || s.bUseAutomaticCaptions) LoadSubtitle(sub);
+                    CYoutubeDLInstance::YDLSubInfo ydlsub = pli->m_ydl_subs.GetNext(pos2);
+                    if (!ydlsub.isAutomaticCaptions || s.bUseAutomaticCaptions) {
+                        LoadSubtitle(ydlsub);
+                    }
                 }
             }
         }
@@ -15599,12 +15601,17 @@ bool CMainFrame::LoadSubtitle(CString fn, SubtitleInput* pSubInput /*= nullptr*/
 bool CMainFrame::LoadSubtitle(CYoutubeDLInstance::YDLSubInfo& sub) {
     CAppSettings& s = AfxGetAppSettings();
     CComQIPtr<ISubStream> pSubStream;
-    CAtlList<CString> prefrelist;
+    CAtlList<CString> preferlist;
     if (!s.sYDLSubsPreference.IsEmpty()) {
-        if (s.sYDLSubsPreference.Find(_T(',')) != -1) ExplodeMin(s.sYDLSubsPreference, prefrelist, ',');
-        else ExplodeMin(s.sYDLSubsPreference, prefrelist, ' ');
+        if (s.sYDLSubsPreference.Find(_T(',')) != -1) {
+            ExplodeMin(s.sYDLSubsPreference, preferlist, ',');
+        } else {
+            ExplodeMin(s.sYDLSubsPreference, preferlist, ' ');
+        }
     }
-    if (!s.sYDLSubsPreference.IsEmpty() && !CYoutubeDLInstance::isPrefer(prefrelist, sub.lang)) return false;
+    if (!preferlist.IsEmpty() && !CYoutubeDLInstance::isPrefer(preferlist, sub.lang)) {
+        return false;
+    }
 
     if (!s.IsISRAutoLoadEnabled() && (FindFilter(CLSID_VSFilter, m_pGB) || FindFilter(CLSID_XySubFilter, m_pGB))) {
         // Prevent ISR from loading if VSFilter is already in graph.
@@ -15630,30 +15637,29 @@ bool CMainFrame::LoadSubtitle(CYoutubeDLInstance::YDLSubInfo& sub) {
         pRTS->SetDefaultStyle(s.subtitlesDefStyle);
         bool opened = false;
         if (!sub.url.IsEmpty()) {
-            SubtitlesProvidersUtils::stringMap s{};
+            SubtitlesProvidersUtils::stringMap strmap{};
             DWORD dwStatusCode;
             CT2CA tem(sub.url);
             std::string tem2(tem);
             std::string data("");
-            SubtitlesProvidersUtils::StringDownload(tem2, s, data, true, &dwStatusCode);
+            SubtitlesProvidersUtils::StringDownload(tem2, strmap, data, true, &dwStatusCode);
             if (dwStatusCode != 200) {
                 return false;
             }
-            CString extt(sub.ext);
-            if (extt.IsEmpty()) {
-                int m2(sub.url.ReverseFind(*_T("?")));
-                int m3(sub.url.ReverseFind(*_T("#")));
+            if (sub.ext.IsEmpty()) {
+                int m2(sub.url.ReverseFind(_T('?')));
+                int m3(sub.url.ReverseFind(_T('#')));
                 int m = -1;
                 if (m2 > -1 && m3 > -1) m = std::min(m2, m3);
                 else if (m2 > -1) m = m2;
                 else if (m3 > -1) m = m3;
                 CString temp(sub.url);
                 if (m > 0) temp = sub.url.Left(m);
-                m = temp.ReverseFind(*_T("."));
-                if (m >= 0) extt = temp.Mid(m + 1);
+                m = temp.ReverseFind(_T('.'));
+                if (m >= 0) sub.ext = temp.Mid(m + 1);
             }
             CString langt = sub.isAutomaticCaptions ? sub.lang + _T("[Automatic]") : sub.lang;
-            opened = pRTS->Open((BYTE*)data.c_str(), data.length(), DEFAULT_CHARSET, _T("YoutubeDL"), langt, extt);
+            opened = pRTS->Open((BYTE*)data.c_str(), (int)data.length(), DEFAULT_CHARSET, _T("YoutubeDL"), langt, sub.ext);
         } else if (!sub.data.IsEmpty()) {
             CString langt = sub.isAutomaticCaptions ? sub.lang + _T("[Automatic]") : sub.lang;
             opened = pRTS->Open(sub.data, CTextFile::enc::UTF8, DEFAULT_CHARSET, _T("YoutubeDL"), langt, sub.ext);  // Do not modify charset, Now it wroks with Unicode char.
