@@ -1925,13 +1925,17 @@ static bool OpenSubStationAlpha(CTextFile* file, CSimpleTextSubtitle& ret, int C
                 version = sver = 6;
             }
         } else if (entry == L"collisions") {
-            buff = GetStrW(pszBuff, nBuffLength);
-            buff.MakeLower();
-            ret.m_collisions = buff.Find(L"reverse") >= 0 ? 1 : 0;
+            if (nBuffLength) {
+                buff = GetStrW(pszBuff, nBuffLength);
+                buff.MakeLower();
+                ret.m_collisions = buff.Find(L"reverse") >= 0 ? 1 : 0;
+            }
         } else if (entry == L"scaledborderandshadow") {
-            buff = GetStrW(pszBuff, nBuffLength);
-            buff.MakeLower();
-            ret.m_fScaledBAS = buff.Find(L"yes") >= 0;
+            if (nBuffLength) {
+                buff = GetStrW(pszBuff, nBuffLength);
+                buff.MakeLower();
+                ret.m_fScaledBAS = buff.Find(L"yes") >= 0;
+            }
         } else if (entry == L"[v4 styles]") {
             fRet = true;
             sver = 4;
@@ -1946,9 +1950,9 @@ static bool OpenSubStationAlpha(CTextFile* file, CSimpleTextSubtitle& ret, int C
         } else if (entry == L"fontname") {
             LoadUUEFont(file);
         } else if (entry == L"ycbcr matrix") {
-            try {
+            if (nBuffLength) {
                 ret.m_sYCbCrMatrix = GetStrW(pszBuff, nBuffLength);
-            } catch (...) {}
+            }
         } else if (entry == L"format") {
             // ToDo: Parse this line and use it to correctly parse following style and dialogue lines
             // Currently the contents of the format lines are assumed to have a standard string value based on script version.
