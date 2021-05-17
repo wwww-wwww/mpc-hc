@@ -60,8 +60,8 @@ bool CYoutubeDLInstance::Run(CString url)
 
     CString args = _T("youtube-dl -J --no-warnings --youtube-skip-dash-manifest");
     if (!s.sYDLSubsPreference.IsEmpty()) {
-        args.Append(_T(" --all-subs"));
-        if (s.bUseAutomaticCaptions) args.Append(_T(" --write-auto-sub --write-sub"));
+        args.Append(_T(" --all-subs --write-sub"));
+        if (s.bUseAutomaticCaptions) args.Append(_T(" --write-auto-sub"));
     }
     if (url.Find(_T("list=")) > 0) {
         args.Append(_T(" --ignore-errors"));
