@@ -45,11 +45,19 @@ make_dirs() {
   mkdir -p ${FFMPEG_DLL_PATH}
 }
 
+CV2PDB_PATH=$(readlink -f ../../..)/build/cv2pdb.exe
+
 copy_libs() {
   # install -s --strip-program=${cross_prefix}strip lib*/*-lav-*.dll ${FFMPEG_DLL_PATH}
   cp lib*/*-lav-*.dll ${FFMPEG_DLL_PATH}
   if [ "${COMPILER}" == "GCC" ]; then
-    ${cross_prefix}strip ${FFMPEG_DLL_PATH}/*-lav-*.dll
+    #${cross_prefix}strip ${FFMPEG_DLL_PATH}/*-lav-*.dll
+    ${CV2PDB_PATH} ${FFMPEG_DLL_PATH}/avcodec-lav-58.dll
+    ${CV2PDB_PATH} ${FFMPEG_DLL_PATH}/avfilter-lav-7.dll
+    ${CV2PDB_PATH} ${FFMPEG_DLL_PATH}/avformat-lav-58.dll
+    ${CV2PDB_PATH} ${FFMPEG_DLL_PATH}/avresample-lav-4.dll
+    ${CV2PDB_PATH} ${FFMPEG_DLL_PATH}/avutil-lav-56.dll
+    ${CV2PDB_PATH} ${FFMPEG_DLL_PATH}/swscale-lav-5.dll
   fi
   cp -u lib*/*.lib ${FFMPEG_LIB_PATH}
 }
@@ -105,6 +113,7 @@ configure() {
     --disable-schannel              \
     --enable-gnutls                 \
     --enable-libxml2                \
+    --disable-stripping             \
     --enable-gmp"
   fi
   
@@ -121,7 +130,7 @@ configure() {
       TOOLCHAIN="--toolchain=msvc"
     else
       OPTIONS="${OPTIONS} --enable-cross-compile --cross-prefix=${cross_prefix} --target-os=mingw32 --pkg-config=pkg-config"
-      EXTRA_CFLAGS="-fno-tree-vectorize -D_WIN32_WINNT=0x0600 -DWINVER=0x0600"
+      EXTRA_CFLAGS="-fno-tree-vectorize -D_WIN32_WINNT=0x0600 -DWINVER=0x0600 -gdwarf-2 -fno-omit-frame-pointer"
       EXTRA_CFLAGS="${EXTRA_CFLAGS} -I../../../thirdparty/64/include"
       EXTRA_LDFLAGS="${EXTRA_LDFLAGS} -L../../../thirdparty/64/lib"
     fi
@@ -136,7 +145,7 @@ configure() {
       TOOLCHAIN="--toolchain=msvc"
     else
       OPTIONS="${OPTIONS} --cpu=i686 --target-os=mingw32"
-      EXTRA_CFLAGS="-fno-tree-vectorize -D_WIN32_WINNT=0x0600 -DWINVER=0x0600"
+      EXTRA_CFLAGS="-fno-tree-vectorize -D_WIN32_WINNT=0x0600 -DWINVER=0x0600 -gdwarf-2 -fno-omit-frame-pointer"
       EXTRA_CFLAGS="${EXTRA_CFLAGS} -I../../../thirdparty/32/include -mmmx -msse -msse2 -mfpmath=sse -mstackrealign"
       EXTRA_LDFLAGS="${EXTRA_LDFLAGS} -L../../../thirdparty/32/lib"
     fi
