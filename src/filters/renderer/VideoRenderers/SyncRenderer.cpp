@@ -577,8 +577,8 @@ HRESULT CBaseAP::CreateDXDevice(CString& _Error)
         m_pp.SwapEffect = D3DSWAPEFFECT_COPY;
         m_pp.Flags = D3DPRESENTFLAG_VIDEO;
         m_pp.BackBufferCount = 1;
-        m_pp.BackBufferWidth = szDesktopSize.cx;
-        m_pp.BackBufferHeight = szDesktopSize.cy;
+        m_pp.BackBufferWidth  = r.m_AdvRendSets.bDesktopSizeBackBuffer ? szDesktopSize.cx : m_ScreenSize.cx;
+        m_pp.BackBufferHeight = r.m_AdvRendSets.bDesktopSizeBackBuffer ? szDesktopSize.cy : m_ScreenSize.cy;
         m_BackbufferType = d3ddm.Format;
         m_DisplayType = d3ddm.Format;
         m_bHighColorResolution = r.m_AdvRendSets.bEVRHighColorResolution;
@@ -829,8 +829,8 @@ HRESULT CBaseAP::ResetDXDevice(CString& _Error)
         m_BackbufferType = m_pp.BackBufferFormat;
         m_DisplayType = d3ddm.Format;
     } else { // Windowed
-        m_pp.BackBufferWidth = szDesktopSize.cx;
-        m_pp.BackBufferHeight = szDesktopSize.cy;
+        m_pp.BackBufferWidth  = r.m_AdvRendSets.bDesktopSizeBackBuffer ? szDesktopSize.cx : m_ScreenSize.cx;
+        m_pp.BackBufferHeight = r.m_AdvRendSets.bDesktopSizeBackBuffer ? szDesktopSize.cy : m_ScreenSize.cy;
         m_BackbufferType = d3ddm.Format;
         m_DisplayType = d3ddm.Format;
         if (m_bHighColorResolution) {

@@ -82,6 +82,7 @@ public:
         bool    bVMRFlushGPUBeforeVSync;
         bool    bVMRFlushGPUAfterPresent;
         bool    bVMRFlushGPUWait;
+        bool    bDesktopSizeBackBuffer;
 
         // EVR
         bool    bEVRHighColorResolution;

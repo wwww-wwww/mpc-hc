@@ -63,6 +63,7 @@ void CRenderersSettings::CAdvRendererSettings::SetDefault()
     fTargetSyncOffset                 = 12.0;
     fControlLimit                     = 2.0;
     bCacheShaders                     = false;
+    bDesktopSizeBackBuffer            = false;
 }
 
 void CRenderersSettings::CAdvRendererSettings::SetOptimal()
