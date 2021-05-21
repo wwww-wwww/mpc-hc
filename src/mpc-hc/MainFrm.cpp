@@ -7747,7 +7747,7 @@ void CMainFrame::OnPlayPlay()
 
     if (GetLoadState() == MLS::LOADED) {
         // If playback was previously stopped or ended, we need to reset the window size
-        bool bVideoWndNeedReset = !m_bFirstPlay && GetMediaState() == State_Stopped || m_fEndOfStream;
+        bool bVideoWndNeedReset = GetMediaState() == State_Stopped || m_fEndOfStream;
 
         KillTimersStop();
 
