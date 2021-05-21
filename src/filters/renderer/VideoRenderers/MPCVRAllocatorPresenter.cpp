@@ -87,7 +87,7 @@ HRESULT CMPCVRAllocatorPresenter::SetDevice(IDirect3DDevice9* pD3DDev)
 	if (GetMonitorInfoW(MonitorFromWindow(m_hWnd, MONITOR_DEFAULTTONEAREST), &mi)) {
 		screenSize.SetSize(mi.rcMonitor.right - mi.rcMonitor.left, mi.rcMonitor.bottom - mi.rcMonitor.top);
 	}
-	InitMaxSubtitleTextureSize(r.subPicQueueSettings.nMaxRes, screenSize);
+    InitMaxSubtitleTextureSize(r.subPicQueueSettings.nMaxResX, r.subPicQueueSettings.nMaxResY);
 
     if (m_pAllocator) {
         m_pAllocator->ChangeDevice(pD3DDev);

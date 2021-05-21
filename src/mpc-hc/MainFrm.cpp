@@ -7747,7 +7747,7 @@ void CMainFrame::OnPlayPlay()
 
     if (GetLoadState() == MLS::LOADED) {
         // If playback was previously stopped or ended, we need to reset the window size
-        bool bVideoWndNeedReset = GetMediaState() == State_Stopped || m_fEndOfStream;
+        bool bVideoWndNeedReset = !m_bFirstPlay && GetMediaState() == State_Stopped || m_fEndOfStream;
 
         KillTimersStop();
 
@@ -7782,18 +7782,6 @@ void CMainFrame::OnPlayPlay()
 
         if (bVideoWndNeedReset) {
             MoveVideoWindow(false, true);
-
-            if (!m_fEndOfStream && m_pCAP) {
-                // if we have just opened a file, set sizes in the subtitle renderer, so that they are already known when parsing
-                CLSID clsid;
-                if (m_pCurrentSubInput.pSubStream && SUCCEEDED(m_pCurrentSubInput.pSubStream->GetClassID(&clsid)) && clsid == __uuidof(CRenderedTextSubtitle)) {
-                    CRenderedTextSubtitle* pRTS = (CRenderedTextSubtitle*)(ISubStream*)m_pCurrentSubInput.pSubStream;
-
-                    CRect windowRect, videoRect;
-                    m_pCAP->GetPosition(windowRect, videoRect);
-                    pRTS->Init(windowRect.Size(), videoRect);
-                }
-            }
         }
 
         // Restart playback
@@ -7830,8 +7818,6 @@ void CMainFrame::OnPlayPlay()
         }
 
         if (m_bFirstPlay) {
-            m_bFirstPlay = false;
-
             if (GetPlaybackMode() == PM_FILE) {
                 if (!m_LastOpenBDPath.IsEmpty()) {
                     strOSD.LoadString(IDS_PLAY_BD);
@@ -7855,6 +7841,8 @@ void CMainFrame::OnPlayPlay()
             m_OSD.DisplayMessage(OSD_TOPLEFT, strOSD, 3000);
         }
     }
+
+    m_bFirstPlay = false;
 }
 
 void CMainFrame::OnPlayPauseI()

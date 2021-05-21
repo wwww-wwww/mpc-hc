@@ -2061,7 +2061,8 @@ void CAppSettings::UpdateRenderersData(bool fSave)
         pApp->WriteProfileInt(IDS_R_SETTINGS, _T("ResetDevice"), r.fResetDevice);
 
         pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_SPCSIZE, r.subPicQueueSettings.nSize);
-        pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_SPCMAXRES, r.subPicQueueSettings.nMaxRes);
+        pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_SPCMAXRESX, r.subPicQueueSettings.nMaxResX);
+        pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_SPCMAXRESY, r.subPicQueueSettings.nMaxResY);
         pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_DISABLE_SUBTITLE_ANIMATION, r.subPicQueueSettings.bDisableSubtitleAnimation);
         pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_RENDER_AT_WHEN_ANIM_DISABLED, r.subPicQueueSettings.nRenderAtWhenAnimationIsDisabled);
         pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_SUBTITLE_ANIMATION_RATE, r.subPicQueueSettings.nAnimationRate);
@@ -2131,7 +2132,12 @@ void CAppSettings::UpdateRenderersData(bool fSave)
         r.fResetDevice = !!pApp->GetProfileInt(IDS_R_SETTINGS, _T("ResetDevice"), FALSE);
 
         r.subPicQueueSettings.nSize = pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_SPCSIZE, 0);
-        r.subPicQueueSettings.nMaxRes = pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_SPCMAXRES, 0);
+        r.subPicQueueSettings.nMaxResX = pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_SPCMAXRESX, 2560);
+        r.subPicQueueSettings.nMaxResY = pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_SPCMAXRESY, 1440);
+        if (r.subPicQueueSettings.nMaxResX < 600 || r.subPicQueueSettings.nMaxResY < 480) {
+            r.subPicQueueSettings.nMaxResX = 2560;
+            r.subPicQueueSettings.nMaxResY = 1440;
+        }
         r.subPicQueueSettings.bDisableSubtitleAnimation = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_DISABLE_SUBTITLE_ANIMATION, FALSE);
         r.subPicQueueSettings.nRenderAtWhenAnimationIsDisabled = pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_RENDER_AT_WHEN_ANIM_DISABLED, 50);
         r.subPicQueueSettings.nAnimationRate = pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_SUBTITLE_ANIMATION_RATE, 100);

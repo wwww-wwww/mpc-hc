@@ -62,11 +62,7 @@ protected:
     bool m_bDeviceResetRequested;
     bool m_bPendingResetDevice;
 
-    enum SubtitleTextureLimit {
-        STATIC, VIDEO, DESKTOP
-    };
-    SubtitleTextureLimit m_SubtitleTextureLimit;
-    void InitMaxSubtitleTextureSize(int maxSize, CSize desktopSize);
+    void InitMaxSubtitleTextureSize(int maxSizeX, int maxSizeY);
 
     HRESULT AlphaBltSubPic(const CRect& windowRect,
                            const CRect& videoRect,

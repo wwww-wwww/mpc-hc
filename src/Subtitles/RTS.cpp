@@ -1704,6 +1704,10 @@ void CRenderedTextSubtitle::OnChanged()
 
 bool CRenderedTextSubtitle::Init(CSize size, const CRect& vidrect)
 {
+    if (!vidrect.Width()) {
+        return false;
+    }
+
     CAutoLock cAutoLock(&renderLock);
     CRect newVidRect = CRect(vidrect.left * 8, vidrect.top * 8, vidrect.right * 8, vidrect.bottom * 8);
     CSize newSize = CSize(size.cx * 8, size.cy * 8);
@@ -3022,6 +3026,11 @@ STDMETHODIMP CRenderedTextSubtitle::Render(SubPicDesc& spd, REFERENCE_TIME rt, d
     CAutoLock cAutoLock(&renderLock);
     //TRACE(_T("render sub start: %lld\n"), rt);
 
+    if (!spd.vidrect.right) {
+        // video size is not known yet
+        return S_FALSE;
+    }
+
 #if USE_LIBASS
     if (m_assloaded) {
         if (spd.bpp != 32) {
@@ -3052,8 +3061,6 @@ STDMETHODIMP CRenderedTextSubtitle::Render(SubPicDesc& spd, REFERENCE_TIME rt, d
     }
 #endif
 
-    CRect bbox2(0, 0, 0, 0);
-
     Init(CSize(spd.w, spd.h), spd.vidrect);
 
     int segment;
@@ -3062,6 +3069,8 @@ STDMETHODIMP CRenderedTextSubtitle::Render(SubPicDesc& spd, REFERENCE_TIME rt, d
         //TRACE(_T("render sub skipped: %lld\n"), rt);
         return S_FALSE;
     }
+
+    CRect bbox2(0, 0, 0, 0);
 
     // clear any cached subs that is behind current time
     {

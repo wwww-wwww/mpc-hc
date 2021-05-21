@@ -85,7 +85,7 @@ HRESULT CmadVRAllocatorPresenter::SetDevice(IDirect3DDevice9* pD3DDev)
     }
 
     const CRenderersSettings& r = GetRenderersSettings();
-    InitMaxSubtitleTextureSize(r.subPicQueueSettings.nMaxRes, screenSize);
+    InitMaxSubtitleTextureSize(r.subPicQueueSettings.nMaxResX, r.subPicQueueSettings.nMaxResY);
 
     if (m_pAllocator) {
         m_pAllocator->ChangeDevice(pD3DDev);

@@ -662,7 +662,7 @@ HRESULT CBaseAP::CreateDXDevice(CString& _Error)
 
     m_bicubicA = 0;
 
-    InitMaxSubtitleTextureSize(r.subPicQueueSettings.nMaxRes, m_bIsFullscreen ? m_ScreenSize : szDesktopSize);
+    InitMaxSubtitleTextureSize(r.subPicQueueSettings.nMaxResX, r.subPicQueueSettings.nMaxResY);
 
     if (m_pAllocator) {
         m_pAllocator->ChangeDevice(m_pD3DDev);
@@ -884,7 +884,7 @@ HRESULT CBaseAP::ResetDXDevice(CString& _Error)
         m_pSubPicQueue->GetSubPicProvider(&pSubPicProvider);
     }
 
-    InitMaxSubtitleTextureSize(r.subPicQueueSettings.nMaxRes, m_bIsFullscreen ? m_ScreenSize : szDesktopSize);
+    InitMaxSubtitleTextureSize(r.subPicQueueSettings.nMaxResX, r.subPicQueueSettings.nMaxResY);
 
     if (m_pAllocator) {
         m_pAllocator->ChangeDevice(m_pD3DDev);
