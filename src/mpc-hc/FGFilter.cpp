@@ -461,15 +461,8 @@ HRESULT CFGFilterVideoRenderer::Create(IBaseFilter** ppBF, CInterfaceList<IUnkno
         CheckNoLog(CreateEVR(m_clsid, m_hWnd, isD3DFullScreenMode(), &pCAP));
     } else if (m_clsid == CLSID_SyncAllocatorPresenter) {
         CheckNoLog(CreateSyncRenderer(m_clsid, m_hWnd, isD3DFullScreenMode(), &pCAP));
-    } else if (m_clsid == CLSID_madVRAllocatorPresenter) {
-        CheckNoLog(CreateAP9(m_clsid, m_hWnd, isD3DFullScreenMode(), &pCAP));
-
-        if (CComQIPtr<IMadVRSubclassReplacement> pMVRSR = pCAP) {
-            VERIFY(SUCCEEDED(pMVRSR->DisableSubclassing()));
-        }
-    } else if (m_clsid == CLSID_MPCVRAllocatorPresenter) {
-        CheckNoLog(CreateAP9(m_clsid, m_hWnd, isD3DFullScreenMode(), &pCAP));
-    } else if (m_clsid == CLSID_VMR9AllocatorPresenter || m_clsid == CLSID_DXRAllocatorPresenter) {
+    } else if (m_clsid == CLSID_MPCVRAllocatorPresenter || m_clsid == CLSID_madVRAllocatorPresenter ||
+               m_clsid == CLSID_VMR9AllocatorPresenter || m_clsid == CLSID_DXRAllocatorPresenter) {
         CheckNoLog(CreateAP9(m_clsid, m_hWnd, isD3DFullScreenMode(), &pCAP));
     } else {
         CComPtr<IBaseFilter> pBF;
@@ -520,6 +513,9 @@ HRESULT CFGFilterVideoRenderer::Create(IBaseFilter** ppBF, CInterfaceList<IUnkno
         *ppBF = CComQIPtr<IBaseFilter>(pRenderer).Detach();
 
         if (m_clsid == CLSID_madVRAllocatorPresenter || m_clsid == CLSID_MPCVRAllocatorPresenter) {
+            if (CComQIPtr<IMadVRSubclassReplacement> pMVRSR = pCAP) {
+                VERIFY(SUCCEEDED(pMVRSR->DisableSubclassing()));
+            }
             // renderer supports calling IVideoWindow::put_Owner before the pins are connected
             if (CComQIPtr<IVideoWindow> pVW = *ppBF) {
                 VERIFY(SUCCEEDED(pVW->put_Owner((OAHWND)m_hWnd)));
