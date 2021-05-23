@@ -2022,7 +2022,7 @@ void CMainFrame::OnTimer(UINT_PTR nIDEvent)
                     case PM_FILE:
                     // no break
                     case PM_DVD:
-                        if (m_bOSDDisplayTime && m_OSD.GetShowMessage()) {
+                        if (m_bOSDDisplayTime && m_OSD.CanShowMessage()) {
                             m_OSD.DisplayMessage(OSD_TOPLEFT, m_wndStatusBar.GetStatusTimer());
                         }
                         break;
@@ -2034,7 +2034,7 @@ void CMainFrame::OnTimer(UINT_PTR nIDEvent)
                             REFERENCE_TIME rtNow = REFERENCE_TIME(tNow - NowNext.startTime) * 10000000;
                             REFERENCE_TIME rtDur = REFERENCE_TIME(NowNext.duration) * 10000000;
                             m_wndStatusBar.SetStatusTimer(rtNow, rtDur, false, TIME_FORMAT_MEDIA_TIME);
-                            if (m_bOSDDisplayTime && m_OSD.GetShowMessage()) {
+                            if (m_bOSDDisplayTime && m_OSD.CanShowMessage()) {
                                 m_OSD.DisplayMessage(OSD_TOPLEFT, m_wndStatusBar.GetStatusTimer());
                             }
                         } else {
@@ -3047,7 +3047,9 @@ LRESULT CMainFrame::OnResetDevice(WPARAM wParam, LPARAM lParam)
         }
     }
 
-    m_OSD.HideMessage(false);
+    if (m_OSD.CanShowMessage()) {
+        m_OSD.HideMessage(false);
+    }
 
     return S_OK;
 }
@@ -7809,7 +7811,7 @@ void CMainFrame::OnPlayPlay()
 
     SetupEVRColorControl(); // can be configured when streaming begins
 
-    if (m_OSD.GetShowMessage()) {
+    if (m_OSD.CanShowMessage()) {
         CString strOSD;
         CString strPlay(StrRes(ID_PLAY_PLAY));
         int i = strPlay.Find(_T("\n"));
@@ -11400,7 +11402,7 @@ double CMainFrame::GetZoomAutoFitScale(bool bLargerOnly)
 
 void CMainFrame::RepaintVideo()
 {
-    if (!m_bDelaySetOutputRect && GetMediaState() != State_Running) {
+    if (!m_bDelaySetOutputRect && (m_pCAP || m_pMFVDC) && GetMediaState() != State_Running) {
         if (m_pCAP) {
             m_pCAP->Paint(false);
         } else if (m_pMFVDC) {

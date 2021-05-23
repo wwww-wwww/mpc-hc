@@ -610,9 +610,9 @@ void CVMROSD::EnableShowMessage(bool enabled)
     m_bShowMessage = enabled;
 }
 
-bool CVMROSD::GetShowMessage()
+bool CVMROSD::CanShowMessage()
 {
-    return m_bShowMessage;
+    return m_bShowMessage && (m_pVMB || m_pMFVMB || m_pMVTO);
 }
 
 void CVMROSD::EnableShowSeekBar(bool enabled)

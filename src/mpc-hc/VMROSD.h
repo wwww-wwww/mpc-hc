@@ -62,7 +62,7 @@ public:
     void ClearMessage(bool hide = false);
     void HideMessage(bool hide);
     void EnableShowMessage(bool enabled = true);
-    bool GetShowMessage();
+    bool CanShowMessage();
 
     __int64 GetPos() const;
     void SetPos(__int64 pos);
