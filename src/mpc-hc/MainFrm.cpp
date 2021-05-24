@@ -2869,7 +2869,7 @@ LRESULT CMainFrame::OnGraphNotify(WPARAM wParam, LPARAM lParam)
                                 dvdPosition->lTitle = m_iDVDTitle;
                             }
 
-                            if (!m_fValidDVDOpen) {
+                            if (!m_fValidDVDOpen && m_pDVDC) {
                                 m_fValidDVDOpen = true;
                                 m_pDVDC->ShowMenu(DVD_MENU_Title, DVD_CMD_FLAG_Block | DVD_CMD_FLAG_Flush, nullptr);
                             }
