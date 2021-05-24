@@ -185,8 +185,11 @@ void CPlayerSubresyncBar::ReloadSubtitle()
 
     ResetSubtitle();
 
-    for (int i = 0, count = m_list.GetHeaderCtrl()->GetItemCount(); i < count; i++) {
-        m_list.DeleteColumn(0);
+    CHeaderCtrl* hctrl = m_list.GetHeaderCtrl();
+    if (hctrl) {
+        for (int i = 0, count = hctrl->GetItemCount(); i < count; i++) {
+            m_list.DeleteColumn(0);
+        }
     }
 
     if (!m_pSubStream) {
