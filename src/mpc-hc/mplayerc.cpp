@@ -1946,12 +1946,12 @@ UINT CMPlayerCApp::GetRemoteControlCodeMicrosoft(UINT nInputcode, HRAWINPUT hRaw
     UINT nMceCmd = 0;
 
     // Support for MCE remote control
-    GetRawInputData(hRawInput, RID_INPUT, nullptr, &dwSize, sizeof(RAWINPUTHEADER));
-    if (dwSize > 0) {
+    UINT ret = GetRawInputData(hRawInput, RID_INPUT, nullptr, &dwSize, sizeof(RAWINPUTHEADER));
+    if (ret == 0 && dwSize > 0) {
         BYTE* pRawBuffer = DEBUG_NEW BYTE[dwSize];
         if (GetRawInputData(hRawInput, RID_INPUT, pRawBuffer, &dwSize, sizeof(RAWINPUTHEADER)) != -1) {
             RAWINPUT* raw = (RAWINPUT*)pRawBuffer;
-            if (raw->header.dwType == RIM_TYPEHID) {
+            if (raw->header.dwType == RIM_TYPEHID && raw->data.hid.dwSizeHid >= 3) {
                 nMceCmd = 0x10000 + (raw->data.hid.bRawData[1] | raw->data.hid.bRawData[2] << 8);
             }
         }
@@ -1966,14 +1966,14 @@ UINT CMPlayerCApp::GetRemoteControlCodeSRM7500(UINT nInputcode, HRAWINPUT hRawIn
     UINT dwSize = 0;
     UINT nMceCmd = 0;
 
-    GetRawInputData(hRawInput, RID_INPUT, nullptr, &dwSize, sizeof(RAWINPUTHEADER));
-    if (dwSize > 21) {
+    UINT ret = GetRawInputData(hRawInput, RID_INPUT, nullptr, &dwSize, sizeof(RAWINPUTHEADER));
+    if (ret == 0 && dwSize > 21) {
         BYTE* pRawBuffer = DEBUG_NEW BYTE[dwSize];
         if (GetRawInputData(hRawInput, RID_INPUT, pRawBuffer, &dwSize, sizeof(RAWINPUTHEADER)) != -1) {
             RAWINPUT* raw = (RAWINPUT*)pRawBuffer;
 
             // data.hid.bRawData[21] set to one when key is pressed
-            if (raw->header.dwType == RIM_TYPEHID && raw->data.hid.bRawData[21] == 1) {
+            if (raw->header.dwType == RIM_TYPEHID && raw->data.hid.dwSizeHid >= 22 && raw->data.hid.bRawData[21] == 1) {
                 // data.hid.bRawData[21] has keycode
                 switch (raw->data.hid.bRawData[20]) {
                     case 0x0033:
