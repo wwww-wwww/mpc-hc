@@ -47,7 +47,7 @@ STDMETHODIMP CRLECodedSubtitle::NonDelegatingQueryInterface(REFIID riid, void** 
 
 STDMETHODIMP CRLECodedSubtitle::GetRelativeTo(POSITION pos, RelativeTo& relativeTo)
 {
-    relativeTo = WINDOW;
+    relativeTo = BEST_FIT;
     return S_OK;
 }
 
