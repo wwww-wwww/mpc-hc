@@ -560,7 +560,7 @@ msgstr "Следващ &кадър"
 
 msgctxt "POPUP"
 msgid "&Repeat"
-msgstr "&Повтаряй"
+msgstr "&Повтoрение"
 
 msgctxt "ID_PLAY_REPEAT_FOREVER"
 msgid "F&orever"

@@ -470,7 +470,7 @@ msgstr "A&umentar Largura"
 
 msgctxt "ID_VIEW_DECWIDTH"
 msgid "D&ecrease Width"
-msgstr "Diminuir Largura"
+msgstr "D&iminuir Largura"
 
 msgctxt "ID_VIEW_INCHEIGHT"
 msgid "In&crease Height"
@@ -534,11 +534,11 @@ msgstr "&Sempre"
 
 msgctxt "ID_ONTOP_WHILEPLAYING"
 msgid "While &Playing"
-msgstr "Enquanto &Tocando"
+msgstr "Enquanto &Reproduzindo"
 
 msgctxt "ID_ONTOP_WHILEPLAYINGVIDEO"
 msgid "While Playing &Video"
-msgstr "Enquanto Executando &Vídeo"
+msgstr "Enquanto Reproduzindo um &Vídeo"
 
 msgctxt "ID_VIEW_OPTIONS"
 msgid "&Options..."
@@ -682,7 +682,7 @@ msgstr "Fa&ixa da Legenda"
 
 msgctxt "ID_VIDEO_STREAMS"
 msgid "Vide&o Track"
-msgstr "Faix&a de Vídeo"
+msgstr "Faix&a do Vídeo"
 
 msgctxt "POPUP"
 msgid "&Volume"
@@ -690,11 +690,11 @@ msgstr "&Volume"
 
 msgctxt "ID_VOLUME_UP"
 msgid "&Up"
-msgstr "&Aumentar"
+msgstr "&Pra cima"
 
 msgctxt "ID_VOLUME_DOWN"
 msgid "&Down"
-msgstr "&Diminuir"
+msgstr "&Pra baixo"
 
 msgctxt "ID_VOLUME_MUTE"
 msgid "&Mute"
@@ -702,7 +702,7 @@ msgstr "&Mudo"
 
 msgctxt "POPUP"
 msgid "Af&ter Playback"
-msgstr "Ap&ós Playback"
+msgstr "Ap&ós o Playback"
 
 msgctxt "ID_AFTERPLAYBACK_DONOTHING"
 msgid "Do no&thing"
@@ -730,7 +730,7 @@ msgstr "&Hibernar"
 
 msgctxt "ID_AFTERPLAYBACK_SHUTDOWN"
 msgid "Shut&down"
-msgstr "Desl&igar"
+msgstr "Desl&igamento"
 
 msgctxt "ID_AFTERPLAYBACK_LOGOFF"
 msgid "Log &Off"
@@ -746,15 +746,15 @@ msgstr "&Navegar"
 
 msgctxt "ID_NAVIGATE_SKIPBACK"
 msgid "&Previous"
-msgstr "Anterior"
+msgstr "&Anterior"
 
 msgctxt "ID_NAVIGATE_SKIPFORWARD"
 msgid "&Next"
-msgstr "Próximo"
+msgstr "&Próximo"
 
 msgctxt "ID_NAVIGATE_GOTO"
 msgid "&Go To..."
-msgstr "&Ir Para..."
+msgstr "&Ir Pra..."
 
 msgctxt "ID_NAVIGATE_TITLEMENU"
 msgid "&Title Menu"

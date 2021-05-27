@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2021-02-23 16:03:02+0000\n"
+"POT-Creation-Date: 2021-04-03 23:14:53+0000\n"
 "PO-Revision-Date: 2020-01-02 07:46+0000\n"
 "Last-Translator: Андрей Станков <astankov84@gmail.com>, 2021\n"
 "Language-Team: Bulgarian (https://www.transifex.com/mpchc/teams/106126/bg/)\n"
@@ -629,7 +629,7 @@ msgstr "Задай като &програма по подразбиране"
 
 msgctxt "IDD_PPAGEFORMATS_IDC_STATIC"
 msgid "Explorer Context Menu"
-msgstr "Контекстно меню във файловия мениджър"
+msgstr "Контекстно меню в Explorer"
 
 msgctxt "IDD_PPAGEFORMATS_IDC_CHECK6"
 msgid "Directory"

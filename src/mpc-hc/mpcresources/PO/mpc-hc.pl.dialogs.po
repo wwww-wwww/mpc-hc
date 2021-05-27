@@ -5,13 +5,14 @@
 # MPC HC <adiposegithub@gmail.com>, 2020
 # Dawid Lyceus <lyceus666@gmail.com>, 2020
 # Michał Trzebiatowski <michtrz@gmail.com>, 2020
+# Mirosław Żylewicz, 2021
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2021-02-23 16:03:02+0000\n"
+"POT-Creation-Date: 2021-04-03 23:14:53+0000\n"
 "PO-Revision-Date: 2020-01-02 07:46+0000\n"
-"Last-Translator: Michał Trzebiatowski <michtrz@gmail.com>, 2020\n"
+"Last-Translator: Mirosław Żylewicz, 2021\n"
 "Language-Team: Polish (https://www.transifex.com/mpchc/teams/106126/pl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -206,7 +207,7 @@ msgstr "O programie"
 
 msgctxt "IDD_ABOUTBOX_IDC_AUTHORS_LINK"
 msgid "Copyright 2002-2021 clsid2 and others"
-msgstr ""
+msgstr "Prawa autorskie 2002-2021 clsid2 i inni"
 
 msgctxt "IDD_ABOUTBOX_IDC_STATIC"
 msgid ""
@@ -489,11 +490,11 @@ msgstr "Preferowane"
 
 msgctxt "IDD_PPAGEPLAYBACK_IDC_STATIC"
 msgid "Subtitles:"
-msgstr "napisy:"
+msgstr "Napisy:"
 
 msgctxt "IDD_PPAGEPLAYBACK_IDC_STATIC"
 msgid "Audio:"
-msgstr "audio:"
+msgstr "Audio:"
 
 msgctxt "IDD_PPAGEPLAYBACK_IDC_CHECK4"
 msgid "Allow overriding external splitter choice"
@@ -1145,7 +1146,7 @@ msgstr "Przeglądaj..."
 
 msgctxt "IDD_PPAGELOGO_IDC_CHECK1"
 msgid "Apply Monitor Color Profile"
-msgstr ""
+msgstr "Zastosuj profil kolorów monitora"
 
 msgctxt "IDD_PPAGEOUTPUT_IDC_STATIC"
 msgid "DirectShow Video"
@@ -1293,7 +1294,7 @@ msgstr "Szukaj"
 
 msgctxt "IDD_SUBTITLEUP_DLG_CAPTION"
 msgid "Upload subtitles"
-msgstr "Wysili napisy"
+msgstr "Wyślij napisy"
 
 msgctxt "IDD_SUBTITLEUP_DLG_IDOK"
 msgid "Upload"
@@ -1743,7 +1744,7 @@ msgstr "Domyślne"
 
 msgctxt "IDD_PPAGEAUDIORENDERER_IDC_STATIC5"
 msgid "Device"
-msgstr ""
+msgstr "Urządzenie"
 
 msgctxt "IDD_PPAGEAUDIORENDERER_IDC_CHECK1"
 msgid "Exclusive mode"
@@ -1755,7 +1756,7 @@ msgstr "Zezwól na bitstreaming"
 
 msgctxt "IDD_PPAGEAUDIORENDERER_IDC_STATIC6"
 msgid "Options"
-msgstr ""
+msgstr "Ustawienia"
 
 msgctxt "IDD_PPAGEAUDIORENDERER_IDC_CHECK3"
 msgid "Enable stereo crossfeed (for headphones)"
@@ -1785,7 +1786,7 @@ msgstr ""
 
 msgctxt "IDD_PPAGEAUDIORENDERER_IDC_STATIC7"
 msgid "Note"
-msgstr ""
+msgstr "Uwaga"
 
 msgctxt "IDD_PPAGEAUDIORENDERER_IDC_STATIC8"
 msgid ""

@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2021-02-23 16:03:02+0000\n"
+"POT-Creation-Date: 2021-04-03 23:14:53+0000\n"
 "PO-Revision-Date: 2020-01-02 07:46+0000\n"
 "Last-Translator: Hugo Simões <hugo.simoes.1984@gmail.com>, 2021\n"
 "Language-Team: Portuguese (Portugal) (https://www.transifex.com/mpchc/teams/106126/pt_PT/)\n"
@@ -1367,7 +1367,7 @@ msgstr "Exportar chaves"
 
 msgctxt "IDD_TUNER_SCAN_CAPTION"
 msgid "Tuner scan"
-msgstr "Pesq. tuner"
+msgstr "Pesquisar no sintonizador"
 
 msgctxt "IDD_TUNER_SCAN_ID_START"
 msgid "Start"
@@ -1379,15 +1379,15 @@ msgstr "Cancelar"
 
 msgctxt "IDD_TUNER_SCAN_IDC_STATIC"
 msgid "Freq. Start"
-msgstr "Freq. inicial"
+msgstr "Frequência inicial:"
 
 msgctxt "IDD_TUNER_SCAN_IDC_STATIC"
 msgid "Bandwidth"
-msgstr "Larg. banda"
+msgstr "Largura de banda"
 
 msgctxt "IDD_TUNER_SCAN_IDC_STATIC"
 msgid "Freq. End"
-msgstr "Freq. final"
+msgstr "Frequência final:"
 
 msgctxt "IDD_TUNER_SCAN_IDC_CHECK_IGNORE_ENCRYPTED"
 msgid "Ignore encrypted channels"
@@ -1407,7 +1407,7 @@ msgstr "Q"
 
 msgctxt "IDD_TUNER_SCAN_IDC_CHECK_OFFSET"
 msgid "Use an offset"
-msgstr "Usar um desl."
+msgstr "Usar um deslocamento"
 
 msgctxt "IDD_PPAGECAPTURE_IDC_STATIC"
 msgid "Default Device"

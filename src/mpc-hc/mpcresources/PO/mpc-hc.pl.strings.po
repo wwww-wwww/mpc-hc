@@ -7,13 +7,14 @@
 # Orzełek, 2020
 # Rudolph RD, 2020
 # Michał Trzebiatowski <michtrz@gmail.com>, 2020
+# Mirosław Żylewicz, 2021
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2021-02-17 23:32:57+0000\n"
+"POT-Creation-Date: 2021-05-04 16:20:41+0000\n"
 "PO-Revision-Date: 2020-01-02 07:46+0000\n"
-"Last-Translator: Michał Trzebiatowski <michtrz@gmail.com>, 2020\n"
+"Last-Translator: Mirosław Żylewicz, 2021\n"
 "Language-Team: Polish (https://www.transifex.com/mpchc/teams/106126/pl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -103,7 +104,7 @@ msgstr "Powtarzanie A-B: Ustaw znacznik B"
 
 msgctxt "IDS_SNAPSHOT_SUBTITLES"
 msgid "Include Subtitles"
-msgstr " Uwzględnij Napisy"
+msgstr " Uwzględnij napisy"
 
 msgctxt "IDS_INFOBAR_CHANNEL"
 msgid "Channel"
@@ -157,19 +158,19 @@ msgstr ""
 
 msgctxt "IDS_PLAYLOOPMODE_PLAYLIST"
 msgid "Repeat Mode: Playlist"
-msgstr "Tryb Powtarzania: Lista odtwarzania"
+msgstr "Tryb powtarzania: Lista odtwarzania"
 
 msgctxt "IDS_PLAYLOOPMODE_FILE"
 msgid "Repeat Mode: File"
-msgstr "Tryb Powtarzania: Plik"
+msgstr "Tryb powtarzania: Plik"
 
 msgctxt "IDS_PLAYLOOP_FOREVER_ON"
 msgid "Repeat Forever: On"
-msgstr "Powtarzanie Ciągłe: Włączone"
+msgstr "Powtarzanie ciągłe: Włączone"
 
 msgctxt "IDS_PLAYLOOP_FOREVER_OFF"
 msgid "Repeat Forever: Off"
-msgstr "Powtarzanie Ciągłe: Wyłączone"
+msgstr "Powtarzanie ciągłe: Wyłączone"
 
 msgctxt "IDS_PLAYLOOP_FOREVER"
 msgid "Repeat Forever"
@@ -228,7 +229,7 @@ msgstr "%d+"
 
 msgctxt "IDS_NO_PARENTAL_RATING"
 msgid "Not rated"
-msgstr "niesklasyfikowane"
+msgstr "Niesklasyfikowane"
 
 msgctxt "IDS_INFOBAR_CONTENT"
 msgid "Content"
@@ -674,7 +675,7 @@ msgstr "Renderer wideo MPC"
 
 msgctxt "IDS_PPAGE_OUTPUT_VMR7"
 msgid "Video Mixing Renderer 7"
-msgstr ""
+msgstr "Video Mixing Renderer 7"
 
 msgctxt "IDD_PPAGEACCELTBL"
 msgid "Player::Keys"
@@ -2124,7 +2125,7 @@ msgid ""
 msgstr ""
 "Chcesz, aby okresowo były sprawdzane aktualizacje MPC-HC?\n"
 "\n"
-"Ta opcja może zostać później wyłączona w zakładce „Różne” w opcjach."
+"Ta opcja może zostać później wyłączona w ustawieniach w zakładce „Różne”."
 
 msgctxt "IDS_ZOOM_50"
 msgid "50%"
@@ -2144,15 +2145,15 @@ msgstr "Dopasuj do rozdzielczości ekranu"
 
 msgctxt "IDS_ZOOM_AUTOFIT_LARGER"
 msgid "Auto Fit (Larger Only)"
-msgstr "Dopasuj do rozdzielczości ekranu (Tylko większe)"
+msgstr "Dopasuj do rozdzielczości ekranu (tylko większe)"
 
 msgctxt "IDS_AG_ZOOM_AUTO_FIT_LARGER"
 msgid "Zoom Auto Fit (Larger Only)"
-msgstr "Dopasuj rozmiar okna do rozdzielczości ekranu (Tylko większe)"
+msgstr "Dopasuj rozmiar okna do rozdzielczości ekranu (tylko większe)"
 
 msgctxt "IDS_OSD_ZOOM_AUTO_LARGER"
 msgid "Zoom: Auto (Larger Only)"
-msgstr "Rozmiar okna: dopasowany do rozdzielczości ekranu (Tylko większe)"
+msgstr "Rozmiar okna: dopasowany do rozdzielczości ekranu (tylko większe)"
 
 msgctxt "IDS_TOOLTIP_EXPLORE_TO_FILE"
 msgid "Double click to open file location"
@@ -2324,19 +2325,19 @@ msgstr "DVD: Poprzednia kamera"
 
 msgctxt "IDS_MPLAYERC_93"
 msgid "Next Audio Track (DVD)"
-msgstr "Następna ścieżka dźwiękowa (DVD)"
+msgstr "DVD: Następna ścieżka dźwiękowa"
 
 msgctxt "IDS_MPLAYERC_94"
 msgid "Prev Audio Track (DVD)"
-msgstr "Poprzednia ścieżka dźwiękowa (DVD)"
+msgstr "DVD: Poprzednia ścieżka dźwiękowa"
 
 msgctxt "IDS_MPLAYERC_95"
 msgid "Next Subtitle Track (DVD)"
-msgstr "Następna ścieżka napisów (DVD)"
+msgstr "DVD: Następna ścieżka napisów"
 
 msgctxt "IDS_MPLAYERC_96"
 msgid "Prev Subtitle Track (DVD)"
-msgstr "Poprzednia ścieżka napisów (DVD)"
+msgstr "DVD: Poprzednia ścieżka napisów"
 
 msgctxt "IDS_MPLAYERC_97"
 msgid "On/Off Subtitle (DVD)"
@@ -3012,11 +3013,11 @@ msgstr "Rozmiar okna 25%"
 
 msgctxt "IDS_AG_MOUSE_MODIFIER"
 msgid "Mouse Modifier"
-msgstr ""
+msgstr "Mysz (modyfikator)"
 
 msgctxt "IDS_AG_MOUSE_FS_MODIFIER"
 msgid "Mouse FS Modifier"
-msgstr ""
+msgstr "Mysz (modyfikator FS)"
 
 msgctxt "IDS_AG_VIDFRM_ZOOM1"
 msgid "VidFrm Zoom 1"
@@ -4224,7 +4225,7 @@ msgstr "/d3dfs\t\tUruchamia odtwarzanie pełnoekranowe w D3D"
 
 msgctxt "IDS_CMD_SUB"
 msgid "/sub \"subname\"\tLoad an additional subtitle file"
-msgstr "/sub „plik”\t\tWczytuje dodatkowe napisy"
+msgstr "/sub „plik”\tWczytuje dodatkowe napisy"
 
 msgctxt "IDS_CMD_FILTER"
 msgid ""
@@ -4289,7 +4290,7 @@ msgstr ""
 
 msgctxt "IDS_CMD_LOGOFF"
 msgid "/logoff\t\tLog off after playback"
-msgstr "/logoff\t\tWyglogowuje użytownika po zakończeniu odtwarzania"
+msgstr "/logoff\t\tWylogowuje użytkownika po zakończeniu odtwarzania"
 
 msgctxt "IDS_CMD_LOCK"
 msgid "/lock\t\tLock workstation after playback"
@@ -4482,7 +4483,7 @@ msgstr "/fixedsize x,y\tUstawia rozmiar okna programu"
 msgctxt "IDS_CMD_MONITOR"
 msgid "/monitor N\tStart player on monitor N, where N starts from 1"
 msgstr ""
-"/monitor N\tUruchamia na N-tym ekranie, gdzie numer  pierwszego ekranu to 1"
+"/monitor N\tUruchamia na N-tym ekranie, gdzie numer pierwszego ekranu to 1"
 
 msgctxt "IDS_CMD_AUDIORENDERER"
 msgid ""
@@ -4518,7 +4519,7 @@ msgstr "OK"
 
 msgctxt "IDS_MESSAGEBOX_CONTINUE"
 msgid "&Continue"
-msgstr "&Kontyntynuj"
+msgstr "&Kontynuuj"
 
 msgctxt "IDS_AG_TOGGLE_DEFAULT_SUBTITLE_STYLE"
 msgid "Toggle Default Subtitle Style"
@@ -4567,27 +4568,27 @@ msgstr ""
 
 msgctxt "IDS_PRESIZE_SHADERS_ENABLED"
 msgid "Pre-Resize Pixel Shaders: on"
-msgstr ""
+msgstr "Shadery przed skalowaniem: włączone"
 
 msgctxt "IDS_PRESIZE_SHADERS_DISABLED"
 msgid "Pre-Resize Pixel Shaders: off"
-msgstr ""
+msgstr "Shadery przed skalowaniem: wyłączone"
 
 msgctxt "IDS_PRESIZE_SHADERS_TOGGLE"
 msgid "Enable Pre-Resize Pixel Shaders"
-msgstr ""
+msgstr "Włącz shadery przed skalowaniem"
 
 msgctxt "IDS_POSTSIZE_SHADERS_ENABLED"
 msgid "Post-Resize Pixel Shaders: on"
-msgstr ""
+msgstr "Shadery po skalowaniu: włączone"
 
 msgctxt "IDS_POSTSIZE_SHADERS_DISABLED"
 msgid "Post-Resize Pixel Shaders: off"
-msgstr ""
+msgstr "Shadery po skalowaniu: wyłączone"
 
 msgctxt "IDS_POSTSIZE_SHADERS_TOGGLE"
 msgid "Enable Post-Resize Pixel Shaders"
-msgstr ""
+msgstr "Włącz shadery po skalowaniu"
 
 msgctxt "IDS_PPAGEADVANCED_TIME_REFRESH_INTERVAL"
 msgid "Refresh interval (in milliseconds) of time in status bar"

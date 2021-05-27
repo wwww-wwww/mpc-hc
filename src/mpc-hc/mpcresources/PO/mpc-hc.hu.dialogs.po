@@ -5,13 +5,14 @@
 # MPC HC <adiposegithub@gmail.com>, 2020
 # Nagy Imre <nagyimre1980@gmail.com>, 2020
 # Péter Patkós <patkos96@gmail.com>, 2021
+# Evin, 2021
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2021-02-23 16:03:02+0000\n"
+"POT-Creation-Date: 2021-04-03 23:14:53+0000\n"
 "PO-Revision-Date: 2020-01-02 07:46+0000\n"
-"Last-Translator: Péter Patkós <patkos96@gmail.com>, 2021\n"
+"Last-Translator: Evin, 2021\n"
 "Language-Team: Hungarian (https://www.transifex.com/mpchc/teams/106126/hu/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -207,7 +208,7 @@ msgstr "Névjegy"
 
 msgctxt "IDD_ABOUTBOX_IDC_AUTHORS_LINK"
 msgid "Copyright 2002-2021 clsid2 and others"
-msgstr ""
+msgstr "Copyright 2002-2021 clsid2 és a többiek"
 
 msgctxt "IDD_ABOUTBOX_IDC_STATIC"
 msgid ""
@@ -1149,7 +1150,7 @@ msgstr "Tallózás..."
 
 msgctxt "IDD_PPAGELOGO_IDC_CHECK1"
 msgid "Apply Monitor Color Profile"
-msgstr ""
+msgstr "A monitor színprofiljának alkalmazása"
 
 msgctxt "IDD_PPAGEOUTPUT_IDC_STATIC"
 msgid "DirectShow Video"
@@ -1749,7 +1750,7 @@ msgstr "Alapértelmezés"
 
 msgctxt "IDD_PPAGEAUDIORENDERER_IDC_STATIC5"
 msgid "Device"
-msgstr ""
+msgstr "Eszköz"
 
 msgctxt "IDD_PPAGEAUDIORENDERER_IDC_CHECK1"
 msgid "Exclusive mode"
@@ -1761,7 +1762,7 @@ msgstr "Bitstreaming engedélyezése"
 
 msgctxt "IDD_PPAGEAUDIORENDERER_IDC_STATIC6"
 msgid "Options"
-msgstr ""
+msgstr "Beállítások"
 
 msgctxt "IDD_PPAGEAUDIORENDERER_IDC_CHECK3"
 msgid "Enable stereo crossfeed (for headphones)"
@@ -1791,7 +1792,7 @@ msgstr ""
 
 msgctxt "IDD_PPAGEAUDIORENDERER_IDC_STATIC7"
 msgid "Note"
-msgstr ""
+msgstr "Megjegyzés"
 
 msgctxt "IDD_PPAGEAUDIORENDERER_IDC_STATIC8"
 msgid ""

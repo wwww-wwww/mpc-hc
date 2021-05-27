@@ -10,7 +10,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2021-02-17 23:32:57+0000\n"
+"POT-Creation-Date: 2021-05-04 16:20:41+0000\n"
 "PO-Revision-Date: 2020-01-02 07:46+0000\n"
 "Last-Translator: Renz Straatman <renz75@outlook.com>, 2021\n"
 "Language-Team: Dutch (https://www.transifex.com/mpchc/teams/106126/nl/)\n"
@@ -869,7 +869,7 @@ msgstr "3D oppervlaktes (aanbevolen)"
 
 msgctxt "IDS_PPAGE_OUTPUT_RESIZE_NN"
 msgid "Nearest neighbor"
-msgstr "Naaste buur"
+msgstr "Nearest neighbor-algoritme"
 
 msgctxt "IDS_PPAGE_OUTPUT_RESIZER_BILIN"
 msgid "Bilinear"
@@ -893,7 +893,7 @@ msgstr "Bicubic A=-1.00 (PS 2.0)"
 
 msgctxt "IDS_PPAGE_OUTPUT_UNAVAILABLE"
 msgid "**unavailable**"
-msgstr "**onbeschikbaar**"
+msgstr "**niet beschikbaar**"
 
 msgctxt "IDS_PPAGE_OUTPUT_UNAVAILABLEMSG"
 msgid "The selected renderer is not installed."
@@ -909,7 +909,7 @@ msgstr "Null (ongecomprimeerd)"
 
 msgctxt "IDS_PPAGE_OUTPUT_AUD_INTERNAL_REND"
 msgid "Internal Audio Renderer"
-msgstr "Interne audio opbouwer"
+msgstr "Interne audiorenderer"
 
 msgctxt "IDS_EMB_RESOURCES_VIEWER_NAME"
 msgid "Name"
