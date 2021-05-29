@@ -219,7 +219,7 @@ void CDebugShadersDlg::OnListRefresh()
     for (std::size_t i = 0; i != m_list.size(); ++i) {
         const auto& shader = m_list[i];
         ASSERT(!shader.filePath.IsEmpty());
-        int idx = AppendShader(i, shader.filePath);
+        int idx = AppendShader((int)i, shader.filePath);
         if (idx >= 0) {
             if (shader.filePath == path) {
                 VERIFY(m_Shaders.SetCurSel(idx) != CB_ERR);

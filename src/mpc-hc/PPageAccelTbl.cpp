@@ -1410,8 +1410,8 @@ int CPPageAccelTbl::CompareFunc(LPARAM lParam1, LPARAM lParam2)
     CString strItem1 = m_list.GetItemText(static_cast<int>(lParam1), sortColumn);
     CString strItem2 = m_list.GetItemText(static_cast<int>(lParam2), sortColumn);
     if (sortColumn == COL_ID || sortColumn == COL_RMREPCNT) {
-        wmcmd& wc1 = m_wmcmds.GetAt(((ITEMDATA*)m_list.GetItemData(lParam1))->index);
-        wmcmd& wc2 = m_wmcmds.GetAt(((ITEMDATA*)m_list.GetItemData(lParam2))->index);
+        wmcmd& wc1 = m_wmcmds.GetAt(((ITEMDATA*)m_list.GetItemData(static_cast<int>(lParam1)))->index);
+        wmcmd& wc2 = m_wmcmds.GetAt(((ITEMDATA*)m_list.GetItemData(static_cast<int>(lParam2)))->index);
 
         result = wc1.cmd == wc2.cmd ? 0 : (wc1.cmd < wc2.cmd ? -1 : 1);
     } else {

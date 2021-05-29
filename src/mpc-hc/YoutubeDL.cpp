@@ -704,7 +704,7 @@ void CYoutubeDLInstance::loadSub(const Value& obj, CAtlList<YDLSubInfo>& subs, b
         }
         if (iter->value.IsArray()) {
             const Value& arr = obj[(LPCTSTR)lang];
-            for (int i = 0; i < arr.Size(); i++) {
+            for (rapidjson::SizeType i = 0; i < arr.Size(); i++) {
                 const Value& dict = arr[i];
                 YDLSubInfo sub;
                 sub.isAutomaticCaptions = isAutomaticCaptions;

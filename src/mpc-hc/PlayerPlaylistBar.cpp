@@ -837,7 +837,7 @@ bool CPlayerPlaylistBar::SaveMPCPlayList(CString fn, CTextFile::enc e, bool fRem
                     if (!s.data.IsEmpty()) continue;
                     CString t;
                     CString t2 = s.isAutomaticCaptions ? _T("ydl_auto_sub") : _T("ydl_sub");
-                    t.Format(_T("%d,%s,%s,%s,%s\n"), i, t2, s.lang, s.ext, s.url);
+                    t.Format(_T("%d,%s,%s,%s,%s\n"), i, static_cast<LPCWSTR>(t2), static_cast<LPCWSTR>(s.lang), static_cast<LPCWSTR>(s.ext), static_cast<LPCWSTR>(s.url));
                     f.WriteString(t);
                 }
             }
