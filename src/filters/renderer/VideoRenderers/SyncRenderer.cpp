@@ -490,7 +490,6 @@ HRESULT CBaseAP::CreateDXDevice(CString& _Error)
     m_dD3DRefreshCycle = 1000.0 / m_refreshRate; // In ms
     m_ScreenSize.SetSize(d3ddm.Width, d3ddm.Height);
     m_pGenlock->SetDisplayResolution(d3ddm.Width, d3ddm.Height);
-    CSize szDesktopSize(GetSystemMetrics(SM_CXVIRTUALSCREEN), GetSystemMetrics(SM_CYVIRTUALSCREEN));
 
     BOOL bCompositionEnabled = false;
     if (m_pDwmIsCompositionEnabled) {
@@ -577,8 +576,9 @@ HRESULT CBaseAP::CreateDXDevice(CString& _Error)
         m_pp.SwapEffect = D3DSWAPEFFECT_COPY;
         m_pp.Flags = D3DPRESENTFLAG_VIDEO;
         m_pp.BackBufferCount = 1;
-        m_pp.BackBufferWidth  = r.m_AdvRendSets.bDesktopSizeBackBuffer ? szDesktopSize.cx : m_ScreenSize.cx;
-        m_pp.BackBufferHeight = r.m_AdvRendSets.bDesktopSizeBackBuffer ? szDesktopSize.cy : m_ScreenSize.cy;
+        CSize bbsize = GetBackBufferSize(m_ScreenSize, r.m_AdvRendSets.bDesktopSizeBackBuffer);
+        m_pp.BackBufferWidth  = bbsize.cx;
+        m_pp.BackBufferHeight = bbsize.cy;
         m_BackbufferType = d3ddm.Format;
         m_DisplayType = d3ddm.Format;
         m_bHighColorResolution = r.m_AdvRendSets.bEVRHighColorResolution;
@@ -829,8 +829,9 @@ HRESULT CBaseAP::ResetDXDevice(CString& _Error)
         m_BackbufferType = m_pp.BackBufferFormat;
         m_DisplayType = d3ddm.Format;
     } else { // Windowed
-        m_pp.BackBufferWidth  = r.m_AdvRendSets.bDesktopSizeBackBuffer ? szDesktopSize.cx : m_ScreenSize.cx;
-        m_pp.BackBufferHeight = r.m_AdvRendSets.bDesktopSizeBackBuffer ? szDesktopSize.cy : m_ScreenSize.cy;
+        CSize bbsize = GetBackBufferSize(m_ScreenSize, r.m_AdvRendSets.bDesktopSizeBackBuffer);
+        m_pp.BackBufferWidth  = bbsize.cx;
+        m_pp.BackBufferHeight = bbsize.cy;
         m_BackbufferType = d3ddm.Format;
         m_DisplayType = d3ddm.Format;
         if (m_bHighColorResolution) {
