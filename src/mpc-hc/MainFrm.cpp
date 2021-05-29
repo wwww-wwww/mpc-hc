@@ -3603,7 +3603,12 @@ void CMainFrame::OnUpdatePlayerStatus(CCmdUI* pCmdUI)
 
 LRESULT CMainFrame::OnFilePostOpenmedia(WPARAM wParam, LPARAM lParam)
 {
+    if (!m_pGB) {
+        ASSERT(FALSE);
+        return 1;
+    }
     ASSERT(GetLoadState() == MLS::LOADING);
+
     auto& s = AfxGetAppSettings();
 
     // from this on
