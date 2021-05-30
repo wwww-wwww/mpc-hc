@@ -329,18 +329,22 @@ void CPlayerPlaylistBar::ParsePlayList(CAtlList<CString>& fns, CAtlList<CString>
     if (redir_count == 0) {
         ResolveLinkFiles(fns);
 
-        CAtlList<CString> sl;
-        if (SearchFiles(fns.GetHead(), sl)) {
-            if (sl.GetCount() > 0) {
-                if (sl.GetCount() > 1) {
-                    subs = nullptr;
+        // single entry can be a directory or file mask -> search for files
+        // multiple filenames means video file plus audio dub
+        if (fns.GetCount() == 1) {
+            CAtlList<CString> sl;
+            if (SearchFiles(fns.GetHead(), sl)) {
+                if (sl.GetCount() > 0) {
+                    if (sl.GetCount() > 1) {
+                        subs = nullptr;
+                    }
+                    POSITION pos = sl.GetHeadPosition();
+                    while (pos) {
+                        ParsePlayList(sl.GetNext(pos), subs, redir_count + 1);
+                    }
                 }
-                POSITION pos = sl.GetHeadPosition();
-                while (pos) {
-                    ParsePlayList(sl.GetNext(pos), subs, redir_count + 1);
-                }
+                return;
             }
-            return;
         }
     }
 
@@ -875,9 +879,9 @@ bool CPlayerPlaylistBar::Empty()
 
 void CPlayerPlaylistBar::Open(CAtlList<CString>& fns, bool fMulti, CAtlList<CString>* subs, CString label, CString ydl_src, CString cue)
 {
-    ResolveLinkFiles(fns);
     Empty();
     Append(fns, fMulti, subs, label, ydl_src, cue);
+
     CString ext = CPath(fns.GetHead()).GetExtension().MakeLower();
     if (!fMulti && (ext == _T(".mpcpl"))) {
         m_playListPath = fns.GetHead();
