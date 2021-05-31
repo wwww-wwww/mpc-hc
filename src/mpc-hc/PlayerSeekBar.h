@@ -102,6 +102,7 @@ public:
     REFERENCE_TIME GetPos() const;
     void SetPos(REFERENCE_TIME rtPos);
     bool HasDuration() const;
+    REFERENCE_TIME GetDuration();
 
     void SetChapterBag(IDSMChapterBag* pCB);
     void RemoveChapters();

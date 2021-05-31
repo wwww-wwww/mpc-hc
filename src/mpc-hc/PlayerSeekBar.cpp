@@ -140,8 +140,9 @@ void CPlayerSeekBar::MoveThumb(const CPoint& point)
     if (m_bHasDuration) {
         REFERENCE_TIME rtPos = PositionFromClientPoint(point);
         const CAppSettings& s = AfxGetAppSettings();
-        if (s.bFastSeek ^ (GetKeyState(VK_SHIFT) < 0)) {
-            REFERENCE_TIME rtMaxDiff = s.bAllowInaccurateFastseek ? 200000000LL : std::min(100000000LL, m_rtStop / 30);
+        REFERENCE_TIME duration = m_rtStop - m_rtStart;
+        if (duration >= 600000000LL && s.bFastSeek && (GetKeyState(VK_SHIFT) >= 0)) {
+            REFERENCE_TIME rtMaxDiff = s.bAllowInaccurateFastseek ? 200000000LL : std::min(100000000LL, duration / 30);
             rtPos = m_pMainFrame->GetClosestKeyFrame(rtPos, rtMaxDiff, rtMaxDiff);
         }
         SyncThumbToVideo(rtPos);
@@ -519,6 +520,11 @@ void CPlayerSeekBar::SetPos(REFERENCE_TIME rtPos)
 bool CPlayerSeekBar::HasDuration() const
 {
     return m_bHasDuration;
+}
+
+REFERENCE_TIME CPlayerSeekBar::GetDuration()
+{
+    return m_bHasDuration ? m_rtStop - m_rtStart : 0LL;
 }
 
 void CPlayerSeekBar::SetChapterBag(IDSMChapterBag* pCB)
