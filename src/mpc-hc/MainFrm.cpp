@@ -3731,7 +3731,7 @@ LRESULT CMainFrame::OnFilePostOpenmedia(WPARAM wParam, LPARAM lParam)
         ZoomVideoWindow();
     }
 
-    if (s.fLaunchfullscreen && !m_fFullScreen && !m_fAudioOnly) {
+    if (s.fLaunchfullscreen && !m_fFullScreen && !IsD3DFullScreenMode() && !m_fAudioOnly) {
         OnViewFullscreen();
     }
 
