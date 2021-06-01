@@ -78,12 +78,16 @@ bool CMainFrameControls::ShowToolbars(UINT nCS)
         int i = 1;
         for (const auto& pair : m_toolbars) {
             auto& pCB = pair.second;
-            if (nCS & i) {
-                m_pMainFrame->ShowControlBar(pCB, TRUE, TRUE);
-                m_pMainFrame->m_pLastBar = pCB;
+            if (pCB->m_hWnd) {
+                if (nCS & i) {
+                    m_pMainFrame->ShowControlBar(pCB, TRUE, TRUE);
+                    m_pMainFrame->m_pLastBar = pCB;
+                } else {
+                    m_pMainFrame->ShowControlBar(pCB, FALSE, TRUE);
+                }
             } else {
-                m_pMainFrame->ShowControlBar(pCB, FALSE, TRUE);
-            }
+                ASSERT(FALSE);
+            }        
             i <<= 1;
         }
         st.nVisibleCS = nCS;
