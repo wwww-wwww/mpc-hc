@@ -93,7 +93,8 @@ HRESULT CDXRAllocatorPresenter::SetDevice(IDirect3DDevice9* pD3DDev)
     }
 
     const CRenderersSettings& r = GetRenderersSettings();
-    InitMaxSubtitleTextureSize(r.subPicQueueSettings.nMaxResX, r.subPicQueueSettings.nMaxResY);
+    CSize largestScreen = GetLargestScreenSize(CSize(2560, 1440));
+    InitMaxSubtitleTextureSize(r.subPicQueueSettings.nMaxResX, r.subPicQueueSettings.nMaxResY, largestScreen);
 
     if (m_pAllocator) {
         m_pAllocator->ChangeDevice(pD3DDev);

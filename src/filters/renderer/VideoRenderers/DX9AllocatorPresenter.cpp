@@ -640,6 +640,8 @@ HRESULT CDX9AllocatorPresenter::CreateDevice(CString& _Error)
         m_SurfaceType = D3DFMT_X8R8G8B8;
     }
 
+    CSize largestScreen = GetLargestScreenSize(CSize(2560, 1440));
+
     D3DDISPLAYMODEEX DisplayMode;
     ZeroMemory(&DisplayMode, sizeof(DisplayMode));
     DisplayMode.Size = sizeof(DisplayMode);
@@ -756,7 +758,7 @@ HRESULT CDX9AllocatorPresenter::CreateDevice(CString& _Error)
 
             m_ScreenSize.SetSize(DisplayMode.Width, DisplayMode.Height);
             m_refreshRate = DisplayMode.RefreshRate;
-            CSize bbsize = GetBackBufferSize(m_ScreenSize, r.m_AdvRendSets.bDesktopSizeBackBuffer);
+            CSize bbsize = GetBackBufferSize(m_ScreenSize, largestScreen, r.m_AdvRendSets.bDesktopSizeBackBuffer);
             pp.BackBufferWidth  = bbsize.cx;
             pp.BackBufferHeight = bbsize.cy;
 
@@ -786,7 +788,7 @@ HRESULT CDX9AllocatorPresenter::CreateDevice(CString& _Error)
             CHECK_HR(m_pD3D->GetAdapterDisplayMode(m_CurrentAdapter, &d3ddm));
             m_ScreenSize.SetSize(d3ddm.Width, d3ddm.Height);
             m_refreshRate = d3ddm.RefreshRate;
-            CSize bbsize = GetBackBufferSize(m_ScreenSize, r.m_AdvRendSets.bDesktopSizeBackBuffer);
+            CSize bbsize = GetBackBufferSize(m_ScreenSize, largestScreen, r.m_AdvRendSets.bDesktopSizeBackBuffer);
             pp.BackBufferWidth  = bbsize.cx;
             pp.BackBufferHeight = bbsize.cy;
 
@@ -844,7 +846,7 @@ HRESULT CDX9AllocatorPresenter::CreateDevice(CString& _Error)
         m_pSubPicQueue->GetSubPicProvider(&pSubPicProvider);
     }
 
-    InitMaxSubtitleTextureSize(r.subPicQueueSettings.nMaxResX, r.subPicQueueSettings.nMaxResY);
+    InitMaxSubtitleTextureSize(r.subPicQueueSettings.nMaxResX, r.subPicQueueSettings.nMaxResY, largestScreen);
 
     if (m_pAllocator) {
         m_pAllocator->ChangeDevice(m_pD3DDev);

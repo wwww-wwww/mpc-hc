@@ -312,6 +312,7 @@ STDMETHODIMP CSubPicAllocatorImpl::GetStatic(ISubPic** ppSubPic)
 
         if (!m_pStatic) {
             if (!Alloc(true, &m_pStatic) || !m_pStatic) {
+                TRACE(_T("CSubPicAllocatorImpl::GetStatic failed\n"));
                 return E_OUTOFMEMORY;
             }
         }

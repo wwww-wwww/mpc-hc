@@ -31,6 +31,7 @@
 #include <evr.h>
 #include <dxva2api.h>
 #include <functional>
+#include "ScreenUtil.h"
 
 CSubPicAllocatorPresenterImpl::CSubPicAllocatorPresenterImpl(HWND hWnd, HRESULT& hr, CString* _pError)
     : CUnknown(NAME("CSubPicAllocatorPresenterImpl"), nullptr)
@@ -75,15 +76,20 @@ STDMETHODIMP CSubPicAllocatorPresenterImpl::NonDelegatingQueryInterface(REFIID r
         __super::NonDelegatingQueryInterface(riid, ppv);
 }
 
-void CSubPicAllocatorPresenterImpl::InitMaxSubtitleTextureSize(int maxSizeX, int maxSizeY)
+void CSubPicAllocatorPresenterImpl::InitMaxSubtitleTextureSize(int maxSizeX, int maxSizeY, CSize largestScreen)
 {
     if (maxSizeX < 384 || maxSizeY < 288) {
-        m_maxSubtitleTextureSize.SetSize(1280, 720);
+        m_maxSubtitleTextureSize = largestScreen;
     } else {
-        m_maxSubtitleTextureSize.cx = maxSizeX;
-        m_maxSubtitleTextureSize.cy = maxSizeY;
+        if (maxSizeX * maxSizeY > largestScreen.cx * largestScreen.cy) {
+            m_maxSubtitleTextureSize = largestScreen;
+        } else {
+            m_maxSubtitleTextureSize.cx = maxSizeX;
+            m_maxSubtitleTextureSize.cy = maxSizeY;
+        }
     }
     m_curSubtitleTextureSize = m_maxSubtitleTextureSize;
+    TRACE(_T("CSubPicAllocatorPresenterImpl::InitMaxSubtitleTextureSize %dx%d\n"), m_maxSubtitleTextureSize.cx, m_maxSubtitleTextureSize.cy);
 }
 
 HRESULT CSubPicAllocatorPresenterImpl::AlphaBltSubPic(const CRect& windowRect,
@@ -157,8 +163,8 @@ STDMETHODIMP_(void) CSubPicAllocatorPresenterImpl::SetPosition(RECT w, RECT v)
                 if (correct_ar) {
                     double new_w = sqrt((uint64_t)m_curSubtitleTextureSize.cx * m_curSubtitleTextureSize.cy * m_windowRect.Width()  / m_windowRect.Height());
                     double new_h = sqrt((uint64_t)m_curSubtitleTextureSize.cx * m_curSubtitleTextureSize.cy * m_windowRect.Height() / m_windowRect.Width());
-                    m_curSubtitleTextureSize.cx = round(new_w);
-                    m_curSubtitleTextureSize.cy = round(new_h);
+                    m_curSubtitleTextureSize.cx = lround(new_w);
+                    m_curSubtitleTextureSize.cy = lround(new_h);
                 }
 
                 m_pAllocator->SetMaxTextureSize(m_curSubtitleTextureSize);
@@ -226,12 +232,7 @@ STDMETHODIMP_(void) CSubPicAllocatorPresenterImpl::SetSubPicProvider(ISubPicProv
 
     m_pSubPicProvider = pSubPicProvider;
 
-    // Reset the default state to be sure text subtitles will be displayed right.
-    // Subtitles with specific requirements will adapt those values later.
     if (m_pAllocator) {
-        m_pAllocator->SetMaxTextureSize(m_maxSubtitleTextureSize);
-        m_pAllocator->SetCurSize(m_windowRect.Size());
-        m_pAllocator->SetCurVidRect(m_videoRect);
         m_pAllocator->FreeStatic();
     }
 

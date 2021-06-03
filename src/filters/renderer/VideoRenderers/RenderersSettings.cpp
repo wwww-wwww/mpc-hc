@@ -27,7 +27,6 @@
 #include <mpc-hc_config.h>
 #include <d3d9.h>
 #include "d3dx9/d3dx9.h"
-#include "../mpc-hc/Monitors.h"
 
 void CRenderersSettings::UpdateData(bool fSave)
 {
@@ -134,37 +133,4 @@ HINSTANCE CRenderersData::GetD3X9Dll()
     }
 
     return m_hD3DX9Dll;
-}
-
-CSize GetBackBufferSize(CSize screenSize, bool use_desktop_size)
-{
-    CSize desktopSize(GetSystemMetrics(SM_CXVIRTUALSCREEN), GetSystemMetrics(SM_CYVIRTUALSCREEN));
-    if (use_desktop_size) {
-        return desktopSize;
-    }
-
-    CSize bbsize = screenSize;
-
-    CMonitors monitors;
-    if (monitors.GetCount() > 1) {
-        // this includes virtual screens
-        for (int i = 0; i < monitors.GetCount(); i++) {
-            CMonitor monitor = monitors.GetMonitor(i);
-            RECT rc;
-            monitor.GetMonitorRect(&rc);
-            LONG w = rc.right - rc.left;
-            LONG h = rc.bottom - rc.top;
-            if (w > bbsize.cx) {
-                bbsize.cx = w;
-            }
-            if (h > bbsize.cy) {
-                bbsize.cy = h;
-            }
-        }
-        // validate
-        if (bbsize.cx > desktopSize.cx || bbsize.cy > desktopSize.cy) {
-            return desktopSize;
-        }
-    }
-    return bbsize;
 }

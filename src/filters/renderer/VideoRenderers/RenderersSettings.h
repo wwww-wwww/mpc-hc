@@ -150,5 +150,3 @@ extern CRenderersData*      GetRenderersData();
 extern CRenderersSettings&  GetRenderersSettings();
 
 extern bool LoadResource(UINT resid, CStringA& str, LPCTSTR restype);
-
-CSize GetBackBufferSize(CSize screenSize, bool use_desktop_size);

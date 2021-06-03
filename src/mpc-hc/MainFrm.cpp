@@ -15735,6 +15735,8 @@ bool CMainFrame::SetSubtitle(int i, bool bIsOffset /*= false*/, bool bDisplayMes
 
 void CMainFrame::SetSubtitle(const SubtitleInput& subInput, bool skip_lcid /* = false */)
 {
+    TRACE(_T("CMainFrame::SetSubtitle\n"));
+
     CAppSettings& s = AfxGetAppSettings();
 
     {

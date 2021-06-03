@@ -172,6 +172,7 @@ void CPlayerSubresyncBar::SetSubtitle(ISubStream* pSubStream, double fps)
         m_pSubStream = pSubStream;
         m_fps = fps;
 
+        // FIXME: if subresync bar is not visible, then delay this until we enable it
         ReloadSubtitle();
     }
 }

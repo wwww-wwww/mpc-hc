@@ -497,6 +497,8 @@ HRESULT CBaseAP::CreateDXDevice(CString& _Error)
     }
     m_bCompositionEnabled = bCompositionEnabled != 0;
 
+    CSize largestScreen = GetLargestScreenSize(CSize(2560, 1440));
+
     ZeroMemory(&m_pp, sizeof(m_pp));
     if (m_bIsFullscreen) { // Exclusive mode fullscreen
         m_pp.Windowed = FALSE;
@@ -576,7 +578,7 @@ HRESULT CBaseAP::CreateDXDevice(CString& _Error)
         m_pp.SwapEffect = D3DSWAPEFFECT_COPY;
         m_pp.Flags = D3DPRESENTFLAG_VIDEO;
         m_pp.BackBufferCount = 1;
-        CSize bbsize = GetBackBufferSize(m_ScreenSize, r.m_AdvRendSets.bDesktopSizeBackBuffer);
+        CSize bbsize = GetBackBufferSize(m_ScreenSize, largestScreen, r.m_AdvRendSets.bDesktopSizeBackBuffer);
         m_pp.BackBufferWidth  = bbsize.cx;
         m_pp.BackBufferHeight = bbsize.cy;
         m_BackbufferType = d3ddm.Format;
@@ -662,7 +664,7 @@ HRESULT CBaseAP::CreateDXDevice(CString& _Error)
 
     m_bicubicA = 0;
 
-    InitMaxSubtitleTextureSize(r.subPicQueueSettings.nMaxResX, r.subPicQueueSettings.nMaxResY);
+    InitMaxSubtitleTextureSize(r.subPicQueueSettings.nMaxResX, r.subPicQueueSettings.nMaxResY, largestScreen);
 
     if (m_pAllocator) {
         m_pAllocator->ChangeDevice(m_pD3DDev);
@@ -793,6 +795,8 @@ HRESULT CBaseAP::ResetDXDevice(CString& _Error)
     m_bCompositionEnabled = bCompositionEnabled != 0;
     m_bHighColorResolution = r.m_AdvRendSets.bEVRHighColorResolution;
 
+    CSize largestScreen = GetLargestScreenSize(CSize(2560, 1440));
+
     if (m_bIsFullscreen) { // Exclusive mode fullscreen
         m_pp.BackBufferWidth = d3ddm.Width;
         m_pp.BackBufferHeight = d3ddm.Height;
@@ -829,7 +833,7 @@ HRESULT CBaseAP::ResetDXDevice(CString& _Error)
         m_BackbufferType = m_pp.BackBufferFormat;
         m_DisplayType = d3ddm.Format;
     } else { // Windowed
-        CSize bbsize = GetBackBufferSize(m_ScreenSize, r.m_AdvRendSets.bDesktopSizeBackBuffer);
+        CSize bbsize = GetBackBufferSize(m_ScreenSize, largestScreen, r.m_AdvRendSets.bDesktopSizeBackBuffer);
         m_pp.BackBufferWidth  = bbsize.cx;
         m_pp.BackBufferHeight = bbsize.cy;
         m_BackbufferType = d3ddm.Format;
@@ -885,7 +889,7 @@ HRESULT CBaseAP::ResetDXDevice(CString& _Error)
         m_pSubPicQueue->GetSubPicProvider(&pSubPicProvider);
     }
 
-    InitMaxSubtitleTextureSize(r.subPicQueueSettings.nMaxResX, r.subPicQueueSettings.nMaxResY);
+    InitMaxSubtitleTextureSize(r.subPicQueueSettings.nMaxResX, r.subPicQueueSettings.nMaxResY, largestScreen);
 
     if (m_pAllocator) {
         m_pAllocator->ChangeDevice(m_pD3DDev);

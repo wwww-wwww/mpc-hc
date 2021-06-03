@@ -27,6 +27,7 @@
 #include "ISubPic.h"
 #include "CoordGeom.h"
 #include "SubRenderIntf.h"
+#include "ScreenUtil.h"
 
 class CSubPicAllocatorPresenterImpl
     : public CUnknown
@@ -62,7 +63,7 @@ protected:
     bool m_bDeviceResetRequested;
     bool m_bPendingResetDevice;
 
-    void InitMaxSubtitleTextureSize(int maxSizeX, int maxSizeY);
+    void InitMaxSubtitleTextureSize(int maxSizeX, int maxSizeY, CSize largestScreen);
 
     HRESULT AlphaBltSubPic(const CRect& windowRect,
                            const CRect& videoRect,

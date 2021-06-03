@@ -369,6 +369,7 @@ void CDX9SubPicAllocator::GetStats(int& nFree, int& nAlloc) const
 
 void CDX9SubPicAllocator::ClearCache()
 {
+    TRACE(_T("CDX9SubPicAllocator::ClearCache\n"));
     // Clear the allocator of any remaining subpics
     CAutoLock autoLock(&ms_surfaceQueueLock);
     for (POSITION pos = m_allocatedSurfaces.GetHeadPosition(); pos;) {
@@ -406,11 +407,24 @@ STDMETHODIMP CDX9SubPicAllocator::SetMaxTextureSize(SIZE maxTextureSize)
         }
         m_maxsize = maxTextureSize;
     }
-
+    TRACE(_T("CDX9SubPicAllocator::SetMaxTextureSize %dx%d\n"), m_maxsize.cx, m_maxsize.cy);
     return SetCurSize(m_maxsize);
 }
 
 // ISubPicAllocatorImpl
+
+LONG RoundUpToMultiple(LONG input, LONG multiple)
+{
+    if (multiple < 2 || input < 0 || multiple >= input) {
+        return input;
+    }
+    LONG r = input % multiple;
+    if (r == 0) {
+        return input;
+    } else {
+        return input + multiple - r;
+    }
+}
 
 bool CDX9SubPicAllocator::Alloc(bool fStatic, ISubPic** ppSubPic)
 {
@@ -419,8 +433,13 @@ bool CDX9SubPicAllocator::Alloc(bool fStatic, ISubPic** ppSubPic)
     }
 
     if (m_maxsize.cx <= 0 || m_maxsize.cy <= 0) {
+        TRACE(_T("CDX9SubPicAllocator::Alloc -> maxsize is zero\n"));
         return false;
     }
+
+    LONG x_r16 = RoundUpToMultiple(m_maxsize.cx, 16);
+    LONG y_r16 = RoundUpToMultiple(m_maxsize.cy, 16);
+    TRACE(_T("CDX9SubPicAllocator::Alloc (%dx%d -> %dx%d)\n"), m_maxsize.cx, m_maxsize.cy, x_r16, y_r16);
 
     CAutoLock cAutoLock(this);
 
@@ -437,11 +456,15 @@ bool CDX9SubPicAllocator::Alloc(bool fStatic, ISubPic** ppSubPic)
 
     if (!pSurface) {
         CComPtr<IDirect3DTexture9> pTexture;
-        if (FAILED(m_pD3DDev->CreateTexture(m_maxsize.cx, m_maxsize.cy, 1, 0, D3DFMT_A8R8G8B8, fStatic ? D3DPOOL_SYSTEMMEM : D3DPOOL_DEFAULT, &pTexture, nullptr))) {
+        HRESULT hr = m_pD3DDev->CreateTexture(x_r16, y_r16, 1, 0, D3DFMT_A8R8G8B8, fStatic ? D3DPOOL_SYSTEMMEM : D3DPOOL_DEFAULT, &pTexture, nullptr);
+        if (FAILED(hr)) {
+            TRACE(_T("CDX9SubPicAllocator::Alloc -> CreateTexture failed (%dx%d), hr=%x\n"), m_maxsize.cx, m_maxsize.cy, hr);
             return false;
         }
 
-        if (FAILED(pTexture->GetSurfaceLevel(0, &pSurface))) {
+        hr = pTexture->GetSurfaceLevel(0, &pSurface);
+        if (FAILED(hr)) {
+            TRACE(_T("CDX9SubPicAllocator::Alloc -> GetSurfaceLevel failed, hr=%x\n"), hr);
             return false;
         }
     }
@@ -450,6 +473,7 @@ bool CDX9SubPicAllocator::Alloc(bool fStatic, ISubPic** ppSubPic)
         *ppSubPic = DEBUG_NEW CDX9SubPic(pSurface, fStatic ? nullptr : this, m_bExternalRenderer);
     } catch (CMemoryException* e) {
         e->Delete();
+        TRACE(_T("CDX9SubPicAllocator::Alloc -> CDX9SubPic gave memory exception\n"));
         return false;
     }
 
