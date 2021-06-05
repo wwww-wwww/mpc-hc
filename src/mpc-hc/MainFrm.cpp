@@ -9285,11 +9285,18 @@ bool CMainFrame::SeekToFileChapter(int iChapter, bool bRelative /*= false*/)
         if (bRelative) {
             if (SUCCEEDED(m_pMS->GetCurrentPosition(&rt))) {
                 if (iChapter < 0) {
-                    // Go the previous chapter only if more than PREV_CHAP_THRESHOLD seconds
-                    // have passed since the beginning of the current chapter else restart it
+                    // Add a small threshold to jump back at least that amount of time
+                    // This is needed when rt is near start of current chapter
                     rt -= PREV_CHAP_THRESHOLD * 10000000;
                     iChapter = 0;
                     iChapter = m_pCB->ChapLookupPrevious(&rt, nullptr);
+                    // seek to start if there is no previous chapter
+                    if (iChapter == -1 && rt >= 0) {
+                        REFERENCE_TIME rtStart, rtStop;
+                        m_wndSeekBar.GetRange(rtStart, rtStop);
+                        DoSeekTo(rtStart, false);
+                        return true;
+                    }
                 } else {
                     iChapter = m_pCB->ChapLookupNext(&rt, nullptr);
                 }

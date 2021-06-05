@@ -457,30 +457,28 @@ STDMETHODIMP_(long) IDSMChapterBagImpl::ChapLookup(REFERENCE_TIME* prt, BSTR* pp
 STDMETHODIMP_(long) IDSMChapterBagImpl::ChapLookupPrevious(REFERENCE_TIME* prt, BSTR* ppName)
 {
     CheckPointer(prt, -1);
-    if (m_chapters.GetCount() < 2) {
+
+    size_t chapcount = m_chapters.GetCount();
+    if (chapcount < 1 || *prt < 0) {
         return -1;
     }
 
     size_t result = 0;
-
-    // assume first entry is best, find better match
-    for (size_t i = 1; i < m_chapters.GetCount(); ++i) {
-        if (*prt > m_chapters[i].rt) {
-            result = i;
-        } else {
-            break;
-        }
-    }
-    // validate first if it was best
-    if (result == 0 && *prt < m_chapters[result].rt) {
+    if (*prt < m_chapters[0].rt) {
         return -1;
+    } else {
+        for (size_t i = 1; i < chapcount; ++i) {
+            if (*prt > m_chapters[i].rt) {
+                result = i;
+            } else {
+                break;
+            }
+        }
     }
 
-    if (result != MAXSIZE_T) {
-        *prt = m_chapters[result].rt;
-        if (ppName) {
-            *ppName = m_chapters[result].name.AllocSysString();
-        }
+    *prt = m_chapters[result].rt;
+    if (ppName) {
+        *ppName = m_chapters[result].name.AllocSysString();
     }
 
     return (long)result;
@@ -489,29 +487,27 @@ STDMETHODIMP_(long) IDSMChapterBagImpl::ChapLookupPrevious(REFERENCE_TIME* prt, 
 STDMETHODIMP_(long) IDSMChapterBagImpl::ChapLookupNext(REFERENCE_TIME* prt, BSTR* ppName)
 {
     CheckPointer(prt, -1);
-    if (m_chapters.GetCount() < 2) {
+
+    size_t chapcount = m_chapters.GetCount();
+    if (chapcount < 1) {
         return -1;
     }
 
     size_t result = 0;
-
-    // assume first entry is best, find better match
-    for (size_t i = 1; i < m_chapters.GetCount(); ++i) {
-        if (*prt < m_chapters[i].rt) {
-            result = i;
-            break;
-        }
-    }
-    // validate first if it was best
-    if (result == 0 && *prt >= m_chapters[result].rt) {
+    if (*prt >= m_chapters[chapcount-1].rt) {
         return -1;
+    } else {
+        for (size_t i = 0; i < chapcount; ++i) {
+            if (*prt < m_chapters[i].rt) {
+                result = i;
+                break;
+            }
+        }
     }
 
-    if (result != MAXSIZE_T) {
-        *prt = m_chapters[result].rt;
-        if (ppName) {
-            *ppName = m_chapters[result].name.AllocSysString();
-        }
+    *prt = m_chapters[result].rt;
+    if (ppName) {
+        *ppName = m_chapters[result].name.AllocSysString();
     }
 
     return (long)result;
