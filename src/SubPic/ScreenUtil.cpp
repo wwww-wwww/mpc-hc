@@ -41,8 +41,10 @@ CSize GetLargestScreenSize(CSize fallback)
             monitor.GetMonitorRect(&rc);
             LONG w = rc.right - rc.left;
             LONG h = rc.bottom - rc.top;
-            if (w * h > result.cx * result.cy) {
+            if (w > result.cx) {
                 result.cx = w;
+            }
+            if (h > result.cy) {
                 result.cy = h;
             }
         }
@@ -52,6 +54,12 @@ CSize GetLargestScreenSize(CSize fallback)
                 ASSERT(FALSE);
                 return desktop;
             }
+        }
+    } else {
+        if (desktop.cx > 0 && desktop.cy > 0) {
+            return desktop;
+        } else {
+            return fallback;
         }
     }
 
