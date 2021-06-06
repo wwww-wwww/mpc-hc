@@ -2566,7 +2566,7 @@ void CAppSettings::CRecentFileAndURLList::SetSize(int nSize)
     }
 }
 
-void CAppSettings::CRecentFileListWithMoreInfo::Remove(int nIndex) {
+void CAppSettings::CRecentFileListWithMoreInfo::Remove(size_t nIndex) {
     if (nIndex >= 0 && nIndex < rfe_array.GetCount()) {
         rfe_array.RemoveAt(nIndex);
         rfe_array.FreeExtra();
@@ -2580,14 +2580,14 @@ void CAppSettings::CRecentFileListWithMoreInfo::Add(LPCTSTR fn) {
 }
 
 void CAppSettings::CRecentFileListWithMoreInfo::Add(RecentFileEntry r) {
-    if (m_maxSize <= 0 || r.fns.GetCount() < 1) {
+    if (r.fns.GetCount() < 1) {
         return;
     }
     if (CString(r.fns.GetHead()).MakeLower().Find(_T("@device:")) >= 0) {
         return;
     }
 
-    for (int i = 0; i < rfe_array.GetCount(); i++) {
+    for (size_t i = 0; i < rfe_array.GetCount(); i++) {
         if (r == rfe_array[i]) {
             Remove(i);
             break;
@@ -2603,14 +2603,14 @@ void CAppSettings::CRecentFileListWithMoreInfo::Add(RecentFileEntry r) {
 void CAppSettings::CRecentFileListWithMoreInfo::ReadList() {
     rfe_array.RemoveAll();
     auto pApp = AfxGetMyApp();
-    for (int i = 1; i <= m_maxSize; i++) {
+    for (size_t i = 1; i <= m_maxSize; i++) {
         CString t;
-        t.Format(_T("File%d"), i);
+        t.Format(_T("File%zu"), i);
         CString fn = pApp->GetProfileString(m_section, t);
         if (fn.IsEmpty()) break;
-        t.Format(_T("Title%d"), i);
+        t.Format(_T("Title%zu"), i);
         CString title = pApp->GetProfileString(m_section, t);
-        t.Format(_T("Cue%d"), i);
+        t.Format(_T("Cue%zu"), i);
         CString cue = pApp->GetProfileString(m_section, t);
         RecentFileEntry r;
         r.fns.AddTail(fn);
@@ -2618,14 +2618,14 @@ void CAppSettings::CRecentFileListWithMoreInfo::ReadList() {
         r.cue = cue;
         int k = 2;
         for (;; k++) {
-            t.Format(_T("File%d,%d"), i, k);
+            t.Format(_T("File%zu,%d"), i, k);
             CString ft = pApp->GetProfileString(m_section, t);
             if (ft.IsEmpty()) break;
             r.fns.AddTail(ft);
         }
         k = 1;
         for (;; k++) {
-            t.Format(_T("Sub%d,%d"), i, k);
+            t.Format(_T("Sub%zu,%d"), i, k);
             CString st = pApp->GetProfileString(m_section, t);
             if (st.IsEmpty()) break;
             r.subs.AddTail(st);
@@ -2675,7 +2675,7 @@ void CAppSettings::CRecentFileListWithMoreInfo::WriteList() {
     }
 }
 
-void CAppSettings::CRecentFileListWithMoreInfo::SetSize(int nSize) {
+void CAppSettings::CRecentFileListWithMoreInfo::SetSize(size_t nSize) {
     m_maxSize = nSize;
     if (rfe_array.GetCount() > m_maxSize) {
         rfe_array.SetCount(m_maxSize);

@@ -473,24 +473,24 @@ class CAppSettings
         CRecentFileListWithMoreInfo(LPCTSTR lpszSection, int nSize) : m_section(lpszSection), m_maxSize(nSize){}
 
         CAtlArray<RecentFileEntry> rfe_array;
-        int m_maxSize;
+        size_t m_maxSize;
         LPCTSTR m_section;
 
         int GetSize() {
             return (int)rfe_array.GetCount();
         }
 
-        RecentFileEntry& operator[](int nIndex) {
+        RecentFileEntry& operator[](size_t nIndex) {
             ASSERT(nIndex >= 0 && nIndex < rfe_array.GetCount());
             return rfe_array[nIndex];
         }
 
-        void Remove(int nIndex);
+        void Remove(size_t nIndex);
         void Add(LPCTSTR fn);
         void Add(RecentFileEntry r);
         void ReadList();
         void WriteList();
-        void SetSize(int nSize);
+        void SetSize(size_t nSize);
     };
 
 public:
