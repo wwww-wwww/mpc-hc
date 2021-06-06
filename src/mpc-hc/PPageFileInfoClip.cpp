@@ -58,44 +58,33 @@ CPPageFileInfoClip::CPPageFileInfoClip(CString path, IFilterGraph* pFG, IFileSou
         }
     }
 
-    bool bFound = false;
-    BeginEnumFilters(pFG, pEF, pBF) {
-        if (CComQIPtr<IAMMediaContent, &IID_IAMMediaContent> pAMMC = pBF) {
-            CComBSTR bstr;
-            if (SUCCEEDED(pAMMC->get_Title(&bstr)) && bstr.Length()) {
-                m_clip = bstr.m_str;
-                m_clip.Trim();
-                bFound = true;
-            }
-            bstr.Empty();
-            if (SUCCEEDED(pAMMC->get_AuthorName(&bstr)) && bstr.Length()) {
-                m_author = bstr.m_str;
-                bFound = true;
-            }
-            bstr.Empty();
-            if (SUCCEEDED(pAMMC->get_Copyright(&bstr)) && bstr.Length()) {
-                m_copyright = bstr.m_str;
-                bFound = true;
-            }
-            bstr.Empty();
-            if (SUCCEEDED(pAMMC->get_Rating(&bstr)) && bstr.Length()) {
-                m_rating = bstr.m_str;
-                bFound = true;
-            }
-            bstr.Empty();
-            if (SUCCEEDED(pAMMC->get_Description(&bstr)) && bstr.Length()) {
-                m_desc = bstr.m_str;
-                m_desc.Replace(L"\r\n", L"\n"); //Replace existing \r\n to \n
-                m_desc.Replace(L"\n", L"\r\n");
-                bFound = true;
-            }
-            bstr.Empty();
-            if (bFound) {
-                break;
-            }
+    CComQIPtr<IAMMediaContent, &IID_IAMMediaContent> pAMMC = pFSF;
+    if (pAMMC) {
+        CComBSTR bstr;
+        if (SUCCEEDED(pAMMC->get_Title(&bstr)) && bstr.Length()) {
+            m_clip = bstr.m_str;
+            m_clip.Trim();
         }
+        bstr.Empty();
+        if (SUCCEEDED(pAMMC->get_AuthorName(&bstr)) && bstr.Length()) {
+            m_author = bstr.m_str;
+        }
+        bstr.Empty();
+        if (SUCCEEDED(pAMMC->get_Copyright(&bstr)) && bstr.Length()) {
+            m_copyright = bstr.m_str;
+        }
+        bstr.Empty();
+        if (SUCCEEDED(pAMMC->get_Rating(&bstr)) && bstr.Length()) {
+            m_rating = bstr.m_str;
+        }
+        bstr.Empty();
+        if (SUCCEEDED(pAMMC->get_Description(&bstr)) && bstr.Length()) {
+            m_desc = bstr.m_str;
+            m_desc.Replace(L"\r\n", L"\n"); //Replace existing \r\n to \n
+            m_desc.Replace(L"\n", L"\r\n");
+        }
+        bstr.Empty();
     }
-    EndEnumFilters;
 }
 
 CPPageFileInfoClip::~CPPageFileInfoClip()

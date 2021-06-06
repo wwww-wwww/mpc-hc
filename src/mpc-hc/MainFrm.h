@@ -46,6 +46,8 @@
 #include "VMROSD.h"
 #include "CMPCThemeMenu.h"
 #include "../SubPic/MemSubPic.h"
+#include <initguid.h>
+#include <qnetwork.h>
 
 #define AfxGetMainFrame() dynamic_cast<CMainFrame*>(AfxGetMainWnd())
 
@@ -231,6 +233,7 @@ private:
     CComQIPtr<IQualProp, &IID_IQualProp> m_pQP;
     CComQIPtr<IBufferInfo> m_pBI;
     CComQIPtr<IAMOpenProgress> m_pAMOP;
+    CComQIPtr<IAMMediaContent, &IID_IAMMediaContent> m_pAMMC;
     // SmarkSeek
     CComPtr<IGraphBuilder2>         m_pGB_preview;
     CComQIPtr<IMediaControl>        m_pMC_preview;
