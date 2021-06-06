@@ -2355,7 +2355,9 @@ void CMainFrame::OnTimer(UINT_PTR nIDEvent)
             break;
         case TIMER_DELAYEDSEEK:
             KillTimer(TIMER_DELAYEDSEEK);
-            SeekTo(queuedSeek.rtPos, queuedSeek.bShowOSD);
+            if (queuedSeek.seekTime > 0) {
+                SeekTo(queuedSeek.rtPos, queuedSeek.bShowOSD);
+            }
             break;
         default:
             if (nIDEvent >= TIMER_ONETIME_START && nIDEvent <= TIMER_ONETIME_END) {
@@ -8239,10 +8241,8 @@ void CMainFrame::SetTimersPlay()
 
 void CMainFrame::KillTimerDelayedSeek()
 {
-    if (queuedSeek.seekTime > 0) {
-        KillTimer(TIMER_DELAYEDSEEK);
-        queuedSeek = { 0, 0, false };
-    }
+    KillTimer(TIMER_DELAYEDSEEK);
+    queuedSeek = { 0, 0, false };
 }
 
 void CMainFrame::KillTimersStop()
