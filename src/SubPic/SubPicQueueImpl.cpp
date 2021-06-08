@@ -803,7 +803,9 @@ STDMETHODIMP_(bool) CSubPicQueueNoThread::LookupSubPic(REFERENCE_TIME rtNow, boo
                             // Ensure the previously allocated subpic is big enough to hold the subtitle to be rendered
                             SIZE maxSize = {0L,0L};
                             bAllocSubPic = FAILED(pSubPic->GetMaxSize(&maxSize)) || maxSize.cx < maxTextureSize.cx || maxSize.cy < maxTextureSize.cy;
-                            TRACE(_T("AllocSubPic required: size=%dx%d maxsize=%dx%d\n"), maxSize.cx, maxSize.cy, maxTextureSize.cx, maxTextureSize.cy);
+                            if (bAllocSubPic) {
+                                TRACE(_T("AllocSubPic required: maxSize=%dx%d maxTextureSize=%dx%d\n"), maxSize.cx, maxSize.cy, maxTextureSize.cx, maxTextureSize.cy);
+                            }
                         }
                     }
 
