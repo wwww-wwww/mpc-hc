@@ -1452,12 +1452,23 @@ BOOL WINAPI Mine_DeviceIoControl(HANDLE hDevice, DWORD dwIoControlCode, LPVOID l
     BOOL ret = Real_DeviceIoControl(hDevice, dwIoControlCode, lpInBuffer, nInBufferSize, lpOutBuffer, nOutBufferSize, lpBytesReturned, lpOverlapped);
     if (IOCTL_DVD_GET_REGION == dwIoControlCode && lpOutBuffer && nOutBufferSize == sizeof(DVD_REGION)) {
         DVD_REGION* pDVDRegion = (DVD_REGION*)lpOutBuffer;
-        pDVDRegion->RegionData = 0xff;
-        if (*lpBytesReturned == 0) {
-            pDVDRegion->SystemRegion = 0;
-            *lpBytesReturned = 4;
+
+        if (pDVDRegion->RegionData > 0) {
+            UCHAR disc_regions = ~pDVDRegion->RegionData;
+            if ((disc_regions & pDVDRegion->SystemRegion) == 0) {
+                if      (disc_regions & 1)   pDVDRegion->SystemRegion = 1;
+                else if (disc_regions & 2)   pDVDRegion->SystemRegion = 2;
+                else if (disc_regions & 4)   pDVDRegion->SystemRegion = 4;
+                else if (disc_regions & 8)   pDVDRegion->SystemRegion = 8;
+                else if (disc_regions & 16)  pDVDRegion->SystemRegion = 16;
+                else if (disc_regions & 32)  pDVDRegion->SystemRegion = 32;
+                else if (disc_regions & 128) pDVDRegion->SystemRegion = 128;
+                ret = true;
+            }
+        } else if (pDVDRegion->SystemRegion == 0) {
+            pDVDRegion->SystemRegion = 1;
+            ret = true;
         }
-        ret = true;
     }
     return ret;
 }
