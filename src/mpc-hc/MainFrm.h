@@ -48,6 +48,7 @@
 #include "../SubPic/MemSubPic.h"
 #include <initguid.h>
 #include <qnetwork.h>
+#include "../DSUtil/FontInstaller.h"
 
 #define AfxGetMainFrame() dynamic_cast<CMainFrame*>(AfxGetMainWnd())
 
@@ -284,6 +285,9 @@ private:
 
     void SetVolumeBoost(UINT nAudioBoost);
     void SetBalance(int balance);
+	
+	// temp fonts loader
+	CFontInstaller m_FontInstaller;
 
     // subtitles
 

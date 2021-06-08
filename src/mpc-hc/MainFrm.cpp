@@ -13942,6 +13942,8 @@ void CMainFrame::CloseMediaPrivate()
 
     m_VidDispName.Empty();
     m_AudDispName.Empty();
+	
+	m_FontInstaller.UninstallFonts();
 }
 
 bool CMainFrame::SearchInDir(bool bDirForward, bool bLoop /*= false*/)
@@ -15574,6 +15576,33 @@ bool CMainFrame::LoadSubtitle(CString fn, SubtitleInput* pSubInput /*= nullptr*/
         SubtitleInput subInput(pSubStream);
         m_ExternalSubstreams.push_back(pSubStream);
         m_pSubStreams.AddTail(subInput);
+
+        // Temporarily load fonts from 'Fonts' folder - Begin
+        CString path = PathUtils::DirName(fn) + L"\\fonts\\";
+
+        if (::PathIsDirectory(path)) {
+            WIN32_FIND_DATA fd = {0};
+            HANDLE hFind;
+            
+            hFind = FindFirstFile(path + L"*.ttf", &fd);
+            if (hFind != INVALID_HANDLE_VALUE) {
+                do {
+                    m_FontInstaller.InstallTempFontFile(path + fd.cFileName);
+                } while (FindNextFile(hFind, &fd));
+                
+                FindClose(hFind);
+            }
+
+            hFind = FindFirstFile(path + L"*.otf", &fd);
+            if (hFind != INVALID_HANDLE_VALUE) {
+                do {
+                    m_FontInstaller.InstallTempFontFile(path + fd.cFileName);
+                } while (FindNextFile(hFind, &fd));
+                
+                FindClose(hFind);
+            }
+        }
+        // Temporarily load fonts from 'Fonts' folder - End
 
         if (!m_posFirstExtSub) {
             m_posFirstExtSub = m_pSubStreams.GetTailPosition();
