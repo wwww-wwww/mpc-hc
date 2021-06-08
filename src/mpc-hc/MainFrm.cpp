@@ -464,8 +464,8 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWnd)
     ON_UPDATE_COMMAND_UI(ID_PLAY_PAUSE, OnUpdatePlayPauseStop)
     ON_UPDATE_COMMAND_UI(ID_PLAY_PLAYPAUSE, OnUpdatePlayPauseStop)
     ON_UPDATE_COMMAND_UI(ID_PLAY_STOP, OnUpdatePlayPauseStop)
-    ON_COMMAND_RANGE(ID_PLAY_FRAMESTEP, ID_PLAY_FRAMESTEPCANCEL, OnPlayFramestep)
-    ON_UPDATE_COMMAND_UI_RANGE(ID_PLAY_FRAMESTEP, ID_PLAY_FRAMESTEPCANCEL, OnUpdatePlayFramestep)
+    ON_COMMAND_RANGE(ID_PLAY_FRAMESTEP, ID_PLAY_FRAMESTEP_BACK, OnPlayFramestep)
+    ON_UPDATE_COMMAND_UI(ID_PLAY_FRAMESTEP, OnUpdatePlayFramestep)
     ON_COMMAND_RANGE(ID_PLAY_SEEKBACKWARDSMALL, ID_PLAY_SEEKFORWARDLARGE, OnPlaySeek)
     ON_COMMAND(ID_PLAY_SEEKSET, OnPlaySeekSet)
     ON_COMMAND_RANGE(ID_PLAY_SEEKKEYBACKWARD, ID_PLAY_SEEKKEYFORWARD, OnPlaySeekKey)
@@ -2685,8 +2685,6 @@ LRESULT CMainFrame::OnGraphNotify(WPARAM wParam, LPARAM lParam)
             case EC_STEP_COMPLETE:
                 if (m_fFrameSteppingActive) {
                     m_nStepForwardCount++;
-                    m_fFrameSteppingActive = false;
-                    m_pBA->put_Volume(m_nVolumeBeforeFrameStepping);
                 }
                 break;
             case EC_DEVICE_LOST:
@@ -8064,14 +8062,14 @@ void CMainFrame::OnUpdatePlayPauseStop(CCmdUI* pCmdUI)
 
 void CMainFrame::OnPlayFramestep(UINT nID)
 {
-    if (!m_pFS) {
+    if (!m_pFS && !m_pMS) {
         return;
     }
 
     KillTimerDelayedSeek();
 
     m_OSD.EnableShowMessage(false);
-    if (nID == ID_PLAY_FRAMESTEP) {
+    if (nID == ID_PLAY_FRAMESTEP && m_pFS) {
         if (GetMediaState() != State_Paused && !queue_ffdshow_support) {
             SendMessage(WM_COMMAND, ID_PLAY_PAUSE);
         }
@@ -8087,13 +8085,14 @@ void CMainFrame::OnPlayFramestep(UINT nID)
             }
         }
 
-        m_fFrameSteppingActive = true;
-
-        m_nVolumeBeforeFrameStepping = m_wndToolBar.Volume;
-        m_pBA->put_Volume(-10000);
+        if (!m_fFrameSteppingActive) {
+            m_fFrameSteppingActive = true;
+            m_nVolumeBeforeFrameStepping = m_wndToolBar.Volume;
+            m_pBA->put_Volume(-10000);
+        }
 
         m_pFS->Step(1, nullptr);
-    } else if (S_OK == m_pMS->IsFormatSupported(&TIME_FORMAT_FRAME)) {
+    } else if (m_pMS && (m_nStepForwardCount == 0) && (S_OK == m_pMS->IsFormatSupported(&TIME_FORMAT_FRAME))) {
         if (GetMediaState() != State_Paused) {
             SendMessage(WM_COMMAND, ID_PLAY_PAUSE);
         }
@@ -8108,28 +8107,32 @@ void CMainFrame::OnPlayFramestep(UINT nID)
             }
             m_pMS->SetTimeFormat(&TIME_FORMAT_MEDIA_TIME);
         }
-    } else { //if (s.iDSVideoRendererType != VIDRNDT_DS_VMR9WINDOWED && s.iDSVideoRendererType != VIDRNDT_DS_VMR9RENDERLESS)
+    } else { // nID == ID_PLAY_FRAMESTEP_BACK
         if (GetMediaState() != State_Paused) {
             SendMessage(WM_COMMAND, ID_PLAY_PAUSE);
         }
 
-        const REFERENCE_TIME rtAvgTimePerFrame = std::llround(GetAvgTimePerFrame() * 10000000i64);
+        const REFERENCE_TIME rtAvgTimePerFrame = std::llround(GetAvgTimePerFrame() * 10000000LL);
         REFERENCE_TIME rtCurPos = 0;
-
-        // Exit of framestep forward : calculate the initial position
-        if (m_nStepForwardCount) {
+        
+        if (m_nStepForwardCount) { // Exit of framestep forward, calculate current position
             m_pFS->CancelStep();
             rtCurPos = m_rtStepForwardStart + m_nStepForwardCount * rtAvgTimePerFrame;
             m_nStepForwardCount = 0;
+            rtCurPos -= rtAvgTimePerFrame;
         } else if (GetPlaybackMode() == PM_DVD) {
-            // IMediaSeeking doesn't work well with DVD Navigator
+            // IMediaSeeking doesn't work properly with DVD Navigator
+            // Unfortunately, IDvdInfo2::GetCurrentLocation is inaccurate as well and only updates position approx. once per 500ms
+            // Due to inaccurate start position value, framestep backwards simply doesn't work well with DVDs.
+            // Seeking has same accuracy problem. Best we can do is jump back 500ms to at least get to a different frame.
             OnTimer(TIMER_STREAMPOSPOLLER);
             rtCurPos = m_wndSeekBar.GetPos();
+            rtCurPos -= 5000000LL;
         } else {
             m_pMS->GetCurrentPosition(&rtCurPos);
+            rtCurPos -= rtAvgTimePerFrame;
         }
 
-        rtCurPos += (nID == ID_PLAY_FRAMESTEP) ? rtAvgTimePerFrame : -rtAvgTimePerFrame;
         DoSeekTo(rtCurPos, false);
     }
     m_OSD.EnableShowMessage();
@@ -8139,17 +8142,13 @@ void CMainFrame::OnUpdatePlayFramestep(CCmdUI* pCmdUI)
 {
     bool fEnable = false;
 
-    if (GetLoadState() == MLS::LOADED && !m_fAudioOnly && !m_fLiveWM
-            && (GetPlaybackMode() == PM_FILE || (GetPlaybackMode() == PM_DVD && m_iDVDDomain == DVD_DOMAIN_Title))) {
-        if (m_pFS && (S_OK == m_pMS->IsFormatSupported(&TIME_FORMAT_FRAME))) {
-            fEnable = true;
-        } else if (pCmdUI->m_nID == ID_PLAY_FRAMESTEP) {
-            fEnable = true;
-        } else if (pCmdUI->m_nID == ID_PLAY_FRAMESTEPCANCEL && m_pFS && m_pFS->CanStep(0, nullptr) == S_OK) {
-            fEnable = true;
+    if (pCmdUI->m_nID == ID_PLAY_FRAMESTEP) {
+        if (!m_fAudioOnly && !m_fLiveWM && GetLoadState() == MLS::LOADED && (GetPlaybackMode() == PM_FILE || (GetPlaybackMode() == PM_DVD && m_iDVDDomain == DVD_DOMAIN_Title))) {
+            if (m_pFS || m_pMS && (S_OK == m_pMS->IsFormatSupported(&TIME_FORMAT_FRAME))) {
+                fEnable = true;
+            }
         }
     }
-
     pCmdUI->Enable(fEnable);
 }
 

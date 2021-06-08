@@ -486,7 +486,7 @@ static constexpr wmcmd_base default_wmcmds[] = {
     { ID_PLAY_PAUSE,                        0, FVIRTKEY | FNOINVERT,                    IDS_AG_PAUSE,       APPCOMMAND_MEDIA_PAUSE },
     { ID_PLAY_STOP,             VK_OEM_PERIOD, FVIRTKEY | FNOINVERT,                    IDS_AG_STOP,        APPCOMMAND_MEDIA_STOP },
     { ID_PLAY_FRAMESTEP,             VK_RIGHT, FVIRTKEY | FCONTROL | FNOINVERT,         IDS_AG_FRAMESTEP },
-    { ID_PLAY_FRAMESTEPCANCEL,        VK_LEFT, FVIRTKEY | FCONTROL | FNOINVERT,         IDS_MPLAYERC_16 },
+    { ID_PLAY_FRAMESTEP_BACK,         VK_LEFT, FVIRTKEY | FCONTROL | FNOINVERT,         IDS_MPLAYERC_16 },
     { ID_NAVIGATE_GOTO,                   'G', FVIRTKEY | FCONTROL | FNOINVERT,         IDS_AG_GO_TO },
     { ID_PLAY_INCRATE,                  VK_UP, FVIRTKEY | FCONTROL | FNOINVERT,         IDS_AG_INCREASE_RATE },
     { ID_PLAY_DECRATE,                VK_DOWN, FVIRTKEY | FCONTROL | FNOINVERT,         IDS_AG_DECREASE_RATE },

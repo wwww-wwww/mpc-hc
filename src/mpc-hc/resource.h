@@ -165,7 +165,7 @@
 #define IDS_SHADERNOTES                 889
 #define ID_PLAY_STOP                    890
 #define ID_PLAY_FRAMESTEP               891
-#define ID_PLAY_FRAMESTEPCANCEL         892
+#define ID_PLAY_FRAMESTEP_BACK          892
 #define ID_NAVIGATE_GOTO                893
 #define ID_PLAY_DECRATE                 894
 #define ID_PLAY_INCRATE                 895
