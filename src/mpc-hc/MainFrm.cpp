@@ -12089,14 +12089,18 @@ void CMainFrame::OpenFile(OpenFileData* pOFD)
             if (!m_pFSF) {
                 m_pFSF = pBF;
                 if (m_pFSF && m_bUseSeekPreview) {
-                    CLSID clsid2;
-                    if (S_OK == pBF->GetClassID(&clsid2) && clsid2 == __uuidof(CRARFileSource)) {
-                        WCHAR* pFN = nullptr;
-                        AM_MEDIA_TYPE mt;
-                        if (SUCCEEDED(m_pFSF->GetCurFile(&pFN, &mt)) && pFN && *pFN) {
-                            isRFS = true;
-                            entryRFS = pFN;
-                            CoTaskMemFree(pFN);
+                    CLSID clsid;
+                    if (S_OK == pBF->GetClassID(&clsid)) {
+                        if (clsid == CLSID_StillVideo) {
+                            m_bUseSeekPreview = false;
+                        } else if (clsid == __uuidof(CRARFileSource)) {
+                            WCHAR* pFN = nullptr;
+                            AM_MEDIA_TYPE mt;
+                            if (SUCCEEDED(m_pFSF->GetCurFile(&pFN, &mt)) && pFN && *pFN) {
+                                isRFS = true;
+                                entryRFS = pFN;
+                                CoTaskMemFree(pFN);
+                            }
                         }
                     }
                 }
@@ -12118,7 +12122,19 @@ void CMainFrame::OpenFile(OpenFileData* pOFD)
                 m_pFSF = m_pGB;
             }
 
-            if (m_bUseSeekPreview && bIsVideo) {
+            if (!bIsVideo) {
+                m_bUseSeekPreview = false;
+            }
+            if (m_bUseSeekPreview) {
+                // don't use preview for images
+                CPath path(fn);
+                CString ext(path.GetExtension().MakeLower());
+                if (ext == _T(".jpg") || ext == _T(".jpeg") || ext == _T(".png") || ext == _T(".gif") || ext == _T(".bmp")) {
+                    m_bUseSeekPreview = false;
+                }
+            }
+
+            if (m_bUseSeekPreview) {
                 HRESULT previewHR;
                 if (isRFS) {
                     CComPtr<CFGManager> fgm = static_cast<CFGManager*>(m_pGB_preview.p);

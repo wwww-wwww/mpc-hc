@@ -837,19 +837,20 @@ void CPlayerSeekBar::OnMouseMove(UINT nFlags, CPoint point)
         UpdateTooltip(point);
     }
 
-    if (m_pMainFrame->CanPreviewUse()) {
+    if (m_bHasDuration && m_pMainFrame->CanPreviewUse()) {
         UpdateTooltip(point);
-    }
 
-    checkHover(point);
-    const OAFilterState fs = m_pMainFrame->GetMediaState();
-    if (fs != -1) {
-        if (m_pMainFrame->CanPreviewUse()) {
-            UpdateToolTipPosition(point);
-            PreviewWindowShow(point);            
+        checkHover(point);
+
+        const OAFilterState fs = m_pMainFrame->GetMediaState();
+        if (fs != -1) {
+            if (m_pMainFrame->CanPreviewUse()) {
+                UpdateToolTipPosition(point);
+                PreviewWindowShow(point);
+            }
+        } else {
+            m_pMainFrame->PreviewWindowHide();
         }
-    } else {
-        m_pMainFrame->PreviewWindowHide();
     }
 }
 
