@@ -2595,6 +2595,13 @@ bool CMainFrame::CheckABRepeat(REFERENCE_TIME& aPos, REFERENCE_TIME& bPos, bool&
     return false;
 }
 
+bool CMainFrame::IsImageFile(CString fn)
+{
+    CPath path(fn);
+    CString ext(path.GetExtension().MakeLower());
+    return (ext == _T(".jpg") || ext == _T(".jpeg") || ext == _T(".png") || ext == _T(".gif") || ext == _T(".bmp") || ext == _T(".tiff") || ext == _T(".jpe") || ext == _T(".tga"));
+}
+
 //
 // graph event EC_COMPLETE handler
 //
@@ -2630,10 +2637,12 @@ void CMainFrame::GraphEventComplete()
             if (GetMediaState() == State_Stopped) {
                 SendMessage(WM_COMMAND, ID_PLAY_PLAY);
             } else {
-                REFERENCE_TIME rtPos = 0;
-                m_pMS->SetPositions(&rtPos, AM_SEEKING_AbsolutePositioning, nullptr, AM_SEEKING_NoPositioning);
-                if (GetMediaState() == State_Paused) {
-                    SendMessage(WM_COMMAND, ID_PLAY_PLAY);
+                if (!IsImageFile(lastOpenFile)) { // repeating still image is pointless and can cause player UI to freeze
+                    REFERENCE_TIME rtPos = 0;
+                    m_pMS->SetPositions(&rtPos, AM_SEEKING_AbsolutePositioning, nullptr, AM_SEEKING_NoPositioning);
+                    if (GetMediaState() == State_Paused) {
+                        SendMessage(WM_COMMAND, ID_PLAY_PLAY);
+                    }
                 }
             }
         }
@@ -12011,7 +12020,10 @@ void CMainFrame::OpenFile(OpenFileData* pOFD)
         if (fn.IsEmpty() && !bMainFile) {
             break;
         }
-        lastOpenFile = fn; //this is only used for skipping to other files, so it may not have been "open"
+        if (bMainFile) {
+            lastOpenFile = fn; //this is only used for skipping to other files, so it may not have been "open"
+        }
+
         HRESULT hr = m_pGB->RenderFile(CStringW(fn), nullptr);
 
         if (FAILED(hr)) {
@@ -12125,13 +12137,9 @@ void CMainFrame::OpenFile(OpenFileData* pOFD)
             if (!bIsVideo) {
                 m_bUseSeekPreview = false;
             }
-            if (m_bUseSeekPreview) {
+            if (m_bUseSeekPreview && IsImageFile(fn)) {
                 // don't use preview for images
-                CPath path(fn);
-                CString ext(path.GetExtension().MakeLower());
-                if (ext == _T(".jpg") || ext == _T(".jpeg") || ext == _T(".png") || ext == _T(".gif") || ext == _T(".bmp")) {
-                    m_bUseSeekPreview = false;
-                }
+                m_bUseSeekPreview = false;
             }
 
             if (m_bUseSeekPreview) {
