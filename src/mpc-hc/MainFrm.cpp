@@ -12022,15 +12022,15 @@ void CMainFrame::OpenFile(OpenFileData* pOFD)
             break;
         }
         if (bMainFile) {
-            lastOpenFile = fn; //this is only used for skipping to other files, so it may not have been "open"
+            // store info, this is used for skipping to next/previous file
+            pOFD->title = fn;
+            lastOpenFile = fn;
         }
 
         HRESULT hr = m_pGB->RenderFile(CStringW(fn), nullptr);
 
         if (FAILED(hr)) {
             if (bMainFile) {
-                pOFD->title = fn; //we can use this later for skipping to the next file
-
                 if (s.fReportFailedPins) {
                     ShowMediaTypesDialog();
                 }
@@ -12205,7 +12205,6 @@ void CMainFrame::OpenFile(OpenFileData* pOFD)
                         if (SUCCEEDED(m_pAMMC->get_Title(&bstr)) && bstr.Length()) {
                             title = bstr.m_str;
                             title.Trim();
-                            break;
                         }
                     }
                     if (!title.IsEmpty() && !IsNameSimilar(title, PathUtils::StripPathOrUrl(fn))) r.title = title;
@@ -12237,10 +12236,6 @@ void CMainFrame::OpenFile(OpenFileData* pOFD)
                 pMRU->WriteList();
                 SHAddToRecentDocs(SHARD_PATH, fn);
             }
-        }
-
-        if (bMainFile) {
-            pOFD->title = fn;
         }
 
         bMainFile = false;
@@ -13974,27 +13969,27 @@ bool CMainFrame::SearchInDir(bool bDirForward, bool bLoop /*= false*/)
 {
     ASSERT(GetPlaybackMode() == PM_FILE || CanSkipFromClosedFile());
 
-    CString title;
+    CString filename;
 
     auto pFileData = dynamic_cast<OpenFileData*>(m_lastOMD.m_p);
     if (!pFileData) {
         if (CanSkipFromClosedFile()) {
             if (m_wndPlaylistBar.GetCount() == 1) {
-                title = m_wndPlaylistBar.m_pl.GetHead().m_fns.GetHead();
+                filename = m_wndPlaylistBar.m_pl.GetHead().m_fns.GetHead();
             } else {
-                title = lastOpenFile;
+                filename = lastOpenFile;
             }
         } else {
             ASSERT(FALSE);
             return false;
         }
     } else {
-        title = pFileData->title;
+        filename = pFileData->title;
     }
 
     std::set<CString, CStringUtils::LogicalLess> files;
     const CMediaFormats& mf = AfxGetAppSettings().m_Formats;
-    CString mask = title.Left(title.ReverseFind(_T('\\')) + 1) + _T("*.*");
+    CString mask = filename.Left(filename.ReverseFind(_T('\\')) + 1) + _T("*.*");
     CFileFind finder;
     BOOL bHasNext = finder.FindFile(mask);
 
@@ -14018,7 +14013,7 @@ bool CMainFrame::SearchInDir(bool bDirForward, bool bLoop /*= false*/)
 
     // We make sure that the currently opened file is added to the list
     // even if it's of an unknown format.
-    auto current = files.insert(title).first;
+    auto current = files.insert(filename).first;
 
     if (bDirForward) {
         current++;
