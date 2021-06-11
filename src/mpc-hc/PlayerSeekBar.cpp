@@ -830,8 +830,8 @@ void CPlayerSeekBar::OnMouseMove(UINT nFlags, CPoint point)
 
     if (DraggingThumb() && (nFlags & MK_LBUTTON)) {
         MoveThumb(point);
-        // update video position if seekbar moved at least 5 sec or 1/30th of duration
-        CheckScrollDistance(point, std::min(50000000LL, m_rtStop / 30));
+        // update video position if seekbar moved at least 500ms or 1/30th of duration
+        CheckScrollDistance(point, std::min(5000000LL, m_rtStop / 30));
     }
     if (AfxGetAppSettings().fUseTimeTooltip) {
         UpdateTooltip(point);
