@@ -738,9 +738,26 @@ HRESULT CFGManager::Connect(IPin* pPinOut, IPin* pPinIn, bool bContinueRender)
             }
         }
 
+        CComPtr<IBaseFilter> pUpstreamFilter = GetFilterFromPin(pPinOut);
+        CLSID clsid_upstream = GetCLSID(pUpstreamFilter);
+
         pos = fl.GetHeadPosition();
         while (pos) {
             CFGFilter* pFGF = fl.GetNext(pos);
+
+            // avoid pointless connection attempts
+            CLSID candidate = pFGF->GetCLSID();
+            if (clsid_upstream == candidate) {
+                continue;
+            } else if (clsid_upstream == __uuidof(CAudioSwitcherFilter)) {
+                if (candidate == CLSID_VSFilter || candidate == GUID_LAVAudio || candidate == CLSID_RDPDShowRedirectionFilter) {
+                    continue;
+                }
+            } else if (candidate == CLSID_VSFilter) {
+                if (clsid_upstream == GUID_LAVAudio) {
+                    continue;
+                }
+            }
 
 #if 0
             // Checks if madVR is already in the graph to avoid two instances at the same time

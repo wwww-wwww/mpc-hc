@@ -570,8 +570,13 @@ void CFGFilterList::Insert(CFGFilter* pFGF, int group, bool exactmatch, bool aut
 {
     bool bInsert = true;
 
-    TRACE(_T("FGM: Inserting %d %d %016I64x '%s' --> "), group, exactmatch, pFGF->GetMerit(),
-          pFGF->GetName().IsEmpty() ? CStringFromGUID(pFGF->GetCLSID()).GetString() : CString(pFGF->GetName()).GetString());
+#if DEBUG
+    bool do_log = pFGF->GetMerit() != 0x2000000000;
+    if (do_log) {
+        TRACE(_T("FGM: Inserting %d %d %016I64x '%s' --> "), group, exactmatch, pFGF->GetMerit(),
+            pFGF->GetName().IsEmpty() ? CStringFromGUID(pFGF->GetCLSID()).GetString() : CString(pFGF->GetName()).GetString());
+    }
+#endif
 
     CFGFilterRegistry* pFGFR = dynamic_cast<CFGFilterRegistry*>(pFGF);
 
@@ -580,21 +585,25 @@ void CFGFilterList::Insert(CFGFilter* pFGF, int group, bool exactmatch, bool aut
         filter_t& f = m_filters.GetNext(pos);
 
         if (pFGF == f.pFGF) {
-            TRACE(_T("Rejected (exact duplicate)\n"));
+            //TRACE(_T("Rejected (exact duplicate)\n"));
             bInsert = false;
             break;
         }
 
         if (pFGF->GetCLSID() != GUID_NULL && pFGF->GetCLSID() == f.pFGF->GetCLSID()) {
             if (group == f.group && f.pFGF->GetMerit() == MERIT64_DO_NOT_USE) {
-                TRACE(_T("Rejected (same filter with merit DO_NOT_USE already in the list)\n"));
+                //TRACE(_T("Rejected (same filter with merit DO_NOT_USE already in the list)\n"));
+                bInsert = false;
+                break;
+            }
+            if (pFGF->GetCLSID() == CLSID_VSFilter && f.pFGF->GetMerit() > pFGF->GetMerit()) {
                 bInsert = false;
                 break;
             }
             if (f.pFGF->GetCLSID() == CLSID_AsyncReader || f.pFGF->GetCLSID() == CLSID_URLReader) {
                 if (pFGF->GetMerit() == f.pFGF->GetMerit()) {
                     // to avoid duplicates with different group value
-                    TRACE(_T("Rejected (same source filter already in list)\n"));
+                    //TRACE(_T("Rejected (same source filter already in list)\n"));
                     bInsert = false;
                     break;
                 }
@@ -607,16 +616,21 @@ void CFGFilterList::Insert(CFGFilter* pFGF, int group, bool exactmatch, bool aut
 
         if (CFGFilterRegistry* pFGFR2 = dynamic_cast<CFGFilterRegistry*>(f.pFGF)) {
             if (pFGFR && pFGFR->GetMoniker() && pFGFR2->GetMoniker() && S_OK == pFGFR->GetMoniker()->IsEqual(pFGFR2->GetMoniker())) {
-                TRACE(_T("Rejected (duplicated moniker)\n"));
+                //TRACE(_T("Rejected (duplicated moniker)\n"));
                 bInsert = false;
                 break;
             }
         }
     }
 
-    if (bInsert) {
-        TRACE(_T("Success\n"));
+#if DEBUG
+    if (do_log) {
+        if (bInsert) TRACE(_T("Success\n"));
+        else         TRACE(_T("Fail\n"));
+    }
+#endif
 
+    if (bInsert) {
         filter_t f = {(int)m_filters.GetCount(), pFGF, group, exactmatch, autodelete};
         m_filters.AddTail(f);
 
@@ -641,17 +655,16 @@ POSITION CFGFilterList::GetHeadPosition()
                 m_sortedfilters.AddTail(sort[i].pFGF);
             }
         }
-    }
 
 #ifdef _DEBUG
-    TRACE(_T("FGM: Sorting filters\n"));
-
-    POSITION pos = m_sortedfilters.GetHeadPosition();
-    while (pos) {
-        CFGFilter* pFGF = m_sortedfilters.GetNext(pos);
-        TRACE(_T("FGM: - %016I64x '%s'\n"), pFGF->GetMerit(), pFGF->GetName().IsEmpty() ? CStringFromGUID(pFGF->GetCLSID()).GetString() : CString(pFGF->GetName()).GetString());
-    }
+        TRACE(_T("FGM: Sorting filters\n"));
+        pos = m_sortedfilters.GetHeadPosition();
+        while (pos) {
+            CFGFilter* pFGF = m_sortedfilters.GetNext(pos);
+            TRACE(_T("FGM: - %016I64x '%s'\n"), pFGF->GetMerit(), pFGF->GetName().IsEmpty() ? CStringFromGUID(pFGF->GetCLSID()).GetString() : CString(pFGF->GetName()).GetString());
+        }
 #endif
+    }
 
     return m_sortedfilters.GetHeadPosition();
 }
