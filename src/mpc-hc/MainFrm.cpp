@@ -4486,20 +4486,25 @@ BOOL CMainFrame::OnCopyData(CWnd* pWnd, COPYDATASTRUCT* pCDS)
                 //SendMessage(WM_COMMAND, ID_FILE_CLOSEMEDIA);
                 fSetForegroundWindow = true;
 
-                bool first = true;
-                POSITION pos2 = sl.GetHeadPosition();
-                while (pos2) {
-                    CString fn = sl.GetNext(pos2);
-                    if (!CanSendToYoutubeDL(fn) || !ProcessYoutubeDLURL(fn, !first)) {
-                        CAtlList<CString> sl2;
-                        sl2.AddHead(fn);
-                        if (first) {
-                            m_wndPlaylistBar.Open(sl2, false, &s.slSubs);
-                        } else {
-                            m_wndPlaylistBar.Append(sl2, false, &s.slSubs);
+                if (fMulti || sl.GetCount() == 1) {
+                    bool first = true;
+                    POSITION pos2 = sl.GetHeadPosition();
+                    while (pos2) {
+                        CString fn = sl.GetNext(pos2);
+                        if (!CanSendToYoutubeDL(fn) || !ProcessYoutubeDLURL(fn, !first, false)) {
+                            CAtlList<CString> sl2;
+                            sl2.AddHead(fn);
+                            if (first) {
+                                m_wndPlaylistBar.Open(sl2, false, &s.slSubs);
+                            } else {
+                                m_wndPlaylistBar.Append(sl2, false, &s.slSubs);
+                            }
                         }
+                        first = false;
                     }
-                    first = false;
+                } else {
+                    // video + dub
+                    m_wndPlaylistBar.Open(sl, false, &s.slSubs);
                 }
 
                 applyRandomizeSwitch();
