@@ -2060,7 +2060,7 @@ void CEVRAllocatorPresenter::RenderThread()
         }
     };
 
-    const CRenderersSettings r = GetRenderersSettings();
+    const CRenderersSettings& r = GetRenderersSettings();
 
     auto SubPicSetTime = [&] {
         if (!g_bExternalSubtitleTime) {
