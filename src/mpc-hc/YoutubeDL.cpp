@@ -264,7 +264,10 @@ bool GetYDLStreamDetails(const Value& format, YDLStreamDetails& details, bool re
     details.has_audio = !details.acodec.IsEmpty() && details.acodec != _T("none");
     details.has_video = !details.vcodec.IsEmpty() && details.vcodec != _T("none") || (details.width > 0) || (details.height > 0);
 
-    if (details.has_video && !details.has_audio) {
+    if (!details.has_video && details.protocol == _T("http_dash_segments")) {
+        details.has_video = details.url.Find(_T("_hd_clear")) > 0; // youtube manifest url that should have video
+    }
+    if (!details.has_audio && details.protocol == _T("http_dash_segments")) {
         details.has_audio = details.url.Find(_T("_audio_clear")) > 0; // youtube manifest url that should have audio
     }
 
@@ -310,10 +313,10 @@ bool GetYDLStreamDetails(const Value& format, YDLStreamDetails& details, bool re
     }
 
     #if YDL_TRACE
-    TRACE(_T("vcodec=%s width=%d height=%d fps=%d vbr=%d acodec=%s abr=%d formatid=%s url=%s\n"), static_cast<LPCWSTR>(details.vcodec), details.width, details.height, details.fps, details.vbr, static_cast<LPCWSTR>(details.acodec), details.abr, static_cast<LPCWSTR>(details.format_id), static_cast<LPCWSTR>(details.url));
+    TRACE(_T("protocol=%s vcodec=%s width=%d height=%d fps=%d vbr=%d acodec=%s abr=%d formatid=%s url=%s\n"), static_cast<LPCWSTR>(details.protocol), static_cast<LPCWSTR>(details.vcodec), details.width, details.height, details.fps, details.vbr, static_cast<LPCWSTR>(details.acodec), details.abr, static_cast<LPCWSTR>(details.format_id), static_cast<LPCWSTR>(details.url));
     #endif
     #if YDL_LOG_URLS
-    YDL_LOG(_T("vcodec=%s width=%d height=%d fps=%d vbr=%d acodec=%s abr=%d formatid=%s url=%s"), static_cast<LPCWSTR>(details.vcodec), details.width, details.height, details.fps, details.vbr, static_cast<LPCWSTR>(details.acodec), details.abr, static_cast<LPCWSTR>(details.format_id), static_cast<LPCWSTR>(details.url));
+    YDL_LOG(_T("protocol=%s vcodec=%s width=%d height=%d fps=%d vbr=%d acodec=%s abr=%d formatid=%s url=%s"), static_cast<LPCWSTR>(details.protocol), static_cast<LPCWSTR>(details.vcodec), details.width, details.height, details.fps, details.vbr, static_cast<LPCWSTR>(details.acodec), details.abr, static_cast<LPCWSTR>(details.format_id), static_cast<LPCWSTR>(details.url));
     #endif
 
     return true;
