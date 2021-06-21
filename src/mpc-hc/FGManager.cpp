@@ -2564,6 +2564,11 @@ CFGManagerPlayer::CFGManagerPlayer(LPCTSTR pName, LPUNKNOWN pUnk, HWND hWnd, boo
     // Renderers
     if (!m_bIsPreview) {
         switch (s.iDSVideoRendererType) {
+            case VIDRNDT_DS_DEFAULT:
+                m_transform.AddTail(DEBUG_NEW CFGFilterRegistry(CLSID_VideoRendererDefault,  MERIT64(0x800001)));
+                m_transform.AddTail(DEBUG_NEW CFGFilterRegistry(CLSID_VideoMixingRenderer9,  MERIT64(0x200003)));
+                m_transform.AddTail(DEBUG_NEW CFGFilterRegistry(CLSID_EnhancedVideoRenderer, MERIT64(0x200002)));
+                break;
             case VIDRNDT_DS_OLDRENDERER:
                 m_transform.AddTail(DEBUG_NEW CFGFilterRegistry(CLSID_VideoRenderer, renderer_merit));
                 break;
