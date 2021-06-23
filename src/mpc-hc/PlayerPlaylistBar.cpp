@@ -1261,30 +1261,32 @@ bool CPlayerPlaylistBar::DeleteFileInPlaylist(POSITION pos, bool recycle)
         m_pMainFrame->SendMessage(WM_COMMAND, ID_FILE_CLOSEMEDIA);
     }
 
-    if (SUCCEEDED(FileDelete(m_pl.GetAt(pos).m_fns.GetHead(), m_pMainFrame->m_hWnd, recycle))) {
-        POSITION nextpos = pos;
-        if (isplaying) {
-            // Get position of next file
-            m_pl.GetNext(nextpos);
-        }
-        // remove selected from playlist
-        int listPos = FindItem(pos);
-        m_list.DeleteItem(listPos);
-        m_list.RedrawItems(listPos, m_list.GetItemCount() - 1);
-        m_pl.RemoveAt(pos);
-        SavePlaylist();
-        if (isplaying) {
-            // play next file
-            if (folderPlayNext) {
-                m_pMainFrame->DoAfterPlaybackEvent(); //we know this will call PLAY_NEXT, which should do normal folder looping
-            } else if (nextpos || AfxGetAppSettings().bLoopFolderOnPlayNextFile) {
-                m_pl.SetPos(nextpos);
-                m_pMainFrame->OpenCurPlaylistItem();
-            }
-        }
-        return true;
+    CString filename = m_pl.GetAt(pos).m_fns.GetHead();
+
+    // Get position of next file
+    POSITION nextpos = pos;
+    if (isplaying) {
+        m_pl.GetNext(nextpos);
     }
-    return false;
+    // remove selected from playlist
+    int listPos = FindItem(pos);
+    m_list.DeleteItem(listPos);
+    m_list.RedrawItems(listPos, m_list.GetItemCount() - 1);
+    m_pl.RemoveAt(pos);
+    SavePlaylist();
+    // Delete file
+    FileDelete(filename, m_pMainFrame->m_hWnd, recycle);
+    // Continue with next file
+    if (isplaying) {
+        if (folderPlayNext) {
+            m_pMainFrame->DoAfterPlaybackEvent(); //we know this will call PLAY_NEXT, which should do normal folder looping
+        } else if (nextpos || AfxGetAppSettings().bLoopFolderOnPlayNextFile) {
+            m_pl.SetPos(nextpos);
+            m_pMainFrame->OpenCurPlaylistItem();
+        }
+    }
+
+    return true;
 }
 
 void CPlayerPlaylistBar::LoadPlaylist(LPCTSTR filename)
