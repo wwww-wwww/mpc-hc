@@ -2328,7 +2328,7 @@ bool CBaseAP::ExtractInterlaced(const AM_MEDIA_TYPE* pmt)
 }
 
 HRESULT CBaseAP::Resize(IDirect3DTexture9* pTexture, const CRect& srcRect, const CRect& destRect) {
-    HRESULT hr;
+    HRESULT hr = E_FAIL;
 
     const CRenderersSettings& r = GetRenderersSettings();
 

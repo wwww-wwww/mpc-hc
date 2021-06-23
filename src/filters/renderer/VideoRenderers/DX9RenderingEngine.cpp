@@ -958,7 +958,7 @@ HRESULT CDX9RenderingEngine::TextureResizeBicubic2pass(IDirect3DTexture9* pTextu
 
 HRESULT CDX9RenderingEngine::Resize(IDirect3DTexture9* pTexture, const CRect& srcRect, const CRect& destRect)
 {
-    HRESULT hr;
+    HRESULT hr = E_FAIL;
 
     const CRenderersSettings& r = GetRenderersSettings();
 

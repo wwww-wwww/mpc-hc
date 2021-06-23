@@ -1323,6 +1323,9 @@ STDMETHODIMP_(bool) CDX9AllocatorPresenter::Paint(bool bAll)
     }
 
     const CRenderersSettings& r = GetRenderersSettings();
+    if (&r == nullptr) {
+        return false;
+    }
 
     //TRACE(_T("Thread: %d\n"), (LONG)((CRITICAL_SECTION &)m_RenderLock).OwningThread);
 
