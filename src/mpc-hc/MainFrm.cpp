@@ -19022,7 +19022,7 @@ void CMainFrame::UpdateDXVAStatus()
     if (CComQIPtr<ILAVVideoStatus> pLAVVideoStatus = FindFilter(GUID_LAVVideo, m_pGB)) {
         const LPCWSTR decoderName = pLAVVideoStatus->GetActiveDecoderName();
         ASSERT(decoderName != nullptr);
-        if (wcscmp(decoderName, L"avcodec") != 0 && wcscmp(decoderName, L"wmv9 mft") != 0 && wcscmp(decoderName, L"msdk mvc") != 0) {
+        if (decoderName != nullptr && wcscmp(decoderName, L"avcodec") != 0 && wcscmp(decoderName, L"wmv9 mft") != 0 && wcscmp(decoderName, L"msdk mvc") != 0) {
             m_HWAccelType = CFGFilterLAVVideo::GetUserFriendlyDecoderName(decoderName);
             CString LAVDXVAInfo;
             LAVDXVAInfo.Format(_T("LAV Video Decoder (%s)"), m_HWAccelType);
