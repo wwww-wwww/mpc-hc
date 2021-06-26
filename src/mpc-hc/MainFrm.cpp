@@ -13950,6 +13950,7 @@ void CMainFrame::CloseMediaPrivate()
 
     if (m_pGB_preview) {
         PreviewWindowHide();
+        m_pCAP2_preview.Release();
         m_pMFVP_preview.Release();
         m_pMFVDC_preview.Release();
         m_pVMR9C_preview.Release();
