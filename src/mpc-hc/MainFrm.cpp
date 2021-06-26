@@ -11102,6 +11102,9 @@ void CMainFrame::SetPreviewVideoPosition() {
             m_pVMR9C_preview->SetVideoPosition(nullptr, wr);
             m_pVMR9C_preview->SetAspectRatioMode(VMR9ARMode_LetterBox);
         }
+        if (m_pCAP2_preview) {
+            m_pCAP2_preview->SetPosition(wr, wr);
+        }
 
         m_pBV_preview->SetDefaultSourcePosition();
         m_pBV_preview->SetDestinationPosition(vr.left, vr.top, vr.Width(), vr.Height());
@@ -13694,12 +13697,16 @@ bool CMainFrame::OpenMediaPrivate(CAutoPtr<OpenMediaData> pOMD)
             m_pGB_preview->FindInterface(IID_PPV_ARGS(&m_pMFVDC_preview), TRUE);
             m_pGB_preview->FindInterface(IID_PPV_ARGS(&m_pMFVP_preview), TRUE);
             m_pGB_preview->FindInterface(IID_PPV_ARGS(&m_pVMR9C_preview), TRUE);
+            m_pGB_preview->FindInterface(IID_PPV_ARGS(&m_pCAP2_preview), TRUE);
 
+            RECT Rect;
+            m_wndPreView.GetClientRect(&Rect);
             if (m_pMFVDC_preview) {
-                RECT Rect;
-                m_wndPreView.GetClientRect(&Rect);
                 m_pMFVDC_preview->SetVideoWindow(m_wndPreView.GetVideoHWND());
                 m_pMFVDC_preview->SetVideoPosition(nullptr, &Rect);
+            }
+            if (m_pCAP2_preview) {
+                m_pCAP2_preview->SetPosition(Rect, Rect);
             }
         }
 
@@ -13760,6 +13767,9 @@ bool CMainFrame::OpenMediaPrivate(CAutoPtr<OpenMediaData> pOMD)
                                     m_pCAP3->SetRotation(rotatevalue);
                                 } else {
                                     m_pCAP2->SetDefaultVideoAngle(Vector(0, 0, Vector::DegToRad(360 - rotatevalue)));
+                                }
+                                if (m_pCAP2_preview) {
+                                    m_pCAP2_preview->SetDefaultVideoAngle(Vector(0, 0, Vector::DegToRad(360 - rotatevalue)));
                                 }
                             }
                         }

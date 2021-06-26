@@ -248,6 +248,7 @@ private:
     CComPtr<IMFVideoDisplayControl> m_pMFVDC_preview;
     CComPtr<IVMRWindowlessControl9> m_pVMR9C_preview;
     CComPtr<IMFVideoProcessor>      m_pMFVP_preview;
+    CComPtr<ISubPicAllocatorPresenter2> m_pCAP2_preview;
     //
     CComPtr<IVMRMixerControl9> m_pVMRMC;
     CComPtr<IMFVideoDisplayControl> m_pMFVDC;

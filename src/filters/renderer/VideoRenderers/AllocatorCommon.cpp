@@ -83,12 +83,12 @@ HRESULT CreateAP9(const CLSID& clsid, HWND hWnd, bool bFullscreen, ISubPicAlloca
     return hr;
 }
 
-HRESULT CreateEVR(const CLSID& clsid, HWND hWnd, bool bFullscreen, ISubPicAllocatorPresenter** ppAP)
+HRESULT CreateEVR(const CLSID& clsid, HWND hWnd, bool bFullscreen, ISubPicAllocatorPresenter** ppAP, bool isPreview)
 {
     HRESULT hr = E_FAIL;
     if (clsid == CLSID_EVRAllocatorPresenter) {
         CString Error;
-        *ppAP = DEBUG_NEW DSObjects::CEVRAllocatorPresenter(hWnd, bFullscreen, hr, Error);
+        *ppAP = DEBUG_NEW DSObjects::CEVRAllocatorPresenter(hWnd, bFullscreen, hr, Error, isPreview);
         (*ppAP)->AddRef();
 
         if (FAILED(hr)) {
@@ -100,6 +100,7 @@ HRESULT CreateEVR(const CLSID& clsid, HWND hWnd, bool bFullscreen, ISubPicAlloca
         } else if (!Error.IsEmpty()) {
             MessageBox(hWnd, Error, L"Warning creating EVR Custom renderer", MB_OK | MB_ICONWARNING);
         }
+
     }
 
     return hr;

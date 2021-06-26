@@ -46,7 +46,7 @@ namespace DSObjects
     /*  public IMFVideoPositionMapper,      // Non mandatory EVR Presenter Interfaces (see later...) */
     {
     public:
-        CEVRAllocatorPresenter(HWND hWnd, bool bFullscreen, HRESULT& hr, CString& _Error);
+        CEVRAllocatorPresenter(HWND hWnd, bool bFullscreen, HRESULT& hr, CString& _Error, bool isPreview=false);
         ~CEVRAllocatorPresenter();
 
         DECLARE_IUNKNOWN;
@@ -180,6 +180,7 @@ namespace DSObjects
         bool                             m_bEvtQuit;
         HANDLE                           m_hEvtFlush;        // Discard all buffers
         bool                             m_bEvtFlush;
+        bool                             m_bIsPreview;
 
         bool                             m_fUseInternalTimer;
         INT32                            m_LastSetOutputRange;

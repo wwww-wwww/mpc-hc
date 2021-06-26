@@ -69,7 +69,7 @@ MFVideoArea MakeArea(float x, float y, DWORD width, DWORD height)
 
 using namespace DSObjects;
 
-CEVRAllocatorPresenter::CEVRAllocatorPresenter(HWND hWnd, bool bFullscreen, HRESULT& hr, CString& _Error)
+CEVRAllocatorPresenter::CEVRAllocatorPresenter(HWND hWnd, bool bFullscreen, HRESULT& hr, CString& _Error, bool isPreview)
     : CDX9AllocatorPresenter(hWnd, bFullscreen, hr, true, _Error)
     , m_ModeratedTime(0)
     , m_ModeratedTimeLast(-1)
@@ -113,6 +113,7 @@ CEVRAllocatorPresenter::CEVRAllocatorPresenter(HWND hWnd, bool bFullscreen, HRES
     , fnAvSetMmThreadCharacteristicsW(_T("avrt.dll"), "AvSetMmThreadCharacteristicsW")
     , fnAvSetMmThreadPriority(_T("avrt.dll"), "AvSetMmThreadPriority")
     , fnAvRevertMmThreadCharacteristics(_T("avrt.dll"), "AvRevertMmThreadCharacteristics")
+    , m_bIsPreview(isPreview)
 {
     const CRenderersSettings& r = GetRenderersSettings();
 
@@ -276,7 +277,7 @@ STDMETHODIMP CEVRAllocatorPresenter::CreateRenderer(IUnknown** ppRenderer)
     CComQIPtr<IMFGetService, &__uuidof(IMFGetService)> pMFGS = pBF;
     CComQIPtr<IEVRFilterConfig> pConfig = pBF;
     if (SUCCEEDED(hr)) {
-        if (FAILED(pConfig->SetNumberOfStreams(3))) { // TODO - maybe need other number of input stream ...
+        if (FAILED(pConfig->SetNumberOfStreams(m_bIsPreview?1:3))) { // TODO - maybe need other number of input stream ...
             return E_FAIL;
         }
     }
