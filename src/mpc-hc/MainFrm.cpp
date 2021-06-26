@@ -18490,13 +18490,13 @@ LRESULT CMainFrame::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
         }
     }
 
-#define SAFE_ZONE 20
     if (message == WM_NCLBUTTONDOWN) {
         CRect r;
         CPoint pt;
-        m_wndSeekBar.GetWindowRect(r);
+        m_wndSeekBar.GetClientRect(r);
+        m_wndSeekBar.MapWindowPoints(this, r);
         POINTSTOPOINT(pt, lParam);
-        r.InflateRect(SAFE_ZONE, SAFE_ZONE);
+        r.InflateRect(0, m_dpi.ScaleY(10));
 
         if (r.PtInRect(pt)) {
             return 0;
