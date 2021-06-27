@@ -578,6 +578,8 @@ void CFGFilterList::Insert(CFGFilter* pFGF, int group, bool exactmatch, bool aut
     }
 #endif
 
+    CLSID insert_clsid = pFGF->GetCLSID();
+
     POSITION pos = m_filters.GetHeadPosition();
     while (pos) {
         filter_t& f = m_filters.GetNext(pos);
@@ -598,11 +600,10 @@ void CFGFilterList::Insert(CFGFilter* pFGF, int group, bool exactmatch, bool aut
         // 3) Overrides
         // 4) Registry
 
-        CLSID insert_clsid = pFGF->GetCLSID();
-        if (insert_clsid != GUID_NULL && insert_clsid == f.pFGF->GetCLSID() && pFGF->GetName() == f.pFGF->GetName()) {
-            // Same filter, different merit
-            if (pFGF->GetMerit() < MERIT64_ABOVE_DSHOW || insert_clsid == __uuidof(CAudioSwitcherFilter)) {
-                // ignore unless it is an overide
+        if (insert_clsid != GUID_NULL && insert_clsid == f.pFGF->GetCLSID()) {
+            // Exact same filter if name also identical. Name is different for the internal filters, and those should be handled as different filters.
+            // Blacklisted filters can have empty name.
+            if (f.pFGF->GetMerit() == MERIT64_DO_NOT_USE || pFGF->GetName() == f.pFGF->GetName()) {
                 bInsert = false;
 #if DEBUG
                 if (do_log) {
