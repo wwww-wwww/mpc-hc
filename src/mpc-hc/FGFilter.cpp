@@ -601,7 +601,7 @@ void CFGFilterList::Insert(CFGFilter* pFGF, int group, bool exactmatch, bool aut
         CLSID insert_clsid = pFGF->GetCLSID();
         if (insert_clsid != GUID_NULL && insert_clsid == f.pFGF->GetCLSID() && pFGF->GetName() == f.pFGF->GetName()) {
             // Same filter, different merit
-            if (pFGF->GetMerit() < MERIT64_ABOVE_DSHOW) {
+            if (pFGF->GetMerit() < MERIT64_ABOVE_DSHOW || insert_clsid == __uuidof(CAudioSwitcherFilter)) {
                 // ignore unless it is an overide
                 bInsert = false;
 #if DEBUG
