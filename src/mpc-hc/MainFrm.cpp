@@ -18451,6 +18451,19 @@ void CMainFrame::enableFileDialogHook(CMPCThemeUtil* helper)
     }
 }
 
+bool CMainFrame::isSafeZone(CPoint pt) {
+    CRect r;
+    m_wndSeekBar.GetClientRect(r);
+    m_wndSeekBar.MapWindowPoints(this, r);
+    r.InflateRect(0, m_dpi.ScaleY(10));
+
+    if (r.PtInRect(pt)) {
+        return true;
+    }
+    return false;
+
+}
+
 LRESULT CMainFrame::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 {
     if (!m_hWnd) {
@@ -18502,14 +18515,9 @@ LRESULT CMainFrame::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
     }
 
     if (message == WM_NCLBUTTONDOWN) {
-        CRect r;
         CPoint pt;
-        m_wndSeekBar.GetClientRect(r);
-        m_wndSeekBar.MapWindowPoints(this, r);
         POINTSTOPOINT(pt, lParam);
-        r.InflateRect(0, m_dpi.ScaleY(10));
-
-        if (r.PtInRect(pt)) {
+        if (isSafeZone(pt)) {
             return 0;
         }
     }

@@ -1160,6 +1160,8 @@ public:
     CMPCThemeMenu* defaultMPCThemeMenu = nullptr;
     void enableFileDialogHook(CMPCThemeUtil* helper);
 
+    bool isSafeZone(CPoint pt);
+
 protected:
     afx_msg void OnMeasureItem(int nIDCtl, LPMEASUREITEMSTRUCT lpMeasureItemStruct);
     // GDI+

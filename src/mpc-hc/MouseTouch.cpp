@@ -268,6 +268,7 @@ bool CMouse::MVRUp(UINT nFlags, const CPoint& point)
 // Left button
 void CMouse::InternalOnLButtonDown(UINT nFlags, const CPoint& point)
 {
+    if (m_pMainFrame->isSafeZone(point)) return;
     GetWnd().SetFocus();
     m_bLeftDown = false;
     SetCursor(nFlags, point);
