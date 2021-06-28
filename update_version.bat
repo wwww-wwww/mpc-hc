@@ -43,6 +43,7 @@ EXIT /B
 
 :MissingVar
 copy /Y "build\version_rev_fallback.h" "build\version_rev.h"
+copy /Y "src\mpc-hc\res\mpc-hc.exe.manifest.fallback" "src\mpc-hc\res\mpc-hc.exe.manifest"
 ECHO Not all build dependencies were found: Missing bash.exe in Git installation
 ECHO.
 ECHO See "docs\Compilation.md" for more information.
