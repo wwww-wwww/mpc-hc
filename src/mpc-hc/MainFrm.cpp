@@ -14898,7 +14898,7 @@ void CMainFrame::SetupJumpToSubMenus(CMenu* parentMenu /*= nullptr*/, int iInser
         }
 
         SetupChapters();
-        if (m_pCB->ChapGetCount() > 1) {
+        if (m_pCB && m_pCB->ChapGetCount() > 1) {
             REFERENCE_TIME rt = GetPos();
             DWORD j = m_pCB->ChapLookup(&rt, nullptr);
             menuStartRadioSection();
