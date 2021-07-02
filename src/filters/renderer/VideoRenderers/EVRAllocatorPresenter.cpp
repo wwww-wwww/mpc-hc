@@ -155,7 +155,9 @@ CEVRAllocatorPresenter::CEVRAllocatorPresenter(HWND hWnd, bool bFullscreen, HRES
         if (SUCCEEDED(m_pD3DManager->OpenDeviceHandle(&hDevice)) &&
                 SUCCEEDED(m_pD3DManager->GetVideoService(hDevice, IID_PPV_ARGS(&pDecoderService)))) {
             TRACE_EVR("EVR: DXVA2 : device handle = 0x%08x\n", hDevice);
-            HookDirectXVideoDecoderService(pDecoderService);
+            if (!m_bIsPreview) {
+                HookDirectXVideoDecoderService(pDecoderService);
+            }
 
             m_pD3DManager->CloseDeviceHandle(hDevice);
         }
@@ -163,8 +165,9 @@ CEVRAllocatorPresenter::CEVRAllocatorPresenter(HWND hWnd, bool bFullscreen, HRES
         _Error += L"DXVA2CreateDirect3DDeviceManager9 failed\n";
     }
 
+
     // Bufferize frame only with 3D texture!
-    if (r.iAPSurfaceUsage == VIDRNDT_AP_TEXTURE3D) {
+    if (!m_bIsPreview && r.iAPSurfaceUsage == VIDRNDT_AP_TEXTURE3D) {
         m_nNbDXSurface  = std::max(std::min(r.iEvrBuffers, MAX_VIDEO_SURFACES), 4);
     } else {
         m_nNbDXSurface = 1;
