@@ -840,6 +840,7 @@ CMainFrame::CMainFrame()
     , queuedSeek({0,0,false})
     , lastSeekStart(0)
     , lastSeekFinish(0)
+    , defaultVideoAngle(0)
 {
     // Don't let CFrameWnd handle automatically the state of the menu items.
     // This means that menu items without handlers won't be automatically
@@ -7541,6 +7542,10 @@ void CMainFrame::OnUpdateViewPanNScanPresets(CCmdUI* pCmdUI)
     pCmdUI->Enable(GetLoadState() == MLS::LOADED && !m_fAudioOnly && nID >= 0 && nID <= s.m_pnspresets.GetCount() && s.iDSVideoRendererType != VIDRNDT_DS_EVR);
 }
 
+int nearest90(int angle) {
+    return int(float(angle) / 90 + 0.5) * 90;
+}
+
 bool CMainFrame::PerformFlipRotate()
 {
     HRESULT hr = E_NOTIMPL;
@@ -7569,6 +7574,16 @@ bool CMainFrame::PerformFlipRotate()
         m_AngleX = m_AngleY = m_AngleZ = 0;
         return false;
     }
+    if (m_pCAP2_preview) { //we support rotating preview
+        PreviewWindowHide();
+        m_wndPreView.SetWindowSize();
+        SetPreviewVideoPosition();
+        //adipose: using defaultvideoangle instead of videoangle, as some oddity with AR shows up when using normal rotate with EVRCP.
+        //Since we only need to support 4 angles, this will work, but it *should* work with SetVideoAngle...
+
+        hr = m_pCAP2_preview->SetDefaultVideoAngle(Vector(Vector::DegToRad(nearest90(m_AngleX)), Vector::DegToRad(nearest90(m_AngleY)), Vector::DegToRad(defaultVideoAngle + nearest90(m_AngleZ))));
+    }
+
     return true;
 }
 
@@ -10442,6 +10457,20 @@ void CMainFrame::SetPlaybackMode(int iNewStatus)
     m_iPlaybackMode = iNewStatus;
 }
 
+CSize CMainFrame::GetVideoSizeWithRotation() const
+{
+    const CAppSettings& s = AfxGetAppSettings();
+    CSize ret = GetVideoSize();
+    if (m_pCAP && !m_pCAP3) { //videosize does not consider manual rotation
+
+        int rotation = ((360 - nearest90(m_AngleZ)) % 360) / 90; //do not add in m_iDefRotation
+        if (rotation == 1 || rotation == 3) { //90 degrees
+            std::swap(ret.cx, ret.cy);
+        }
+    }
+    return ret;
+}
+
 CSize CMainFrame::GetVideoSize() const
 {
     CSize ret;
@@ -11074,7 +11103,7 @@ void CMainFrame::SetPreviewVideoPosition() {
         int w = ws.cx;
         int h = ws.cy;
 
-        const CSize arxy(GetVideoSize());
+        const CSize arxy(GetVideoSizeWithRotation());
         {
             const int dh = ws.cy;
             const int dw = MulDiv(dh, arxy.cx, arxy.cy);
@@ -11094,9 +11123,10 @@ void CMainFrame::SetPreviewVideoPosition() {
 
         const CPoint pos(int(m_PosX * (wr.Width() * 3 - w) - wr.Width()), int(m_PosY * (wr.Height() * 3 - h) - wr.Height()));
         const CRect vr(pos, CSize(w, h));
-
+        
         if (m_pMFVDC_preview) {
             m_pMFVDC_preview->SetVideoPosition(nullptr, wr);
+            m_pMFVDC_preview->SetAspectRatioMode(MFVideoARMode_PreservePicture);
         }
         if (m_pVMR9C_preview) {
             m_pVMR9C_preview->SetVideoPosition(nullptr, wr);
@@ -13699,14 +13729,14 @@ bool CMainFrame::OpenMediaPrivate(CAutoPtr<OpenMediaData> pOMD)
             m_pGB_preview->FindInterface(IID_PPV_ARGS(&m_pVMR9C_preview), TRUE);
             m_pGB_preview->FindInterface(IID_PPV_ARGS(&m_pCAP2_preview), TRUE);
 
-            RECT Rect;
-            m_wndPreView.GetClientRect(&Rect);
+            RECT wr;
+            m_wndPreView.GetVideoRect(&wr);
             if (m_pMFVDC_preview) {
                 m_pMFVDC_preview->SetVideoWindow(m_wndPreView.GetVideoHWND());
-                m_pMFVDC_preview->SetVideoPosition(nullptr, &Rect);
+                m_pMFVDC_preview->SetVideoPosition(nullptr, &wr);
             }
             if (m_pCAP2_preview) {
-                m_pCAP2_preview->SetPosition(Rect, Rect);
+                m_pCAP2_preview->SetPosition(wr, wr);
             }
         }
 
@@ -13769,7 +13799,8 @@ bool CMainFrame::OpenMediaPrivate(CAutoPtr<OpenMediaData> pOMD)
                                     m_pCAP2->SetDefaultVideoAngle(Vector(0, 0, Vector::DegToRad(360 - rotatevalue)));
                                 }
                                 if (m_pCAP2_preview) {
-                                    m_pCAP2_preview->SetDefaultVideoAngle(Vector(0, 0, Vector::DegToRad(360 - rotatevalue)));
+                                    defaultVideoAngle = 360 - rotatevalue;
+                                    m_pCAP2_preview->SetDefaultVideoAngle(Vector(0, 0, Vector::DegToRad(defaultVideoAngle)));
                                 }
                             }
                         }

@@ -249,6 +249,7 @@ private:
     CComPtr<IVMRWindowlessControl9> m_pVMR9C_preview;
     CComPtr<IMFVideoProcessor>      m_pMFVP_preview;
     CComPtr<ISubPicAllocatorPresenter2> m_pCAP2_preview;
+    int defaultVideoAngle;
     //
     CComPtr<IVMRMixerControl9> m_pVMRMC;
     CComPtr<IMFVideoDisplayControl> m_pMFVDC;
@@ -588,6 +589,7 @@ public:
     void SetTrayTip(CString str);
 
     CSize GetVideoSize() const;
+    CSize GetVideoSizeWithRotation() const;
     void ToggleFullscreen(bool fToNearest, bool fSwitchScreenResWhenHasTo);
     void ToggleD3DFullscreen(bool fSwitchScreenResWhenHasTo);
     void MoveVideoWindow(bool fShowStats = false, bool bSetStoppedVideoRect = false);
