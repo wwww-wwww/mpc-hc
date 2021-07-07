@@ -70,7 +70,7 @@ MFVideoArea MakeArea(float x, float y, DWORD width, DWORD height)
 using namespace DSObjects;
 
 CEVRAllocatorPresenter::CEVRAllocatorPresenter(HWND hWnd, bool bFullscreen, HRESULT& hr, CString& _Error, bool isPreview)
-    : CDX9AllocatorPresenter(hWnd, bFullscreen, hr, true, _Error)
+    : CDX9AllocatorPresenter(hWnd, bFullscreen, hr, true, _Error, isPreview)
     , m_ModeratedTime(0)
     , m_ModeratedTimeLast(-1)
     , m_ModeratedClockLast(-1)
@@ -113,7 +113,6 @@ CEVRAllocatorPresenter::CEVRAllocatorPresenter(HWND hWnd, bool bFullscreen, HRES
     , fnAvSetMmThreadCharacteristicsW(_T("avrt.dll"), "AvSetMmThreadCharacteristicsW")
     , fnAvSetMmThreadPriority(_T("avrt.dll"), "AvSetMmThreadPriority")
     , fnAvRevertMmThreadCharacteristics(_T("avrt.dll"), "AvRevertMmThreadCharacteristics")
-    , m_bIsPreview(isPreview)
 {
     const CRenderersSettings& r = GetRenderersSettings();
 
@@ -2067,7 +2066,7 @@ void CEVRAllocatorPresenter::RenderThread()
     const CRenderersSettings& r = GetRenderersSettings();
 
     auto SubPicSetTime = [&] {
-        if (!g_bExternalSubtitleTime) {
+        if (!g_bExternalSubtitleTime && !m_bIsPreview) {
             CSubPicAllocatorPresenterImpl::SetTime(g_tSegmentStart + nsSampleTime * (g_bExternalSubtitle ? g_dRate : 1));
         }
     };

@@ -180,7 +180,6 @@ namespace DSObjects
         bool                             m_bEvtQuit;
         HANDLE                           m_hEvtFlush;        // Discard all buffers
         bool                             m_bEvtFlush;
-        bool                             m_bIsPreview;
 
         bool                             m_fUseInternalTimer;
         INT32                            m_LastSetOutputRange;

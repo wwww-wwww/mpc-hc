@@ -48,7 +48,7 @@ namespace DSObjects
         bool    m_bIsFullscreen, fullScreenChanged;
         bool    m_bNeedCheckSample;
         DWORD   m_MainThreadId;
-
+        bool    m_bIsPreview;
         bool    m_bIsRendering;
 
         CRenderersSettings::CAdvRendererSettings m_LastRendererSettings;
@@ -283,7 +283,7 @@ namespace DSObjects
         HWND                    m_hFocusWindow;
 
     public:
-        CDX9AllocatorPresenter(HWND hWnd, bool bFullscreen, HRESULT& hr, bool bIsEVR, CString& _Error);
+        CDX9AllocatorPresenter(HWND hWnd, bool bFullscreen, HRESULT& hr, bool bIsEVR, CString& _Error, bool isPreview = false);
         ~CDX9AllocatorPresenter();
 
         // ISubPicAllocatorPresenter
