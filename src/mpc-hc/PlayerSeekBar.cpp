@@ -615,8 +615,20 @@ void CPlayerSeekBar::OnPaint()
             m_lastThumbRect = r;
         }
 
-        // Chapters
         if (m_bHasDuration) {
+            // A-B Repeat
+            REFERENCE_TIME aPos, bPos;
+            bool aEnabled, bEnabled;
+            if (m_pMainFrame->CheckABRepeat(aPos, bPos, aEnabled, bEnabled)) {
+                if (aEnabled) {
+                    funcMarkChannel(aPos, 1, CMPCTheme::SeekbarABColor);
+                }
+                if (bEnabled) {
+                    funcMarkChannel(bPos, 1, CMPCTheme::SeekbarABColor);
+                }
+            }
+
+            // Chapters
             CAutoLock lock(&m_csChapterBag);
             if (m_pChapterBag) {
                 for (DWORD i = 0; i < m_pChapterBag->ChapGetCount(); i++) {
@@ -626,16 +638,6 @@ void CPlayerSeekBar::OnPaint()
                     } else {
                         ASSERT(FALSE);
                     }
-                }
-            }
-            REFERENCE_TIME aPos, bPos;
-            bool aEnabled, bEnabled;
-            if (m_pMainFrame->CheckABRepeat(aPos, bPos, aEnabled, bEnabled)) {
-                if (aEnabled) {
-                    funcMarkChannel(aPos, 1, CMPCTheme::SeekbarABColor);
-                }
-                if (bEnabled) {
-                    funcMarkChannel(bPos, 1, CMPCTheme::SeekbarABColor);
                 }
             }
         }
@@ -694,8 +696,20 @@ void CPlayerSeekBar::OnPaint()
             m_lastThumbRect = r;
         }
 
-        // Chapters
         if (m_bHasDuration) {
+            // A-B Repeat
+            REFERENCE_TIME aPos, bPos;
+            bool aEnabled, bEnabled;
+            if (m_pMainFrame->CheckABRepeat(aPos, bPos, aEnabled, bEnabled)) {
+                if (aEnabled) {
+                    funcMarkChannel(aPos, 0, CMPCTheme::SeekbarABColor);
+                }
+                if (bEnabled) {
+                    funcMarkChannel(bPos, 0, CMPCTheme::SeekbarABColor);
+                }
+            }
+
+            // Chapters
             CAutoLock lock(&m_csChapterBag);
             if (m_pChapterBag) {
                 for (DWORD i = 0; i < m_pChapterBag->ChapGetCount(); i++) {
@@ -706,17 +720,6 @@ void CPlayerSeekBar::OnPaint()
                         ASSERT(FALSE);
                     }
                 }
-            }
-        }
-
-        REFERENCE_TIME aPos, bPos;
-        bool aEnabled, bEnabled;
-        if (m_pMainFrame->CheckABRepeat(aPos, bPos, aEnabled, bEnabled)) {
-            if (aEnabled) {
-                funcMarkChannel(aPos, 0, CMPCTheme::SeekbarABColor);
-            }
-            if (bEnabled) {
-                funcMarkChannel(bPos, 0, CMPCTheme::SeekbarABColor);
             }
         }
 
