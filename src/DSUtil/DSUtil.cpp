@@ -753,65 +753,78 @@ OpticalDiskType_t GetOpticalDiskType(TCHAR drive, CAtlList<CString>& files)
     CString path;
     path.Format(_T("%c:"), drive);
 
-    if (GetDriveType(path + _T("\\")) == DRIVE_CDROM) {
-        // CDROM_DVDVideo
-        FindFiles(path + _T("\\VIDEO_TS\\video_ts.ifo"), files);
-        if (!files.IsEmpty()) {
-            return OpticalDisk_DVDVideo;
-        }
-
-        // CDROM_BD
-        FindFiles(path + _T("\\BDMV\\index.bdmv"), files);
-        if (!files.IsEmpty()) {
-            return OpticalDisk_BD;
-        }
-
-        // CDROM_VideoCD
-        FindFiles(path + _T("\\mpegav\\avseq??.dat"), files);
-        FindFiles(path + _T("\\mpegav\\avseq??.mpg"), files);
-        FindFiles(path + _T("\\mpeg2\\avseq??.dat"), files);
-        FindFiles(path + _T("\\mpeg2\\avseq??.mpg"), files);
-        FindFiles(path + _T("\\mpegav\\music??.dat"), files);
-        FindFiles(path + _T("\\mpegav\\music??.mpg"), files);
-        FindFiles(path + _T("\\mpeg2\\music??.dat"), files);
-        FindFiles(path + _T("\\mpeg2\\music??.mpg"), files);
-        if (!files.IsEmpty()) {
-            return OpticalDisk_VideoCD;
-        }
-
-        // CDROM_Audio
-        HANDLE hDrive = CreateFile(CString(_T("\\\\.\\")) + path, GENERIC_READ, FILE_SHARE_READ, nullptr,
-                                   OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, (HANDLE)nullptr);
-        if (hDrive != INVALID_HANDLE_VALUE) {
-            DWORD BytesReturned;
-            CDROM_TOC TOC;
-            if (DeviceIoControl(hDrive, IOCTL_CDROM_READ_TOC, nullptr, 0, &TOC, sizeof(TOC), &BytesReturned, 0)) {
-                ASSERT(TOC.FirstTrack >= 1u && TOC.LastTrack <= _countof(TOC.TrackData));
-                TOC.FirstTrack = std::max(TOC.FirstTrack, UCHAR(1));
-                TOC.LastTrack = std::min(TOC.LastTrack, UCHAR(_countof(TOC.TrackData)));
-                for (ptrdiff_t i = TOC.FirstTrack; i <= TOC.LastTrack; i++) {
-                    // MMC-3 Draft Revision 10g: Table 222 - Q Sub-channel control field
-                    auto& trackData = TOC.TrackData[i - 1];
-                    trackData.Control &= 5;
-                    if (trackData.Control == 0 || trackData.Control == 1) {
-                        CString fn;
-                        fn.Format(_T("%s\\track%02Id.cda"), path.GetString(), i);
-                        files.AddTail(fn);
-                    }
-                }
-            }
-
-            CloseHandle(hDrive);
-        }
-        if (!files.IsEmpty()) {
-            return OpticalDisk_Audio;
-        }
-
-        // it is a cdrom but nothing special
-        return OpticalDisk_Unknown;
+    if (GetDriveType(path + _T("\\")) != DRIVE_CDROM) {
+        return OpticalDisk_NotFound;
     }
 
-    return OpticalDisk_NotFound;
+    // Check if it contains a disc
+    HANDLE hDevice = CreateFile(CString(_T("\\\\.\\")) + path, FILE_READ_ATTRIBUTES,
+        FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, OPEN_EXISTING, 0, NULL);
+    if (hDevice == INVALID_HANDLE_VALUE) {
+        return OpticalDisk_NotFound;
+    }
+    DWORD cbBytesReturned;
+    BOOL bSuccess = DeviceIoControl(hDevice, IOCTL_STORAGE_CHECK_VERIFY2,
+        NULL, 0, NULL, 0, &cbBytesReturned, (LPOVERLAPPED)NULL);
+    if (!bSuccess) {
+        return OpticalDisk_NotFound;
+    }
+
+    // CDROM_DVDVideo
+    FindFiles(path + _T("\\VIDEO_TS\\video_ts.ifo"), files);
+    if (!files.IsEmpty()) {
+        return OpticalDisk_DVDVideo;
+    }
+
+    // CDROM_BD
+    FindFiles(path + _T("\\BDMV\\index.bdmv"), files);
+    if (!files.IsEmpty()) {
+        return OpticalDisk_BD;
+    }
+
+    // CDROM_VideoCD
+    FindFiles(path + _T("\\mpegav\\avseq??.dat"), files);
+    FindFiles(path + _T("\\mpegav\\avseq??.mpg"), files);
+    FindFiles(path + _T("\\mpeg2\\avseq??.dat"), files);
+    FindFiles(path + _T("\\mpeg2\\avseq??.mpg"), files);
+    FindFiles(path + _T("\\mpegav\\music??.dat"), files);
+    FindFiles(path + _T("\\mpegav\\music??.mpg"), files);
+    FindFiles(path + _T("\\mpeg2\\music??.dat"), files);
+    FindFiles(path + _T("\\mpeg2\\music??.mpg"), files);
+    if (!files.IsEmpty()) {
+        return OpticalDisk_VideoCD;
+    }
+
+    // CDROM_Audio
+    HANDLE hDrive = CreateFile(CString(_T("\\\\.\\")) + path, GENERIC_READ, FILE_SHARE_READ, nullptr,
+                                OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, (HANDLE)nullptr);
+    if (hDrive != INVALID_HANDLE_VALUE) {
+        DWORD BytesReturned;
+        CDROM_TOC TOC;
+        if (DeviceIoControl(hDrive, IOCTL_CDROM_READ_TOC, nullptr, 0, &TOC, sizeof(TOC), &BytesReturned, 0)) {
+            ASSERT(TOC.FirstTrack >= 1u && TOC.LastTrack <= _countof(TOC.TrackData));
+            TOC.FirstTrack = std::max(TOC.FirstTrack, UCHAR(1));
+            TOC.LastTrack = std::min(TOC.LastTrack, UCHAR(_countof(TOC.TrackData)));
+            for (ptrdiff_t i = TOC.FirstTrack; i <= TOC.LastTrack; i++) {
+                // MMC-3 Draft Revision 10g: Table 222 - Q Sub-channel control field
+                auto& trackData = TOC.TrackData[i - 1];
+                trackData.Control &= 5;
+                if (trackData.Control == 0 || trackData.Control == 1) {
+                    CString fn;
+                    fn.Format(_T("%s\\track%02Id.cda"), path.GetString(), i);
+                    files.AddTail(fn);
+                }
+            }
+        }
+
+        CloseHandle(hDrive);
+    }
+    if (!files.IsEmpty()) {
+        return OpticalDisk_Audio;
+    }
+
+    // it is a cdrom but nothing special
+    return OpticalDisk_Unknown;
 }
 
 CString GetDriveLabel(TCHAR drive)
