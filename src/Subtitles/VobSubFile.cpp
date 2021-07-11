@@ -757,12 +757,11 @@ bool CVobSubFile::ReadSub(CString fn)
         return false;
     }
 
-    m_sub.SetLength(f.GetLength());
-    m_sub.SeekToBegin();
-
     int len;
     BYTE buff[2048];
     try {
+        m_sub.SetLength(f.GetLength());
+        m_sub.SeekToBegin();
         while ((len = f.Read(buff, sizeof(buff))) > 0 && *(DWORD*)buff == 0xba010000) {
             m_sub.Write(buff, len);
         }
