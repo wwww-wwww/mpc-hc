@@ -13628,6 +13628,24 @@ bool CMainFrame::OpenMediaPrivate(CAutoPtr<OpenMediaData> pOMD)
     // Clear DXVA state ...
     ClearDXVAState();
 
+    m_pCAP3 = nullptr;
+    m_pCAP2 = nullptr;
+    m_pCAP = nullptr;
+    m_pVMRWC = nullptr;
+    m_pVMRMC = nullptr;
+    m_pMFVDC = nullptr;
+    m_pMFVP = nullptr;
+    m_pMVRC = nullptr;
+    m_pMVRI = nullptr;
+    m_pMVRS = nullptr;
+    m_pMVRSR = nullptr;
+    m_pMVRFG = nullptr;
+    m_pLN21 = nullptr;
+    m_pCAP2_preview = nullptr;
+    m_pMFVDC_preview = nullptr;
+    m_pMFVP_preview = nullptr;
+    m_pVMR9C_preview = nullptr;
+
 #ifdef _DEBUG
     // Debug trace code - Begin
     // Check for bad / buggy auto loading file code
@@ -13672,14 +13690,6 @@ bool CMainFrame::OpenMediaPrivate(CAutoPtr<OpenMediaData> pOMD)
         } else {
             throw (UINT)IDS_INVALID_PARAMS_ERROR;
         }
-
-        m_pCAP3  = nullptr;
-        m_pCAP2  = nullptr;
-        m_pCAP   = nullptr;
-        m_pVMRWC = nullptr;
-        m_pVMRMC = nullptr;
-        m_pMFVDC = nullptr;
-        m_pMFVP  = nullptr;
 
         CComPtr<IVMRMixerBitmap9>    pVMB   = nullptr;
         CComPtr<IMFVideoMixerBitmap> pMFVMB = nullptr;
@@ -18684,7 +18694,7 @@ void CMainFrame::UpdateSkypeHandler()
 void CMainFrame::UpdateSeekbarChapterBag()
 {
     const auto& s = AfxGetAppSettings();
-    if (s.fShowChapters && m_pCB) {
+    if (s.fShowChapters && m_pCB && m_pCB->ChapGetCount() > 0) {
         m_wndSeekBar.SetChapterBag(m_pCB);
         m_OSD.SetChapterBag(m_pCB);
     } else {
