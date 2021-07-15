@@ -840,7 +840,7 @@ CMainFrame::CMainFrame()
     , queuedSeek({0,0,false})
     , lastSeekStart(0)
     , lastSeekFinish(0)
-    , defaultVideoAngle(360)
+    , defaultVideoAngle(0)
 {
     // Don't let CFrameWnd handle automatically the state of the menu items.
     // This means that menu items without handlers won't be automatically
@@ -13793,7 +13793,7 @@ bool CMainFrame::OpenMediaPrivate(CAutoPtr<OpenMediaData> pOMD)
             if (rtPos) {
                 m_pMS->SetPositions(&rtPos, AM_SEEKING_AbsolutePositioning, nullptr, AM_SEEKING_NoPositioning);
             }
-            defaultVideoAngle = 360;
+            defaultVideoAngle = 0;
             if (m_pFSF && (m_pCAP2 || m_pCAP3)) {
                 CComQIPtr<IBaseFilter> pBF = m_pFSF;
                 if (GetCLSID(pBF) == GUID_LAVSplitter || GetCLSID(pBF) == GUID_LAVSplitterSource) {
