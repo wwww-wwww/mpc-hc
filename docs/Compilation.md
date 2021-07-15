@@ -131,8 +131,14 @@ Use Git to clone MPC-HC's repository to **C:\mpc-hc** (or anywhere else you like
 
 Note that you can add `-b master` to the `git clone` command if you want to get the latest
 stable version instead of the latest development version.
-        
-## Part G: Compiling the MPC-HC source
+
+## PART G: Install VSNASM
+
+1. Open VSNASM from source root folder
+2. Run install_script.bat as administrator
+3. This adds VS integration for NASM compiler
+
+## Part H: Compiling the MPC-HC source
 
 1. Open the solution file **C:\mpc-hc\mpc-hc.sln**.
    Change the solution's configuration to **Release** (in the toolbar).
@@ -148,7 +154,7 @@ stable version instead of the latest development version.
 Alternatively, you can use **build.bat** that can build everything for you (run: `build.bat help` for more info).
 
 
-## Part H: Building the installer
+## Part I: Building the installer
 
 Download Inno Setup Unicode v5.5.9 or newer from <http://www.jrsoftware.org/isdl.php>.
 Install everything and then go to **C:\mpc-hc\distrib**, open **mpc-hc_setup.iss** with Inno Setup,
