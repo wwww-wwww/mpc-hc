@@ -132,11 +132,11 @@ Use Git to clone MPC-HC's repository to **C:\mpc-hc** (or anywhere else you like
 Note that you can add `-b master` to the `git clone` command if you want to get the latest
 stable version instead of the latest development version.
 
-## PART G: Install VSNASM
+## PART G: Install NASM
 
-1. Open VSNASM from source root folder
-2. Run install_script.bat as administrator
-3. This adds VS integration for NASM compiler
+1. Download NASM from <https://www.nasm.us/pub/nasm/releasebuilds/2.14.02/nasm-2.14.02.zip>
+2. Put nasm.exe in the VC folder of your Visual Studio intallation.
+   Example: C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC
 
 ## Part H: Compiling the MPC-HC source
 
