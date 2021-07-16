@@ -42,7 +42,9 @@
 
 #define USE_LIBASS 0
 
-#define USE_DRDUMP_CRASH_REPORTER 1
+#ifndef USE_DRDUMP_CRASH_REPORTER
+#define USE_DRDUMP_CRASH_REPORTER 0
+#endif
 
 #define SHADERS_DIR _T("Shaders")
 #define SHADERS_DIR11 _T("Shaders11")
