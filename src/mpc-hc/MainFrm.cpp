@@ -8206,7 +8206,7 @@ void CMainFrame::OnPlaySeek(UINT nID)
         rtSeekTo = 0;
     }
 
-    if (s.bFastSeek && !m_kfs.empty() && m_wndSeekBar.GetDuration() >= 600000000LL) {
+    if (s.bFastSeek && !m_kfs.empty()) {
         REFERENCE_TIME rtMaxForwardDiff;
         REFERENCE_TIME rtMaxBackwardDiff;
         if (s.bAllowInaccurateFastseek && (nID != ID_PLAY_SEEKBACKWARDSMALL) && (nID != ID_PLAY_SEEKFORWARDSMALL)) {
