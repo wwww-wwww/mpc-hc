@@ -440,7 +440,6 @@ private:
     MLS m_eMediaLoadState;
     bool m_bSettingUpMenus;
     bool m_bOpenMediaActive;
-    bool streampospoller_active;
 
     REFTIME GetAvgTimePerFrame() const;
     void OnVideoSizeChanged(const bool bWasAudioOnly = false);

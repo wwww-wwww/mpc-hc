@@ -758,7 +758,6 @@ CMainFrame::CMainFrame()
     , m_eMediaLoadState(MLS::CLOSED)
     , m_bSettingUpMenus(false)
     , m_bOpenMediaActive(false)
-    , streampospoller_active(false)
     , m_fFullScreen(false)
     , m_fFirstFSAfterLaunchOnFS(false)
     , m_fStartInD3DFullscreen(false)
@@ -1897,8 +1896,7 @@ void CMainFrame::OnTimer(UINT_PTR nIDEvent)
             delayingFullScreen = false;
             break;
         case TIMER_STREAMPOSPOLLER:
-            ASSERT(streampospoller_active);
-            if (streampospoller_active && GetLoadState() == MLS::LOADED) {
+            if (GetLoadState() == MLS::LOADED) {
                 REFERENCE_TIME rtNow = 0, rtDur = 0;
                 switch (GetPlaybackMode()) {
                     case PM_FILE:
@@ -2017,8 +2015,7 @@ void CMainFrame::OnTimer(UINT_PTR nIDEvent)
             }
             break;
         case TIMER_STREAMPOSPOLLER2:
-            ASSERT(streampospoller_active);
-            if (streampospoller_active && GetLoadState() == MLS::LOADED) {
+            if (GetLoadState() == MLS::LOADED) {
                 switch (GetPlaybackMode()) {
                     case PM_FILE:
                     // no break
@@ -3728,7 +3725,6 @@ LRESULT CMainFrame::OnFilePostOpenmedia(WPARAM wParam, LPARAM lParam)
     }
 
     // we don't want to wait until timers initialize the seekbar and the time counter
-    streampospoller_active = true;
     OnTimer(TIMER_STREAMPOSPOLLER);
     OnTimer(TIMER_STREAMPOSPOLLER2);
 
@@ -7794,7 +7790,6 @@ void CMainFrame::OnPlayPlay()
             } else {
                 // after long pause (10min) or hibernation, perform a seek to current position first, to prevent potential hang on some systems (due to gpu driver issues?)
                 if (m_dwLastPause && m_wndSeekBar.HasDuration() && (GetTickCount64() - m_dwLastPause >= 10*60*1000)) {
-                    streampospoller_active = true;
                     DoSeekTo(m_wndSeekBar.GetPos(), False);
                 }
             }
@@ -8243,16 +8238,16 @@ void CMainFrame::OnPlaySeekSet()
 
 void CMainFrame::AdjustStreamPosPoller(bool restart)
 {
-    if (streampospoller_active) {
-        int current_value = m_iStreamPosPollerInterval;
+    int current_value = m_iStreamPosPollerInterval;
 
-        if (g_bExternalSubtitleTime || IsSubresyncBarVisible()) {
-            m_iStreamPosPollerInterval = 40;
-        } else {
-            m_iStreamPosPollerInterval = AfxGetAppSettings().nStreamPosPollerInterval;
-        }
+    if (g_bExternalSubtitleTime || IsSubresyncBarVisible()) {
+        m_iStreamPosPollerInterval = 40;
+    } else {
+        m_iStreamPosPollerInterval = AfxGetAppSettings().nStreamPosPollerInterval;
+    }
 
-        if (restart && current_value != m_iStreamPosPollerInterval) {
+    if (restart && current_value != m_iStreamPosPollerInterval) {
+        if (KillTimer(TIMER_STREAMPOSPOLLER)) {
             SetTimer(TIMER_STREAMPOSPOLLER, m_iStreamPosPollerInterval, nullptr);
         }
     }
@@ -8260,7 +8255,6 @@ void CMainFrame::AdjustStreamPosPoller(bool restart)
 
 void CMainFrame::SetTimersPlay()
 {
-    streampospoller_active = true;
     AdjustStreamPosPoller(false);
 
     SetTimer(TIMER_STREAMPOSPOLLER, m_iStreamPosPollerInterval, nullptr);
@@ -8278,12 +8272,9 @@ void CMainFrame::KillTimersStop()
 {
     KillTimerDelayedSeek();
     KillTimer(TIMER_STREAMPOSPOLLER2);
-    if (KillTimer(TIMER_STREAMPOSPOLLER)) {
-        ASSERT(streampospoller_active);
-    }
+    KillTimer(TIMER_STREAMPOSPOLLER);
     KillTimer(TIMER_STATS);
     m_timerOneTime.Unsubscribe(TimerOneTimeSubscriber::DVBINFO_UPDATE);
-    streampospoller_active = false;
 }
 
 void CMainFrame::OnPlaySeekKey(UINT nID)
