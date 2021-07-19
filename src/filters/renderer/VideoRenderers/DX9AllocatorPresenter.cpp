@@ -1394,8 +1394,6 @@ STDMETHODIMP_(bool) CDX9AllocatorPresenter::Paint(bool bAll)
         }
     }
 
-    // ToDo: Add a simplified PaintPreview() function and call that instead
-    // There is no need to do all the complex VSync stuff in case of preview
     if (!m_bIsPreview) {
         // paint the text on the backbuffer
         AlphaBltSubPic(rDstPri, rDstVid);
