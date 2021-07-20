@@ -100,7 +100,7 @@ STDMETHODIMP CVMR9AllocatorPresenter::CreateRenderer(IUnknown** ppRenderer)
 
     CComPtr<IPin> pPin = GetFirstPin(pBF);
     CComQIPtr<IMemInputPin> pMemInputPin = pPin;
-    m_fUseInternalTimer = HookNewSegmentAndReceive((IPinC*)(IPin*)pPin, (IMemInputPinC*)(IMemInputPin*)pMemInputPin);
+    m_fUseInternalTimer = !m_bIsPreview && HookNewSegmentAndReceive((IPinC*)(IPin*)pPin, (IMemInputPinC*)(IMemInputPin*)pMemInputPin);
 
     if (CComQIPtr<IAMVideoAccelerator> pAMVA = pPin) {
         HookAMVideoAccelerator((IAMVideoAcceleratorC*)(IAMVideoAccelerator*)pAMVA);
