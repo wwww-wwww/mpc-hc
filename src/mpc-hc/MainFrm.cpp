@@ -10450,10 +10450,8 @@ void CMainFrame::SetPlaybackMode(int iNewStatus)
 
 CSize CMainFrame::GetVideoSizeWithRotation() const
 {
-    const CAppSettings& s = AfxGetAppSettings();
     CSize ret = GetVideoSize();
     if (m_pCAP && !m_pCAP3) { //videosize does not consider manual rotation
-
         int rotation = ((360 - nearest90(m_AngleZ)) % 360) / 90; //do not add in m_iDefRotation
         if (rotation == 1 || rotation == 3) { //90 degrees
             std::swap(ret.cx, ret.cy);
