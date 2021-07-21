@@ -42,6 +42,9 @@
 #endif
 #define sse2_required
 
+#if GetEnv('MPC_DRDUMP') == '1'
+#define USE_DRDUMP_CRASH_REPORTER 1
+#endif
 
 ; From now on you shouldn't need to change anything
 
