@@ -301,9 +301,14 @@ HRESULT SubtitlesInfo::GetFileInfo(const std::string& sFileName /*= std::string(
                 }
             }
         }
+
+        if (filePath.empty()) {
+            return E_FAIL;
+        }
     } else {
         filePath = sFileName;
     }
+
     auto fPath = UTF8To16(filePath.c_str());
     fileExtension = UTF16To8(PathUtils::FileExt(fPath).TrimLeft('.'));
     fileName = UTF16To8(PathUtils::FileName(fPath));
@@ -723,20 +728,19 @@ void SubtitlesTask::ThreadProc()
         // We get all the information we need within a separate thread,
         // to avoid delaying the video playback.
         SubtitlesInfo pFileInfo;
-        pFileInfo.GetFileInfo();
         if (m_nType & STT_MANUALSEARCH) {
             pFileInfo.manualSearchString = manualSearch;
+        } else {
+            pFileInfo.GetFileInfo();
         }
 
         const auto& s = AfxGetAppSettings();
         std::string exclude = UTF16To8(s.strAutoDownloadSubtitlesExclude).GetString();
         stringArray exclude_array = StringTokenize(exclude, "|");
 
-        if (!pFileInfo.title.empty()
-        && std::none_of(exclude_array.cbegin(), exclude_array.cend(), [&](const std::string & str) {
-        return pFileInfo.filePath.find(str) != std::string::npos;
-        })
-        && !IsThreadAborting()) {
+        bool do_search = !pFileInfo.manualSearchString.IsEmpty() || !pFileInfo.title.empty() && std::none_of(exclude_array.cbegin(), exclude_array.cend(), [&](const std::string& str) {return pFileInfo.filePath.find(str) != std::string::npos;});
+
+        if (do_search && !IsThreadAborting()) {
             for (const auto& iter : m_pMainFrame->m_pSubtitlesProviders->Providers()) {
                 if (iter->Enabled(SPF_SEARCH)) {
                     InsertThread(DEBUG_NEW SubtitlesThread(this, pFileInfo, iter));
