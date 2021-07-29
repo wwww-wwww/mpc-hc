@@ -3069,9 +3069,8 @@ bool CSimpleTextSubtitle::Open(CString fn, int CharSet, CString name, CString vi
         return false;
     }
 
-    CString guessed = Subtitle::GuessSubtitleName(fn, videoName, m_lcid, m_eHearingImpaired);
     if (name.IsEmpty()) {
-        name = guessed;
+        name = Subtitle::GuessSubtitleName(fn, videoName, m_lcid, m_eHearingImpaired);
     }
 
     return Open(&f, CharSet, name);
