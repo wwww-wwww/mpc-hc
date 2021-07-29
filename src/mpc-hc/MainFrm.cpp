@@ -3877,6 +3877,8 @@ void CMainFrame::OnFilePostClosemedia(bool bNextIsQueued/* = false*/)
     SetPlaybackMode(PM_NONE);
     SetLoadState(MLS::CLOSED);
 
+    m_bOpenMediaActive = false;
+
     m_kfs.clear();
 
     m_nCurSubtitle = -1;
@@ -16863,14 +16865,14 @@ void CMainFrame::OpenMedia(CAutoPtr<OpenMediaData> pOMD)
         ASSERT(!m_bSettingUpMenus);
     }
 
-    ASSERT(!m_bOpenMediaActive);
-    m_bOpenMediaActive = true;
-
     // close the current graph before opening new media
     if (GetLoadState() != MLS::CLOSED) {
         CloseMedia(true);
         ASSERT(GetLoadState() == MLS::CLOSED);
     }
+
+    ASSERT(!m_bOpenMediaActive);
+    m_bOpenMediaActive = true;
 
     // if the file is on some removable drive and that drive is missing,
     // we yell at user before even trying to construct the graph
