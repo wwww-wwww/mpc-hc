@@ -1073,7 +1073,20 @@ CPlaylistItem* CPlayerPlaylistBar::GetCur()
     return &m_pl.GetAt(m_pl.GetPos());
 }
 
-CString CPlayerPlaylistBar::GetCurFileName()
+CString CPlayerPlaylistBar::GetCurFileName(bool use_ydl_source)
+{
+    CString fn;
+    CPlaylistItem* pli = GetCur();
+
+    if (pli && pli->m_bYoutubeDL && use_ydl_source) {
+        fn = pli->m_ydlSourceURL;
+    } else if (pli && !pli->m_fns.IsEmpty()) {
+        fn = pli->m_fns.GetHead();
+    }
+    return fn;
+}
+
+CString CPlayerPlaylistBar::GetCurFileNameTitle()
 {
     CString fn;
     CPlaylistItem* pli = GetCur();

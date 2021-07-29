@@ -5570,19 +5570,22 @@ void CMainFrame::SaveThumbnails(LPCTSTR fn)
         }
 
         CStringW fs;
-        WIN32_FIND_DATA wfd;
-        HANDLE hFind = FindFirstFile(m_wndPlaylistBar.GetCurFileName(), &wfd);
-        if (hFind != INVALID_HANDLE_VALUE) {
-            FindClose(hFind);
+        CString curfile = m_wndPlaylistBar.GetCurFileName();
+        if (!PathUtils::IsURL(curfile)) {
+            WIN32_FIND_DATA wfd;
+            HANDLE hFind = FindFirstFile(curfile, &wfd);
+            if (hFind != INVALID_HANDLE_VALUE) {
+                FindClose(hFind);
 
-            __int64 size = (__int64(wfd.nFileSizeHigh) << 32) | wfd.nFileSizeLow;
-            const int MAX_FILE_SIZE_BUFFER = 65;
-            WCHAR szFileSize[MAX_FILE_SIZE_BUFFER];
-            StrFormatByteSizeW(size, szFileSize, MAX_FILE_SIZE_BUFFER);
-            CString szByteSize;
-            szByteSize.Format(_T("%I64d"), size);
-            fs.Format(IDS_THUMBNAILS_INFO_FILESIZE, szFileSize, FormatNumber(szByteSize).GetString());
-        }
+                __int64 size = (__int64(wfd.nFileSizeHigh) << 32) | wfd.nFileSizeLow;
+                const int MAX_FILE_SIZE_BUFFER = 65;
+                WCHAR szFileSize[MAX_FILE_SIZE_BUFFER];
+                StrFormatByteSizeW(size, szFileSize, MAX_FILE_SIZE_BUFFER);
+                CString szByteSize;
+                szByteSize.Format(_T("%I64d"), size);
+                fs.Format(IDS_THUMBNAILS_INFO_FILESIZE, szFileSize, FormatNumber(szByteSize).GetString());
+            }
+        }        
 
         CStringW ar;
         if (szAR.cx > 0 && szAR.cy > 0 && szAR.cx != szVideo.cx && szAR.cy != szVideo.cy) {
@@ -5867,10 +5870,13 @@ void CMainFrame::OnFileSubtitlesLoad()
     ofn.lpstrFile = filenames.GetBuffer(nBufferSize);
     ofn.nMaxFile = nBufferSize;
     // Set the current file directory as default folder
-    CPath defaultDir(m_wndPlaylistBar.GetCurFileName());
-    defaultDir.RemoveFileSpec();
-    if (!defaultDir.m_strPath.IsEmpty()) {
-        ofn.lpstrInitialDir = defaultDir;
+    CString curfile = m_wndPlaylistBar.GetCurFileName();
+    if (!PathUtils::IsURL(curfile)) {
+        CPath defaultDir(curfile);
+        defaultDir.RemoveFileSpec();
+        if (!defaultDir.m_strPath.IsEmpty()) {
+            ofn.lpstrInitialDir = defaultDir;
+        }
     }
 
     if (fd.DoModal() == IDOK) {
@@ -5904,14 +5910,14 @@ void CMainFrame::OnFileSubtitlesSave()
             return;
         }
 
-        // exclude the extension, it will be auto-completed
-        CString suggestedFileName(PathUtils::FileName(GetFileName()));
-
-        // Try to detect the directory of the current playlist item, and prepend it if it's valid
-        CPath path(m_wndPlaylistBar.GetCurFileName());
-        if (path.RemoveFileSpec() && path.IsDirectory()) {
-            path.AddBackslash();
-            suggestedFileName = CString(path) + suggestedFileName;
+        CString suggestedFileName;
+        CString curfile = m_wndPlaylistBar.GetCurFileName();
+        if (PathUtils::IsURL(curfile)) {
+            suggestedFileName = _T("subtitle");
+        } else {
+            CPath path(curfile);
+            path.RemoveExtension();
+            suggestedFileName = CString(path);
         }
 
         if (clsid == __uuidof(CVobSubFile)) {
@@ -6023,7 +6029,9 @@ void CMainFrame::OnUpdateFileProperties(CCmdUI* pCmdUI)
 
 void CMainFrame::OnFileOpenLocation() {
     CString filePath = m_wndPlaylistBar.GetCurFileName();
-    ExploreToFile(filePath);
+    if (!PathUtils::IsURL(filePath)) {
+        ExploreToFile(filePath);
+    }
 }
 
 void CMainFrame::OnFileCloseMedia()
@@ -9842,7 +9850,7 @@ void CMainFrame::AddFavorite(bool fDisplayMessage, bool fShowDialog)
 
     if (GetPlaybackMode() == PM_FILE) {
         bool is_BD = false;
-        CString fn = m_wndPlaylistBar.GetCurFileName();
+        CString fn = m_wndPlaylistBar.GetCurFileNameTitle();
         if (fn.IsEmpty()) {
             BeginEnumFilters(m_pGB, pEF, pBF) {
                 CComQIPtr<IFileSourceFilter> pFSF = pBF;
@@ -13296,7 +13304,7 @@ void CMainFrame::OpenSetupWindowTitle(bool reset /*= false*/)
             }
         } else { // Show full path
             if (GetPlaybackMode() == PM_FILE) {
-                title = m_wndPlaylistBar.GetCurFileName();
+                title = m_wndPlaylistBar.GetCurFileNameTitle();
             } else if (GetPlaybackMode() == PM_DVD) {
                 title = _T("DVD");
                 ULONG len = 0;
@@ -18717,12 +18725,14 @@ void CMainFrame::UpdateControlState(UpdateControlTarget target)
                 CString filename = m_wndPlaylistBar.GetCurFileName();
                 CString filename_no_ext;
                 CString filedir;
-                CPath path = CPath(filename);
-                if (path.FileExists()) {
-                    path.RemoveExtension();
-                    filename_no_ext = path.m_strPath;
-                    path.RemoveFileSpec();
-                    filedir = path.m_strPath;
+                if (!PathUtils::IsURL(filename)) {
+                    CPath path = CPath(filename);
+                    if (path.FileExists()) {
+                        path.RemoveExtension();
+                        filename_no_ext = path.m_strPath;
+                        path.RemoveFileSpec();
+                        filedir = path.m_strPath;
+                    }
                 }
 
                 CString author;
@@ -19008,7 +19018,7 @@ CString CMainFrame::GetFileName()
 {
     CPlaylistItem* pli = m_wndPlaylistBar.GetCur();
     if (pli) {
-        CString path(m_wndPlaylistBar.GetCurFileName());
+        CString path(m_wndPlaylistBar.GetCurFileName(true));
         if (!pli->m_bYoutubeDL && m_pFSF) {
             CComHeapPtr<OLECHAR> pFN;
             if (SUCCEEDED(m_pFSF->GetCurFile(&pFN, nullptr))) {

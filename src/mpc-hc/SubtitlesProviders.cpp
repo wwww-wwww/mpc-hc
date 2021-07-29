@@ -272,7 +272,10 @@ HRESULT SubtitlesInfo::GetFileInfo(const std::string& sFileName /*= std::string(
             }
             fileSize = size;
         } else {
-            CString _filePath(MainFrame.m_wndPlaylistBar.GetCurFileName());
+            CString _filePath = MainFrame.m_wndPlaylistBar.GetCurFileName();
+            if (PathUtils::IsURL(_filePath)) {
+                return E_FAIL;
+            }
             {
                 CFile file;
                 CFileException fileException;

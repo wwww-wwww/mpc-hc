@@ -124,7 +124,8 @@ public:
     bool IsAtEnd();
     bool GetCur(CPlaylistItem& pli) const;
     CPlaylistItem* GetCur();
-    CString GetCurFileName();
+    CString GetCurFileName(bool use_ydl_source = false);
+    CString GetCurFileNameTitle();
     bool SetNext();
     bool SetPrev();
     void SetFirstSelected();

@@ -468,8 +468,7 @@ bool CWebClientSocket::OnBrowser(CStringA& hdr, CStringA& body, CStringA& mime)
     CString path;
     CFileStatus fs;
     if (m_get.Lookup("path", path)) {
-
-        if (CFileGetStatus(path, fs) && !(fs.m_attribute & CFile::directory)) {
+        if (!PathUtils::IsURL(path) && CFileGetStatus(path, fs) && !(fs.m_attribute & CFile::directory)) {
             // TODO: make a new message for just opening files, this is a bit overkill now...
 
             CAtlList<CString> cmdln;
@@ -517,7 +516,7 @@ bool CWebClientSocket::OnBrowser(CStringA& hdr, CStringA& body, CStringA& mime)
     } else {
         path = m_pMainFrame->m_wndPlaylistBar.GetCurFileName();
 
-        if (CFileGetStatus(path, fs) && !(fs.m_attribute & CFile::directory)) {
+        if (!PathUtils::IsURL(path) && CFileGetStatus(path, fs) && !(fs.m_attribute & CFile::directory)) {
             CPath p(path);
             p.RemoveFileSpec();
             path = (LPCTSTR)p;
@@ -528,7 +527,7 @@ bool CWebClientSocket::OnBrowser(CStringA& hdr, CStringA& body, CStringA& mime)
         path.Empty();
     }
 
-    if (CFileGetStatus(path, fs) && (fs.m_attribute & CFile::directory)
+    if (!path.IsEmpty() && CFileGetStatus(path, fs) && (fs.m_attribute & CFile::directory)
             || path.Find(_T("\\")) == 0) { // FIXME
         CPath p(path);
         p.Canonicalize();
@@ -644,7 +643,7 @@ bool CWebClientSocket::OnControls(CStringA& hdr, CStringA& body, CStringA& mime)
     CString path = m_pMainFrame->m_wndPlaylistBar.GetCurFileName();
     CString dir;
 
-    if (!path.IsEmpty()) {
+    if (!path.IsEmpty() && !PathUtils::IsURL(path)) {
         CPath p(path);
         p.RemoveFileSpec();
         dir = (LPCTSTR)p;
@@ -701,7 +700,7 @@ bool CWebClientSocket::OnVariables(CStringA& hdr, CStringA& body, CStringA& mime
     CString path = m_pMainFrame->m_wndPlaylistBar.GetCurFileName();
     CString dir;
 
-    if (!path.IsEmpty()) {
+    if (!path.IsEmpty() && !PathUtils::IsURL(path)) {
         CPath p(path);
         p.RemoveFileSpec();
         dir = (LPCTSTR)p;
