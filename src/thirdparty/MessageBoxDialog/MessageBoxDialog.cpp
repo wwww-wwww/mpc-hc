@@ -427,7 +427,10 @@ BOOL CMessageBoxDialog::OnInitDialog ( )
 	if ( m_nDefaultButton != IDC_STATIC )
 	{
 		// Set the focus to the default button.
-		GetDlgItem(m_nDefaultButton)->SetFocus();
+        CWnd* item = GetDlgItem(m_nDefaultButton);
+        if (item) {
+            item->SetFocus();
+        }
 
 		// Set the default ID of the dialog.
 		SetDefID(m_nDefaultButton);
