@@ -15391,6 +15391,9 @@ void CMainFrame::SetupFavoritesSubMenu()
         }
 
         id++;
+        if (id > ID_FAVORITES_FILE_END) {
+            break;
+        }
     }
 
     if (id > ID_FAVORITES_FILE_START) {
@@ -15423,6 +15426,9 @@ void CMainFrame::SetupFavoritesSubMenu()
         }
 
         id++;
+        if (id > ID_FAVORITES_DVD_END) {
+            break;
+        }
     }
 
     if (id > ID_FAVORITES_DVD_START) {
@@ -15452,6 +15458,9 @@ void CMainFrame::SetupFavoritesSubMenu()
         }
 
         id++;
+        if (id > ID_FAVORITES_DEVICE_END) {
+            break;
+        }
     }
 }
 
