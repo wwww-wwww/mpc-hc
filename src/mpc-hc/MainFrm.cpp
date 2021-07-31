@@ -15974,7 +15974,9 @@ void CMainFrame::ToggleSubtitleOnOff(bool bDisplayMessage /*= false*/)
     if (s.fEnableSubtitles) {
         SetSubtitle(0, true, bDisplayMessage);
     } else {
-        m_pCAP->SetSubPicProvider(nullptr);
+        if (m_pCAP) {
+            m_pCAP->SetSubPicProvider(nullptr);
+        }
         currentSubLang.Empty();
 
         if (bDisplayMessage) {
