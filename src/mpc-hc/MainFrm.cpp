@@ -2636,7 +2636,7 @@ void CMainFrame::GraphEventComplete()
                 SendMessage(WM_COMMAND, ID_PLAY_PLAY);
             } else if (m_pMS) {
                 REFERENCE_TIME rtDur = 0;
-                if ((m_pMS->GetDuration(&rtDur) == S_OK) && (rtDur >= 10000000LL) || !IsImageFile(lastOpenFile)) { // repeating still image is pointless and can cause player UI to freeze
+                if ((m_pMS->GetDuration(&rtDur) == S_OK) && (rtDur >= 1000000LL) || !IsImageFile(lastOpenFile)) { // repeating still image is pointless and can cause player UI to freeze
                     REFERENCE_TIME rtPos = 0;
                     m_pMS->SetPositions(&rtPos, AM_SEEKING_AbsolutePositioning, nullptr, AM_SEEKING_NoPositioning);
                     if (GetMediaState() == State_Paused) {
