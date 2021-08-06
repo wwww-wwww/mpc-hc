@@ -915,7 +915,7 @@ STDMETHODIMP CStreamSwitcherInputPin::Receive(IMediaSample* pSample)
 
 STDMETHODIMP CStreamSwitcherInputPin::NewSegment(REFERENCE_TIME tStart, REFERENCE_TIME tStop, double dRate)
 {
-    if (!IsConnected()) {
+    if (!IsConnected() || !IsActive()) {
         return S_OK;
     }
 
