@@ -3989,13 +3989,13 @@ void CMainFrame::OnStreamAudio(UINT nID)
             DWORD dwFlags = 0;
             LCID lcid = 0;
             DWORD dwGroup = 0;
-            CComHeapPtr<WCHAR> pszName;
-            if (FAILED(pSS->Info(i, nullptr, &dwFlags, &lcid, &dwGroup, &pszName, nullptr, nullptr))) {
+            if (FAILED(pSS->Info(i, nullptr, &dwFlags, &lcid, &dwGroup, nullptr, nullptr, nullptr))) {
                 return;
             }
             if (dwFlags & (AMSTREAMSELECTINFO_ENABLED | AMSTREAMSELECTINFO_EXCLUSIVE)) {
                 long stream_index = (i + (nID == 0 ? 1 : cStreams - 1)) % cStreams;
                 pSS->Enable(stream_index, AMSTREAMSELECTENABLE_ENABLE);
+                CComHeapPtr<WCHAR> pszName;
                 if (SUCCEEDED(pSS->Info(stream_index, nullptr, &dwFlags, &lcid, &dwGroup, &pszName, nullptr, nullptr))) {
                     m_OSD.DisplayMessage(OSD_TOPLEFT, GetStreamOSDString(CString(pszName), lcid, 1));
                     if (lcid) {
