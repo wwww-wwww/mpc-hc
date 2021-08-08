@@ -49,6 +49,7 @@
 #include <initguid.h>
 #include <qnetwork.h>
 #include "../DSUtil/FontInstaller.h"
+#include "AppSettings.h"
 
 #define AfxGetMainFrame() dynamic_cast<CMainFrame*>(AfxGetMainWnd())
 

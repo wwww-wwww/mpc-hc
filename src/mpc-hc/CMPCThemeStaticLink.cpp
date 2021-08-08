@@ -2,6 +2,7 @@
 #include "CMPCThemeStaticLink.h"
 #include "CMPCTheme.h"
 #include "CMPCThemeUtil.h"
+#include "mplayerc.h"
 
 CMPCThemeStaticLink::CMPCThemeStaticLink(LPCTSTR lpText, bool bDeleteOnDestroy) : CStaticLink(lpText, bDeleteOnDestroy)
 {

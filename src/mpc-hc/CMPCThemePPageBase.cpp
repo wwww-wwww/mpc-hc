@@ -2,6 +2,7 @@
 #include "CMPCThemePPageBase.h"
 #include "CMPCTheme.h"
 #include "ImageGrayer.h"
+#include "mplayerc.h"
 
 IMPLEMENT_DYNAMIC(CMPCThemePPageBase, CPPageBase)
 

@@ -2,6 +2,7 @@
 #include "CMPCThemeEdit.h"
 #include "CMPCTheme.h"
 #include "CMPCThemeUtil.h"
+#include "mplayerc.h"
 
 CMPCThemeEdit::CMPCThemeEdit()
 {

@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
-#include "mplayerc.h"
 #include <afxcmn.h>
+#include <afxdlgs.h>
 #include "CMPCTheme.h"
 #include "CMPCThemeToolTipCtrl.h"
 

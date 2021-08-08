@@ -2,10 +2,12 @@
 #include "CMPCThemeGroupBox.h"
 #include "CMPCTheme.h"
 #include "CMPCThemeUtil.h"
+#include "mplayerc.h"
 
 IMPLEMENT_DYNAMIC(CMPCThemeGroupBox, CStatic)
 
 CMPCThemeGroupBox::CMPCThemeGroupBox()
+    :manuallySetFont(nullptr)
 {
 
 }
@@ -18,6 +20,8 @@ CMPCThemeGroupBox::~CMPCThemeGroupBox()
 BEGIN_MESSAGE_MAP(CMPCThemeGroupBox, CStatic)
     ON_WM_PAINT()
     ON_WM_ENABLE()
+    ON_MESSAGE(WM_SETFONT, OnSetFont)
+    ON_MESSAGE(WM_GETFONT, OnGetFont)
 END_MESSAGE_MAP()
 
 
@@ -33,7 +37,14 @@ void CMPCThemeGroupBox::OnPaint()
         CString text;
         GetWindowText(text);
 
-        CFont* font = GetFont();
+        CFont* font;
+
+        if (manuallySetFont) {
+            font = CFont::FromHandle(manuallySetFont); //font for created window and SetFont()
+        } else {
+            font = GetFont(); //font for subclassed window
+        }
+        
         CSize cs = CMPCThemeUtil::GetTextSize(_T("W"), hDC, font);
         ::ReleaseDC(NULL, hDC);
 
@@ -81,5 +92,21 @@ void CMPCThemeGroupBox::OnEnable(BOOL bEnable) {
         RedrawWindow();
     } else {
         __super::OnEnable(bEnable);
+    }
+}
+
+LRESULT CMPCThemeGroupBox::OnSetFont(WPARAM wParam, LPARAM lParam) {
+    manuallySetFont = (HFONT)wParam;
+    if ((BOOL)lParam) {
+        Invalidate();
+    }
+    return 0;
+}
+
+LRESULT CMPCThemeGroupBox::OnGetFont(WPARAM wParam, LPARAM lParam) {
+    if (manuallySetFont) {
+        return (LRESULT)manuallySetFont;
+    } else {
+        return (LRESULT)Default();
     }
 }

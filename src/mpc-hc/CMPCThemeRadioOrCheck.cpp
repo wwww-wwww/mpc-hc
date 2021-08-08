@@ -5,6 +5,7 @@
 #include "CMPCThemeUtil.h"
 #include "VersionHelpersInternal.h"
 #include "DpiHelper.h"
+#include "mplayerc.h"
 
 CMPCThemeRadioOrCheck::CMPCThemeRadioOrCheck()
 {

@@ -5,10 +5,11 @@
 class CMPCThemeInternalPropertyPageWnd :
     public CInternalPropertyPageWnd
     , public CMPCThemeUtil {
-
-    virtual ~CMPCThemeInternalPropertyPageWnd();
 public:
+    virtual ~CMPCThemeInternalPropertyPageWnd();
+protected:
     DECLARE_MESSAGE_MAP()
+public:
     afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
     afx_msg BOOL OnEraseBkgnd(CDC* pDC);
 };

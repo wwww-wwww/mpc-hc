@@ -2,6 +2,8 @@
 #include "CMPCThemeHeaderCtrl.h"
 #include "CMPCTheme.h"
 #include "CMPCThemeUtil.h"
+#include "DpiHelper.h"
+#include "mplayerc.h"
 
 CMPCThemeHeaderCtrl::CMPCThemeHeaderCtrl()
 {

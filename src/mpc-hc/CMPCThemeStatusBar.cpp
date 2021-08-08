@@ -2,6 +2,7 @@
 #include "CMPCThemeStatusBar.h"
 #include "CMPCTheme.h"
 #include "CMPCThemeUtil.h"
+#include "mplayerc.h"
 
 CMPCThemeStatusBar::CMPCThemeStatusBar()
 {

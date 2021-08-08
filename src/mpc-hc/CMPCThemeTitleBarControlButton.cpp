@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "mplayerc.h"
 #include "CMPCThemeTitleBarControlButton.h"
 #include "CMPCThemeUtil.h"
 

@@ -1,7 +1,9 @@
 #include "stdafx.h"
+#include "DpiHelper.h"
 #include "CMPCThemeSpinButtonCtrl.h"
 #include "CMPCTheme.h"
 #include "CMPCThemeEdit.h"
+#include "mplayerc.h"
 
 CMPCThemeSpinButtonCtrl::CMPCThemeSpinButtonCtrl()
 {

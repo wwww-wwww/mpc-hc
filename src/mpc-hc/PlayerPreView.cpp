@@ -23,6 +23,7 @@
 #include "MainFrm.h"
 #include "PlayerPreView.h"
 #include "CMPCTheme.h"
+#include "mplayerc.h"
 
 #define PREVIEW_TOOLTIP_BOTTOM 1
 

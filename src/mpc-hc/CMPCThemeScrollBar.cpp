@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "DpiHelper.h"
 #include "CMPCThemeScrollBar.h"
 #include "CMPCTheme.h"
 #include "CMPCThemeListBox.h"

@@ -3,6 +3,7 @@
 #include "CMPCTheme.h"
 #include "CMPCThemeUtil.h"
 #include <afxglobals.h>
+#include "mplayerc.h"
 
 
 CMPCThemeToolTipCtrl::CMPCThemeToolTipCtrl()

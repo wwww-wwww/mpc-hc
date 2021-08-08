@@ -1,5 +1,4 @@
 #pragma once
-#include "mplayerc.h"
 
 class CMPCTheme
 {
