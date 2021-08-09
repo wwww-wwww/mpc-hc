@@ -278,10 +278,20 @@ bool CTextFile::FillBuffer()
     }
     m_posInBuffer = 0;
 
-    UINT nBytesRead = Read(&m_buffer[m_nInBuffer], UINT(TEXTFILE_BUFFER_SIZE - m_nInBuffer) * sizeof(char));
+    UINT nBytesRead = __super::Read(&m_buffer[m_nInBuffer], UINT(TEXTFILE_BUFFER_SIZE - m_nInBuffer) * sizeof(char));
     if (nBytesRead) {
         m_nInBuffer += nBytesRead;
     }
+
+    // Workaround for buggy text files that contain a duplicate UTF BOM
+    if (m_posInFile == m_offset && m_offset >= 2 && m_nInBuffer > 3) {
+        if (m_buffer[0] == (char)0xEF && m_buffer[1] == (char)0xBB && m_buffer[2] == (char)0xBF) {
+            m_posInBuffer = 3;
+        } else if (m_buffer[0] == (char)0xFE && m_buffer[1] == (char)0xFF || m_buffer[0] == (char)0xFF && m_buffer[1] == (char)0xEF) {
+            m_posInBuffer = 2;
+        }
+    }
+
     m_posInFile = __super::GetPosition();
 
     return !nBytesRead;
@@ -625,8 +635,9 @@ BOOL CTextFile::ReadString(CStringW& str)
             }
 
             if (bValid || m_offset) {
-                str.Append(m_wbuffer, nCharsRead);
-
+                if (nCharsRead > 0) {
+                    str.Append(m_wbuffer, nCharsRead);
+                }
                 if (!bLineEndFound) {
                     bLineEndFound = FillBuffer();
                     if (!nCharsRead) {
