@@ -37,13 +37,7 @@ void CMPCThemeGroupBox::OnPaint()
         CString text;
         GetWindowText(text);
 
-        CFont* font;
-
-        if (manuallySetFont) {
-            font = CFont::FromHandle(manuallySetFont); //font for created window and SetFont()
-        } else {
-            font = GetFont(); //font for subclassed window
-        }
+        CFont* font = GetFont();
         
         CSize cs = CMPCThemeUtil::GetTextSize(_T("W"), hDC, font);
         ::ReleaseDC(NULL, hDC);
