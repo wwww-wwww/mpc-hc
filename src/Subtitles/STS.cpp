@@ -1739,6 +1739,7 @@ static bool OpenSubStationAlpha(CTextFile* file, CSimpleTextSubtitle& ret, int C
     bool fRet = false;
     int version = 3, sver = 3;
     CStringW buff;
+    int ignore_count = 0;
 
     while (file->ReadString(buff)) {
         FastTrim(buff);
@@ -1961,6 +1962,11 @@ static bool OpenSubStationAlpha(CTextFile* file, CSimpleTextSubtitle& ret, int C
             }
         } else {
             TRACE(_T("Ignoring unknown SSA entry: %s\n"), entry);
+            if (!fRet) {
+                if (++ignore_count >= 20) {
+                    return false;
+                }
+            }
         }
     }
 
