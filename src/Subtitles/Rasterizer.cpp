@@ -332,7 +332,7 @@ bool Rasterizer::PartialEndPath(HDC hdc, long dx, long dy)
             delete [] pPoints;
             return true;
         } else {
-            DebugBreak();
+            ASSERT(FALSE);
         }
 
         delete [] pTypes;
