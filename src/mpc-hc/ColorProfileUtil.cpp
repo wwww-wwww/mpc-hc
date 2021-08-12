@@ -31,6 +31,10 @@ TCHAR* ColorProfileUtil::getIccProfilePath(HWND wnd)
 
 bool ColorProfileUtil::applyColorProfile(HWND wnd, CImage& image)
 {
+    if (image.GetBPP() < 24) {
+        return false;
+    }
+
     cmsHPROFILE hInputProfile = cmsCreate_sRGBProfile();
 
     cmsHPROFILE hOutputProfile = nullptr;
