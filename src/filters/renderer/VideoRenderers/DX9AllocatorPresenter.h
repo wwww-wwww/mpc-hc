@@ -80,7 +80,7 @@ namespace DSObjects
 
                 if (!IsBadReadPtr(pCritSec, sizeof(*pCritSec)) && !IsBadWritePtr(pCritSec, sizeof(*pCritSec))
                         && !IsBadReadPtr(pCritSec->DebugInfo, sizeof(*(pCritSec->DebugInfo))) && !IsBadWritePtr(pCritSec->DebugInfo, sizeof(*(pCritSec->DebugInfo)))) {
-                    if (pCritSec->DebugInfo->CriticalSection == pCritSec) {
+                    if (pCritSec->DebugInfo->CriticalSection == pCritSec && pCritSec->OwningThread) {
                         LeaveCriticalSection(pCritSec);
                     }
                 }
