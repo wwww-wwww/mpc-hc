@@ -1961,7 +1961,7 @@ static bool OpenSubStationAlpha(CTextFile* file, CSimpleTextSubtitle& ret, int C
                 version = 5;
             }
         } else {
-            TRACE(_T("Ignoring unknown SSA entry: %s\n"), entry);
+            TRACE(_T("Ignoring unknown SSA entry: %s\n"), static_cast<LPCWSTR>(entry));
             if (!fRet) {
                 if (++ignore_count >= 20) {
                     return false;
@@ -3087,7 +3087,7 @@ bool CSimpleTextSubtitle::Open(BYTE* data, int length, int CharSet, CString prov
 
     m_provider = provider;
     CString name;
-    name.Format(_T("%s.%s"), lang, ext);
+    name.Format(_T("%s.%s"), static_cast<LPCWSTR>(lang), static_cast<LPCWSTR>(ext));
     CW2A temp(lang);
     m_lcid = ISOLang::ISO6391ToLcid(temp);
     return Open(data, length, CharSet, name);
@@ -3098,7 +3098,7 @@ bool CSimpleTextSubtitle::Open(CString data, CTextFile::enc SaveCharSet, int Rea
 
     m_provider = provider;
     CString name;
-    name.Format(_T("%s.%s"), lang, ext);
+    name.Format(_T("%s.%s"), static_cast<LPCWSTR>(lang), static_cast<LPCWSTR>(ext));
     CW2A temp(lang);
     m_lcid = ISOLang::ISO6391ToLcid(temp);
     TCHAR path[MAX_PATH];
