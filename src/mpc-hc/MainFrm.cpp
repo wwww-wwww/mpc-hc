@@ -756,6 +756,7 @@ CMainFrame::CMainFrame()
     , m_lCurrentChapter(0)
     , m_lChapterStartTime(0xFFFFFFFF)
     , m_eMediaLoadState(MLS::CLOSED)
+    , m_CachedFilterState(-1)
     , m_bSettingUpMenus(false)
     , m_bOpenMediaActive(false)
     , m_fFullScreen(false)
@@ -2661,6 +2662,7 @@ LRESULT CMainFrame::OnGraphNotify(WPARAM wParam, LPARAM lParam)
 
     LONG evCode = 0;
     LONG_PTR evParam1, evParam2;
+    bool updateMediaState;
     while (!AfxGetMyApp()->m_fClosingState && m_pME && SUCCEEDED(m_pME->GetEvent(&evCode, &evParam1, &evParam2, 0))) {
 #ifdef _DEBUG
         if (evCode != EC_DVD_CURRENT_HMSF_TIME) {
@@ -2668,26 +2670,31 @@ LRESULT CMainFrame::OnGraphNotify(WPARAM wParam, LPARAM lParam)
         }
 #endif
         CString str;
-
         if (m_fCustomGraph) {
             if (EC_BG_ERROR == evCode) {
                 str = CString((char*)evParam1);
             }
         }
 
+        updateMediaState = false;
+
         hr = m_pME->FreeEventParams(evCode, evParam1, evParam2);
 
         CComPtr<IDvdState> pStateData;
         switch (evCode) {
+            case EC_PAUSED:
+                updateMediaState = true;
+                break;
             case EC_COMPLETE:
+                GetMediaStateDirect();
                 GraphEventComplete();
                 break;
             case EC_ERRORABORT:
+                updateMediaState = true;
                 TRACE(_T("\thr = %08x\n"), (HRESULT)evParam1);
                 break;
             case EC_BUFFERING_DATA:
                 TRACE(_T("\tBuffering data = %s\n"), evParam1 ? _T("true") : _T("false"));
-
                 m_bBuffering = !!evParam1;
                 break;
             case EC_STEP_COMPLETE:
@@ -2696,6 +2703,7 @@ LRESULT CMainFrame::OnGraphNotify(WPARAM wParam, LPARAM lParam)
                 }
                 break;
             case EC_DEVICE_LOST:
+                updateMediaState = true;
                 if (evParam2 == 0) {
                     // Device lost
                     if (GetPlaybackMode() == PM_ANALOG_CAPTURE) {
@@ -3002,6 +3010,7 @@ LRESULT CMainFrame::OnGraphNotify(WPARAM wParam, LPARAM lParam)
                 }
                 break;
             case EC_BG_ERROR:
+                updateMediaState = true;
                 if (m_fCustomGraph) {
                     SendMessage(WM_COMMAND, ID_FILE_CLOSEMEDIA);
                     m_closingmsg = !str.IsEmpty() ? str : CString(_T("Unspecified graph error"));
@@ -3015,7 +3024,25 @@ LRESULT CMainFrame::OnGraphNotify(WPARAM wParam, LPARAM lParam)
                     AutoChangeMonitorMode();
                 }
                 break;
+            case 0xfa17:
+                // madVR changed graph state
+                updateMediaState = true;
+                break;
+            default:
+                updateMediaState = true;
+                TRACE(_T("Unhandled graph event\n"));
         }
+
+        if (updateMediaState) {
+            GetMediaStateDirect();
+        }
+#if DEBUG
+        else if (evCode != EC_COMPLETE){
+            // sanity check
+            OAFilterState cfs  = m_CachedFilterState;
+            ASSERT(GetMediaStateDirect() == cfs);
+        }
+#endif
     }
 
     return hr;
@@ -3028,9 +3055,9 @@ LRESULT CMainFrame::OnResetDevice(WPARAM wParam, LPARAM lParam)
     OAFilterState fs = GetMediaState();
     if (fs == State_Running) {
         if (!IsPlaybackCaptureMode()) {
-            m_pMC->Pause();
+            MediaControlPause(true);
         } else {
-            m_pMC->Stop(); // Capture mode doesn't support pause
+            MediaControlStop(true); // Capture mode doesn't support pause
         }
     }
 
@@ -3043,8 +3070,7 @@ LRESULT CMainFrame::OnResetDevice(WPARAM wParam, LPARAM lParam)
     }
 
     if (fs == State_Running && m_pMC) {
-        m_pMC->Run();
-        m_dwLastPause = 0;
+        MediaControlRun();        
 
         // When restarting DVB capture, we need to set again the channel.
         if (GetPlaybackMode() == PM_DIGITAL_CAPTURE) {
@@ -3623,6 +3649,7 @@ LRESULT CMainFrame::OnFilePostOpenmedia(WPARAM wParam, LPARAM lParam)
     m_bOpenMediaActive = false;
     m_bSettingUpMenus = true;
     SetLoadState(MLS::LOADED);
+    ASSERT(GetMediaStateDirect() == State_Stopped);
 
     // destroy invisible top-level d3dfs window if there is no video renderer
     if (IsD3DFullScreenMode() && !m_pMFVDC && !m_pVMRWC) {
@@ -4849,14 +4876,14 @@ void CMainFrame::OnFileSaveAs()
     OAFilterState fs = State_Stopped;
     m_pMC->GetState(0, &fs);
     if (fs == State_Running) {
-        m_pMC->Pause();
+        MediaControlPause(true);
     }
 
     CSaveDlg dlg(in, p);
     dlg.DoModal();
 
     if (m_pMC && fs == State_Running) {
-        m_pMC->Run();
+        MediaControlRun();
     }
 }
 
@@ -4880,8 +4907,7 @@ bool CMainFrame::GetDIB(BYTE** ppData, long& size, bool fSilent)
     }
 
     if (fs == State_Running && !m_pCAP) {
-        m_pMC->Pause();
-        GetMediaState(); // wait for completion of the pause command
+        MediaControlPause(true); // wait for completion
     }
 
     HRESULT hr = S_OK;
@@ -4966,7 +4992,7 @@ bool CMainFrame::GetDIB(BYTE** ppData, long& size, bool fSilent)
     }
 
     if (fs == State_Running && GetMediaState() != State_Running) {
-        m_pMC->Run();
+        MediaControlRun();
     }
 
     if (FAILED(hr)) {
@@ -5188,8 +5214,7 @@ HRESULT CMainFrame::GetCurrentFrame(std::vector<BYTE>& dib, CString& errmsg) {
     }
 
     if (fs == State_Running && !m_pCAP) {
-        m_pMC->Pause();
-        GetMediaState(); // wait for completion of the pause command
+        MediaControlPause(true); //wait for completion
     }
 
     if (m_pCAP) {
@@ -5219,7 +5244,7 @@ HRESULT CMainFrame::GetCurrentFrame(std::vector<BYTE>& dib, CString& errmsg) {
     }
 
     if (fs == State_Running && GetMediaState() != State_Running) {
-        m_pMC->Run();
+        MediaControlRun();
     }
 
     return hr;
@@ -7809,7 +7834,7 @@ void CMainFrame::OnPlayPlay()
             m_pDVDC->PlayForwards(m_dSpeedRate, DVD_CMD_FLAG_Block, nullptr);
             m_pDVDC->Pause(FALSE);
         } else if (GetPlaybackMode() == PM_ANALOG_CAPTURE) {
-            m_pMC->Stop(); // audio preview won't be in sync if we run it from paused state
+            MediaControlStop(); // audio preview won't be in sync if we run it from paused state
         } else if (GetPlaybackMode() == PM_DIGITAL_CAPTURE) {
             CComQIPtr<IBDATuner> pTun = m_pGB;
             if (pTun) {
@@ -7827,8 +7852,7 @@ void CMainFrame::OnPlayPlay()
         }
 
         // Restart playback
-        m_dwLastPause = 0;
-        m_pMC->Run();
+        MediaControlRun();
 
         if (m_fFrameSteppingActive) {
             m_pFS->CancelStep();
@@ -7901,8 +7925,7 @@ void CMainFrame::OnPlayPauseI()
         if (GetPlaybackMode() == PM_FILE
                 || GetPlaybackMode() == PM_DVD
                 || GetPlaybackMode() == PM_ANALOG_CAPTURE) {
-            m_pMC->Pause();
-            m_dwLastPause = GetTickCount64();
+            MediaControlPause();
         } else {
             ASSERT(FALSE);
         }
@@ -7970,7 +7993,7 @@ void CMainFrame::OnPlayStop()
         if (GetPlaybackMode() == PM_FILE) {
             LONGLONG pos = 0;
             m_pMS->SetPositions(&pos, AM_SEEKING_AbsolutePositioning, nullptr, AM_SEEKING_NoPositioning);
-            m_pMC->Stop();
+            MediaControlStop();
 
             // BUG: after pause or stop the netshow url source filter won't continue
             // on the next play command, unless we cheat it by setting the file name again.
@@ -7993,7 +8016,7 @@ void CMainFrame::OnPlayStop()
             EndEnumFilters;
         } else if (GetPlaybackMode() == PM_DVD) {
             m_pDVDC->SetOption(DVD_ResetOnStop, TRUE);
-            m_pMC->Stop();
+            MediaControlStop();
             m_pDVDC->SetOption(DVD_ResetOnStop, FALSE);
 
             if (m_bUseSeekPreview && m_pDVDC_preview) {
@@ -8002,12 +8025,12 @@ void CMainFrame::OnPlayStop()
                 m_pDVDC_preview->SetOption(DVD_ResetOnStop, FALSE);
             }
         } else if (GetPlaybackMode() == PM_DIGITAL_CAPTURE) {
-            m_pMC->Stop();
+            MediaControlStop();
             m_pDVBState->bActive = false;
             OpenSetupWindowTitle();
             m_wndStatusBar.SetStatusTimer(StrRes(IDS_CAPTURE_LIVE));
         } else if (GetPlaybackMode() == PM_ANALOG_CAPTURE) {
-            m_pMC->Stop();
+            MediaControlStop();
         }
 
         m_dSpeedRate = 1.0;
@@ -8020,9 +8043,7 @@ void CMainFrame::OnPlayStop()
         }
         m_nStepForwardCount = 0;
     } else if (GetLoadState() == MLS::CLOSING) {
-        if (m_pMC) {
-            VERIFY(m_pMC->Stop() == S_OK);
-        }
+        MediaControlStop();
     }
 
     m_nLoops = 0;
@@ -10444,13 +10465,86 @@ CRect CMainFrame::GetInvisibleBorderSize() const
     return invisibleBorders;
 }
 
-OAFilterState CMainFrame::GetMediaState() const
+OAFilterState CMainFrame::GetMediaStateDirect()
 {
     OAFilterState ret = -1;
-    if (GetLoadState() == MLS::LOADED) {
+    if (m_eMediaLoadState == MLS::LOADED) {
         m_pMC->GetState(0, &ret);
     }
+    m_CachedFilterState = ret;
     return ret;
+}
+
+OAFilterState CMainFrame::GetMediaState()
+{
+    if (m_eMediaLoadState == MLS::LOADED) {
+        if (m_CachedFilterState != -1) {
+            #if DEBUG & 0
+            OAFilterState cfs = m_CachedFilterState;
+            ASSERT(GetMediaStateDirect() == cfs);
+            #endif
+            return m_CachedFilterState;
+        }
+        return GetMediaStateDirect();
+    }
+    return -1;
+}
+
+bool CMainFrame::MediaControlRun(bool waitforcompletion)
+{
+    m_dwLastPause = 0;
+    if (m_pMC) {
+        ASSERT(m_CachedFilterState != State_Running);
+        m_CachedFilterState = State_Running;
+        if (!m_pMC->Run()) {
+            // still in transition to running state
+            if (waitforcompletion) {
+                OAFilterState fs = -1;
+                m_pMC->GetState(0, &fs);
+                ASSERT(fs == State_Running);
+            }
+        };
+        return true;
+    }
+    return false;
+}
+
+bool CMainFrame::MediaControlPause(bool waitforcompletion)
+{
+    m_dwLastPause = GetTickCount64();
+    if (m_pMC) {
+        ASSERT(m_CachedFilterState != State_Paused);
+        m_CachedFilterState = State_Paused;
+        if (!m_pMC->Pause()) {
+            // still in transition to paused state
+            if (waitforcompletion) {
+                OAFilterState fs = -1;
+                m_pMC->GetState(0, &fs);
+                ASSERT(fs == State_Paused);
+            }
+        }
+        return true;
+    }
+    return false;
+}
+
+bool CMainFrame::MediaControlStop(bool waitforcompletion)
+{
+    m_dwLastPause = 0;
+    if (m_pMC) {
+        m_CachedFilterState = State_Stopped;
+        if (FAILED(m_pMC->Stop())) {
+            ASSERT(FALSE);
+            return false;
+        }
+        if (waitforcompletion) {
+            OAFilterState fs = -1;
+            m_pMC->GetState(0, &fs);
+            ASSERT(fs == State_Stopped);
+        }
+        return true;
+    }
+    return false;
 }
 
 void CMainFrame::SetPlaybackMode(int iNewStatus)
@@ -12784,11 +12878,11 @@ void CMainFrame::OpenCapture(OpenDeviceData* pODD)
                 OAFilterState fs = State_Stopped;
                 m_pMC->GetState(0, &fs);
                 if (fs == State_Running) {
-                    m_pMC->Pause();
+                    MediaControlPause(true);
                 }
                 m_pAMTuner->put_Channel(vchannel, AMTUNER_SUBCHAN_DEFAULT, AMTUNER_SUBCHAN_DEFAULT);
                 if (fs == State_Running) {
-                    m_pMC->Run();
+                    MediaControlRun();
                 }
             }
         }
@@ -13912,9 +14006,9 @@ void CMainFrame::CloseMediaPrivate()
 {
     ASSERT(GetLoadState() == MLS::CLOSING);
 
-    if (m_pMC) {
-        m_pMC->Stop(); // needed for StreamBufferSource, because m_iMediaLoadState is always MLS::CLOSED // TODO: fix the opening for such media
-    }
+    MediaControlStop(true); // needed for StreamBufferSource, because m_iMediaLoadState is always MLS::CLOSED // TODO: fix the opening for such media
+    m_CachedFilterState = -1;
+
     m_fLiveWM = false;
     m_fEndOfStream = false;
     m_bBuffering = false;
@@ -15575,7 +15669,7 @@ HRESULT CMainFrame::InsertTextPassThruFilter(IBaseFilter* pBF, IPin* pPin, IPin*
 
     OAFilterState fs = GetMediaState();
     if (fs == State_Running || fs == State_Paused) {
-        m_pMC->Stop();
+        MediaControlStop(true);
     }
 
     hr = pPinTo->Disconnect();
@@ -15590,9 +15684,9 @@ HRESULT CMainFrame::InsertTextPassThruFilter(IBaseFilter* pBF, IPin* pPin, IPin*
     }
 
     if (fs == State_Running) {
-        m_pMC->Run();
+        MediaControlRun();
     } else if (fs == State_Paused) {
-        m_pMC->Pause();
+        MediaControlPause();
     }
 
     return hr;

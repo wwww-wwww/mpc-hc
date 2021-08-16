@@ -439,6 +439,8 @@ private:
     void SendNowPlayingToSkype();
 
     MLS m_eMediaLoadState;
+    OAFilterState m_CachedFilterState;
+
     bool m_bSettingUpMenus;
     bool m_bOpenMediaActive;
 
@@ -598,7 +600,12 @@ public:
     void RepaintVideo();
     void HideVideoWindow(bool fHide);
 
-    OAFilterState GetMediaState() const;
+    OAFilterState GetMediaStateDirect();
+    OAFilterState GetMediaState();
+    bool MediaControlRun(bool waitforcompletion = false);
+    bool MediaControlPause(bool waitforcompletion = false);
+    bool MediaControlStop(bool waitforcompletion = false);
+
     REFERENCE_TIME GetPos() const;
     REFERENCE_TIME GetDur() const;
     bool GetKeyFrame(REFERENCE_TIME rtTarget, REFERENCE_TIME rtMin, REFERENCE_TIME rtMax, bool nearest, REFERENCE_TIME& keyframetime) const;
