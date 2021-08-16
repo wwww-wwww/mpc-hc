@@ -430,6 +430,9 @@ namespace SaneAudioRenderer
                 // Recreate
                 backend->audioClient = nullptr;
                 CreateAudioClient(pEnumerator, *backend);
+                if (!backend->audioClient) {
+                    return E_FAIL;
+                }
 
                 // Initialize
                 {
