@@ -450,9 +450,8 @@ public:
 };
 #endif
 
-bool CDX9AllocatorPresenter::SettingsNeedResetDevice()
+bool CDX9AllocatorPresenter::SettingsNeedResetDevice(CRenderersSettings& r)
 {
-    CRenderersSettings& r = GetRenderersSettings();
     CRenderersSettings::CAdvRendererSettings& New = r.m_AdvRendSets;
     CRenderersSettings::CAdvRendererSettings& Current = m_LastRendererSettings;
 
@@ -1325,7 +1324,7 @@ STDMETHODIMP_(bool) CDX9AllocatorPresenter::Paint(bool bAll)
         return false;
     }
 
-    const CRenderersSettings& r = GetRenderersSettings();
+    CRenderersSettings& r = GetRenderersSettings();
     if (&r == nullptr) {
         return false;
     }
@@ -1609,7 +1608,7 @@ STDMETHODIMP_(bool) CDX9AllocatorPresenter::Paint(bool bAll)
             fResetDevice = true;
         }
 
-        if (SettingsNeedResetDevice()) {
+        if (SettingsNeedResetDevice(r)) {
             TRACE(_T("Reset Device: settings changed\n"));
             fResetDevice = true;
         }

@@ -94,7 +94,7 @@ namespace DSObjects
         CComPtr<ID3DXFont>              m_pFont;
         CComPtr<ID3DXSprite>            m_pSprite;
 
-        bool SettingsNeedResetDevice();
+        bool SettingsNeedResetDevice(CRenderersSettings& r);
 
         virtual HRESULT CreateDevice(CString& _Error);
         virtual HRESULT AllocSurfaces();
