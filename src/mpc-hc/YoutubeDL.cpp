@@ -162,7 +162,11 @@ bool CYoutubeDLInstance::Run(CString url)
     if (exitcode) {
         CString err = buf_err;
         if (err.IsEmpty()) {
-            err.Format(_T("An error occurred while running youtube-dl.exe\n\nprocess exitcode = %d"), exitcode);
+            if (exitcode == 0xC0000135) {
+                err.Format(_T("An error occurred while running youtube-dl.exe\n\nYou probably forgot to install this required runtime:\nMicrosoft Visual C++ 2010 Service Pack 1 Redistributable Package (x86)"));
+            } else {
+                err.Format(_T("An error occurred while running youtube-dl.exe\n\nprocess exitcode = 0x%08x"), exitcode);
+            }
         } else {
             if (err.Find(_T("ERROR: Unsupported URL")) >= 0) {
                 // abort without showing error message
