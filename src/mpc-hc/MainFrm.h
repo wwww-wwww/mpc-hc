@@ -562,8 +562,8 @@ protected:
 protected:
     friend class CSubtitleDlDlg;
     CSubtitleDlDlg m_wndSubtitlesDownloadDialog;
-    friend class CSubtitleUpDlg;
-    CSubtitleUpDlg m_wndSubtitlesUploadDialog;
+    //friend class CSubtitleUpDlg;
+    //CSubtitleUpDlg m_wndSubtitlesUploadDialog;
     friend class CPPageSubMisc;
 
     friend class SubtitlesProviders;
@@ -858,8 +858,8 @@ public:
     afx_msg void OnUpdateFileSubtitlesLoad(CCmdUI* pCmdUI);
     afx_msg void OnFileSubtitlesSave();
     afx_msg void OnUpdateFileSubtitlesSave(CCmdUI* pCmdUI);
-    afx_msg void OnFileSubtitlesUpload();
-    afx_msg void OnUpdateFileSubtitlesUpload(CCmdUI* pCmdUI);
+    //afx_msg void OnFileSubtitlesUpload();
+    //afx_msg void OnUpdateFileSubtitlesUpload(CCmdUI* pCmdUI);
     afx_msg void OnFileSubtitlesDownload();
     afx_msg void OnUpdateFileSubtitlesDownload(CCmdUI* pCmdUI);
     afx_msg void OnFileProperties();

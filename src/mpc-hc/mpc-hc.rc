@@ -834,18 +834,18 @@ BEGIN
     EDITTEXT        IDC_EDIT1,341,183,102,13,ES_AUTOHSCROLL
 END
 
-IDD_SUBTITLEUP_DLG DIALOGEX 0, 0, 500, 200
-STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "Upload subtitles"
-FONT 9, "Segoe UI", 400, 0, 0x1
-BEGIN
-    CONTROL         "",IDC_LIST1,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_SHAREIMAGELISTS | LVS_ALIGNLEFT | WS_BORDER | WS_TABSTOP,5,5,490,157
-    DEFPUSHBUTTON   "Upload",IDOK,341,166,50,14
-    PUSHBUTTON      "Abort",IDC_BUTTON1,393,166,50,14,WS_DISABLED
-    PUSHBUTTON      "Options",IDC_BUTTON2,445,166,50,14
-    CONTROL         "",IDC_STATUSBAR,"msctls_statusbar32",0x103,0,184,499,16
-    CONTROL         "",IDC_PROGRESS1,"msctls_progress32",PBS_SMOOTH,213,166,82,14
-END
+//IDD_SUBTITLEUP_DLG DIALOGEX 0, 0, 500, 200
+//STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+//CAPTION "Upload subtitles"
+//FONT 9, "Segoe UI", 400, 0, 0x1
+//BEGIN
+//    CONTROL         "",IDC_LIST1,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_SHAREIMAGELISTS | LVS_ALIGNLEFT | WS_BORDER | WS_TABSTOP,5,5,490,157
+//    DEFPUSHBUTTON   "Upload",IDOK,341,166,50,14
+//    PUSHBUTTON      "Abort",IDC_BUTTON1,393,166,50,14,WS_DISABLED
+//    PUSHBUTTON      "Options",IDC_BUTTON2,445,166,50,14
+//    CONTROL         "",IDC_STATUSBAR,"msctls_statusbar32",0x103,0,184,499,16
+//    CONTROL         "",IDC_PROGRESS1,"msctls_progress32",PBS_SMOOTH,213,166,82,14
+//END
 
 IDD_FILEPROPRES DIALOGEX 0, 0, 284, 252
 STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD
@@ -1024,7 +1024,7 @@ BEGIN
     GROUPBOX        "Autoload paths",IDC_STATIC,6,49,343,38
     EDITTEXT        IDC_EDIT1,14,64,264,14,ES_AUTOHSCROLL
     PUSHBUTTON      "Reset",IDC_BUTTON1,281,64,60,14
-    GROUPBOX        "Online search, download and upload subtitles",IDC_STATIC,6,91,343,192
+    GROUPBOX        "Online subtitle search",IDC_STATIC,6,91,343,192
     CONTROL         "Automatically search and download subtitles if none are found locally",IDC_CHECK4,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,14,108,327,8
     CONTROL         "Prefer subtitles for hearing impaired (when indicated by subtitles provider)",IDC_CHECK5,
@@ -1515,7 +1515,7 @@ BEGIN
             MENUITEM "Save S&ubtitles...",          ID_FILE_SUBTITLES_SAVE
             MENUITEM SEPARATOR
             MENUITEM "&Download Subtitles...",      ID_FILE_SUBTITLES_DOWNLOAD
-            MENUITEM "&Upload Subtitles...",        ID_FILE_SUBTITLES_UPLOAD
+            //MENUITEM "&Upload Subtitles...",        ID_FILE_SUBTITLES_UPLOAD
         END
         MENUITEM SEPARATOR
         MENUITEM "P&roperties",                 ID_FILE_PROPERTIES
@@ -1795,7 +1795,7 @@ BEGIN
                 MENUITEM "Save S&ubtitles...",          ID_FILE_SUBTITLES_SAVE
                 MENUITEM SEPARATOR
                 MENUITEM "&Download Subtitles...",      ID_FILE_SUBTITLES_DOWNLOAD
-                MENUITEM "&Upload Subtitles...",        ID_FILE_SUBTITLES_UPLOAD
+                //MENUITEM "&Upload Subtitles...",        ID_FILE_SUBTITLES_UPLOAD
             END
             MENUITEM SEPARATOR
             MENUITEM "P&roperties",                 ID_FILE_PROPERTIES
@@ -2046,7 +2046,7 @@ BEGIN
                 MENUITEM "Save S&ubtitles...",          ID_FILE_SUBTITLES_SAVE
                 MENUITEM SEPARATOR
                 MENUITEM "&Download Subtitles...",      ID_FILE_SUBTITLES_DOWNLOAD
-                MENUITEM "&Upload Subtitles...",        ID_FILE_SUBTITLES_UPLOAD
+                //MENUITEM "&Upload Subtitles...",        ID_FILE_SUBTITLES_UPLOAD
             END
             MENUITEM SEPARATOR
             MENUITEM "P&roperties",                 ID_FILE_PROPERTIES
@@ -2765,7 +2765,7 @@ BEGIN
     IDS_EMB_RESOURCES_VIEWER_INFO 
                             "In order to view an embedded resource in your browser you have to enable the web interface.\n\nUse the ""Save As"" button if you only want to save the information."
     IDS_SUBTITLES_DOWNLOAD  "Download Subtitles..."
-    IDS_SUBTITLES_UPLOAD    "Upload Subtitles..."
+    //IDS_SUBTITLES_UPLOAD    "Upload Subtitles..."
     IDS_SUBFILE_DELAY       "Delay (ms):"
     IDS_SPEEDSTEP_AUTO      "Auto"
     IDS_EXPORT_SETTINGS_NO_KEYS "There are no customized keys to export."

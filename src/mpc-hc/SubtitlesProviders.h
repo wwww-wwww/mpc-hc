@@ -237,7 +237,7 @@ private:
     void Search();
     void Download(SubtitlesInfo& pFileInfo, BOOL bActivate);
     void Download();
-    void Upload();
+    //void Upload();
 
     void CheckAbortAndThrow() {
         if (IsThreadAborting()) {

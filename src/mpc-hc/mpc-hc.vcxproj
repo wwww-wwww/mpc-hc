@@ -287,7 +287,9 @@
     <ClCompile Include="SubtitlesProvider.cpp" />
     <ClCompile Include="SubtitlesProviders.cpp" />
     <ClCompile Include="SubtitlesProvidersUtils.cpp" />
-    <ClCompile Include="SubtitleUpDlg.cpp" />
+    <ClCompile Include="SubtitleUpDlg.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="TextPassThruFilter.cpp" />
     <ClCompile Include="TunerScanDlg.cpp" />
     <ClCompile Include="UpdateChecker.cpp" />
