@@ -303,11 +303,11 @@ namespace SaneAudioRenderer
 
                             DebugOut(ClassName(this), "awaiting renew");
 
-                            int64_t currentPosition = GetPosition();
-                            m_renewPosition = FramesToTimeLong(m_receivedFrames - m_bufferFrames, GetRate());
-
                             try
                             {
+                                int64_t currentPosition = GetPosition();
+                                m_renewPosition = FramesToTimeLong(m_receivedFrames - m_bufferFrames, GetRate());
+
                                 int64_t renewSilence = m_renewPosition - currentPosition;
                                 if (renewSilence > 0)
                                     m_renewSilenceFrames = TimeToFrames(renewSilence, GetRate());
