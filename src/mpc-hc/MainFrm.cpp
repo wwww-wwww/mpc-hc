@@ -19548,6 +19548,8 @@ bool CMainFrame::ProcessYoutubeDLURL(CString url, bool append, bool replace)
     CYoutubeDLInstance ydl;
     CYoutubeDLInstance::YDLPlaylistInfo listinfo;
 
+    m_sydlLastProcessURL = url;
+
     m_wndStatusBar.SetStatusMessage(ResStr(IDS_CONTROLS_YOUTUBEDL));
 
     if (!ydl.Run(url)) {
@@ -19557,7 +19559,12 @@ bool CMainFrame::ProcessYoutubeDLURL(CString url, bool append, bool replace)
         return false;
     }
 
-    m_sydlLastProcessURL = url;
+    if (streams.GetCount() > 0) {
+        if (streams.GetHead().video_url != url && streams.GetHead().audio_url != url) {
+            m_sydlLastProcessURL.Empty();
+        }
+    }
+
 
     if (!append && !replace) {
         m_wndPlaylistBar.Empty();
