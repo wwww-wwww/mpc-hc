@@ -58,4 +58,5 @@ protected:
 
 public:
     afx_msg void OnDestroy();
+    CString GetNextPathName(POSITION& pos) const;
 };

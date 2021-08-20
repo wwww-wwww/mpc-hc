@@ -154,3 +154,84 @@ BOOL COpenFileDlg::OnIncludeItem(OFNOTIFYEX* pOFNEx, LRESULT* pResult)
 
     return TRUE;
 }
+
+// override CFileDialog::GetNextPathName() and increase max path length
+CString COpenFileDlg::GetNextPathName(POSITION& pos) const
+{
+    BOOL bExplorer = m_ofn.Flags & OFN_EXPLORER;
+    TCHAR chDelimiter;
+    if (bExplorer)
+        chDelimiter = '\0';
+    else
+        chDelimiter = ' ';
+
+    LPTSTR lpsz = (LPTSTR)pos;
+    if (lpsz == m_ofn.lpstrFile) // first time
+    {
+        if ((m_ofn.Flags & OFN_ALLOWMULTISELECT) == 0)
+        {
+            pos = NULL;
+            return m_ofn.lpstrFile;
+        }
+
+        // find char pos after first Delimiter
+        while (*lpsz != chDelimiter && *lpsz != '\0')
+            lpsz = _tcsinc(lpsz);
+        lpsz = _tcsinc(lpsz);
+
+        // if single selection then return only selection
+        if (*lpsz == 0)
+        {
+            pos = NULL;
+            return m_ofn.lpstrFile;
+        }
+    }
+
+    CString strBasePath = m_ofn.lpstrFile;
+    if (!bExplorer)
+    {
+        LPTSTR lpszPath = m_ofn.lpstrFile;
+        while (*lpszPath != chDelimiter)
+            lpszPath = _tcsinc(lpszPath);
+        strBasePath = strBasePath.Left(int(lpszPath - m_ofn.lpstrFile));
+    }
+
+    LPTSTR lpszFileName = lpsz;
+    CString strFileName = lpsz;
+
+    // find char pos at next Delimiter
+    while (*lpsz != chDelimiter && *lpsz != '\0')
+        lpsz = _tcsinc(lpsz);
+
+    if (!bExplorer && *lpsz == '\0')
+        pos = NULL;
+    else
+    {
+        if (!bExplorer)
+            strFileName = strFileName.Left(int(lpsz - lpszFileName));
+
+        lpsz = _tcsinc(lpsz);
+        if (*lpsz == '\0') // if double terminated then done
+            pos = NULL;
+        else
+            pos = (POSITION)lpsz;
+    }
+
+    TCHAR strDrive[_MAX_DRIVE], strDir[4 * _MAX_DIR], strName[4 * _MAX_FNAME], strExt[_MAX_EXT];
+    Checked::tsplitpath_s(strFileName, strDrive, _MAX_DRIVE, strDir, 4 * _MAX_DIR, strName, 4 * _MAX_FNAME, strExt, _MAX_EXT);
+    TCHAR strPath[4 * _MAX_PATH];
+    if (*strDrive || *strDir)
+    {
+        Checked::tcscpy_s(strPath, _countof(strPath), strFileName);
+    } else
+    {
+        if ((strBasePath.GetLength() != 3) || (strBasePath[1] != ':') || (strBasePath[2] != '\\'))
+        {
+            strBasePath += _T("\\");
+        }
+        Checked::tsplitpath_s(strBasePath, strDrive, _MAX_DRIVE, strDir, 4 * _MAX_DIR, NULL, 0, NULL, 0);
+        Checked::tmakepath_s(strPath, 4 * _MAX_PATH, strDrive, strDir, strName, strExt);
+    }
+
+    return strPath;
+}
