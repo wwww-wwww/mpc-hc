@@ -3980,19 +3980,21 @@ BEGIN
     IDS_POSTSIZE_SHADERS_DISABLED "Post-Resize Pixel Shaders: off"
     IDS_POSTSIZE_SHADERS_TOGGLE "Enable Post-Resize Pixel Shaders"
     IDS_PPAGEADVANCED_TIME_REFRESH_INTERVAL 
-                            "Refresh interval (in milliseconds) of time in status bar"
+                            "Refresh interval (in milliseconds) of time in status bar."
 END
 
 STRINGTABLE
 BEGIN
     IDS_PPAGEADVANCED_SHOW_LANG_STATUSBAR 
-                            "Display current audio and subtitle language in status bar"
+                            "Display current audio and subtitle language in status bar."
     IDS_PPAGEADVANCED_SHOW_FPS_STATUSBAR 
-                            "Display current fps and rate in status bar"
+                            "Display current fps and rate in status bar."
     IDS_PPAGEADVANCED_ADD_LANGCODE_WHEN_SAVE_SUBTITLES 
                             "When save the subtitles file, the language code (if available) text will be added to suggested file name by default."
     IDS_PPAGEADVANCED_USE_TITLE_IN_RECENT_FILE_LIST 
                             "Use title in recent file list."
+    IDS_PPAGEADVANCED_SHOW_ABMARKS_STATUSBAR 
+                            "Display current A-B repeat marks in status bar."
 END
 
 #endif    // English (United States) resources

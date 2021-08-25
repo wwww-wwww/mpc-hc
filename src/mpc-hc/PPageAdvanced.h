@@ -187,6 +187,7 @@ private:
         USE_LEGACY_TOOLBAR,
         LANG_STATUSBAR,
         FPS_STATUSBAR,
+        ABMARKS_STATUSBAR,
         RECENT_FILES_NB,
         FILE_POS_LONGER,
         FILE_POS_AUDIO,

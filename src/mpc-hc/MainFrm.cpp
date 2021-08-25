@@ -3605,7 +3605,9 @@ void CMainFrame::OnUpdatePlayerStatus(CCmdUI* pCmdUI)
             if (m_bUsingDXVA && (msg == ResStr(IDS_CONTROLS_PAUSED) || msg == ResStr(IDS_CONTROLS_PLAYING))) {
                 msg.AppendFormat(_T(" %s"), ResStr(IDS_HW_INDICATOR).GetString());
             }
-            if (AfxGetAppSettings().bShowLangInStatusbar) {
+
+            auto& s = AfxGetAppSettings();
+            if (s.bShowLangInStatusbar) {
                 if (!currentAudioLang.IsEmpty() || !currentSubLang.IsEmpty()) {
                     msg.Append(_T("\u2001["));
                     if (!currentAudioLang.IsEmpty()) {
@@ -3620,8 +3622,25 @@ void CMainFrame::OnUpdatePlayerStatus(CCmdUI* pCmdUI)
                     msg.Append(_T("]"));
                 }
             }
-            if (AfxGetAppSettings().bShowFPSInStatusbar && m_pCAP) {
-                msg.AppendFormat(_T("\u2001%.2lf fps (%.2lfx)"), m_pCAP->GetFPS(), m_dSpeedRate);
+            if (s.bShowFPSInStatusbar && m_pCAP) {
+                msg.AppendFormat(_T("\u2001[%.2lf fps (%.2lfx)]"), m_pCAP->GetFPS(), m_dSpeedRate);
+            }
+            if (s.bShowABMarksInStatusbar) {
+                if (abRepeatPositionAEnabled || abRepeatPositionBEnabled) {
+                    msg.Append(_T("\u2001[A-B "));
+                    if(abRepeatPositionAEnabled) {
+                        CString timeMarkA = ReftimeToString2(abRepeatPositionA);
+                        msg.Append(timeMarkA.GetString());
+                    }
+                    if(abRepeatPositionBEnabled) {
+                        if(abRepeatPositionAEnabled) {
+                            msg.AppendChar(_T(' '));
+                        }
+                        CString timeMarkB = ReftimeToString2(abRepeatPositionB);
+                        msg.AppendFormat(_T("> %s"), timeMarkB.GetString());
+                    }
+                    msg.Append(_T("]"));
+                }
             }
         }
 
