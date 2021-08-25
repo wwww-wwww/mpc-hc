@@ -9552,14 +9552,9 @@ bool CMainFrame::CanSkipFromClosedFile() {
     if (GetPlaybackMode() == PM_NONE && AfxGetAppSettings().fUseSearchInFolder) {
         if (m_wndPlaylistBar.GetCount() == 1) {
             CPlaylistItem* pli = m_wndPlaylistBar.GetCur();
-            if (pli && !pli->m_fns.IsEmpty()) {
-                CString in = pli->m_fns.GetHead();
-                if (!(pli->m_bYoutubeDL || PathUtils::IsURL(in))) {
-                    return true;
-                }
-            }
+            return pli && !pli->m_fns.IsEmpty() && !PathUtils::IsURL(pli->m_fns.GetHead());
         } else if (m_wndPlaylistBar.GetCount() == 0 && !lastOpenFile.IsEmpty()) {
-            return true;
+            return !PathUtils::IsURL(lastOpenFile);
         }
     }
     return false;
@@ -14139,6 +14134,8 @@ void CMainFrame::CloseMediaPrivate()
 
     m_VidDispName.Empty();
     m_AudDispName.Empty();
+
+    m_lastOMD.Free();
 	
 	m_FontInstaller.UninstallFonts();
 }
@@ -14163,6 +14160,10 @@ bool CMainFrame::SearchInDir(bool bDirForward, bool bLoop /*= false*/)
         }
     } else {
         filename = pFileData->title;
+    }
+
+    if (PathUtils::IsURL(filename)) {
+        return false;
     }
 
     std::set<CString, CStringUtils::LogicalLess> files;
