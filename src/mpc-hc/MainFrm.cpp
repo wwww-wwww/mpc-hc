@@ -19701,7 +19701,14 @@ bool CMainFrame::DownloadWithYoutubeDL(CString url, CString filename)
     STARTUPINFO startup_info;
     const auto& s = AfxGetAppSettings();
 
-    CString args = _T("youtube-dl --console-title \"") + url + _T("\"");
+    CString ydlpath;
+    if (s.sYDLExePath.IsEmpty()) {
+        ydlpath = _T("youtube-dl.exe");
+    } else {
+        ydlpath = s.sYDLExePath;
+    }
+
+    CString args = ydlpath + _T(" --console-title \"") + url + _T("\"");
     if (!s.sYDLCommandLine.IsEmpty()) {
         args.Append(_T(" "));
         args.Append(s.sYDLCommandLine);
@@ -19719,7 +19726,7 @@ bool CMainFrame::DownloadWithYoutubeDL(CString url, CString filename)
 
     if (!CreateProcess(NULL, args.GetBuffer(), NULL, NULL, false, 0,
                        NULL, NULL, &startup_info, &proc_info)) {
-        AfxMessageBox(_T("An error occurred while attempting to run youtube-dl"), MB_ICONERROR, 0);
+        AfxMessageBox(_T("An error occurred while attempting to run Youtube-DL"), MB_ICONERROR, 0);
         return false;
     }
 

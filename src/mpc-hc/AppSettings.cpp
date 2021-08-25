@@ -225,6 +225,7 @@ CAppSettings::CAppSettings()
     , iYDLMaxHeight(1440)
     , iYDLVideoFormat(0)
     , bYDLAudioOnly(false)
+    , sYDLExePath(_T(""))
     , sYDLCommandLine(_T(""))
     , bSnapShotSubtitles(true)
     , bSnapShotKeepVideoExtension(true)
@@ -1172,6 +1173,7 @@ void CAppSettings::SaveSettings()
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_YDL_MAX_HEIGHT, iYDLMaxHeight);
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_YDL_VIDEO_FORMAT, iYDLVideoFormat);
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_YDL_AUDIO_ONLY, bYDLAudioOnly);
+    pApp->WriteProfileString(IDS_R_SETTINGS, IDS_RS_YDL_COMMAND_LINE, sYDLExePath);
     pApp->WriteProfileString(IDS_R_SETTINGS, IDS_RS_YDL_COMMAND_LINE, sYDLCommandLine);
 
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_ENABLE_CRASH_REPORTER, bEnableCrashReporter);
@@ -1988,6 +1990,7 @@ void CAppSettings::LoadSettings()
     iYDLMaxHeight = pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_YDL_MAX_HEIGHT, 1440);
     iYDLVideoFormat = pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_YDL_VIDEO_FORMAT, 0);
     bYDLAudioOnly   = pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_YDL_AUDIO_ONLY, FALSE);
+    sYDLExePath     = pApp->GetProfileString(IDS_R_SETTINGS, IDS_RS_YDL_EXEPATH, _T(""));
     sYDLCommandLine = pApp->GetProfileString(IDS_R_SETTINGS, IDS_RS_YDL_COMMAND_LINE, _T(""));
 
     bEnableCrashReporter = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_ENABLE_CRASH_REPORTER, TRUE);

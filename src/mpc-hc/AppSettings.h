@@ -859,6 +859,7 @@ public:
     int iYDLMaxHeight;
     int iYDLVideoFormat;
     bool bYDLAudioOnly;
+    CString sYDLExePath;
     CString sYDLCommandLine;
 
     bool bEnableCrashReporter;

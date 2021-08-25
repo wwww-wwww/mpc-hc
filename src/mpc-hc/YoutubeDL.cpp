@@ -58,7 +58,14 @@ bool CYoutubeDLInstance::Run(CString url)
 
     YDL_LOG(url);
 
-    CString args = _T("youtube-dl -J --no-warnings --youtube-skip-dash-manifest");
+    CString ydlpath;
+    if (s.sYDLExePath.IsEmpty()) {
+        ydlpath = _T("youtube-dl.exe");
+    } else {
+        ydlpath = s.sYDLExePath;
+    }
+
+    CString args = ydlpath + _T(" -J --no-warnings --youtube-skip-dash-manifest");
     if (!s.sYDLSubsPreference.IsEmpty()) {
         args.Append(_T(" --all-subs --write-sub"));
         if (s.bUseAutomaticCaptions) args.Append(_T(" --write-auto-sub"));
@@ -163,16 +170,16 @@ bool CYoutubeDLInstance::Run(CString url)
         CString err = buf_err;
         if (err.IsEmpty()) {
             if (exitcode == 0xC0000135) {
-                err.Format(_T("An error occurred while running youtube-dl.exe\n\nYou probably forgot to install this required runtime:\nMicrosoft Visual C++ 2010 Service Pack 1 Redistributable Package (x86)"));
+                err.Format(_T("An error occurred while running Youtube-DL\n\nYou probably forgot to install this required runtime:\nMicrosoft Visual C++ 2010 Service Pack 1 Redistributable Package (x86)"));
             } else {
-                err.Format(_T("An error occurred while running youtube-dl.exe\n\nprocess exitcode = 0x%08x"), exitcode);
+                err.Format(_T("An error occurred while running Youtube-DL\n\nprocess exitcode = 0x%08x"), exitcode);
             }
         } else {
             if (err.Find(_T("ERROR: Unsupported URL")) >= 0) {
                 // abort without showing error message
                 return false;
             }
-            err = _T("Youtube-dl.exe error message:\n\n") + err;
+            err = _T("Youtube-DL error message:\n\n") + err;
         }
         AfxMessageBox(err, MB_ICONERROR, 0);
     }
