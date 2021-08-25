@@ -1287,25 +1287,9 @@ msgctxt "IDD_SUBTITLEDL_DLG_IDC_BUTTON4"
 msgid "Search"
 msgstr ""
 
-msgctxt "IDD_SUBTITLEUP_DLG_CAPTION"
-msgid "Upload subtitles"
-msgstr "Prenesi podnapise gor"
-
-msgctxt "IDD_SUBTITLEUP_DLG_IDOK"
-msgid "Upload"
-msgstr "Prenesi gor"
-
-msgctxt "IDD_SUBTITLEUP_DLG_IDC_BUTTON1"
-msgid "Abort"
-msgstr "Prekini"
-
-msgctxt "IDD_SUBTITLEUP_DLG_IDC_BUTTON2"
-msgid "Options"
-msgstr "Možnosti"
-
-msgctxt "IDD_FILEPROPRES_IDC_BUTTON1"
+msgctxt "//IDD_SUBTITLEUP_DLG_IDC_BUTTON1"
 msgid "Save As..."
-msgstr "Shrani kot..."
+msgstr ""
 
 msgctxt "IDD_PPAGEMISC_IDC_STATIC"
 msgid "Color controls (for VMR-9, EVR and madVR)"
@@ -1604,8 +1588,8 @@ msgid "Reset"
 msgstr "Ponastavi"
 
 msgctxt "IDD_PPAGESUBMISC_IDC_STATIC"
-msgid "Online search, download and upload subtitles"
-msgstr "Išči, prenesi podnapise dol in gor"
+msgid "Online subtitle search"
+msgstr ""
 
 msgctxt "IDD_PPAGESUBMISC_IDC_CHECK4"
 msgid "Automatically search and download subtitles if none are found locally"

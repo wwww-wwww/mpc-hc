@@ -915,9 +915,9 @@ msgctxt "IDS_SUBTITLES_DOWNLOAD"
 msgid "Download Subtitles..."
 msgstr "Преузми титл…"
 
-msgctxt "IDS_SUBTITLES_UPLOAD"
+msgctxt "//IDS_SUBTITLES_UPLOAD"
 msgid "Upload Subtitles..."
-msgstr "Отпреми титл…"
+msgstr ""
 
 msgctxt "IDS_SUBFILE_DELAY"
 msgid "Delay (ms):"

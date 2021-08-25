@@ -83,10 +83,6 @@ msgctxt "ID_FILE_SUBTITLES_DOWNLOAD"
 msgid "&Download Subtitles..."
 msgstr "Felirat letöltése"
 
-msgctxt "ID_FILE_SUBTITLES_UPLOAD"
-msgid "&Upload Subtitles..."
-msgstr "Felirat feltöltése"
-
 msgctxt "ID_FILE_PROPERTIES"
 msgid "P&roperties"
 msgstr "&Tulajdonságok"

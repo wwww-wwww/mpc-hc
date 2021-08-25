@@ -81,10 +81,6 @@ msgctxt "ID_FILE_SUBTITLES_DOWNLOAD"
 msgid "&Download Subtitles..."
 msgstr "সাবটাইটেল ডাউনলোড করি... (&D)"
 
-msgctxt "ID_FILE_SUBTITLES_UPLOAD"
-msgid "&Upload Subtitles..."
-msgstr "সাবটাইটেল আপলোড করি... (&U)"
-
 msgctxt "ID_FILE_PROPERTIES"
 msgid "P&roperties"
 msgstr "প্রোপার্টিস (&R)"

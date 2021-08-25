@@ -932,9 +932,9 @@ msgctxt "IDS_SUBTITLES_DOWNLOAD"
 msgid "Download Subtitles..."
 msgstr "Scarica Sottotitoli..."
 
-msgctxt "IDS_SUBTITLES_UPLOAD"
+msgctxt "//IDS_SUBTITLES_UPLOAD"
 msgid "Upload Subtitles..."
-msgstr "Condividi Sottotitoli..."
+msgstr ""
 
 msgctxt "IDS_SUBFILE_DELAY"
 msgid "Delay (ms):"

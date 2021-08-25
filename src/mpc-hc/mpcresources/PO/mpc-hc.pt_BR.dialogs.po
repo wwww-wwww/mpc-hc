@@ -1290,25 +1290,9 @@ msgctxt "IDD_SUBTITLEDL_DLG_IDC_BUTTON4"
 msgid "Search"
 msgstr "Procurar"
 
-msgctxt "IDD_SUBTITLEUP_DLG_CAPTION"
-msgid "Upload subtitles"
-msgstr "Fazer upload das legendas"
-
-msgctxt "IDD_SUBTITLEUP_DLG_IDOK"
-msgid "Upload"
-msgstr "Upload"
-
-msgctxt "IDD_SUBTITLEUP_DLG_IDC_BUTTON1"
-msgid "Abort"
-msgstr "Abortar"
-
-msgctxt "IDD_SUBTITLEUP_DLG_IDC_BUTTON2"
-msgid "Options"
-msgstr "Opções"
-
-msgctxt "IDD_FILEPROPRES_IDC_BUTTON1"
+msgctxt "//IDD_SUBTITLEUP_DLG_IDC_BUTTON1"
 msgid "Save As..."
-msgstr "Salvar Como..."
+msgstr ""
 
 msgctxt "IDD_PPAGEMISC_IDC_STATIC"
 msgid "Color controls (for VMR-9, EVR and madVR)"
@@ -1607,8 +1591,8 @@ msgid "Reset"
 msgstr "Resetar"
 
 msgctxt "IDD_PPAGESUBMISC_IDC_STATIC"
-msgid "Online search, download and upload subtitles"
-msgstr "Busca online, baixar e fazer upload das legendas"
+msgid "Online subtitle search"
+msgstr ""
 
 msgctxt "IDD_PPAGESUBMISC_IDC_CHECK4"
 msgid "Automatically search and download subtitles if none are found locally"

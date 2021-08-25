@@ -921,9 +921,9 @@ msgctxt "IDS_SUBTITLES_DOWNLOAD"
 msgid "Download Subtitles..."
 msgstr "Prenesi podnapise"
 
-msgctxt "IDS_SUBTITLES_UPLOAD"
+msgctxt "//IDS_SUBTITLES_UPLOAD"
 msgid "Upload Subtitles..."
-msgstr "Prenesi podnapise gor"
+msgstr ""
 
 msgctxt "IDS_SUBFILE_DELAY"
 msgid "Delay (ms):"
