@@ -1157,11 +1157,11 @@ LRESULT CMainFrame::OnTaskBarRestart(WPARAM, LPARAM)
 
 LRESULT CMainFrame::OnNotifyIcon(WPARAM wParam, LPARAM lParam)
 {
-    if ((UINT)wParam != IDR_MAINFRAME) {
+    if (HIWORD(lParam) != IDR_MAINFRAME) {
         return -1;
     }
 
-    switch ((UINT)lParam) {
+    switch (LOWORD(lParam)) {
         case WM_LBUTTONDOWN:
             if (IsIconic()) {
                 ShowWindow(SW_RESTORE);
@@ -1173,12 +1173,16 @@ LRESULT CMainFrame::OnNotifyIcon(WPARAM wParam, LPARAM lParam)
         case WM_LBUTTONDBLCLK:
             PostMessage(WM_COMMAND, ID_FILE_OPENMEDIA);
             break;
-        case WM_RBUTTONDOWN: {
-            POINT p;
-            GetCursorPos(&p);
+        case WM_RBUTTONDOWN:
+        case WM_CONTEXTMENU: {
             SetForegroundWindow();
-            m_mainPopupMenu.GetSubMenu(0)->TrackPopupMenu(TPM_RIGHTBUTTON | TPM_NOANIMATION, p.x, p.y, GetModalParent());
+            m_mainPopupMenu.GetSubMenu(0)->TrackPopupMenu(TPM_RIGHTBUTTON | TPM_NOANIMATION,
+                GET_X_LPARAM(wParam), GET_Y_LPARAM(wParam), GetModalParent());
             PostMessage(WM_NULL);
+            break;
+        }
+        case WM_MBUTTONDOWN: {
+            OnPlayPlaypause();
             break;
         }
         case WM_MOUSEMOVE: {
@@ -1212,11 +1216,13 @@ void CMainFrame::ShowTrayIcon(bool bShow)
         if (!m_bTrayIcon) {
             nid.uFlags = NIF_MESSAGE | NIF_ICON | NIF_TIP;
             nid.uCallbackMessage = WM_NOTIFYICON;
+            nid.uVersion = NOTIFYICON_VERSION_4;
             nid.hIcon = (HICON)LoadImage(AfxGetInstanceHandle(), MAKEINTRESOURCE(IDR_MAINFRAME),
                                          IMAGE_ICON, 16, 16, LR_DEFAULTCOLOR);
             StringCchCopy(nid.szTip, _countof(nid.szTip), _T("MPC-HC"));
-            Shell_NotifyIcon(NIM_ADD, &nid);
-            m_bTrayIcon = true;
+            if (Shell_NotifyIcon(NIM_ADD, &nid) && Shell_NotifyIcon(NIM_SETVERSION, &nid)) {
+                m_bTrayIcon = true;
+            }
         }
     } else {
         if (m_bTrayIcon) {
@@ -1230,13 +1236,13 @@ void CMainFrame::ShowTrayIcon(bool bShow)
     }
 }
 
-void CMainFrame::SetTrayTip(CString str)
+void CMainFrame::SetTrayTip(const CString& str)
 {
     NOTIFYICONDATA tnid;
     tnid.cbSize = sizeof(NOTIFYICONDATA);
     tnid.hWnd = m_hWnd;
     tnid.uID = IDR_MAINFRAME;
-    tnid.uFlags = NIF_TIP;
+    tnid.uFlags = NIF_TIP | NIF_SHOWTIP;
     StringCchCopy(tnid.szTip, _countof(tnid.szTip), str);
     Shell_NotifyIcon(NIM_MODIFY, &tnid);
 }

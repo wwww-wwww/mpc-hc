@@ -588,7 +588,7 @@ public:
 
     bool m_bTrayIcon;
     void ShowTrayIcon(bool bShow);
-    void SetTrayTip(CString str);
+    void SetTrayTip(const CString& str);
 
     CSize GetVideoSize() const;
     CSize GetVideoSizeWithRotation() const;
