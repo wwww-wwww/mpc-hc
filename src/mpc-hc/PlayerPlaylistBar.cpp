@@ -1669,9 +1669,20 @@ void CPlayerPlaylistBar::OnDropFiles(CAtlList<CString>& slFiles, DROPEFFECT)
     SetForegroundWindow();
     m_list.SetFocus();
 
+    bool fMulti = slFiles.GetCount() > 1;
+
+    if (!fMulti && m_pMainFrame->CanSendToYoutubeDL(slFiles.GetHead())) {
+        if (m_pMainFrame->ProcessYoutubeDLURL(slFiles.GetHead(), true)) {
+            return;
+        } else if (m_pMainFrame->IsOnYDLWhitelist(slFiles.GetHead())) {
+            // don't bother trying to open this website URL directly
+            return;
+        }
+    }
+
     PathUtils::ParseDirs(slFiles);
 
-    Append(slFiles, true);
+    Append(slFiles, fMulti);
 }
 
 void CPlayerPlaylistBar::OnBeginDrag(NMHDR* pNMHDR, LRESULT* pResult)

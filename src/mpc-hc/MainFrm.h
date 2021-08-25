@@ -1249,11 +1249,11 @@ public:
     RecentFileEntry m_current_rfe;
     static bool IsOnYDLWhitelist(const CString url);
 
-private:
     bool CanSendToYoutubeDL(const CString url);
     bool ProcessYoutubeDLURL(CString url, bool append, bool replace = false);
     bool DownloadWithYoutubeDL(CString url, CString filename);
 
+private:
     bool watchingFileDialog;
     HWND fileDialogHandle;
     CMPCThemeUtil* fileDialogHookHelper;
