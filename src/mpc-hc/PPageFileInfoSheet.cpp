@@ -30,10 +30,10 @@
 // CPPageFileInfoSheet
 
 IMPLEMENT_DYNAMIC(CPPageFileInfoSheet, CMPCThemePropertySheet)
-CPPageFileInfoSheet::CPPageFileInfoSheet(CString path, CMainFrame* pMainFrame, CWnd* pParentWnd)
+CPPageFileInfoSheet::CPPageFileInfoSheet(CString path, CString ydlsrc, CMainFrame* pMainFrame, CWnd* pParentWnd)
     : CMPCThemePropertySheet(IDS_PROPSHEET_PROPERTIES, pParentWnd, 0)
-    , m_clip(path, pMainFrame->m_pGB, pMainFrame->m_pFSF, pMainFrame->m_pDVDI)
-    , m_details(path, pMainFrame->m_pGB, pMainFrame->m_pCAP, pMainFrame->m_pFSF, pMainFrame->m_pDVDI)
+    , m_clip(path, ydlsrc, pMainFrame->m_pGB, pMainFrame->m_pFSF, pMainFrame->m_pDVDI)
+    , m_details(path, ydlsrc, pMainFrame->m_pGB, pMainFrame->m_pCAP, pMainFrame->m_pFSF, pMainFrame->m_pDVDI)
     , m_res(path, pMainFrame->m_pGB, pMainFrame->m_pFSF)
     , m_mi(path, pMainFrame->m_pFSF, pMainFrame->m_pDVDI, pMainFrame)
     , m_path(path)

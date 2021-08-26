@@ -38,7 +38,7 @@ private:
     CMPCThemeEdit m_locationCtrl;
 
     CStatic m_icon;
-    CString m_fn, m_path, m_displayFn;
+    CString m_fn, m_path, m_ydlsrc, m_displayFn;
     CString m_clip;
     CString m_author;
     CString m_copyright;
@@ -47,7 +47,7 @@ private:
     CString m_desc;
 
 public:
-    CPPageFileInfoClip(CString path, IFilterGraph* pFG, IFileSourceFilter* pFSF, IDvdInfo2* pDVDI);
+    CPPageFileInfoClip(CString path, CString ydlsrc, IFilterGraph* pFG, IFileSourceFilter* pFSF, IDvdInfo2* pDVDI);
     virtual ~CPPageFileInfoClip();
 
     // Dialog Data

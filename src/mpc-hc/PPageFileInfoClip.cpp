@@ -32,11 +32,12 @@
 // CPPageFileInfoClip dialog
 
 IMPLEMENT_DYNAMIC(CPPageFileInfoClip, CMPCThemePropertyPage)
-CPPageFileInfoClip::CPPageFileInfoClip(CString path, IFilterGraph* pFG, IFileSourceFilter* pFSF, IDvdInfo2* pDVDI)
+CPPageFileInfoClip::CPPageFileInfoClip(CString path, CString ydlsrc, IFilterGraph* pFG, IFileSourceFilter* pFSF, IDvdInfo2* pDVDI)
     : CMPCThemePropertyPage(CPPageFileInfoClip::IDD, CPPageFileInfoClip::IDD)
     , m_hIcon(nullptr)
     , m_fn(path)
-    , m_displayFn(path)
+    , m_ydlsrc(ydlsrc)
+    , m_displayFn()
     , m_path(path)
     , m_clip(StrRes(IDS_AG_NONE))
     , m_author(StrRes(IDS_AG_NONE))
@@ -154,8 +155,11 @@ BOOL CPPageFileInfoClip::OnInitDialog()
         m_icon.SetIcon(m_hIcon);
     }
 
-    if (PathUtils::IsURL(m_path)) {
-        m_displayFn = UrlDecodeWithUTF8(ShortenURL(m_fn));
+    if (!m_ydlsrc.IsEmpty()) {
+        m_displayFn = m_ydlsrc;
+        m_displayLocation = UrlDecodeWithUTF8(m_location, true);
+    } else if (PathUtils::IsURL(m_path)) {
+        m_displayFn = UrlDecodeWithUTF8(ShortenURL(m_fn, 200));
         m_displayLocation = UrlDecodeWithUTF8(m_location, true);
     } else {
         m_displayFn = m_fn;

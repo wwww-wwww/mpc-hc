@@ -6073,7 +6073,23 @@ void CMainFrame::OnUpdateFileSubtitlesDownload(CCmdUI* pCmdUI)
 
 void CMainFrame::OnFileProperties()
 {
-    CPPageFileInfoSheet fileinfo(m_pDVBState ? m_pDVBState->sChannelName : m_wndPlaylistBar.GetCurFileName(), this, GetModalParent());
+    CString fn;
+    CString ydlsrc;
+    if (m_pDVBState) {
+        fn = m_pDVBState->sChannelName;
+    } else {
+        CPlaylistItem* pli = m_wndPlaylistBar.GetCur();
+        if (pli && !pli->m_fns.IsEmpty()) {
+            fn = pli->m_fns.GetHead();
+            if (pli->m_bYoutubeDL) {
+                ydlsrc = pli->m_ydlSourceURL;
+            }
+        }
+    }
+
+    ASSERT(!fn.IsEmpty());
+
+    CPPageFileInfoSheet fileinfo(fn, ydlsrc, this, GetModalParent());
     fileinfo.DoModal();
 }
 

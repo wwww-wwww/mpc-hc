@@ -37,7 +37,7 @@ private:
     HICON m_hIcon;
     CStatic m_icon;
 
-    CString m_fn, m_path, m_displayFn;
+    CString m_fn, m_path, m_ydlsrc, m_displayFn;
     CString m_type;
     CString m_size;
     CString m_duration;
@@ -48,7 +48,7 @@ private:
     void InitTrackInfoText(IFilterGraph* pFG);
 
 public:
-    CPPageFileInfoDetails(CString path, IFilterGraph* pFG, ISubPicAllocatorPresenter* pCAP, IFileSourceFilter* pFSF, IDvdInfo2* pDVDI);
+    CPPageFileInfoDetails(CString path, CString ydlsrc, IFilterGraph* pFG, ISubPicAllocatorPresenter* pCAP, IFileSourceFilter* pFSF, IDvdInfo2* pDVDI);
     virtual ~CPPageFileInfoDetails();
 
     // Dialog Data

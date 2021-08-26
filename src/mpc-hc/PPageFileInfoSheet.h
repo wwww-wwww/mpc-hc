@@ -45,7 +45,7 @@ private:
     CMPCThemeButton m_Button_MI;
 
 public:
-    CPPageFileInfoSheet(CString path, CMainFrame* pMainFrame, CWnd* pParentWnd);
+    CPPageFileInfoSheet(CString path, CString ydlsrc, CMainFrame* pMainFrame, CWnd* pParentWnd);
     virtual ~CPPageFileInfoSheet();
 
     afx_msg void OnSaveAs();
