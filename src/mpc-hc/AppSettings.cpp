@@ -1173,7 +1173,7 @@ void CAppSettings::SaveSettings()
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_YDL_MAX_HEIGHT, iYDLMaxHeight);
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_YDL_VIDEO_FORMAT, iYDLVideoFormat);
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_YDL_AUDIO_ONLY, bYDLAudioOnly);
-    pApp->WriteProfileString(IDS_R_SETTINGS, IDS_RS_YDL_COMMAND_LINE, sYDLExePath);
+    pApp->WriteProfileString(IDS_R_SETTINGS, IDS_RS_YDL_EXEPATH, sYDLExePath);
     pApp->WriteProfileString(IDS_R_SETTINGS, IDS_RS_YDL_COMMAND_LINE, sYDLCommandLine);
 
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_ENABLE_CRASH_REPORTER, bEnableCrashReporter);
