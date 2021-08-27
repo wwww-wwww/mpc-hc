@@ -19725,7 +19725,7 @@ bool CMainFrame::DownloadWithYoutubeDL(CString url, CString filename)
         ydlpath = s.sYDLExePath;
     }
 
-    CString args = ydlpath + _T(" --console-title \"") + url + _T("\"");
+    CString args = _T("\"") + ydlpath + _T("\" --console-title \"") + url + _T("\"");
     if (!s.sYDLCommandLine.IsEmpty()) {
         args.Append(_T(" "));
         args.Append(s.sYDLCommandLine);

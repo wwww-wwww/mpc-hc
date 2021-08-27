@@ -55,6 +55,7 @@ bool CYoutubeDLInstance::Run(CString url)
     STARTUPINFO startup_info;
     SECURITY_ATTRIBUTES sec_attrib;
     auto& s = AfxGetAppSettings();
+    bool show_createprocess_error = false;
 
     YDL_LOG(url);
 
@@ -63,9 +64,10 @@ bool CYoutubeDLInstance::Run(CString url)
         ydlpath = _T("youtube-dl.exe");
     } else {
         ydlpath = s.sYDLExePath;
+        show_createprocess_error = true;
     }
 
-    CString args = ydlpath + _T(" -J --no-warnings --youtube-skip-dash-manifest");
+    CString args = _T("\"") + ydlpath + _T("\" -J --no-warnings --youtube-skip-dash-manifest");
     if (!s.sYDLSubsPreference.IsEmpty()) {
         args.Append(_T(" --all-subs --write-sub"));
         if (s.bUseAutomaticCaptions) args.Append(_T(" --write-auto-sub"));
@@ -98,7 +100,11 @@ bool CYoutubeDLInstance::Run(CString url)
 
     if (!CreateProcess(NULL, args.GetBuffer(), NULL, NULL, true, 0,
                        NULL, NULL, &startup_info, &proc_info)) {
-        YDL_LOG(_T("Failed to run YDL"));
+        CString errmsg = _T("Failed to create process for:\n") + ydlpath + _T("\n\nCorrect your setting here:\nOptions > Advanced > YDLExePath");
+        if (show_createprocess_error) {
+            AfxMessageBox(errmsg, MB_ICONERROR, 0);
+        }
+        YDL_LOG(_T("Failed to create process for YDL"));
         return false;
     }
 
