@@ -17737,7 +17737,9 @@ afx_msg void CMainFrame::OnGotoSubtitle(UINT nID)
         m_lSubtitleShift = 0;
         m_nCurSubtitle = m_wndSubresyncBar.FindNearestSub(m_rtCurSubPos, (nID == ID_GOTO_NEXT_SUB));
         if (m_nCurSubtitle >= 0 && m_pMS) {
-            //OnPlayPause();
+            if (nID == ID_GOTO_PREV_SUB) {
+                OnPlayPause();
+            }
             m_pMS->SetPositions(&m_rtCurSubPos, AM_SEEKING_AbsolutePositioning, nullptr, AM_SEEKING_NoPositioning);
         }
     }
