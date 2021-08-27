@@ -591,7 +591,7 @@ public:
     void SetTrayTip(const CString& str);
 
     CSize GetVideoSize() const;
-    CSize GetVideoSizeWithRotation() const;
+    CSize GetVideoSizeWithRotation(bool forPreview = false) const;
     void ToggleFullscreen(bool fToNearest, bool fSwitchScreenResWhenHasTo);
     void ToggleD3DFullscreen(bool fSwitchScreenResWhenHasTo);
     void MoveVideoWindow(bool fShowStats = false, bool bSetStoppedVideoRect = false);
