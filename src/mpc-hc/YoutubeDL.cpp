@@ -65,6 +65,14 @@ bool CYoutubeDLInstance::Run(CString url)
     } else {
         ydlpath = s.sYDLExePath;
         show_createprocess_error = true;
+        // expand environment variables
+        if (ydlpath.Find(_T('%')) >= 0) {
+            wchar_t expanded_buf[MAX_PATH] = {0};
+            DWORD req = ExpandEnvironmentStrings(ydlpath, expanded_buf, MAX_PATH);
+            if (req > 0 && req < MAX_PATH) {
+                ydlpath = CString(expanded_buf);
+            }
+        }
     }
 
     CString args = _T("\"") + ydlpath + _T("\" -J --no-warnings --youtube-skip-dash-manifest");
