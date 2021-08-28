@@ -74,8 +74,10 @@ interface IMemInputPinC
     CONST_VTBL struct IMemInputPinCVtbl* lpVtbl;
 };
 
-extern bool HookNewSegmentAndReceive(IPinC* pPinC, IMemInputPinC* pMemInputPin);
-extern void UnhookNewSegmentAndReceive();
+extern bool HookNewSegment(IPinC* pPinC);
+extern bool HookReceive(IMemInputPinC* pMemInputPin);
+extern void UnhookNewSegment();
+extern void UnhookReceive();
 extern REFERENCE_TIME g_tSegmentStart, g_tSampleStart, g_rtTimePerFrame;
 
 extern void HookWorkAround10BitBug(IBaseFilter* pBF);

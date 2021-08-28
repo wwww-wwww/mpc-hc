@@ -155,7 +155,8 @@ STDMETHODIMP CmadVRAllocatorPresenter::CreateRenderer(IUnknown** ppRenderer)
     CComQIPtr<IBaseFilter> pBF = m_pMVR;
     CComPtr<IPin> pPin = GetFirstPin(pBF);
     CComQIPtr<IMemInputPin> pMemInputPin = pPin;
-    HookNewSegmentAndReceive((IPinC*)(IPin*)pPin, (IMemInputPinC*)(IMemInputPin*)pMemInputPin);
+    HookNewSegment((IPinC*)(IPin*)pPin);
+    HookReceive((IMemInputPinC*)(IMemInputPin*)pMemInputPin);
 
     return S_OK;
 }

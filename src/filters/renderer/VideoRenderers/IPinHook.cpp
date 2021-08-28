@@ -51,10 +51,10 @@ int  g_nDXVAVersion = 0;
 
 extern double g_dRate;
 
-IPinCVtbl* g_pPinCVtbl = nullptr;
+IPinCVtbl* g_pPinCVtbl_NewSegment = nullptr;
 IPinCVtbl* g_pPinCVtbl10BitWorkAround = nullptr;
 IMemInputPinCVtbl* g_pMemInputPinCVtbl = nullptr;
-IPinC* g_pPinC = nullptr;
+IPinC* g_pPinC_NewSegment = nullptr;
 
 struct D3DFORMAT_TYPE {
     int Format;
@@ -151,7 +151,7 @@ static HRESULT(STDMETHODCALLTYPE* NewSegmentOrg)(IPinC* This, /* [in] */ REFEREN
 
 static HRESULT STDMETHODCALLTYPE NewSegmentMine(IPinC* This, /* [in] */ REFERENCE_TIME tStart, /* [in] */ REFERENCE_TIME tStop, /* [in] */ double dRate)
 {
-    if (g_pPinC == This) {
+    if (g_pPinC_NewSegment == This) {
         g_tSegmentStart = tStart;
         g_dRate = dRate;
     }
@@ -238,27 +238,33 @@ void UnhookWorkAround10BitBug()
     }
 }
 
-void UnhookNewSegmentAndReceive()
+void UnhookNewSegment()
 {
     DWORD flOldProtect = 0;
 
     // Unhook previous VTables
-    if (g_pPinCVtbl) {
-        if (VirtualProtect(g_pPinCVtbl, sizeof(IPinCVtbl), PAGE_EXECUTE_WRITECOPY, &flOldProtect)) {
-            if (g_pPinCVtbl->NewSegment == NewSegmentMine) {
-                g_pPinCVtbl->NewSegment = NewSegmentOrg;
+    if (g_pPinCVtbl_NewSegment) {
+        if (VirtualProtect(g_pPinCVtbl_NewSegment, sizeof(IPinCVtbl), PAGE_EXECUTE_WRITECOPY, &flOldProtect)) {
+            if (g_pPinCVtbl_NewSegment->NewSegment == NewSegmentMine) {
+                g_pPinCVtbl_NewSegment->NewSegment = NewSegmentOrg;
             }
-            FlushInstructionCache(GetCurrentProcess(), g_pPinCVtbl, sizeof(IPinCVtbl));
-            VirtualProtect(g_pPinCVtbl, sizeof(IPinCVtbl), flOldProtect, &flOldProtect);
-            g_pPinCVtbl = nullptr;
-            g_pPinC = nullptr;
+            FlushInstructionCache(GetCurrentProcess(), g_pPinCVtbl_NewSegment, sizeof(IPinCVtbl));
+            VirtualProtect(g_pPinCVtbl_NewSegment, sizeof(IPinCVtbl), flOldProtect, &flOldProtect);
+            g_pPinCVtbl_NewSegment = nullptr;
+            g_pPinC_NewSegment = nullptr;
             NewSegmentOrg = nullptr;
         } else {
-            TRACE(_T("UnhookNewSegmentAndReceive: Could not unhook g_pPinCVtbl VTable"));
+            TRACE(_T("UnhookNewSegment: Could not unhook g_pPinCVtbl VTable"));
             ASSERT(FALSE);
         }
     }
+}
 
+void UnhookReceive()
+{
+    DWORD flOldProtect = 0;
+
+    // Unhook previous VTables
     if (g_pMemInputPinCVtbl) {
         if (VirtualProtect(g_pMemInputPinCVtbl, sizeof(IMemInputPinCVtbl), PAGE_EXECUTE_WRITECOPY, &flOldProtect)) {
             if (g_pMemInputPinCVtbl->Receive == ReceiveMine) {
@@ -269,27 +275,26 @@ void UnhookNewSegmentAndReceive()
             g_pMemInputPinCVtbl = nullptr;
             ReceiveOrg = nullptr;
         } else {
-            TRACE(_T("UnhookNewSegmentAndReceive: Could not unhook g_pMemInputPinCVtbl VTable"));
+            TRACE(_T("UnhookReceive: Could not unhook g_pMemInputPinCVtbl VTable"));
             ASSERT(FALSE);
         }
     }
 }
 
-bool HookNewSegmentAndReceive(IPinC* pPinC, IMemInputPinC* pMemInputPinC)
+bool HookNewSegment(IPinC* pPinC)
 {
-    if (!pPinC || !pMemInputPinC) {
+    if (!pPinC) {
         return false;
     }
 
     g_tSegmentStart = 0;
-    g_tSampleStart = 0;
     g_dRate = 1.0;
 
-    UnhookNewSegmentAndReceive();
+    UnhookNewSegment();
 
     DWORD flOldProtect = 0;
 
-    if (!g_pPinCVtbl) {
+    if (!g_pPinCVtbl_NewSegment) {
         if (VirtualProtect(pPinC->lpVtbl, sizeof(IPinCVtbl), PAGE_EXECUTE_WRITECOPY, &flOldProtect)) {
             if (NewSegmentOrg == nullptr) {
                 NewSegmentOrg = pPinC->lpVtbl->NewSegment;
@@ -297,13 +302,28 @@ bool HookNewSegmentAndReceive(IPinC* pPinC, IMemInputPinC* pMemInputPinC)
             pPinC->lpVtbl->NewSegment = NewSegmentMine; // Function sets global variable(s)
             FlushInstructionCache(GetCurrentProcess(), pPinC->lpVtbl, sizeof(IPinCVtbl));
             VirtualProtect(pPinC->lpVtbl, sizeof(IPinCVtbl), flOldProtect, &flOldProtect);
-            g_pPinCVtbl = pPinC->lpVtbl;
-            g_pPinC = pPinC;
+            g_pPinCVtbl_NewSegment = pPinC->lpVtbl;
+            g_pPinC_NewSegment = pPinC;
         } else {
-            TRACE(_T("HookNewSegmentAndReceive: Could not unhook g_pPinCVtbl VTable"));
+            TRACE(_T("HookNewSegment: Could not unhook VTable"));
             ASSERT(FALSE);
         }
     }
+
+    return true;
+}
+
+bool HookReceive(IMemInputPinC* pMemInputPinC)
+{
+    if (!pMemInputPinC) {
+        return false;
+    }
+
+    g_tSampleStart = 0;
+
+    UnhookReceive();
+
+    DWORD flOldProtect = 0;
 
     if (!g_pMemInputPinCVtbl) {
         if (VirtualProtect(pMemInputPinC->lpVtbl, sizeof(IMemInputPinCVtbl), PAGE_EXECUTE_WRITECOPY, &flOldProtect)) {
@@ -315,7 +335,7 @@ bool HookNewSegmentAndReceive(IPinC* pPinC, IMemInputPinC* pMemInputPinC)
             VirtualProtect(pMemInputPinC->lpVtbl, sizeof(IMemInputPinCVtbl), flOldProtect, &flOldProtect);
             g_pMemInputPinCVtbl = pMemInputPinC->lpVtbl;
         } else {
-            TRACE(_T("HookNewSegmentAndReceive: Could not unhook g_pMemInputPinCVtbl VTable"));
+            TRACE(_T("HookReceive: Could not unhook VTable"));
             ASSERT(FALSE);
         }
     }

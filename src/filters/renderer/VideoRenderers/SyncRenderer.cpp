@@ -2668,7 +2668,7 @@ STDMETHODIMP CSyncAP::CreateRenderer(IUnknown** ppRenderer)
         CComPtr<IPin> pPin = GetFirstPin(pBF);
         CComQIPtr<IMemInputPin> pMemInputPin = pPin;
 
-        m_bUseInternalTimer = HookNewSegmentAndReceive((IPinC*)(IPin*)pPin, (IMemInputPinC*)(IMemInputPin*)pMemInputPin);
+        m_bUseInternalTimer = HookNewSegment((IPinC*)(IPin*)pPin) && HookReceive((IMemInputPinC*)(IMemInputPin*)pMemInputPin);
         if (FAILED(hr)) {
             *ppRenderer = nullptr;
         } else {
