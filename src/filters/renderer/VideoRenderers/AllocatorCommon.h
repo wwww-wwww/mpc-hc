@@ -44,28 +44,12 @@ DEFINE_GUID(CLSID_MPCVRAllocatorPresenter,
 DEFINE_GUID(CLSID_EVRAllocatorPresenter,
             0x7612b889, 0xe070, 0x4bcc, 0xb8, 0x8, 0x91, 0xcb, 0x79, 0x41, 0x74, 0xab);
 
-extern CCritSec g_ffdshowReceive;
-extern bool queue_ffdshow_support;
-
 extern bool IsVMR9InGraph(IFilterGraph* pFG);
 extern CString GetWindowsErrorMessage(HRESULT _Error, HMODULE _Module);
 extern const wchar_t* GetD3DFormatStr(D3DFORMAT Format);
 
 extern HRESULT CreateAP9(const CLSID& clsid, HWND hWnd, bool bFullscreen, ISubPicAllocatorPresenter** ppAP);
 extern HRESULT CreateEVR(const CLSID& clsid, HWND hWnd, bool bFullscreen, ISubPicAllocatorPresenter** ppAP, bool isPreview = false);
-
-// Support ffdshow queuing.
-// This interface is used to check version of MPC-HC.
-// {A273C7F6-25D4-46b0-B2C8-4F7FADC44E37}
-DEFINE_GUID(IID_IVMRffdshow9,
-            0xa273c7f6, 0x25d4, 0x46b0, 0xb2, 0xc8, 0x4f, 0x7f, 0xad, 0xc4, 0x4e, 0x37);
-
-MIDL_INTERFACE("A273C7F6-25D4-46b0-B2C8-4F7FADC44E37")
-IVMRffdshow9 :
-public IUnknown {
-public:
-    STDMETHOD(support_ffdshow()) PURE;
-};
 
 // Set and query D3DFullscreen mode.
 interface __declspec(uuid("8EA1E899-B77D-4777-9F0E-66421BEA50F8"))

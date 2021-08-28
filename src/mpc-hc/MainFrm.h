@@ -1015,7 +1015,6 @@ public:
 
     afx_msg void OnPlayPlay();
     afx_msg void OnPlayPause();
-    afx_msg void OnPlayPauseI();
     afx_msg void OnPlayPlaypause();
     afx_msg void OnApiPlay();
     afx_msg void OnApiPause();

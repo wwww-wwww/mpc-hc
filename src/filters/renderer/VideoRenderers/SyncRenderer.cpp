@@ -2668,7 +2668,7 @@ STDMETHODIMP CSyncAP::CreateRenderer(IUnknown** ppRenderer)
         CComPtr<IPin> pPin = GetFirstPin(pBF);
         CComQIPtr<IMemInputPin> pMemInputPin = pPin;
 
-        m_bUseInternalTimer = HookNewSegment((IPinC*)(IPin*)pPin) && HookReceive((IMemInputPinC*)(IMemInputPin*)pMemInputPin);
+        m_bUseInternalTimer = HookNewSegment((IPinC*)(IPin*)pPin);
         if (FAILED(hr)) {
             *ppRenderer = nullptr;
         } else {
@@ -4325,12 +4325,6 @@ STDMETHODIMP CSyncRenderer::UpdateAlphaBitmapParameters(const VMR9AlphaBitmap* p
     return S_OK;
 }
 
-STDMETHODIMP CSyncRenderer::support_ffdshow()
-{
-    queue_ffdshow_support = true;
-    return S_OK;
-}
-
 STDMETHODIMP CSyncRenderer::NonDelegatingQueryInterface(REFIID riid, void** ppv)
 {
     HRESULT hr;
@@ -4356,11 +4350,6 @@ STDMETHODIMP CSyncRenderer::NonDelegatingQueryInterface(REFIID riid, void** ppv)
     hr = m_pEVR ? m_pEVR->QueryInterface(riid, ppv) : E_NOINTERFACE;
     if (m_pEVR && FAILED(hr)) {
         hr = m_pAllocatorPresenter ? m_pAllocatorPresenter->QueryInterface(riid, ppv) : E_NOINTERFACE;
-        if (FAILED(hr)) {
-            if (riid == __uuidof(IVMRffdshow9)) { // Support ffdshow queueing. We show ffdshow that this is patched MPC-HC.
-                return GetInterface((IVMRffdshow9*)this, ppv);
-            }
-        }
     }
     return SUCCEEDED(hr) ? hr : __super::NonDelegatingQueryInterface(riid, ppv);
 }

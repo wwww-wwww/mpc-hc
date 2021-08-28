@@ -7955,7 +7955,7 @@ void CMainFrame::OnPlayPlay()
     m_bFirstPlay = false;
 }
 
-void CMainFrame::OnPlayPauseI()
+void CMainFrame::OnPlayPause()
 {
     m_timerOneTime.Unsubscribe(TimerOneTimeSubscriber::DELAY_PLAYPAUSE_AFTER_AUTOCHANGE_MODE);
     m_bOpeningInAutochangedMonitorMode = false;
@@ -7986,17 +7986,6 @@ void CMainFrame::OnPlayPauseI()
     m_OSD.DisplayMessage(OSD_TOPLEFT, strOSD, 3000);
     m_Lcd.SetStatusMessage(ResStr(IDS_CONTROLS_PAUSED), 3000);
     SetPlayState(PS_PAUSE);
-}
-
-void CMainFrame::OnPlayPause()
-{
-    // Support ffdshow queuing.
-    // To avoid black out on pause, we have to lock g_ffdshowReceive to synchronize with ReceiveMine.
-    if (queue_ffdshow_support) {
-        CAutoLock lck(&g_ffdshowReceive);
-        return OnPlayPauseI();
-    }
-    OnPlayPauseI();
 }
 
 void CMainFrame::OnPlayPlaypause()
@@ -8170,7 +8159,7 @@ void CMainFrame::OnPlayFramestep(UINT nID)
 
     m_OSD.EnableShowMessage(false);
     if (nID == ID_PLAY_FRAMESTEP && m_pFS) {
-        if (GetMediaState() != State_Paused && !queue_ffdshow_support) {
+        if (GetMediaState() != State_Paused) {
             SendMessage(WM_COMMAND, ID_PLAY_PAUSE);
         }
 

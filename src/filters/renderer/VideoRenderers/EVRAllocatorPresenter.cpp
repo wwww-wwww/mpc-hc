@@ -298,7 +298,7 @@ STDMETHODIMP CEVRAllocatorPresenter::CreateRenderer(IUnknown** ppRenderer)
     CComQIPtr<IMemInputPin> pMemInputPin = pPin;
 
     // No NewSegment : no chocolate :o)
-    m_fUseInternalTimer = !m_bIsPreview && HookNewSegment((IPinC*)(IPin*)pPin) && HookReceive((IMemInputPinC*)(IMemInputPin*)pMemInputPin);
+    m_fUseInternalTimer = !m_bIsPreview && HookNewSegment((IPinC*)(IPin*)pPin);
 #else
     m_fUseInternalTimer = false;
 #endif

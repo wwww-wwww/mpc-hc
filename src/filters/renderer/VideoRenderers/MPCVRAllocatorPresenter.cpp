@@ -184,7 +184,6 @@ STDMETHODIMP CMPCVRAllocatorPresenter::CreateRenderer(IUnknown** ppRenderer)
     CComPtr<IPin> pPin = GetFirstPin(pBF);
     CComQIPtr<IMemInputPin> pMemInputPin = pPin;
     HookNewSegment((IPinC*)(IPin*)pPin);
-    HookReceive((IMemInputPinC*)(IMemInputPin*)pMemInputPin);
 
     return S_OK;
 }

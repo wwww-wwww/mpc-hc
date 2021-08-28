@@ -31,9 +31,6 @@
 #include "../../../DSUtil/vd.h"
 #include <mpc-hc_config.h>
 
-CCritSec g_ffdshowReceive;
-bool queue_ffdshow_support = false;
-
 // only for debugging
 //#define DISABLE_USING_D3D9EX
 
