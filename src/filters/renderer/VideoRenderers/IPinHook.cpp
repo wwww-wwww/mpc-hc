@@ -52,7 +52,7 @@ int  g_nDXVAVersion = 0;
 extern double g_dRate;
 
 IPinCVtbl* g_pPinCVtbl_NewSegment = nullptr;
-IPinCVtbl* g_pPinCVtbl10BitWorkAround = nullptr;
+IPinCVtbl* g_pPinCVtbl_ReceiveConnection = nullptr;
 IMemInputPinCVtbl* g_pMemInputPinCVtbl = nullptr;
 IPinC* g_pPinC_NewSegment = nullptr;
 
@@ -197,7 +197,7 @@ static HRESULT STDMETHODCALLTYPE ReceiveMine(IMemInputPinC* This, IMediaSample* 
     return ReceiveMineI(This, pSample);
 }
 
-void HookWorkAround10BitBug(IBaseFilter* pBF)
+void HookReceiveConnection(IBaseFilter* pBF)
 {
     if (CComPtr<IPin> pPin = GetFirstPin(pBF)) {
         IPinC* pPinC = (IPinC*)(IPin*)pPin;
@@ -210,7 +210,7 @@ void HookWorkAround10BitBug(IBaseFilter* pBF)
             pPinC->lpVtbl->ReceiveConnection = ReceiveConnectionMine;
             FlushInstructionCache(GetCurrentProcess(), pPinC->lpVtbl, sizeof(IPinCVtbl));
             VirtualProtect(pPinC->lpVtbl, sizeof(IPinCVtbl), flOldProtect, &flOldProtect);
-            g_pPinCVtbl10BitWorkAround = pPinC->lpVtbl;
+            g_pPinCVtbl_ReceiveConnection = pPinC->lpVtbl;
         } else {
             TRACE(_T("HookWorkAroundVideoDriversBug: Could not hook the VTable"));
             ASSERT(FALSE);
@@ -218,21 +218,21 @@ void HookWorkAround10BitBug(IBaseFilter* pBF)
     }
 }
 
-void UnhookWorkAround10BitBug()
+void UnhookReceiveConnection()
 {
     // Unhook previous VTable
-    if (g_pPinCVtbl10BitWorkAround) {
+    if (g_pPinCVtbl_ReceiveConnection) {
         DWORD flOldProtect = 0;
-        if (VirtualProtect(g_pPinCVtbl10BitWorkAround, sizeof(IPinCVtbl), PAGE_EXECUTE_WRITECOPY, &flOldProtect)) {
-            if (g_pPinCVtbl10BitWorkAround->ReceiveConnection == ReceiveConnectionMine) {
-                g_pPinCVtbl10BitWorkAround->ReceiveConnection = ReceiveConnectionOrg;
+        if (VirtualProtect(g_pPinCVtbl_ReceiveConnection, sizeof(IPinCVtbl), PAGE_EXECUTE_WRITECOPY, &flOldProtect)) {
+            if (g_pPinCVtbl_ReceiveConnection->ReceiveConnection == ReceiveConnectionMine) {
+                g_pPinCVtbl_ReceiveConnection->ReceiveConnection = ReceiveConnectionOrg;
             }
             ReceiveConnectionOrg = nullptr;
-            FlushInstructionCache(GetCurrentProcess(), g_pPinCVtbl10BitWorkAround, sizeof(IPinCVtbl));
-            VirtualProtect(g_pPinCVtbl10BitWorkAround, sizeof(IPinCVtbl), flOldProtect, &flOldProtect);
-            g_pPinCVtbl10BitWorkAround = nullptr;
+            FlushInstructionCache(GetCurrentProcess(), g_pPinCVtbl_ReceiveConnection, sizeof(IPinCVtbl));
+            VirtualProtect(g_pPinCVtbl_ReceiveConnection, sizeof(IPinCVtbl), flOldProtect, &flOldProtect);
+            g_pPinCVtbl_ReceiveConnection = nullptr;
         } else {
-            TRACE(_T("UnhookWorkAroundVideoDriversBug: Could not unhook previous VTable"));
+            TRACE(_T("UnhookReceiveConnection: Could not unhook previous VTable"));
             ASSERT(FALSE);
         }
     }

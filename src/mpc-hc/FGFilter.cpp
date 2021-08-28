@@ -439,7 +439,7 @@ CFGFilterVideoRenderer::CFGFilterVideoRenderer(HWND hWnd, const CLSID& clsid, CS
 CFGFilterVideoRenderer::~CFGFilterVideoRenderer()
 {
     if (m_bHas10BitWorkAround) {
-        UnhookWorkAround10BitBug();
+        UnhookReceiveConnection();
     }
 }
 
@@ -534,7 +534,7 @@ HRESULT CFGFilterVideoRenderer::Create(IBaseFilter** ppBF, CInterfaceList<IUnkno
     CheckPointer(*ppBF, E_FAIL);
 
     if (!m_bIsPreview && (m_clsid == CLSID_EnhancedVideoRenderer || m_clsid == CLSID_EVRAllocatorPresenter || m_clsid == CLSID_SyncAllocatorPresenter || m_clsid == CLSID_VMR9AllocatorPresenter)) {
-        HookWorkAround10BitBug(*ppBF);
+        HookReceiveConnection(*ppBF);
         m_bHas10BitWorkAround = true;
     }
 

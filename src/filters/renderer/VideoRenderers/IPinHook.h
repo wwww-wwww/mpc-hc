@@ -80,8 +80,8 @@ extern void UnhookNewSegment();
 extern void UnhookReceive();
 extern REFERENCE_TIME g_tSegmentStart, g_tSampleStart, g_rtTimePerFrame;
 
-extern void HookWorkAround10BitBug(IBaseFilter* pBF);
-extern void UnhookWorkAround10BitBug();
+extern void HookReceiveConnection(IBaseFilter* pBF);
+extern void UnhookReceiveConnection();
 
 //
 
