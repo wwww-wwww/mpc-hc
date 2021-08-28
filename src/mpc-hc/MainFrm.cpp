@@ -19732,22 +19732,7 @@ bool CMainFrame::DownloadWithYoutubeDL(CString url, CString filename)
     STARTUPINFO startup_info;
     const auto& s = AfxGetAppSettings();
 
-    CString ydlpath;
-    if (s.sYDLExePath.IsEmpty()) {
-        ydlpath = _T("youtube-dl.exe");
-    } else {
-        ydlpath = s.sYDLExePath;
-        // expand environment variables
-        if (ydlpath.Find(_T('%')) >= 0) {
-            wchar_t expanded_buf[MAX_PATH] = { 0 };
-            DWORD req = ExpandEnvironmentStrings(ydlpath, expanded_buf, MAX_PATH);
-            if (req > 0 && req < MAX_PATH) {
-                ydlpath = CString(expanded_buf);
-            }
-        }
-    }
-
-    CString args = _T("\"") + ydlpath + _T("\" --console-title \"") + url + _T("\"");
+    CString args = _T("\"") + GetYDLExePath() + _T("\" --console-title \"") + url + _T("\"");
     if (!s.sYDLCommandLine.IsEmpty()) {
         args.Append(_T(" "));
         args.Append(s.sYDLCommandLine);

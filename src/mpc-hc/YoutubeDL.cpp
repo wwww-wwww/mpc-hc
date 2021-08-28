@@ -27,6 +27,29 @@ struct CUtf16JSON {
     rapidjson::GenericDocument<rapidjson::UTF16<>> d;
 };
 
+CString GetYDLExePath() {
+    auto& s = AfxGetAppSettings();
+    CString ydlpath;
+    if (s.sYDLExePath.IsEmpty()) {
+        CString appdir = PathUtils::GetProgramPath(false);
+        if (CPath(appdir + _T("\\yt-dlp.exe")).FileExists()) {
+            ydlpath = _T("yt-dlp.exe");
+        } else {
+            ydlpath = _T("youtube-dl.exe");
+        }
+    } else {
+        ydlpath = s.sYDLExePath;
+        // expand environment variables
+        if (ydlpath.Find(_T('%')) >= 0) {
+            wchar_t expanded_buf[MAX_PATH] = { 0 };
+            DWORD req = ExpandEnvironmentStrings(ydlpath, expanded_buf, MAX_PATH);
+            if (req > 0 && req < MAX_PATH) {
+                ydlpath = CString(expanded_buf);
+            }
+        }
+    }
+    return ydlpath;
+}
 
 CYoutubeDLInstance::CYoutubeDLInstance()
     : idx_out(0), idx_err(0),
@@ -59,23 +82,7 @@ bool CYoutubeDLInstance::Run(CString url)
 
     YDL_LOG(url);
 
-    CString ydlpath;
-    if (s.sYDLExePath.IsEmpty()) {
-        ydlpath = _T("youtube-dl.exe");
-    } else {
-        ydlpath = s.sYDLExePath;
-        show_createprocess_error = true;
-        // expand environment variables
-        if (ydlpath.Find(_T('%')) >= 0) {
-            wchar_t expanded_buf[MAX_PATH] = {0};
-            DWORD req = ExpandEnvironmentStrings(ydlpath, expanded_buf, MAX_PATH);
-            if (req > 0 && req < MAX_PATH) {
-                ydlpath = CString(expanded_buf);
-            }
-        }
-    }
-
-    CString args = _T("\"") + ydlpath + _T("\" -J --no-warnings --youtube-skip-dash-manifest");
+    CString args = _T("\"") + GetYDLExePath() + _T("\" -J --no-warnings --youtube-skip-dash-manifest");
     if (!s.sYDLSubsPreference.IsEmpty()) {
         args.Append(_T(" --all-subs --write-sub"));
         if (s.bUseAutomaticCaptions) args.Append(_T(" --write-auto-sub"));
@@ -108,10 +115,6 @@ bool CYoutubeDLInstance::Run(CString url)
 
     if (!CreateProcess(NULL, args.GetBuffer(), NULL, NULL, true, 0,
                        NULL, NULL, &startup_info, &proc_info)) {
-        CString errmsg = _T("Failed to create process for:\n") + ydlpath + _T("\n\nCorrect your setting here:\nOptions > Advanced > YDLExePath");
-        if (show_createprocess_error) {
-            AfxMessageBox(errmsg, MB_ICONERROR, 0);
-        }
         YDL_LOG(_T("Failed to create process for YDL"));
         return false;
     }

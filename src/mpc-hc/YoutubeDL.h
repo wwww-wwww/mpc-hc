@@ -24,6 +24,8 @@ typedef rapidjson::GenericValue<rapidjson::UTF16<>> Value;
 
 struct  CUtf16JSON;
 
+CString GetYDLExePath();
+
 class CYoutubeDLInstance
 {
 public:
