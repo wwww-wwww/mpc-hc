@@ -91,6 +91,7 @@
 #define IDS_RS_SHOW_ABMARKS_STATUSBAR       _T("ShowABMarksInStatusbar")
 #define IDS_RS_SHOW_LANG_STATUSBAR          _T("ShowLangInStatusbar")
 #define IDS_RS_SHOW_FPS_STATUSBAR           _T("ShowFPSInStatusbar")
+#define IDS_RS_SHOW_VIDEOINFO_STATUSBAR     _T("ShowVideoInfoInStatusbar")
 #define IDS_RS_ADD_LANGCODE_WHEN_SAVE_SUBTITLES _T("AddLanguageCodeWhenSaveSubtitles")
 #define IDS_RS_USE_TITLE_IN_RECENT_FILE_LIST    _T("UseTitleInRecentFileList")
 #define IDS_RS_YDL_SUBS_PREFERENCE          _T("YDLSubsPreference")

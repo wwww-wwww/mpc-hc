@@ -99,6 +99,7 @@ extern bool UnloadUnusedExternalObjects();
 extern void ExtendMaxPathLengthIfNeeded(CString& path, int max_length = MAX_PATH);
 extern void ShortenLongPath(CString& path);
 extern CString MakeFullPath(LPCTSTR path);
+extern bool GetMediaTypeFourCC(const GUID& guid, CString& fourCC);
 extern CString GetMediaTypeName(const GUID& guid);
 extern GUID GUIDFromCString(CString str);
 extern HRESULT GUIDFromCString(CString str, GUID& guid);

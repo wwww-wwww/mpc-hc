@@ -303,8 +303,11 @@ private:
     POSITION m_posFirstExtSub;
     SubtitleInput m_pCurrentSubInput;
 
+    // StatusBar message text parts
     CString currentAudioLang;
     CString currentSubLang;
+    CString m_statusbarVideoFourCC;
+    CString m_statusbarVideoSize;
 
     SubtitleInput* GetSubtitleInput(int& i, bool bIsOffset = false);
 

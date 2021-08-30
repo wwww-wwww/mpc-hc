@@ -868,6 +868,7 @@ public:
     bool bShowLangInStatusbar;
     bool bShowFPSInStatusbar;
     bool bShowABMarksInStatusbar;
+    bool bShowVideoInfoInStatusbar;
 
     bool bAddLangCodeWhenSaveSubtitles;
     bool bUseTitleInRecentFileList;

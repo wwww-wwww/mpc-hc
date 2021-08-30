@@ -1393,7 +1393,27 @@ CString MakeFullPath(LPCTSTR path)
     return CString(c);
 }
 
-//
+inline bool _IsFourCC(const GUID& guid)
+{
+    // XXXXXXXX-0000-0010-8000-00AA00389B71
+    return (guid.Data2 == 0x0000) && (guid.Data3 == 0x0010) &&
+        (((DWORD*)guid.Data4)[0] == 0xAA000080) &&
+        (((DWORD*)guid.Data4)[1] == 0x719b3800);
+}
+
+bool GetMediaTypeFourCC(const GUID& guid, CString& fourCC)
+{
+    if (_IsFourCC(guid) && (guid.Data1 >= 0x10000)) {
+        fourCC.Format(_T("%c%c%c%c"),
+            (TCHAR)(guid.Data1 >> 0 ) & 0xFF, (TCHAR)(guid.Data1 >> 8 ) & 0xFF,
+            (TCHAR)(guid.Data1 >> 16) & 0xFF, (TCHAR)(guid.Data1 >> 24) & 0xFF);
+        fourCC.MakeUpper();
+        return true;
+    }
+
+    fourCC = _T("UNKN");
+    return false;
+}
 
 CString GetMediaTypeName(const GUID& guid)
 {
