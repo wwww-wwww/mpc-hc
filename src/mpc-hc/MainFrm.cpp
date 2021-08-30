@@ -3565,20 +3565,16 @@ void CMainFrame::OnUpdatePlayerStatus(CCmdUI* pCmdUI)
                 }
             }
         } else if (m_bBuffering) {
-            BeginEnumFilters(m_pGB, pEF, pBF) {
-                if (CComQIPtr<IAMNetworkStatus, &IID_IAMNetworkStatus> pAMNS = pBF) {
-                    long BufferingProgress = 0;
-                    if (SUCCEEDED(pAMNS->get_BufferingProgress(&BufferingProgress)) && BufferingProgress > 0) {
-                        msg.Format(IDS_CONTROLS_BUFFERING, BufferingProgress);
+            if (m_pAMNS) {
+                long BufferingProgress = 0;
+                if (SUCCEEDED(m_pAMNS->get_BufferingProgress(&BufferingProgress)) && BufferingProgress > 0) {
+                    msg.Format(IDS_CONTROLS_BUFFERING, BufferingProgress);
 
-                        __int64 start = 0, stop = 0;
-                        m_wndSeekBar.GetRange(start, stop);
-                        m_fLiveWM = (stop == start);
-                    }
-                    break;
+                    __int64 start = 0, stop = 0;
+                    m_wndSeekBar.GetRange(start, stop);
+                    m_fLiveWM = (stop == start);
                 }
             }
-            EndEnumFilters;
         } else if (m_pAMOP) {
             LONGLONG t = 0, c = 0;
             if (SUCCEEDED(m_pAMOP->QueryProgress(&t, &c)) && t > 0 && c < t) {
@@ -8028,25 +8024,16 @@ void CMainFrame::OnPlayStop()
             m_pMS->SetPositions(&pos, AM_SEEKING_AbsolutePositioning, nullptr, AM_SEEKING_NoPositioning);
             MediaControlStop();
 
-            // BUG: after pause or stop the netshow url source filter won't continue
-            // on the next play command, unless we cheat it by setting the file name again.
-            //
-            // Note: WMPx may be using some undocumented interface to restart streaming.
-
-            BeginEnumFilters(m_pGB, pEF, pBF) {
-                CComQIPtr<IAMNetworkStatus, &IID_IAMNetworkStatus> pAMNS = pBF;
-                CComQIPtr<IFileSourceFilter> pFSF = pBF;
-                if (pAMNS && pFSF) {
-                    WCHAR* pFN = nullptr;
-                    AM_MEDIA_TYPE mt;
-                    if (SUCCEEDED(pFSF->GetCurFile(&pFN, &mt)) && pFN && *pFN) {
-                        pFSF->Load(pFN, nullptr);
-                        CoTaskMemFree(pFN);
-                    }
-                    break;
+            if (m_pAMNS && m_pFSF) {
+                // After pause or stop the netshow url source filter won't continue
+                // on the next play command, unless we cheat it by setting the file name again.
+                WCHAR* pFN = nullptr;
+                AM_MEDIA_TYPE mt;
+                if (SUCCEEDED(m_pFSF->GetCurFile(&pFN, &mt)) && pFN && *pFN) {
+                    m_pFSF->Load(pFN, nullptr);
+                    CoTaskMemFree(pFN);
                 }
             }
-            EndEnumFilters;
         } else if (GetPlaybackMode() == PM_DVD) {
             m_pDVDC->SetOption(DVD_ResetOnStop, TRUE);
             MediaControlStop();
@@ -12272,18 +12259,23 @@ void CMainFrame::OpenFile(OpenFileData* pOFD)
             BeginEnumFilters(m_pGB, pEF, pBF);
             if (!m_pFSF) {
                 m_pFSF = pBF;
-                if (m_pFSF && m_bUseSeekPreview) {
-                    CLSID clsid;
-                    if (S_OK == pBF->GetClassID(&clsid)) {
-                        if (clsid == CLSID_StillVideo) {
-                            m_bUseSeekPreview = false;
-                        } else if (clsid == __uuidof(CRARFileSource)) {
-                            WCHAR* pFN = nullptr;
-                            AM_MEDIA_TYPE mt;
-                            if (SUCCEEDED(m_pFSF->GetCurFile(&pFN, &mt)) && pFN && *pFN) {
-                                isRFS = true;
-                                entryRFS = pFN;
-                                CoTaskMemFree(pFN);
+                if (m_pFSF) { // IFileSourceFilter
+                    if (!m_pAMNS) {
+                        m_pAMNS = pBF;
+                    }
+                    if (m_bUseSeekPreview) {
+                        CLSID clsid;
+                        if (S_OK == pBF->GetClassID(&clsid)) {
+                            if (clsid == CLSID_StillVideo) {
+                                m_bUseSeekPreview = false;
+                            } else if (clsid == __uuidof(CRARFileSource)) {
+                                WCHAR* pFN = nullptr;
+                                AM_MEDIA_TYPE mt;
+                                if (SUCCEEDED(m_pFSF->GetCurFile(&pFN, &mt)) && pFN && *pFN) {
+                                    isRFS = true;
+                                    entryRFS = pFN;
+                                    CoTaskMemFree(pFN);
+                                }
                             }
                         }
                     }
@@ -12304,6 +12296,7 @@ void CMainFrame::OpenFile(OpenFileData* pOFD)
             EndEnumFilters;
             if (!m_pFSF) {
                 m_pFSF = m_pGB;
+                ASSERT(FALSE);
             }
 
             if (!bIsVideo) {
@@ -14116,6 +14109,7 @@ void CMainFrame::CloseMediaPrivate()
     m_pFSF.Release();
     m_pKFI.Release();
     m_pAMMC.Release();
+    m_pAMNS.Release();
 
     if (m_pGB) {
         m_pGB->RemoveFromROT();

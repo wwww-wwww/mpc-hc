@@ -236,6 +236,7 @@ private:
     CComQIPtr<IBufferInfo> m_pBI;
     CComQIPtr<IAMOpenProgress> m_pAMOP;
     CComQIPtr<IAMMediaContent, &IID_IAMMediaContent> m_pAMMC;
+    CComQIPtr<IAMNetworkStatus, &IID_IAMNetworkStatus> m_pAMNS;
     // SmarkSeek
     CComPtr<IGraphBuilder2>         m_pGB_preview;
     CComQIPtr<IMediaControl>        m_pMC_preview;
