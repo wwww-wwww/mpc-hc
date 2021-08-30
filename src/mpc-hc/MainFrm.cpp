@@ -13248,25 +13248,37 @@ void CMainFrame::OpenSetupStatusBar()
     m_wndStatusBar.ShowTimer(true);
 
     if (!m_fCustomGraph) {
-
-        CComQIPtr<IBaseFilter> pFBF = m_pFSF;
-        ASSERT(pFBF);
-
-        BeginEnumPins(pFBF, pEP, pPin) {
-            CMediaTypeEx mt;
-            PIN_DIRECTION dir;
-            if (SUCCEEDED(pPin->QueryDirection(&dir)) && (dir == PINDIR_OUTPUT) &&
-                SUCCEEDED(pPin->ConnectionMediaType(&mt))) {
-                if (mt.majortype == MEDIATYPE_Video) {
-                    GetMediaTypeFourCC(mt.subtype, m_statusbarVideoFourCC);
-                    if (!m_statusbarVideoFourCC.IsEmpty()) {
-                        break;
+        // Find video output pin of the source filter or splitter
+        BeginEnumFilters(m_pGB, pEF, pBF) {
+            CString fcc;
+            int input_pins = 0;
+            bool splitter = false;
+            BeginEnumPins(pBF, pEP, pPin) {               
+                PIN_DIRECTION dir;
+                CMediaTypeEx mt;
+                if (SUCCEEDED(pPin->QueryDirection(&dir)) && SUCCEEDED(pPin->ConnectionMediaType(&mt))) {
+                    if (dir == PINDIR_OUTPUT) {
+                        if (mt.majortype == MEDIATYPE_Video) {
+                            GetMediaTypeFourCC(mt.subtype, fcc);
+                            if (splitter) {
+                                break;
+                            }
+                        }
+                    } else {
+                        input_pins++;
+                        splitter = (mt.majortype == MEDIATYPE_Stream);
                     }
                 }
             }
-        }
-        EndEnumPins;
+            EndEnumPins;
 
+            if ((input_pins == 0 || splitter) && !fcc.IsEmpty()) {
+                m_statusbarVideoFourCC = fcc;
+                break;
+            }
+        }
+        EndEnumFilters;
+        // ToDo: merge the two filter enumeration loops
 
         UINT id = IDB_AUDIOTYPE_NOAUDIO;
 
