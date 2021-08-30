@@ -480,6 +480,46 @@ msgctxt "IDS_SUBRESYNC_RESET"
 msgid "&Reset"
 msgstr "重置(&R)"
 
+msgctxt "IDS_SUBRESYNC_ORIGINAL"
+msgid "&Original"
+msgstr "原始(&O)"
+
+msgctxt "IDS_SUBRESYNC_CURRENT"
+msgid "&Current"
+msgstr "当前(&C)"
+
+msgctxt "IDS_SUBRESYNC_EDIT"
+msgid "&Edit"
+msgstr "编辑(&E)"
+
+msgctxt "IDS_SUBRESYNC_YES"
+msgid "&Yes"
+msgstr "是(&Y)"
+
+msgctxt "IDS_SUBRESYNC_NO"
+msgid "&No"
+msgstr "否(&N)"
+
+msgctxt "IDS_SUBRESYNC_DECREASE"
+msgid "&Decrease"
+msgstr "减少(&D)"
+
+msgctxt "IDS_SUBRESYNC_INCREASE"
+msgid "&Increase"
+msgstr "增加(&I)"
+
+msgctxt "IDS_OPTIONS_CAPTION"
+msgid "Options"
+msgstr "选项"
+
+msgctxt "IDS_SHADERS_SELECT"
+msgid "&Select Shaders..."
+msgstr "选择着色器(&S)..."
+
+msgctxt "IDS_SHADERS_DEBUG"
+msgid "&Debug Shaders..."
+msgstr "调试着色器(&D)..."
+
 msgctxt "IDS_MPLAYERC_104"
 msgid "Subtitle Delay -"
 msgstr "字幕延迟 -"
@@ -892,10 +932,6 @@ msgctxt "IDS_SUBTITLES_DOWNLOAD"
 msgid "Download Subtitles..."
 msgstr "下载字幕..."
 
-msgctxt "//IDS_SUBTITLES_UPLOAD"
-msgid "Upload Subtitles..."
-msgstr ""
-
 msgctxt "IDS_SUBFILE_DELAY"
 msgid "Delay (ms):"
 msgstr "延迟 (毫秒):"
@@ -1085,46 +1121,6 @@ msgid ""
 msgstr ""
 "向前跳转\n"
 "向前跳转"
-
-msgctxt "IDS_SUBRESYNC_ORIGINAL"
-msgid "&Original"
-msgstr "原始(&O)"
-
-msgctxt "IDS_SUBRESYNC_CURRENT"
-msgid "&Current"
-msgstr "当前(&C)"
-
-msgctxt "IDS_SUBRESYNC_EDIT"
-msgid "&Edit"
-msgstr "编辑(&E)"
-
-msgctxt "IDS_SUBRESYNC_YES"
-msgid "&Yes"
-msgstr "是(&Y)"
-
-msgctxt "IDS_SUBRESYNC_NO"
-msgid "&No"
-msgstr "否(&N)"
-
-msgctxt "IDS_SUBRESYNC_DECREASE"
-msgid "&Decrease"
-msgstr "减少(&D)"
-
-msgctxt "IDS_SUBRESYNC_INCREASE"
-msgid "&Increase"
-msgstr "增加(&I)"
-
-msgctxt "IDS_OPTIONS_CAPTION"
-msgid "Options"
-msgstr "选项"
-
-msgctxt "IDS_SHADERS_SELECT"
-msgid "&Select Shaders..."
-msgstr "选择着色器(&S)..."
-
-msgctxt "IDS_SHADERS_DEBUG"
-msgid "&Debug Shaders..."
-msgstr "调试着色器(&D)..."
 
 msgctxt "IDS_FAVORITES_ADD"
 msgid "&Add to Favorites..."
@@ -4469,4 +4465,8 @@ msgstr "在最近播放列表中使用标题。"
 
 msgctxt "IDS_PPAGEADVANCED_SHOW_ABMARKS_STATUSBAR"
 msgid "Display current A-B repeat marks in status bar."
+msgstr ""
+
+msgctxt "IDS_PPAGEADVANCED_SHOW_VIDEOINFO_STATUSBAR"
+msgid "Display video info (codec name, resolution) in status bar."
 msgstr ""

@@ -483,6 +483,46 @@ msgctxt "IDS_SUBRESYNC_RESET"
 msgid "&Reset"
 msgstr "&คืนค่า"
 
+msgctxt "IDS_SUBRESYNC_ORIGINAL"
+msgid "&Original"
+msgstr "&ต้นฉบับ"
+
+msgctxt "IDS_SUBRESYNC_CURRENT"
+msgid "&Current"
+msgstr "&ปัจจุบัน"
+
+msgctxt "IDS_SUBRESYNC_EDIT"
+msgid "&Edit"
+msgstr "แ&ก้ไข"
+
+msgctxt "IDS_SUBRESYNC_YES"
+msgid "&Yes"
+msgstr "ใ&ช่"
+
+msgctxt "IDS_SUBRESYNC_NO"
+msgid "&No"
+msgstr "ไ&ม่"
+
+msgctxt "IDS_SUBRESYNC_DECREASE"
+msgid "&Decrease"
+msgstr "&ลด"
+
+msgctxt "IDS_SUBRESYNC_INCREASE"
+msgid "&Increase"
+msgstr "เ&พิ่ม"
+
+msgctxt "IDS_OPTIONS_CAPTION"
+msgid "Options"
+msgstr "ตัวเลือก"
+
+msgctxt "IDS_SHADERS_SELECT"
+msgid "&Select Shaders..."
+msgstr "เลือกเ&ฉดเดอร์..."
+
+msgctxt "IDS_SHADERS_DEBUG"
+msgid "&Debug Shaders..."
+msgstr "&ดีบักเฉดเดอร์..."
+
 msgctxt "IDS_MPLAYERC_104"
 msgid "Subtitle Delay -"
 msgstr "ศัพท์บรรยาย หน่วง -"
@@ -917,10 +957,6 @@ msgctxt "IDS_SUBTITLES_DOWNLOAD"
 msgid "Download Subtitles..."
 msgstr "ดาวน์โหลดศัพท์บรรยาย..."
 
-msgctxt "//IDS_SUBTITLES_UPLOAD"
-msgid "Upload Subtitles..."
-msgstr ""
-
 msgctxt "IDS_SUBFILE_DELAY"
 msgid "Delay (ms):"
 msgstr "หน่วง (มว.):"
@@ -1118,46 +1154,6 @@ msgid ""
 msgstr ""
 "ข้ามไปหน้า\n"
 "ข้ามไปหน้า"
-
-msgctxt "IDS_SUBRESYNC_ORIGINAL"
-msgid "&Original"
-msgstr "&ต้นฉบับ"
-
-msgctxt "IDS_SUBRESYNC_CURRENT"
-msgid "&Current"
-msgstr "&ปัจจุบัน"
-
-msgctxt "IDS_SUBRESYNC_EDIT"
-msgid "&Edit"
-msgstr "แ&ก้ไข"
-
-msgctxt "IDS_SUBRESYNC_YES"
-msgid "&Yes"
-msgstr "ใ&ช่"
-
-msgctxt "IDS_SUBRESYNC_NO"
-msgid "&No"
-msgstr "ไ&ม่"
-
-msgctxt "IDS_SUBRESYNC_DECREASE"
-msgid "&Decrease"
-msgstr "&ลด"
-
-msgctxt "IDS_SUBRESYNC_INCREASE"
-msgid "&Increase"
-msgstr "เ&พิ่ม"
-
-msgctxt "IDS_OPTIONS_CAPTION"
-msgid "Options"
-msgstr "ตัวเลือก"
-
-msgctxt "IDS_SHADERS_SELECT"
-msgid "&Select Shaders..."
-msgstr "เลือกเ&ฉดเดอร์..."
-
-msgctxt "IDS_SHADERS_DEBUG"
-msgid "&Debug Shaders..."
-msgstr "&ดีบักเฉดเดอร์..."
 
 msgctxt "IDS_FAVORITES_ADD"
 msgid "&Add to Favorites..."
@@ -4477,4 +4473,8 @@ msgstr ""
 
 msgctxt "IDS_PPAGEADVANCED_SHOW_ABMARKS_STATUSBAR"
 msgid "Display current A-B repeat marks in status bar."
+msgstr ""
+
+msgctxt "IDS_PPAGEADVANCED_SHOW_VIDEOINFO_STATUSBAR"
+msgid "Display video info (codec name, resolution) in status bar."
 msgstr ""
