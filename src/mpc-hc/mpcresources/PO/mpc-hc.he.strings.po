@@ -501,8 +501,8 @@ msgid "Player"
 msgstr "נגן"
 
 msgctxt "IDD_PPAGEDVD"
-msgid "Playback::DVD/OGM"
-msgstr "ניגון::די.וי.די/OGM"
+msgid "Playback::DVD"
+msgstr "ניגון::די.וי.די"
 
 msgctxt "IDD_PPAGESUBTITLES"
 msgid "Subtitles"

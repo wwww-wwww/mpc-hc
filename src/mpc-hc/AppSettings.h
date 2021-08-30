@@ -618,7 +618,7 @@ public:
         EXIT
     } eAfterPlayback;
 
-    // DVD/OGM
+    // DVD
     bool            fUseDVDPath;
     CString         strDVDPath;
     LCID            idMenuLang, idAudioLang, idSubtitlesLang;

@@ -509,8 +509,8 @@ msgid "Player"
 msgstr "Přehrávač"
 
 msgctxt "IDD_PPAGEDVD"
-msgid "Playback::DVD/OGM"
-msgstr "Přehrávání::DVD/OGM"
+msgid "Playback::DVD"
+msgstr "Přehrávání::DVD"
 
 msgctxt "IDD_PPAGESUBTITLES"
 msgid "Subtitles"

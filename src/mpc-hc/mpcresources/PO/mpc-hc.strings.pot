@@ -492,7 +492,7 @@ msgid "Player"
 msgstr ""
 
 msgctxt "IDD_PPAGEDVD"
-msgid "Playback::DVD/OGM"
+msgid "Playback::DVD"
 msgstr ""
 
 msgctxt "IDD_PPAGESUBTITLES"

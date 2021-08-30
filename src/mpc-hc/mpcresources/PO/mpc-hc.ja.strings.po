@@ -503,8 +503,8 @@ msgid "Player"
 msgstr "プレーヤー"
 
 msgctxt "IDD_PPAGEDVD"
-msgid "Playback::DVD/OGM"
-msgstr "再生::DVD/OGM"
+msgid "Playback::DVD"
+msgstr "再生::DVD"
 
 msgctxt "IDD_PPAGESUBTITLES"
 msgid "Subtitles"

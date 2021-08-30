@@ -510,8 +510,8 @@ msgid "Player"
 msgstr "Trình phát"
 
 msgctxt "IDD_PPAGEDVD"
-msgid "Playback::DVD/OGM"
-msgstr "Phát lại::DVD / OGM"
+msgid "Playback::DVD"
+msgstr "Phát lại::DVD"
 
 msgctxt "IDD_PPAGESUBTITLES"
 msgid "Subtitles"

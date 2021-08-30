@@ -512,8 +512,8 @@ msgid "Player"
 msgstr "Αναπαραγωγός"
 
 msgctxt "IDD_PPAGEDVD"
-msgid "Playback::DVD/OGM"
-msgstr "Αναπαραγωγή::DVD/OGM"
+msgid "Playback::DVD"
+msgstr "Αναπαραγωγή::DVD"
 
 msgctxt "IDD_PPAGESUBTITLES"
 msgid "Subtitles"

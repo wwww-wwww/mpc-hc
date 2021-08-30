@@ -372,9 +372,8 @@ msgid "Always open the default location:"
 msgstr "Deschide întotdeauna dosarul implicit:"
 
 msgctxt "IDD_PPAGEDVD_IDC_STATIC"
-msgid "Preferred language for DVD Navigator and the external OGM Splitter"
-msgstr ""
-"Limbă preferată pentru navigatorul DVD și separatorul (splitter) extern OGM"
+msgid "Preferred language for DVD"
+msgstr "Limbă preferată pentru navigatorul DVD"
 
 msgctxt "IDD_PPAGEDVD_IDC_RADIO3"
 msgid "Menu"

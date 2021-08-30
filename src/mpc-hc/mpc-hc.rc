@@ -267,7 +267,7 @@ BEGIN
     CONTROL         "Always open the default location:",IDC_RADIO2,"Button",BS_AUTORADIOBUTTON,12,35,336,8
     EDITTEXT        IDC_DVDPATH,24,49,299,13,ES_AUTOHSCROLL | WS_GROUP
     PUSHBUTTON      "...",IDC_BUTTON1,328,49,16,13
-    GROUPBOX        "Preferred language for DVD Navigator and the external OGM Splitter",IDC_STATIC,6,74,343,89
+    GROUPBOX        "Preferred language for DVD",IDC_STATIC,6,74,343,89
     CONTROL         "Menu",IDC_RADIO3,"Button",BS_AUTORADIOBUTTON | WS_GROUP,12,89,78,8
     CONTROL         "Audio",IDC_RADIO4,"Button",BS_AUTORADIOBUTTON,12,103,78,8
     CONTROL         "Subtitles",IDC_RADIO5,"Button",BS_AUTORADIOBUTTON,12,118,78,8
@@ -2640,7 +2640,7 @@ STRINGTABLE
 BEGIN
     IDD_PPAGEPLAYBACK       "Playback"
     IDD_PPAGEPLAYER         "Player"
-    IDD_PPAGEDVD            "Playback::DVD/OGM"
+    IDD_PPAGEDVD            "Playback::DVD"
     IDD_PPAGESUBTITLES      "Subtitles"
     IDD_PPAGEFORMATS        "Player::Formats"
     IDD_PPAGETWEAKS         "Tweaks"

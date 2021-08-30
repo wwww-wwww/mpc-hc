@@ -369,7 +369,7 @@ msgid "Always open the default location:"
 msgstr "সর্বদা নির্ধারিত স্থান চালনা:"
 
 msgctxt "IDD_PPAGEDVD_IDC_STATIC"
-msgid "Preferred language for DVD Navigator and the external OGM Splitter"
+msgid "Preferred language for DVD"
 msgstr "DVD ন্যাভিগেটর এবং বাহিরস্থ OGM স্প্লিটারের জন্য পছন্দনীয় ভাষা"
 
 msgctxt "IDD_PPAGEDVD_IDC_RADIO3"

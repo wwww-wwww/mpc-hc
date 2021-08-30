@@ -12510,52 +12510,6 @@ void CMainFrame::SetupChapters()
         }
     }
 
-    pos = pBFs.GetHeadPosition();
-    while (pos && !m_pCB->ChapGetCount()) {
-        IBaseFilter* pBF = pBFs.GetNext(pos);
-
-        if (GetCLSID(pBF) != CLSID_OggSplitter) {
-            continue;
-        }
-
-        BeginEnumPins(pBF, pEP, pPin) {
-            if (m_pCB->ChapGetCount()) {
-                break;
-            }
-
-            if (CComQIPtr<IPropertyBag> pPB = pPin) {
-                for (int i = 1; ; i++) {
-                    CStringW str;
-                    CComVariant var;
-
-                    var.Clear();
-                    str.Format(L"CHAPTER%02d", i);
-                    if (S_OK != pPB->Read(str, &var, nullptr)) {
-                        break;
-                    }
-
-                    int h, m, s, ms;
-                    WCHAR wc;
-                    if (7 != swscanf_s(CStringW(var), L"%d%c%d%c%d%c%d",
-                                       &h, &wc, 1, &m, &wc, 1, &s, &wc, 1, &ms)) {
-                        break;
-                    }
-
-                    CStringW name;
-                    name.Format(IDS_AG_CHAPTER, i);
-                    var.Clear();
-                    str += L"NAME";
-                    if (S_OK == pPB->Read(str, &var, nullptr)) {
-                        name = var;
-                    }
-
-                    m_pCB->ChapAppend(10000i64 * (((h * 60 + m) * 60 + s) * 1000 + ms), name);
-                }
-            }
-        }
-        EndEnumPins;
-    }
-
     CPlaylistItem* pli = m_wndPlaylistBar.GetCur();
     if (pli && pli->m_cue) {
         SetupCueChapters(pli->m_cue_filename);
@@ -13016,60 +12970,6 @@ void CMainFrame::OpenCustomizeGraph()
         }
         EndEnumFilters;
     }
-
-    BeginEnumFilters(m_pGB, pEF, pBF) {
-        if (GetCLSID(pBF) == CLSID_OggSplitter) {
-            if (CComQIPtr<IAMStreamSelect> pSS = pBF) {
-                LCID idAudio = s.idAudioLang;
-                if (!idAudio) {
-                    idAudio = GetUserDefaultLCID();
-                }
-                LCID idSub = s.idSubtitlesLang;
-                if (!idSub) {
-                    idSub = GetUserDefaultLCID();
-                }
-
-                DWORD cnt = 0;
-                if (SUCCEEDED(pSS->Count(&cnt))) {
-                    for (DWORD i = 0; i < cnt; i++) {
-                        AM_MEDIA_TYPE* pmt = nullptr;
-                        DWORD dwFlags = 0;
-                        LCID lcid = 0;
-                        DWORD dwGroup = 0;
-                        WCHAR* pszName = nullptr;
-                        if (SUCCEEDED(pSS->Info((long)i, &pmt, &dwFlags, &lcid, &dwGroup, &pszName, nullptr, nullptr))) {
-                            CStringW name(pszName), sound(StrRes(IDS_AG_SOUND)), subtitle(L"Subtitle");
-
-                            if (idAudio != (LCID) - 1 && (idAudio & 0x3ff) == (lcid & 0x3ff) // sublang seems to be zeroed out in ogm...
-                                    && name.GetLength() > sound.GetLength()
-                                    && !name.Left(sound.GetLength()).CompareNoCase(sound)) {
-                                if (SUCCEEDED(pSS->Enable(i, AMSTREAMSELECTENABLE_ENABLE))) {
-                                    idAudio = (LCID) - 1;
-                                }
-                            }
-
-                            if (idSub != (LCID) - 1 && (idSub & 0x3ff) == (lcid & 0x3ff) // sublang seems to be zeroed out in ogm...
-                                    && name.GetLength() > subtitle.GetLength()
-                                    && !name.Left(subtitle.GetLength()).CompareNoCase(subtitle)
-                                    && name.Mid(subtitle.GetLength()).Trim().CompareNoCase(L"off")) {
-                                if (SUCCEEDED(pSS->Enable(i, AMSTREAMSELECTENABLE_ENABLE))) {
-                                    idSub = (LCID) - 1;
-                                }
-                            }
-
-                            if (pmt) {
-                                DeleteMediaType(pmt);
-                            }
-                            if (pszName) {
-                                CoTaskMemFree(pszName);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-    EndEnumFilters;
 
     CleanGraph();
 }

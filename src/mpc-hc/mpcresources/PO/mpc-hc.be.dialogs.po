@@ -367,8 +367,8 @@ msgid "Always open the default location:"
 msgstr "Заўсёды адкрываць вызначаную папку:"
 
 msgctxt "IDD_PPAGEDVD_IDC_STATIC"
-msgid "Preferred language for DVD Navigator and the external OGM Splitter"
-msgstr "Пажаданая мова для DVD Navigator і OGM Splitter"
+msgid "Preferred language for DVD"
+msgstr "Пажаданая мова для DVD Navigator"
 
 msgctxt "IDD_PPAGEDVD_IDC_RADIO3"
 msgid "Menu"

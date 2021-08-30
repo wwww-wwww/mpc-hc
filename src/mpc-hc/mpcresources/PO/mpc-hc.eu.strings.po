@@ -509,8 +509,8 @@ msgid "Player"
 msgstr "Irakurgailua"
 
 msgctxt "IDD_PPAGEDVD"
-msgid "Playback::DVD/OGM"
-msgstr "Irakurketa::DVD/OGM"
+msgid "Playback::DVD"
+msgstr "Irakurketa::DVD"
 
 msgctxt "IDD_PPAGESUBTITLES"
 msgid "Subtitles"

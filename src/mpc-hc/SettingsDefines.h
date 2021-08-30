@@ -121,7 +121,7 @@
 #define IDS_RS_COLOR_HUE                    _T("VideoHue")
 #define IDS_RS_COLOR_SATURATION             _T("VideoSaturation")
 
-// DVD/OGM
+// DVD
 #define IDS_RS_DVDPATH                      _T("DVDPath")
 #define IDS_RS_USEDVDPATH                   _T("UseDVDPath")
 #define IDS_RS_MENULANG                     _T("MenuLang")

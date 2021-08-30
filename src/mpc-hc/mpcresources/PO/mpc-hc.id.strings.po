@@ -508,8 +508,8 @@ msgid "Player"
 msgstr "Pemutar"
 
 msgctxt "IDD_PPAGEDVD"
-msgid "Playback::DVD/OGM"
-msgstr "Pemutaran::DVD/OGM"
+msgid "Playback::DVD"
+msgstr "Pemutaran::DVD"
 
 msgctxt "IDD_PPAGESUBTITLES"
 msgid "Subtitles"

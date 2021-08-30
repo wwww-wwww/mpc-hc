@@ -507,8 +507,8 @@ msgid "Player"
 msgstr "Grotuvas"
 
 msgctxt "IDD_PPAGEDVD"
-msgid "Playback::DVD/OGM"
-msgstr "Įrašo peržiūra::DVD/OGM"
+msgid "Playback::DVD"
+msgstr "Įrašo peržiūra::DVD"
 
 msgctxt "IDD_PPAGESUBTITLES"
 msgid "Subtitles"

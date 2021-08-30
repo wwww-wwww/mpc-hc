@@ -373,8 +373,8 @@ msgid "Always open the default location:"
 msgstr "Apri sempre nella posizione predefinita:"
 
 msgctxt "IDD_PPAGEDVD_IDC_STATIC"
-msgid "Preferred language for DVD Navigator and the external OGM Splitter"
-msgstr "Lingua preferita per il DVD Navigator e lo splitter OGM esterno"
+msgid "Preferred language for DVD"
+msgstr "Lingua preferita per il DVD"
 
 msgctxt "IDD_PPAGEDVD_IDC_RADIO3"
 msgid "Menu"

@@ -363,7 +363,7 @@ msgid "Always open the default location:"
 msgstr "總是開啟預設位置:"
 
 msgctxt "IDD_PPAGEDVD_IDC_STATIC"
-msgid "Preferred language for DVD Navigator and the external OGM Splitter"
+msgid "Preferred language for DVD"
 msgstr "DVD 導覽與外部 OGM 分離器的偏好語言"
 
 msgctxt "IDD_PPAGEDVD_IDC_RADIO3"

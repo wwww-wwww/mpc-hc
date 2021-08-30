@@ -507,8 +507,8 @@ msgid "Player"
 msgstr "Oynatıcı"
 
 msgctxt "IDD_PPAGEDVD"
-msgid "Playback::DVD/OGM"
-msgstr "Yürütme::DVD/OGM"
+msgid "Playback::DVD"
+msgstr "Yürütme::DVD"
 
 msgctxt "IDD_PPAGESUBTITLES"
 msgid "Subtitles"

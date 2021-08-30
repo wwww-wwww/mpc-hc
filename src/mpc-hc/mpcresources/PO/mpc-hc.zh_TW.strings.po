@@ -500,8 +500,8 @@ msgid "Player"
 msgstr "播放程式"
 
 msgctxt "IDD_PPAGEDVD"
-msgid "Playback::DVD/OGM"
-msgstr "播放器::DVD/OGM"
+msgid "Playback::DVD"
+msgstr "播放器::DVD"
 
 msgctxt "IDD_PPAGESUBTITLES"
 msgid "Subtitles"

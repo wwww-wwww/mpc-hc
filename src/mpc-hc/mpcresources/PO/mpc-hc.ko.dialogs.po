@@ -363,7 +363,7 @@ msgid "Always open the default location:"
 msgstr ""
 
 msgctxt "IDD_PPAGEDVD_IDC_STATIC"
-msgid "Preferred language for DVD Navigator and the external OGM Splitter"
+msgid "Preferred language for DVD"
 msgstr "DVD메뉴/외부OGM스플리터에서 사용할 언어"
 
 msgctxt "IDD_PPAGEDVD_IDC_RADIO3"
