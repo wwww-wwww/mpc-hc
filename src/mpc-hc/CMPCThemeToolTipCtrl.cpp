@@ -139,7 +139,7 @@ void CMPCThemeToolTipCtrl::makeHelper()
     }
     ClientToScreen(r);
 
-    helper = new CMPCThemeToolTipCtrlHelper(this);
+    helper = DEBUG_NEW CMPCThemeToolTipCtrlHelper(this);
     //do it the long way since no menu for parent
     helper->CreateEx(NULL, AfxRegisterWndClass(0), NULL, WS_POPUP | WS_DISABLED,
                      r.left, r.top, r.right - r.left, r.bottom - r.top,

@@ -32,6 +32,10 @@
 #endif
 
 #ifdef _DEBUG
+#if 1
 #define _CRTDBG_MAP_ALLOC   // include Microsoft memory leak detection procedures
 #include <crtdbg.h>
+#else
+#include "vld.h" //include visual leak detector procedures
+#endif
 #endif

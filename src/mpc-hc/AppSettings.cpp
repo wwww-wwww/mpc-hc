@@ -2564,7 +2564,7 @@ void CAppSettings::CRecentFileAndURLList::SetSize(int nSize)
     ENSURE_ARG(nSize >= 0);
 
     if (m_nSize != nSize) {
-        CString* arrNames = new CString[nSize];
+        CString* arrNames = DEBUG_NEW CString[nSize];
         int nSizeToCopy = std::min(m_nSize, nSize);
         for (int i = 0; i < nSizeToCopy; i++) {
             arrNames[i] = m_arrNames[i];

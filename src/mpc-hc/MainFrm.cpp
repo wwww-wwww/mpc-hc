@@ -1348,7 +1348,7 @@ void CMainFrame::EnableDocking(DWORD dwDockStyle)
         if (dwDockBarMap[i][1] & dwDockStyle & CBRS_ALIGN_ANY) {
             CMPCThemeDockBar* pDock = (CMPCThemeDockBar*)GetControlBar(dwDockBarMap[i][0]);
             if (pDock == NULL) {
-                pDock = new CMPCThemeDockBar;
+                pDock = DEBUG_NEW CMPCThemeDockBar;
                 if (!pDock->Create(this,
                                    WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_CHILD | WS_VISIBLE |
                                    dwDockBarMap[i][1], dwDockBarMap[i][0])) {
@@ -5098,7 +5098,7 @@ void CMainFrame::SaveDIB(LPCTSTR fn, BYTE* pData, long size)
             mime = L"image/jpeg";
 
             // Set the encoder parameter for jpeg quality
-            pEncoderParameters = new Gdiplus::EncoderParameters;
+            pEncoderParameters = DEBUG_NEW Gdiplus::EncoderParameters;
             ULONG quality = AfxGetAppSettings().nJpegQuality;
 
             pEncoderParameters->Count = 1;
@@ -18559,7 +18559,7 @@ HRESULT CMainFrame::UpdateThumbnailClip()
 BOOL CMainFrame::Create(LPCTSTR lpszClassName, LPCTSTR lpszWindowName, DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, LPCTSTR lpszMenuName, DWORD dwExStyle, CCreateContext* pContext)
 {
     if (defaultMPCThemeMenu == nullptr) {
-        defaultMPCThemeMenu = new CMPCThemeMenu();
+        defaultMPCThemeMenu = DEBUG_NEW CMPCThemeMenu();
     }
     if (lpszMenuName != NULL) {
         defaultMPCThemeMenu->LoadMenu(lpszMenuName);
@@ -18896,7 +18896,7 @@ void CMainFrame::UpdateUILanguage()
     m_mainPopupMenu.LoadMenu(IDR_POPUPMAIN);
 
     oldMenu = GetMenu();
-    defaultMPCThemeMenu = new CMPCThemeMenu(); //will have been destroyed
+    defaultMPCThemeMenu = DEBUG_NEW CMPCThemeMenu(); //will have been destroyed
     defaultMPCThemeMenu->LoadMenu(IDR_MAINFRAME);
     if (oldMenu) {
         // Attach the new menu to the window only if there was a menu before

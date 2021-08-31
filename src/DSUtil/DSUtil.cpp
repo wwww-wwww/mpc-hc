@@ -1352,7 +1352,7 @@ void ShortenLongPath(CString& path)
 {
     if (path.GetLength() > MAX_PATH && path.Find(_T("\\\\?\\")) < 0) {
         CString longpath = _T("\\\\?\\") + path;
-        TCHAR* buffer = new TCHAR[MAX_PATH];
+        TCHAR* buffer = DEBUG_NEW TCHAR[MAX_PATH];
         long length = GetShortPathName(longpath, buffer, MAX_PATH);
         if (length > 0 && length < MAX_PATH) {
             path = buffer;
