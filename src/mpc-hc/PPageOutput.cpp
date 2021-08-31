@@ -166,8 +166,7 @@ BOOL CPPageOutput::OnInitDialog()
         }
 
         CStringW str(olestr);
-
-        m_AudioRendererDisplayNames.Add(CString(str));
+        m_AudioRendererDisplayNames.Add(str);
 
         CComPtr<IPropertyBag> pPB;
         if (SUCCEEDED(pMoniker->BindToStorage(0, 0, IID_PPV_ARGS(&pPB)))) {
@@ -424,7 +423,7 @@ BOOL CPPageOutput::OnApply()
     r.iDX9Resizer                           = m_iDX9Resizer;
     r.fVMR9MixerMode                        = !!m_fVMR9MixerMode;
     r.m_AdvRendSets.bVMR9AlterativeVSync    = m_fVMR9AlterativeVSync != FALSE;
-    s.strAudioRendererDisplayName           = m_AudioRendererDisplayNames[m_iAudioRendererType];
+    s.strAudioRendererDisplayName           = GetAudioRendererDisplayName();
     s.fD3DFullscreen                        = m_fD3DFullscreen ? true : false;
 
     if (m_SubtitleRendererCtrl.IsWindowEnabled()) {
@@ -633,10 +632,14 @@ void CPPageOutput::OnDSRendererChange()
 void CPPageOutput::OnAudioRendererChange() {
     UpdateData();
     CPPageAudioRenderer* pAR = static_cast<CPPageAudioRenderer*>(FindSiblingPage(RUNTIME_CLASS(CPPageAudioRenderer)));
-    if (pAR) { //audio renderer page visible, so we have to update the checkbox
-        pAR->SetEnabled(m_AudioRendererDisplayNames[m_iAudioRendererType] == AUDRNDT_INTERNAL);
+    if (pAR) { //audio renderer page visible, so we have to update it, too
+        pAR->SetCurAudioRenderer(GetAudioRendererDisplayName());
     }
     SetModified();
+}
+
+const CString& CPPageOutput::GetAudioRendererDisplayName() {
+    return m_AudioRendererDisplayNames[m_iAudioRendererType];
 }
 
 void CPPageOutput::OnSubtitleRendererChange()

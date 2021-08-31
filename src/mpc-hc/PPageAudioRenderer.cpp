@@ -175,7 +175,12 @@ BOOL CPPageAudioRenderer::OnInitDialog()
     m_slider1.SetPos(crossfeedCuttoffFrequency);
     m_slider2.SetPos(crossfeedLevel);
 
-    curAudioRenderer = s.SelectedAudioRenderer();
+    CPPageOutput* po = static_cast<CPPageOutput*>(FindSiblingPage(RUNTIME_CLASS(CPPageOutput)));
+    if (po) { //output page visible, so we will use its setting (maybe unapplied)
+        curAudioRenderer = po->GetAudioRendererDisplayName();
+    } else {
+        curAudioRenderer = s.SelectedAudioRenderer();
+    }
     m_bIsEnabled = (curAudioRenderer == AUDRNDT_INTERNAL);
 
     UpdateData(FALSE);
@@ -274,6 +279,11 @@ void CPPageAudioRenderer::OnUpdateInternalAudioEnabled(CCmdUI* pCmdUI) {
 
 void CPPageAudioRenderer::SetEnabled(bool enabled) {
     m_bIsEnabled = enabled;
+}
+
+void CPPageAudioRenderer::SetCurAudioRenderer(CString renderer) {
+    curAudioRenderer = renderer;
+    SetEnabled(renderer == AUDRNDT_INTERNAL);
 }
 
 void CPPageAudioRenderer::OnUpdateCrossfeedCutoffLabel(CCmdUI* pCmdUI)

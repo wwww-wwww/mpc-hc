@@ -79,7 +79,7 @@ public:
 
     BOOL m_fD3D9RenderDevice;
     int m_iD3D9RenderDevice;
-
+    const CString& GetAudioRendererDisplayName();
 
 protected:
     virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support

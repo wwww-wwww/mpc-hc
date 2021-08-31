@@ -34,6 +34,7 @@ public:
 
     enum { IDD = IDD_PPAGEAUDIORENDERER };
     void SetEnabled(bool enabled);
+    void SetCurAudioRenderer(CString renderer);
 
 protected:
 
