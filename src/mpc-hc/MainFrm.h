@@ -1222,6 +1222,9 @@ protected:
 
     bool IsImageFile(CString fn);
 
+    // Handles MF_DEFAULT and escapes '&'
+    static BOOL AppendMenuEx(CMenu& menu, UINT nFlags, UINT_PTR nIDNewItem, CString& text);
+
 public:
     afx_msg UINT OnPowerBroadcast(UINT nPowerEvent, LPARAM nEventData);
     afx_msg void OnSessionChange(UINT nSessionState, UINT nId);

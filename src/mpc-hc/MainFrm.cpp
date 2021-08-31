@@ -14634,9 +14634,7 @@ void CMainFrame::SetupAudioSubMenu()
                 }
             }
 
-            str.Replace(_T("&"), _T("&&"));
-
-            VERIFY(subMenu.AppendMenu(flags, id++, str));
+            VERIFY(AppendMenuEx(subMenu, flags, id++, str));
         }
     }
     // If available use the audio switcher for everything but DVDs
@@ -14762,9 +14760,7 @@ void CMainFrame::SetupSubtitlesSubMenu()
                     }
                 }
 
-                str.Replace(_T("&"), _T("&&"));
-
-                VERIFY(subMenu.AppendMenu(flags, id++, str));
+                VERIFY(AppendMenuEx(subMenu, flags, id++, str));
             }
         }
     }
@@ -19745,4 +19741,14 @@ void CMainFrame::updateRecentFileListSub() {
             }            
         }
     }
+}
+
+BOOL CMainFrame::AppendMenuEx(CMenu& menu, UINT nFlags, UINT_PTR nIDNewItem, CString& text)
+{
+    text.Replace(_T("&"), _T("&&"));
+    auto bResult = menu.AppendMenu(nFlags, nIDNewItem, text.GetString());
+    if (bResult && (nFlags & MF_DEFAULT)) {
+        bResult = menu.SetDefaultItem(nIDNewItem);
+    }
+    return bResult;
 }
