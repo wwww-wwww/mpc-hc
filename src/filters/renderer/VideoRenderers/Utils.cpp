@@ -19,14 +19,3 @@ bool RetrieveBitmapData(unsigned w, unsigned h, unsigned bpp, BYTE* dst, BYTE* s
 
     return true;
 }
-
-bool AngleStep90(int& angle) {
-    if (angle % 90 == 0) {
-        angle %= 360;
-        if (angle < 0) {
-            angle += 360;
-        }
-        return true;
-    }
-    return false;
-}

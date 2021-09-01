@@ -30,7 +30,6 @@
 #include <d3d9.h>
 #include "NullRenderers.h"
 
-#include <initguid.h>
 #include "moreuuids.h"
 #include <dxva.h>
 #include <dxva2api.h>
@@ -1872,52 +1871,6 @@ void SetThreadName(DWORD dwThreadID, LPCSTR szThreadName)
     }
 }
 
-void CorrectComboListWidth(CComboBox& m_pComboBox)
-{
-    // Find the longest string in the combo box.
-    if (m_pComboBox.GetCount() <= 0) {
-        return;
-    }
-
-    CString    str;
-    CSize      sz;
-    int        dx = 0;
-    TEXTMETRIC tm;
-    CDC*       pDC = m_pComboBox.GetDC();
-    CFont*     pFont = m_pComboBox.GetFont();
-
-    // Select the listbox font, save the old font
-    CFont* pOldFont = pDC->SelectObject(pFont);
-    // Get the text metrics for avg char width
-    pDC->GetTextMetrics(&tm);
-
-    for (int i = 0; i < m_pComboBox.GetCount(); i++) {
-        m_pComboBox.GetLBText(i, str);
-        sz = pDC->GetTextExtent(str);
-
-        // Add the avg width to prevent clipping
-        sz.cx += tm.tmAveCharWidth;
-
-        if (sz.cx > dx) {
-            dx = sz.cx;
-        }
-    }
-    // Select the old font back into the DC
-    pDC->SelectObject(pOldFont);
-    m_pComboBox.ReleaseDC(pDC);
-
-    // Get the scrollbar width if it exists
-    int min_visible = m_pComboBox.GetMinVisible();
-    int scroll_width = (m_pComboBox.GetCount() > min_visible) ?
-                       ::GetSystemMetrics(SM_CXVSCROLL) : 0;
-
-    // Adjust the width for the vertical scroll bar and the left and right border.
-    dx += scroll_width + 2 *::GetSystemMetrics(SM_CXEDGE);
-
-    // Set the width of the list box so that every item is completely visible.
-    m_pComboBox.SetDroppedWidth(dx);
-}
-
 void CorrectComboBoxHeaderWidth(CWnd* pComboBox)
 {
     if (!pComboBox) {
@@ -1980,4 +1933,21 @@ CString NormalizeUnicodeStrForSearch(CString srcStr, LANGID langid) {
     CString ret = dest;
     delete[] dest;
     return ret;
+}
+
+inline const LONGLONG GetPerfCounter() {
+    auto GetPerfFrequency = [] {
+        LARGE_INTEGER freq;
+        QueryPerformanceFrequency(&freq);
+        return freq.QuadPart;
+    };
+    static const LONGLONG llPerfFrequency = GetPerfFrequency();
+    if (llPerfFrequency) {
+        LARGE_INTEGER llPerfCounter;
+        QueryPerformanceCounter(&llPerfCounter);
+        return llMulDiv(llPerfCounter.QuadPart, 10000000LL, llPerfFrequency, 0);
+    } else {
+        // ms to 100ns units
+        return timeGetTime() * 10000;
+    }
 }
