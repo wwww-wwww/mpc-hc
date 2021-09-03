@@ -2025,8 +2025,7 @@ void CPlayerPlaylistBar::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
         case M_RANDOMIZE:
             Randomize();
             break;
-        case M_CLIPBOARD:
-            if (OpenClipboard() && EmptyClipboard()) {
+        case M_CLIPBOARD: {
                 CString str;
 
                 CPlaylistItem& pli = m_pl.GetAt(pos);
@@ -2036,14 +2035,8 @@ void CPlayerPlaylistBar::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
                 }
                 str.Trim();
 
-                if (HGLOBAL h = GlobalAlloc(GMEM_MOVEABLE, (str.GetLength() + 1) * sizeof(TCHAR))) {
-                    if (TCHAR* cp = (TCHAR*)GlobalLock(h)) {
-                        _tcscpy_s(cp, str.GetLength() + 1, str);
-                        GlobalUnlock(h);
-                        SetClipboardData(CF_UNICODETEXT, h);
-                    }
-                }
-                CloseClipboard();
+                CClipboard clipboard(this);
+                VERIFY(clipboard.SetText(str));
             }
             break;
         case M_SHOWFOLDER:

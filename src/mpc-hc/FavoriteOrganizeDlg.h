@@ -21,8 +21,6 @@
 
 #pragma once
 
-#include <afxcmn.h>
-#include <afxwin.h>
 #include "CMPCThemeResizableDialog.h"
 #include "CMPCThemeTabCtrl.h"
 #include "CMPCThemePlayerListCtrl.h"
@@ -56,6 +54,7 @@ protected:
     void UpdateColumnsSizes();
     void MoveItem(int nItem, int offset);
     void PlayFavorite(int nItem);
+    void CopyToClipboard();
 
     DECLARE_MESSAGE_MAP()
 public:

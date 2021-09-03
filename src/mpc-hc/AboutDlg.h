@@ -20,7 +20,6 @@
 
 #pragma once
 
-#include <afxwin.h>
 #include "resource.h"
 #include "CMPCThemeDialog.h"
 
@@ -48,8 +47,6 @@ public:
 
     virtual BOOL OnInitDialog();
 
-    afx_msg void OnHomepage(NMHDR* pNMHDR, LRESULT* pResult);
-
     // Dialog Data
     //{{AFX_DATA(CAboutDlg)
     enum { IDD = IDD_ABOUTBOX };
@@ -64,9 +61,8 @@ protected:
     // Implementation
 protected:
     //{{AFX_MSG(CAboutDlg)
-    // No message handlers
+    afx_msg void OnCopyToClipboard();
+    afx_msg void OnHomepage(NMHDR* pNMHDR, LRESULT* pResult);
     //}}AFX_MSG
     DECLARE_MESSAGE_MAP()
-
-    afx_msg void OnCopyToClipboard();
 };

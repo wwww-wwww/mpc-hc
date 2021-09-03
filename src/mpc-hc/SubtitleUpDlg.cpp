@@ -19,6 +19,7 @@
  */
 
 #include "stdafx.h"
+#include <WinAPIUtils.h>
 #include "SubtitleUpDlg.h"
 #include "SubtitlesProvider.h"
 #include "MainFrm.h"
@@ -320,30 +321,8 @@ void CSubtitleUpDlg::OnRightClick(NMHDR* pNMHDR, LRESULT* pResult)
                 break;
             case COPY_URL: {
                 if (!provider.Url().empty()) {
-                    size_t len = provider.Url().length() + 1;
-                    HGLOBAL hGlob = ::GlobalAlloc(GMEM_MOVEABLE, len * sizeof(CHAR));
-                    if (hGlob) {
-                        // Lock the handle and copy the text to the buffer
-                        LPVOID pData = ::GlobalLock(hGlob);
-                        if (pData) {
-                            ::strcpy_s((CHAR*)pData, len, (LPCSTR)provider.Url().c_str());
-                            ::GlobalUnlock(hGlob);
-
-                            if (GetParent()->OpenClipboard()) {
-                                // Place the handle on the clipboard, if the call succeeds
-                                // the system will take care of the allocated memory
-                                if (::EmptyClipboard() && ::SetClipboardData(CF_TEXT, hGlob)) {
-                                    hGlob = nullptr;
-                                }
-
-                                ::CloseClipboard();
-                            }
-                        }
-
-                        if (hGlob) {
-                            ::GlobalFree(hGlob);
-                        }
-                    }
+                    CClipboard clipboard(this);
+                    VERIFY(clipboard.SetText(provider.Url().c_str()));
                 }
                 break;
             }

@@ -19,6 +19,8 @@
  */
 
 #include "stdafx.h"
+#include <WinAPIFunc.h>
+#include <WinAPIUtils.h>
 #include "AboutDlg.h"
 #include "mpc-hc_config.h"
 #ifndef MPCHC_LITE
@@ -28,8 +30,6 @@
 #include "FileVersionInfo.h"
 #include "PathUtils.h"
 #include "VersionInfo.h"
-#include "WinapiFunc.h"
-#include <afxole.h>
 
 /////////////////////////////////////////////////////////////////////////////
 // CAboutDlg dialog used for App About
@@ -247,31 +247,6 @@ void CAboutDlg::OnCopyToClipboard()
         pD3D9->Release();
     }
 
-    // Allocate a global memory object for the text
-    int len = info.GetLength() + 1;
-    HGLOBAL hGlob = GlobalAlloc(GMEM_MOVEABLE, len * sizeof(WCHAR));
-    if (hGlob) {
-        // Lock the handle and copy the text to the buffer
-        LPVOID pData = GlobalLock(hGlob);
-        if (pData) {
-            wcscpy_s((WCHAR*)pData, len, (LPCWSTR)info);
-            GlobalUnlock(hGlob);
-
-            if (GetParent()->OpenClipboard()) {
-                // Place the handle on the clipboard, if the call succeeds
-                // the system will take care of the allocated memory
-                if (::EmptyClipboard() && ::SetClipboardData(CF_UNICODETEXT, hGlob)) {
-                    hGlob = nullptr;
-                }
-
-                ::CloseClipboard();
-            }
-        }
-
-        if (hGlob) {
-            GlobalFree(hGlob);
-        }
-    }
+    CClipboard clipboard(this);
+    VERIFY(clipboard.SetText(info));
 }
-
-

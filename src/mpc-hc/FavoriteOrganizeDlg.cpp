@@ -20,10 +20,11 @@
  */
 
 #include "stdafx.h"
+#include <strsafe.h>
+#include <WinAPIUtils.h>
 #include "FavoriteOrganizeDlg.h"
 #include "mplayerc.h"
 #include "MainFrm.h"
-#include <strsafe.h>
 #include "CMPCTheme.h"
 
 // CFavoriteOrganizeDlg dialog
@@ -311,6 +312,15 @@ void CFavoriteOrganizeDlg::OnKeyPressed(NMHDR* pNMHDR, LRESULT* pResult)
             }
             *pResult = 1;
             break;
+
+        case 'C':
+            if (GetKeyState(VK_CONTROL) < 0) {
+                if(m_tab.GetCurSel() == 0) {   // Files
+                    CopyToClipboard();
+                }
+            }
+            *pResult = 1;
+            break;
         default:
             *pResult = 0;
     }
@@ -448,4 +458,30 @@ void CFavoriteOrganizeDlg::OnLvnGetInfoTipList(NMHDR* pNMHDR, LRESULT* pResult)
     StringCchCopy(pGetInfoTip->pszText, pGetInfoTip->cchTextMax, path.Mid(rootLength));
 
     *pResult = 0;
+}
+
+
+void CFavoriteOrganizeDlg::CopyToClipboard()
+{
+    CAtlList<CString>* pSL = &m_sl[m_tab.GetCurSel()];
+
+    // Iterate through selected items
+    CString favorites;
+    for(POSITION pos = m_list.GetFirstSelectedItemPosition(); pos; ) {
+        int iItem = m_list.GetNextSelectedItem(pos);
+        const CString& fav = pSL->GetAt((POSITION)m_list.GetItemData(iItem));
+        CAtlList<CString> args;
+        ((CMainFrame*)GetParentFrame())->ParseFavoriteFile(fav, args);
+
+        CString path = args.GetHead().Trim();
+        if (!path.IsEmpty()) {
+            favorites.Append(path);
+            favorites.Append(_T("\r\n"));
+        }
+    }
+
+    if (!favorites.IsEmpty()) {
+        CClipboard clipboard(this);
+        VERIFY(clipboard.SetText(favorites));
+    }
 }

@@ -8677,31 +8677,8 @@ void CMainFrame::OnPlayFiltersCopyToClipboard()
         filtersList.AppendFormat(_T("  - %s\r\n"), filterName.GetString());
     }
 
-    // Allocate a global memory object for the text
-    int len = filtersList.GetLength() + 1;
-    HGLOBAL hGlob = GlobalAlloc(GMEM_MOVEABLE, len * sizeof(WCHAR));
-    if (hGlob) {
-        // Lock the handle and copy the text to the buffer
-        LPVOID pData = GlobalLock(hGlob);
-        if (pData) {
-            wcscpy_s((WCHAR*)pData, len, (LPCWSTR)filtersList);
-            GlobalUnlock(hGlob);
-
-            if (OpenClipboard()) {
-                // Place the handle on the clipboard, if the call succeeds
-                // the system will take care of the allocated memory
-                if (::EmptyClipboard() && ::SetClipboardData(CF_UNICODETEXT, hGlob)) {
-                    hGlob = nullptr;
-                }
-
-                ::CloseClipboard();
-            }
-        }
-
-        if (hGlob) {
-            GlobalFree(hGlob);
-        }
-    }
+    CClipboard clipboard(this);
+    VERIFY(clipboard.SetText(filtersList));
 }
 
 void CMainFrame::OnPlayFilters(UINT nID)
@@ -10117,48 +10094,12 @@ void CMainFrame::OnFavoritesFile(UINT nID)
     }
 }
 
-void CMainFrame::PlayFavoriteFile(CString fav)
+void CMainFrame::PlayFavoriteFile(const CString& fav)
 {
     CAtlList<CString> args;
     REFERENCE_TIME rtStart = 0;
-    BOOL bRelativeDrive = FALSE;
 
-    ExplodeEsc(fav, args, _T(';'));
-    args.RemoveHeadNoReturn(); // desc / name
-    _stscanf_s(args.RemoveHead(), _T("%I64d"), &rtStart);    // pos
-    _stscanf_s(args.RemoveHead(), _T("%d"), &bRelativeDrive);    // relative drive
-    rtStart = std::max(rtStart, 0ll);
-
-    // NOTE: This is just for the favorites but we could add a global settings that does this always when on. Could be useful when using removable devices.
-    //       All you have to do then is plug in your 500 gb drive, full with movies and/or music, start MPC-HC (from the 500 gb drive) with a preloaded playlist and press play.
-    if (bRelativeDrive) {
-        // Get the drive MPC-HC is on and apply it to the path list
-        CString exePath = PathUtils::GetProgramPath(true);
-
-        CPath exeDrive(exePath);
-
-        if (exeDrive.StripToRoot()) {
-            POSITION pos = args.GetHeadPosition();
-
-            while (pos != nullptr) {
-                CString& stringPath = args.GetNext(pos);
-                CPath path(stringPath);
-
-                int rootLength = path.SkipRoot();
-
-                if (path.StripToRoot()) {
-                    if (_tcsicmp(exeDrive, path) != 0) {   // Do we need to replace the drive letter ?
-                        // Replace drive letter
-                        CString newPath(exeDrive);
-
-                        newPath += stringPath.Mid(rootLength);  //newPath += stringPath.Mid( 3 );
-
-                        stringPath = newPath;
-                    }
-                }
-            }
-        }
-    }
+    ParseFavoriteFile(fav, args, &rtStart);
 
     SendMessage(WM_COMMAND, ID_FILE_CLOSEMEDIA);
 
@@ -10173,6 +10114,55 @@ void CMainFrame::PlayFavoriteFile(CString fav)
         OnPlayPlay();
     } else {
         OpenCurPlaylistItem(rtStart);
+    }
+}
+
+void CMainFrame::ParseFavoriteFile(const CString& fav, CAtlList<CString>& args, REFERENCE_TIME* prtStart)
+{
+    REFERENCE_TIME rtStart = 0;
+    BOOL bRelativeDrive = FALSE;
+
+    ExplodeEsc(fav, args, _T(';'));
+    args.RemoveHeadNoReturn(); // desc / name
+    _stscanf_s(args.RemoveHead(), _T("%I64d"), &rtStart);    // pos
+    _stscanf_s(args.RemoveHead(), _T("%d"), &bRelativeDrive);    // relative drive
+    rtStart = std::max(rtStart, 0ll);
+
+    if (prtStart) {
+        *prtStart = rtStart;
+    }
+
+    // NOTE: This is just for the favorites but we could add a global settings that
+    // does this always when on. Could be useful when using removable devices.
+    // All you have to do then is plug in your 500 gb drive, full with movies and/or music,
+    // start MPC-HC (from the 500 gb drive) with a preloaded playlist and press play.
+    if (bRelativeDrive) {
+        // Get the drive MPC-HC is on and apply it to the path list
+        CString exePath = PathUtils::GetProgramPath(true);
+
+        CPath exeDrive(exePath);
+
+        if (exeDrive.StripToRoot()) {
+            POSITION pos = args.GetHeadPosition();
+
+            while (pos != nullptr) {
+                CString& stringPath = args.GetNext(pos);    // Note the reference (!)
+                CPath path(stringPath);
+
+                int rootLength = path.SkipRoot();
+
+                if (path.StripToRoot()) {
+                    if (_tcsicmp(exeDrive, path) != 0) {   // Do we need to replace the drive letter ?
+                        // Replace drive letter
+                        CString newPath(exeDrive);
+
+                        newPath += stringPath.Mid(rootLength);
+
+                        stringPath = newPath;   // Note: Changes args.GetHead()
+                    }
+                }
+            }
+        }
     }
 }
 

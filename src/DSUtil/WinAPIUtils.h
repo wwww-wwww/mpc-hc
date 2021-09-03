@@ -44,3 +44,21 @@ public:
     CoInitializeHelper();
     ~CoInitializeHelper();
 };
+
+class CClipboard
+{
+public:
+    CClipboard(CWnd* pWnd = nullptr) {
+        m_bOpened = ::OpenClipboard(pWnd->GetSafeHwnd());
+    }
+    ~CClipboard() {
+        if(m_bOpened) {
+            VERIFY(::CloseClipboard());
+        }
+    }
+
+    BOOL SetText(const CString& text) const;
+
+protected:
+    BOOL m_bOpened;
+};

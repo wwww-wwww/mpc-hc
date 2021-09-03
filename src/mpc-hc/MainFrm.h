@@ -579,8 +579,9 @@ protected:
 public:
     void OpenCurPlaylistItem(REFERENCE_TIME rtStart = 0, bool reopen = false);
     void OpenMedia(CAutoPtr<OpenMediaData> pOMD);
-    void PlayFavoriteFile(CString fav);
+    void PlayFavoriteFile(const CString& fav);
     void PlayFavoriteDVD(CString fav);
+    void ParseFavoriteFile(const CString& fav, CAtlList<CString>& args, REFERENCE_TIME* prtStart = nullptr);
     bool ResetDevice();
     bool DisplayChange();
     void CloseMedia(bool bNextIsQueued = false);

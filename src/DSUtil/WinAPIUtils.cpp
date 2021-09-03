@@ -303,3 +303,40 @@ HRESULT FileDelete(CString file, HWND hWnd, bool recycle /*= true*/)
     TRACE(_T("Delete recycle=%d hRes=0x%08x, file=%s\n"), recycle, hRes, file.GetString());
     return hRes;
 }
+
+BOOL CClipboard::SetText(const CString& text) const
+{
+#ifdef _UNICODE
+    const UINT format = CF_UNICODETEXT;
+#else
+    const UINT format = CF_TEXT;
+#endif
+
+    BOOL bResult = FALSE;
+
+    if(m_bOpened) {
+        // Allocate a global memory object for the text
+        int len = text.GetLength() + 1;
+        auto hGlob = GlobalAlloc(GMEM_MOVEABLE, len*sizeof(TCHAR));
+        if (hGlob) {
+            // Lock the handle and copy the text to the buffer
+            auto pData = (LPTSTR)GlobalLock(hGlob);
+            if (pData) {
+                _tcscpy_s(pData, len, text.GetString());
+                GlobalUnlock(hGlob);
+
+                // Place the handle on the clipboard, if the call succeeds
+                // the system will take care of the allocated memory
+                if (::EmptyClipboard() && ::SetClipboardData(format, hGlob)) {
+                    bResult = TRUE;
+                    hGlob = nullptr;
+                }
+            }
+
+            if (hGlob) {
+                GlobalFree(hGlob);
+            }
+        }
+    }
+    return bResult;
+}
