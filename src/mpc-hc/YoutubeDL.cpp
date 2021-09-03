@@ -78,7 +78,6 @@ bool CYoutubeDLInstance::Run(CString url)
     STARTUPINFO startup_info;
     SECURITY_ATTRIBUTES sec_attrib;
     auto& s = AfxGetAppSettings();
-    bool show_createprocess_error = false;
 
     YDL_LOG(url);
 
@@ -263,6 +262,8 @@ struct YDLStreamDetails {
     int abr;
     int fps;
     CString format_id;
+    CString language;
+    bool pref_lang;
 };
 
 #define YDL_EXTRA_LOGGING 0
@@ -271,7 +272,7 @@ struct YDLStreamDetails {
 
 bool GetYDLStreamDetails(const Value& format, YDLStreamDetails& details, bool require_video, bool require_audio_only)
 {
-    details = { _T(""), _T(""), 0, 0, _T(""), _T(""), _T(""), false, false, 0, 0, 0, _T("") };
+    details = { _T(""), _T(""), 0, 0, _T(""), _T(""), _T(""), false, false, 0, 0, 0, _T(""), _T(""), false };
 
     details.url = format[_T("url")].GetString();
     if (details.url.IsEmpty()) {
@@ -288,6 +289,8 @@ bool GetYDLStreamDetails(const Value& format, YDLStreamDetails& details, bool re
     details.acodec    = format.HasMember(_T("acodec"))   && !format[_T("acodec")].IsNull()   ? format[_T("acodec")].GetString() : _T("");
     details.format    = format.HasMember(_T("format"))   && !format[_T("format")].IsNull()   ? format[_T("format")].GetString() : _T("");
     details.format_id = format.HasMember(_T("format_id")) && !format[_T("format_id")].IsNull() ? format[_T("format_id")].GetString() : _T("");
+    details.language  = format.HasMember(_T("language")) && !format[_T("language")].IsNull() ? format[_T("language")].GetString() : _T("");
+    details.pref_lang = format.HasMember(_T("language_preference")) && !format[_T("language_preference")].IsNull() && format[_T("language_preference")].GetInt() > 0;
 
     details.has_audio = !details.acodec.IsEmpty() && details.acodec != _T("none");
     details.has_video = !details.vcodec.IsEmpty() && details.vcodec != _T("none") || (details.width > 0) || (details.height > 0);
@@ -341,10 +344,10 @@ bool GetYDLStreamDetails(const Value& format, YDLStreamDetails& details, bool re
     }
 
     #if YDL_TRACE
-    TRACE(_T("protocol=%s vcodec=%s width=%d height=%d fps=%d vbr=%d acodec=%s abr=%d formatid=%s url=%s\n"), static_cast<LPCWSTR>(details.protocol), static_cast<LPCWSTR>(details.vcodec), details.width, details.height, details.fps, details.vbr, static_cast<LPCWSTR>(details.acodec), details.abr, static_cast<LPCWSTR>(details.format_id), static_cast<LPCWSTR>(details.url));
+    TRACE(_T("protocol=%s vcodec=%s width=%d height=%d fps=%d vbr=%d acodec=%s abr=%d formatid=%s lang=%s(p%d) url=%s\n"), static_cast<LPCWSTR>(details.protocol), static_cast<LPCWSTR>(details.vcodec), details.width, details.height, details.fps, details.vbr, static_cast<LPCWSTR>(details.acodec), details.abr, static_cast<LPCWSTR>(details.format_id), static_cast<LPCWSTR>(details.language), details.pref_lang, static_cast<LPCWSTR>(details.url));
     #endif
     #if YDL_LOG_URLS
-    YDL_LOG(_T("protocol=%s vcodec=%s width=%d height=%d fps=%d vbr=%d acodec=%s abr=%d formatid=%s url=%s"), static_cast<LPCWSTR>(details.protocol), static_cast<LPCWSTR>(details.vcodec), details.width, details.height, details.fps, details.vbr, static_cast<LPCWSTR>(details.acodec), details.abr, static_cast<LPCWSTR>(details.format_id), static_cast<LPCWSTR>(details.url));
+    YDL_LOG(_T("protocol=%s vcodec=%s width=%d height=%d fps=%d vbr=%d acodec=%s abr=%d formatid=%s lang=%s(p%d) url=%s"), static_cast<LPCWSTR>(details.protocol), static_cast<LPCWSTR>(details.vcodec), details.width, details.height, details.fps, details.vbr, static_cast<LPCWSTR>(details.acodec), details.abr, static_cast<LPCWSTR>(details.format_id), static_cast<LPCWSTR>(details.language), details.pref_lang, static_cast<LPCWSTR>(details.url));
     #endif
 
     return true;
@@ -472,6 +475,11 @@ bool IsBetterYDLStream(YDLStreamDetails& first, YDLStreamDetails& second, int ma
     } else if (first.has_audio) {
         if (!second.has_audio) {
             return false;
+        }
+
+        // Preferred track
+        if (first.pref_lang != second.pref_lang) {
+            return second.pref_lang;
         }
 
         // Audio format
