@@ -1100,23 +1100,24 @@ BEGIN
     COMBOBOX        IDC_COMBO1,24,40,307,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
     CONTROL         "Exclusive mode",IDC_CHECK1,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,48,65,126,8
     CONTROL         "Allow bitstreaming",IDC_CHECK2,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,188,65,150,8
-    GROUPBOX        "Options",IDC_STATIC6,6,96,343,101
-    GROUPBOX        "",IDC_STATIC,16,107,323,62
+    GROUPBOX        "Options",IDC_STATIC6,6,90,343,101
+    GROUPBOX        "",IDC_STATIC,16,101,323,62
     CONTROL         "Enable stereo crossfeed (for headphones)",IDC_CHECK3,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,24,120,307,8
-    PUSHBUTTON      "C. Moy",IDC_BUTTON1,24,140,65,14
-    PUSHBUTTON      "J. Meier",IDC_BUTTON2,95,140,65,14
-    LTEXT           "Cut-off:",IDC_STATIC1,188,132,56,8,0,WS_EX_RIGHT
-    CONTROL         "",IDC_SLIDER1,"msctls_trackbar32",TBS_NOTICKS | WS_TABSTOP,250,131,50,12
-    LTEXT           "",IDC_STATIC2,300,132,36,8
-    LTEXT           "Level:",IDC_STATIC3,188,152,56,8,0,WS_EX_RIGHT
-    CONTROL         "",IDC_SLIDER2,"msctls_trackbar32",TBS_NOTICKS | WS_TABSTOP,250,149,50,12
-    LTEXT           "",IDC_STATIC4,300,152,36,8
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,24,114,307,8
+    PUSHBUTTON      "C. Moy",IDC_BUTTON1,24,134,65,14
+    PUSHBUTTON      "J. Meier",IDC_BUTTON2,95,134,65,14
+    LTEXT           "Cut-off:",IDC_STATIC1,188,126,56,8,0,WS_EX_RIGHT
+    CONTROL         "",IDC_SLIDER1,"msctls_trackbar32",TBS_NOTICKS | WS_TABSTOP,250,125,50,12
+    LTEXT           "",IDC_STATIC2,300,126,36,8
+    LTEXT           "Level:",IDC_STATIC3,188,146,56,8,0,WS_EX_RIGHT
+    CONTROL         "",IDC_SLIDER2,"msctls_trackbar32",TBS_NOTICKS | WS_TABSTOP,250,143,50,12
+    LTEXT           "",IDC_STATIC4,300,146,36,8
     CONTROL         "Ignore system channel mixer (always ignored in exclusive WASAPI mode)",IDC_CHECK4,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,16,177,323,8
-    GROUPBOX        "Note",IDC_STATIC7,6,204,343,58
-    LTEXT           "To minimize audio distortion, it is recommended to keep player volume at around 85% when playing loud lossy-encoded content.",IDC_STATIC8,16,218,323,33
-    CONTROL         "Internal Audio Renderer Enabled",IDC_CHECK5,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,6,6,343,8
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,16,171,323,8
+    GROUPBOX        "Note",IDC_STATIC7,6,192,343,58
+    LTEXT           "To minimize audio distortion, it is recommended to keep player volume at around 85% when playing loud lossy-encoded content.",IDC_STATIC8,16,206,323,33
+    CONTROL         "SaneAR Audio Renderer Enabled",IDC_CHECK5,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,6,6,343,8
+    PUSHBUTTON      "MPC Audio Renderer Settings",IDC_BUTTON3,7,260,105,15
 END
 
 IDD_SAVEIMAGEDIALOGTEMPL DIALOGEX 0, 0, 304, 20
@@ -2736,6 +2737,7 @@ END
 STRINGTABLE
 BEGIN
     IDS_PPAGE_OUTPUT_SYNC   "Sync Renderer"
+    IDS_PPAGE_OUTPUT_AUD_MPC_REND "MPC Audio Renderer"
     IDS_PPAGE_OUTPUT_SURF_OFFSCREEN "Regular offscreen plain surface"
     IDS_PPAGE_OUTPUT_SURF_2D "2D surfaces"
     IDS_PPAGE_OUTPUT_SURF_3D "3D surfaces (recommended)"
@@ -2753,7 +2755,7 @@ END
 
 STRINGTABLE
 BEGIN
-    IDS_PPAGE_OUTPUT_AUD_INTERNAL_REND "Internal Audio Renderer"
+    IDS_PPAGE_OUTPUT_AUD_INTERNAL_REND "SaneAR Audio Renderer"
     IDS_EMB_RESOURCES_VIEWER_NAME "Name"
     IDS_EMB_RESOURCES_VIEWER_TYPE "MIME Type"
     IDS_EMB_RESOURCES_VIEWER_INFO 
@@ -3976,6 +3978,35 @@ BEGIN
                             "Display current A-B repeat marks in status bar."
     IDS_PPAGEADVANCED_SHOW_VIDEOINFO_STATUSBAR 
                             "Display video info (codec name, resolution) in status bar."
+END
+
+STRINGTABLE
+BEGIN
+    IDS_ARS_WASAPI_MODE     "WASAPI mode:"
+    IDS_ARS_EXCLUSIVE       "Exclusive"
+    IDS_ARS_SHARED          "Shared"
+    IDS_ARS_BITEXACT_OUTPUT "Allow bit-exact output"
+    IDS_ARS_SYSTEM_LAYOUT_CHANNELS "Use system layout channels"
+    IDS_ARS_SOUND_DEVICE    "Sound Device:"
+    IDS_ARS_RELEASE_DEVICE_IDLE "Release device when idle"
+    IDS_ARS_CROSSFEED       "Enable stereo crossfeed (for headphones)"
+    IDS_ARS_DEVICE_PERIOD   "Device buffer:"
+    IDS_ARS_CHECK_FORMAT    "Do not check format support"
+    IDS_ARS_STATUS          "Status"
+    IDS_ARS_DEVICE          "Device:"
+    IDS_ARS_MODE            "Mode:"
+    IDS_ARS_INPUT           "Input"
+    IDS_ARS_OUTPUT          "Output"
+    IDS_ARS_FORMAT          "Format:"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_ARS_SAMPLERATE      "Sample rate:"
+    IDS_ARS_CHANNELS        "Channels:"
+    IDS_ARS_WASAPI_METHOD   "WASAPI method:"
+    IDS_ARS_DUMMY_CHANNELS  "Don't fill channels when upmixing"
+    IDS_AG_DEFAULT          "Default"
 END
 
 #endif    // English (United States) resources

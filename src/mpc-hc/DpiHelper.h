@@ -46,6 +46,12 @@ public:
     inline int DPIX() { return m_dpix; }
     inline int DPIY() { return m_dpiy; }
     static bool CanUsePerMonitorV2();
+    inline void ScaleRect(__inout RECT* pRect) {
+        pRect->left = ScaleX(pRect->left);
+        pRect->right = ScaleX(pRect->right);
+        pRect->top = ScaleY(pRect->top);
+        pRect->bottom = ScaleY(pRect->bottom);
+    }
 
 private:
 

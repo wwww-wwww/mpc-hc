@@ -1389,6 +1389,7 @@
 #define IDS_PPAGE_OUTPUT_NULL_UNCOMP    41422
 #define IDS_PPAGE_OUTPUT_MADVR          41423
 #define IDS_PPAGE_OUTPUT_SYNC           41424
+#define IDS_PPAGE_OUTPUT_AUD_MPC_REND   41425
 #define IDS_PPAGE_OUTPUT_SURF_OFFSCREEN 41427
 #define IDS_PPAGE_OUTPUT_SURF_2D        41428
 #define IDS_PPAGE_OUTPUT_SURF_3D        41429
@@ -1657,6 +1658,27 @@
 #define IDS_PPAGEADVANCED_USE_TITLE_IN_RECENT_FILE_LIST 57571
 #define IDS_PPAGEADVANCED_SHOW_ABMARKS_STATUSBAR 57572
 #define IDS_PPAGEADVANCED_SHOW_VIDEOINFO_STATUSBAR 57573
+#define IDS_ARS_WASAPI_MODE             57600
+#define IDS_ARS_EXCLUSIVE               57601
+#define IDS_ARS_SHARED                  57602
+#define IDS_ARS_BITEXACT_OUTPUT         57603
+#define IDS_ARS_SYSTEM_LAYOUT_CHANNELS  57604
+#define IDS_ARS_SOUND_DEVICE            57605
+#define IDS_ARS_RELEASE_DEVICE_IDLE     57606
+#define IDS_ARS_CROSSFEED               57607
+#define IDS_ARS_DEVICE_PERIOD           57608
+#define IDS_ARS_CHECK_FORMAT            57609
+#define IDS_ARS_STATUS                  57610
+#define IDS_ARS_DEVICE                  57611
+#define IDS_ARS_MODE                    57612
+#define IDS_ARS_INPUT                   57613
+#define IDS_ARS_OUTPUT                  57614
+#define IDS_ARS_FORMAT                  57615
+#define IDS_ARS_SAMPLERATE              57616
+#define IDS_ARS_CHANNELS                57617
+#define IDS_ARS_WASAPI_METHOD           57618
+#define IDS_ARS_DUMMY_CHANNELS          57619
+#define IDS_AG_DEFAULT                  57620
 
 // Next default values for new objects
 // 

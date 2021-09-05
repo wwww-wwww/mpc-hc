@@ -46,6 +46,7 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AudioParser.cpp" />
     <ClCompile Include="AudioTools.cpp" />
     <ClCompile Include="deinterlace.cpp" />
     <ClCompile Include="DSMPropertyBag.cpp" />
@@ -60,6 +61,7 @@
     <ClCompile Include="MediaTypeEx.cpp" />
     <ClCompile Include="MediaTypes.cpp" />
     <ClCompile Include="MFCHelper.cpp" />
+    <ClCompile Include="MP4AudioDecoderConfig.cpp" />
     <ClCompile Include="NullRenderers.cpp" />
     <ClCompile Include="Packet.cpp" />
     <ClCompile Include="PathUtils.cpp" />
@@ -76,6 +78,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ArrayUtils.h" />
+    <ClInclude Include="AudioParser.h" />
     <ClInclude Include="AudioTools.h" />
     <ClInclude Include="DSMPropertyBag.h" />
     <ClInclude Include="DSUtil.h" />
@@ -90,11 +93,13 @@
     <ClInclude Include="MediaTypes.h" />
     <ClInclude Include="MFCHelper.h" />
     <ClInclude Include="MhookHelper.h" />
+    <ClInclude Include="MP4AudioDecoderConfig.h" />
     <ClInclude Include="Mpeg2Def.h" />
     <ClInclude Include="NullRenderers.h" />
     <ClInclude Include="Packet.h" />
     <ClInclude Include="PathUtils.h" />
     <ClInclude Include="SharedInclude.h" />
+    <ClInclude Include="SimpleBuffer.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="text.h" />
     <ClInclude Include="vd.h" />

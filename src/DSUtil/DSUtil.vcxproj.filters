@@ -74,6 +74,12 @@
     <ClCompile Include="Packet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="AudioParser.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MP4AudioDecoderConfig.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="MFCHelper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -151,10 +157,19 @@
     <ClInclude Include="ISOLang.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SimpleBuffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="VersionHelpersInternal.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Packet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioParser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MP4AudioDecoderConfig.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MFCHelper.h">

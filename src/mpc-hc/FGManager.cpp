@@ -33,6 +33,7 @@
 #include "SyncAllocatorPresenter.h"
 #include "mplayerc.h"
 #include "sanear/src/Factory.h"
+#include "../src/thirdparty/MpcAudioRenderer/MpcAudioRenderer.h"
 #include <d3d9.h>
 #include <evr.h>
 #include <evr9.h>
@@ -2657,6 +2658,11 @@ CFGManagerPlayer::CFGManagerPlayer(LPCTSTR pName, LPUNKNOWN pUnk, HWND hWnd, boo
             };
             pFGF = DEBUG_NEW SaneAudioRendererFilter(AUDRNDT_INTERNAL, renderer_merit + 0x50);
             pFGF->AddType(MEDIATYPE_Audio, MEDIASUBTYPE_NULL);
+            m_transform.AddTail(pFGF);
+        } else if (SelAudioRenderer == AUDRNDT_MPC) {
+            pFGF = DEBUG_NEW CFGFilterInternal<CMpcAudioRenderer>(AUDRNDT_MPC, renderer_merit);
+            pFGF->AddType(MEDIATYPE_Audio, MEDIASUBTYPE_PCM);
+            pFGF->AddType(MEDIATYPE_Audio, MEDIASUBTYPE_IEEE_FLOAT);
             m_transform.AddTail(pFGF);
         } else if (!SelAudioRenderer.IsEmpty()) {
             pFGF = DEBUG_NEW CFGFilterRegistry(SelAudioRenderer, renderer_merit);

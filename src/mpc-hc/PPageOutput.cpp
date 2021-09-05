@@ -216,6 +216,14 @@ BOOL CPPageOutput::OnInitDialog()
     if (s.strAudioRendererDisplayName == AUDRNDT_INTERNAL && m_iAudioRendererType == 0) {
         m_iAudioRendererType = m_iAudioRendererTypeCtrl.GetCount() - 1;
     }
+    
+    Cbstr.Format(_T("%d: %s"), i++, ResStr(IDS_PPAGE_OUTPUT_AUD_MPC_REND).GetString());
+    m_AudioRendererDisplayNames.Add(AUDRNDT_MPC);
+    m_iAudioRendererTypeCtrl.AddString(Cbstr);
+    if (s.strAudioRendererDisplayName == AUDRNDT_MPC && m_iAudioRendererType == 0) {
+        m_iAudioRendererType = m_iAudioRendererTypeCtrl.GetCount() - 1;
+    }
+
     // check if renderer wasn't in the list of available ones
     if (m_iAudioRendererType == 0 && !s.strAudioRendererDisplayName.IsEmpty()) {
         s.strAudioRendererDisplayName = _T("");

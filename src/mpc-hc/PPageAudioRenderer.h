@@ -48,12 +48,15 @@ protected:
     void OnCMoyButton();
     void OnJMeierButton();
     void OnClickInternalAudioRenderer();
+    void ShowPPage(CUnknown* (__stdcall* CreateInstance)(LPUNKNOWN lpunk, HRESULT* phr));
+    void OnMPCAudioRendererButton();
 
     void OnUpdateAllowBitstreamingCheckbox(CCmdUI* pCmdUI);
     void OnUpdateCrossfeedGroup(CCmdUI* pCmdUI);
     void OnUpdateCrossfeedCutoffLabel(CCmdUI* pCmdUI);
     void OnUpdateCrossfeedLevelLabel(CCmdUI* pCmdUI);
     void OnUpdateInternalAudioEnabled(CCmdUI* pCmdUI);
+    void OnUpdateMPCAudioRenderer(CCmdUI* pCmdUI);
 
     DECLARE_MESSAGE_MAP()
 
