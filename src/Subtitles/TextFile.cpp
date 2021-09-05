@@ -278,7 +278,12 @@ bool CTextFile::FillBuffer()
     }
     m_posInBuffer = 0;
 
-    UINT nBytesRead = __super::Read(&m_buffer[m_nInBuffer], UINT(TEXTFILE_BUFFER_SIZE - m_nInBuffer) * sizeof(char));
+    UINT nBytesRead;
+    try {
+        nBytesRead = __super::Read(&m_buffer[m_nInBuffer], UINT(TEXTFILE_BUFFER_SIZE - m_nInBuffer) * sizeof(char));
+    } catch (...) {
+        return true; // signal EOF in case of exception
+    }
     if (nBytesRead) {
         m_nInBuffer += nBytesRead;
     }
