@@ -3,14 +3,14 @@
 # This file is distributed under the same license as the MPC-HC package.
 # Translators:
 # MPC HC <adiposegithub@gmail.com>, 2020
-# Roger Espolet <roger.espolet@gmail.com>, 2020
+# Roger Espolet <roger.espolet@gmail.com>, 2021
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
 "POT-Creation-Date: 2021-05-04 16:20:41+0000\n"
 "PO-Revision-Date: 2020-01-02 07:46+0000\n"
-"Last-Translator: Roger Espolet <roger.espolet@gmail.com>, 2020\n"
+"Last-Translator: Roger Espolet <roger.espolet@gmail.com>, 2021\n"
 "Language-Team: Catalan (https://www.transifex.com/mpchc/teams/106126/ca/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -457,7 +457,7 @@ msgstr "&Copia al porta-retalls"
 
 msgctxt "IDS_PLAYLIST_SAVE"
 msgid "Sa&ve"
-msgstr ""
+msgstr "De&sa"
 
 msgctxt "IDS_PLAYLIST_SAVEAS"
 msgid "&Save As..."
@@ -717,7 +717,7 @@ msgstr "Renderitzador de vídeo MPC"
 
 msgctxt "IDS_PPAGE_OUTPUT_VMR7"
 msgid "Video Mixing Renderer 7"
-msgstr ""
+msgstr "Video Mixing Renderer 7"
 
 msgctxt "IDD_PPAGEACCELTBL"
 msgid "Player::Keys"
@@ -2689,6 +2689,8 @@ msgstr "Memòria esgotada"
 msgctxt "IDS_MAINFRM_77"
 msgid "Error: Requires Adobe Flash Player for IE with killswitch patch"
 msgstr ""
+"Error: Requereix l'Adobe Flash Player per a l'Internet Explorer amb el pedaç"
+" d'interruptor d'apagada (killswitch)"
 
 msgctxt "IDS_MAINFRM_80"
 msgid "Failed to create the filter graph object"
@@ -3213,7 +3215,7 @@ msgstr "3GP"
 
 msgctxt "IDS_MFMT_3GA"
 msgid "3GA"
-msgstr ""
+msgstr "3GA"
 
 msgctxt "IDS_MFMT_FLV"
 msgid "Flash Video"
@@ -4599,25 +4601,28 @@ msgstr "Activa post-redimensionament dels píxel shaders"
 
 msgctxt "IDS_PPAGEADVANCED_TIME_REFRESH_INTERVAL"
 msgid "Refresh interval (in milliseconds) of time in status bar"
-msgstr ""
+msgstr "Interval de refresc (en mil·lisegons) de temps a la barra d'estat"
 
 msgctxt "IDS_PPAGEADVANCED_SHOW_LANG_STATUSBAR"
 msgid "Display current audio and subtitle language in status bar"
 msgstr ""
+"Mostra l'idioma de l'àudio i dels subtítols actuals a la barra d'estat"
 
 msgctxt "IDS_PPAGEADVANCED_SHOW_FPS_STATUSBAR"
 msgid "Display current fps and rate in status bar"
-msgstr ""
+msgstr "Mostra els fps i la taxa de bits actuals a la barra d'estat"
 
 msgctxt "IDS_PPAGEADVANCED_ADD_LANGCODE_WHEN_SAVE_SUBTITLES"
 msgid ""
 "When save the subtitles file, the language code (if available) text will be "
 "added to suggested file name by default."
 msgstr ""
+"Quan es desi el fitxer de subtítols, el codi d'idioma (si està disponible) "
+"s'afegirà per defecte al nom de fitxer suggerit"
 
 msgctxt "IDS_PPAGEADVANCED_USE_TITLE_IN_RECENT_FILE_LIST"
 msgid "Use title in recent file list."
-msgstr ""
+msgstr "Utilitza el títol a la llista de fitxers recents."
 
 msgctxt "IDS_PPAGEADVANCED_SHOW_ABMARKS_STATUSBAR"
 msgid "Display current A-B repeat marks in status bar."

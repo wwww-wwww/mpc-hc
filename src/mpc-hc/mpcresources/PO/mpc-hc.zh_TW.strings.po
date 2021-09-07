@@ -3,14 +3,14 @@
 # This file is distributed under the same license as the MPC-HC package.
 # Translators:
 # MPC HC <adiposegithub@gmail.com>, 2020
-# Peter Chen <petercpg@gmail.com>, 2020
+# Peter Chen <petercpg@gmail.com>, 2021
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
 "POT-Creation-Date: 2021-05-04 16:20:41+0000\n"
 "PO-Revision-Date: 2020-01-02 07:46+0000\n"
-"Last-Translator: Peter Chen <petercpg@gmail.com>, 2020\n"
+"Last-Translator: Peter Chen <petercpg@gmail.com>, 2021\n"
 "Language-Team: Chinese (Taiwan) (https://www.transifex.com/mpchc/teams/106126/zh_TW/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -100,7 +100,7 @@ msgstr "A-B 點重複播放：標示 B 點"
 
 msgctxt "IDS_SNAPSHOT_SUBTITLES"
 msgid "Include Subtitles"
-msgstr ""
+msgstr "包含字幕"
 
 msgctxt "IDS_INFOBAR_CHANNEL"
 msgid "Channel"
@@ -441,7 +441,7 @@ msgstr "複製到剪貼簿(&C)"
 
 msgctxt "IDS_PLAYLIST_SAVE"
 msgid "Sa&ve"
-msgstr ""
+msgstr "儲存（&v）"
 
 msgctxt "IDS_PLAYLIST_SAVEAS"
 msgid "&Save As..."
@@ -641,11 +641,11 @@ msgstr "增強視訊繪製器"
 
 msgctxt "IDS_PPAGE_OUTPUT_EVR_CUSTOM"
 msgid "Enhanced Video Renderer (custom presenter)"
-msgstr "增強視訊繪製器 (自訂呈現)"
+msgstr "增強視訊繪製器（自訂呈現）"
 
 msgctxt "IDS_PPAGE_OUTPUT_DXR"
 msgid "Haali Video Renderer"
-msgstr "Haali 繪製器"
+msgstr "Haali 視訊繪製器"
 
 msgctxt "IDS_PPAGE_OUTPUT_NULL_COMP"
 msgid "Null (anything)"
@@ -701,7 +701,7 @@ msgstr "MPC 視訊繪製器"
 
 msgctxt "IDS_PPAGE_OUTPUT_VMR7"
 msgid "Video Mixing Renderer 7"
-msgstr ""
+msgstr "Video Mixing Renderer 7"
 
 msgctxt "IDD_PPAGEACCELTBL"
 msgid "Player::Keys"
@@ -945,7 +945,7 @@ msgstr "自動"
 
 msgctxt "IDS_EXPORT_SETTINGS_NO_KEYS"
 msgid "There are no customized keys to export."
-msgstr "沒有自定義按建可供匯出。"
+msgstr "沒有自定義按鍵可供匯出。"
 
 msgctxt "IDS_RFS_NO_FILES"
 msgid "No media files found in the archive"
@@ -1583,7 +1583,7 @@ msgstr "播放完後: 關閉"
 
 msgctxt "IDS_FRAME_INIT_FAILED"
 msgid "MPC-HC encountered a problem during initialization."
-msgstr ""
+msgstr "MPC-HC 初始化時遇到問題。"
 
 msgctxt "IDS_TIME_SHIFT_TOOLTIP"
 msgid ""
@@ -1722,7 +1722,7 @@ msgid ""
 "MPC-HC encountered a problem during initialization. DVD playback may not "
 "work correctly. This problem might be caused by an incompatibility with "
 "certain security software."
-msgstr ""
+msgstr "MPC-HC 初始化時遇到問題，可能無法正確播放 DVD。這個問題可能是因為與某些安全軟體不相容所造成的。"
 
 msgctxt "IDS_PPAGEFULLSCREEN_SHOWNEVER"
 msgid "Never show"
@@ -2555,6 +2555,8 @@ msgid ""
 "To load subtitles you have to change the video renderer type and reopen the file.\n"
 "- DirectShow: EVR (Custom Presenter), Sync, VMR-9 (renderless), madVR, MPC VR, or Haali VR"
 msgstr ""
+"要能載入字幕，請更改視訊繪製器類型，並重新開啟檔案。\n"
+"- DirectShow: 增強視訊繪製器（自訂呈現）、同步繪製器、VMR-9（無轉換）、madVR、MPC VR 或 Haali VR"
 
 msgctxt "IDS_SUBTITLE_FILES_FILTER"
 msgid "Subtitle files"
@@ -2582,7 +2584,7 @@ msgstr "記憶體不足"
 
 msgctxt "IDS_MAINFRM_77"
 msgid "Error: Requires Adobe Flash Player for IE with killswitch patch"
-msgstr ""
+msgstr "錯誤：需要安裝已讓自爆開關失效的 Adobe Flash Player for IE 外掛程式"
 
 msgctxt "IDS_MAINFRM_80"
 msgid "Failed to create the filter graph object"
@@ -2910,11 +2912,11 @@ msgstr "縮放 25%"
 
 msgctxt "IDS_AG_MOUSE_MODIFIER"
 msgid "Mouse Modifier"
-msgstr ""
+msgstr "滑鼠修飾鍵"
 
 msgctxt "IDS_AG_MOUSE_FS_MODIFIER"
 msgid "Mouse FS Modifier"
-msgstr ""
+msgstr "滑鼠修飾鍵（全螢幕）"
 
 msgctxt "IDS_AG_VIDFRM_ZOOM1"
 msgid "VidFrm Zoom 1"
@@ -3106,7 +3108,7 @@ msgstr "3GP"
 
 msgctxt "IDS_MFMT_3GA"
 msgid "3GA"
-msgstr ""
+msgstr "3GA"
 
 msgctxt "IDS_MFMT_FLV"
 msgid "Flash Video"
@@ -4069,6 +4071,11 @@ msgid ""
 "\n"
 "Failure can also happen when you are temporarily blocked due to too many search requests from your account or IP address."
 msgstr ""
+"無法使用帳號「%2」登入字幕網站「%1」。\n"
+"\n"
+"請確認輸入的帳號與密碼是否正確。\n"
+"\n"
+"若您的帳號或 IP 地址短時間內做了太多次搜尋，字幕網站可能也會暫時封鎖您的帳號。"
 
 msgctxt "IDS_SUB_AUTODL_IGNORE_TOOLTIP"
 msgid ""
@@ -4403,58 +4410,58 @@ msgstr "延後顯示全螢幕視訊，以避免畫面不正常"
 
 msgctxt "IDS_PPAGEADVANCED_SNAPSHOTSUBTITLES"
 msgid "Render subtitles onto screenshots"
-msgstr ""
+msgstr "在螢幕擷圖中繪製字幕"
 
 msgctxt "IDS_PPAGEADVANCED_SNAPSHOTKEEPVIDEOEXTENSION"
 msgid ""
 "Keep video file extension as part of snapshot filenames (e.g., file.mkv.png)"
-msgstr ""
+msgstr "在螢幕擷圖檔名中，保留原影片檔的副檔名（例如 file.mkv.png）"
 
 msgctxt "IDS_PRESIZE_SHADERS_ENABLED"
 msgid "Pre-Resize Pixel Shaders: on"
-msgstr ""
+msgstr "Pre-Resize Pixel Shader：開啟"
 
 msgctxt "IDS_PRESIZE_SHADERS_DISABLED"
 msgid "Pre-Resize Pixel Shaders: off"
-msgstr ""
+msgstr "Pre-Resize Pixel Shader：關閉"
 
 msgctxt "IDS_PRESIZE_SHADERS_TOGGLE"
 msgid "Enable Pre-Resize Pixel Shaders"
-msgstr ""
+msgstr "開啟 Pre-Resize Pixel Shader"
 
 msgctxt "IDS_POSTSIZE_SHADERS_ENABLED"
 msgid "Post-Resize Pixel Shaders: on"
-msgstr ""
+msgstr "Post-Resize Pixel Shader：開啟"
 
 msgctxt "IDS_POSTSIZE_SHADERS_DISABLED"
 msgid "Post-Resize Pixel Shaders: off"
-msgstr ""
+msgstr "Post-Resize Pixel Shader：關閉"
 
 msgctxt "IDS_POSTSIZE_SHADERS_TOGGLE"
 msgid "Enable Post-Resize Pixel Shaders"
-msgstr ""
+msgstr "開啟 Post-Resize Pixel Shader"
 
 msgctxt "IDS_PPAGEADVANCED_TIME_REFRESH_INTERVAL"
 msgid "Refresh interval (in milliseconds) of time in status bar"
-msgstr ""
+msgstr "於狀態列重新整理顯示時間的間隔（單位為毫秒）"
 
 msgctxt "IDS_PPAGEADVANCED_SHOW_LANG_STATUSBAR"
 msgid "Display current audio and subtitle language in status bar"
-msgstr ""
+msgstr "於狀態列顯示目前的音訊與字幕語言"
 
 msgctxt "IDS_PPAGEADVANCED_SHOW_FPS_STATUSBAR"
 msgid "Display current fps and rate in status bar"
-msgstr ""
+msgstr "於狀態列顯示目前的畫框數與畫框率"
 
 msgctxt "IDS_PPAGEADVANCED_ADD_LANGCODE_WHEN_SAVE_SUBTITLES"
 msgid ""
 "When save the subtitles file, the language code (if available) text will be "
 "added to suggested file name by default."
-msgstr ""
+msgstr "儲存字幕檔案時，若有語言代碼，則預設會加入到建議的檔案名稱當中。"
 
 msgctxt "IDS_PPAGEADVANCED_USE_TITLE_IN_RECENT_FILE_LIST"
 msgid "Use title in recent file list."
-msgstr ""
+msgstr "於「最近的檔案」清單使用影片標題。"
 
 msgctxt "IDS_PPAGEADVANCED_SHOW_ABMARKS_STATUSBAR"
 msgid "Display current A-B repeat marks in status bar."
