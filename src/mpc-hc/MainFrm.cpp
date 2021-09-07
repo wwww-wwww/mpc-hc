@@ -10491,8 +10491,7 @@ OAFilterState CMainFrame::GetMediaState() const
     if (m_eMediaLoadState == MLS::LOADED) {
         if (m_CachedFilterState != -1) {
             #if DEBUG & 0
-            OAFilterState cfs = m_CachedFilterState;
-            ASSERT(GetMediaStateDirect() == cfs);
+            ASSERT(GetMediaStateDirect() == m_CachedFilterState);
             #endif
             return m_CachedFilterState;
         } else {
@@ -10516,9 +10515,9 @@ bool CMainFrame::MediaControlRun(bool waitforcompletion)
         if (FAILED(m_pMC->Run())) {
             // still in transition to running state
             if (waitforcompletion) {
-                OAFilterState fs = -1;
-                m_pMC->GetState(0, &fs);
-                ASSERT(fs == State_Running);
+                m_CachedFilterState = -1;
+                m_pMC->GetState(0, &m_CachedFilterState);
+                ASSERT(m_CachedFilterState == State_Running);
             }
         };
         return true;
@@ -10535,9 +10534,9 @@ bool CMainFrame::MediaControlPause(bool waitforcompletion)
         if (FAILED(m_pMC->Pause())) {
             // still in transition to paused state
             if (waitforcompletion) {
-                OAFilterState fs = -1;
-                m_pMC->GetState(0, &fs);
-                ASSERT(fs == State_Paused);
+                m_CachedFilterState = -1;
+                m_pMC->GetState(0, &m_CachedFilterState);
+                ASSERT(m_CachedFilterState == State_Paused);
             }
         }
         return true;
@@ -10552,12 +10551,13 @@ bool CMainFrame::MediaControlStop(bool waitforcompletion)
         m_CachedFilterState = State_Stopped;
         if (FAILED(m_pMC->Stop())) {
             ASSERT(FALSE);
+            m_CachedFilterState = -1;
             return false;
         }
         if (waitforcompletion) {
-            OAFilterState fs = -1;
-            m_pMC->GetState(0, &fs);
-            ASSERT(fs == State_Stopped);
+            m_CachedFilterState = -1;
+            m_pMC->GetState(0, &m_CachedFilterState);
+            ASSERT(m_CachedFilterState == State_Stopped);
         }
         return true;
     }
