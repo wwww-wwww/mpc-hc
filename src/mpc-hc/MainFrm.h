@@ -605,8 +605,9 @@ public:
     void RepaintVideo();
     void HideVideoWindow(bool fHide);
 
-    OAFilterState GetMediaStateDirect();
-    OAFilterState GetMediaState();
+    OAFilterState GetMediaStateDirect() const;
+    OAFilterState GetMediaState() const;
+    void CMainFrame::UpdateCachedMediaState();
     bool MediaControlRun(bool waitforcompletion = false);
     bool MediaControlPause(bool waitforcompletion = false);
     bool MediaControlStop(bool waitforcompletion = false);

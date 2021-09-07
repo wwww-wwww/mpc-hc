@@ -2669,7 +2669,6 @@ LRESULT CMainFrame::OnGraphNotify(WPARAM wParam, LPARAM lParam)
 
     LONG evCode = 0;
     LONG_PTR evParam1, evParam2;
-    bool updateMediaState;
     while (!AfxGetMyApp()->m_fClosingState && m_pME && SUCCEEDED(m_pME->GetEvent(&evCode, &evParam1, &evParam2, 0))) {
 #ifdef _DEBUG
         if (evCode != EC_DVD_CURRENT_HMSF_TIME) {
@@ -2683,21 +2682,19 @@ LRESULT CMainFrame::OnGraphNotify(WPARAM wParam, LPARAM lParam)
             }
         }
 
-        updateMediaState = false;
-
         hr = m_pME->FreeEventParams(evCode, evParam1, evParam2);
 
         CComPtr<IDvdState> pStateData;
         switch (evCode) {
             case EC_PAUSED:
-                updateMediaState = true;
+                m_CachedFilterState = -1;
                 break;
             case EC_COMPLETE:
-                GetMediaStateDirect();
+                UpdateCachedMediaState();
                 GraphEventComplete();
                 break;
             case EC_ERRORABORT:
-                updateMediaState = true;
+                UpdateCachedMediaState();
                 TRACE(_T("\thr = %08x\n"), (HRESULT)evParam1);
                 break;
             case EC_BUFFERING_DATA:
@@ -2710,7 +2707,7 @@ LRESULT CMainFrame::OnGraphNotify(WPARAM wParam, LPARAM lParam)
                 }
                 break;
             case EC_DEVICE_LOST:
-                updateMediaState = true;
+                UpdateCachedMediaState();
                 if (evParam2 == 0) {
                     // Device lost
                     if (GetPlaybackMode() == PM_ANALOG_CAPTURE) {
@@ -3017,7 +3014,7 @@ LRESULT CMainFrame::OnGraphNotify(WPARAM wParam, LPARAM lParam)
                 }
                 break;
             case EC_BG_ERROR:
-                updateMediaState = true;
+                UpdateCachedMediaState();
                 if (m_fCustomGraph) {
                     SendMessage(WM_COMMAND, ID_FILE_CLOSEMEDIA);
                     m_closingmsg = !str.IsEmpty() ? str : CString(_T("Unspecified graph error"));
@@ -3031,25 +3028,16 @@ LRESULT CMainFrame::OnGraphNotify(WPARAM wParam, LPARAM lParam)
                     AutoChangeMonitorMode();
                 }
                 break;
+            case EC_CLOCK_CHANGED:
+                break;
             case 0xfa17:
                 // madVR changed graph state
-                updateMediaState = true;
+                UpdateCachedMediaState();
                 break;
             default:
-                updateMediaState = true;
+                UpdateCachedMediaState();
                 TRACE(_T("Unhandled graph event\n"));
         }
-
-        if (updateMediaState) {
-            GetMediaStateDirect();
-        }
-#if DEBUG
-        else if (evCode != EC_COMPLETE){
-            // sanity check
-            OAFilterState cfs  = m_CachedFilterState;
-            ASSERT(GetMediaStateDirect() == cfs);
-        }
-#endif
     }
 
     return hr;
@@ -10488,18 +10476,18 @@ CRect CMainFrame::GetInvisibleBorderSize() const
     return invisibleBorders;
 }
 
-OAFilterState CMainFrame::GetMediaStateDirect()
+OAFilterState CMainFrame::GetMediaStateDirect() const
 {
     OAFilterState ret = -1;
     if (m_eMediaLoadState == MLS::LOADED) {
         m_pMC->GetState(0, &ret);
     }
-    m_CachedFilterState = ret;
     return ret;
 }
 
-OAFilterState CMainFrame::GetMediaState()
+OAFilterState CMainFrame::GetMediaState() const
 {
+    OAFilterState ret = -1;
     if (m_eMediaLoadState == MLS::LOADED) {
         if (m_CachedFilterState != -1) {
             #if DEBUG & 0
@@ -10507,10 +10495,16 @@ OAFilterState CMainFrame::GetMediaState()
             ASSERT(GetMediaStateDirect() == cfs);
             #endif
             return m_CachedFilterState;
+        } else {
+            m_pMC->GetState(0, &ret);
         }
-        return GetMediaStateDirect();
     }
-    return -1;
+    return ret;
+}
+
+void CMainFrame::UpdateCachedMediaState()
+{
+    m_CachedFilterState = GetMediaStateDirect();
 }
 
 bool CMainFrame::MediaControlRun(bool waitforcompletion)
@@ -10519,7 +10513,7 @@ bool CMainFrame::MediaControlRun(bool waitforcompletion)
     if (m_pMC) {
         ASSERT(m_CachedFilterState != State_Running);
         m_CachedFilterState = State_Running;
-        if (!m_pMC->Run()) {
+        if (FAILED(m_pMC->Run())) {
             // still in transition to running state
             if (waitforcompletion) {
                 OAFilterState fs = -1;
@@ -10538,7 +10532,7 @@ bool CMainFrame::MediaControlPause(bool waitforcompletion)
     if (m_pMC) {
         ASSERT(m_CachedFilterState != State_Paused);
         m_CachedFilterState = State_Paused;
-        if (!m_pMC->Pause()) {
+        if (FAILED(m_pMC->Pause())) {
             // still in transition to paused state
             if (waitforcompletion) {
                 OAFilterState fs = -1;
