@@ -4240,8 +4240,8 @@ msgstr ""
 "/standby\t\tMenempatkan sistem operasi dalam mode standby setelah pemutaran"
 
 msgctxt "IDS_CMD_HIBERNATE"
-msgid "/hibernate\tHibernate operating system after playback"
-msgstr "/hibernate\tHibernate sistem operasi setelah pemutaran"
+msgid "/hibernate\t\tHibernate operating system after playback"
+msgstr "/hibernate\t\tHibernate sistem operasi setelah pemutaran"
 
 msgctxt "IDS_CMD_LOGOFF"
 msgid "/logoff\t\tLog off after playback"

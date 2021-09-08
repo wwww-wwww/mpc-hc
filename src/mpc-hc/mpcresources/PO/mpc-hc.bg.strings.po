@@ -4266,8 +4266,8 @@ msgid "/standby\t\tPut the operating system in standby mode after playback"
 msgstr "/standby\t\tПоставя компютъра в режим стендбай след изпълнение"
 
 msgctxt "IDS_CMD_HIBERNATE"
-msgid "/hibernate\tHibernate operating system after playback"
-msgstr "/hibernate\tПоставя компютъра в режим на хибернация след изпълнение"
+msgid "/hibernate\t\tHibernate operating system after playback"
+msgstr "/hibernate\t\tПоставя компютъра в режим на хибернация след изпълнение"
 
 msgctxt "IDS_CMD_LOGOFF"
 msgid "/logoff\t\tLog off after playback"
@@ -4429,7 +4429,7 @@ msgstr "/regvid\t\tСъздава файлови асоциации за вид�
 
 msgctxt "IDS_CMD_REGAUD"
 msgid "/regaud\t\tCreate file associations for audio files"
-msgstr "/regaud\tСъздава файлови асоциации за аудио файлове"
+msgstr "/regaud\t\tСъздава файлови асоциации за аудио файлове"
 
 msgctxt "IDS_CMD_REGPL"
 msgid "/regpl\t\tCreate file associations for playlist files"

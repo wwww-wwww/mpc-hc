@@ -4250,8 +4250,8 @@ msgstr ""
 "balik"
 
 msgctxt "IDS_CMD_HIBERNATE"
-msgid "/hibernate\tHibernate operating system after playback"
-msgstr "/hibernate\tHibernasi sistem pengoperasian selepas main balik"
+msgid "/hibernate\t\tHibernate operating system after playback"
+msgstr "/hibernate\t\tHibernasi sistem pengoperasian selepas main balik"
 
 msgctxt "IDS_CMD_LOGOFF"
 msgid "/logoff\t\tLog off after playback"

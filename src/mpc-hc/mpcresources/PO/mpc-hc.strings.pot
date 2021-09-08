@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2021-09-06 17:51:01+0000\n"
+"POT-Creation-Date: 2021-09-08 08:33:47+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -4068,7 +4068,7 @@ msgid "/standby\t\tPut the operating system in standby mode after playback"
 msgstr ""
 
 msgctxt "IDS_CMD_HIBERNATE"
-msgid "/hibernate\tHibernate operating system after playback"
+msgid "/hibernate\t\tHibernate operating system after playback"
 msgstr ""
 
 msgctxt "IDS_CMD_LOGOFF"

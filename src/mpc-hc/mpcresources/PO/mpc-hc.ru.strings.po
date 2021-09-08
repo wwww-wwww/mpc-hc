@@ -4255,9 +4255,9 @@ msgstr ""
 "воспроизведения"
 
 msgctxt "IDS_CMD_HIBERNATE"
-msgid "/hibernate\tHibernate operating system after playback"
+msgid "/hibernate\t\tHibernate operating system after playback"
 msgstr ""
-"/hibernate\tПеревести компьютер в спящий режим после окончания "
+"/hibernate\t\tПеревести компьютер в спящий режим после окончания "
 "воспроизведения"
 
 msgctxt "IDS_CMD_LOGOFF"

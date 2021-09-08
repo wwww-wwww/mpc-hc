@@ -4284,9 +4284,9 @@ msgstr ""
 "/standby\t\tWprowadza system w stan wstrzymania po zakończeniu odtwarzania"
 
 msgctxt "IDS_CMD_HIBERNATE"
-msgid "/hibernate\tHibernate operating system after playback"
+msgid "/hibernate\t\tHibernate operating system after playback"
 msgstr ""
-"/hibernate\tWprowadza system w stan hibernacji po zakończeniu odtwarzania"
+"/hibernate\t\tWprowadza system w stan hibernacji po zakończeniu odtwarzania"
 
 msgctxt "IDS_CMD_LOGOFF"
 msgid "/logoff\t\tLog off after playback"

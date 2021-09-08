@@ -4187,7 +4187,7 @@ msgid "/standby\t\tPut the operating system in standby mode after playback"
 msgstr ""
 
 msgctxt "IDS_CMD_HIBERNATE"
-msgid "/hibernate\tHibernate operating system after playback"
+msgid "/hibernate\t\tHibernate operating system after playback"
 msgstr ""
 
 msgctxt "IDS_CMD_LOGOFF"
