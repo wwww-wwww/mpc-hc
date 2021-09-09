@@ -126,20 +126,20 @@ static void DumpWaveFormatEx(const WAVEFORMATEX* pwfx)
 			break;
 	}
 
-	TRACE(L"        => %s", format.GetString());
-	TRACE(L"        => wFormatTag      = 0x%04x", pwfx->wFormatTag);
-	TRACE(L"        => nChannels       = %d", pwfx->nChannels);
-	TRACE(L"        => nSamplesPerSec  = %d", pwfx->nSamplesPerSec);
-	TRACE(L"        => nAvgBytesPerSec = %d", pwfx->nAvgBytesPerSec);
-	TRACE(L"        => nBlockAlign     = %d", pwfx->nBlockAlign);
-	TRACE(L"        => wBitsPerSample  = %d", pwfx->wBitsPerSample);
-	TRACE(L"        => cbSize          = %d", pwfx->cbSize);
+	TRACE(L"        => %s\n", format.GetString());
+	TRACE(L"        => wFormatTag      = 0x%04x\n", pwfx->wFormatTag);
+	TRACE(L"        => nChannels       = %d\n", pwfx->nChannels);
+	TRACE(L"        => nSamplesPerSec  = %d\n", pwfx->nSamplesPerSec);
+	TRACE(L"        => nAvgBytesPerSec = %d\n", pwfx->nAvgBytesPerSec);
+	TRACE(L"        => nBlockAlign     = %d\n", pwfx->nBlockAlign);
+	TRACE(L"        => wBitsPerSample  = %d\n", pwfx->wBitsPerSample);
+	TRACE(L"        => cbSize          = %d\n", pwfx->cbSize);
 	if (IsWaveFormatExtensible(pwfx)) {
 		const auto pwfex = (WAVEFORMATEXTENSIBLE*)pwfx;
-		TRACE(L"        WAVEFORMATEXTENSIBLE:");
-		TRACE(L"            => wValidBitsPerSample = %d", pwfex->Samples.wValidBitsPerSample);
-		TRACE(L"            => dwChannelMask       = 0x%x", pwfex->dwChannelMask);
-		TRACE(L"            => SubFormat           = %s", CStringFromGUID(pwfex->SubFormat));
+		TRACE(L"        WAVEFORMATEXTENSIBLE:\n");
+		TRACE(L"            => wValidBitsPerSample = %d\n", pwfex->Samples.wValidBitsPerSample);
+		TRACE(L"            => dwChannelMask       = 0x%x\n", pwfex->dwChannelMask);
+		TRACE(L"            => SubFormat           = %s\n", CStringFromGUID(pwfex->SubFormat));
 	}
 }
 
@@ -214,7 +214,7 @@ CMpcAudioRenderer::CMpcAudioRenderer(LPUNKNOWN punk, HRESULT *phr)
 	, m_bs2b_active(false)
 	, m_bDVDPlayback(FALSE)
 {
-	TRACE(L"CMpcAudioRenderer::CMpcAudioRenderer()");
+	TRACE(L"CMpcAudioRenderer::CMpcAudioRenderer()\n");
 
 #ifdef REGISTER_FILTER
 	CRegKey key;
@@ -346,7 +346,7 @@ CMpcAudioRenderer::CMpcAudioRenderer(LPUNKNOWN punk, HRESULT *phr)
 	if (SUCCEEDED(hr)) {
 		HRESULT hr = m_pMMDeviceEnumerator.CoCreateInstance(__uuidof(MMDeviceEnumerator));
 		if (FAILED(hr)) {
-			TRACE(L"CMpcAudioRenderer::CMpcAudioRenderer() - IMMDeviceEnumerator::CoCreateInstance() failed: (0x%08x)", hr);
+			TRACE(L"CMpcAudioRenderer::CMpcAudioRenderer() - IMMDeviceEnumerator::CoCreateInstance() failed: (0x%08x)\n", hr);
 			if (phr) {
 				*phr = hr;
 			}
@@ -360,7 +360,7 @@ CMpcAudioRenderer::CMpcAudioRenderer(LPUNKNOWN punk, HRESULT *phr)
 
 CMpcAudioRenderer::~CMpcAudioRenderer()
 {
-	TRACE(L"CMpcAudioRenderer::~CMpcAudioRenderer()");
+	TRACE(L"CMpcAudioRenderer::~CMpcAudioRenderer()\n");
 
 	m_pMMDeviceEnumerator->UnregisterEndpointNotificationCallback(this);
 
@@ -411,12 +411,12 @@ HRESULT	CMpcAudioRenderer::CheckMediaType(const CMediaType *pmt)
 	CheckPointer(pmt->pbFormat, VFW_E_TYPE_NOT_ACCEPTED);
 
 	if ((pmt->majortype != MEDIATYPE_Audio) || (pmt->formattype != FORMAT_WaveFormatEx)) {
-		TRACE(L"CMpcAudioRenderer::CheckMediaType() - Not supported");
+		TRACE(L"CMpcAudioRenderer::CheckMediaType() - Not supported\n");
 		return VFW_E_TYPE_NOT_ACCEPTED;
 	}
 
 	if (pmt->subtype != MEDIASUBTYPE_PCM && pmt->subtype != MEDIASUBTYPE_IEEE_FLOAT) {
-		TRACE(L"CMpcAudioRenderer::CheckMediaType() - allow only PCM/IEEE_FLOAT input");
+		TRACE(L"CMpcAudioRenderer::CheckMediaType() - allow only PCM/IEEE_FLOAT input\n");
 		return VFW_E_TYPE_NOT_ACCEPTED;
 	}
 
@@ -428,7 +428,7 @@ HRESULT	CMpcAudioRenderer::CheckMediaType(const CMediaType *pmt)
 		if (bIsBitstreamInput) {
 			hr = CreateAudioClient();
 			if (FAILED(hr)) {
-				TRACE(L"CMpcAudioRenderer::CheckMediaType() - audio client initialization error");
+				TRACE(L"CMpcAudioRenderer::CheckMediaType() - audio client initialization error\n");
 				return VFW_E_CANNOT_CONNECT;
 			}
 
@@ -531,22 +531,22 @@ HRESULT CMpcAudioRenderer::SetMediaType(const CMediaType *pmt)
 	WAVEFORMATEX *pwf = (WAVEFORMATEX *)pmt->Format();
 	CheckPointer(pwf, VFW_E_TYPE_NOT_ACCEPTED);
 
-	TRACE(L"CMpcAudioRenderer::SetMediaType()");
+	TRACE(L"CMpcAudioRenderer::SetMediaType()\n");
 
 	HRESULT hr = S_OK;
 
 	if (!m_pAudioClient) {
 		hr = CreateAudioClient();
 		if (FAILED(hr)) {
-			TRACE(L"CMpcAudioRenderer::SetMediaType() - audio client initialization error");
+			TRACE(L"CMpcAudioRenderer::SetMediaType() - audio client initialization error\n");
 			return VFW_E_CANNOT_CONNECT;
 		}
 	}
 
 	if (m_pRenderClient) {
-		TRACE(L"CMpcAudioRenderer::SetMediaType() : Render client already initialized. Reinitialization...");
+		TRACE(L"CMpcAudioRenderer::SetMediaType() : Render client already initialized. Reinitialization...\n");
 	} else {
-		TRACE(L"CMpcAudioRenderer::SetMediaType() : Render client initialization");
+		TRACE(L"CMpcAudioRenderer::SetMediaType() : Render client initialization\n");
 	}
 
 	hr = CheckAudioClient(pwf);
@@ -562,7 +562,7 @@ HRESULT CMpcAudioRenderer::SetMediaType(const CMediaType *pmt)
 
 HRESULT CMpcAudioRenderer::CompleteConnect(IPin *pReceivePin)
 {
-	TRACE(L"CMpcAudioRenderer::CompleteConnect()");
+	TRACE(L"CMpcAudioRenderer::CompleteConnect()\n");
 
 	m_bDVDPlayback = FindFilter(CLSID_DVDNavigator, m_pGraph) != nullptr;
 
@@ -620,7 +620,7 @@ HRESULT CMpcAudioRenderer::PauseRendererThread()
 
 DWORD CMpcAudioRenderer::RenderThread()
 {
-	TRACE(L"CMpcAudioRenderer::RenderThread() - start, thread ID = 0x%x", m_nThreadId);
+	TRACE(L"CMpcAudioRenderer::RenderThread() - start, thread ID = 0x%x\n", m_nThreadId);
 
 	HRESULT hr = S_OK;
 
@@ -645,7 +645,7 @@ DWORD CMpcAudioRenderer::RenderThread()
 
 		hTaskHandle = pfAvSetMmThreadCharacteristicsW(L"Pro Audio", &taskIndex);
 		if (hTaskHandle != nullptr) {
-			TRACE(L"CMpcAudioRenderer::EnableMMCSS() - Putting thread 0x%x in higher priority for Wasapi mode (lowest latency)", ::GetCurrentThreadId());
+			TRACE(L"CMpcAudioRenderer::EnableMMCSS() - Putting thread 0x%x in higher priority for Wasapi mode (lowest latency)\n", ::GetCurrentThreadId());
 		}
 	}
 	if (hTaskHandle == nullptr) {
@@ -675,12 +675,12 @@ DWORD CMpcAudioRenderer::RenderThread()
 				}
 				break;
 			case WAIT_OBJECT_0: // exit event
-				TRACE(L"CMpcAudioRenderer::RenderThread() - exit events");
+				TRACE(L"CMpcAudioRenderer::RenderThread() - exit events\n");
 				bExit = true;
 				break;
 			case WAIT_OBJECT_0 + 1: // pause event
 				{
-					TRACE(L"CMpcAudioRenderer::RenderThread() - pause events");
+					TRACE(L"CMpcAudioRenderer::RenderThread() - pause events\n");
 
 					m_bThreadPaused = TRUE;
 					ResetEvent(m_hResumeEvent);
@@ -689,11 +689,11 @@ DWORD CMpcAudioRenderer::RenderThread()
 					const DWORD resultResume = WaitForMultipleObjects(std::size(resumeHandles), resumeHandles, FALSE, INFINITE);
 					switch (resultResume) {
 						case WAIT_OBJECT_0: // exit event
-							TRACE(L"CMpcAudioRenderer::RenderThread() - exit events");
+							TRACE(L"CMpcAudioRenderer::RenderThread() - exit events\n");
 							bExit = true;
 							break;
 						case WAIT_OBJECT_0 + 1: // resume event
-							TRACE(L"CMpcAudioRenderer::RenderThread() - resume events");
+							TRACE(L"CMpcAudioRenderer::RenderThread() - resume events\n");
 							m_bThreadPaused = FALSE;
 							SetEvent(m_hWaitResumeEvent);
 					}
@@ -702,7 +702,7 @@ DWORD CMpcAudioRenderer::RenderThread()
 			case WAIT_OBJECT_0 + 2: // render event
 				{
 #if defined(DEBUG_OR_LOG) && DBGLOG_LEVEL > 1
-					TRACE(L"CMpcAudioRenderer::RenderThread() - Data Event, Audio client state = %s", m_bIsAudioClientStarted ? L"Started" : L"Stoped");
+					TRACE(L"CMpcAudioRenderer::RenderThread() - Data Event, Audio client state = %s", m_bIsAudioClientStarted ? L"Started" : L"Stoped\n");
 #endif
 					HRESULT hr = RenderWasapiBuffer();
 					if (hr == AUDCLNT_E_DEVICE_INVALIDATED) {
@@ -712,7 +712,7 @@ DWORD CMpcAudioRenderer::RenderThread()
 				break;
 			default:
 #if defined(DEBUG_OR_LOG) && DBGLOG_LEVEL > 1
-				TRACE(L"CMpcAudioRenderer::RenderThread() - WaitForMultipleObjects() failed: %u", GetLastError());
+				TRACE(L"CMpcAudioRenderer::RenderThread() - WaitForMultipleObjects() failed: %u\n", GetLastError());
 #endif
 				break;
 		}
@@ -722,14 +722,14 @@ DWORD CMpcAudioRenderer::RenderThread()
 		pfAvRevertMmThreadCharacteristics(hTaskHandle);
 	}
 
-	TRACE(L"CMpcAudioRenderer::RenderThread() - close, thread ID = 0x%x", m_nThreadId);
+	TRACE(L"CMpcAudioRenderer::RenderThread() - close, thread ID = 0x%x\n", m_nThreadId);
 
 	return 0;
 }
 
 STDMETHODIMP CMpcAudioRenderer::Run(REFERENCE_TIME rtStart)
 {
-	TRACE(L"CMpcAudioRenderer::Run()");
+	TRACE(L"CMpcAudioRenderer::Run()\n");
 
 	if (m_State == State_Running) {
 		return NOERROR;
@@ -765,7 +765,7 @@ STDMETHODIMP CMpcAudioRenderer::Run(REFERENCE_TIME rtStart)
 
 STDMETHODIMP CMpcAudioRenderer::Stop()
 {
-	TRACE(L"CMpcAudioRenderer::Stop()");
+	TRACE(L"CMpcAudioRenderer::Stop()\n");
 
 	m_pSyncClock->UnSlave();
 
@@ -785,7 +785,7 @@ STDMETHODIMP CMpcAudioRenderer::Stop()
 
 STDMETHODIMP CMpcAudioRenderer::Pause()
 {
-	TRACE(L"CMpcAudioRenderer::Pause()");
+	TRACE(L"CMpcAudioRenderer::Pause()\n");
 
 	m_pSyncClock->UnSlave();
 
@@ -1419,7 +1419,7 @@ static const WCHAR* GetSampleFormatString(const SampleFormat value)
 HRESULT CMpcAudioRenderer::Transform(IMediaSample *pMediaSample)
 {
 #if defined(DEBUG_OR_LOG) && DBGLOG_LEVEL > 1
-	TRACE(L"CMpcAudioRenderer::Transform()");
+	TRACE(L"CMpcAudioRenderer::Transform()\n");
 #endif
 
 	if (m_filterState == State_Stopped
@@ -1480,7 +1480,7 @@ HRESULT CMpcAudioRenderer::Transform(IMediaSample *pMediaSample)
 			const auto duration = m_rtStartTime + rtStart - m_pSyncClock->GetPrivateTime() - m_hnsBufferDuration;
 			if (duration >= OneMillisecond) {
 				const DWORD dwMilliseconds = duration / OneMillisecond;
-				TRACE(L"CMpcAudioRenderer::Transform() : sleep %u ms", dwMilliseconds);
+				TRACE(L"CMpcAudioRenderer::Transform() : sleep %u ms\n", dwMilliseconds);
 				WaitForMultipleObjects(2, handles, FALSE, dwMilliseconds);
 			}
 
@@ -1500,7 +1500,7 @@ HRESULT CMpcAudioRenderer::Transform(IMediaSample *pMediaSample)
 		const UINT32 nSilenceFrames    = TimeToSamples(rtSilence, m_pWaveFormatExOutput);
 		const UINT32 nSilenceBytes     = nSilenceFrames * m_pWaveFormatExOutput->nBlockAlign;
 #if defined(DEBUG_OR_LOG) && DBGLOG_LEVEL
-		TRACE(L"CMpcAudioRenderer::Transform() - Pad silence %.2f ms to minimize slaving jitter", rtSilence / 10000.0f);
+		TRACE(L"CMpcAudioRenderer::Transform() - Pad silence %.2f ms to minimize slaving jitter\n", rtSilence / 10000.0f);
 #endif
 		CAutoPtr<CPacket> pSilence(DNew CPacket());
 		pSilence->rtStart = rtStart - rtSilence;
@@ -1575,7 +1575,7 @@ HRESULT CMpcAudioRenderer::Transform(IMediaSample *pMediaSample)
 			}
 		} else {
 #if defined(DEBUG_OR_LOG) && DBGLOG_LEVEL > 2
-			TRACE(L"CMpcAudioRenderer::Transform() - convert: '%s' -> '%s'", GetSampleFormatString(m_input_params.sf), GetSampleFormatString(m_output_params.sf));
+			TRACE(L"CMpcAudioRenderer::Transform() - convert: '%s' -> '%s'\n", GetSampleFormatString(m_input_params.sf), GetSampleFormatString(m_output_params.sf));
 #endif
 
 			lSize   = out_samples * m_output_params.channels * get_bytes_per_sample(m_output_params.sf);
@@ -1677,7 +1677,7 @@ HRESULT CMpcAudioRenderer::PushToQueue(CAutoPtr<CPacket> p)
 {
 	if (p && (!m_rtLastQueuedSampleTimeEnd || p->bDiscontinuity)) {
 		if (p->bDiscontinuity && (p->rtStop <= m_rtLastQueuedSampleTimeEnd)) {
-			TRACE(L"CMpcAudioRenderer::PushToQueue() - drop [%I64d]", p->rtStart);
+			TRACE(L"CMpcAudioRenderer::PushToQueue() - drop [%I64d]\n", p->rtStart);
 			return S_OK;
 		} else if (p->rtStart > m_rtLastQueuedSampleTimeEnd) {
 			const auto rtLastTimeEnd = std::max(m_rtLastQueuedSampleTimeEnd, m_rtNextRenderedSampleTime);
@@ -1688,7 +1688,7 @@ HRESULT CMpcAudioRenderer::PushToQueue(CAutoPtr<CPacket> p)
 				if (nSilenceFrames > 0) {
 					const UINT32 nSilenceBytes = nSilenceFrames * m_pWaveFormatExOutput->nBlockAlign;
 #if defined(DEBUG_OR_LOG) && DBGLOG_LEVEL
-					TRACE(L"CMpcAudioRenderer::PushToQueue() - Pad silence %.2f ms [%I64d -> %I64d, %s -> %s]",
+					TRACE(L"CMpcAudioRenderer::PushToQueue() - Pad silence %.2f ms [%I64d -> %I64d, %s -> %s]\n",
 						 rtSilence / 10000.0f, rtLastStop, p->rtStart, ReftimeToString(rtLastStop), ReftimeToString(p->rtStart));
 #endif
 					CAutoPtr<CPacket> pSilence(DNew CPacket());
@@ -1710,7 +1710,7 @@ HRESULT CMpcAudioRenderer::PushToQueue(CAutoPtr<CPacket> p)
 
 HRESULT CMpcAudioRenderer::GetAudioDevice(const BOOL bForceUseDefaultDevice)
 {
-	TRACE(L"CMpcAudioRenderer::GetAudioDevice() - Target device: '%s'/'%s'", m_DeviceId, m_DeviceName);
+	TRACE(L"CMpcAudioRenderer::GetAudioDevice() - Target device: '%s'/'%s'\n", m_DeviceId, m_DeviceName);
 
 	m_bUseDefaultDevice = FALSE;
 	m_strCurrentDeviceId.Empty();
@@ -1719,10 +1719,10 @@ HRESULT CMpcAudioRenderer::GetAudioDevice(const BOOL bForceUseDefaultDevice)
 	if (!bForceUseDefaultDevice && !m_DeviceId.IsEmpty()) {
 		AudioDevices::deviceList_t deviceList;
 		if (SUCCEEDED(AudioDevices::GetActiveAudioDevices(m_pMMDeviceEnumerator, &deviceList, nullptr, FALSE))) {
-			TRACE(L"CMpcAudioRenderer::GetAudioDevice() - trying by device id");
+			TRACE(L"CMpcAudioRenderer::GetAudioDevice() - trying by device id\n");
 			for (const auto& device : deviceList) {
 				if (m_DeviceId == device.deviceId) {
-					TRACE(L"CMpcAudioRenderer::GetAudioDevice() - Using the device: '%s'/'%s'", device.deviceId, device.deviceName);
+					TRACE(L"CMpcAudioRenderer::GetAudioDevice() - Using the device: '%s'/'%s'\n", device.deviceId, device.deviceName);
 
 					m_strCurrentDeviceId = device.deviceId;
 					m_strCurrentDeviceName = device.deviceName;
@@ -1732,10 +1732,10 @@ HRESULT CMpcAudioRenderer::GetAudioDevice(const BOOL bForceUseDefaultDevice)
 				}
 			}
 
-			TRACE(L"CMpcAudioRenderer::GetAudioDevice() - trying by device name");
+			TRACE(L"CMpcAudioRenderer::GetAudioDevice() - trying by device name\n");
 			for (const auto& device : deviceList) {
 				if (m_DeviceName == device.deviceName) {
-					TRACE(L"CMpcAudioRenderer::GetAudioDevice() - Using the device: '%s'/'%s'", device.deviceId, device.deviceName);
+					TRACE(L"CMpcAudioRenderer::GetAudioDevice() - Using the device: '%s'/'%s'\n", device.deviceId, device.deviceName);
 
 					m_strCurrentDeviceId = device.deviceId;
 					m_strCurrentDeviceName = device.deviceName;
@@ -1750,7 +1750,7 @@ HRESULT CMpcAudioRenderer::GetAudioDevice(const BOOL bForceUseDefaultDevice)
 	m_bUseDefaultDevice = TRUE;
 	AudioDevices::device_t device;
 	if (SUCCEEDED(AudioDevices::GetDefaultAudioDevice(m_pMMDeviceEnumerator, device))) {
-		TRACE(L"CMpcAudioRenderer::GetAudioDevice() - Using the default device: '%s'/'%s'", device.deviceId, device.deviceName);
+		TRACE(L"CMpcAudioRenderer::GetAudioDevice() - Using the default device: '%s'/'%s'\n", device.deviceId, device.deviceName);
 
 		m_strCurrentDeviceId = device.deviceId;
 		m_strCurrentDeviceName = device.deviceName;
@@ -1764,13 +1764,13 @@ HRESULT CMpcAudioRenderer::GetAudioDevice(const BOOL bForceUseDefaultDevice)
 
 HRESULT CMpcAudioRenderer::InitAudioClient()
 {
-	TRACE(L"CMpcAudioRenderer::InitAudioClient()");
+	TRACE(L"CMpcAudioRenderer::InitAudioClient()\n");
 
 	HRESULT hr = S_OK;
 	m_hnsBufferDuration = 0;
 
 	if (m_pMMDevice == nullptr) {
-		TRACE(L"CMpcAudioRenderer::InitAudioClient() - failed, device not loaded");
+		TRACE(L"CMpcAudioRenderer::InitAudioClient() - failed, device not loaded\n");
 		return E_FAIL;
 	}
 
@@ -1783,9 +1783,9 @@ HRESULT CMpcAudioRenderer::InitAudioClient()
 
 	hr = m_pMMDevice->Activate(__uuidof(IAudioClient), CLSCTX_ALL, nullptr, reinterpret_cast<void**>(&m_pAudioClient));
 	if (FAILED(hr)) {
-		TRACE(L"CMpcAudioRenderer::InitAudioClient() - IMMDevice::Activate() failed: (0x%08x)", hr);
+		TRACE(L"CMpcAudioRenderer::InitAudioClient() - IMMDevice::Activate() failed: (0x%08x)\n", hr);
 	} else {
-		TRACE(L"CMpcAudioRenderer::InitAudioClient() - success");
+		TRACE(L"CMpcAudioRenderer::InitAudioClient() - success\n");
 		if (m_wBitsPerSampleList.empty()) {
 			// get list of supported output formats - wBitsPerSample, nChannels(dwChannelMask), nSamplesPerSec
 			const WORD  wBitsPerSampleValues[] = {16, 24, 32};
@@ -1861,18 +1861,18 @@ HRESULT CMpcAudioRenderer::InitAudioClient()
 			}
 
 #ifdef DEBUG_OR_LOG
-			TRACE(L"    List of supported output formats:");
-			TRACE(L"        BitsPerSample:");
+			TRACE(L"    List of supported output formats:\n");
+			TRACE(L"        BitsPerSample:\n");
 			for (const auto& _bitdepth : m_wBitsPerSampleList) {
 				if (_bitdepth == 32 && !m_bReal32bitSupport) {
-					TRACE(L"            24 padded to 32");
+					TRACE(L"            24 padded to 32\n");
 				} else {
-					TRACE(L"            %d", _bitdepth);
+					TRACE(L"            %d\n", _bitdepth);
 				}
-				TRACE(L"            SamplesPerSec:");
+				TRACE(L"            SamplesPerSec:\n");
 				for (const auto& audioparams : m_AudioParamsList) {
 					if (audioparams.wBitsPerSample == _bitdepth) {
-						TRACE(L"                %d", audioparams.nSamplesPerSec);
+						TRACE(L"                %d\n", audioparams.nSamplesPerSec);
 					}
 				}
 			}
@@ -1888,9 +1888,9 @@ HRESULT CMpcAudioRenderer::InitAudioClient()
 			ADDENTRY(KSAUDIO_SPEAKER_7POINT1);
 			#undef ADDENTRY
 
-			TRACE(L"        Channels:");
+			TRACE(L"        Channels:\n");
 			for (size_t i = 0; i < m_nChannelsList.size(); i++) {
-				TRACE(L"            %d/0x%x  [%s]", m_nChannelsList[i], m_dwChannelMaskList[i], ChannelMaskStr[m_dwChannelMaskList[i]]);
+				TRACE(L"            %d/0x%x  [%s]\n", m_nChannelsList[i], m_dwChannelMaskList[i], ChannelMaskStr[m_dwChannelMaskList[i]]);
 			}
 #endif
 		}
@@ -1918,14 +1918,14 @@ HRESULT CMpcAudioRenderer::CreateAudioClient(const BOOL bForceUseDefaultDevice/*
 HRESULT CMpcAudioRenderer::CheckAudioClient(const WAVEFORMATEX *pWaveFormatEx)
 {
 	CAutoLock cAutoLock(&m_csCheck);
-	TRACE(L"CMpcAudioRenderer::CheckAudioClient()");
+	TRACE(L"CMpcAudioRenderer::CheckAudioClient()\n");
 
 	BOOL bForceUseDefaultDevice = FALSE;
 
 again:
 	HRESULT hr = CreateAudioClient(bForceUseDefaultDevice);
 	if (FAILED(hr)) {
-		TRACE(L"CMpcAudioRenderer::CheckAudioClient() - audio client initialization error");
+		TRACE(L"CMpcAudioRenderer::CheckAudioClient() - audio client initialization error\n");
 		return hr;
 	}
 
@@ -1957,7 +1957,7 @@ again:
 	if (CheckFormatChanged(pWaveFormatEx, &m_pWaveFormatExInput) || !m_pWaveFormatExOutput) {
 
 		// Format has changed, audio client has to be reinitialized
-		TRACE(L"CMpcAudioRenderer::CheckAudioClient() - Format changed, re-initialize the audio client");
+		TRACE(L"CMpcAudioRenderer::CheckAudioClient() - Format changed, re-initialize the audio client\n");
 
 		CopyWaveFormat(m_pWaveFormatExInput, &m_pWaveFormatExOutput);
 
@@ -1990,7 +1990,7 @@ again:
 						hr = InitAudioClient();
 						if (SUCCEEDED(hr)) {
 #ifdef DEBUG_OR_LOG
-							TRACE(L"    Trying format:");
+							TRACE(L"    Trying format:\n");
 							DumpWaveFormatEx((WAVEFORMATEX*)&wfexAsIs);
 #endif
 							hr = CreateRenderClient((WAVEFORMATEX*)&wfexAsIs, FALSE);
@@ -2007,7 +2007,7 @@ again:
 								for (const auto& wBitsPerSample : wBitsPerSampleValues) {
 									CreateFormat(wfexAsIs, wBitsPerSample[0], nChannels, dwChannelMask, pWaveFormatEx->nSamplesPerSec, wBitsPerSample[1]);
 #ifdef DEBUG_OR_LOG
-									TRACE(L"    Trying format:");
+									TRACE(L"    Trying format:\n");
 									DumpWaveFormatEx((WAVEFORMATEX*)&wfexAsIs);
 #endif
 									hr = CreateRenderClient((WAVEFORMATEX*)&wfexAsIs, FALSE);
@@ -2086,21 +2086,21 @@ again:
 		}
 
 #ifdef DEBUG_OR_LOG
-		TRACE(L"    Input format:");
+		TRACE(L"    Input format:\n");
 		DumpWaveFormatEx(pWaveFormatEx);
 
-		TRACE(L"    Output format:");
+		TRACE(L"    Output format:\n");
 		DumpWaveFormatEx(m_pWaveFormatExOutput);
 #endif
 
 		if (SUCCEEDED(hr)) {
-			TRACE(L"CMpcAudioRenderer::CheckAudioClient() - WASAPI client accepted the format");
+			TRACE(L"CMpcAudioRenderer::CheckAudioClient() - WASAPI client accepted the format\n");
 		} else if (AUDCLNT_E_UNSUPPORTED_FORMAT == hr) {
-			TRACE(L"CMpcAudioRenderer::CheckAudioClient() - WASAPI client refused the format");
+			TRACE(L"CMpcAudioRenderer::CheckAudioClient() - WASAPI client refused the format\n");
 			SAFE_DELETE_ARRAY(m_pWaveFormatExOutput);
 			return hr;
 		} else if (AUDCLNT_E_EXCLUSIVE_MODE_NOT_ALLOWED == hr && (m_DeviceModeCurrent == MODE_WASAPI_EXCLUSIVE && !IsBitstream(pWaveFormatEx))) {
-			TRACE(L"CMpcAudioRenderer::CheckAudioClient() - WASAPI exclusive mode not allowed, trying shared");
+			TRACE(L"CMpcAudioRenderer::CheckAudioClient() - WASAPI exclusive mode not allowed, trying shared\n");
 
 			ReleaseAudio();
 
@@ -2108,12 +2108,12 @@ again:
 			m_DeviceModeCurrent = MODE_WASAPI_SHARED;
 			goto again;
 		} else {
-			TRACE(L"CMpcAudioRenderer::CheckAudioClient() - WASAPI failed: (0x%08x)", hr);
+			TRACE(L"CMpcAudioRenderer::CheckAudioClient() - WASAPI failed: (0x%08x)\n", hr);
 			SAFE_DELETE_ARRAY(m_pWaveFormatExOutput);
 			return hr;
 		}
 	} else if (m_pRenderClient == nullptr) {
-		TRACE(L"CMpcAudioRenderer::CheckAudioClient() - initialization/initialization of the audio renderer");
+		TRACE(L"CMpcAudioRenderer::CheckAudioClient() - initialization/initialization of the audio renderer\n");
 	} else {
 		return hr;
 	}
@@ -2127,7 +2127,7 @@ again:
 		}
 
 		if (AUDCLNT_E_DEVICE_IN_USE == hr && !m_bUseDefaultDevice) {
-			TRACE(L"CMpcAudioRenderer::CheckAudioClient() - device is used, trying default");
+			TRACE(L"CMpcAudioRenderer::CheckAudioClient() - device is used, trying default\n");
 
 			ReleaseAudio(true);
 
@@ -2135,7 +2135,7 @@ again:
 			bForceUseDefaultDevice = TRUE;
 			goto again;
 		} else if (AUDCLNT_E_EXCLUSIVE_MODE_NOT_ALLOWED == hr && (m_DeviceModeCurrent == MODE_WASAPI_EXCLUSIVE && !IsBitstream(pWaveFormatEx))) {
-			TRACE(L"CMpcAudioRenderer::CheckAudioClient() - WASAPI exclusive mode not allowed, trying shared");
+			TRACE(L"CMpcAudioRenderer::CheckAudioClient() - WASAPI exclusive mode not allowed, trying shared\n");
 
 			ReleaseAudio();
 
@@ -2235,7 +2235,7 @@ static HRESULT CalcBitstreamBufferPeriod(WAVEFORMATEX *pWaveFormatEx, REFERENCE_
 	if (nBufferSize) {
 		*pHnsBufferPeriod = llMulDiv(nBufferSize << 3, UNITS, pWaveFormatEx->nChannels * pWaveFormatEx->wBitsPerSample * pWaveFormatEx->nSamplesPerSec, 0);
 
-		TRACE(L"CalcBitstreamBufferPeriod() - set period of %I64d hundred-nanoseconds for a %u buffer size", *pHnsBufferPeriod, nBufferSize);
+		TRACE(L"CalcBitstreamBufferPeriod() - set period of %I64d hundred-nanoseconds for a %u buffer size\n", *pHnsBufferPeriod, nBufferSize);
 	}
 
 	return S_OK;
@@ -2243,7 +2243,7 @@ static HRESULT CalcBitstreamBufferPeriod(WAVEFORMATEX *pWaveFormatEx, REFERENCE_
 
 HRESULT CMpcAudioRenderer::CreateRenderClient(WAVEFORMATEX *pWaveFormatEx, const BOOL bCheckFormat/* = TRUE*/)
 {
-	TRACE(L"CMpcAudioRenderer::CreateRenderClient()");
+	TRACE(L"CMpcAudioRenderer::CreateRenderClient()\n");
 	HRESULT hr = S_OK;
 
 	m_hnsBufferDuration = 0;
@@ -2253,7 +2253,7 @@ HRESULT CMpcAudioRenderer::CreateRenderClient(WAVEFORMATEX *pWaveFormatEx, const
 	REFERENCE_TIME hnsMinimumDevicePeriod = 0;
 	hr = m_pAudioClient->GetDevicePeriod(&hnsDefaultDevicePeriod, &hnsMinimumDevicePeriod);
 	if (SUCCEEDED(hr)) {
-		TRACE(L"CMpcAudioRenderer::CreateRenderClient() - DefaultDevicePeriod = %.2f ms, MinimumDevicePeriod = %.2f ms", hnsDefaultDevicePeriod / 10000.0f, hnsMinimumDevicePeriod / 10000.0f);
+		TRACE(L"CMpcAudioRenderer::CreateRenderClient() - DefaultDevicePeriod = %.2f ms, MinimumDevicePeriod = %.2f ms\n", hnsDefaultDevicePeriod / 10000.0f, hnsMinimumDevicePeriod / 10000.0f);
 	}
 
 	if (m_BufferDuration == 0) {
@@ -2261,10 +2261,10 @@ HRESULT CMpcAudioRenderer::CreateRenderClient(WAVEFORMATEX *pWaveFormatEx, const
 	} else {
 		m_hnsBufferDuration = m_BufferDuration * 10000LL;
 	}
-	TRACE(L"CMpcAudioRenderer::CreateRenderClient() - using period = %.2f ms", m_hnsBufferDuration / 10000.0f);
+	TRACE(L"CMpcAudioRenderer::CreateRenderClient() - using period = %.2f ms\n", m_hnsBufferDuration / 10000.0f);
 
 	const auto ShareMode = IsExclusive(pWaveFormatEx) ? AUDCLNT_SHAREMODE_EXCLUSIVE : AUDCLNT_SHAREMODE_SHARED;
-	TRACE(L"CMpcAudioRenderer::CreateRenderClient() - using %s mode", ShareMode == AUDCLNT_SHAREMODE_SHARED ? L"Shared" : L"Exclusive");
+	TRACE(L"CMpcAudioRenderer::CreateRenderClient() - using %s mode", ShareMode == AUDCLNT_SHAREMODE_SHARED ? L"Shared" : L"Exclusive\n");
 
 	if (bCheckFormat) {
 		WAVEFORMATEX *pClosestMatch = nullptr;
@@ -2276,15 +2276,15 @@ HRESULT CMpcAudioRenderer::CreateRenderClient(WAVEFORMATEX *pWaveFormatEx, const
 		}
 
 		if (S_OK == hr) {
-			TRACE(L"CMpcAudioRenderer::CreateRenderClient() - WASAPI client accepted the format");
+			TRACE(L"CMpcAudioRenderer::CreateRenderClient() - WASAPI client accepted the format\n");
 		} else if (S_FALSE == hr) {
-			TRACE(L"CMpcAudioRenderer::CreateRenderClient() - WASAPI client refused the format with a closest match");
+			TRACE(L"CMpcAudioRenderer::CreateRenderClient() - WASAPI client refused the format with a closest match\n");
 			return hr;
 		} else if (AUDCLNT_E_UNSUPPORTED_FORMAT == hr) {
-			TRACE(L"CMpcAudioRenderer::CreateRenderClient() - WASAPI client refused the format");
+			TRACE(L"CMpcAudioRenderer::CreateRenderClient() - WASAPI client refused the format\n");
 			return hr;
 		} else {
-			TRACE(L"CMpcAudioRenderer::CreateRenderClient() - IAudioClient::IsFormatSupported() failed: (0x%08x)", hr);
+			TRACE(L"CMpcAudioRenderer::CreateRenderClient() - IAudioClient::IsFormatSupported() failed: (0x%08x)\n", hr);
 			return hr;
 		}
 	}
@@ -2309,7 +2309,7 @@ HRESULT CMpcAudioRenderer::CreateRenderClient(WAVEFORMATEX *pWaveFormatEx, const
 
 	if (AUDCLNT_E_BUFFER_SIZE_NOT_ALIGNED == hr && IsExclusive(pWaveFormatEx)) {
 		// if the buffer size was not aligned, need to do the alignment dance
-		TRACE(L"CMpcAudioRenderer::CreateRenderClient() - Buffer size not aligned. Realigning");
+		TRACE(L"CMpcAudioRenderer::CreateRenderClient() - Buffer size not aligned. Realigning\n");
 
 		// get the buffer size, which will be aligned
 		hr = m_pAudioClient->GetBufferSize(&m_nFramesInBuffer);
@@ -2329,7 +2329,7 @@ HRESULT CMpcAudioRenderer::CreateRenderClient(WAVEFORMATEX *pWaveFormatEx, const
 		// calculate the new aligned buffer duration and set the same periodicity
 		m_hnsBufferDuration = SamplesToTime(m_nFramesInBuffer, pWaveFormatEx);
 
-		TRACE(L"CMpcAudioRenderer::CreateRenderClient() - Trying again with periodicity of %I64d hundred-nanoseconds, or %u frames.", m_hnsBufferDuration, m_nFramesInBuffer);
+		TRACE(L"CMpcAudioRenderer::CreateRenderClient() - Trying again with periodicity of %I64d hundred-nanoseconds, or %u frames.\n", m_hnsBufferDuration, m_nFramesInBuffer);
 		if (SUCCEEDED(hr)) {
 			const REFERENCE_TIME hnsPeriodicity = m_WasapiMethod == WASAPI_METHOD::EVENT ? m_hnsBufferDuration : 0;
 			hr = m_pAudioClient->Initialize(ShareMode,
@@ -2342,11 +2342,11 @@ HRESULT CMpcAudioRenderer::CreateRenderClient(WAVEFORMATEX *pWaveFormatEx, const
 
 	if (FAILED(hr)) {
 		if (AUDCLNT_E_DEVICE_IN_USE == hr) {
-			TRACE(L"CMpcAudioRenderer::CreateRenderClient() - IAudioClient::Initialize() failed: Device in use");
+			TRACE(L"CMpcAudioRenderer::CreateRenderClient() - IAudioClient::Initialize() failed: Device in use\n");
 		} else if (AUDCLNT_E_UNSUPPORTED_FORMAT == hr) {
-			TRACE(L"CMpcAudioRenderer::CreateRenderClient() - IAudioClient::Initialize() failed: Device does not support the specified format");
+			TRACE(L"CMpcAudioRenderer::CreateRenderClient() - IAudioClient::Initialize() failed: Device does not support the specified format\n");
 		} else {
-			TRACE(L"CMpcAudioRenderer::CreateRenderClient() - IAudioClient::Initialize() failed: (0x%08x)", hr);
+			TRACE(L"CMpcAudioRenderer::CreateRenderClient() - IAudioClient::Initialize() failed: (0x%08x)\n", hr);
 		}
 		return hr;
 	}
@@ -2354,22 +2354,22 @@ HRESULT CMpcAudioRenderer::CreateRenderClient(WAVEFORMATEX *pWaveFormatEx, const
 	// get the buffer size, which is aligned
 	hr = m_pAudioClient->GetBufferSize(&m_nFramesInBuffer);
 	EXIT_ON_ERROR(hr);
-	TRACE(L"CMpcAudioRenderer::CreateRenderClient() - NumBufferFrames = %u (%.2f ms)", m_nFramesInBuffer, m_nFramesInBuffer * 1000.0 / pWaveFormatEx->nSamplesPerSec);
+	TRACE(L"CMpcAudioRenderer::CreateRenderClient() - NumBufferFrames = %u (%.2f ms)\n", m_nFramesInBuffer, m_nFramesInBuffer * 1000.0 / pWaveFormatEx->nSamplesPerSec);
 
 	// enables a client to write output data to a rendering endpoint buffer
 	hr = m_pAudioClient->GetService(IID_PPV_ARGS(&m_pRenderClient));
 
 	if (FAILED(hr)) {
-		TRACE(L"CMpcAudioRenderer::CreateRenderClient() - IAudioClient::GetService(IAudioRenderClient) failed: (0x%08x)", hr);
+		TRACE(L"CMpcAudioRenderer::CreateRenderClient() - IAudioClient::GetService(IAudioRenderClient) failed: (0x%08x)\n", hr);
 	} else {
-		TRACE(L"CMpcAudioRenderer::CreateRenderClient() - service initialization success, with periodicity of %I64d hundred-nanoseconds = %u frames", m_hnsBufferDuration, m_nFramesInBuffer);
+		TRACE(L"CMpcAudioRenderer::CreateRenderClient() - service initialization success, with periodicity of %I64d hundred-nanoseconds = %u frames\n", m_hnsBufferDuration, m_nFramesInBuffer);
 		m_bIsBitstream = IsBitstream(pWaveFormatEx);
 	}
 	EXIT_ON_ERROR(hr);
 
 	hr = m_pAudioClient->GetService(IID_PPV_ARGS(&m_pAudioClock));
 	if (FAILED(hr)) {
-		TRACE(L"CMpcAudioRenderer::CreateRenderClient() - IAudioClient::GetService(IAudioClock) failed: (0x%08x)", hr);
+		TRACE(L"CMpcAudioRenderer::CreateRenderClient() - IAudioClient::GetService(IAudioClock) failed: (0x%08x)\n", hr);
 	}
 
 	if (!m_bReleased) {
@@ -2400,7 +2400,7 @@ HRESULT CMpcAudioRenderer::CreateRenderClient(WAVEFORMATEX *pWaveFormatEx, const
 					&& rtEstimateSlavingJitter <= UNITS) {
 				const DWORD dwMilliseconds = rtEstimateSlavingJitter / OneMillisecond;
 #if defined(DEBUG_OR_LOG) && DBGLOG_LEVEL
-				TRACE(L"CMpcAudioRenderer::CreateRenderClient() - Sleep %u ms to minimize slaving jitter", dwMilliseconds);
+				TRACE(L"CMpcAudioRenderer::CreateRenderClient() - Sleep %u ms to minimize slaving jitter\n", dwMilliseconds);
 				Sleep(dwMilliseconds);
 #endif
 			}
@@ -2412,12 +2412,12 @@ HRESULT CMpcAudioRenderer::CreateRenderClient(WAVEFORMATEX *pWaveFormatEx, const
 
 	const auto buffer_duration = m_hnsBufferDuration < 1000000LL ? 2000000LL : 5000000LL;
 	m_nMaxWasapiQueueSize = TimeToSamples(buffer_duration, m_pWaveFormatExOutput) * m_pWaveFormatExOutput->nBlockAlign;
-	TRACE(L"CMpcAudioRenderer::CreateRenderClient() - internal buffer duration = %.2f ms, size = %u", buffer_duration / 10000.0f, m_nMaxWasapiQueueSize);
+	TRACE(L"CMpcAudioRenderer::CreateRenderClient() - internal buffer duration = %.2f ms, size = %u\n", buffer_duration / 10000.0f, m_nMaxWasapiQueueSize);
 
 #ifdef DEBUG_OR_LOG
 	REFERENCE_TIME hnsLatency = 0;
 	if (SUCCEEDED(m_pAudioClient->GetStreamLatency(&hnsLatency))) {
-		TRACE(L"CMpcAudioRenderer::CreateRenderClient() - stream latency = %.2f ms", hnsLatency / 10000.0f);
+		TRACE(L"CMpcAudioRenderer::CreateRenderClient() - stream latency = %.2f ms\n", hnsLatency / 10000.0f);
 	}
 #endif
 
@@ -2633,7 +2633,7 @@ HRESULT CMpcAudioRenderer::StartAudioClient()
 
 	if (m_pAudioClient) {
 		if (!m_bIsAudioClientStarted) {
-			TRACE(L"CMpcAudioRenderer::StartAudioClient()");
+			TRACE(L"CMpcAudioRenderer::StartAudioClient()\n");
 
 			// To reduce latency, load the first buffer with data
 			// from the audio source before starting the stream.
@@ -2641,12 +2641,12 @@ HRESULT CMpcAudioRenderer::StartAudioClient()
 
 			CAutoLock cAutoLock(&m_csAudioClock);
 			if (FAILED(hr = m_pAudioClient->Start())) {
-				TRACE(L"CMpcAudioRenderer::StartAudioClient() - start audio client failed (0x%08x)", hr);
+				TRACE(L"CMpcAudioRenderer::StartAudioClient() - start audio client failed (0x%08x)\n", hr);
 				return hr;
 			}
 			m_bIsAudioClientStarted = true;
 		} else {
-			TRACE(L"CMpcAudioRenderer::StartAudioClient() - already started");
+			TRACE(L"CMpcAudioRenderer::StartAudioClient() - already started\n");
 		}
 	}
 
@@ -2668,7 +2668,7 @@ void CMpcAudioRenderer::SetReinitializeAudioDevice(BOOL bFullInitialization/* = 
 
 HRESULT CMpcAudioRenderer::ReinitializeAudioDevice(BOOL bFullInitialization/* = FALSE*/)
 {
-	TRACE(L"CMpcAudioRenderer::ReinitializeAudioDevice()");
+	TRACE(L"CMpcAudioRenderer::ReinitializeAudioDevice()\n");
 
 	PauseRendererThread();
 
@@ -2710,7 +2710,7 @@ HRESULT CMpcAudioRenderer::ReinitializeAudioDevice(BOOL bFullInitialization/* = 
 	}
 
 	if (FAILED(hr)) {
-		TRACE(L"CMpcAudioRenderer::ReinitializeAudioDevice() failed: (0x%08x)", hr);
+		TRACE(L"CMpcAudioRenderer::ReinitializeAudioDevice() failed: (0x%08x)\n", hr);
 	}
 
 	SAFE_DELETE_ARRAY(pWaveFormatEx);
@@ -2734,7 +2734,7 @@ HRESULT CMpcAudioRenderer::RenderWasapiBuffer()
 		m_pAudioClient->GetCurrentPadding(&numFramesPadding);
 		if (FAILED(hr)) {
 #if defined(DEBUG_OR_LOG) && DBGLOG_LEVEL > 1
-			TRACE(L"CMpcAudioRenderer::RenderWasapiBuffer() - GetCurrentPadding() failed (0x%08x)", hr);
+			TRACE(L"CMpcAudioRenderer::RenderWasapiBuffer() - GetCurrentPadding() failed (0x%08x)\n", hr);
 #endif
 			return hr;
 		}
@@ -2747,7 +2747,7 @@ HRESULT CMpcAudioRenderer::RenderWasapiBuffer()
 	hr = m_pRenderClient->GetBuffer(numFramesAvailable, &pData);
 	if (FAILED(hr)) {
 #if defined(DEBUG_OR_LOG) && DBGLOG_LEVEL > 1
-		TRACE(L"CMpcAudioRenderer::RenderWasapiBuffer() - GetBuffer() failed with size %u (0x%08x)", numFramesAvailable, hr);
+		TRACE(L"CMpcAudioRenderer::RenderWasapiBuffer() - GetBuffer() failed with size %u (0x%08x)\n", numFramesAvailable, hr);
 #endif
 		return hr;
 	}
@@ -2759,11 +2759,11 @@ HRESULT CMpcAudioRenderer::RenderWasapiBuffer()
 	if (!pData || !nWasapiQueueSize || m_filterState != State_Running || bFlushing) {
 #if defined(DEBUG_OR_LOG) && DBGLOG_LEVEL > 1
 		if (m_filterState != State_Running) {
-			TRACE(L"CMpcAudioRenderer::RenderWasapiBuffer() - not running");
+			TRACE(L"CMpcAudioRenderer::RenderWasapiBuffer() - not running\n");
 		} else if (!nWasapiQueueSize) {
-			TRACE(L"CMpcAudioRenderer::RenderWasapiBuffer() - data queue is empty");
+			TRACE(L"CMpcAudioRenderer::RenderWasapiBuffer() - data queue is empty\n");
 		} else if (bFlushing) {
-			TRACE(L"CMpcAudioRenderer::RenderWasapiBuffer() - flushing");
+			TRACE(L"CMpcAudioRenderer::RenderWasapiBuffer() - flushing\n");
 		}
 #endif
 		dwFlags = AUDCLNT_BUFFERFLAGS_SILENT;
@@ -2771,11 +2771,11 @@ HRESULT CMpcAudioRenderer::RenderWasapiBuffer()
 		if (!nWasapiQueueSize && m_filterState == State_Running && !bFlushing) {
 			const auto duration = SamplesToTime(numFramesAvailable, m_pWaveFormatExOutput);
 			m_rtNextRenderedSampleTime = m_rtLastReceivedSampleTimeEnd = std::max(m_rtNextRenderedSampleTime, m_pSyncClock->GetPrivateTime() - m_rtStartTime + duration);
-			TRACE(L"CMpcAudioRenderer::RenderWasapiBuffer() - internal buffer is empty, render silence  %.2f ms to %I64d", duration / 10000.0f, m_rtNextRenderedSampleTime);
+			TRACE(L"CMpcAudioRenderer::RenderWasapiBuffer() - internal buffer is empty, render silence  %.2f ms to %I64d\n", duration / 10000.0f, m_rtNextRenderedSampleTime);
 		}
 	} else {
 #if defined(DEBUG_OR_LOG) && DBGLOG_LEVEL > 1
-		TRACE(L"CMpcAudioRenderer::RenderWasapiBuffer() - requested: %u[%u], available: %Iu", nAvailableBytes, numFramesAvailable, nWasapiQueueSize);
+		TRACE(L"CMpcAudioRenderer::RenderWasapiBuffer() - requested: %u[%u], available: %Iu\n", nAvailableBytes, numFramesAvailable, nWasapiQueueSize);
 #endif
 		UINT32 nWritenBytes = 0;
 
@@ -2795,7 +2795,7 @@ HRESULT CMpcAudioRenderer::RenderWasapiBuffer()
 				if (std::abs(rtTimeDelta) > 200) {
 					m_pSyncClock->OffsetAudioClock(rtTimeDelta);
 #if defined(DEBUG_OR_LOG) && DBGLOG_LEVEL
-					TRACE(L"CMpcAudioRenderer::RenderWasapiBuffer() - Discontinuity detected, Correct reference clock by %.2f ms", rtTimeDelta / 10000.0f);
+					TRACE(L"CMpcAudioRenderer::RenderWasapiBuffer() - Discontinuity detected, Correct reference clock by %.2f ms\n", rtTimeDelta / 10000.0f);
 #endif
 				}
 				m_rtNextRenderedSampleTime = m_CurrentPacket->rtStart + SamplesToTime(m_CurrentPacket->size() / m_pWaveFormatExOutput->nBlockAlign, m_pWaveFormatExOutput);
@@ -2832,7 +2832,7 @@ HRESULT CMpcAudioRenderer::RenderWasapiBuffer()
 	hr = m_pRenderClient->ReleaseBuffer(numFramesAvailable, dwFlags);
 #if defined(DEBUG_OR_LOG) && DBGLOG_LEVEL > 1
 	if (FAILED(hr)) {
-		TRACE(L"CMpcAudioRenderer::RenderWasapiBuffer() - ReleaseBuffer() failed with size %u (0x%08x)", numFramesAvailable, hr);
+		TRACE(L"CMpcAudioRenderer::RenderWasapiBuffer() - ReleaseBuffer() failed with size %u (0x%08x)\n", numFramesAvailable, hr);
 	}
 #endif
 
@@ -2855,7 +2855,7 @@ void CMpcAudioRenderer::CheckBufferStatus()
 
 void CMpcAudioRenderer::WasapiFlush()
 {
-	TRACE(L"CMpcAudioRenderer::WasapiFlush()");
+	TRACE(L"CMpcAudioRenderer::WasapiFlush()\n");
 
 	m_WasapiQueue.RemoveAll();
 	m_CurrentPacket.Free();
@@ -2881,7 +2881,7 @@ HRESULT CMpcAudioRenderer::EndFlush()
 
 void CMpcAudioRenderer::NewSegment()
 {
-	TRACE(L"CMpcAudioRenderer::NewSegment()");
+	TRACE(L"CMpcAudioRenderer::NewSegment()\n");
 
 	m_rtNextRenderedSampleTime = 0;
 	m_rtLastReceivedSampleTimeEnd = 0;
@@ -2992,7 +2992,7 @@ void CMpcAudioRenderer::EndReleaseTimer()
 void CMpcAudioRenderer::ReleaseDevice()
 {
 	if (IsExclusiveMode()) {
-		TRACE(L"CMpcAudioRenderer::ReleaseDevice()");
+		TRACE(L"CMpcAudioRenderer::ReleaseDevice()\n");
 
 		m_bReleased = true;
 
@@ -3113,7 +3113,7 @@ CMpcAudioRendererInputPin::CMpcAudioRendererInputPin(CBaseRenderer* pRenderer, H
 
 STDMETHODIMP CMpcAudioRendererInputPin::NewSegment(REFERENCE_TIME startTime, REFERENCE_TIME stopTime, double rate)
 {
-	TRACE(L"CMpcAudioRendererInputPin::NewSegment()");
+	TRACE(L"CMpcAudioRendererInputPin::NewSegment()\n");
 
 	CAutoLock cReceiveLock(&m_csReceive);
 
@@ -3129,7 +3129,7 @@ STDMETHODIMP CMpcAudioRendererInputPin::Receive(IMediaSample* pSample)
 
 STDMETHODIMP CMpcAudioRendererInputPin::EndOfStream()
 {
-	TRACE(L"CMpcAudioRendererInputPin::EndOfStream()");
+	TRACE(L"CMpcAudioRendererInputPin::EndOfStream()\n");
 
 	CAutoLock cReceiveLock(&m_csReceive);
 
@@ -3142,7 +3142,7 @@ STDMETHODIMP CMpcAudioRendererInputPin::EndOfStream()
 
 STDMETHODIMP CMpcAudioRendererInputPin::BeginFlush()
 {
-	TRACE(L"CMpcAudioRendererInputPin::BeginFlush()");
+	TRACE(L"CMpcAudioRendererInputPin::BeginFlush()\n");
 
 	m_pRenderer->Flush();
 
@@ -3152,7 +3152,7 @@ STDMETHODIMP CMpcAudioRendererInputPin::BeginFlush()
 
 STDMETHODIMP CMpcAudioRendererInputPin::EndFlush()
 {
-	TRACE(L"CMpcAudioRendererInputPin::EndFlush()");
+	TRACE(L"CMpcAudioRendererInputPin::EndFlush()\n");
 
 	return CRendererInputPin::EndFlush();
 }

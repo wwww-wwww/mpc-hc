@@ -46,7 +46,7 @@ REFERENCE_TIME CAudioSyncClock::GetPrivateTime()
 #ifdef DEBUG
 	const REFERENCE_TIME counterOffsetDiff = m_counterOffset - oldCounterOffset;
 	if (std::abs(counterOffsetDiff) >= OneMillisecond * 5) {
-		TRACE(L"CAudioSyncClock::GetPrivateTime() : jitter %.2f ms", counterOffsetDiff / 10000.0f);
+		TRACE(L"CAudioSyncClock::GetPrivateTime() : jitter %.2f ms\n", counterOffsetDiff / 10000.0f);
 	}
 #endif
 
@@ -55,7 +55,7 @@ REFERENCE_TIME CAudioSyncClock::GetPrivateTime()
 
 void CAudioSyncClock::Slave(IAudioClock* pAudioClock, const REFERENCE_TIME audioStart)
 {
-	TRACE(L"CAudioSyncClock::Slave()");
+	TRACE(L"CAudioSyncClock::Slave()\n");
 
 	ASSERT(pAudioClock);
 
@@ -70,7 +70,7 @@ void CAudioSyncClock::Slave(IAudioClock* pAudioClock, const REFERENCE_TIME audio
 
 void CAudioSyncClock::UnSlave()
 {
-	TRACE(L"CAudioSyncClock::UnSlave()");
+	TRACE(L"CAudioSyncClock::UnSlave()\n");
 
 	CAutoLock lock(this);
 

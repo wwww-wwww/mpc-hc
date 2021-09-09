@@ -209,7 +209,7 @@ void CMpcAudioRendererSettingsWnd::OnClickedBitExact()
 
 void CMpcAudioRendererStatusWnd::UpdateStatus()
 {
-	TRACE(L"CMpcAudioRendererStatusWnd: UpdateStatus");
+	TRACE(L"CMpcAudioRendererStatusWnd: UpdateStatus\n");
 
 	if (m_pMAR) {
 		m_edtDevice.SetWindowTextW(m_pMAR->GetCurrentDeviceName());
