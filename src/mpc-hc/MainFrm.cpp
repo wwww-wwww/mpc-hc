@@ -13843,6 +13843,10 @@ bool CMainFrame::OpenMediaPrivate(CAutoPtr<OpenMediaData> pOMD)
             throw (UINT)IDS_INVALID_PARAMS_ERROR;
         }
 
+        if (!m_pGB) {
+            throw (UINT)IDS_MAINFRM_88;
+        }
+
         CComPtr<IVMRMixerBitmap9>    pVMB   = nullptr;
         CComPtr<IMFVideoMixerBitmap> pMFVMB = nullptr;
         CComPtr<IMadVRTextOsd>       pMVTO  = nullptr;
