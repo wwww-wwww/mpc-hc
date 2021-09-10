@@ -50,6 +50,7 @@
 #include <qnetwork.h>
 #include "../DSUtil/FontInstaller.h"
 #include "AppSettings.h"
+#include "../filters/transform/VSFilter/IDirectVobSub.h"
 
 #define AfxGetMainFrame() dynamic_cast<CMainFrame*>(AfxGetMainWnd())
 
@@ -303,6 +304,8 @@ private:
     CComPtr<IAMDroppedFrames> m_pAMDF;
 
     CComPtr<IUnknown> m_pProv;
+
+    CComQIPtr<IDirectVobSub> m_pDVS;
 
     bool m_bUsingDXVA;
     LPCTSTR m_HWAccelType;
@@ -1155,7 +1158,7 @@ public:
     void        SetClosedCaptions(bool enable);
     LPCTSTR     GetDVDAudioFormatName(const DVD_AudioAttributes& ATR) const;
     void        SetAudioDelay(REFERENCE_TIME rtShift);
-    void        SetSubtitleDelay(int delay_ms);
+    void        SetSubtitleDelay(int delay_ms, bool relative = false);
     //void      AutoSelectTracks();
     bool        IsRealEngineCompatible(CString strFilename) const;
     void        SetTimersPlay();

@@ -74,7 +74,6 @@
 #include "../filters/PinInfoWnd.h"
 #include "../filters/renderer/SyncClock/SyncClock.h"
 #include "../filters/transform/BufferFilter/BufferFilter.h"
-#include "../filters/transform/VSFilter/IDirectVobSub.h"
 
 #include <AllocatorCommon.h>
 #include <NullRenderers.h>
@@ -8676,16 +8675,40 @@ void CMainFrame::SetAudioDelay(REFERENCE_TIME rtShift)
     }
 }
 
-void CMainFrame::SetSubtitleDelay(int delay_ms)
+void CMainFrame::SetSubtitleDelay(int delay_ms, bool relative)
 {
-    if (m_pCAP) {
-        m_pCAP->SetSubtitleDelay(delay_ms);
-
-        CString strSubDelay;
-        strSubDelay.Format(IDS_MAINFRM_139, delay_ms);
-        SendStatusMessage(strSubDelay, 3000);
-        m_OSD.DisplayMessage(OSD_TOPLEFT, strSubDelay);
+    if (!m_pCAP && !m_pDVS) {
+        return;
     }
+
+    if (m_pDVS) {
+        int currentDelay, speedMul, speedDiv;
+        if (FAILED(m_pDVS->get_SubtitleTiming(&currentDelay, &speedMul, &speedDiv))) {
+            return;
+        }
+        if (relative) {
+            delay_ms += currentDelay;
+        }
+
+        VERIFY(SUCCEEDED(m_pDVS->put_SubtitleTiming(delay_ms, speedMul, speedDiv)));
+    }
+    else {
+        ASSERT(m_pCAP != nullptr);
+        if (m_pSubStreams.IsEmpty()) {
+            SendStatusMessage(StrRes(IDS_SUBTITLES_ERROR), 3000);
+            return;
+        }
+        if (relative) {
+            delay_ms += m_pCAP->GetSubtitleDelay();
+        }
+
+        m_pCAP->SetSubtitleDelay(delay_ms);
+    }
+
+    CString strSubDelay;
+    strSubDelay.Format(IDS_MAINFRM_139, delay_ms);
+    SendStatusMessage(strSubDelay, 3000);
+    m_OSD.DisplayMessage(OSD_TOPLEFT, strSubDelay);
 }
 
 void CMainFrame::OnPlayChangeAudDelay(UINT nID)
@@ -13583,6 +13606,14 @@ int CMainFrame::SetupAudioStreams()
 int CMainFrame::SetupSubtitleStreams()
 {
     const CAppSettings& s = AfxGetAppSettings();
+
+    BeginEnumFilters(m_pGB, pEF, pBF) {
+        if (m_pDVS = pBF) {
+            break;
+        }
+    }
+    EndEnumFilters;
+
     int selected = -1;
 
     if (!m_pSubStreams.IsEmpty()) {
@@ -14105,6 +14136,7 @@ void CMainFrame::CloseMediaPrivate()
     m_pKFI.Release();
     m_pAMMC.Release();
     m_pAMNS.Release();
+    m_pDVS.Release();
 
     if (m_pGB) {
         m_pGB->RemoveFromROT();
@@ -17718,24 +17750,13 @@ afx_msg void CMainFrame::OnShiftSubtitle(UINT nID)
 
 afx_msg void CMainFrame::OnSubtitleDelay(UINT nID)
 {
-    if (m_pCAP) {
-        if (m_pSubStreams.IsEmpty()) {
-            SendStatusMessage(StrRes(IDS_SUBTITLES_ERROR), 3000);
-            return;
-        }
+    int nDelayStep = AfxGetAppSettings().nSubDelayStep;
 
-        int newDelay;
-        int oldDelay = m_pCAP->GetSubtitleDelay();
-        int nDelayStep = AfxGetAppSettings().nSubDelayStep;
-
-        if (nID == ID_SUB_DELAY_DOWN) {
-            newDelay = oldDelay - nDelayStep;
-        } else {
-            newDelay = oldDelay + nDelayStep;
-        }
-
-        SetSubtitleDelay(newDelay);
+    if (nID == ID_SUB_DELAY_DOWN) {
+        nDelayStep = -nDelayStep;
     }
+
+    SetSubtitleDelay(nDelayStep, /*relative=*/ true);
 }
 
 void CMainFrame::ProcessAPICommand(COPYDATASTRUCT* pCDS)
