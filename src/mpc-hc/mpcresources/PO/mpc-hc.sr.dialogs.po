@@ -815,17 +815,21 @@ msgctxt "IDD_FAVADD_IDC_CHECK1"
 msgid "Remember position"
 msgstr "&Запамти позицију"
 
-msgctxt "IDD_FAVADD_IDCANCEL"
-msgid "Cancel"
-msgstr "&Откажи"
+msgctxt "IDD_FAVADD_IDC_CHECK3"
+msgid "Remember A-B repeat marks"
+msgstr ""
+
+msgctxt "IDD_FAVADD_IDC_CHECK2"
+msgid "Relative drive"
+msgstr "&Важи за све погонске јединице"
 
 msgctxt "IDD_FAVADD_IDOK"
 msgid "OK"
 msgstr "&У реду"
 
-msgctxt "IDD_FAVADD_IDC_CHECK2"
-msgid "Relative drive"
-msgstr "&Важи за све погонске јединице"
+msgctxt "IDD_FAVADD_IDCANCEL"
+msgid "Cancel"
+msgstr "&Откажи"
 
 msgctxt "IDD_FAVORGANIZE_CAPTION"
 msgid "Organize Favorites"

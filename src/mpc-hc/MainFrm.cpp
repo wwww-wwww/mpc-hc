@@ -179,6 +179,55 @@ public:
     }
 };
 
+bool FileFavorite::TryParse(const CString& fav, FileFavorite& ff)
+{
+    CAtlList<CString> parts;
+    return TryParse(fav, ff, parts);
+}
+
+bool FileFavorite::TryParse(const CString& fav, FileFavorite& ff, CAtlList<CString>& parts)
+{
+    ExplodeEsc(fav, parts, _T(';'));
+    if (parts.IsEmpty()) {
+        return false;
+    }
+
+    ff.Name = parts.RemoveHead();
+
+    if (!parts.IsEmpty()) {
+        // Start position and optional A-B marks "pos[:A:B]"
+        auto startPos = parts.RemoveHead();
+        _stscanf_s(startPos, _T("%I64d:%I64d:%I64d"), &ff.Start, &ff.MarkA, &ff.MarkB);
+        ff.Start = std::max(ff.Start, 0ll); // Sanitize
+    }
+    if (!parts.IsEmpty()) {
+        _stscanf_s(parts.RemoveHead(), _T("%d"), &ff.RelativeDrive);
+    }
+    return true;
+}
+
+CString FileFavorite::ToString() const
+{
+    CString str;
+    if (RelativeDrive) {
+        str = _T("[RD]");
+    }
+    if (Start > 0) {    // Start position
+        str.AppendFormat(_T("[%s]"), ReftimeToString2(Start).GetString());
+    }
+    if (MarkA > 0 || MarkB > 0) {   // A-B marks (only characters to save space)
+        CString abMarks;
+        if (MarkA > 0) {
+            abMarks = _T("A");
+        }
+        if (MarkB > 0) {
+            abMarks.Append(_T("-B"));
+        }
+        str.AppendFormat(_T("[%s]"), abMarks.GetString());
+    }
+    return str;
+}
+
 /////////////////////////////////////////////////////////////////////////////
 // CMainFrame
 
@@ -9899,7 +9948,8 @@ void CMainFrame::AddFavorite(bool fDisplayMessage, bool fShowDialog)
         // Name
         CString name;
         if (fShowDialog) {
-            CFavoriteAddDlg dlg(desc, fn);
+            BOOL bEnableABMarks = !!(abRepeatPositionAEnabled || abRepeatPositionBEnabled);
+            CFavoriteAddDlg dlg(desc, fn, bEnableABMarks);
             if (dlg.DoModal() != IDOK) {
                 return;
             }
@@ -9913,6 +9963,12 @@ void CMainFrame::AddFavorite(bool fDisplayMessage, bool fShowDialog)
         CString posStr = _T("0");
         if (s.bFavRememberPos) {
             posStr.Format(_T("%I64d"), GetPos());
+        }
+        // RememberABMarks
+        if (s.bFavRememberABMarks && (abRepeatPositionAEnabled || abRepeatPositionBEnabled )) {
+            posStr.AppendFormat(_T(":%I64d:%I64d"),
+                abRepeatPositionAEnabled ? abRepeatPositionA : 0ll,
+                abRepeatPositionBEnabled ? abRepeatPositionB : 0ll);
         }
         args.AddTail(posStr);
 
@@ -10087,12 +10143,11 @@ void CMainFrame::OnFavoritesFile(UINT nID)
 
 void CMainFrame::PlayFavoriteFile(const CString& fav)
 {
+    SendMessage(WM_COMMAND, ID_FILE_CLOSEMEDIA);
+
     CAtlList<CString> args;
     REFERENCE_TIME rtStart = 0;
-
     ParseFavoriteFile(fav, args, &rtStart);
-
-    SendMessage(WM_COMMAND, ID_FILE_CLOSEMEDIA);
 
     if (!m_wndPlaylistBar.SelectFileInPlaylist(args.GetHead()) &&
         (!CanSendToYoutubeDL(args.GetHead()) ||
@@ -10110,24 +10165,26 @@ void CMainFrame::PlayFavoriteFile(const CString& fav)
 
 void CMainFrame::ParseFavoriteFile(const CString& fav, CAtlList<CString>& args, REFERENCE_TIME* prtStart)
 {
-    REFERENCE_TIME rtStart = 0;
-    BOOL bRelativeDrive = FALSE;
+    FileFavorite ff;
+    VERIFY(FileFavorite::TryParse(fav, ff, args));
 
-    ExplodeEsc(fav, args, _T(';'));
-    args.RemoveHeadNoReturn(); // desc / name
-    _stscanf_s(args.RemoveHead(), _T("%I64d"), &rtStart);    // pos
-    _stscanf_s(args.RemoveHead(), _T("%d"), &bRelativeDrive);    // relative drive
-    rtStart = std::max(rtStart, 0ll);
+    abRepeatPositionA = ff.MarkA;
+    abRepeatPositionB = ff.MarkB;
+    abRepeatPositionAEnabled = abRepeatPositionA > 0;
+    abRepeatPositionBEnabled = abRepeatPositionB > 0;
+
+    // Start at mark A (if set)
+    ff.Start = std::max(ff.Start, abRepeatPositionA);
 
     if (prtStart) {
-        *prtStart = rtStart;
+        *prtStart = ff.Start;
     }
 
     // NOTE: This is just for the favorites but we could add a global settings that
     // does this always when on. Could be useful when using removable devices.
     // All you have to do then is plug in your 500 gb drive, full with movies and/or music,
     // start MPC-HC (from the 500 gb drive) with a preloaded playlist and press play.
-    if (bRelativeDrive) {
+    if (ff.RelativeDrive) {
         // Get the drive MPC-HC is on and apply it to the path list
         CString exePath = PathUtils::GetProgramPath(true);
 
@@ -15423,35 +15480,14 @@ void CMainFrame::SetupFavoritesSubMenu()
         f_str.Replace(_T("&"), _T("&&"));
         f_str.Replace(_T("\t"), _T(" "));
 
-        CAtlList<CString> sl;
-        ExplodeEsc(f_str, sl, _T(';'), 3);
+        FileFavorite ff;
+        VERIFY(FileFavorite::TryParse(f_str, ff));
 
-        f_str = sl.RemoveHead();
+        f_str = ff.Name;
 
-        CString str;
-
-        if (!sl.IsEmpty()) {
-            // pos
-            REFERENCE_TIME rt = 0;
-            if (1 == _stscanf_s(sl.GetHead(), _T("%I64d"), &rt) && rt > 0) {
-                DVD_HMSF_TIMECODE hmsf = RT2HMSF(rt);
-                str.Format(_T("[%02u:%02u:%02u]"), hmsf.bHours, hmsf.bMinutes, hmsf.bSeconds);
-            }
-
-            // relative drive
-            if (sl.GetCount() > 1) {   // Here to prevent crash if old favorites settings are present
-                sl.RemoveHead();
-
-                BOOL bRelativeDrive = FALSE;
-                if (_stscanf_s(sl.GetHead(), _T("%d"), &bRelativeDrive) == 1) {
-                    if (bRelativeDrive) {
-                        str = _T("[RD]") + str;
-                    }
-                }
-            }
-            if (!str.IsEmpty()) {
-                f_str.AppendFormat(_T("\t%.14s"), str.GetString());
-            }
+        CString str = ff.ToString();
+        if (!str.IsEmpty()) {
+            f_str.AppendFormat(_T("\t%s"), str.GetString());
         }
 
         if (!f_str.IsEmpty()) {

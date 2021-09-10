@@ -24,36 +24,31 @@
 #include "CMPCThemeCmdUIDialog.h"
 #include "CMPCThemeComboBox.h"
 
-
 // CFavoriteAddDlg dialog
 
 class CFavoriteAddDlg : public CMPCThemeCmdUIDialog
 {
-    DECLARE_DYNAMIC(CFavoriteAddDlg)
-
-private:
-    CString m_shortname, m_fullname;
-
 public:
-    CFavoriteAddDlg(CString shortname, CString fullname, CWnd* pParent = nullptr);   // standard constructor
+    CFavoriteAddDlg(CString shortname, CString fullname, BOOL bEnableABMarks = FALSE, CWnd* pParent = nullptr);   // standard constructor
     virtual ~CFavoriteAddDlg();
 
     // Dialog Data
     enum { IDD = IDD_FAVADD };
 
-    CMPCThemeComboBox m_namectrl;
     CString m_name;
-    BOOL m_bRememberPos;
-    BOOL m_bRelativeDrive;
 
 protected:
     virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
     virtual BOOL OnInitDialog();
-
+    virtual void OnOK();
+    afx_msg void OnUpdateOk(CCmdUI* pCmdUI);
     DECLARE_MESSAGE_MAP()
 
-public:
-    afx_msg void OnUpdateOk(CCmdUI* pCmdUI);
-protected:
-    virtual void OnOK();
+private:
+    CMPCThemeComboBox m_namectrl;
+    CString m_shortname, m_fullname;
+    BOOL m_bEnableABMarks;
+    BOOL m_bRememberPos;
+    BOOL m_bRememberABMarks;
+    BOOL m_bRelativeDrive;
 };

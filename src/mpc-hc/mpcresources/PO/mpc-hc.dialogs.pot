@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2021-09-06 17:51:01+0000\n"
+"POT-Creation-Date: 2021-09-09 08:18:22+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -802,16 +802,20 @@ msgctxt "IDD_FAVADD_IDC_CHECK1"
 msgid "Remember position"
 msgstr ""
 
-msgctxt "IDD_FAVADD_IDCANCEL"
-msgid "Cancel"
+msgctxt "IDD_FAVADD_IDC_CHECK3"
+msgid "Remember A-B repeat marks"
+msgstr ""
+
+msgctxt "IDD_FAVADD_IDC_CHECK2"
+msgid "Relative drive"
 msgstr ""
 
 msgctxt "IDD_FAVADD_IDOK"
 msgid "OK"
 msgstr ""
 
-msgctxt "IDD_FAVADD_IDC_CHECK2"
-msgid "Relative drive"
+msgctxt "IDD_FAVADD_IDCANCEL"
+msgid "Cancel"
 msgstr ""
 
 msgctxt "IDD_FAVORGANIZE_CAPTION"

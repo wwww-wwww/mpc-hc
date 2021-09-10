@@ -199,6 +199,7 @@ CAppSettings::CAppSettings()
     , iOnTop(0)
     , bFavRememberPos(true)
     , bFavRelativeDrive(false)
+    , bFavRememberABMarks(false)
     , iThumbRows(4)
     , iThumbCols(4)
     , iThumbWidth(1024)
@@ -870,6 +871,7 @@ void CAppSettings::SaveSettings()
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_HIDEPLAYLISTFULLSCREEN, bHidePlaylistFullScreen);
     pApp->WriteProfileInt(IDS_R_FAVORITES, IDS_RS_FAV_REMEMBERPOS, bFavRememberPos);
     pApp->WriteProfileInt(IDS_R_FAVORITES, IDS_RS_FAV_RELATIVEDRIVE, bFavRelativeDrive);
+    pApp->WriteProfileInt(IDS_R_FAVORITES, IDS_RS_FAV_REMEMBERABMARKS, bFavRememberABMarks);
 
     UpdateRenderersData(true);
 
@@ -1562,6 +1564,7 @@ void CAppSettings::LoadSettings()
     bHidePlaylistFullScreen = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_HIDEPLAYLISTFULLSCREEN, FALSE);
     bFavRememberPos = !!pApp->GetProfileInt(IDS_R_FAVORITES, IDS_RS_FAV_REMEMBERPOS, TRUE);
     bFavRelativeDrive = !!pApp->GetProfileInt(IDS_R_FAVORITES, IDS_RS_FAV_RELATIVEDRIVE, FALSE);
+    bFavRememberABMarks = !!pApp->GetProfileInt(IDS_R_FAVORITES, IDS_RS_FAV_REMEMBERABMARKS, FALSE);
 
     strDVDPath = pApp->GetProfileString(IDS_R_SETTINGS, IDS_RS_DVDPATH);
     fUseDVDPath = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_USEDVDPATH, FALSE);

@@ -59,25 +59,18 @@ void CFavoriteOrganizeDlg::SetupList(bool fSave)
     } else {
         m_list.DeleteAllItems();
 
-        POSITION pos = m_sl[i].GetHeadPosition(), tmp;
-        while (pos) {
+        for(POSITION pos = m_sl[i].GetHeadPosition(), tmp; pos; ) {
             tmp = pos;
 
-            CAtlList<CString> sl;
-            ExplodeEsc(m_sl[i].GetNext(pos), sl, _T(';'), 3);
+            FileFavorite ff;
+            VERIFY(FileFavorite::TryParse(m_sl[i].GetNext(pos), ff));
 
-            int n = m_list.InsertItem(m_list.GetItemCount(), sl.RemoveHead());
+            int n = m_list.InsertItem(m_list.GetItemCount(), ff.Name);
             m_list.SetItemData(n, (DWORD_PTR)tmp);
 
-            if (!sl.IsEmpty()) {
-                REFERENCE_TIME rt = 0;
-                if (1 == _stscanf_s(sl.GetHead(), _T("%I64d"), &rt) && rt > 0) {
-                    DVD_HMSF_TIMECODE hmsf = RT2HMSF(rt);
-
-                    CString str;
-                    str.Format(_T("[%02u:%02u:%02u]"), hmsf.bHours, hmsf.bMinutes, hmsf.bSeconds);
-                    m_list.SetItemText(n, 1, str);
-                }
+            CString str = ff.ToString();
+            if (!str.IsEmpty()) {
+                m_list.SetItemText(n, 1, str);
             }
         }
 

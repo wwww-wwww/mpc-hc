@@ -25,15 +25,16 @@
 #include "SettingsDefines.h"
 #include "AppSettings.h"
 
-
 // CFavoriteAddDlg dialog
 
-IMPLEMENT_DYNAMIC(CFavoriteAddDlg, CMPCThemeCmdUIDialog)
-CFavoriteAddDlg::CFavoriteAddDlg(CString shortname, CString fullname, CWnd* pParent /*=nullptr*/)
+CFavoriteAddDlg::CFavoriteAddDlg(CString shortname, CString fullname,
+    BOOL bEnableABMarks /*=FALSE*/, CWnd* pParent /*=nullptr*/)
     : CMPCThemeCmdUIDialog(CFavoriteAddDlg::IDD, pParent)
     , m_shortname(shortname)
     , m_fullname(fullname)
+    , m_bEnableABMarks(bEnableABMarks)
     , m_bRememberPos(TRUE)
+    , m_bRememberABMarks(FALSE)
     , m_bRelativeDrive(FALSE)
 {
 }
@@ -49,6 +50,7 @@ void CFavoriteAddDlg::DoDataExchange(CDataExchange* pDX)
     DDX_CBString(pDX, IDC_COMBO1, m_name);
     DDX_Check(pDX, IDC_CHECK1, m_bRememberPos);
     DDX_Check(pDX, IDC_CHECK2, m_bRelativeDrive);
+    DDX_Check(pDX, IDC_CHECK3, m_bRememberABMarks);
     fulfillThemeReqs();
 }
 
@@ -70,6 +72,11 @@ BOOL CFavoriteAddDlg::OnInitDialog()
 
     m_bRememberPos = s.bFavRememberPos;
     m_bRelativeDrive = s.bFavRelativeDrive;
+
+    if (m_bEnableABMarks) {
+        m_bRememberABMarks = s.bFavRememberABMarks;
+    }
+    GetDlgItem(IDC_CHECK3)->EnableWindow(m_bEnableABMarks);
 
     UpdateData(FALSE); // Update UI
 
@@ -103,6 +110,10 @@ void CFavoriteAddDlg::OnOK()
 
     s.bFavRememberPos = !!m_bRememberPos;
     s.bFavRelativeDrive = !!m_bRelativeDrive;
+
+    if (m_bEnableABMarks) {
+        s.bFavRememberABMarks = !!m_bRememberABMarks;
+    }
 
     CCmdUIDialog::OnOK();
 }

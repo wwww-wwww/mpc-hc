@@ -154,6 +154,27 @@ struct SubtitleInput {
         : pSubStream(pSubStream), pSourceFilter(pSourceFilter) {};
 };
 
+struct FileFavorite {
+    CString Name;
+    REFERENCE_TIME Start;
+    REFERENCE_TIME MarkA;
+    REFERENCE_TIME MarkB;
+    BOOL RelativeDrive;
+
+    FileFavorite() {
+        Start = MarkA = MarkB = 0;
+        RelativeDrive = FALSE;
+    }
+
+    static bool TryParse(const CString& fav, FileFavorite& ff);
+    static bool TryParse(const CString& fav, FileFavorite& ff, CAtlList<CString>& parts);
+
+    CString ToString() const;
+};
+
+/////////////////////////////////////////////////////////////////////////////
+// CMainFrame
+
 class CMainFrame : public CFrameWnd, public CDropClient
 {
 public:

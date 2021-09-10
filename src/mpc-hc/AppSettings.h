@@ -780,6 +780,7 @@ public:
     // Add Favorite
     bool            bFavRememberPos;
     bool            bFavRelativeDrive;
+    bool            bFavRememberABMarks;
     // Save Image...
     CString         strSnapshotPath, strSnapshotExt;
     bool			bSnapShotSubtitles;

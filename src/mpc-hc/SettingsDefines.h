@@ -41,6 +41,7 @@
 
 #define IDS_RS_FAV_REMEMBERPOS              _T("RememberPosition")
 #define IDS_RS_FAV_RELATIVEDRIVE            _T("RelativeDrive")
+#define IDS_RS_FAV_REMEMBERABMARKS          _T("RememberABMarks")
 #define IDS_RS_DVDPOS                       _T("RememberDVDPos")
 #define IDS_RS_FILEPOS                      _T("RememberFilePos")
 #define IDS_RS_FILEPOSLONGER                _T("RememberPosForLongerThan")
