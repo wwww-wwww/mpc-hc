@@ -2419,12 +2419,11 @@ void CMainFrame::DoAfterPlaybackEvent()
             bNoMoreMedia = true;
         }
     } else {
+        // remembered after playback events
         switch (s.eAfterPlayback) {
             case CAppSettings::AfterPlayback::PLAY_NEXT:
                 if (!SearchInDir(true, s.bLoopFolderOnPlayNextFile)) {
-                    m_fEndOfStream = true;
-                    bExitFullScreen = true;
-                    bNoMoreMedia = true;
+                    SendMessage(WM_COMMAND, ID_FILE_CLOSE_AND_RESTORE);
                 }
                 break;
             case CAppSettings::AfterPlayback::REWIND:
@@ -7006,6 +7005,10 @@ void CMainFrame::OnD3DFullscreenToggle()
 
 void CMainFrame::OnFileCloseAndRestore()
 {
+    if (GetLoadState() == MLS::LOADED && (m_fFullScreen || IsD3DFullScreenMode())) {
+        // exit fullscreen
+        OnViewFullscreen();
+    }
     SendMessage(WM_COMMAND, ID_FILE_CLOSEMEDIA);
     RestoreDefaultWindowRect();
 }
