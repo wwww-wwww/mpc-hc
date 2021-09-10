@@ -460,7 +460,12 @@ STDMETHODIMP CRARFileSource::Load (LPCOLESTR lpwszFileName, const AM_MEDIA_TYPE 
 
     wcscpy(m_file_name, lpwszFileName);
 
-	hr = ScanArchive ((wchar_t *) lpwszFileName, &file_list, &num_files, &num_ok_files);
+    try {
+        hr = ScanArchive((wchar_t*)lpwszFileName, &file_list, &num_files, &num_ok_files);
+    } catch (...) {
+        DbgLog((LOG_TRACE, 2, L"CRARFileSource::Exception was thrown while scanning archive. Could be encrypted file."));
+        return E_UNEXPECTED;
+    }
 
 	DbgLog((LOG_TRACE, 2, L"Found %d files out of which %d are media files.", num_files, num_ok_files));
 
