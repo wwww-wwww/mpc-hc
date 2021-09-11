@@ -8043,11 +8043,15 @@ void CMainFrame::OnPlayPause()
 
 void CMainFrame::OnPlayPlaypause()
 {
-    OAFilterState fs = GetMediaState();
-    if (fs == State_Running) {
-        SendMessage(WM_COMMAND, ID_PLAY_PAUSE);
-    } else if (fs == State_Stopped || fs == State_Paused) {
-        SendMessage(WM_COMMAND, ID_PLAY_PLAY);
+    if (GetLoadState() == MLS::LOADED) {
+        OAFilterState fs = GetMediaState();
+        if (fs == State_Running) {
+            SendMessage(WM_COMMAND, ID_PLAY_PAUSE);
+        } else if (fs == State_Stopped || fs == State_Paused) {
+            SendMessage(WM_COMMAND, ID_PLAY_PLAY);
+        }
+    } else if (GetLoadState() == MLS::CLOSED && !IsPlaylistEmpty()) {
+        SendMessage(WM_COMMAND, ID_PLAY_PLAY);        
     }
 }
 
@@ -8158,38 +8162,42 @@ void CMainFrame::OnPlayStop()
 
 void CMainFrame::OnUpdatePlayPauseStop(CCmdUI* pCmdUI)
 {
-    OAFilterState fs = m_fFrameSteppingActive ? State_Paused : GetMediaState();
-
-    pCmdUI->SetCheck(fs == State_Running && pCmdUI->m_nID == ID_PLAY_PLAY
-                     || fs == State_Paused && pCmdUI->m_nID == ID_PLAY_PAUSE
-                     || fs == State_Stopped && pCmdUI->m_nID == ID_PLAY_STOP
-                     || (fs == State_Paused || fs == State_Running) && pCmdUI->m_nID == ID_PLAY_PLAYPAUSE);
-
     bool fEnable = false;
+    bool fCheck = false;
 
-    if (fs >= 0) {
-        if (GetPlaybackMode() == PM_FILE || IsPlaybackCaptureMode()) {
-            fEnable = true;
+    if (GetLoadState() == MLS::LOADED) {
+        OAFilterState fs = m_fFrameSteppingActive ? State_Paused : GetMediaState();
 
-            if (m_fCapturing) {
-                fEnable = false;
-            } else if (m_fLiveWM && pCmdUI->m_nID == ID_PLAY_PAUSE) {
-                fEnable = false;
-            } else if (GetPlaybackMode() == PM_DIGITAL_CAPTURE && pCmdUI->m_nID == ID_PLAY_PAUSE) {
-                fEnable = false; // Disable pause for digital capture mode to avoid accidental playback stop. We don't support time shifting yet.
-            }
-        } else if (GetPlaybackMode() == PM_DVD) {
-            fEnable = m_iDVDDomain != DVD_DOMAIN_VideoManagerMenu
-                      && m_iDVDDomain != DVD_DOMAIN_VideoTitleSetMenu;
+        fCheck = pCmdUI->m_nID == ID_PLAY_PLAY && fs == State_Running ||
+            pCmdUI->m_nID == ID_PLAY_PAUSE && fs == State_Paused ||
+            pCmdUI->m_nID == ID_PLAY_STOP && fs == State_Stopped ||
+            pCmdUI->m_nID == ID_PLAY_PLAYPAUSE && (fs == State_Paused || fs == State_Running);
 
-            if (fs == State_Stopped && pCmdUI->m_nID == ID_PLAY_PAUSE) {
-                fEnable = false;
+        if (fs >= 0) {
+            if (GetPlaybackMode() == PM_FILE || IsPlaybackCaptureMode()) {
+                fEnable = true;
+
+                if (m_fCapturing) {
+                    fEnable = false;
+                } else if (m_fLiveWM && pCmdUI->m_nID == ID_PLAY_PAUSE) {
+                    fEnable = false;
+                } else if (GetPlaybackMode() == PM_DIGITAL_CAPTURE && pCmdUI->m_nID == ID_PLAY_PAUSE) {
+                    fEnable = false; // Disable pause for digital capture mode to avoid accidental playback stop. We don't support time shifting yet.
+                }
+            } else if (GetPlaybackMode() == PM_DVD) {
+                fEnable = m_iDVDDomain != DVD_DOMAIN_VideoManagerMenu
+                    && m_iDVDDomain != DVD_DOMAIN_VideoTitleSetMenu;
+
+                if (fs == State_Stopped && pCmdUI->m_nID == ID_PLAY_PAUSE) {
+                    fEnable = false;
+                }
             }
         }
-    } else if (pCmdUI->m_nID == ID_PLAY_PLAY && !IsPlaylistEmpty()) {
-        fEnable = true;
+    } else if (GetLoadState() == MLS::CLOSED) {
+        fEnable = (pCmdUI->m_nID == ID_PLAY_PLAY || pCmdUI->m_nID == ID_PLAY_PLAYPAUSE) && !IsPlaylistEmpty();
     }
 
+    pCmdUI->SetCheck(fCheck);
     pCmdUI->Enable(fEnable);
 }
 
@@ -17484,7 +17492,7 @@ void CMainFrame::SetLoadState(MLS eState)
     UpdateControlState(UPDATE_CONTROLS_VISIBILITY);
 }
 
-MLS CMainFrame::GetLoadState() const
+inline MLS CMainFrame::GetLoadState() const
 {
     return m_eMediaLoadState;
 }
