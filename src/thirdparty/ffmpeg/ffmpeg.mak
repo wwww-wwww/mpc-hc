@@ -249,6 +249,7 @@ SRCS_LR = \
 	libswresample/rematrix.c \
 	libswresample/resample.c \
 	libswresample/resample_dsp.c \
+	libswresample/soxr_resample.c \
 	libswresample/swresample.c \
 	libswresample/swresample_frame.c \
 	libswresample/x86/audio_convert_init.c \

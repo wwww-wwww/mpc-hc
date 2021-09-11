@@ -30,7 +30,7 @@ AVCODECFLAGS= -DBUILDING_avcodec
 AVFILTERFLAGS= -DBUILDING_avfilter
 AVUTILFLAGS= -DBUILDING_avutil
 
-CFLAGS= -D_ISOC99_SOURCE -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_USE_MATH_DEFINES -D_CRT_SECURE_NO_WARNINGS -D_CRT_NONSTDC_NO_WARNINGS -DZLIB_CONST -DHAVE_AV_CONFIG_H -nologo -D_WIN32_WINNT=0x0600 -DWINVER=0x0600 -GS- -W3 -wd4018 -wd4146 -wd4244 -wd4305 -wd4554 -O2 -utf-8 -I $(MAK_DIR) -I . -I compat/atomics/win32 
+CFLAGS= -D_ISOC99_SOURCE -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_USE_MATH_DEFINES -D_CRT_SECURE_NO_WARNINGS -D_CRT_NONSTDC_NO_WARNINGS -DZLIB_CONST -DHAVE_AV_CONFIG_H -nologo -D_WIN32_WINNT=0x0600 -DWINVER=0x0600 -GS- -W3 -wd4018 -wd4146 -wd4244 -wd4305 -wd4554 -O2 -utf-8 -I $(MAK_DIR) -I . -I compat/atomics/win32 -I $(SOXR_DIR) 
 CXXFLAGS=  -D__STDC_CONSTANT_MACROS 
 CC=cl.exe
 LIBFLAGS = -nologo -NODEFAULTLIB:libcmt 
@@ -244,6 +244,7 @@ SRCS_LR = \
 	libswresample/rematrix.c \
 	libswresample/resample.c \
 	libswresample/resample_dsp.c \
+	libswresample/soxr_resample.c \
 	libswresample/swresample.c \
 	libswresample/swresample_frame.c \
 	libswresample/x86/audio_convert_init.c \

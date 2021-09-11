@@ -1560,6 +1560,10 @@ HRESULT CMpcAudioRenderer::Transform(IMediaSample *pMediaSample)
 			m_Resampler.UpdateInput(m_input_params.sf, m_input_params.layout, m_input_params.samplerate);
 			m_Resampler.UpdateOutput(m_output_params.sf, m_output_params.layout, m_output_params.samplerate);
 			out_samples = m_Resampler.CalcOutSamples(in_samples);
+            if (!out_samples) {
+                TRACE(L"CMpcAudioRenderer::Transform() - resampling failure\n");
+                return E_INVALIDARG;
+            }
 			REFERENCE_TIME delay = m_Resampler.GetDelay();
 			out_buf     = DNew BYTE[out_samples * m_output_params.channels * get_bytes_per_sample(m_output_params.sf)];
 			out_samples = m_Resampler.Mixing(out_buf, out_samples, in_buff, in_samples);
