@@ -14277,6 +14277,13 @@ void CMainFrame::DoTunerScan(TunerScanData* pTSD)
     if (GetPlaybackMode() == PM_DIGITAL_CAPTURE) {
         CComQIPtr<IBDATuner> pTun = m_pGB;
         if (pTun) {
+            bool wasStopped = false;
+            if (GetMediaState() == State_Stopped) {
+                SetChannel(-1);
+                MediaControlRun();
+                wasStopped = true;
+            }
+
             BOOLEAN bPresent;
             BOOLEAN bLocked;
             LONG lDbStrength = 0;
@@ -14309,6 +14316,10 @@ void CMainFrame::DoTunerScan(TunerScanData* pTSD)
             }
 
             ::SendMessage(pTSD->Hwnd, WM_TUNER_SCAN_END, 0, 0);
+            if (wasStopped) {
+                SetChannel(AfxGetAppSettings().nDVBLastChannel);
+                MediaControlStop();
+            }
         }
     }
 }
