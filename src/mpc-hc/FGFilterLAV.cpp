@@ -912,7 +912,9 @@ void CFGFilterLAVAudio::Settings::LoadSettings()
 
     bDTSHDFraming = pApp->GetProfileInt(IDS_R_INTERNAL_LAVAUDIO, _T("DTSHDFraming"), bDTSHDFraming);
 
-    bBitstreamingFallback = pApp->GetProfileInt(IDS_R_INTERNAL_LAVAUDIO, _T("BitstreamingFallback"), bBitstreamingFallback);
+    if (lav_version >= LAV_FILTERS_VERSION(0, 74, 0, 0)) {
+        bBitstreamingFallback = pApp->GetProfileInt(IDS_R_INTERNAL_LAVAUDIO, _T("BitstreamingFallback"), bBitstreamingFallback);
+    }
 
     bAutoAVSync = pApp->GetProfileInt(IDS_R_INTERNAL_LAVAUDIO, _T("AutoAVSync"), bAutoAVSync);
 
@@ -968,7 +970,9 @@ void CFGFilterLAVAudio::Settings::SaveSettings()
 
     pApp->WriteProfileInt(IDS_R_INTERNAL_LAVAUDIO, _T("DTSHDFraming"), bDTSHDFraming);
 
-    pApp->WriteProfileInt(IDS_R_INTERNAL_LAVAUDIO, _T("BitstreamingFallback"), bBitstreamingFallback);
+    if (lav_version >= LAV_FILTERS_VERSION(0, 74, 0, 0)) {
+        pApp->WriteProfileInt(IDS_R_INTERNAL_LAVAUDIO, _T("BitstreamingFallback"), bBitstreamingFallback);
+    }
 
     pApp->WriteProfileInt(IDS_R_INTERNAL_LAVAUDIO, _T("AutoAVSync"), bAutoAVSync);
 
@@ -1023,7 +1027,9 @@ bool CFGFilterLAVAudio::Settings::GetSettings(CComQIPtr<ILAVAudioSettings> pLAVF
 
     bDTSHDFraming = pLAVFSettings->GetDTSHDFraming();
 
-    bBitstreamingFallback = pLAVFSettings->GetBitstreamingFallback();
+    if (lav_version >= LAV_FILTERS_VERSION(0, 74, 0, 0)) {
+        bBitstreamingFallback = pLAVFSettings->GetBitstreamingFallback();
+    }
 
     bAutoAVSync = pLAVFSettings->GetAutoAVSync();
 
@@ -1072,7 +1078,9 @@ bool CFGFilterLAVAudio::Settings::SetSettings(CComQIPtr<ILAVAudioSettings> pLAVF
 
     pLAVFSettings->SetDTSHDFraming(bDTSHDFraming);
 
-    pLAVFSettings->SetBitstreamingFallback(bBitstreamingFallback);
+    if (lav_version >= LAV_FILTERS_VERSION(0, 74, 0, 0)) {
+        pLAVFSettings->SetBitstreamingFallback(bBitstreamingFallback);
+    }
 
     pLAVFSettings->SetAutoAVSync(bAutoAVSync);
 
