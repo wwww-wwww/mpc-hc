@@ -2656,7 +2656,7 @@ CFGManagerPlayer::CFGManagerPlayer(LPCTSTR pName, LPUNKNOWN pUnk, HWND hWnd, boo
                     return SaneAudioRenderer::Factory::CreateFilter(AfxGetAppSettings().sanear, ppBF);
                 }
             };
-            pFGF = DEBUG_NEW SaneAudioRendererFilter(AUDRNDT_INTERNAL, renderer_merit + 0x50);
+            pFGF = DEBUG_NEW SaneAudioRendererFilter(AUDRNDT_SANEAR, renderer_merit + 0x50);
             pFGF->AddType(MEDIATYPE_Audio, MEDIASUBTYPE_NULL);
             m_transform.AddTail(pFGF);
         } else if (SelAudioRenderer == AUDRNDT_MPC) {
