@@ -272,6 +272,7 @@ struct YDLStreamDetails {
 
 bool GetYDLStreamDetails(const Value& format, YDLStreamDetails& details, bool require_video, bool require_audio_only)
 {
+    bool canuse = true;
     details = { _T(""), _T(""), 0, 0, _T(""), _T(""), _T(""), false, false, 0, 0, 0, _T(""), _T(""), false };
 
     details.url = format[_T("url")].GetString();
@@ -282,15 +283,33 @@ bool GetYDLStreamDetails(const Value& format, YDLStreamDetails& details, bool re
         return false;
     }
 
-    details.protocol  = format.HasMember(_T("protocol")) && !format[_T("protocol")].IsNull() ? format[_T("protocol")].GetString() : _T("");
-    details.width     = format.HasMember(_T("width"))    && !format[_T("width")].IsNull()    ? format[_T("width")].GetInt()  : 0;
-    details.height    = format.HasMember(_T("height"))   && !format[_T("height")].IsNull()   ? format[_T("height")].GetInt() : 0;
-    details.vcodec    = format.HasMember(_T("vcodec"))   && !format[_T("vcodec")].IsNull()   ? format[_T("vcodec")].GetString() : _T("");
-    details.acodec    = format.HasMember(_T("acodec"))   && !format[_T("acodec")].IsNull()   ? format[_T("acodec")].GetString() : _T("");
-    details.format    = format.HasMember(_T("format"))   && !format[_T("format")].IsNull()   ? format[_T("format")].GetString() : _T("");
-    details.format_id = format.HasMember(_T("format_id")) && !format[_T("format_id")].IsNull() ? format[_T("format_id")].GetString() : _T("");
-    details.language  = format.HasMember(_T("language")) && !format[_T("language")].IsNull() ? format[_T("language")].GetString() : _T("");
-    details.pref_lang = format.HasMember(_T("language_preference")) && !format[_T("language_preference")].IsNull() && format[_T("language_preference")].GetInt() > 0;
+    if (format.HasMember(_T("protocol")) && !format[_T("protocol")].IsNull()) {
+        details.protocol = CString(format[_T("protocol")].GetString()).MakeLower();
+    }
+    if (format.HasMember(_T("vcodec")) && !format[_T("vcodec")].IsNull()) {
+        details.vcodec = CString(format[_T("vcodec")].GetString()).MakeLower();
+    }
+    if (format.HasMember(_T("acodec")) && !format[_T("acodec")].IsNull()) {
+        details.acodec = CString(format[_T("acodec")].GetString()).MakeLower();
+    }
+    if (format.HasMember(_T("format")) && !format[_T("format")].IsNull()) {
+        details.format = CString(format[_T("format")].GetString()).MakeLower();
+    }
+    if (format.HasMember(_T("format_id")) && !format[_T("format_id")].IsNull()) {
+        details.format_id = CString(format[_T("format_id")].GetString()).MakeLower();
+    }
+    if (format.HasMember(_T("language")) && !format[_T("language")].IsNull()) {
+        details.language = CString(format[_T("language")].GetString()).MakeLower();
+    }
+    if (format.HasMember(_T("width")) && !format[_T("width")].IsNull()) {
+        details.width = format[_T("width")].GetInt();
+    }
+    if (format.HasMember(_T("height")) && !format[_T("height")].IsNull()) {
+        details.height = format[_T("height")].GetInt();
+    }
+    if (format.HasMember(_T("language_preference")) && !format[_T("language_preference")].IsNull()) {
+        details.pref_lang = format[_T("language_preference")].GetInt() > 0;
+    } 
 
     details.has_audio = !details.acodec.IsEmpty() && details.acodec != _T("none");
     details.has_video = !details.vcodec.IsEmpty() && details.vcodec != _T("none") || (details.width > 0) || (details.height > 0);
@@ -304,33 +323,21 @@ bool GetYDLStreamDetails(const Value& format, YDLStreamDetails& details, bool re
 
     // make assumption
     if (!details.has_video && !details.has_audio) {
-        details.has_video = true;
-        details.has_audio = true;
-        #if YDL_TRACE
-        TRACE(_T("assuming url has video: %s\n"), static_cast<LPCWSTR>(details.url));
-        #endif
-        #if YDL_EXTRA_LOGGING
-        YDL_LOG(_T("assuming url has video: %s"), static_cast<LPCWSTR>(details.url));
-        #endif
+        if (details.vcodec != _T("none")) {
+            details.has_video = true;
+            details.vcodec = _T("unknown");
+        }
+        if (details.acodec != _T("none")) {
+            details.has_audio = true;
+            details.acodec = _T("unknown");
+        }
     }
 
-    if (require_video && !details.has_video) {
-        #if YDL_TRACE
-        TRACE(_T("ignore url because it has no video: %s\n"), static_cast<LPCWSTR>(details.url));
-        #endif
-        #if YDL_EXTRA_LOGGING
-        YDL_LOG(_T("ignore url because it has no video: %s"), static_cast<LPCWSTR>(details.url));
-        #endif
-        return false;
+    if (canuse && require_video && !details.has_video) {
+        canuse = false;
     }
-    if (require_audio_only && (details.has_video || !details.has_audio)) {
-        #if YDL_TRACE
-        TRACE(_T("ignore url because it is not audio only (vcodec=%s): %s\n"), static_cast<LPCWSTR>(details.vcodec), static_cast<LPCWSTR>(details.url));
-        #endif
-        #if YDL_EXTRA_LOGGING
-        YDL_LOG(_T("ignore url because it is not audio only (vcodec=%s): %s"), static_cast<LPCWSTR>(details.vcodec), static_cast<LPCWSTR>(details.url));
-        #endif
-        return false;
+    if (canuse && require_audio_only && (details.has_video || !details.has_audio)) {
+        canuse = false;
     }
 
     details.vbr = details.has_video && format.HasMember(_T("vbr")) && !format[_T("vbr")].IsNull() ? (int)format[_T("vbr")].GetFloat() : 0;
@@ -344,13 +351,13 @@ bool GetYDLStreamDetails(const Value& format, YDLStreamDetails& details, bool re
     }
 
     #if YDL_TRACE
-    TRACE(_T("protocol=%s vcodec=%s width=%d height=%d fps=%d vbr=%d acodec=%s abr=%d formatid=%s lang=%s(p%d) url=%s\n"), static_cast<LPCWSTR>(details.protocol), static_cast<LPCWSTR>(details.vcodec), details.width, details.height, details.fps, details.vbr, static_cast<LPCWSTR>(details.acodec), details.abr, static_cast<LPCWSTR>(details.format_id), static_cast<LPCWSTR>(details.language), details.pref_lang, static_cast<LPCWSTR>(details.url));
+    TRACE(_T("canuse=%d protocol=%s vcodec=%s width=%d height=%d fps=%d vbr=%d acodec=%s abr=%d formatid=%s lang=%s(p%d) url=%s\n"), canuse, static_cast<LPCWSTR>(details.protocol), static_cast<LPCWSTR>(details.vcodec), details.width, details.height, details.fps, details.vbr, static_cast<LPCWSTR>(details.acodec), details.abr, static_cast<LPCWSTR>(details.format_id), static_cast<LPCWSTR>(details.language), details.pref_lang, static_cast<LPCWSTR>(details.url));
     #endif
     #if YDL_LOG_URLS
-    YDL_LOG(_T("protocol=%s vcodec=%s width=%d height=%d fps=%d vbr=%d acodec=%s abr=%d formatid=%s lang=%s(p%d) url=%s"), static_cast<LPCWSTR>(details.protocol), static_cast<LPCWSTR>(details.vcodec), details.width, details.height, details.fps, details.vbr, static_cast<LPCWSTR>(details.acodec), details.abr, static_cast<LPCWSTR>(details.format_id), static_cast<LPCWSTR>(details.language), details.pref_lang, static_cast<LPCWSTR>(details.url));
+    YDL_LOG(_T("canuse=%d protocol=%s vcodec=%s width=%d height=%d fps=%d vbr=%d acodec=%s abr=%d formatid=%s lang=%s(p%d) url=%s"), canuse, static_cast<LPCWSTR>(details.protocol), static_cast<LPCWSTR>(details.vcodec), details.width, details.height, details.fps, details.vbr, static_cast<LPCWSTR>(details.acodec), details.abr, static_cast<LPCWSTR>(details.format_id), static_cast<LPCWSTR>(details.language), details.pref_lang, static_cast<LPCWSTR>(details.url));
     #endif
 
-    return true;
+    return canuse;
 }
 
 #define YDL_FORMAT_AUTO      0
@@ -380,6 +387,13 @@ bool IsBetterYDLStream(YDLStreamDetails& first, YDLStreamDetails& second, int ma
         CString vcodec1 = first.vcodec.Left(4);
         CString vcodec2 = second.vcodec.Left(4);
         if (vcodec1 != vcodec2) {
+            // Prefer stream with known format
+            if (vcodec1 == _T("unkn")) {
+                return true;
+            }
+            if (vcodec2 == _T("unkn")) {
+                return false;
+            }
             // AV1
             if (vcodec1 == _T("av01")) {
                 return (preferred_format != YDL_FORMAT_AV1_30 && preferred_format != YDL_FORMAT_AV1_60);
@@ -541,9 +555,28 @@ bool filterVideo(const Value& formats, YDLStreamDetails& ydl_sd, int max_height,
             if (!found || IsBetterYDLStream(ydl_sd, current, max_height, separate, preferred_format)) {
                 ydl_sd = current;
                 #if YDL_TRACE
-                TRACE(_T("this is currently best video stream\n"));
+                TRACE(_T("This is currently best video stream\n"));
                 #endif
-                //YDL_LOG(_T("this is currently best video stream"));
+                // A single http dash manifest can appear several times in the formats list with different video and audio parameters.
+                // So if current entry does not have audio, check if another entry with same url does have audio.
+                if (!ydl_sd.has_audio && ydl_sd.protocol == _T("http_dash_segments")) {
+                    for (rapidjson::SizeType j = 0; j < formats.Size(); j++) {
+                        if (i != j && formats[j].HasMember(_T("url")) && !formats[j][_T("url")].IsNull()) {
+                            CString url = formats[j][_T("url")].GetString();
+                            if (url == ydl_sd.url && formats[j].HasMember(_T("acodec")) && !formats[j][_T("acodec")].IsNull()) {
+                                CString acodec = CString(formats[j][_T("acodec")].GetString()).MakeLower();
+                                if (!acodec.IsEmpty() && acodec != _T("none")) {
+                                    ydl_sd.has_audio = true;
+                                    ydl_sd.acodec = acodec;
+                                    #if YDL_TRACE
+                                    TRACE(_T("Found matching audio stream for above manifest url\n"));
+                                    #endif
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
             }
             found = true;
         }
@@ -632,6 +665,10 @@ bool CYoutubeDLInstance::GetHttpStreams(CAtlList<YDLStreamURL>& streams, YDLPlay
                 if (filterAudio(pJSON->d[_T("formats")], ydl_sd)) {
                     if (ydl_sd.url != stream.video_url) {
                         stream.audio_url = ydl_sd.url;
+                        #if YDL_TRACE
+                        TRACE(_T("selected video url = %s\n"), static_cast<LPCWSTR>(stream.video_url));
+                        TRACE(_T("selected audio url = %s\n"), static_cast<LPCWSTR>(stream.audio_url));
+                        #endif
                     }
                 }
             }
