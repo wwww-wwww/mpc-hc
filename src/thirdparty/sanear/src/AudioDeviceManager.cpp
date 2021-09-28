@@ -285,8 +285,13 @@ namespace SaneAudioRenderer
                             break;
                         }
                     }
+
+                    if (backend->dspFormat == DspFormat::Unknown) {
+                        // Exclusive mode is not supported, fallback to shared mode
+                        backend->exclusive = false;
+                    }
                 }
-                else
+                if (!backend->bitstream && !backend->exclusive)
                 {
                     // Shared.
                     backend->dspFormat = DspFormat::Float;
