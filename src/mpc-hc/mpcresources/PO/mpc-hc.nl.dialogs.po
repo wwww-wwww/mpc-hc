@@ -1730,21 +1730,25 @@ msgctxt "IDD_PPAGEADVANCED_IDC_BUTTON1"
 msgid "Default"
 msgstr "Standaard"
 
+msgctxt "IDD_PPAGEAUDIORENDERER_IDC_CHECK5"
+msgid "SaneAR Audio Renderer Enabled"
+msgstr ""
+
 msgctxt "IDD_PPAGEAUDIORENDERER_IDC_STATIC5"
 msgid "Device"
 msgstr "Apparaat"
+
+msgctxt "IDD_PPAGEAUDIORENDERER_IDC_STATIC6"
+msgid "Options"
+msgstr "Opties"
 
 msgctxt "IDD_PPAGEAUDIORENDERER_IDC_CHECK1"
 msgid "Exclusive mode"
 msgstr "Exclusieve mode"
 
-msgctxt "IDD_PPAGEAUDIORENDERER_IDC_CHECK2"
-msgid "Allow bitstreaming"
-msgstr "Sta \"bitstreaming\" toe"
-
-msgctxt "IDD_PPAGEAUDIORENDERER_IDC_STATIC6"
-msgid "Options"
-msgstr "Opties"
+msgctxt "IDD_PPAGEAUDIORENDERER_IDC_CHECK4"
+msgid "Ignore system channel mixer (always ignored in exclusive WASAPI mode)"
+msgstr "Systeem kanaal mixer negeren (wordt altijd genegeerd in WASAPI modus)"
 
 msgctxt "IDD_PPAGEAUDIORENDERER_IDC_CHECK3"
 msgid "Enable stereo crossfeed (for headphones)"
@@ -1766,10 +1770,6 @@ msgctxt "IDD_PPAGEAUDIORENDERER_IDC_STATIC3"
 msgid "Level:"
 msgstr "Hoogte:"
 
-msgctxt "IDD_PPAGEAUDIORENDERER_IDC_CHECK4"
-msgid "Ignore system channel mixer (always ignored in exclusive WASAPI mode)"
-msgstr "Systeem kanaal mixer negeren (wordt altijd genegeerd in WASAPI modus)"
-
 msgctxt "IDD_PPAGEAUDIORENDERER_IDC_STATIC7"
 msgid "Note"
 msgstr "Opmerking"
@@ -1781,10 +1781,6 @@ msgid ""
 msgstr ""
 "Om audiovervorming te verminderen, is het aanbevolen om het volume rond 85% "
 "te houden bij luide gecomprimeerde content."
-
-msgctxt "IDD_PPAGEAUDIORENDERER_IDC_CHECK5"
-msgid "SaneAR Audio Renderer Enabled"
-msgstr ""
 
 msgctxt "IDD_PPAGEAUDIORENDERER_IDC_BUTTON3"
 msgid "MPC Audio Renderer Settings"

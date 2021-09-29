@@ -1746,21 +1746,27 @@ msgctxt "IDD_PPAGEADVANCED_IDC_BUTTON1"
 msgid "Default"
 msgstr "Original"
 
+msgctxt "IDD_PPAGEAUDIORENDERER_IDC_CHECK5"
+msgid "SaneAR Audio Renderer Enabled"
+msgstr ""
+
 msgctxt "IDD_PPAGEAUDIORENDERER_IDC_STATIC5"
 msgid "Device"
 msgstr "Dispositiu"
+
+msgctxt "IDD_PPAGEAUDIORENDERER_IDC_STATIC6"
+msgid "Options"
+msgstr "Opcions"
 
 msgctxt "IDD_PPAGEAUDIORENDERER_IDC_CHECK1"
 msgid "Exclusive mode"
 msgstr "Mode exclusiu"
 
-msgctxt "IDD_PPAGEAUDIORENDERER_IDC_CHECK2"
-msgid "Allow bitstreaming"
-msgstr "Pemet el bitstreaming"
-
-msgctxt "IDD_PPAGEAUDIORENDERER_IDC_STATIC6"
-msgid "Options"
-msgstr "Opcions"
+msgctxt "IDD_PPAGEAUDIORENDERER_IDC_CHECK4"
+msgid "Ignore system channel mixer (always ignored in exclusive WASAPI mode)"
+msgstr ""
+"Ignora el sistema mesclador de canal (sempre ignorat en el mode exclusiu "
+"WASAPI)"
 
 msgctxt "IDD_PPAGEAUDIORENDERER_IDC_CHECK3"
 msgid "Enable stereo crossfeed (for headphones)"
@@ -1782,12 +1788,6 @@ msgctxt "IDD_PPAGEAUDIORENDERER_IDC_STATIC3"
 msgid "Level:"
 msgstr "Nivell:"
 
-msgctxt "IDD_PPAGEAUDIORENDERER_IDC_CHECK4"
-msgid "Ignore system channel mixer (always ignored in exclusive WASAPI mode)"
-msgstr ""
-"Ignora el sistema mesclador de canal (sempre ignorat en el mode exclusiu "
-"WASAPI)"
-
 msgctxt "IDD_PPAGEAUDIORENDERER_IDC_STATIC7"
 msgid "Note"
 msgstr "Nota"
@@ -1800,10 +1800,6 @@ msgstr ""
 "Per minimitzar la distorsió d'àudio, es recomana mantenir el volum del "
 "reproductor al voltant del 85% quan es reprodueixi contingut sorollós "
 "codificat amb compressió"
-
-msgctxt "IDD_PPAGEAUDIORENDERER_IDC_CHECK5"
-msgid "SaneAR Audio Renderer Enabled"
-msgstr ""
 
 msgctxt "IDD_PPAGEAUDIORENDERER_IDC_BUTTON3"
 msgid "MPC Audio Renderer Settings"

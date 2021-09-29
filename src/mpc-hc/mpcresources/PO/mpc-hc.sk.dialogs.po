@@ -1728,21 +1728,27 @@ msgctxt "IDD_PPAGEADVANCED_IDC_BUTTON1"
 msgid "Default"
 msgstr "Predvolené"
 
+msgctxt "IDD_PPAGEAUDIORENDERER_IDC_CHECK5"
+msgid "SaneAR Audio Renderer Enabled"
+msgstr "Vykresľovač zvuku SaneAR zapnutý"
+
 msgctxt "IDD_PPAGEAUDIORENDERER_IDC_STATIC5"
 msgid "Device"
 msgstr "Zariadenie"
+
+msgctxt "IDD_PPAGEAUDIORENDERER_IDC_STATIC6"
+msgid "Options"
+msgstr "Nastavenia"
 
 msgctxt "IDD_PPAGEAUDIORENDERER_IDC_CHECK1"
 msgid "Exclusive mode"
 msgstr "Režim vyhradeného použitia"
 
-msgctxt "IDD_PPAGEAUDIORENDERER_IDC_CHECK2"
-msgid "Allow bitstreaming"
-msgstr "Povoliť streamovanie bitov"
-
-msgctxt "IDD_PPAGEAUDIORENDERER_IDC_STATIC6"
-msgid "Options"
-msgstr "Nastavenia"
+msgctxt "IDD_PPAGEAUDIORENDERER_IDC_CHECK4"
+msgid "Ignore system channel mixer (always ignored in exclusive WASAPI mode)"
+msgstr ""
+"Ignorovať systémový zmiešavač kanálov (vždy ignorovaný v exkluzívnom režime "
+"WASAPI)"
 
 msgctxt "IDD_PPAGEAUDIORENDERER_IDC_CHECK3"
 msgid "Enable stereo crossfeed (for headphones)"
@@ -1764,12 +1770,6 @@ msgctxt "IDD_PPAGEAUDIORENDERER_IDC_STATIC3"
 msgid "Level:"
 msgstr "Úroveň:"
 
-msgctxt "IDD_PPAGEAUDIORENDERER_IDC_CHECK4"
-msgid "Ignore system channel mixer (always ignored in exclusive WASAPI mode)"
-msgstr ""
-"Ignorovať systémový zmiešavač kanálov (vždy ignorovaný v exkluzívnom režime "
-"WASAPI)"
-
 msgctxt "IDD_PPAGEAUDIORENDERER_IDC_STATIC7"
 msgid "Note"
 msgstr "Poznámka"
@@ -1781,10 +1781,6 @@ msgid ""
 msgstr ""
 "Na minimalizovanie skreslenia zvuku sa odporúča udržiavať počas prehrávania "
 "hlasitého obsahu so stratovou kompresiou hlasitosť na 85 %."
-
-msgctxt "IDD_PPAGEAUDIORENDERER_IDC_CHECK5"
-msgid "SaneAR Audio Renderer Enabled"
-msgstr "Vykresľovač zvuku SaneAR zapnutý"
 
 msgctxt "IDD_PPAGEAUDIORENDERER_IDC_BUTTON3"
 msgid "MPC Audio Renderer Settings"
