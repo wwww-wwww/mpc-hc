@@ -355,7 +355,7 @@ void CPPageAudioRenderer::OnJMeierButton()
 
 void CPPageAudioRenderer::OnUpdateAllowBitstreamingCheckbox(CCmdUI* pCmdUI)
 {
-    pCmdUI->Enable(IsDlgButtonChecked(IDC_CHECK1) && m_bIsEnabled);
+    pCmdUI->Enable(m_bIsEnabled);
 }
 
 void CPPageAudioRenderer::OnUpdateCrossfeedGroup(CCmdUI* pCmdUI)

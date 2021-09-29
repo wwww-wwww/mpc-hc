@@ -282,7 +282,7 @@ namespace SaneAudioRenderer
         m_settings->GetOutputDevice(nullptr, &exclusive, nullptr);
         BOOL bitstreamingAllowed = m_settings->GetAllowBitstreaming();
 
-        if (!exclusive || !bitstreamingAllowed || live)
+        if (!bitstreamingAllowed || live)
             return false;
 
         CAutoLock objectLock(this);

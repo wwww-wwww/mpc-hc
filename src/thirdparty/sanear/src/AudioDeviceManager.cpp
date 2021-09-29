@@ -198,7 +198,8 @@ namespace SaneAudioRenderer
                         std::unique_ptr<WCHAR, CoTaskMemFreeDeleter> holder(pDeviceId);
                         backend->id = std::make_shared<std::wstring>(pDeviceId);
                     }
-                    backend->exclusive = !!exclusive;
+                    backend->bitstream = (DspFormatFromWaveFormat(*format) == DspFormat::Unknown);
+                    backend->exclusive = backend->bitstream || !!exclusive;
                     backend->realtime = realtime;
                     backend->bufferDuration = buffer;
                 }
@@ -224,9 +225,6 @@ namespace SaneAudioRenderer
                 SharedWaveFormat mixFormat(pFormat, CoTaskMemFreeDeleter());
 
                 backend->mixFormat = mixFormat;
-
-                backend->bitstream = (DspFormatFromWaveFormat(*format) == DspFormat::Unknown);
-
                 backend->ignoredSystemChannelMixer = false;
 
                 const auto inputRate = format->nSamplesPerSec;
@@ -239,9 +237,6 @@ namespace SaneAudioRenderer
                 if (backend->bitstream)
                 {
                     // Exclusive bitstreaming.
-                    if (!backend->exclusive)
-                        return E_FAIL;
-
                     backend->dspFormat = DspFormat::Unknown;
                     backend->waveFormat = format;
                 }
