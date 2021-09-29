@@ -1157,9 +1157,6 @@ void CAppSettings::SaveSettings()
             pApp->WriteProfileInt(IDS_R_SANEAR, IDS_RS_SANEAR_DEVICE_BUFFER, uBufferDuration);
         }
 
-        BOOL bAllowBitstreaming = sanear->GetAllowBitstreaming();
-        pApp->WriteProfileInt(IDS_R_SANEAR, IDS_RS_SANEAR_ALLOW_BITSTREAMING, bAllowBitstreaming);
-
         BOOL bCrossfeedEnabled = sanear->GetCrossfeedEnabled();
         pApp->WriteProfileInt(IDS_R_SANEAR, IDS_RS_SANEAR_CROSSFEED_ENABLED, bCrossfeedEnabled);
 
@@ -1979,8 +1976,6 @@ void CAppSettings::LoadSettings()
                            pApp->GetProfileInt(IDS_R_SANEAR, IDS_RS_SANEAR_DEVICE_EXCLUSIVE, FALSE),
                            pApp->GetProfileInt(IDS_R_SANEAR, IDS_RS_SANEAR_DEVICE_BUFFER,
                                                SaneAudioRenderer::ISettings::OUTPUT_DEVICE_BUFFER_DEFAULT_MS));
-
-    sanear->SetAllowBitstreaming(pApp->GetProfileInt(IDS_R_SANEAR, IDS_RS_SANEAR_ALLOW_BITSTREAMING, TRUE));
 
     sanear->SetCrossfeedEnabled(pApp->GetProfileInt(IDS_R_SANEAR, IDS_RS_SANEAR_CROSSFEED_ENABLED, FALSE));
 

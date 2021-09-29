@@ -278,11 +278,7 @@ namespace SaneAudioRenderer
         if (DspFormatFromWaveFormat(*inputFormat) != DspFormat::Unknown)
             return true;
 
-        BOOL exclusive;
-        m_settings->GetOutputDevice(nullptr, &exclusive, nullptr);
-        BOOL bitstreamingAllowed = m_settings->GetAllowBitstreaming();
-
-        if (!bitstreamingAllowed || live)
+        if (live)
             return false;
 
         CAutoLock objectLock(this);

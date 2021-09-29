@@ -19,9 +19,6 @@ namespace SaneAudioRenderer
         STDMETHOD(SetOutputDevice)(LPCWSTR pDeviceId, BOOL bExclusive, UINT32 uBufferMS) = 0;
         STDMETHOD(GetOutputDevice)(LPWSTR* ppDeviceId, BOOL* pbExclusive, UINT32* puBufferMS) = 0;
 
-        STDMETHOD_(void, SetAllowBitstreaming)(BOOL bAllowBitstreaming) = 0;
-        STDMETHOD_(BOOL, GetAllowBitstreaming)() = 0;
-
         STDMETHOD_(void, SetCrossfeedEnabled)(BOOL bEnable) = 0;
         STDMETHOD_(BOOL, GetCrossfeedEnabled)() = 0;
 

@@ -1100,7 +1100,6 @@ BEGIN
     GROUPBOX        "Device",IDC_STATIC5,6,24,343,65
     COMBOBOX        IDC_COMBO1,24,40,307,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
     CONTROL         "Exclusive mode",IDC_CHECK1,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,48,65,126,8
-    CONTROL         "Allow bitstreaming",IDC_CHECK2,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,188,65,150,8
     GROUPBOX        "Options",IDC_STATIC6,6,90,343,101
     GROUPBOX        "",IDC_STATIC,16,101,323,62
     CONTROL         "Enable stereo crossfeed (for headphones)",IDC_CHECK3,

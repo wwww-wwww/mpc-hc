@@ -72,7 +72,6 @@ IMPLEMENT_DYNAMIC(CPPageAudioRenderer, CMPCThemePPageBase)
 CPPageAudioRenderer::CPPageAudioRenderer()
     : CMPCThemePPageBase(IDD, IDD_PPAGEAUDIORENDERER)
     , m_bExclusiveMode(FALSE)
-    , m_bAllowBitstreaming(TRUE)
     , m_bCrossfeedEnabled(FALSE)
     , m_bIgnoreSystemChannelMixer(TRUE)
     , curAudioRenderer()
@@ -83,7 +82,6 @@ void CPPageAudioRenderer::DoDataExchange(CDataExchange* pDX)
 {
     __super::DoDataExchange(pDX);
     DDX_Check(pDX, IDC_CHECK1, m_bExclusiveMode);
-    DDX_Check(pDX, IDC_CHECK2, m_bAllowBitstreaming);
     DDX_Check(pDX, IDC_CHECK3, m_bCrossfeedEnabled);
     DDX_Check(pDX, IDC_CHECK4, m_bIgnoreSystemChannelMixer);
     DDX_Check(pDX, IDC_CHECK5, m_bIsEnabled);
@@ -95,7 +93,6 @@ void CPPageAudioRenderer::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(CPPageAudioRenderer, CMPCThemePPageBase)
     ON_WM_HSCROLL()
-    ON_UPDATE_COMMAND_UI(IDC_CHECK2, OnUpdateAllowBitstreamingCheckbox)
     ON_UPDATE_COMMAND_UI(IDC_BUTTON1, OnUpdateCrossfeedGroup)
     ON_BN_CLICKED(IDC_BUTTON1, OnCMoyButton)
     ON_UPDATE_COMMAND_UI(IDC_BUTTON2, OnUpdateCrossfeedGroup)
@@ -165,7 +162,6 @@ BOOL CPPageAudioRenderer::OnInitDialog()
         }
     }
 
-    m_bAllowBitstreaming = s.sanear->GetAllowBitstreaming();
     m_bCrossfeedEnabled = s.sanear->GetCrossfeedEnabled();
     m_bIgnoreSystemChannelMixer = s.sanear->GetIgnoreSystemChannelMixer();
 
@@ -211,7 +207,6 @@ BOOL CPPageAudioRenderer::OnApply()
     s.sanear->GetOutputDevice(nullptr, nullptr, &buffer);
     s.sanear->SetOutputDevice(deviceId, m_bExclusiveMode, buffer);
 
-    s.sanear->SetAllowBitstreaming(m_bAllowBitstreaming);
     s.sanear->SetCrossfeedSettings(m_slider1.GetPos(), m_slider2.GetPos());
     s.sanear->SetCrossfeedEnabled(m_bCrossfeedEnabled);
     s.sanear->SetIgnoreSystemChannelMixer(m_bIgnoreSystemChannelMixer);
@@ -351,11 +346,6 @@ void CPPageAudioRenderer::OnJMeierButton()
     m_slider1.SetPos(SaneAudioRenderer::ISettings::CROSSFEED_CUTOFF_FREQ_JMEIER);
     m_slider2.SetPos(SaneAudioRenderer::ISettings::CROSSFEED_LEVEL_JMEIER);
     SetModified(TRUE);
-}
-
-void CPPageAudioRenderer::OnUpdateAllowBitstreamingCheckbox(CCmdUI* pCmdUI)
-{
-    pCmdUI->Enable(m_bIsEnabled);
 }
 
 void CPPageAudioRenderer::OnUpdateCrossfeedGroup(CCmdUI* pCmdUI)

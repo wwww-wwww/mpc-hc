@@ -344,7 +344,6 @@
 #define IDS_RS_SANEAR_DEVICE_ID             _T("DeviceId")
 #define IDS_RS_SANEAR_DEVICE_EXCLUSIVE      _T("DeviceExclusive")
 #define IDS_RS_SANEAR_DEVICE_BUFFER         _T("DeviceBufferDuration")
-#define IDS_RS_SANEAR_ALLOW_BITSTREAMING    _T("AllowBitstreaming")
 #define IDS_RS_SANEAR_CROSSFEED_ENABLED     _T("CrossfeedEnabled")
 #define IDS_RS_SANEAR_CROSSFEED_CUTOFF_FREQ _T("CrossfeedCutoffFrequency")
 #define IDS_RS_SANEAR_CROSSFEED_LEVEL       _T("CrossfeedLevel")

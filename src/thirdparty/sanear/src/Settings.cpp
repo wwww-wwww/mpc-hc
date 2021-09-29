@@ -73,24 +73,6 @@ namespace SaneAudioRenderer
         return S_OK;
     }
 
-    STDMETHODIMP_(void) Settings::SetAllowBitstreaming(BOOL bAllowBitstreaming)
-    {
-        CAutoLock lock(this);
-
-        if (m_allowBitstreaming != bAllowBitstreaming)
-        {
-            m_allowBitstreaming = bAllowBitstreaming;
-            m_serial++;
-        }
-    }
-
-    STDMETHODIMP_(BOOL) Settings::GetAllowBitstreaming()
-    {
-        CAutoLock lock(this);
-
-        return m_allowBitstreaming;
-    }
-
     STDMETHODIMP_(void) Settings::SetCrossfeedEnabled(BOOL bEnable)
     {
         CAutoLock lock(this);

@@ -24,9 +24,6 @@ namespace SaneAudioRenderer
         STDMETHODIMP SetOutputDevice(LPCWSTR pDeviceId, BOOL bExclusive, UINT32 uBufferMS) override;
         STDMETHODIMP GetOutputDevice(LPWSTR* ppDeviceId, BOOL* pbExclusive, UINT32* puBufferMS) override;
 
-        STDMETHODIMP_(void) SetAllowBitstreaming(BOOL bAllowBitstreaming) override;
-        STDMETHODIMP_(BOOL) GetAllowBitstreaming() override;
-
         STDMETHODIMP_(void) SetCrossfeedEnabled(BOOL bEnable) override;
         STDMETHODIMP_(BOOL) GetCrossfeedEnabled() override;
 
@@ -46,8 +43,6 @@ namespace SaneAudioRenderer
         std::wstring m_deviceId;
         BOOL m_exclusive = FALSE;
         UINT32 m_buffer = OUTPUT_DEVICE_BUFFER_DEFAULT_MS;
-
-        BOOL m_allowBitstreaming = TRUE;
 
         BOOL m_sharedModePeakLimiterEnabled = FALSE;
 
