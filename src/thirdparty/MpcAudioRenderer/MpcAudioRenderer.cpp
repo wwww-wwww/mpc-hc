@@ -2895,6 +2895,11 @@ void CMpcAudioRenderer::NewSegment()
 	m_rtEstimateSlavingJitter = 0;
 	m_rtCurrentRenderedTime = 0;
 
+    if (m_BitstreamMode == BITSTREAM_DTS || m_BitstreamMode == BITSTREAM_AC3) {
+        // format might have changed
+        m_BitstreamMode = BITSTREAM_NONE;
+    }
+
 	m_bFlushing = FALSE;
 }
 
