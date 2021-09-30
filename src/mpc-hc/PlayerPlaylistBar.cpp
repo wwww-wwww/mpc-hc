@@ -49,6 +49,7 @@ CPlayerPlaylistBar::CPlayerPlaylistBar(CMainFrame* pMainFrame)
     , m_bHiddenDueToFullscreen(false)
     , m_pl(AfxGetAppSettings().bShufflePlaylistItems)
     , createdWindow(false)
+    , inlineEditXpos(0)
 {
     GetEventd().Connect(m_eventc, {
         MpcEvent::DPI_CHANGED,
@@ -1572,6 +1573,8 @@ void CPlayerPlaylistBar::OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruc
         return;
     }
 
+    int dpi3 = m_pMainFrame->m_dpi.ScaleX(3);
+    int dpi6 = m_pMainFrame->m_dpi.ScaleX(6);
 
     int nItem = lpDrawItemStruct->itemID;
     CRect rcItem = lpDrawItemStruct->rcItem;
@@ -1584,7 +1587,25 @@ void CPlayerPlaylistBar::OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruc
     CDC* pDC = CDC::FromHandle(lpDrawItemStruct->hDC);
     int oldDC = pDC->SaveDC();
 
-    COLORREF bgColor;
+    CString fmt, file, num;
+
+    fmt.Format(_T("[%%0%dd]\t"), (int)log10(0.1 + m_pl.GetCount()) + 1);
+    num.Format(fmt, nItem + 1);
+    CSize numWidth = pDC->GetTextExtent(num);
+    CSize spaceWidth = pDC->GetTextExtent(L" ");
+
+    COLORREF bgColor, contentBGColor;
+
+    if (AppIsThemeLoaded()) {
+        contentBGColor = CMPCTheme::ContentBGColor;
+    } else {
+        contentBGColor = GetSysColor(COLOR_WINDOW);
+    }
+
+    CRect fileRect = rcItem, seqRect = rcItem;
+    fileRect.left += numWidth.cx;
+    inlineEditXpos = numWidth.cx - 2; //magic number 2 for accounting for border/padding of inline edit.  works at all dpi except 168, where it's off by 1px (shrug)
+    seqRect.right = fileRect.left;
 
     if (itemSelected) {
         if (AppIsThemeLoaded()) {
@@ -1593,63 +1614,67 @@ void CPlayerPlaylistBar::OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruc
             bgColor = 0xf1dacc;
             FrameRect(pDC->m_hDC, rcItem, CBrush(0xc56a31));
         }
+        FillRect(pDC->m_hDC, fileRect, CBrush(bgColor));
+        FillRect(pDC->m_hDC, seqRect, CBrush(contentBGColor));
     } else {
-        if (AppIsThemeLoaded()) {
-            bgColor = CMPCTheme::ContentBGColor;
-        } else {
-            bgColor = GetSysColor(COLOR_WINDOW);
-        }
+        bgColor = contentBGColor;
+        FillRect(pDC->m_hDC, rcItem, CBrush(bgColor));
     }
-    FillRect(pDC->m_hDC, rcItem, CBrush(bgColor));
-    pDC->SetBkColor(bgColor);
 
-    COLORREF textcolor;
-    CString bullet = _T("\x25CF ");
-    CSize bulletWidth = pDC->GetTextExtent(bullet);
+    COLORREF textColor, sequenceColor;
 
     if (AppIsThemeLoaded()) {
         if (pli.m_fInvalid) {
-            textcolor = CMPCTheme::ContentTextDisabledFGColorFade2;
+            textColor = CMPCTheme::ContentTextDisabledFGColorFade2;
+            sequenceColor = textColor;
         } else if (itemPlaying) {
-            textcolor = itemSelected ? CMPCTheme::ActivePlayListItemHLColor : CMPCTheme::ActivePlayListItemColor;
+            textColor = itemSelected ? CMPCTheme::ActivePlayListItemHLColor : CMPCTheme::ActivePlayListItemColor;
+            sequenceColor = CMPCTheme::ActivePlayListItemColor;
         } else {
-            textcolor = CMPCTheme::TextFGColor;
+            textColor = CMPCTheme::TextFGColor;
+            sequenceColor = textColor;
         }
     } else {
-        textcolor = itemPlaying ? 0xff : 0;
+        textColor = itemPlaying ? 0xff : 0;
         if (pli.m_fInvalid) {
-            textcolor |= 0xA0A0A0;
+            textColor |= 0xA0A0A0;
         }
+        sequenceColor = textColor;
     }
 
     CString time = !pli.m_fInvalid ? m_list.GetItemText(nItem, COL_TIME) : CString(_T("Invalid"));
     CPoint timept(rcItem.right, 0);
     if (!time.IsEmpty()) {
         CSize timesize = pDC->GetTextExtent(time);
-        if ((3 + timesize.cx + 3) < rcItem.Width() / 2) {
-            timept = CPoint(rcItem.right - (3 + timesize.cx + 3), (rcItem.top + rcItem.bottom - timesize.cy) / 2);
+        if ((dpi3 + timesize.cx + dpi3) < rcItem.Width() / 2) {
+            timept = CPoint(rcItem.right - (dpi3 + timesize.cx + dpi3), (rcItem.top + rcItem.bottom - timesize.cy) / 2);
 
-            pDC->SetTextColor(textcolor);
+            pDC->SetTextColor(textColor);
+            pDC->SetBkColor(bgColor);
             pDC->TextOut(timept.x, timept.y, time);
         }
     }
 
-    CString fmt, file;
-    fmt.Format(_T("%%0%dd. %%s"), (int)log10(0.1 + m_pl.GetCount()) + 1);
-    file.Format(fmt, nItem + 1, m_list.GetItemText(nItem, COL_NAME).GetString());
+    file = m_list.GetItemText(nItem, COL_NAME).GetString();
     CSize filesize = pDC->GetTextExtent(file);
-    while (3 + bulletWidth.cx + filesize.cx + 6 > timept.x && file.GetLength() > 3) {
+    while (dpi3 + numWidth.cx + filesize.cx + dpi6 > timept.x && file.GetLength() > 3) {
         file = file.Left(file.GetLength() - 4) + _T("...");
         filesize = pDC->GetTextExtent(file);
     }
 
-    if (file.GetLength() > 3) {
-        pDC->SetTextColor(textcolor);
-        pDC->TextOut(rcItem.left + 3 + bulletWidth.cx, (rcItem.top + rcItem.bottom - filesize.cy) / 2, file);
-        if (itemPlaying) {
-            pDC->TextOut(rcItem.left + 3, (rcItem.top + rcItem.bottom - filesize.cy) / 2, bullet);
-        }
+    pDC->SetTextColor(textColor);
+    pDC->SetBkColor(bgColor);
+    pDC->TextOut(rcItem.left + dpi3 + numWidth.cx, (rcItem.top + rcItem.bottom - filesize.cy) / 2, file);
+
+    if (!itemPlaying) {
+        pDC->SetTextColor(CMPCTheme::ContentTextDisabledFGColorFade);
+    } else {
+        pDC->SetTextColor(sequenceColor);
     }
+    pDC->SetBkColor(contentBGColor);
+    pDC->TextOut(rcItem.left + dpi3, (rcItem.top + rcItem.bottom - filesize.cy) / 2, num);
+
+
     pDC->RestoreDC(oldDC);
 }
 
@@ -2280,12 +2305,13 @@ void CPlayerPlaylistBar::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
 
 void CPlayerPlaylistBar::OnLvnBeginlabeleditList(NMHDR* pNMHDR, LRESULT* pResult)
 {
-    if (AppIsThemeLoaded()) {
-        HWND e_hwnd = (HWND)m_list.SendMessage(LVM_GETEDITCONTROL);
-        if (::IsWindow(m_edit.m_hWnd)) {
-            m_edit.UnsubclassWindow();
-        }
+    HWND e_hwnd = (HWND)m_list.SendMessage(LVM_GETEDITCONTROL);
+    if (::IsWindow(m_edit.m_hWnd)) {
+        m_edit.UnsubclassWindow();
+    }
+    if (e_hwnd) {
         m_edit.SubclassWindow(e_hwnd);
+        m_edit.setOverrideX(inlineEditXpos);
     }
 }
 
@@ -2295,13 +2321,13 @@ void CPlayerPlaylistBar::OnLvnEndlabeleditList(NMHDR* pNMHDR, LRESULT* pResult)
 
     if (pDispInfo->item.iItem >= 0 && pDispInfo->item.pszText) {
         CPlaylistItem& pli = m_pl.GetAt((POSITION)m_list.GetItemData(pDispInfo->item.iItem));
-        pli.m_label = pDispInfo->item.pszText;
-        m_list.SetItemText(pDispInfo->item.iItem, 0, pDispInfo->item.pszText);
-    }
-    if (AppIsThemeLoaded()) {
-        if (::IsWindow(m_edit.m_hWnd)) {
-            m_edit.UnsubclassWindow();
+        if (wcsnlen_s(pDispInfo->item.pszText, 1024) > 0) {
+            pli.m_label = pDispInfo->item.pszText;
+            m_list.SetItemText(pDispInfo->item.iItem, 0, pDispInfo->item.pszText);
         }
+    }
+    if (::IsWindow(m_edit.m_hWnd)) {
+        m_edit.UnsubclassWindow();
     }
     *pResult = 0;
 }

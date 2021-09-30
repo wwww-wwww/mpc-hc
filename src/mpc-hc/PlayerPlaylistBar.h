@@ -51,6 +51,7 @@ private:
 
     CMainFrame* m_pMainFrame;
     CMPCThemeInlineEdit m_edit;
+    int inlineEditXpos;
 
     CFont m_font;
     void ScaleFont();
