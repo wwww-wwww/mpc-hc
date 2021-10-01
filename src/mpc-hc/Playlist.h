@@ -42,6 +42,7 @@ public:
     CAtlList<CString> m_subs;
     enum type_t { file, device } m_type;
     REFERENCE_TIME m_duration;
+    int inlineEditMaxWidth;
     int m_vinput, m_vchannel;
     int m_ainput;
     long m_country;

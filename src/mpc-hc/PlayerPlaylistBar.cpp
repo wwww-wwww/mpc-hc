@@ -1654,6 +1654,7 @@ void CPlayerPlaylistBar::OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruc
             pDC->TextOut(timept.x, timept.y, time);
         }
     }
+    pli.inlineEditMaxWidth = timept.x - inlineEditXpos;
 
     file = m_list.GetItemText(nItem, COL_NAME).GetString();
     CSize filesize = pDC->GetTextExtent(file);
@@ -1662,9 +1663,11 @@ void CPlayerPlaylistBar::OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruc
         filesize = pDC->GetTextExtent(file);
     }
 
-    pDC->SetTextColor(textColor);
-    pDC->SetBkColor(bgColor);
-    pDC->TextOut(rcItem.left + dpi3 + numWidth.cx, (rcItem.top + rcItem.bottom - filesize.cy) / 2, file);
+    if (!::IsWindow(m_edit.m_hWnd) || !itemSelected) { //if inline edit is active, and this is the selected item, don't draw filename (visually distracting while editing)
+        pDC->SetTextColor(textColor);
+        pDC->SetBkColor(bgColor);
+        pDC->TextOut(rcItem.left + dpi3 + numWidth.cx, (rcItem.top + rcItem.bottom - filesize.cy) / 2, file);
+    }
 
     if (!itemPlaying) {
         pDC->SetTextColor(CMPCTheme::ContentTextDisabledFGColorFade);
@@ -2311,7 +2314,13 @@ void CPlayerPlaylistBar::OnLvnBeginlabeleditList(NMHDR* pNMHDR, LRESULT* pResult
     }
     if (e_hwnd) {
         m_edit.SubclassWindow(e_hwnd);
-        m_edit.setOverrideX(inlineEditXpos);
+        int inlineEditMaxWidth = -1;
+        NMLVDISPINFO* pDispInfo = reinterpret_cast<NMLVDISPINFO*>(pNMHDR);
+        if (pDispInfo->item.iItem >= 0) {
+            CPlaylistItem& pli = m_pl.GetAt((POSITION)m_list.GetItemData(pDispInfo->item.iItem));
+            inlineEditMaxWidth = pli.inlineEditMaxWidth;
+        }
+        m_edit.setOverridePos(inlineEditXpos, inlineEditMaxWidth);
     }
 }
 

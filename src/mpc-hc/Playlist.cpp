@@ -48,6 +48,7 @@ CPlaylistItem::CPlaylistItem()
     , m_cue_index(0)
     , m_cover(_T(""))
     , m_ydl_subs()
+    , inlineEditMaxWidth(0)
 {
     m_id = m_globalid++;
 }
