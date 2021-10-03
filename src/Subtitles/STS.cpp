@@ -2238,6 +2238,7 @@ static std::vector<int> PreferredOpenFuncts(CString fn) {
 
 CSimpleTextSubtitle::CSimpleTextSubtitle()
     : m_lcid(0)
+    , m_langname()
     , m_subtitleType(Subtitle::SRT)
     , m_mode(TIME)
     , m_encoding(CTextFile::DEFAULT_ENCODING)
@@ -3076,7 +3077,7 @@ bool CSimpleTextSubtitle::Open(CString fn, int CharSet, CString name, CString vi
     }
 
     if (name.IsEmpty()) {
-        name = Subtitle::GuessSubtitleName(fn, videoName, m_lcid, m_eHearingImpaired);
+        name = Subtitle::GuessSubtitleName(fn, videoName, m_lcid, m_langname, m_eHearingImpaired);
     }
 
     return Open(&f, CharSet, name);
@@ -3090,6 +3091,12 @@ bool CSimpleTextSubtitle::Open(BYTE* data, int length, int CharSet, CString prov
     name.Format(_T("%s.%s"), static_cast<LPCWSTR>(lang), static_cast<LPCWSTR>(ext));
     CW2A temp(lang);
     m_lcid = ISOLang::ISO6391ToLcid(temp);
+    if (m_lcid > 0) {
+        m_langname = ISOLang::LCIDToLanguage(m_lcid);
+    }
+    if (m_langname.IsEmpty()) {
+        m_langname = ISOLang::ISO639XToLanguage(temp);
+    }
     return Open(data, length, CharSet, name);
 }
 
@@ -3101,6 +3108,12 @@ bool CSimpleTextSubtitle::Open(CString data, CTextFile::enc SaveCharSet, int Rea
     name.Format(_T("%s.%s"), static_cast<LPCWSTR>(lang), static_cast<LPCWSTR>(ext));
     CW2A temp(lang);
     m_lcid = ISOLang::ISO6391ToLcid(temp);
+    if (m_lcid > 0) {
+        m_langname = ISOLang::LCIDToLanguage(m_lcid);
+    }
+    if (m_langname.IsEmpty()) {
+        m_langname = ISOLang::ISO639XToLanguage(temp);
+    }
     TCHAR path[MAX_PATH];
     if (!GetTempPath(MAX_PATH, path)) {
         return false;

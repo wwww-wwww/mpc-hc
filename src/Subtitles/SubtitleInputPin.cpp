@@ -144,6 +144,9 @@ HRESULT CSubtitleInputPin::CompleteConnect(IPin* pReceivePin)
 #endif
             pRTS->m_name = name;
             pRTS->m_lcid = lcid;
+            if (lcid > 0) {
+                pRTS->m_langname = ISOLang::LCIDToLanguage(lcid);
+            }
             pRTS->m_dstScreenSize = CSize(384, 288);
             pRTS->CreateDefaultStyle(DEFAULT_CHARSET);
 

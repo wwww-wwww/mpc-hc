@@ -150,6 +150,7 @@ protected:
 public:
     CString m_name;
     LCID m_lcid;
+    CString m_langname;
     Subtitle::SubType m_subtitleType;
     tmode m_mode;
     CTextFile::enc m_encoding;

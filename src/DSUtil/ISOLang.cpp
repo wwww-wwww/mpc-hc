@@ -644,6 +644,21 @@ CString ISOLang::ISO639XToLanguage(LPCSTR code, bool bCheckForFullLangName /*= f
     return lang;
 }
 
+CString ISOLang::LCIDToLanguage(LCID lcid)
+{
+    for (size_t i = 0, cnt = _countof(s_isolangs); i < cnt; i++) {
+        if (lcid == s_isolangs[i].lcid) {
+            CString ret = CString(CStringA(s_isolangs[i].name));
+            int k = ret.Find(';');
+            if (k > 0) {
+                ret = ret.Left(k);
+            }
+            return ret;
+        }
+    }
+    return _T("");
+}
+
 LCID ISOLang::ISO6391ToLcid(LPCSTR code)
 {
     CHAR tmp[2 + 1];

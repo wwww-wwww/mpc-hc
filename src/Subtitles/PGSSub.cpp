@@ -527,7 +527,8 @@ bool CPGSSubFile::Open(CString fn, CString name /*= _T("")*/, CString videoName 
 {
     bool bOpened = false;
 
-    CString guessed = Subtitle::GuessSubtitleName(fn, videoName, m_lcid, m_eHearingImpaired);
+    CString tmp;
+    CString guessed = Subtitle::GuessSubtitleName(fn, videoName, m_lcid, tmp, m_eHearingImpaired);
     if (name.IsEmpty()) {
         m_name = guessed;
     } else {

@@ -67,5 +67,5 @@ namespace Subtitle
 
     void GetSubFileNames(CString fn, const CAtlArray<CString>& paths, CAtlArray<SubFile>& ret);
 
-    CString GuessSubtitleName(const CString& fn, CString videoName, LCID& lcid, HearingImpairedType& hi);
+    CString GuessSubtitleName(const CString& fn, CString videoName, LCID& lcid, CString& langname, HearingImpairedType& hi);
 };

@@ -168,9 +168,9 @@ void Subtitle::GetSubFileNames(CString fn, const CAtlArray<CString>& paths, CAtl
     std::sort(ret.GetData(), ret.GetData() + ret.GetCount());
 }
 
-CString Subtitle::GuessSubtitleName(const CString& fn, CString videoName, LCID& lcid, HearingImpairedType& hi)
+CString Subtitle::GuessSubtitleName(const CString& fn, CString videoName, LCID& lcid, CString& langname, HearingImpairedType& hi)
 {
-    CString name, lang;
+    CString name;
 
     // The filename of the subtitle file
     int iExtStart = fn.ReverseFind('.');
@@ -206,9 +206,9 @@ CString Subtitle::GuessSubtitleName(const CString& fn, CString videoName, LCID& 
             if (std::regex_search((LPCTSTR)subName, mc, re)) {
                 ASSERT(mc.size() == 3);
                 ASSERT(mc[1].matched);
-                lang = ISOLang::ISO639XToLanguage(CStringA(mc[1].str().c_str()), true);
+                langname = ISOLang::ISO639XToLanguage(CStringA(mc[1].str().c_str()), true);
 
-                if (!lang.IsEmpty()) {
+                if (!langname.IsEmpty()) {
                     size_t len = mc[1].str().size();
                     if (len == 3) {
                         lcid = ISOLang::ISO6392ToLcid(CStringA(mc[1].str().c_str()));
@@ -226,14 +226,14 @@ CString Subtitle::GuessSubtitleName(const CString& fn, CString videoName, LCID& 
     }
 
     // If we couldn't find any info yet, we try to find the language at the end of the filename
-    if (lang.IsEmpty()) {
+    if (langname.IsEmpty()) {
         std::wregex re(_T(".*?[.\\-_ ]+([^.\\-_ ]+)(?:[.\\-_ ]+([^.\\-_ ]+))?$"), std::wregex::icase);
         std::wcmatch mc;
         if (std::regex_search((LPCTSTR)subName, mc, re)) {
             ASSERT(mc.size() == 3);
             ASSERT(mc[1].matched);
-            lang = ISOLang::ISO639XToLanguage(CStringA(mc[1].str().c_str()), true);
-            if (!lang.IsEmpty()) {
+            langname = ISOLang::ISO639XToLanguage(CStringA(mc[1].str().c_str()), true);
+            if (!langname.IsEmpty()) {
                 size_t len = mc[1].str().size();
                 if (len == 3) {
                     lcid = ISOLang::ISO6392ToLcid(CStringA(mc[1].str().c_str()));
@@ -247,11 +247,11 @@ CString Subtitle::GuessSubtitleName(const CString& fn, CString videoName, LCID& 
                 str = mc[2].str().c_str();
             }
 
-            if (!lang.IsEmpty() && str.CompareNoCase("hi") == 0) {
+            if (!langname.IsEmpty() && str.CompareNoCase("hi") == 0) {
                 hi = HI_YES;
             } else {
-                lang = ISOLang::ISO639XToLanguage(str, true);
-                if (!lang.IsEmpty()) {
+                langname = ISOLang::ISO639XToLanguage(str, true);
+                if (!langname.IsEmpty()) {
                     size_t len = str.GetLength();
                     if (len == 3) {
                         lcid = ISOLang::ISO6392ToLcid(str.GetString());

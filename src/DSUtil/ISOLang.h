@@ -47,6 +47,7 @@ struct ISOLang : public ISOLangT<LPCSTR> {
     static CString ISO6392ToLanguage(LPCSTR code);
     static bool IsISO639Language(LPCSTR code);
     static CString ISO639XToLanguage(LPCSTR code, bool bCheckForFullLangName = false);
+    static CString LCIDToLanguage(LCID lcid);
     static LCID ISO6391ToLcid(LPCSTR code);
     static LCID ISO6392ToLcid(LPCSTR code);
     static BOOL IsISO6391(LPCSTR code);
