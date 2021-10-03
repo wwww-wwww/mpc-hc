@@ -8,7 +8,7 @@ CMPCThemeInlineEdit::CMPCThemeInlineEdit():
     ,overrideMaxWidth(-1)
     ,offsetEnabled(false)
 {
-    m_brBkgnd.CreateSolidBrush(CMPCTheme::InlineEditBorderColor);
+    m_brBkgnd.CreateSolidBrush(CMPCTheme::ContentBGColor);
 }
 
 
@@ -24,6 +24,7 @@ void CMPCThemeInlineEdit::setOverridePos(int x, int maxWidth) {
 BEGIN_MESSAGE_MAP(CMPCThemeInlineEdit, CEdit)
     ON_WM_CTLCOLOR_REFLECT()
     ON_WM_WINDOWPOSCHANGED()
+    ON_WM_PAINT()
 END_MESSAGE_MAP()
 
 
@@ -45,4 +46,24 @@ void CMPCThemeInlineEdit::OnWindowPosChanged(WINDOWPOS* lpwndpos) {
         SetWindowPos(nullptr, overrideX, lpwndpos->y, lpwndpos->cx, lpwndpos->cy, SWP_NOZORDER);
     }
     CEdit::OnWindowPosChanged(lpwndpos);
+}
+
+void CMPCThemeInlineEdit::OnPaint() {
+    if (AppIsThemeLoaded()) {
+        CPaintDC dc(this);
+
+        CRect rect;
+        GetClientRect(&rect);
+
+        CBrush brush;
+        brush.CreateSolidBrush(CMPCTheme::InlineEditBorderColor);
+        dc.FrameRect(&rect, &brush);
+        brush.DeleteObject();
+
+        rect.DeflateRect(1, 1);
+        CBrush bgBrush(CMPCTheme::ContentBGColor);
+        dc.FrameRect(rect, &bgBrush);
+    } else {
+        __super::OnPaint();
+    }
 }

@@ -15,5 +15,7 @@ public:
 private:
     int overrideX, overrideMaxWidth;
     bool offsetEnabled;
+public:
+    afx_msg void OnPaint();
 };
 
