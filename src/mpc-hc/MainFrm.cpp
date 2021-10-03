@@ -13610,6 +13610,69 @@ int CMainFrame::SetupAudioStreams()
     return -1;
 }
 
+bool MatchSubtrackWithISOLang(CString& tname, const ISOLangT<CString>& l)
+{
+    int p;
+    CString substr;
+
+    substr = l.iso6392;
+    if (!substr.IsEmpty()) {
+        p = tname.Find(_T("[") + substr + _T("]"));
+        if (p > 0) {
+            return true;
+        }
+        p = tname.Find(_T(".") + substr + _T("."));
+        if (p > 0) {
+            return true;
+        }
+    }
+
+    substr = l.iso6391;
+    if (!substr.IsEmpty()) {
+        p = tname.Find(_T("[") + substr + _T("]"));
+        if (p > 0) {
+            return true;
+        }
+        p = tname.Find(_T(".") + substr + _T("."));
+        if (p > 0) {
+            return true;
+        }
+    }
+
+    substr = l.name;
+    if (!substr.IsEmpty()) {
+        std::list<CString> langlist;
+        int tPos = 0;
+        CString lang = substr.Tokenize(_T(";"), tPos);
+        while (tPos != -1) {
+            lang.MakeLower().TrimLeft();
+            langlist.emplace_back(lang);
+            lang = substr.Tokenize(_T(";"), tPos);
+        }
+
+        for (auto& substr : langlist) {
+            p = tname.Find(_T("/t") + substr);
+            if (p > 0) {
+                return true;
+            }
+            p = tname.Find(_T(".") + substr + _T("."));
+            if (p > 0) {
+                return true;
+            }
+            p = tname.Find(_T("[") + substr + _T("]"));
+            if (p > 0) {
+                return true;
+            }
+            p = tname.Find(substr);
+            if (p == 0 || p == 3 && tname.Left(3) == _T("s: ")) { // at begin of trackname
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+
 // Called from GraphThread
 int CMainFrame::SetupSubtitleStreams()
 {
@@ -13718,16 +13781,7 @@ int CMainFrame::SetupSubtitleStreams()
                     } else { // this is lang string
                         if (lcid == 0 || lcid == LCID(-1) || lcid != l.lcid) {
                             // no LCID match, analyze track name for language match
-                            auto findCode = [](const CString & name, const CString & code) {
-                                int nPos = code.IsEmpty() ? -1 : name.Find(code);
-                                return nPos == 0 && name.GetLength() == code.GetLength()
-                                       || nPos > 0 && name[nPos - 1] == _T('\t')
-                                       || nPos > 0 && name[nPos - 1] == _T('[') && name.GetLength() >= (nPos + code.GetLength() + 1) && name[nPos + code.GetLength()] == _T(']')
-                                       || nPos > 0 && name[nPos - 1] == _T('.') && name.GetLength() >= (nPos + code.GetLength() + 1) && name[nPos + code.GetLength()] == _T('.');
-                            };
-
-                            // match anything that starts with the language name or that seems to use a code that matches
-                            if (name.Find(l.name) != 0 && !findCode(name, l.name) && !findCode(name, l.iso6392) && !findCode(name, l.iso6391)) {
+                            if (!MatchSubtrackWithISOLang(name, l)) {
                                 k++;
                                 continue; // not matched
                             }
