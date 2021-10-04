@@ -18712,10 +18712,10 @@ bool CMainFrame::isSafeZone(CPoint pt) {
     r.InflateRect(0, m_dpi.ScaleY(10));
 
     if (r.PtInRect(pt)) {
+        TRACE(_T("Click was inside safezone!\n"));
         return true;
     }
     return false;
-
 }
 
 LRESULT CMainFrame::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
@@ -18768,7 +18768,7 @@ LRESULT CMainFrame::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
         }
     }
 
-    if (message == WM_NCLBUTTONDOWN) {
+    if (message == WM_NCLBUTTONDOWN && wParam == 2) {
         CPoint pt;
         POINTSTOPOINT(pt, lParam);
         if (isSafeZone(pt)) {
