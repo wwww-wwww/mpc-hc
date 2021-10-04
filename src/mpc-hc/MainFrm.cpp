@@ -11674,7 +11674,7 @@ double CMainFrame::GetZoomAutoFitScale(bool bLargerOnly)
 
 void CMainFrame::RepaintVideo()
 {
-    if (!m_bDelaySetOutputRect && (m_pCAP || m_pMFVDC) && GetMediaState() != State_Running) {
+    if (!m_bDelaySetOutputRect && (m_pCAP || m_pMFVDC) && GetMediaState() == State_Paused) {
         if (m_pCAP) {
             m_pCAP->Paint(false);
         } else if (m_pMFVDC) {
