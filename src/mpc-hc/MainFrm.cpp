@@ -18852,6 +18852,10 @@ UINT CMainFrame::OnPowerBroadcast(UINT nPowerEvent, LPARAM nEventData)
 
 void CMainFrame::OnSessionChange(UINT nSessionState, UINT nId)
 {
+    if (AfxGetAppSettings().bLockNoPause) {
+        return;
+    }
+
     static BOOL bWasPausedBeforeSessionChange;
 
     switch (nSessionState) {

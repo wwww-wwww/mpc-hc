@@ -611,6 +611,7 @@ public:
     bool            bSaveImageCurrentTime;
     bool            bAllowInaccurateFastseek;
     bool            bLoopFolderOnPlayNextFile;
+    bool            bLockNoPause;
 
     enum class AfterPlayback {
         DO_NOTHING,
