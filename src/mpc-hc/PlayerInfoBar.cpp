@@ -288,7 +288,7 @@ void CPlayerInfoBar::OnLButtonDown(UINT nFlags, CPoint point)
 {
     CMainFrame* pFrame = ((CMainFrame*)GetParentFrame());
     if (!pFrame->m_fFullScreen) {
-        MapWindowPoints(pFrame, &point, 1);
+        ClientToScreen(&point);
         pFrame->PostMessage(WM_NCLBUTTONDOWN, HTCAPTION, MAKELPARAM(point.x, point.y));
     }
 }

@@ -462,9 +462,7 @@ void CPlayerStatusBar::OnLButtonDown(UINT nFlags, CPoint point)
         CRect r;
         GetClientRect(r);
         CPoint p = point;
-
-        MapWindowPoints(pFrame, &point, 1);
-
+        ClientToScreen(&point);
         pFrame->PostMessage(WM_NCLBUTTONDOWN,
                             (p.x >= r.Width() - r.Height() && !pFrame->IsCaptionHidden()) ? HTBOTTOMRIGHT :
                             HTCAPTION,
