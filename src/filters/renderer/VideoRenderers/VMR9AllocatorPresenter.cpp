@@ -389,9 +389,10 @@ STDMETHODIMP CVMR9AllocatorPresenter::PresentImage(DWORD_PTR dwUserID, VMR9Prese
                 AfxGetApp()->m_pMainWnd->PostMessage(WM_REARRANGERENDERLESS);
             }
         }
-        // If framerate not set by Video Decoder choose 23.97...
+        // If framerate not set by Video Decoder choose 23.976
         if (m_rtTimePerFrame == 0) {
-            m_rtTimePerFrame = 417166;
+            m_rtTimePerFrame = 417083;
+            //ASSERT(FALSE);
         }
 
         m_fps = 10000000.0 / m_rtTimePerFrame;
@@ -409,16 +410,18 @@ STDMETHODIMP CVMR9AllocatorPresenter::PresentImage(DWORD_PTR dwUserID, VMR9Prese
 
         if (m_fUseInternalTimer && !g_bExternalSubtitleTime) {
             REFERENCE_TIME rtSub = g_tSegmentStart;
-            // check if present timestamps are valid, rtStart is usually invalid after a seek, rtEnd seems fine
-            if (lpPresInfo->rtEnd > lpPresInfo->rtStart) {
+            REFERENCE_TIME rtCurFrameTime = lpPresInfo->rtEnd - lpPresInfo->rtStart;
+            // check if present timestamps are valid, rtStart can be invalid after a seek, while rtEnd always seems to be correct
+            // rtStart is reliable when rtEnd equals duration of two frames (+2 ms because timestamps are sometimes rounded to ms values)
+            // or if frame duration seems normal
+            if (lpPresInfo->rtEnd > lpPresInfo->rtStart && (lpPresInfo->rtEnd >= 2 * m_rtTimePerFrame + 20000LL || abs(rtCurFrameTime - m_rtTimePerFrame) < 10000LL)) {
                 rtSub += lpPresInfo->rtStart;
-                ASSERT(g_tSampleStart + 10000 >= lpPresInfo->rtStart && g_tSampleStart - lpPresInfo->rtStart < 6 * m_rtTimePerFrame);
-                //TRACE(_T("VMR9: Present %s -> %s | g_tSampleStart %s | g_tSegmentStart %s\n"), ReftimeToString(lpPresInfo->rtStart).GetString(), ReftimeToString(lpPresInfo->rtEnd).GetString(), ReftimeToString(g_tSampleStart).GetString(), ReftimeToString(g_tSegmentStart).GetString());
+                //TRACE(_T("VMR9: Present %s -> %s | g_tSampleStart %s | g_tSegmentStart %s | rtCurFrameTime %ld\n"), ReftimeToString(lpPresInfo->rtStart).GetString(), ReftimeToString(lpPresInfo->rtEnd).GetString(), ReftimeToString(g_tSampleStart).GetString(), ReftimeToString(g_tSegmentStart).GetString(), rtCurFrameTime);
             } else {
-                // ToDo: all uses of g_tSampleStart can be removed if it is always 0 when rtStart is invalid
-                ASSERT(g_tSampleStart == 0);
-                ASSERT(lpPresInfo->rtEnd < 2 * m_rtTimePerFrame);
-                TRACE(_T("VMR9: Present %s -> %s INVALID! | g_tSampleStart %s | g_tSegmentStart %s\n"), ReftimeToString(lpPresInfo->rtStart).GetString(), ReftimeToString(lpPresInfo->rtEnd).GetString(), ReftimeToString(g_tSampleStart).GetString(), ReftimeToString(g_tSegmentStart).GetString());
+                if (lpPresInfo->rtEnd > m_rtTimePerFrame) {
+                    rtSub += lpPresInfo->rtEnd - m_rtTimePerFrame;
+                }
+                TRACE(_T("VMR9: Present %s -> %s INVALID! | g_tSampleStart %s | g_tSegmentStart %s | m_rtTimePerFrame %ld\n"), ReftimeToString(lpPresInfo->rtStart).GetString(), ReftimeToString(lpPresInfo->rtEnd).GetString(), ReftimeToString(g_tSampleStart).GetString(), ReftimeToString(g_tSegmentStart).GetString(), m_rtTimePerFrame);
             }
             __super::SetTime(rtSub);
         }
