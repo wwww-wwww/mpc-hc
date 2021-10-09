@@ -404,16 +404,23 @@ STDMETHODIMP CVMR9AllocatorPresenter::PresentImage(DWORD_PTR dwUserID, VMR9Prese
     CAutoLock cAutoLock(this);
     CAutoLock cRenderLock(&m_RenderLock);
 
-    if (lpPresInfo->rtEnd <= lpPresInfo->rtStart) {
-        TRACE(_T("VMR9: Invalid timestamps (%s - %s). The timestamp from the pin hook will be used anyway (%s).\n"),
-              ReftimeToString(lpPresInfo->rtStart).GetString(), ReftimeToString(lpPresInfo->rtEnd).GetString(), ReftimeToString(g_tSampleStart).GetString());
-    }
-
     if (m_pSubPicQueue) {
         m_pSubPicQueue->SetFPS(m_fps);
 
         if (m_fUseInternalTimer && !g_bExternalSubtitleTime) {
-            __super::SetTime(g_tSegmentStart + g_tSampleStart);
+            REFERENCE_TIME rtSub = g_tSegmentStart;
+            // check if present timestamps are valid, rtStart is usually invalid after a seek, rtEnd seems fine
+            if (lpPresInfo->rtEnd > lpPresInfo->rtStart) {
+                rtSub += lpPresInfo->rtStart;
+                ASSERT(g_tSampleStart + 10000 >= lpPresInfo->rtStart && g_tSampleStart - lpPresInfo->rtStart < 6 * m_rtTimePerFrame);
+                //TRACE(_T("VMR9: Present %s -> %s | g_tSampleStart %s | g_tSegmentStart %s\n"), ReftimeToString(lpPresInfo->rtStart).GetString(), ReftimeToString(lpPresInfo->rtEnd).GetString(), ReftimeToString(g_tSampleStart).GetString(), ReftimeToString(g_tSegmentStart).GetString());
+            } else {
+                // ToDo: all uses of g_tSampleStart can be removed if it is always 0 when rtStart is invalid
+                ASSERT(g_tSampleStart == 0);
+                ASSERT(lpPresInfo->rtEnd < 2 * m_rtTimePerFrame);
+                TRACE(_T("VMR9: Present %s -> %s INVALID! | g_tSampleStart %s | g_tSegmentStart %s\n"), ReftimeToString(lpPresInfo->rtStart).GetString(), ReftimeToString(lpPresInfo->rtEnd).GetString(), ReftimeToString(g_tSampleStart).GetString(), ReftimeToString(g_tSegmentStart).GetString());
+            }
+            __super::SetTime(rtSub);
         }
     }
 
