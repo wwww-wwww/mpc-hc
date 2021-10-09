@@ -5516,9 +5516,15 @@ void CMainFrame::SaveThumbnails(LPCTSTR fn)
     }
 
     // Draw the thumbnails
-    for (int i = 1, pics = cols * rows; i <= pics; i++) {
-        REFERENCE_TIME rt = rtDur * i / (pics + 1);
-        DVD_HMSF_TIMECODE hmsf = RT2HMS_r(rt);
+    int pics = cols * rows;
+    REFERENCE_TIME rtInterval = rtDur / (pics + 1LL);
+    for (int i = 1; i <= pics; i++) {
+        REFERENCE_TIME rt = rtInterval * i;
+        // use a keyframe if close to target time
+        if (rtInterval >= 100000000LL) {
+            REFERENCE_TIME rtMaxDiff = std::min(100000000LL, rtInterval / 10); // no more than 10 sec
+            rt = GetClosestKeyFrame(rt, rtMaxDiff, rtMaxDiff);
+        }
 
         DoSeekTo(rt, false);
         UpdateWindow();
@@ -5563,6 +5569,7 @@ void CMainFrame::SaveThumbnails(LPCTSTR fn)
         style->marginRect.SetRectEmpty();
         rts.AddStyle(_T("thumbs"), style);
 
+        DVD_HMSF_TIMECODE hmsf = RT2HMS_r(rt);
         CStringW str;
         str.Format(L"{\\an7\\1c&Hffffff&\\4a&Hb0&\\bord1\\shad4\\be1}{\\p1}m %d %d l %d %d %d %d %d %d{\\p}",
                    r.left, r.top, r.right, r.top, r.right, r.bottom, r.left, r.bottom);
