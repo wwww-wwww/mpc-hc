@@ -51,6 +51,7 @@
 #include "../DSUtil/FontInstaller.h"
 #include "AppSettings.h"
 #include "../filters/transform/VSFilter/IDirectVobSub.h"
+#include "MediaTransControls.h"
 
 #define AfxGetMainFrame() dynamic_cast<CMainFrame*>(AfxGetMainWnd())
 
@@ -1284,6 +1285,18 @@ public:
     bool CanSendToYoutubeDL(const CString url);
     bool ProcessYoutubeDLURL(CString url, bool append, bool replace = false);
     bool DownloadWithYoutubeDL(CString url, CString filename);
+
+    /**
+     * @brief Get title of file
+     * @param fTitleBarTextTitle 
+     * @return 
+    */
+    CString getBestTitle(bool fTitleBarTextTitle = true);
+    MediaTransControls m_media_trans_control;
+
+    void updateMediaTransControl();
+    void updateMediaTransControlThumbnail();
+    void MediaTransControlUpdateState(OAFilterState state);
 
 private:
     bool watchingFileDialog;

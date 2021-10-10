@@ -889,6 +889,7 @@ CMainFrame::CMainFrame()
     , lastSeekStart(0)
     , lastSeekFinish(0)
     , defaultVideoAngle(0)
+    , m_media_trans_control()
 {
     // Don't let CFrameWnd handle automatically the state of the menu items.
     // This means that menu items without handlers won't be automatically
@@ -1109,6 +1110,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
     m_popupMenu.fulfillThemeReqs();
     m_mainPopupMenu.fulfillThemeReqs();
+    m_media_trans_control.Init(this);
     return 0;
 }
 
@@ -3903,6 +3905,8 @@ LRESULT CMainFrame::OnFilePostOpenmedia(WPARAM wParam, LPARAM lParam)
     }
 
     m_bSettingUpMenus = false;
+
+    updateMediaTransControlThumbnail();
 
     return 0;
 }
@@ -10606,6 +10610,7 @@ void CMainFrame::UpdateCachedMediaState()
 
 bool CMainFrame::MediaControlRun(bool waitforcompletion)
 {
+    MediaTransControlUpdateState(State_Running);
     m_dwLastPause = 0;
     if (m_pMC) {
         ASSERT(m_CachedFilterState != State_Running);
@@ -10625,6 +10630,7 @@ bool CMainFrame::MediaControlRun(bool waitforcompletion)
 
 bool CMainFrame::MediaControlPause(bool waitforcompletion)
 {
+    MediaTransControlUpdateState(State_Paused);
     m_dwLastPause = GetTickCount64();
     if (m_pMC) {
         ASSERT(m_CachedFilterState != State_Paused);
@@ -10644,6 +10650,7 @@ bool CMainFrame::MediaControlPause(bool waitforcompletion)
 
 bool CMainFrame::MediaControlStop(bool waitforcompletion)
 {
+    MediaTransControlUpdateState(State_Stopped);
     m_dwLastPause = 0;
     if (m_pMC) {
         m_CachedFilterState = State_Stopped;
@@ -13416,34 +13423,16 @@ void CMainFrame::OpenSetupWindowTitle(bool reset /*= false*/)
 
     int i = s.iTitleBarTextStyle;
 
+    updateMediaTransControl();
+
     if (!reset && (i == 0 || i == 1)) {
         // There is no path in capture mode
         if (IsPlaybackCaptureMode()) {
             title = GetCaptureTitle();
         } else if (i == 1) { // Show filename or title
             if (GetPlaybackMode() == PM_FILE) {
-                bool has_title = false;
-
-                if (s.fTitleBarTextTitle) {
-                    if (m_pAMMC) {
-                        CComBSTR bstr;
-                        if (SUCCEEDED(m_pAMMC->get_Title(&bstr)) && bstr.Length()) {
-                            title = bstr.m_str;
-                            title.Trim();
-                            has_title = !title.IsEmpty();
-                        }
-                    }
-                }
-
-                if (!has_title) {
-                    CPlaylistItem* pli = m_wndPlaylistBar.GetCur();               
-                    if (pli && !pli->m_fns.IsEmpty() && pli->m_label && !pli->m_label.IsEmpty()) {
-                        if (s.fTitleBarTextTitle || pli->m_bYoutubeDL) {
-                            title = pli->m_label;
-                            has_title = true;
-                        }
-                    }
-                }
+                title = getBestTitle(s.fTitleBarTextTitle);
+                bool has_title = !title.IsEmpty();
 
                 CString fn = GetFileName();
 
@@ -13992,6 +13981,8 @@ bool CMainFrame::OpenMediaPrivate(CAutoPtr<OpenMediaData> pOMD)
 
         OpenSetupAudio();
         checkAborted();
+
+        m_media_trans_control.play();
 
         if (GetPlaybackMode() == PM_FILE && pFileData) {
             const CString& fn = pFileData->fns.GetHead();
@@ -17225,6 +17216,8 @@ void CMainFrame::CloseMedia(bool bNextIsQueued/* = false*/)
         return;
     }
 
+    m_media_trans_control.stop();
+
     if (m_bSettingUpMenus) {
         SleepEx(500, false);
         ASSERT(!m_bSettingUpMenus);
@@ -18976,7 +18969,8 @@ void CMainFrame::UpdateControlState(UpdateControlTarget target)
                 } else if (pli && !pli->m_cover.IsEmpty() && CPath(pli->m_cover).FileExists()) {
                     m_wndView.LoadImg(pli->m_cover);
                 } else if (!filedir.IsEmpty() && (m_currentCoverPath != filedir || m_currentCoverAuthor != author || currentCoverIsFileArt)) {
-                    m_wndView.LoadImg(CoverArt::FindExternal(filename_no_ext, filedir, author, currentCoverIsFileArt));
+                    CString img = CoverArt::FindExternal(filename_no_ext, filedir, author, currentCoverIsFileArt);
+                    m_wndView.LoadImg(img);
                     m_currentCoverPath = filedir;
                     m_currentCoverAuthor = author;
                 } else if (!m_wndView.IsCustomImgLoaded()) {
@@ -19884,4 +19878,173 @@ BOOL CMainFrame::AppendMenuEx(CMenu& menu, UINT nFlags, UINT_PTR nIDNewItem, CSt
         bResult = menu.SetDefaultItem(nIDNewItem);
     }
     return bResult;
+}
+
+CString CMainFrame::getBestTitle(bool fTitleBarTextTitle) {
+    CString title;
+    if (fTitleBarTextTitle) {
+        if (m_pAMMC) {
+            CComBSTR bstr;
+            if (SUCCEEDED(m_pAMMC->get_Title(&bstr)) && bstr.Length()) {
+                title = bstr.m_str;
+                title.Trim();
+                if (!title.IsEmpty()) {
+                    return title;
+                }
+            }
+        }
+    }
+
+    CPlaylistItem* pli = m_wndPlaylistBar.GetCur();
+    if (pli && !pli->m_fns.IsEmpty() && pli->m_label && !pli->m_label.IsEmpty()) {
+        if (fTitleBarTextTitle || pli->m_bYoutubeDL) {
+            title = pli->m_label;
+            return title;
+        }
+    }
+    return L"";
+}
+
+void CMainFrame::updateMediaTransControl() {
+    if (m_media_trans_control.updater) {
+        boolean enabled;
+        HRESULT ret = m_media_trans_control.controls->get_IsEnabled(&enabled);
+        ASSERT(ret == S_OK);
+        if (ret == S_OK && enabled && !m_fAudioOnly) {
+            m_media_trans_control.updater->put_Type(ABI::Windows::Media::MediaPlaybackType_Video);
+            CString title = getBestTitle();
+            if (title.IsEmpty()) {
+                title = GetFileName();
+            }
+            if (!title.IsEmpty()) {
+                HSTRING ttitle;
+                if (WindowsCreateString(title.GetString(), title.GetLength(), &ttitle) == S_OK) {
+                    ret = m_media_trans_control.video->put_Title(ttitle);
+                    ASSERT(ret == S_OK);
+                }
+            }
+            bool have_secondary_title = false;
+            CString chapter;
+            if (m_pCB) {
+                DWORD dwChapCount = m_pCB->ChapGetCount();
+                if (dwChapCount) {
+                    REFERENCE_TIME rtNow;
+                    m_pMS->GetCurrentPosition(&rtNow);
+
+                    CComBSTR bstr;
+                    long currentChap = m_pCB->ChapLookup(&rtNow, &bstr);
+                    if (bstr.Length()) {
+                        chapter.Format(_T("%s (%ld/%lu)"), bstr.m_str, std::max(0l, currentChap + 1l), dwChapCount);
+                    } else {
+                        chapter.Format(_T("%ld/%lu"), currentChap + 1, dwChapCount);
+                    }
+                }
+            }
+            if (!chapter.IsEmpty()) {
+                HSTRING temp;
+                if (WindowsCreateString(chapter.GetString(), chapter.GetLength(), &temp) == S_OK) {
+                    ret = m_media_trans_control.video->put_Subtitle(temp);
+                    ASSERT(ret == S_OK);
+                    have_secondary_title = true;
+                }
+            }
+            if (!have_secondary_title && m_pAMMC) {
+                CComBSTR bstr;
+                if (SUCCEEDED(m_pAMMC->get_AuthorName(&bstr)) && bstr.Length()) {
+                    CString author = bstr.m_str;
+                    author.Trim();
+                    if (!author.IsEmpty()) {
+                        HSTRING temp;
+                        if (WindowsCreateString(author.GetString(), author.GetLength(), &temp) == S_OK) {
+                            ret = m_media_trans_control.video->put_Subtitle(temp);
+                            ASSERT(ret == S_OK);
+                            have_secondary_title = true;
+                        }
+                    }
+                }
+            }
+            ret = m_media_trans_control.updater->Update();
+            ASSERT(ret == S_OK);
+        } else if (ret == S_OK && enabled && m_fAudioOnly) {
+            m_media_trans_control.updater->put_Type(ABI::Windows::Media::MediaPlaybackType_Music);
+            CString title = getBestTitle();
+            CString author;
+            if (title.IsEmpty()) {
+                title = GetFileName();
+            }
+            if (!title.IsEmpty()) {
+                HSTRING ttitle;
+                if (WindowsCreateString(title.GetString(), title.GetLength(), &ttitle) == S_OK) {
+                    ret = m_media_trans_control.audio->put_Title(ttitle);
+                    ASSERT(ret == S_OK);
+                }
+            }
+            if (author.IsEmpty() && m_pAMMC) {
+                CComBSTR bstr;
+                if (SUCCEEDED(m_pAMMC->get_AuthorName(&bstr)) && bstr.Length()) {
+                    author = bstr.m_str;
+                    author.Trim();
+                }
+            }
+            if (!author.IsEmpty()) {
+                HSTRING temp;
+                if (WindowsCreateString(author.GetString(), author.GetLength(), &temp) == S_OK) {
+                    ret = m_media_trans_control.audio->put_Artist(temp);
+                    ASSERT(ret == S_OK);
+                }
+            }
+            ret = m_media_trans_control.updater->Update();
+            ASSERT(ret == S_OK);
+        }
+    }
+}
+
+void CMainFrame::updateMediaTransControlThumbnail() {
+    if (m_media_trans_control.updater) {
+        CString filename = m_wndPlaylistBar.GetCurFileName();
+        CString filename_no_ext;
+        CString filedir;
+        if (!PathUtils::IsURL(filename)) {
+            CPath path = CPath(filename);
+            if (path.FileExists()) {
+                path.RemoveExtension();
+                filename_no_ext = path.m_strPath;
+                path.RemoveFileSpec();
+                filedir = path.m_strPath;
+            }
+        }
+
+        CString author;
+        if (m_pAMMC) {
+            CComBSTR bstr;
+            if (SUCCEEDED(m_pAMMC->get_AuthorName(&bstr)) && bstr.Length()) {
+                author = bstr.m_str;
+            }
+        }
+        CComQIPtr<IFilterGraph> pFilterGraph = m_pGB;
+        CPlaylistItem* pli = m_wndPlaylistBar.GetCur();
+        std::vector<BYTE> internalCover;
+        if (CoverArt::FindEmbedded(pFilterGraph, internalCover)) {
+            m_media_trans_control.loadThumbnail(internalCover.data(), internalCover.size());
+        } else if (pli && !pli->m_cover.IsEmpty()) {
+            m_media_trans_control.loadThumbnail(pli->m_cover);
+        } else if (!filedir.IsEmpty()) {
+            bool is_file_art = false;
+            CString img = CoverArt::FindExternal(filename_no_ext, filedir, author, is_file_art);
+            if (!img.IsEmpty()) {
+                if (m_fAudioOnly || is_file_art) {
+                    m_media_trans_control.loadThumbnail(img);
+                }
+            }
+        }
+        m_media_trans_control.updater->Update();
+    }
+}
+
+void CMainFrame::MediaTransControlUpdateState(OAFilterState state) {
+    if (m_media_trans_control.controls) {
+        if (state == State_Running) m_media_trans_control.controls->put_PlaybackStatus(ABI::Windows::Media::MediaPlaybackStatus_Playing);
+        else if (state == State_Paused) m_media_trans_control.controls->put_PlaybackStatus(ABI::Windows::Media::MediaPlaybackStatus_Paused);
+        else if (state == State_Stopped) m_media_trans_control.controls->put_PlaybackStatus(ABI::Windows::Media::MediaPlaybackStatus_Stopped);
+    }
 }

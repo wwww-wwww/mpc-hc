@@ -71,7 +71,7 @@
       <AdditionalIncludeDirectories>..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>delayimp.lib;dsound.lib;dxguid.lib;GdiPlus.lib;Psapi.lib;SetupAPI.lib;UxTheme.lib;Vfw32.lib;Winmm.lib;dwmapi.lib;strmiids.lib;Uuid.Lib;Version.lib;Bcrypt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>delayimp.lib;dsound.lib;dxguid.lib;GdiPlus.lib;Psapi.lib;SetupAPI.lib;UxTheme.lib;Vfw32.lib;Winmm.lib;dwmapi.lib;strmiids.lib;Uuid.Lib;Version.lib;Bcrypt.lib;RuntimeObject.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ClCompile>
       <AdditionalIncludeDirectories>..\..\include;..\DSUtil;..\filters\renderer\VideoRenderers;..\thirdparty;..\thirdparty\AudioTools;..\thirdparty\MediaInfo\library\Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -275,6 +275,7 @@
     <ClCompile Include="Shaders.cpp" />
     <ClCompile Include="ShockwaveGraph.cpp" />
     <ClCompile Include="SkypeMoodMsgHandler.cpp" />
+    <ClCompile Include="MediaTransControls.cpp" />
     <ClCompile Include="SVGImage.cpp" />
     <ClCompile Include="Translations.cpp" />
     <ClCompile Include="StaticLink.cpp" />
@@ -386,6 +387,7 @@
     <ClInclude Include="FullscreenWnd.h" />
     <ClInclude Include="GoToDlg.h" />
     <ClInclude Include="GraphThread.h" />
+    <ClInclude Include="MediaTransControls.h" />
     <ClInclude Include="Ifo.h" />
     <ClInclude Include="IGraphBuilder2.h" />
     <ClInclude Include="ImageGrayer.h" />

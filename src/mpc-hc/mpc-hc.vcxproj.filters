@@ -594,6 +594,9 @@
       <Filter>Toolbars</Filter>
     </ClCompile>
     <ClCompile Include="RegexUtil.cpp" />
+    <ClCompile Include="MediaTransControls.cpp">
+      <Filter>Main View</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AppSettings.h">
@@ -1127,6 +1130,9 @@
       <Filter>Toolbars</Filter>
     </ClInclude>
     <ClInclude Include="RegexUtil.h" />
+    <ClInclude Include="MediaTransControls.h">
+      <Filter>Main View</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\ani.avi">
