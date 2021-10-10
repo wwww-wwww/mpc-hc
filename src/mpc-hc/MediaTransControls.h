@@ -27,33 +27,22 @@ class CMainFrame;
 class MediaTransControls {
 public:
     MediaTransControls(void) {
-        this->controls = nullptr;
-        this->updater = nullptr;
-        this->video = nullptr;
+        smtc_controls = nullptr;
+        smtc_updater = nullptr;
     }
     ~MediaTransControls(void) {
-        if (controls && m_EventRegistrationToken.value) {
-            controls->remove_ButtonPressed(m_EventRegistrationToken);
+        if (smtc_controls && m_EventRegistrationToken.value) {
+            smtc_controls->remove_ButtonPressed(m_EventRegistrationToken);
         }
     }
-    /**
-     * @brief Intitialize the interface
-     * @param main 
-     * @return 
-    */
+
     bool Init(CMainFrame* main);
-    /**
-     * @brief Set status to stoped and clear all metadata infromations.
-    */
-    void stop();
-    /**
-     * @brief Change status to play status.
-    */
-    void play();
-    CComPtr<ABI::Windows::Media::ISystemMediaTransportControls> controls;
-    CComPtr<ABI::Windows::Media::ISystemMediaTransportControlsDisplayUpdater> updater;
-    CComPtr<ABI::Windows::Media::IVideoDisplayProperties> video;
-    CComPtr<ABI::Windows::Media::IMusicDisplayProperties> audio;
+
+    void close();
+
+    CComPtr<ABI::Windows::Media::ISystemMediaTransportControls> smtc_controls;
+    CComPtr<ABI::Windows::Media::ISystemMediaTransportControlsDisplayUpdater> smtc_updater;
+
     void loadThumbnail(CString fn);
     void loadThumbnail(BYTE* content, size_t size);
     void loadThumbnailFromUrl(CString url);

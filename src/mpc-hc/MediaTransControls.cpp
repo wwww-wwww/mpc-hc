@@ -53,48 +53,42 @@ using namespace Microsoft::WRL::Wrappers;
 
 bool MediaTransControls::Init(CMainFrame* main) {
     /// Windows 8.1 or later is required
-    if (!SysVersion::IsWin81orLater()) return false;
+    if (!SysVersion::IsWin81orLater()) {
+        return false;
+    }
+
     CComPtr<ISystemMediaTransportControlsInterop> op;
     HRESULT ret;
-    if ((ret = GetActivationFactory(HStringReference(L"Windows.Media.SystemMediaTransportControls").Get(), &op)) != S_OK) {
-        this->controls = nullptr;
+    if ((ret = GetActivationFactory(HStringReference(RuntimeClass_Windows_Media_SystemMediaTransportControls).Get(), &op)) != S_OK) {
+        TRACE(_T("MediaTransControls: GetActivationFactory error %ld\n"), ret);
         return false;
     }
-    if ((ret = op->GetForWindow(main->GetSafeHwnd(), IID_PPV_ARGS(&this->controls))) != S_OK) {
-        this->controls = nullptr;
+    if ((ret = op->GetForWindow(main->GetSafeHwnd(), IID_PPV_ARGS(&smtc_controls))) != S_OK) {
+        smtc_controls = nullptr;
+        TRACE(_T("MediaTransControls: GetForWindow error %ld\n"), ret);
         return false;
     }
-    this->controls->put_PlaybackStatus(MediaPlaybackStatus::MediaPlaybackStatus_Closed);
-    ret = this->controls->get_DisplayUpdater(&this->updater);
-    ASSERT(ret == S_OK);
+    ret = smtc_controls->get_DisplayUpdater(&smtc_updater);
     if (ret != S_OK) {
-        controls = nullptr;
+        smtc_controls = nullptr;
+        TRACE(_T("MediaTransControls: get_DisplayUpdater error %ld\n"), ret);
         return false;
     }
-    ret = this->updater->put_Type(MediaPlaybackType::MediaPlaybackType_Video);
-    ASSERT(ret == S_OK);
+    ret = smtc_controls->put_IsEnabled(false);
     if (ret != S_OK) {
-        controls = nullptr;
-        updater = nullptr;
+        smtc_controls = nullptr;
+        smtc_updater = nullptr;
+        TRACE(_T("MediaTransControls: put_IsEnabled error %ld\n"), ret);
         return false;
     }
-    ret = this->updater->get_VideoProperties(&this->video);
-    ASSERT(ret == S_OK);
+    ret = smtc_controls->put_PlaybackStatus(MediaPlaybackStatus::MediaPlaybackStatus_Closed);
     if (ret != S_OK) {
-        controls = nullptr;
-        updater = nullptr;
+        smtc_controls = nullptr;
+        smtc_updater = nullptr;
+        TRACE(_T("MediaTransControls: put_PlaybackStatus error %ld\n"), ret);
         return false;
     }
-    ret = this->updater->put_Type(MediaPlaybackType::MediaPlaybackType_Music);
-    ret = this->updater->get_MusicProperties(&this->audio);
-    ASSERT(ret == S_OK);
-    if (ret != S_OK) {
-        controls = nullptr;
-        updater = nullptr;
-        video = nullptr;
-        return false;
-    }
-    m_pMainFrame = main;
+
     auto callbackButtonPressed = Callback<ABI::Windows::Foundation::ITypedEventHandler<SystemMediaTransportControls*, SystemMediaTransportControlsButtonPressedEventArgs*>>(
         [this](ISystemMediaTransportControls*, ISystemMediaTransportControlsButtonPressedEventArgs* pArgs) {
             HRESULT ret;
@@ -105,35 +99,31 @@ bool MediaTransControls::Init(CMainFrame* main) {
             OnButtonPressed(button);
             return S_OK;
         });
-    ret = controls->add_ButtonPressed(callbackButtonPressed.Get(), &m_EventRegistrationToken);
-    ASSERT(ret == S_OK);
+    ret = smtc_controls->add_ButtonPressed(callbackButtonPressed.Get(), &m_EventRegistrationToken);
     if (ret != S_OK) {
-        controls = nullptr;
-        updater = nullptr;
-        video = nullptr;
-        audio = nullptr;
+        smtc_controls = nullptr;
+        smtc_updater = nullptr;
+        TRACE(_T("MediaTransControls: add_ButtonPressed error %ld\n"), ret);
         return false;
     }
-    this->controls->put_IsPlayEnabled(true);
-    this->controls->put_IsPauseEnabled(true);
-    this->controls->put_IsStopEnabled(true);
-    this->controls->put_IsPreviousEnabled(true);
-    this->controls->put_IsNextEnabled(true);
+
+    smtc_controls->put_IsPlayEnabled(true);
+    smtc_controls->put_IsPauseEnabled(true);
+    smtc_controls->put_IsStopEnabled(true);
+    smtc_controls->put_IsPreviousEnabled(true);
+    smtc_controls->put_IsNextEnabled(true);
+
+    m_pMainFrame = main;
+
     return true;
 }
 
-void MediaTransControls::stop() {
-    if (this->controls != nullptr) {
-        this->controls->put_IsEnabled(false);
-        this->controls->put_PlaybackStatus(MediaPlaybackStatus::MediaPlaybackStatus_Closed);
-        if (this->updater) this->updater->ClearAll();
-    }
-}
-
-void MediaTransControls::play() {
-    if (this->controls != nullptr) {
-        this->controls->put_IsEnabled(true);
-        this->controls->put_PlaybackStatus(MediaPlaybackStatus::MediaPlaybackStatus_Playing);
+void MediaTransControls::close() {
+    if (smtc_controls != nullptr) {
+        TRACE(_T("MediaTransControls::close()"));
+        smtc_controls->put_PlaybackStatus(MediaPlaybackStatus::MediaPlaybackStatus_Closed);
+        smtc_controls->put_IsEnabled(false);
+        if (smtc_updater) smtc_updater->ClearAll();
     }
 }
 
@@ -156,8 +146,13 @@ bool AwaitForIAsyncOperation(CComPtr<ABI::Windows::Foundation::IAsyncOperation<T
 }
 
 void MediaTransControls::loadThumbnail(CString fn) {
-    if (fn.IsEmpty() || !updater) return;
-    if (PathUtils::IsURL(fn)) return loadThumbnailFromUrl(fn);
+    if (fn.IsEmpty() || !smtc_updater) {
+        return;
+    }
+    if (PathUtils::IsURL(fn)) {
+        return loadThumbnailFromUrl(fn);
+    }
+
     HRESULT ret;
     CComPtr<IStorageFileStatics> sfs;
     if ((ret = GetActivationFactory(HStringReference(RuntimeClass_Windows_Storage_StorageFile).Get(), &sfs)) != S_OK) {
@@ -183,11 +178,12 @@ void MediaTransControls::loadThumbnail(CString fn) {
     if ((ret = rasrs->CreateFromFile(f, &stream)) != S_OK) {
         return;
     }
-    updater->put_Thumbnail(stream);
+    smtc_updater->put_Thumbnail(stream);
 }
 
 void MediaTransControls::loadThumbnail(BYTE* content, size_t size) {
-    if (!content || !size || !updater) return;
+    if (!content || !size || !smtc_updater) return;
+
     ComPtr<Streams::IRandomAccessStream> s;
     HRESULT ret;
     if ((ret = ActivateInstance(HStringReference(RuntimeClass_Windows_Storage_Streams_InMemoryRandomAccessStream).Get(), s.GetAddressOf())) != S_OK) {
@@ -195,7 +191,7 @@ void MediaTransControls::loadThumbnail(BYTE* content, size_t size) {
     }
     ComPtr<IStream> writer;
     CreateStreamOverRandomAccessStream(s.Get(), IID_PPV_ARGS(writer.GetAddressOf()));
-    writer->Write(content, size, nullptr);
+    writer->Write(content, (ULONG)size, nullptr);
     CComPtr<Streams::IRandomAccessStreamReferenceStatics> rasrs;
     if ((ret = GetActivationFactory(HStringReference(RuntimeClass_Windows_Storage_Streams_RandomAccessStreamReference).Get(), &rasrs)) != S_OK) {
         return;
@@ -204,11 +200,12 @@ void MediaTransControls::loadThumbnail(BYTE* content, size_t size) {
     if ((ret = rasrs->CreateFromStream(s.Get(), &stream)) != S_OK) {
         return;
     }
-    updater->put_Thumbnail(stream);
+    smtc_updater->put_Thumbnail(stream);
 }
 
 void MediaTransControls::loadThumbnailFromUrl(CString url) {
-    if (url.IsEmpty() || !updater) return;
+    if (url.IsEmpty() || !smtc_updater) return;
+
     HRESULT ret;
     CComPtr<ABI::Windows::Foundation::IUriRuntimeClassFactory> u;
     if ((ret = Windows::Foundation::GetActivationFactory(HStringReference(RuntimeClass_Windows_Foundation_Uri).Get(), &u)) != S_OK) {
@@ -226,36 +223,37 @@ void MediaTransControls::loadThumbnailFromUrl(CString url) {
     if ((ret = rasrs->CreateFromUri(uri, &stream)) != S_OK) {
         return;
     }
-    ret = updater->put_Thumbnail(stream);
+    ret = smtc_updater->put_Thumbnail(stream);
     ASSERT(ret == S_OK);
 }
 
 void MediaTransControls::OnButtonPressed(SystemMediaTransportControlsButton button) {
     if (!m_pMainFrame) return;
+
     switch (button) {
-    case SystemMediaTransportControlsButton_Play:
-        m_pMainFrame->PostMessageW(WM_COMMAND, ID_PLAY_PLAY);
-        break;
-    case SystemMediaTransportControlsButton_Pause:
-        m_pMainFrame->PostMessageW(WM_COMMAND, ID_PLAY_PAUSE);
-        break;
-    case SystemMediaTransportControlsButton_Stop:
-        m_pMainFrame->PostMessageW(WM_COMMAND, ID_PLAY_STOP);
-        break;
-    case SystemMediaTransportControlsButton_Previous:
-        m_pMainFrame->PostMessageW(WM_COMMAND, ID_NAVIGATE_SKIPBACK);
-        break;
-    case SystemMediaTransportControlsButton_Next:
-        m_pMainFrame->PostMessageW(WM_COMMAND, ID_NAVIGATE_SKIPFORWARD);
-        break;
+        case SystemMediaTransportControlsButton_Play:
+            m_pMainFrame->PostMessageW(WM_COMMAND, ID_PLAY_PLAY);
+            break;
+        case SystemMediaTransportControlsButton_Pause:
+            m_pMainFrame->PostMessageW(WM_COMMAND, ID_PLAY_PAUSE);
+            break;
+        case SystemMediaTransportControlsButton_Stop:
+            m_pMainFrame->PostMessageW(WM_COMMAND, ID_PLAY_STOP);
+            break;
+        case SystemMediaTransportControlsButton_Previous:
+            m_pMainFrame->PostMessageW(WM_COMMAND, ID_NAVIGATE_SKIPBACK);
+            break;
+        case SystemMediaTransportControlsButton_Next:
+            m_pMainFrame->PostMessageW(WM_COMMAND, ID_NAVIGATE_SKIPFORWARD);
+            break;
     }
 }
 
 bool MediaTransControls::IsActive() {
-    if (controls) {
+    if (smtc_controls) {
         boolean enabled;
         HRESULT hr;
-        if ((hr = controls->get_IsEnabled(&enabled)) == S_OK) {
+        if ((hr = smtc_controls->get_IsEnabled(&enabled)) == S_OK) {
             return enabled;
         }
     }

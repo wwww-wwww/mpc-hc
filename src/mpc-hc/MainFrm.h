@@ -1294,9 +1294,8 @@ public:
     CString getBestTitle(bool fTitleBarTextTitle = true);
     MediaTransControls m_media_trans_control;
 
-    void updateMediaTransControl();
-    void updateMediaTransControlThumbnail();
-    void MediaTransControlUpdateState(OAFilterState state);
+    void MediaTransportControlSetMedia();
+    void MediaTransportControlUpdateState(OAFilterState state);
 
 private:
     bool watchingFileDialog;

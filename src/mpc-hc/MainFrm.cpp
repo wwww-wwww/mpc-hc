@@ -3854,6 +3854,8 @@ LRESULT CMainFrame::OnFilePostOpenmedia(WPARAM wParam, LPARAM lParam)
     RecalcLayout();
     UpdateWindow();
 
+    MediaTransportControlSetMedia();
+
     // the window is repositioned and repainted, video renderer rect is ready to be set -
     // OnPlayPlay()/OnPlayPause() will take care of that
     m_bDelaySetOutputRect = false;
@@ -3905,8 +3907,6 @@ LRESULT CMainFrame::OnFilePostOpenmedia(WPARAM wParam, LPARAM lParam)
     }
 
     m_bSettingUpMenus = false;
-
-    updateMediaTransControlThumbnail();
 
     return 0;
 }
@@ -10610,7 +10610,6 @@ void CMainFrame::UpdateCachedMediaState()
 
 bool CMainFrame::MediaControlRun(bool waitforcompletion)
 {
-    MediaTransControlUpdateState(State_Running);
     m_dwLastPause = 0;
     if (m_pMC) {
         ASSERT(m_CachedFilterState != State_Running);
@@ -10623,6 +10622,7 @@ bool CMainFrame::MediaControlRun(bool waitforcompletion)
                 ASSERT(m_CachedFilterState == State_Running);
             }
         };
+        MediaTransportControlUpdateState(State_Running);
         return true;
     }
     return false;
@@ -10630,7 +10630,6 @@ bool CMainFrame::MediaControlRun(bool waitforcompletion)
 
 bool CMainFrame::MediaControlPause(bool waitforcompletion)
 {
-    MediaTransControlUpdateState(State_Paused);
     m_dwLastPause = GetTickCount64();
     if (m_pMC) {
         ASSERT(m_CachedFilterState != State_Paused);
@@ -10643,6 +10642,7 @@ bool CMainFrame::MediaControlPause(bool waitforcompletion)
                 ASSERT(m_CachedFilterState == State_Paused);
             }
         }
+        MediaTransportControlUpdateState(State_Paused);
         return true;
     }
     return false;
@@ -10650,10 +10650,10 @@ bool CMainFrame::MediaControlPause(bool waitforcompletion)
 
 bool CMainFrame::MediaControlStop(bool waitforcompletion)
 {
-    MediaTransControlUpdateState(State_Stopped);
     m_dwLastPause = 0;
     if (m_pMC) {
         m_CachedFilterState = State_Stopped;
+        MediaTransportControlUpdateState(State_Stopped);
         if (FAILED(m_pMC->Stop())) {
             ASSERT(FALSE);
             m_CachedFilterState = -1;
@@ -13423,8 +13423,6 @@ void CMainFrame::OpenSetupWindowTitle(bool reset /*= false*/)
 
     int i = s.iTitleBarTextStyle;
 
-    updateMediaTransControl();
-
     if (!reset && (i == 0 || i == 1)) {
         // There is no path in capture mode
         if (IsPlaybackCaptureMode()) {
@@ -13981,8 +13979,6 @@ bool CMainFrame::OpenMediaPrivate(CAutoPtr<OpenMediaData> pOMD)
 
         OpenSetupAudio();
         checkAborted();
-
-        m_media_trans_control.play();
 
         if (GetPlaybackMode() == PM_FILE && pFileData) {
             const CString& fn = pFileData->fns.GetHead();
@@ -17216,7 +17212,7 @@ void CMainFrame::CloseMedia(bool bNextIsQueued/* = false*/)
         return;
     }
 
-    m_media_trans_control.stop();
+    m_media_trans_control.close();
 
     if (m_bSettingUpMenus) {
         SleepEx(500, false);
@@ -19905,25 +19901,76 @@ CString CMainFrame::getBestTitle(bool fTitleBarTextTitle) {
     return L"";
 }
 
-void CMainFrame::updateMediaTransControl() {
-    if (m_media_trans_control.updater) {
-        boolean enabled;
-        HRESULT ret = m_media_trans_control.controls->get_IsEnabled(&enabled);
-        ASSERT(ret == S_OK);
-        if (ret == S_OK && enabled && !m_fAudioOnly) {
-            m_media_trans_control.updater->put_Type(ABI::Windows::Media::MediaPlaybackType_Video);
-            CString title = getBestTitle();
-            if (title.IsEmpty()) {
-                title = GetFileName();
+void CMainFrame::MediaTransportControlSetMedia() {
+    if (m_media_trans_control.smtc_updater && m_media_trans_control.smtc_controls) {
+        TRACE(_T("CMainFrame::MediaTransportControlSetMedia()\n"));
+        HRESULT ret = S_OK;
+        bool have_secondary_title = false;
+
+        CString title = getBestTitle();
+        if (title.IsEmpty()) {
+            title = GetFileName();
+        }
+
+        CString author;
+        if (m_pAMMC) {
+            CComBSTR bstr;
+            if (SUCCEEDED(m_pAMMC->get_AuthorName(&bstr)) && bstr.Length()) {
+                author = bstr.m_str;
+                author.Trim();
             }
+        }
+
+        // Set media details
+        if (m_fAudioOnly) {
+            ret = m_media_trans_control.smtc_updater->put_Type(ABI::Windows::Media::MediaPlaybackType_Music);
+            if (ret != S_OK) {
+                TRACE(_T("MediaTransControls: put_Type error %ld\n"), ret);
+                return;
+            }
+
+            CComPtr<ABI::Windows::Media::IMusicDisplayProperties> pMusicDisplayProperties;
+            ret = m_media_trans_control.smtc_updater->get_MusicProperties(&pMusicDisplayProperties);
+            if (ret != S_OK) {
+                TRACE(_T("MediaTransControls: get_MusicProperties error %ld\n"), ret);
+                return;
+            }
+
             if (!title.IsEmpty()) {
                 HSTRING ttitle;
                 if (WindowsCreateString(title.GetString(), title.GetLength(), &ttitle) == S_OK) {
-                    ret = m_media_trans_control.video->put_Title(ttitle);
+                    ret = pMusicDisplayProperties->put_Title(ttitle);
                     ASSERT(ret == S_OK);
                 }
             }
-            bool have_secondary_title = false;
+            if (!author.IsEmpty()) {
+                HSTRING temp;
+                if (WindowsCreateString(author.GetString(), author.GetLength(), &temp) == S_OK) {
+                    ret = pMusicDisplayProperties->put_Artist(temp);
+                    ASSERT(ret == S_OK);
+                }
+            }
+        } else {
+            ret = m_media_trans_control.smtc_updater->put_Type(ABI::Windows::Media::MediaPlaybackType_Video);
+            if (ret != S_OK) {
+                TRACE(_T("MediaTransControls: put_Type error %ld\n"), ret);
+                return;
+            }
+
+            CComPtr<ABI::Windows::Media::IVideoDisplayProperties> pVideoDisplayProperties;
+            ret = m_media_trans_control.smtc_updater->get_VideoProperties(&pVideoDisplayProperties);
+            if (ret != S_OK) {
+                TRACE(_T("MediaTransControls: get_VideoProperties error %ld\n"), ret);
+                return;
+            }
+
+            if (!title.IsEmpty()) {
+                HSTRING ttitle;
+                if (WindowsCreateString(title.GetString(), title.GetLength(), &ttitle) == S_OK) {
+                    ret = pVideoDisplayProperties->put_Title(ttitle);
+                    ASSERT(ret == S_OK);
+                }
+            }
             CString chapter;
             if (m_pCB) {
                 DWORD dwChapCount = m_pCB->ChapGetCount();
@@ -19940,111 +19987,81 @@ void CMainFrame::updateMediaTransControl() {
                     }
                 }
             }
-            if (!chapter.IsEmpty()) {
+            if (!chapter.IsEmpty() && chapter != title) {
                 HSTRING temp;
                 if (WindowsCreateString(chapter.GetString(), chapter.GetLength(), &temp) == S_OK) {
-                    ret = m_media_trans_control.video->put_Subtitle(temp);
+                    ret = pVideoDisplayProperties->put_Subtitle(temp);
                     ASSERT(ret == S_OK);
                     have_secondary_title = true;
                 }
             }
-            if (!have_secondary_title && m_pAMMC) {
-                CComBSTR bstr;
-                if (SUCCEEDED(m_pAMMC->get_AuthorName(&bstr)) && bstr.Length()) {
-                    CString author = bstr.m_str;
-                    author.Trim();
-                    if (!author.IsEmpty()) {
-                        HSTRING temp;
-                        if (WindowsCreateString(author.GetString(), author.GetLength(), &temp) == S_OK) {
-                            ret = m_media_trans_control.video->put_Subtitle(temp);
-                            ASSERT(ret == S_OK);
-                            have_secondary_title = true;
+            if (!have_secondary_title && !author.IsEmpty() && author != title) {
+                HSTRING temp;
+                if (WindowsCreateString(author.GetString(), author.GetLength(), &temp) == S_OK) {
+                    ret = pVideoDisplayProperties->put_Subtitle(temp);
+                    ASSERT(ret == S_OK);
+                    have_secondary_title = true;
+                }
+            }                
+        }
+
+        // Thumbnail
+        CComQIPtr<IFilterGraph> pFilterGraph = m_pGB;
+        std::vector<BYTE> internalCover;
+        if (CoverArt::FindEmbedded(pFilterGraph, internalCover)) {
+            m_media_trans_control.loadThumbnail(internalCover.data(), internalCover.size());
+        } else {
+            CPlaylistItem* pli = m_wndPlaylistBar.GetCur();
+            if (pli && !pli->m_cover.IsEmpty()) {
+                m_media_trans_control.loadThumbnail(pli->m_cover);
+            } else {
+                CString filename = m_wndPlaylistBar.GetCurFileName();
+                CString filename_no_ext;
+                CString filedir;
+                if (!PathUtils::IsURL(filename)) {
+                    CPath path = CPath(filename);
+                    if (path.FileExists()) {
+                        path.RemoveExtension();
+                        filename_no_ext = path.m_strPath;
+                        path.RemoveFileSpec();
+                        filedir = path.m_strPath;
+                        bool is_file_art = false;
+                        CString img = CoverArt::FindExternal(filename_no_ext, filedir, author, is_file_art);
+                        if (!img.IsEmpty()) {
+                            if (m_fAudioOnly || is_file_art) {
+                                m_media_trans_control.loadThumbnail(img);
+                            }
                         }
                     }
                 }
             }
-            ret = m_media_trans_control.updater->Update();
-            ASSERT(ret == S_OK);
-        } else if (ret == S_OK && enabled && m_fAudioOnly) {
-            m_media_trans_control.updater->put_Type(ABI::Windows::Media::MediaPlaybackType_Music);
-            CString title = getBestTitle();
-            CString author;
-            if (title.IsEmpty()) {
-                title = GetFileName();
-            }
-            if (!title.IsEmpty()) {
-                HSTRING ttitle;
-                if (WindowsCreateString(title.GetString(), title.GetLength(), &ttitle) == S_OK) {
-                    ret = m_media_trans_control.audio->put_Title(ttitle);
-                    ASSERT(ret == S_OK);
-                }
-            }
-            if (author.IsEmpty() && m_pAMMC) {
-                CComBSTR bstr;
-                if (SUCCEEDED(m_pAMMC->get_AuthorName(&bstr)) && bstr.Length()) {
-                    author = bstr.m_str;
-                    author.Trim();
-                }
-            }
-            if (!author.IsEmpty()) {
-                HSTRING temp;
-                if (WindowsCreateString(author.GetString(), author.GetLength(), &temp) == S_OK) {
-                    ret = m_media_trans_control.audio->put_Artist(temp);
-                    ASSERT(ret == S_OK);
-                }
-            }
-            ret = m_media_trans_control.updater->Update();
-            ASSERT(ret == S_OK);
+        }
+
+        // Update data and status
+        ret = m_media_trans_control.smtc_controls->put_PlaybackStatus(ABI::Windows::Media::MediaPlaybackStatus::MediaPlaybackStatus_Playing);
+        if (ret != S_OK) {
+            TRACE(_T("MediaTransControls: put_PlaybackStatus error %ld\n"), ret);
+            return;
+        }
+        ret = m_media_trans_control.smtc_updater->Update();
+        if (ret != S_OK) {
+            TRACE(_T("MediaTransControls: Update error %ld\n"), ret);
+            return;
+        }
+        // Enable
+        ret = m_media_trans_control.smtc_controls->put_IsEnabled(true);
+        if (ret != S_OK) {
+            TRACE(_T("MediaTransControls: put_IsEnabled error %ld\n"), ret);
+            return;
         }
     }
 }
 
-void CMainFrame::updateMediaTransControlThumbnail() {
-    if (m_media_trans_control.updater) {
-        CString filename = m_wndPlaylistBar.GetCurFileName();
-        CString filename_no_ext;
-        CString filedir;
-        if (!PathUtils::IsURL(filename)) {
-            CPath path = CPath(filename);
-            if (path.FileExists()) {
-                path.RemoveExtension();
-                filename_no_ext = path.m_strPath;
-                path.RemoveFileSpec();
-                filedir = path.m_strPath;
-            }
-        }
-
-        CString author;
-        if (m_pAMMC) {
-            CComBSTR bstr;
-            if (SUCCEEDED(m_pAMMC->get_AuthorName(&bstr)) && bstr.Length()) {
-                author = bstr.m_str;
-            }
-        }
-        CComQIPtr<IFilterGraph> pFilterGraph = m_pGB;
-        CPlaylistItem* pli = m_wndPlaylistBar.GetCur();
-        std::vector<BYTE> internalCover;
-        if (CoverArt::FindEmbedded(pFilterGraph, internalCover)) {
-            m_media_trans_control.loadThumbnail(internalCover.data(), internalCover.size());
-        } else if (pli && !pli->m_cover.IsEmpty()) {
-            m_media_trans_control.loadThumbnail(pli->m_cover);
-        } else if (!filedir.IsEmpty()) {
-            bool is_file_art = false;
-            CString img = CoverArt::FindExternal(filename_no_ext, filedir, author, is_file_art);
-            if (!img.IsEmpty()) {
-                if (m_fAudioOnly || is_file_art) {
-                    m_media_trans_control.loadThumbnail(img);
-                }
-            }
-        }
-        m_media_trans_control.updater->Update();
-    }
-}
-
-void CMainFrame::MediaTransControlUpdateState(OAFilterState state) {
-    if (m_media_trans_control.controls) {
-        if (state == State_Running) m_media_trans_control.controls->put_PlaybackStatus(ABI::Windows::Media::MediaPlaybackStatus_Playing);
-        else if (state == State_Paused) m_media_trans_control.controls->put_PlaybackStatus(ABI::Windows::Media::MediaPlaybackStatus_Paused);
-        else if (state == State_Stopped) m_media_trans_control.controls->put_PlaybackStatus(ABI::Windows::Media::MediaPlaybackStatus_Stopped);
+void CMainFrame::MediaTransportControlUpdateState(OAFilterState state) {
+    if (m_media_trans_control.smtc_controls) {
+        if (state == State_Running)      m_media_trans_control.smtc_controls->put_PlaybackStatus(ABI::Windows::Media::MediaPlaybackStatus_Playing);
+        else if (state == State_Paused)  m_media_trans_control.smtc_controls->put_PlaybackStatus(ABI::Windows::Media::MediaPlaybackStatus_Paused);
+        else if (state == State_Stopped) m_media_trans_control.smtc_controls->put_PlaybackStatus(ABI::Windows::Media::MediaPlaybackStatus_Stopped);
+        else                             m_media_trans_control.smtc_controls->put_PlaybackStatus(ABI::Windows::Media::MediaPlaybackStatus_Changing);
     }
 }
