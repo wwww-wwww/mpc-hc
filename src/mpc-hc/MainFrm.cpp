@@ -13607,41 +13607,41 @@ int CMainFrame::SetupAudioStreams()
 bool MatchSubtrackWithISOLang(CString& tname, const ISOLangT<CString>& l)
 {
     int p;
-    CString substr;
 
-    substr = l.iso6392;
-    if (!substr.IsEmpty()) {
-        p = tname.Find(_T("[") + substr + _T("]"));
+    if (!l.iso6392.IsEmpty()) {
+        p = tname.Find(_T("[") + l.iso6392 + _T("]"));
         if (p > 0) {
             return true;
         }
-        p = tname.Find(_T(".") + substr + _T("."));
+        p = tname.Find(_T(".") + l.iso6392 + _T("."));
         if (p > 0) {
             return true;
         }
     }
 
-    substr = l.iso6391;
-    if (!substr.IsEmpty()) {
-        p = tname.Find(_T("[") + substr + _T("]"));
+    if (!l.iso6391.IsEmpty()) {
+        p = tname.Find(_T("[") + l.iso6391 + _T("]"));
         if (p > 0) {
             return true;
         }
-        p = tname.Find(_T(".") + substr + _T("."));
+        p = tname.Find(_T(".") + l.iso6391 + _T("."));
         if (p > 0) {
             return true;
         }
     }
 
-    substr = l.name;
-    if (!substr.IsEmpty()) {
+     if (!l.name.IsEmpty()) {
+        if (l.name == _T("off")) {
+            return tname.Find(_T("no subtitles")) >= 0;
+        }
+
         std::list<CString> langlist;
         int tPos = 0;
-        CString lang = substr.Tokenize(_T(";"), tPos);
+        CString lang = l.name.Tokenize(_T(";"), tPos);
         while (tPos != -1) {
             lang.MakeLower().TrimLeft();
             langlist.emplace_back(lang);
-            lang = substr.Tokenize(_T(";"), tPos);
+            lang = l.name.Tokenize(_T(";"), tPos);
         }
 
         for (auto& substr : langlist) {
@@ -13683,6 +13683,7 @@ int CMainFrame::SetupSubtitleStreams()
 
     if (!m_pSubStreams.IsEmpty()) {
         bool externalPriority = false;
+        bool has_off_lang = false;
         std::list<ISOLangT<CString>> langs;
         int tPos = 0;
         CString lang = s.strSubtitlesLanguageOrder.Tokenize(_T(",; "), tPos);
@@ -13691,6 +13692,9 @@ int CMainFrame::SetupSubtitleStreams()
             ISOLangT<CString> l = ISOLang::ISO639XToISOLang(CStringA(lang));
             if (l.name.IsEmpty()) {
                 l.name = lang;
+                if (lang == _T("off")) {
+                    has_off_lang = true;
+                }
             } else {
                 l.name.MakeLower();
             }
@@ -13700,7 +13704,7 @@ int CMainFrame::SetupSubtitleStreams()
         }
 
         int i = 0;
-        int maxrating = -1;
+        int maxrating = has_off_lang ? 0 : -1;
         POSITION pos = m_pSubStreams.GetHeadPosition();
         while (pos) {
             if (m_posFirstExtSub == pos) {
@@ -13785,10 +13789,10 @@ int CMainFrame::SetupSubtitleStreams()
                     rating += 16 * int(langs.size() - k);
                     break;
                 }
-                if (externalPriority) { // External tracks are given a higher priority than language matches
+                if (externalPriority && (!has_off_lang || rating > 0)) { // external tracks are preferred
                     rating += 16 * int(langs.size() + 1);
                 }
-                if (s.bPreferDefaultForcedSubtitles) {
+                if (!externalPriority && s.bPreferDefaultForcedSubtitles) {
                     if (name.Find(_T("[default,forced]")) != -1) { // for LAV Splitter
                         rating += 4 + 2;
                     }
@@ -15052,7 +15056,9 @@ void CMainFrame::SetupSubtitlesSubMenu()
         if (s.fUseDefaultSubtitlesStyle) {
             subMenu.CheckMenuItem(nItemsBeforeStart + 5, MF_BYPOSITION | MF_CHECKED);
         }
-        VERIFY(subMenu.CheckMenuRadioItem(nItemsBeforeStart + 7, nItemsBeforeStart + 7 + i - 1, nItemsBeforeStart + 7 + iSelected, MF_BYPOSITION));
+        if (iSelected >= 0) {
+            VERIFY(subMenu.CheckMenuRadioItem(nItemsBeforeStart + 7, nItemsBeforeStart + 7 + i - 1, nItemsBeforeStart + 7 + iSelected, MF_BYPOSITION));
+        }
     } else if (GetPlaybackMode() == PM_FILE) {
         SetupNavStreamSelectSubMenu(subMenu, id, 2);
     }
