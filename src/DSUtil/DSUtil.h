@@ -63,6 +63,7 @@ extern void  ShowPPage(CString DisplayName, HWND hParentWnd);
 extern void  ShowPPage(IUnknown* pUnknown, HWND hParentWnd);
 extern CLSID GetCLSID(IBaseFilter* pBF);
 extern CLSID GetCLSID(IPin* pPin);
+extern CString CLSIDToString(CLSID& clsid);
 extern bool  IsCLSIDRegistered(LPCTSTR clsid);
 extern bool  IsCLSIDRegistered(const CLSID& clsid);
 extern CString GetFilterPath(LPCTSTR clsid);

@@ -626,6 +626,15 @@ CLSID GetCLSID(IPin* pPin)
     return GetCLSID(GetFilterFromPin(pPin));
 }
 
+CString CLSIDToString(CLSID& clsid)
+{
+    CComHeapPtr<OLECHAR> pStr;
+    if (S_OK == StringFromCLSID(clsid, &pStr) && pStr) {
+        return CString(pStr);
+    }
+    return CString();
+}
+
 bool IsCLSIDRegistered(LPCTSTR clsid)
 {
     CString rootkey1(_T("CLSID\\"));
