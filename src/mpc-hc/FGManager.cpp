@@ -701,6 +701,17 @@ HRESULT CFGManager::Connect(IPin* pPinOut, IPin* pPinIn, bool bContinueRender)
     // 4. Look up filters in the registry
 
     {
+        // workaround for Cyberlink video decoder, which can have an unwanted output pin
+        if (clsid_pinout == GUIDFromCString(_T("{F8FC6C1F-DE81-41A8-90FF-0316FDD439FD}"))) {
+            CPinInfo infoPinOut;
+            if (SUCCEEDED(pPinOut->QueryPinInfo(&infoPinOut))) {
+                if (CString(infoPinOut.achName) == L"~Encode Out") {
+                    // ignore this pin
+                    return S_OK;
+                }
+            }
+        }
+
         CFGFilterList fl;
 
         CAtlArray<GUID> types;
