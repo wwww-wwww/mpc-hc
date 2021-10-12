@@ -774,7 +774,7 @@ HRESULT CFGManager::Connect(IPin* pPinOut, IPin* pPinIn, bool bContinueRender)
                 #if _DEBUG
                 continue;
                 #else
-                if (clsid_upstream == __uuidof(CAudioSwitcherFilter)) {
+                if (clsid_pinout == __uuidof(CAudioSwitcherFilter)) {
                     continue;
                 }
                 #endif
