@@ -186,8 +186,12 @@ static HRESULT STDMETHODCALLTYPE ReceiveMine(IMemInputPinC* This, IMediaSample* 
     return ReceiveOrg(This, pSample);
 }
 
-void HookReceiveConnection(IBaseFilter* pBF)
+bool HookReceiveConnection(IBaseFilter* pBF)
 {
+    if (!pBF || g_pPinCVtbl_ReceiveConnection) {
+        return false;
+    }
+
     if (CComPtr<IPin> pPin = GetFirstPin(pBF)) {
         IPinC* pPinC = (IPinC*)(IPin*)pPin;
 
@@ -200,11 +204,13 @@ void HookReceiveConnection(IBaseFilter* pBF)
             FlushInstructionCache(GetCurrentProcess(), pPinC->lpVtbl, sizeof(IPinCVtbl));
             VirtualProtect(pPinC->lpVtbl, sizeof(IPinCVtbl), flOldProtect, &flOldProtect);
             g_pPinCVtbl_ReceiveConnection = pPinC->lpVtbl;
+            return true;
         } else {
             TRACE(_T("HookWorkAroundVideoDriversBug: Could not hook the VTable"));
             ASSERT(FALSE);
         }
     }
+    return false;
 }
 
 void UnhookReceiveConnection()
@@ -229,10 +235,9 @@ void UnhookReceiveConnection()
 
 void UnhookNewSegment()
 {
-    DWORD flOldProtect = 0;
-
     // Unhook previous VTables
     if (g_pPinCVtbl_NewSegment) {
+        DWORD flOldProtect = 0;
         if (VirtualProtect(g_pPinCVtbl_NewSegment, sizeof(IPinCVtbl), PAGE_EXECUTE_WRITECOPY, &flOldProtect)) {
             if (g_pPinCVtbl_NewSegment->NewSegment == NewSegmentMine) {
                 g_pPinCVtbl_NewSegment->NewSegment = NewSegmentOrg;
@@ -251,10 +256,9 @@ void UnhookNewSegment()
 
 void UnhookReceive()
 {
-    DWORD flOldProtect = 0;
-
     // Unhook previous VTables
     if (g_pMemInputPinCVtbl) {
+        DWORD flOldProtect = 0;
         if (VirtualProtect(g_pMemInputPinCVtbl, sizeof(IMemInputPinCVtbl), PAGE_EXECUTE_WRITECOPY, &flOldProtect)) {
             if (g_pMemInputPinCVtbl->Receive == ReceiveMine) {
                 g_pMemInputPinCVtbl->Receive = ReceiveOrg;
@@ -272,64 +276,54 @@ void UnhookReceive()
 
 bool HookNewSegment(IPinC* pPinC)
 {
-    if (!pPinC) {
+    if (!pPinC || g_pPinCVtbl_NewSegment) {
         return false;
     }
 
-    g_tSegmentStart = 0;
-    g_dRate = 1.0;
-
-    UnhookNewSegment();
-
     DWORD flOldProtect = 0;
-
-    if (!g_pPinCVtbl_NewSegment) {
-        if (VirtualProtect(pPinC->lpVtbl, sizeof(IPinCVtbl), PAGE_EXECUTE_WRITECOPY, &flOldProtect)) {
-            if (NewSegmentOrg == nullptr) {
-                NewSegmentOrg = pPinC->lpVtbl->NewSegment;
-            }
-            pPinC->lpVtbl->NewSegment = NewSegmentMine; // Function sets global variable(s)
-            FlushInstructionCache(GetCurrentProcess(), pPinC->lpVtbl, sizeof(IPinCVtbl));
-            VirtualProtect(pPinC->lpVtbl, sizeof(IPinCVtbl), flOldProtect, &flOldProtect);
-            g_pPinCVtbl_NewSegment = pPinC->lpVtbl;
-            g_pPinC_NewSegment = pPinC;
-        } else {
-            TRACE(_T("HookNewSegment: Could not unhook VTable"));
-            ASSERT(FALSE);
+    if (VirtualProtect(pPinC->lpVtbl, sizeof(IPinCVtbl), PAGE_EXECUTE_WRITECOPY, &flOldProtect)) {
+        g_tSegmentStart = 0;
+        g_dRate = 1.0;
+        if (NewSegmentOrg == nullptr) {
+            NewSegmentOrg = pPinC->lpVtbl->NewSegment;
         }
+        pPinC->lpVtbl->NewSegment = NewSegmentMine; // Function sets global variable(s)
+        FlushInstructionCache(GetCurrentProcess(), pPinC->lpVtbl, sizeof(IPinCVtbl));
+        VirtualProtect(pPinC->lpVtbl, sizeof(IPinCVtbl), flOldProtect, &flOldProtect);
+        g_pPinCVtbl_NewSegment = pPinC->lpVtbl;
+        g_pPinC_NewSegment = pPinC;
+        return true;
+    } else {
+        TRACE(_T("HookNewSegment: Could not unhook VTable"));
+        ASSERT(FALSE);
     }
 
-    return true;
+    return false;
 }
 
 bool HookReceive(IMemInputPinC* pMemInputPinC)
 {
-    if (!pMemInputPinC) {
+    if (!pMemInputPinC || g_pMemInputPinCVtbl) {
         return false;
     }
 
-    g_tSampleStart = 0;
-
-    UnhookReceive();
-
     DWORD flOldProtect = 0;
-
-    if (!g_pMemInputPinCVtbl) {
-        if (VirtualProtect(pMemInputPinC->lpVtbl, sizeof(IMemInputPinCVtbl), PAGE_EXECUTE_WRITECOPY, &flOldProtect)) {
-            if (ReceiveOrg == nullptr) {
-                ReceiveOrg = pMemInputPinC->lpVtbl->Receive;
-            }
-            pMemInputPinC->lpVtbl->Receive = ReceiveMine; // Function sets global variable(s)
-            FlushInstructionCache(GetCurrentProcess(), pMemInputPinC->lpVtbl, sizeof(IMemInputPinCVtbl));
-            VirtualProtect(pMemInputPinC->lpVtbl, sizeof(IMemInputPinCVtbl), flOldProtect, &flOldProtect);
-            g_pMemInputPinCVtbl = pMemInputPinC->lpVtbl;
-        } else {
-            TRACE(_T("HookReceive: Could not unhook VTable"));
-            ASSERT(FALSE);
+    if (VirtualProtect(pMemInputPinC->lpVtbl, sizeof(IMemInputPinCVtbl), PAGE_EXECUTE_WRITECOPY, &flOldProtect)) {
+        g_tSampleStart = 0;
+        if (ReceiveOrg == nullptr) {
+            ReceiveOrg = pMemInputPinC->lpVtbl->Receive;
         }
+        pMemInputPinC->lpVtbl->Receive = ReceiveMine; // Function sets global variable(s)
+        FlushInstructionCache(GetCurrentProcess(), pMemInputPinC->lpVtbl, sizeof(IMemInputPinCVtbl));
+        VirtualProtect(pMemInputPinC->lpVtbl, sizeof(IMemInputPinCVtbl), flOldProtect, &flOldProtect);
+        g_pMemInputPinCVtbl = pMemInputPinC->lpVtbl;
+        return true;
+    } else {
+        TRACE(_T("HookReceive: Could not unhook VTable"));
+        ASSERT(FALSE);
     }
 
-    return true;
+    return false;
 }
 
 

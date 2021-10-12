@@ -2565,6 +2565,10 @@ CSyncAP::~CSyncAP()
     m_pMediaType = nullptr;
     m_pClock = nullptr;
     m_pD3DManager = nullptr;
+
+    if (m_bHookedNewSegment) {
+        UnhookNewSegment();
+    }
 }
 
 HRESULT CSyncAP::CheckShutdown() const
@@ -2665,14 +2669,15 @@ STDMETHODIMP CSyncAP::CreateRenderer(IUnknown** ppRenderer)
             hr = pMFVR->InitializeRenderer(nullptr, pVP);
         }
 
-        CComPtr<IPin> pPin = GetFirstPin(pBF);
-        CComQIPtr<IMemInputPin> pMemInputPin = pPin;
-
-        m_bUseInternalTimer = HookNewSegment((IPinC*)(IPin*)pPin);
-        if (FAILED(hr)) {
-            *ppRenderer = nullptr;
-        } else {
+        if (SUCCEEDED(hr)) {
+            CComPtr<IPin> pPin = GetFirstPin(pBF);
+            if (HookNewSegment((IPinC*)(IPin*)pPin)) {
+                m_bUseInternalTimer = true;
+                m_bHookedNewSegment = true;
+            }
             *ppRenderer = pBF.Detach();
+        } else {
+            *ppRenderer = nullptr;
         }
     } while (0);
 

@@ -124,7 +124,7 @@ class CFGFilterVideoRenderer : public CFGFilter
 {
 protected:
     HWND m_hWnd;
-    bool m_bHas10BitWorkAround;
+    bool m_bHasHookReceiveConnection;
     bool m_bIsPreview;
 
 public:

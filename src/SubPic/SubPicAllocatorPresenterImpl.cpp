@@ -48,6 +48,8 @@ CSubPicAllocatorPresenterImpl::CSubPicAllocatorPresenterImpl(HWND hWnd, HRESULT&
     , m_bDeviceResetRequested(false)
     , m_bPendingResetDevice(false)
     , m_bDefaultVideoAngleSwitchAR(false)
+    , m_bHookedNewSegment(false)
+    , m_bHookedReceive(false)
 {
     if (!IsWindow(m_hWnd)) {
         hr = E_INVALIDARG;

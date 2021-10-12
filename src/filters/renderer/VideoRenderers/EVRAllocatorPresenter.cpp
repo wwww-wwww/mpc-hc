@@ -179,6 +179,10 @@ CEVRAllocatorPresenter::~CEVRAllocatorPresenter()
     m_pMediaType  = nullptr;
     m_pClock      = nullptr;
     m_pD3DManager = nullptr;
+
+    if (m_bHookedNewSegment) {
+        UnhookNewSegment();
+    }
 }
 
 void CEVRAllocatorPresenter::ResetStats()
@@ -293,20 +297,17 @@ STDMETHODIMP CEVRAllocatorPresenter::CreateRenderer(IUnknown** ppRenderer)
         hr = pMFVR->InitializeRenderer(nullptr, pVP);
     }
 
-#if 1
-    CComPtr<IPin> pPin = GetFirstPin(pBF);
-    CComQIPtr<IMemInputPin> pMemInputPin = pPin;
-
-    // No NewSegment : no chocolate :o)
-    m_fUseInternalTimer = !m_bIsPreview && HookNewSegment((IPinC*)(IPin*)pPin);
-#else
-    m_fUseInternalTimer = false;
-#endif
-
-    if (FAILED(hr)) {
-        *ppRenderer = nullptr;
-    } else {
+    if (SUCCEEDED(hr)) {
+        if (!m_bIsPreview) {
+            CComPtr<IPin> pPin = GetFirstPin(pBF);
+            if (HookNewSegment((IPinC*)(IPin*)pPin)) {
+                m_fUseInternalTimer = true;
+                m_bHookedNewSegment = true;
+            };
+        }
         *ppRenderer = pBF.Detach();
+    } else {
+        *ppRenderer = nullptr;
     }
 
     return hr;

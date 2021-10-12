@@ -48,6 +48,10 @@ CmadVRAllocatorPresenter::~CmadVRAllocatorPresenter()
     m_pSubPicQueue = nullptr;
     m_pAllocator = nullptr;
     m_pMVR = nullptr;
+
+    if (m_bHookedNewSegment) {
+        UnhookNewSegment();
+    }
 }
 
 STDMETHODIMP CmadVRAllocatorPresenter::NonDelegatingQueryInterface(REFIID riid, void** ppv)
@@ -154,8 +158,7 @@ STDMETHODIMP CmadVRAllocatorPresenter::CreateRenderer(IUnknown** ppRenderer)
 
     CComQIPtr<IBaseFilter> pBF = m_pMVR;
     CComPtr<IPin> pPin = GetFirstPin(pBF);
-    CComQIPtr<IMemInputPin> pMemInputPin = pPin;
-    HookNewSegment((IPinC*)(IPin*)pPin);
+    m_bHookedNewSegment = HookNewSegment((IPinC*)(IPin*)pPin);
 
     return S_OK;
 }

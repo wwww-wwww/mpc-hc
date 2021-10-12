@@ -79,6 +79,9 @@ protected:
     XForm m_xform;
     void Transform(CRect r, Vector v[4]);
 
+    bool m_bHookedNewSegment;
+    bool m_bHookedReceive;
+
 public:
     CSubPicAllocatorPresenterImpl(HWND hWnd, HRESULT& hr, CString* _pError);
     virtual ~CSubPicAllocatorPresenterImpl();

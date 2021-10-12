@@ -45,6 +45,16 @@ CVMR9AllocatorPresenter::CVMR9AllocatorPresenter(HWND hWnd, bool bFullscreen, HR
 {
 }
 
+CVMR9AllocatorPresenter::~CVMR9AllocatorPresenter()
+{
+    if (m_bHookedNewSegment) {
+        UnhookNewSegment();
+    }
+    if (m_bHookedReceive) {
+        UnhookReceive();
+    }
+}
+
 STDMETHODIMP CVMR9AllocatorPresenter::NonDelegatingQueryInterface(REFIID riid, void** ppv)
 {
     CheckPointer(ppv, E_POINTER);
@@ -99,8 +109,16 @@ STDMETHODIMP CVMR9AllocatorPresenter::CreateRenderer(IUnknown** ppRenderer)
     CComQIPtr<IBaseFilter> pBF = pUnk;
 
     CComPtr<IPin> pPin = GetFirstPin(pBF);
-    CComQIPtr<IMemInputPin> pMemInputPin = pPin;
-    m_fUseInternalTimer = !m_bIsPreview && HookNewSegment((IPinC*)(IPin*)pPin) && HookReceive((IMemInputPinC*)(IMemInputPin*)pMemInputPin);
+    if (!m_bIsPreview) {
+        if (HookNewSegment((IPinC*)(IPin*)pPin)) {
+            m_bHookedNewSegment = true;
+            CComQIPtr<IMemInputPin> pMemInputPin = pPin;
+            if (HookReceive((IMemInputPinC*)(IMemInputPin*)pMemInputPin)) {
+                m_fUseInternalTimer = true;
+                m_bHookedReceive = true;
+            }
+         }
+    }
 
     if (CComQIPtr<IAMVideoAccelerator> pAMVA = pPin) {
         HookAMVideoAccelerator((IAMVideoAcceleratorC*)(IAMVideoAccelerator*)pAMVA);
@@ -151,7 +169,6 @@ STDMETHODIMP CVMR9AllocatorPresenter::CreateRenderer(IUnknown** ppRenderer)
 STDMETHODIMP_(void) CVMR9AllocatorPresenter::SetTime(REFERENCE_TIME rtNow)
 {
     __super::SetTime(rtNow);
-    //m_fUseInternalTimer = false;
 }
 
 // IVMRSurfaceAllocator9

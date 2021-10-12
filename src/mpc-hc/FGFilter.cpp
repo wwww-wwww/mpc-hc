@@ -430,7 +430,7 @@ HRESULT CFGFilterFile::Create(IBaseFilter** ppBF, CInterfaceList<IUnknown, &IID_
 CFGFilterVideoRenderer::CFGFilterVideoRenderer(HWND hWnd, const CLSID& clsid, CStringW name, UINT64 merit, bool preview)
     : CFGFilter(clsid, name, merit)
     , m_hWnd(hWnd)
-    , m_bHas10BitWorkAround(false)
+    , m_bHasHookReceiveConnection(false)
     , m_bIsPreview(preview)
 {
     AddType(MEDIATYPE_Video, MEDIASUBTYPE_NULL);
@@ -438,7 +438,7 @@ CFGFilterVideoRenderer::CFGFilterVideoRenderer(HWND hWnd, const CLSID& clsid, CS
 
 CFGFilterVideoRenderer::~CFGFilterVideoRenderer()
 {
-    if (m_bHas10BitWorkAround) {
+    if (m_bHasHookReceiveConnection) {
         UnhookReceiveConnection();
     }
 }
@@ -534,8 +534,7 @@ HRESULT CFGFilterVideoRenderer::Create(IBaseFilter** ppBF, CInterfaceList<IUnkno
     CheckPointer(*ppBF, E_FAIL);
 
     if (!m_bIsPreview && (m_clsid == CLSID_EnhancedVideoRenderer || m_clsid == CLSID_EVRAllocatorPresenter || m_clsid == CLSID_SyncAllocatorPresenter || m_clsid == CLSID_VMR9AllocatorPresenter)) {
-        HookReceiveConnection(*ppBF);
-        m_bHas10BitWorkAround = true;
+        m_bHasHookReceiveConnection = HookReceiveConnection(*ppBF);
     }
 
     return hr;
