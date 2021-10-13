@@ -9421,7 +9421,7 @@ void CMainFrame::OnUpdatePlayRepeatForever(CCmdUI* pCmdUI)
 
 bool CMainFrame::SeekToFileChapter(int iChapter, bool bRelative /*= false*/)
 {
-    if (GetPlaybackMode() != PM_FILE) {
+    if (GetPlaybackMode() != PM_FILE || !m_pCB) {
         return false;
     }
 
