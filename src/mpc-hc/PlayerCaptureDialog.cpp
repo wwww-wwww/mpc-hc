@@ -990,7 +990,9 @@ void CPlayerCaptureDialog::SetupVideoControls(
     m_pAMTuner = pAMTuner;
     m_pAMVSC = pAMSC;
 
-    UpdateVideoControls();
+    if (pAMXB || pAMTuner || pAMSC) {
+        UpdateVideoControls();
+    }
 }
 
 void CPlayerCaptureDialog::SetupVideoControls(
@@ -1003,7 +1005,9 @@ void CPlayerCaptureDialog::SetupVideoControls(
     m_pAMVSC = pAMSC;
     m_pAMVfwCD = pAMVfwCD;
 
-    UpdateVideoControls();
+    if (pAMSC || pAMVfwCD) {
+        UpdateVideoControls();
+    }
 }
 
 void CPlayerCaptureDialog::UpdateVideoControls()
