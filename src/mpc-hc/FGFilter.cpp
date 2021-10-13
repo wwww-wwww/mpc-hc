@@ -25,6 +25,7 @@
 #include "MainFrm.h"
 #include "DSUtil.h"
 #include "IPinHook.h" // For the NVIDIA driver bug work-around
+#include "uuids.h"
 #include "moreuuids.h"
 #include <mvrInterfaces.h>
 
@@ -433,7 +434,76 @@ CFGFilterVideoRenderer::CFGFilterVideoRenderer(HWND hWnd, const CLSID& clsid, CS
     , m_bHasHookReceiveConnection(false)
     , m_bIsPreview(preview)
 {
-    AddType(MEDIATYPE_Video, MEDIASUBTYPE_NULL);
+    // List is based on filter registration data from madVR.
+    // ToDo: Some subtypes might only work with madVR. Figure out which ones and add them conditionally for extra efficiency.
+
+    AddType(MEDIATYPE_Video, MEDIASUBTYPE_YV12); // 0
+    AddType(MEDIATYPE_Video, MEDIASUBTYPE_NV12);
+    AddType(MEDIATYPE_Video, MEDIASUBTYPE_yv12);
+    AddType(MEDIATYPE_Video, MEDIASUBTYPE_nv12);
+    AddType(MEDIATYPE_Video, MEDIASUBTYPE_ICM1);
+    AddType(MEDIATYPE_Video, MEDIASUBTYPE_ICM2);
+    AddType(MEDIATYPE_Video, MEDIASUBTYPE_ICM3);
+    AddType(MEDIATYPE_Video, MEDIASUBTYPE_ICM4);
+    AddType(MEDIATYPE_Video, MEDIASUBTYPE_NV21);
+    AddType(MEDIATYPE_Video, MEDIASUBTYPE_IYUV);
+    AddType(MEDIATYPE_Video, MEDIASUBTYPE_I420); // 10
+    AddType(MEDIATYPE_Video, MEDIASUBTYPE_YUY2);
+    AddType(MEDIATYPE_Video, MEDIASUBTYPE_yuy2);
+    AddType(MEDIATYPE_Video, MEDIASUBTYPE_YVYU);
+    AddType(MEDIATYPE_Video, MEDIASUBTYPE_UYVY);
+    AddType(MEDIATYPE_Video, MEDIASUBTYPE_uyvy);
+    AddType(MEDIATYPE_Video, MEDIASUBTYPE_cyuv);
+    AddType(MEDIATYPE_Video, MEDIASUBTYPE_UYNV);
+    AddType(MEDIATYPE_Video, MEDIASUBTYPE_UYNY);
+    AddType(MEDIATYPE_Video, MEDIASUBTYPE_HDYC);
+    AddType(MEDIATYPE_Video, MEDIASUBTYPE_uyv1); // 20
+    AddType(MEDIATYPE_Video, MEDIASUBTYPE_2Vu1);
+    AddType(MEDIATYPE_Video, MEDIASUBTYPE_VDTZ);
+    AddType(MEDIATYPE_Video, MEDIASUBTYPE_YUV2);
+    AddType(MEDIATYPE_Video, MEDIASUBTYPE_yuv2);
+    AddType(MEDIATYPE_Video, MEDIASUBTYPE_2vuy);
+    AddType(MEDIATYPE_Video, MEDIASUBTYPE_2Vuy);
+    AddType(MEDIATYPE_Video, MEDIASUBTYPE_yuvu);
+    AddType(MEDIATYPE_Video, MEDIASUBTYPE_yuvs);
+    AddType(MEDIATYPE_Video, MEDIASUBTYPE_YV16);
+    AddType(MEDIATYPE_Video, MEDIASUBTYPE_I422); // 30
+    AddType(MEDIATYPE_Video, MEDIASUBTYPE_Y422);
+    AddType(MEDIATYPE_Video, MEDIASUBTYPE_V422);
+    AddType(MEDIATYPE_Video, MEDIASUBTYPE_Y42B);
+    AddType(MEDIATYPE_Video, MEDIASUBTYPE_P422);
+    AddType(MEDIATYPE_Video, MEDIASUBTYPE_YUNV);
+    AddType(MEDIATYPE_Video, MEDIASUBTYPE_VYUY);
+    AddType(MEDIATYPE_Video, MEDIASUBTYPE_AVUI);
+    AddType(MEDIATYPE_Video, MEDIASUBTYPE_AYUV);
+    AddType(MEDIATYPE_Video, MEDIASUBTYPE_YV24);
+    AddType(MEDIATYPE_Video, MEDIASUBTYPE_I444); // 40
+    AddType(MEDIATYPE_Video, MEDIASUBTYPE_v308);
+    AddType(MEDIATYPE_Video, MEDIASUBTYPE_v408);
+    AddType(MEDIATYPE_Video, MEDIASUBTYPE_RGB24);
+    AddType(MEDIATYPE_Video, MEDIASUBTYPE_RGB32);
+    AddType(MEDIATYPE_Video, MEDIASUBTYPE_24BG);
+    AddType(MEDIATYPE_Video, MEDIASUBTYPE_BGRA);
+    AddType(MEDIATYPE_Video, MEDIASUBTYPE_ABGR);
+    AddType(MEDIATYPE_Video, MEDIASUBTYPE_RGBA);
+    AddType(MEDIATYPE_Video, MEDIASUBTYPE_RGB0);
+    AddType(MEDIATYPE_Video, MEDIASUBTYPE_0RGB); // 50
+    AddType(MEDIATYPE_Video, MEDIASUBTYPE_b48r);
+    AddType(MEDIATYPE_Video, MEDIASUBTYPE_RBA_at);
+    AddType(MEDIATYPE_Video, MEDIASUBTYPE_at_RBA);
+    AddType(MEDIATYPE_Video, MEDIASUBTYPE_b64a);
+    AddType(MEDIATYPE_Video, MEDIASUBTYPE_P010);
+    AddType(MEDIATYPE_Video, MEDIASUBTYPE_P210);
+    AddType(MEDIATYPE_Video, MEDIASUBTYPE_Y210);
+    AddType(MEDIATYPE_Video, MEDIASUBTYPE_v210);
+    AddType(MEDIATYPE_Video, MEDIASUBTYPE_Y410);
+    AddType(MEDIATYPE_Video, MEDIASUBTYPE_v410); // 60
+    AddType(MEDIATYPE_Video, MEDIASUBTYPE_P016);
+    AddType(MEDIATYPE_Video, MEDIASUBTYPE_P216);
+    AddType(MEDIATYPE_Video, MEDIASUBTYPE_Y216);
+    AddType(MEDIATYPE_Video, MEDIASUBTYPE_v216);
+    AddType(MEDIATYPE_Video, MEDIASUBTYPE_Y416);
+    AddType(MEDIATYPE_Video, MEDIASUBTYPE_v416); // 66
 }
 
 CFGFilterVideoRenderer::~CFGFilterVideoRenderer()
