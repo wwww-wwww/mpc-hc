@@ -1058,7 +1058,7 @@ bool CDX9AllocatorPresenter::GetVBlank(int& _ScanLine, int& _bInVBlank, bool _bM
     return true;
 }
 
-bool CDX9AllocatorPresenter::WaitForVBlankRange(int& _RasterStart, int _RasterSize, bool _bWaitIfInside, bool _bNeedAccurate, bool _bMeasure, bool& _bTakenLock)
+bool CDX9AllocatorPresenter::WaitForVBlankRange(int& _RasterStart, int _RasterSize, bool _bWaitIfInside, bool _bNeedAccurate, bool _bMeasure, HANDLE& lockOwner)
 {
     if (_bMeasure) {
         m_RasterStatusWaitTimeMaxCalc = 0;
@@ -1196,10 +1196,9 @@ bool CDX9AllocatorPresenter::WaitForVBlankRange(int& _RasterStart, int _RasterSi
         }
 
         if (((ScanLineDiffLock >= 0 && ScanLineDiffLock <= D3DDevLockRange) || (LastLineDiffLock < 0 && ScanLineDiffLock > 0))) {
-            if (!_bTakenLock && _bMeasure) {
-                _bTakenLock = true;
+            if (!lockOwner && _bMeasure) {
                 llPerfLock = GetRenderersData()->GetPerfCounter();
-                LockD3DDevice();
+                lockOwner = LockD3DDevice();
             }
         }
         LastLineDiffLock = ScanLineDiffLock;
@@ -1223,7 +1222,7 @@ bool CDX9AllocatorPresenter::WaitForVBlankRange(int& _RasterStart, int _RasterSi
         m_VBlankEndWait = ScanLine;
         m_VBlankWaitTime = GetRenderersData()->GetPerfCounter() - llPerf;
 
-        if (_bTakenLock) {
+        if (lockOwner) {
             m_VBlankLockTime = GetRenderersData()->GetPerfCounter() - llPerfLock;
         } else {
             m_VBlankLockTime = 0;
@@ -1257,7 +1256,7 @@ int CDX9AllocatorPresenter::GetVBlackPos()
     }
 }
 
-bool CDX9AllocatorPresenter::WaitForVBlank(bool& _Waited, bool& _bTakenLock)
+bool CDX9AllocatorPresenter::WaitForVBlank(bool& _Waited, HANDLE& lockOwner)
 {
     const CRenderersSettings& r = GetRenderersSettings();
     if (!r.m_AdvRendSets.bVMR9VSync) {
@@ -1276,15 +1275,15 @@ bool CDX9AllocatorPresenter::WaitForVBlank(bool& _Waited, bool& _bTakenLock)
 
     if (!bCompositionEnabled) {
         if (m_bAlternativeVSync) {
-            _Waited = WaitForVBlankRange(WaitFor, 0, false, true, true, _bTakenLock);
+            _Waited = WaitForVBlankRange(WaitFor, 0, false, true, true, lockOwner);
             return false;
         } else {
-            _Waited = WaitForVBlankRange(WaitFor, 0, false, r.m_AdvRendSets.bVMR9VSyncAccurate, true, _bTakenLock);
+            _Waited = WaitForVBlankRange(WaitFor, 0, false, r.m_AdvRendSets.bVMR9VSyncAccurate, true, lockOwner);
             return true;
         }
     } else {
         // Instead we wait for VBlack after the present, this seems to fix the stuttering problem. It'r also possible to fix by removing the Sleep above, but that isn't an option.
-        WaitForVBlankRange(WaitFor, 0, false, r.m_AdvRendSets.bVMR9VSyncAccurate, true, _bTakenLock);
+        WaitForVBlankRange(WaitFor, 0, false, r.m_AdvRendSets.bVMR9VSyncAccurate, true, lockOwner);
 
         return false;
     }
@@ -1483,10 +1482,10 @@ STDMETHODIMP_(bool) CDX9AllocatorPresenter::Paint(bool bAll)
     }
 
     bool bWaited = false;
-    bool bTakenLock = false;
+    HANDLE lockOwner = nullptr;
     if (bAll) {
         // Only sync to refresh when redrawing all
-        bool bTest = WaitForVBlank(bWaited, bTakenLock);
+        bool bTest = WaitForVBlank(bWaited, lockOwner);
         ASSERT(bTest == bDoVSyncInPresent);
         if (!bDoVSyncInPresent) {
             LONGLONG Time = rd->GetPerfCounter();
@@ -1575,8 +1574,8 @@ STDMETHODIMP_(bool) CDX9AllocatorPresenter::Paint(bool bAll)
         OnVBlankFinished(bAll, Time);
     }
 
-    if (bTakenLock) {
-        UnlockD3DDevice();
+    if (lockOwner) {
+        UnlockD3DDevice(lockOwner);
     }
 
     /*if (!bWaited)

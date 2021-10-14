@@ -61,7 +61,7 @@ namespace DSObjects
         CCritSec m_RenderLock;
         CComPtr<IDirectDraw> m_pDirectDraw;
 
-        void LockD3DDevice() {
+        HANDLE LockD3DDevice() {
             if (m_pD3DDev) {
                 _RTL_CRITICAL_SECTION* pCritSec = (_RTL_CRITICAL_SECTION*)((size_t)m_pD3DDev.p + sizeof(size_t));
 
@@ -69,18 +69,20 @@ namespace DSObjects
                         && !IsBadReadPtr(pCritSec->DebugInfo, sizeof(*(pCritSec->DebugInfo))) && !IsBadWritePtr(pCritSec->DebugInfo, sizeof(*(pCritSec->DebugInfo)))) {
                     if (pCritSec->DebugInfo->CriticalSection == pCritSec) {
                         EnterCriticalSection(pCritSec);
+                        return pCritSec->OwningThread;
                     }
                 }
             }
+            return 0;
         }
 
-        void UnlockD3DDevice() {
+        void UnlockD3DDevice(HANDLE& lockOwner) {
             if (m_pD3DDev) {
                 _RTL_CRITICAL_SECTION* pCritSec = (_RTL_CRITICAL_SECTION*)((size_t)m_pD3DDev.p + sizeof(size_t));
 
                 if (!IsBadReadPtr(pCritSec, sizeof(*pCritSec)) && !IsBadWritePtr(pCritSec, sizeof(*pCritSec))
                         && !IsBadReadPtr(pCritSec->DebugInfo, sizeof(*(pCritSec->DebugInfo))) && !IsBadWritePtr(pCritSec->DebugInfo, sizeof(*(pCritSec->DebugInfo)))) {
-                    if (pCritSec->DebugInfo->CriticalSection == pCritSec && pCritSec->OwningThread) {
+                    if (pCritSec->DebugInfo->CriticalSection == pCritSec && pCritSec->OwningThread == lockOwner) {
                         LeaveCriticalSection(pCritSec);
                     }
                 }
@@ -105,8 +107,8 @@ namespace DSObjects
         DWORD GetVertexProcessing();
 
         bool GetVBlank(int& _ScanLine, int& _bInVBlank, bool _bMeasureTime);
-        bool WaitForVBlankRange(int& _RasterStart, int _RasterEnd, bool _bWaitIfInside, bool _bNeedAccurate, bool _bMeasure, bool& _bTakenLock);
-        bool WaitForVBlank(bool& _Waited, bool& _bTakenLock);
+        bool WaitForVBlankRange(int& _RasterStart, int _RasterEnd, bool _bWaitIfInside, bool _bNeedAccurate, bool _bMeasure, HANDLE& lockOwner);
+        bool WaitForVBlank(bool& _Waited, HANDLE& lockOwner);
         int GetVBlackPos();
         void CalculateJitter(LONGLONG PerformanceCounter);
         virtual void OnVBlankFinished(bool bAll, LONGLONG PerformanceCounter) {}
