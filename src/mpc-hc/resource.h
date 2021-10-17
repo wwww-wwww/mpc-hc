@@ -84,7 +84,7 @@
 #define ID_FILE_SAVE_THUMBNAILS         808
 #define ID_FILE_SUBTITLES_LOAD          809
 #define ID_FILE_SUBTITLES_SAVE          810
-#define ID_FILE_SUBTITLES_UPLOAD        811
+//#define ID_FILE_SUBTITLES_UPLOAD        811
 #define ID_FILE_SUBTITLES_DOWNLOAD      812
 #define ID_VIEW_ZOOM_25                 813
 #define ID_FILE_PROPERTIES              814
