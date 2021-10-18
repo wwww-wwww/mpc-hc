@@ -98,6 +98,7 @@
 #define IDS_RS_YDL_SUBS_PREFERENCE          _T("YDLSubsPreference")
 #define IDS_RS_USE_AUTOMATIC_CAPTIONS       _T("UseAutomaticCaptions")
 #define IDS_RS_LOCK_NOPAUSE                 _T("LockNoPause")
+#define IDS_RS_USE_SMTC                     _T("UseSMTC")
 
 // Audio
 #define IDS_RS_VOLUME                       _T("Volume")

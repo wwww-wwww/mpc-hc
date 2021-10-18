@@ -612,6 +612,7 @@ public:
     bool            bAllowInaccurateFastseek;
     bool            bLoopFolderOnPlayNextFile;
     bool            bLockNoPause;
+    bool            bUseSMTC;
 
     enum class AfterPlayback {
         DO_NOTHING,

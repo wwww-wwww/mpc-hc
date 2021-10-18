@@ -1110,7 +1110,11 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
     m_popupMenu.fulfillThemeReqs();
     m_mainPopupMenu.fulfillThemeReqs();
-    m_media_trans_control.Init(this);
+
+    if (s.bUseSMTC) {
+        m_media_trans_control.Init(this);
+    }
+
     return 0;
 }
 
