@@ -14955,10 +14955,9 @@ void CMainFrame::SetupSubtitlesSubMenu()
 
                 for (int j = 0, cnt = (int)cStreams; j < cnt; j++) {
                     DWORD dwFlags, dwGroup;
-                    LCID lcid = 0;
-                    WCHAR* pszName = nullptr;
+                     WCHAR* pszName = nullptr;
 
-                    if (FAILED(pSSF->Info(j, nullptr, &dwFlags, &lcid, &dwGroup, &pszName, nullptr, nullptr))
+                    if (FAILED(pSSF->Info(j, nullptr, &dwFlags, nullptr, &dwGroup, &pszName, nullptr, nullptr))
                             || !pszName) {
                         continue;
                     }
@@ -14977,23 +14976,11 @@ void CMainFrame::SetupSubtitlesSubMenu()
                     }
 
                     CString str;
-
                     if (lcname.Find(_T(" off")) >= 0) {
                         str.LoadString(IDS_AG_DISABLED);
                     } else {
-                        if (lcid != 0) {
-                            GetLocaleString(lcid, LOCALE_SENGLANGUAGE, str);
-                        }
-
-                        CString lcstr = CString(str).MakeLower();
-
-                        if (str.IsEmpty() || lcname.Find(lcstr) >= 0) {
-                            str = name;
-                        } else if (!name.IsEmpty()) {
-                            str = name + _T(" (") + str + _T(")");
-                        }
+                        str = name;
                     }
-
                     str.Replace(_T("&"), _T("&&"));
                     VERIFY(subMenu.AppendMenu(MF_STRING | MF_ENABLED, id++, str));
                     i++;
@@ -15294,10 +15281,9 @@ void CMainFrame::SetupNavStreamSelectSubMenu(CMenu& subMenu, UINT id, DWORD dwSe
         bool bAdded = false;
         for (DWORD i = 0; i < cStreams; i++) {
             DWORD dwFlags, dwGroup;
-            LCID lcid = 0;
             CComHeapPtr<WCHAR> pszName;
 
-            if (FAILED(pSS->Info(i, nullptr, &dwFlags, &lcid, &dwGroup, &pszName, nullptr, nullptr))
+            if (FAILED(pSS->Info(i, nullptr, &dwFlags, nullptr, &dwGroup, &pszName, nullptr, nullptr))
                     || !pszName) {
                 continue;
             }
@@ -15307,24 +15293,12 @@ void CMainFrame::SetupNavStreamSelectSubMenu(CMenu& subMenu, UINT id, DWORD dwSe
             }
 
             CString str;
-            CString lcname(pszName);
-            lcname.MakeLower();
+            CString lcname = CString(pszName).MakeLower();
 
             if (lcname.Find(_T(" off")) >= 0) {
                 str.LoadString(IDS_AG_DISABLED);
             } else {
-                if (lcid && lcid != LCID(-1)) {
-                    GetLocaleString(lcid, LOCALE_SENGLANGUAGE, str);
-                }
-
-                CString lcstr(str);
-                lcstr.MakeLower();
-
-                if (str.IsEmpty() || lcname.Find(lcstr) >= 0) {
-                    str = pszName;
-                } else if (wcslen(pszName)) {
-                    str = CString(pszName) + _T(" (") + str + _T(")");
-                }
+                str = pszName;
             }
 
             UINT flags = MF_BYCOMMAND | MF_STRING | MF_ENABLED;
