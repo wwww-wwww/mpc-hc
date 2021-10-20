@@ -2225,8 +2225,9 @@ static std::vector<int> PreferredOpenFuncts(CString fn) {
             if (OpenFuncts[i].open == OpenUSF) functs.insert(functs.begin(), i);
         } else if (fileExt == _T("style")) {
             if (OpenFuncts[i].open == OpenSubStationAlpha) functs.push_back(i);
-        } else if (fileExt == _T("tmp")) { // used for embedded subs
-            if (OpenFuncts[i].open == OpenSubRipper || OpenFuncts[i].open == OpenSubStationAlpha || OpenFuncts[i].open == OpenVTT) functs.push_back(i);
+        } else if (fileExt == _T("tmp")) { // used for embedded subs and downloaded subs
+            if (OpenFuncts[i].open == OpenSubRipper || OpenFuncts[i].open == OpenSubStationAlpha || OpenFuncts[i].open == OpenVTT) functs.insert(functs.begin(), i);
+            else functs.push_back(i);
         } else {
             functs.push_back(i);
         }
