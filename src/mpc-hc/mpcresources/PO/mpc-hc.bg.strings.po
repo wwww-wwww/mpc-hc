@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2021-05-04 16:20:41+0000\n"
+"POT-Creation-Date: 2021-09-06 17:51:01+0000\n"
 "PO-Revision-Date: 2020-01-02 07:46+0000\n"
 "Last-Translator: Андрей Станков <astankov84@gmail.com>, 2021\n"
 "Language-Team: Bulgarian (https://www.transifex.com/mpchc/teams/106126/bg/)\n"
@@ -901,7 +901,7 @@ msgstr "Sync Renderer"
 
 msgctxt "IDS_PPAGE_OUTPUT_AUD_MPC_REND"
 msgid "MPC Audio Renderer"
-msgstr ""
+msgstr "MPC Audio Renderer"
 
 msgctxt "IDS_PPAGE_OUTPUT_SURF_OFFSCREEN"
 msgid "Regular offscreen plain surface"
@@ -957,7 +957,7 @@ msgstr "Null (без компресия)"
 
 msgctxt "IDS_PPAGE_OUTPUT_AUD_INTERNAL_REND"
 msgid "SaneAR Audio Renderer"
-msgstr ""
+msgstr "SaneAR Audio Renderer"
 
 msgctxt "IDS_EMB_RESOURCES_VIEWER_NAME"
 msgid "Name"
@@ -4588,92 +4588,93 @@ msgstr "Ползвай заглавието в списъка със скоро�
 
 msgctxt "IDS_PPAGEADVANCED_SHOW_ABMARKS_STATUSBAR"
 msgid "Display current A-B repeat marks in status bar."
-msgstr ""
+msgstr "Показване на текущите A-B маркери за повторение в статус лентата."
 
 msgctxt "IDS_PPAGEADVANCED_SHOW_VIDEOINFO_STATUSBAR"
 msgid "Display video info (codec name, resolution) in status bar."
 msgstr ""
+"Показване на информация за видеото (кодек, резолюция) в статус лентата."
 
 msgctxt "IDS_ARS_WASAPI_MODE"
 msgid "WASAPI mode:"
-msgstr ""
+msgstr "WASAPI режим:"
 
 msgctxt "IDS_ARS_EXCLUSIVE"
 msgid "Exclusive"
-msgstr ""
+msgstr "Ексклузивен"
 
 msgctxt "IDS_ARS_SHARED"
 msgid "Shared"
-msgstr ""
+msgstr "Споделен"
 
 msgctxt "IDS_ARS_BITEXACT_OUTPUT"
 msgid "Allow bit-exact output"
-msgstr ""
+msgstr "Позволяване на точен побитов изход"
 
 msgctxt "IDS_ARS_SYSTEM_LAYOUT_CHANNELS"
 msgid "Use system layout channels"
-msgstr ""
+msgstr "Използване на системна настройка на каналите"
 
 msgctxt "IDS_ARS_SOUND_DEVICE"
 msgid "Sound Device:"
-msgstr ""
+msgstr "Звуково устройство:"
 
 msgctxt "IDS_ARS_RELEASE_DEVICE_IDLE"
 msgid "Release device when idle"
-msgstr ""
+msgstr "Освобождаване на устройство при бездействие"
 
 msgctxt "IDS_ARS_CROSSFEED"
 msgid "Enable stereo crossfeed (for headphones)"
-msgstr ""
+msgstr "Разрешаване на стерео crossfeed (за слушалки)"
 
 msgctxt "IDS_ARS_DEVICE_PERIOD"
 msgid "Device buffer:"
-msgstr ""
+msgstr "Буфер на устройството:"
 
 msgctxt "IDS_ARS_CHECK_FORMAT"
 msgid "Do not check format support"
-msgstr ""
+msgstr "Да не се проверява поддръжката на формати"
 
 msgctxt "IDS_ARS_STATUS"
 msgid "Status"
-msgstr ""
+msgstr "Статус"
 
 msgctxt "IDS_ARS_DEVICE"
 msgid "Device:"
-msgstr ""
+msgstr "Устройство:"
 
 msgctxt "IDS_ARS_MODE"
 msgid "Mode:"
-msgstr ""
+msgstr "Режим:"
 
 msgctxt "IDS_ARS_INPUT"
 msgid "Input"
-msgstr ""
+msgstr "Източник"
 
 msgctxt "IDS_ARS_OUTPUT"
 msgid "Output"
-msgstr ""
+msgstr "Извеждане"
 
 msgctxt "IDS_ARS_FORMAT"
 msgid "Format:"
-msgstr ""
+msgstr "Формат:"
 
 msgctxt "IDS_ARS_SAMPLERATE"
 msgid "Sample rate:"
-msgstr ""
+msgstr "Побитова скорост:"
 
 msgctxt "IDS_ARS_CHANNELS"
 msgid "Channels:"
-msgstr ""
+msgstr "Канали:"
 
 msgctxt "IDS_ARS_WASAPI_METHOD"
 msgid "WASAPI method:"
-msgstr ""
+msgstr "WASAPI метод:"
 
 msgctxt "IDS_ARS_DUMMY_CHANNELS"
 msgid "Don't fill channels when upmixing"
-msgstr ""
+msgstr "Да не се запълват каналите при upmixing"
 
 msgctxt "IDS_AG_DEFAULT"
 msgid "Default"
-msgstr ""
+msgstr "По подразбиране"

@@ -4,17 +4,17 @@
 # Translators:
 # MPC HC <adiposegithub@gmail.com>, 2020
 # Michał Trzebiatowski <michtrz@gmail.com>, 2020
-# Gaugg_Markus, 2020
 # tobsen <github@tobsen.de>, 2020
-# Steve <secure@mail.az>, 2020
 # fc5b3681a8011aa2097a1a11b3d42f55_901a704, 2021
+# Gaugg_Markus, 2021
+# Steve <secure@mail.az>, 2021
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2021-05-04 16:20:41+0000\n"
+"POT-Creation-Date: 2021-09-06 17:51:01+0000\n"
 "PO-Revision-Date: 2020-01-02 07:46+0000\n"
-"Last-Translator: fc5b3681a8011aa2097a1a11b3d42f55_901a704, 2021\n"
+"Last-Translator: Steve <secure@mail.az>, 2021\n"
 "Language-Team: German (https://www.transifex.com/mpchc/teams/106126/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -554,7 +554,7 @@ msgstr "Programm"
 
 msgctxt "IDD_PPAGEDVD"
 msgid "Playback::DVD"
-msgstr "Wiedergabe::DVD/BD"
+msgstr "Wiedergabe::DVD"
 
 msgctxt "IDD_PPAGESUBTITLES"
 msgid "Subtitles"
@@ -903,7 +903,7 @@ msgstr "Sync-Renderer (EVR-CP)"
 
 msgctxt "IDS_PPAGE_OUTPUT_AUD_MPC_REND"
 msgid "MPC Audio Renderer"
-msgstr ""
+msgstr "MPC-Audio-Renderer"
 
 msgctxt "IDS_PPAGE_OUTPUT_SURF_OFFSCREEN"
 msgid "Regular offscreen plain surface"
@@ -959,7 +959,7 @@ msgstr "Null Audio Device (uncompressed)"
 
 msgctxt "IDS_PPAGE_OUTPUT_AUD_INTERNAL_REND"
 msgid "SaneAR Audio Renderer"
-msgstr ""
+msgstr "SaneAR-Audio-Renderer"
 
 msgctxt "IDS_EMB_RESOURCES_VIEWER_NAME"
 msgid "Name"
@@ -1059,7 +1059,7 @@ msgstr ""
 
 msgctxt "IDS_AG_OPEN_FILE_LOCATION"
 msgid "Open File Location"
-msgstr "Öffne Dateiablageort"
+msgstr "Dateispeicherort öffnen"
 
 msgctxt "IDS_AG_TOGGLE_NAVIGATION"
 msgid "Toggle Navigation Bar"
@@ -4602,92 +4602,92 @@ msgstr "Benutze Titel aus der zuletzt benutzten Dateiliste."
 
 msgctxt "IDS_PPAGEADVANCED_SHOW_ABMARKS_STATUSBAR"
 msgid "Display current A-B repeat marks in status bar."
-msgstr ""
+msgstr "Aktuelle A-B Wiederholungsmarken in Statusleiste anzeigen."
 
 msgctxt "IDS_PPAGEADVANCED_SHOW_VIDEOINFO_STATUSBAR"
 msgid "Display video info (codec name, resolution) in status bar."
-msgstr ""
+msgstr "Videoinformationen (Codecname, Auflösung) in Statusleiste anzeigen."
 
 msgctxt "IDS_ARS_WASAPI_MODE"
 msgid "WASAPI mode:"
-msgstr ""
+msgstr "WASAPI-Modus:"
 
 msgctxt "IDS_ARS_EXCLUSIVE"
 msgid "Exclusive"
-msgstr ""
+msgstr "Exklusiv"
 
 msgctxt "IDS_ARS_SHARED"
 msgid "Shared"
-msgstr ""
+msgstr "Geteilt"
 
 msgctxt "IDS_ARS_BITEXACT_OUTPUT"
 msgid "Allow bit-exact output"
-msgstr ""
+msgstr "Bit-genaue Ausgabe erlauben"
 
 msgctxt "IDS_ARS_SYSTEM_LAYOUT_CHANNELS"
 msgid "Use system layout channels"
-msgstr ""
+msgstr "Kanäle des Systemlayouts verwenden"
 
 msgctxt "IDS_ARS_SOUND_DEVICE"
 msgid "Sound Device:"
-msgstr ""
+msgstr "Audiogerät:"
 
 msgctxt "IDS_ARS_RELEASE_DEVICE_IDLE"
 msgid "Release device when idle"
-msgstr ""
+msgstr "Gerät im Leerlauf freigeben"
 
 msgctxt "IDS_ARS_CROSSFEED"
 msgid "Enable stereo crossfeed (for headphones)"
-msgstr ""
+msgstr "Stereo-Kreuzung aktivieren (für Kopfhörer)"
 
 msgctxt "IDS_ARS_DEVICE_PERIOD"
 msgid "Device buffer:"
-msgstr ""
+msgstr "Geräte-Puffer:"
 
 msgctxt "IDS_ARS_CHECK_FORMAT"
 msgid "Do not check format support"
-msgstr ""
+msgstr "Formatunterstützung nicht prüfen"
 
 msgctxt "IDS_ARS_STATUS"
 msgid "Status"
-msgstr ""
+msgstr "Status"
 
 msgctxt "IDS_ARS_DEVICE"
 msgid "Device:"
-msgstr ""
+msgstr "Gerät:"
 
 msgctxt "IDS_ARS_MODE"
 msgid "Mode:"
-msgstr ""
+msgstr "Modus:"
 
 msgctxt "IDS_ARS_INPUT"
 msgid "Input"
-msgstr ""
+msgstr "Eingabe"
 
 msgctxt "IDS_ARS_OUTPUT"
 msgid "Output"
-msgstr ""
+msgstr "Ausgabe"
 
 msgctxt "IDS_ARS_FORMAT"
 msgid "Format:"
-msgstr ""
+msgstr "Format:"
 
 msgctxt "IDS_ARS_SAMPLERATE"
 msgid "Sample rate:"
-msgstr ""
+msgstr "Abtastrate:"
 
 msgctxt "IDS_ARS_CHANNELS"
 msgid "Channels:"
-msgstr ""
+msgstr "Kanäle:"
 
 msgctxt "IDS_ARS_WASAPI_METHOD"
 msgid "WASAPI method:"
-msgstr ""
+msgstr "WASAPI-Methode:"
 
 msgctxt "IDS_ARS_DUMMY_CHANNELS"
 msgid "Don't fill channels when upmixing"
-msgstr ""
+msgstr "Kanäle während des Upmix nicht füllen"
 
 msgctxt "IDS_AG_DEFAULT"
 msgid "Default"
-msgstr ""
+msgstr "Standard"

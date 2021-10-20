@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2021-05-04 16:20:41+0000\n"
+"POT-Creation-Date: 2021-09-06 17:51:01+0000\n"
 "PO-Revision-Date: 2020-01-02 07:46+0000\n"
 "Last-Translator: Cyril Provence <ywa78408@eveav.com>, 2021\n"
 "Language-Team: French (https://www.transifex.com/mpchc/teams/106126/fr/)\n"
@@ -707,7 +707,7 @@ msgstr "&Chaînes"
 
 msgctxt "IDS_PPAGE_OUTPUT_MPCVR"
 msgid "MPC Video Renderer"
-msgstr "MPC Video Renderer"
+msgstr "Moteur de rendu vidéo MPC"
 
 msgctxt "IDS_PPAGE_OUTPUT_VMR7"
 msgid "Video Mixing Renderer 7"
@@ -903,7 +903,7 @@ msgstr "Moteur de rendu Sync"
 
 msgctxt "IDS_PPAGE_OUTPUT_AUD_MPC_REND"
 msgid "MPC Audio Renderer"
-msgstr ""
+msgstr "Moteur de rendu audio MPC"
 
 msgctxt "IDS_PPAGE_OUTPUT_SURF_OFFSCREEN"
 msgid "Regular offscreen plain surface"
@@ -959,7 +959,7 @@ msgstr "Pas de rendu vidéo (formats non compressés)"
 
 msgctxt "IDS_PPAGE_OUTPUT_AUD_INTERNAL_REND"
 msgid "SaneAR Audio Renderer"
-msgstr ""
+msgstr "Moteur de rendu audio SaneAR"
 
 msgctxt "IDS_EMB_RESOURCES_VIEWER_NAME"
 msgid "Name"
@@ -4624,92 +4624,93 @@ msgstr "Utiliser le titre dans la liste des fichiers récents"
 
 msgctxt "IDS_PPAGEADVANCED_SHOW_ABMARKS_STATUSBAR"
 msgid "Display current A-B repeat marks in status bar."
-msgstr ""
+msgstr "Afficher les repères de répétition A-B actuels dans la barre d'état "
 
 msgctxt "IDS_PPAGEADVANCED_SHOW_VIDEOINFO_STATUSBAR"
 msgid "Display video info (codec name, resolution) in status bar."
 msgstr ""
+"Afficher les infos vidéo (nom du codec, résolution) dans la barre d'état"
 
 msgctxt "IDS_ARS_WASAPI_MODE"
 msgid "WASAPI mode:"
-msgstr ""
+msgstr "Mode WASAPI:"
 
 msgctxt "IDS_ARS_EXCLUSIVE"
 msgid "Exclusive"
-msgstr ""
+msgstr "Exclusif"
 
 msgctxt "IDS_ARS_SHARED"
 msgid "Shared"
-msgstr ""
+msgstr "Partagé"
 
 msgctxt "IDS_ARS_BITEXACT_OUTPUT"
 msgid "Allow bit-exact output"
-msgstr ""
+msgstr "Autoriser la sortie bit-exacte"
 
 msgctxt "IDS_ARS_SYSTEM_LAYOUT_CHANNELS"
 msgid "Use system layout channels"
-msgstr ""
+msgstr "Utiliser la disposition des canaux du système"
 
 msgctxt "IDS_ARS_SOUND_DEVICE"
 msgid "Sound Device:"
-msgstr ""
+msgstr "Périphérique audio:"
 
 msgctxt "IDS_ARS_RELEASE_DEVICE_IDLE"
 msgid "Release device when idle"
-msgstr ""
+msgstr "Libérer le périphérique quand inactif"
 
 msgctxt "IDS_ARS_CROSSFEED"
 msgid "Enable stereo crossfeed (for headphones)"
-msgstr ""
+msgstr "Activer l'alimentation croisée stéréo (pour les écouteurs)"
 
 msgctxt "IDS_ARS_DEVICE_PERIOD"
 msgid "Device buffer:"
-msgstr ""
+msgstr "Tampon du périphérique:"
 
 msgctxt "IDS_ARS_CHECK_FORMAT"
 msgid "Do not check format support"
-msgstr ""
+msgstr "Ne pas vérifier la prise en charge du format"
 
 msgctxt "IDS_ARS_STATUS"
 msgid "Status"
-msgstr ""
+msgstr "Statut"
 
 msgctxt "IDS_ARS_DEVICE"
 msgid "Device:"
-msgstr ""
+msgstr "Périphérique:"
 
 msgctxt "IDS_ARS_MODE"
 msgid "Mode:"
-msgstr ""
+msgstr "Mode:"
 
 msgctxt "IDS_ARS_INPUT"
 msgid "Input"
-msgstr ""
+msgstr "Entrée"
 
 msgctxt "IDS_ARS_OUTPUT"
 msgid "Output"
-msgstr ""
+msgstr "Sortie"
 
 msgctxt "IDS_ARS_FORMAT"
 msgid "Format:"
-msgstr ""
+msgstr "Format:"
 
 msgctxt "IDS_ARS_SAMPLERATE"
 msgid "Sample rate:"
-msgstr ""
+msgstr "Fréquence d'échantillonnage:"
 
 msgctxt "IDS_ARS_CHANNELS"
 msgid "Channels:"
-msgstr ""
+msgstr "Canaux:"
 
 msgctxt "IDS_ARS_WASAPI_METHOD"
 msgid "WASAPI method:"
-msgstr ""
+msgstr "Méthode WASAPI:"
 
 msgctxt "IDS_ARS_DUMMY_CHANNELS"
 msgid "Don't fill channels when upmixing"
-msgstr ""
+msgstr "Ne pas remplir les canaux lors du mixage élévateur"
 
 msgctxt "IDS_AG_DEFAULT"
 msgid "Default"
-msgstr ""
+msgstr "Par défaut"

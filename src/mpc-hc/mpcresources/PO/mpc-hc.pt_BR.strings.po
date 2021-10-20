@@ -9,7 +9,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2021-05-04 16:20:41+0000\n"
+"POT-Creation-Date: 2021-09-06 17:51:01+0000\n"
 "PO-Revision-Date: 2020-01-02 07:46+0000\n"
 "Last-Translator: Felipefpl, 2021\n"
 "Language-Team: Portuguese (Brazil) (https://www.transifex.com/mpchc/teams/106126/pt_BR/)\n"
@@ -419,7 +419,7 @@ msgstr "Padrão do Sistema"
 
 msgctxt "IDS_GRAPH_INTERFACES_ERROR"
 msgid "Failed to query the needed interfaces for playback"
-msgstr "Falhou em consultar as interfaces necessárias pro playback."
+msgstr "Falhou em consultar as interfaces necessárias pro playback"
 
 msgctxt "IDS_GRAPH_TARGET_WND_ERROR"
 msgid "Could not set target window for graph notification"
@@ -904,7 +904,7 @@ msgstr "Sincronizar o Renderizador"
 
 msgctxt "IDS_PPAGE_OUTPUT_AUD_MPC_REND"
 msgid "MPC Audio Renderer"
-msgstr ""
+msgstr "Renderizador do Áudio do MPC"
 
 msgctxt "IDS_PPAGE_OUTPUT_SURF_OFFSCREEN"
 msgid "Regular offscreen plain surface"
@@ -960,7 +960,7 @@ msgstr "Nulo (descomprimido)"
 
 msgctxt "IDS_PPAGE_OUTPUT_AUD_INTERNAL_REND"
 msgid "SaneAR Audio Renderer"
-msgstr ""
+msgstr "Renderizador de Áudio SaneAR"
 
 msgctxt "IDS_EMB_RESOURCES_VIEWER_NAME"
 msgid "Name"
@@ -1426,7 +1426,7 @@ msgstr ""
 
 msgctxt "IDS_SHADER_DLL_ERR_0"
 msgid "Cannot load %s, pixel shaders will not work."
-msgstr "Não pôde carregar o %s os shaders dos pixels não funcionarão. "
+msgstr "Não pôde carregar o %s os shaders dos pixels não funcionarão."
 
 msgctxt "IDS_SHADER_DLL_ERR_1"
 msgid ""
@@ -2530,11 +2530,11 @@ msgstr "O nome do arquivo contém caracteres não suportados (só usar A-Z, 0-9)
 
 msgctxt "IDS_THUMB_ROWNUMBER"
 msgid "Rows:"
-msgstr "Linhas: "
+msgstr "Linhas:"
 
 msgctxt "IDS_THUMB_COLNUMBER"
 msgid "Columns:"
-msgstr "Colunas: "
+msgstr "Colunas:"
 
 msgctxt "IDS_THUMB_IMAGE_WIDTH"
 msgid "Image width"
@@ -2672,7 +2672,7 @@ msgstr "Capítulo %d"
 
 msgctxt "IDS_AG_OUT_OF_MEMORY"
 msgid "Out of memory"
-msgstr "Sem memória!!!"
+msgstr "Sem memória"
 
 msgctxt "IDS_MAINFRM_77"
 msgid "Error: Requires Adobe Flash Player for IE with killswitch patch"
@@ -4140,7 +4140,7 @@ msgstr "Insira as credenciais do site da web"
 
 msgctxt "IDS_SUB_CREDENTIALS_MSG"
 msgid "Enter your credentials to connect to: "
-msgstr "Insira suas credenciais pra se conectar a:"
+msgstr "Insira suas credenciais pra se conectar a: "
 
 msgctxt "IDS_ASPECT_RATIO_SAR"
 msgid "Aspect Ratio: Assume square pixels (SAR)"
@@ -4599,92 +4599,93 @@ msgstr "Usar o título na lista de arquivos recentes."
 
 msgctxt "IDS_PPAGEADVANCED_SHOW_ABMARKS_STATUSBAR"
 msgid "Display current A-B repeat marks in status bar."
-msgstr ""
+msgstr "Exibir as marcas de repetição A-B atuais na barra de status."
 
 msgctxt "IDS_PPAGEADVANCED_SHOW_VIDEOINFO_STATUSBAR"
 msgid "Display video info (codec name, resolution) in status bar."
 msgstr ""
+"Exibir informações do vídeo (nome do codec, resolução) na barra de status."
 
 msgctxt "IDS_ARS_WASAPI_MODE"
 msgid "WASAPI mode:"
-msgstr ""
+msgstr "Modo WASAPI:"
 
 msgctxt "IDS_ARS_EXCLUSIVE"
 msgid "Exclusive"
-msgstr ""
+msgstr "Exclusivo"
 
 msgctxt "IDS_ARS_SHARED"
 msgid "Shared"
-msgstr ""
+msgstr "Compartilhado"
 
 msgctxt "IDS_ARS_BITEXACT_OUTPUT"
 msgid "Allow bit-exact output"
-msgstr ""
+msgstr "Permitir saída exata dos bits"
 
 msgctxt "IDS_ARS_SYSTEM_LAYOUT_CHANNELS"
 msgid "Use system layout channels"
-msgstr ""
+msgstr "Use canais do layout do sistema"
 
 msgctxt "IDS_ARS_SOUND_DEVICE"
 msgid "Sound Device:"
-msgstr ""
+msgstr "Dispositivo de Som:"
 
 msgctxt "IDS_ARS_RELEASE_DEVICE_IDLE"
 msgid "Release device when idle"
-msgstr ""
+msgstr "Liberar dispositivo quando inativo"
 
 msgctxt "IDS_ARS_CROSSFEED"
 msgid "Enable stereo crossfeed (for headphones)"
-msgstr ""
+msgstr "Ativar o crossfeed estéreo (pra fones de ouvido)"
 
 msgctxt "IDS_ARS_DEVICE_PERIOD"
 msgid "Device buffer:"
-msgstr ""
+msgstr "Buffer do dispositivo:"
 
 msgctxt "IDS_ARS_CHECK_FORMAT"
 msgid "Do not check format support"
-msgstr ""
+msgstr "Não verificar o suporte do formato"
 
 msgctxt "IDS_ARS_STATUS"
 msgid "Status"
-msgstr ""
+msgstr "Status"
 
 msgctxt "IDS_ARS_DEVICE"
 msgid "Device:"
-msgstr ""
+msgstr "Dispositivo:"
 
 msgctxt "IDS_ARS_MODE"
 msgid "Mode:"
-msgstr ""
+msgstr "Modo:"
 
 msgctxt "IDS_ARS_INPUT"
 msgid "Input"
-msgstr ""
+msgstr "Entrada"
 
 msgctxt "IDS_ARS_OUTPUT"
 msgid "Output"
-msgstr ""
+msgstr "Saída"
 
 msgctxt "IDS_ARS_FORMAT"
 msgid "Format:"
-msgstr ""
+msgstr "Formato:"
 
 msgctxt "IDS_ARS_SAMPLERATE"
 msgid "Sample rate:"
-msgstr ""
+msgstr "Taxa de Amostra:"
 
 msgctxt "IDS_ARS_CHANNELS"
 msgid "Channels:"
-msgstr ""
+msgstr "Canais:"
 
 msgctxt "IDS_ARS_WASAPI_METHOD"
 msgid "WASAPI method:"
-msgstr ""
+msgstr "Método do WASAPI:"
 
 msgctxt "IDS_ARS_DUMMY_CHANNELS"
 msgid "Don't fill channels when upmixing"
-msgstr ""
+msgstr "Não preencha os canais quando aumentar o número deles"
 
 msgctxt "IDS_AG_DEFAULT"
 msgid "Default"
-msgstr ""
+msgstr "Padrão"
