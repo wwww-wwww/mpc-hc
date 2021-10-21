@@ -420,6 +420,7 @@ private:
 
     bool m_fEndOfStream;
     ULONGLONG m_dwLastPause;
+    ULONGLONG m_dwReloadPos;
 
     bool m_bRememberFilePos;
 

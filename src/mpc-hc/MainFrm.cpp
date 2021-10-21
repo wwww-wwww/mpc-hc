@@ -795,6 +795,7 @@ CMainFrame::CMainFrame()
     , m_nVolumeBeforeFrameStepping(0)
     , m_fEndOfStream(false)
     , m_dwLastPause(0)
+    , m_dwReloadPos(0)
     , m_bRememberFilePos(false)
     , m_dwLastRun(0)
     , m_bBuffering(false)
@@ -3930,6 +3931,8 @@ LRESULT CMainFrame::OnOpenMediaFailed(WPARAM wParam, LPARAM lParam)
     bool bAfterPlaybackEvent = false;
 
     m_bOpenMediaActive = false;
+
+    m_dwReloadPos = 0;
 
     if (wParam == PM_FILE) {
         auto* pli = m_wndPlaylistBar.GetCur();
@@ -7935,9 +7938,13 @@ void CMainFrame::OnPlayPlay()
             if (m_fEndOfStream) {
                 SendMessage(WM_COMMAND, ID_PLAY_STOP);
             } else {
-                // after long pause (10min) or hibernation, perform a seek to current position first, to prevent potential hang on some systems (due to gpu driver issues?)
-                if (m_dwLastPause && m_wndSeekBar.HasDuration() && (GetTickCount64() - m_dwLastPause >= 10*60*1000)) {
-                    DoSeekTo(m_wndSeekBar.GetPos(), False);
+                if (!m_fAudioOnly) {
+                    // after long pause (15min) or hibernation, reload file to avoid playback issues on some systems (with buggy drivers)
+                    if (m_dwLastPause && m_wndSeekBar.HasDuration() && (GetTickCount64() - m_dwLastPause >= 15 * 60 * 1000)) {
+                        m_dwReloadPos = m_wndSeekBar.GetPos();
+                        OnFileReopen();
+                        return;
+                    }
                 }
             }
             m_pMS->SetRate(m_dSpeedRate);
@@ -14001,6 +14008,10 @@ bool CMainFrame::OpenMediaPrivate(CAutoPtr<OpenMediaData> pOMD)
             if (pFileData->rtStart > 0) { // Check if an explicit start time was given
                 rtPos = pFileData->rtStart;
             }
+            if (m_dwReloadPos > 0) {
+                rtPos = m_dwReloadPos;
+                m_dwReloadPos = 0;
+            }
             if (m_bRememberFilePos) { // Check if we want to remember the position
                 // Always update the file positions list so that the position
                 // is correctly saved but only restore the remembered position
@@ -14013,6 +14024,7 @@ bool CMainFrame::OpenMediaPrivate(CAutoPtr<OpenMediaData> pOMD)
             if (rtPos) {
                 m_pMS->SetPositions(&rtPos, AM_SEEKING_AbsolutePositioning, nullptr, AM_SEEKING_NoPositioning);
             }
+
             defaultVideoAngle = 0;
             if (m_pFSF && (m_pCAP2 || m_pCAP3)) {
                 CComQIPtr<IBaseFilter> pBF = m_pFSF;
