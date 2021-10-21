@@ -114,24 +114,20 @@ STDMETHODIMP CAudioSwitcherFilter::NonDelegatingQueryInterface(REFIID riid, void
 
 HRESULT CAudioSwitcherFilter::CheckMediaType(const CMediaType* pmt)
 {
-    if (pmt->formattype == FORMAT_WaveFormatEx
-            && ((WAVEFORMATEX*)pmt->pbFormat)->nChannels > 2
-            && ((WAVEFORMATEX*)pmt->pbFormat)->wFormatTag != WAVE_FORMAT_EXTENSIBLE) {
-        return VFW_E_INVALIDMEDIATYPE;    // stupid iviaudio tries to fool us
+    if (pmt->majortype == MEDIATYPE_Audio && pmt->formattype == FORMAT_WaveFormatEx && pmt->pbFormat) {
+        WORD wBitsPerSample = ((WAVEFORMATEX*)pmt->pbFormat)->wBitsPerSample;
+        WORD wFormatTag = ((WAVEFORMATEX*)pmt->pbFormat)->wFormatTag;
+        WORD nChannels = ((WAVEFORMATEX*)pmt->pbFormat)->nChannels;
+        if (nChannels > 2 && wFormatTag != WAVE_FORMAT_EXTENSIBLE) {
+            return VFW_E_INVALIDMEDIATYPE; // iviaudio tries to fool us
+        }
+        if (wBitsPerSample == 8 || wBitsPerSample == 16 || wBitsPerSample == 24 || wBitsPerSample == 32) {
+            if (wFormatTag == WAVE_FORMAT_PCM || wFormatTag == WAVE_FORMAT_IEEE_FLOAT || wFormatTag == WAVE_FORMAT_DOLBY_AC3_SPDIF || wFormatTag == WAVE_FORMAT_EXTENSIBLE) {
+                return S_OK;
+            }
+        }
     }
-
-    return (pmt->majortype == MEDIATYPE_Audio
-            && pmt->formattype == FORMAT_WaveFormatEx
-            && (((WAVEFORMATEX*)pmt->pbFormat)->wBitsPerSample == 8
-                || ((WAVEFORMATEX*)pmt->pbFormat)->wBitsPerSample == 16
-                || ((WAVEFORMATEX*)pmt->pbFormat)->wBitsPerSample == 24
-                || ((WAVEFORMATEX*)pmt->pbFormat)->wBitsPerSample == 32)
-            && (((WAVEFORMATEX*)pmt->pbFormat)->wFormatTag == WAVE_FORMAT_PCM
-                || ((WAVEFORMATEX*)pmt->pbFormat)->wFormatTag == WAVE_FORMAT_IEEE_FLOAT
-                || ((WAVEFORMATEX*)pmt->pbFormat)->wFormatTag == WAVE_FORMAT_DOLBY_AC3_SPDIF
-                || ((WAVEFORMATEX*)pmt->pbFormat)->wFormatTag == WAVE_FORMAT_EXTENSIBLE))
-           ? S_OK
-           : VFW_E_TYPE_NOT_ACCEPTED;
+    return VFW_E_TYPE_NOT_ACCEPTED;
 }
 
 template<class T, class U, int Umin, int Umax>
