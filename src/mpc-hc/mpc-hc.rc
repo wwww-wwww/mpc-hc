@@ -1097,13 +1097,15 @@ IDD_PPAGEAUDIORENDERER DIALOGEX 0, 0, 355, 289
 STYLE DS_SETFONT | WS_CHILD
 FONT 9, "Segoe UI", 400, 0, 0x1
 BEGIN
-    CONTROL         "SaneAR Audio Renderer Enabled", IDC_CHECK5, "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 6, 6, 343, 8
+    CONTROL         "SaneAR Audio Renderer Enabled",IDC_CHECK5,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,6,6,343,8
     GROUPBOX        "Device",IDC_STATIC5,6,24,343,40
     COMBOBOX        IDC_COMBO1,24,40,307,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
     GROUPBOX        "Options",IDC_STATIC6,6,70,343,100
-    CONTROL         "Exclusive mode", IDC_CHECK1, "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 24, 84, 126, 8
-    CONTROL         "Ignore system channel mixer (always ignored in exclusive WASAPI mode)", IDC_CHECK4, "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 24, 99, 323, 8
-    CONTROL         "Enable stereo crossfeed (for headphones)",IDC_CHECK3,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,24,114,307,8
+    CONTROL         "Exclusive mode",IDC_CHECK1,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,24,84,126,8
+    CONTROL         "Ignore system channel mixer (always ignored in exclusive WASAPI mode)",IDC_CHECK4,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,24,99,323,8
+    CONTROL         "Enable stereo crossfeed (for headphones)",IDC_CHECK3,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,24,114,307,8
     PUSHBUTTON      "C. Moy",IDC_BUTTON1,24,134,65,14
     PUSHBUTTON      "J. Meier",IDC_BUTTON2,95,134,65,14
     LTEXT           "Cut-off:",IDC_STATIC1,188,126,56,8,0,WS_EX_RIGHT
@@ -2372,6 +2374,8 @@ IDB_DT_RADIO_120        PNG                     "res\\darktheme\\radios-120.png"
 IDB_DT_RADIO_144        PNG                     "res\\darktheme\\radios-144.png"
 
 IDB_DT_RADIO_192        PNG                     "res\\darktheme\\radios-192.png"
+
+IDB_NOIMAGE             PNG                     "res\\noimage.png"
 
 
 /////////////////////////////////////////////////////////////////////////////

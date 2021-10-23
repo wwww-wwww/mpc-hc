@@ -1398,6 +1398,7 @@
     <Image Include="res\darktheme\radios-192.png">
       <Filter>MPCTheme\resources</Filter>
     </Image>
+    <Image Include="res\noimage.png" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\subtitles\favicon_opensubtitles.ico">

@@ -24,6 +24,7 @@
 #include "PlayerPreView.h"
 #include "CMPCTheme.h"
 #include "mplayerc.h"
+#include "resource.h"
 
 #define PREVIEW_TOOLTIP_BOTTOM 1
 
@@ -68,6 +69,13 @@ BEGIN_MESSAGE_MAP(CPreView, CWnd)
     ON_WM_CREATE()
     ON_WM_PAINT()
     ON_WM_SHOWWINDOW()
+END_MESSAGE_MAP()
+
+IMPLEMENT_DYNAMIC(previewView, CWnd)
+
+BEGIN_MESSAGE_MAP(previewView, CWnd)
+    ON_WM_PAINT()
+    ON_WM_ERASEBKGND()
 END_MESSAGE_MAP()
 
 // CPreView message handlers
@@ -116,6 +124,30 @@ int CPreView::OnCreate(LPCREATESTRUCT lpCreateStruct) {
     SetColor();
 
     return 0;
+}
+
+void previewView::OnPaint() {
+    CPaintDC dc(this);
+    if (onePaint) {
+        CRect rc;
+        GetClientRect(&rc);
+        if (!noImage.m_hObject) {
+            noImage.Load(IDB_NOIMAGE);
+        }
+        CImage i;
+        i.Attach(noImage);
+        CPoint p = { (rc.Width() - i.GetWidth()) / 2, (rc.Height() - i.GetHeight()) / 2 };
+        CRect exRect = { p.x, p.y, p.x + i.GetWidth(), p.y + i.GetHeight() };
+        i.BitBlt(dc, p);
+        i.Detach();
+        dc.ExcludeClipRect(exRect);
+        dc.FillSolidRect(rc, RGB(0, 0, 0)); //fill
+        onePaint = false;
+    }
+}
+
+BOOL previewView::OnEraseBkgnd(CDC* pDC) {
+    return TRUE;
 }
 
 void CPreView::OnPaint() {
@@ -175,6 +207,8 @@ void CPreView::OnPaint() {
 
 void CPreView::OnShowWindow(BOOL bShow, UINT nStatus) {
     if (bShow) {
+        m_view.onePaint = true;
+        UpdateWindow();
         m_pMainFrame->SetPreviewVideoPosition();
     }
 

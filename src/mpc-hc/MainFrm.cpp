@@ -17182,6 +17182,9 @@ void CMainFrame::OpenMedia(CAutoPtr<OpenMediaData> pOMD)
 
 bool CMainFrame::ResetDevice()
 {
+    if (m_pCAP2_preview) {
+        m_pCAP2_preview->ResetDevice();
+    }
     if (m_pCAP) {
         return m_pCAP->ResetDevice();
     }
@@ -17190,6 +17193,9 @@ bool CMainFrame::ResetDevice()
 
 bool CMainFrame::DisplayChange()
 {
+    if (m_pCAP2_preview) {
+        m_pCAP2_preview->DisplayChange();
+    }
     if (m_pCAP) {
         return m_pCAP->DisplayChange();
     }

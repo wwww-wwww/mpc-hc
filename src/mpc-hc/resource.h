@@ -84,7 +84,6 @@
 #define ID_FILE_SAVE_THUMBNAILS         808
 #define ID_FILE_SUBTITLES_LOAD          809
 #define ID_FILE_SUBTITLES_SAVE          810
-//#define ID_FILE_SUBTITLES_UPLOAD        811
 #define ID_FILE_SUBTITLES_DOWNLOAD      812
 #define ID_VIEW_ZOOM_25                 813
 #define ID_FILE_PROPERTIES              814
@@ -629,6 +628,7 @@
 #define IDS_MESSAGEBOX_CONTINUE         20064
 #define IDS_AG_TOGGLE_DEFAULT_SUBTITLE_STYLE 20065
 #define ID_FILE_OPEN_LOCATION           20066
+#define IDB_NOIMAGE                     20067
 #define IDI_OPENSUBTITLES               21001
 #define IDI_PODNAPISI                   21002
 #define IDI_SUBDB                       21003
@@ -1684,7 +1684,7 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        20067
+#define _APS_NEXT_RESOURCE_VALUE        20068
 #define _APS_NEXT_COMMAND_VALUE         33456
 #define _APS_NEXT_CONTROL_VALUE         22087
 #define _APS_NEXT_SYMED_VALUE           24052
