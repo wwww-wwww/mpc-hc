@@ -1402,6 +1402,10 @@ msgctxt "IDD_TUNER_SCAN_IDC_CHECK_OFFSET"
 msgid "Use an offset"
 msgstr "Dùng offset"
 
+msgctxt "IDD_TUNER_SCAN_IDC_STATIC"
+msgid "Symbol Rate"
+msgstr ""
+
 msgctxt "IDD_PPAGECAPTURE_IDC_STATIC"
 msgid "Default Device"
 msgstr "Thiết bị mặc định"

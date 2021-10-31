@@ -121,8 +121,8 @@ public:
     // IBDATuner
     STDMETHODIMP SetChannel(int nChannelPrefNumber);
     STDMETHODIMP SetAudio(int nAudioIndex);
-    STDMETHODIMP SetFrequency(ULONG ulFrequency, ULONG ulBandwidth);
-    STDMETHODIMP Scan(ULONG ulFrequency, ULONG ulBandwidth, HWND hWnd);
+    STDMETHODIMP SetFrequency(ULONG ulFrequency, ULONG ulBandwidth, ULONG ulSymbolRate);
+    STDMETHODIMP Scan(ULONG ulFrequency, ULONG ulBandwidth, ULONG ulSymbolRate, HWND hWnd);
     STDMETHODIMP GetStats(BOOLEAN& bPresent, BOOLEAN& bLocked, LONG& lDbStrength, LONG& lPercentQuality);
 
     // IAMStreamSelect

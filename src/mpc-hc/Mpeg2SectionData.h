@@ -70,7 +70,7 @@ class CMpeg2DataParser
 public:
     CMpeg2DataParser(IBaseFilter* pFilter);
 
-    HRESULT     ParseSDT(ULONG ulFrequency, ULONG ulBandwidth);
+    HRESULT     ParseSDT(ULONG ulFrequency, ULONG ulBandwidth, ULONG ulSymbolRate);
     HRESULT     ParsePAT();
     HRESULT     ParseNIT();
     HRESULT     ParseEIT(ULONG ulSID, EventDescriptor& NowNext);

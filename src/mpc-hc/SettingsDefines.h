@@ -275,6 +275,7 @@
 #define IDS_RS_BDA_SCAN_FREQ_START          _T("BDAScanFreqStart")
 #define IDS_RS_BDA_SCAN_FREQ_END            _T("BDAScanFreqEnd")
 #define IDS_RS_BDA_BANDWIDTH                _T("BDABandWidth")
+#define IDS_RS_BDA_SYMBOLRATE               _T("BDASymbolRate")
 #define IDS_RS_BDA_USE_OFFSET               _T("BDAUseOffset")
 #define IDS_RS_BDA_OFFSET                   _T("BDAOffset")
 #define IDS_RS_BDA_IGNORE_ENCRYPTED_CHANNELS _T("BDAIgnoreEncryptedChannels")

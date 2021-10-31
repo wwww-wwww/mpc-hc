@@ -701,14 +701,17 @@ STDMETHODIMP CFGManagerBDA::SetAudio(int nAudioIndex)
     return E_NOTIMPL;
 }
 
-STDMETHODIMP CFGManagerBDA::SetFrequency(ULONG ulFrequency, ULONG ulBandwidth)
+STDMETHODIMP CFGManagerBDA::SetFrequency(ULONG ulFrequency, ULONG ulBandwidth, ULONG ulSymbolRate)
 {
     HRESULT hr;
-    LOG(_T("Frequency %lu, Bandwidth %lu"), ulFrequency, ulBandwidth);
+    LOG(_T("Frequency %lu, Bandwidth %lu, SymbolRate %lu"), ulFrequency, ulBandwidth, ulSymbolRate);
     CheckPointer(m_pBDAControl, E_FAIL);
     CheckPointer(m_pBDAFreq, E_FAIL);
 
     CheckAndLogBDA(m_pBDAControl->StartChanges(), _T("  SetFrequency StartChanges"));
+    if (ulSymbolRate != 0) {
+        CheckAndLogBDANoRet(m_pBDADemodulator->put_SymbolRate(&ulSymbolRate), _T(" SetFrequency put_SymbolRate"));
+    }
     CheckAndLogBDANoRet(m_pBDAFreq->put_FrequencyMultiplier(1000), _T("  SetFrequency put_FrequencyMultiplier"));
     CheckAndLogBDANoRet(m_pBDAFreq->put_Bandwidth(ulBandwidth / 1000), _T("  SetFrequency put_Bandwidth"));
     CheckAndLogBDA(m_pBDAFreq->put_Frequency(ulFrequency), _T("  SetFrequency put_Frequency"));
@@ -781,7 +784,7 @@ HRESULT CFGManagerBDA::ClearMaps()
     return hr;
 }
 
-STDMETHODIMP CFGManagerBDA::Scan(ULONG ulFrequency, ULONG ulBandwidth, HWND hWnd)
+STDMETHODIMP CFGManagerBDA::Scan(ULONG ulFrequency, ULONG ulBandwidth, ULONG ulSymbolRate, HWND hWnd)
 {
     HRESULT hr = S_OK;
 
@@ -792,7 +795,7 @@ STDMETHODIMP CFGManagerBDA::Scan(ULONG ulFrequency, ULONG ulBandwidth, HWND hWnd
 
         LOG(_T("Scanning frequency %u.........."), ulFrequency);
 
-        if (FAILED(hr = Parser.ParseSDT(ulFrequency, ulBandwidth))) {
+        if (FAILED(hr = Parser.ParseSDT(ulFrequency, ulBandwidth, ulSymbolRate))) {
             LOG(_T("ParseSDT failed. Result: 0x%08x."), hr);
         } else if (FAILED(hr = Parser.ParsePAT())) {
             LOG(_T("ParsePAT failed. Result: 0x%08x."), hr);
@@ -1191,7 +1194,7 @@ HRESULT CFGManagerBDA::SetChannelInternal(CBDAChannel* pChannel)
         CheckNoLog(ChangeState(State_Running));
     }
 
-    CheckNoLog(SetFrequency(pChannel->GetFrequency(), pChannel->GetBandwidth()));
+    CheckNoLog(SetFrequency(pChannel->GetFrequency(), pChannel->GetBandwidth(), pChannel->GetSymbolRate()));
 
     CheckNoLog(Flush(pChannel->GetVideoType(), pChannel->GetDefaultAudioType()));
 

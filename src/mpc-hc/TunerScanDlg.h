@@ -53,6 +53,7 @@ public:
     ULONG m_ulFrequencyStart;
     ULONG m_ulFrequencyEnd;
     ULONG m_ulBandwidth;
+    ULONG m_ulSymbolRate;
     LONG m_lOffset;
     CMPCThemeEdit m_OffsetEditBox;
     BOOL m_bUseOffset;

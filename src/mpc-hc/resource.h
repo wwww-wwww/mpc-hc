@@ -655,6 +655,7 @@
 #define IDC_FREQ_END                    22023
 #define IDC_CHANNEL_LIST                22024
 #define ID_START                        22025
+#define IDC_SYMBOLRATE                  22026
 #define ID_SAVE                         22030
 #define IDC_STRENGTH                    22031
 #define IDC_SYNCVIDEO                   22032
@@ -1684,7 +1685,7 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        20068
+#define _APS_NEXT_RESOURCE_VALUE        20069
 #define _APS_NEXT_COMMAND_VALUE         33456
 #define _APS_NEXT_CONTROL_VALUE         22087
 #define _APS_NEXT_SYMED_VALUE           24052

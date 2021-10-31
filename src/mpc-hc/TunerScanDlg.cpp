@@ -56,6 +56,7 @@ CTunerScanDlg::CTunerScanDlg(CMainFrame* pMainFrame)
     m_ulFrequencyStart = s.iBDAScanFreqStart;
     m_ulFrequencyEnd = s.iBDAScanFreqEnd;
     m_ulBandwidth = s.iBDABandwidth * 1000;
+    m_ulSymbolRate = s.iBDASymbolRate;
     m_bUseOffset = s.fBDAUseOffset;
     m_lOffset = s.iBDAOffset;
     m_bIgnoreEncryptedChannels = s.fBDAIgnoreEncryptedChannels;
@@ -99,6 +100,7 @@ void CTunerScanDlg::DoDataExchange(CDataExchange* pDX)
     DDX_Text(pDX, IDC_FREQ_START, m_ulFrequencyStart);
     DDX_Text(pDX, IDC_FREQ_END, m_ulFrequencyEnd);
     DDX_Text(pDX, IDC_BANDWIDTH, m_ulBandwidth);
+    DDX_Text(pDX, IDC_SYMBOLRATE, m_ulSymbolRate);
     DDX_Text(pDX, IDC_OFFSET, m_lOffset);
     DDX_Check(pDX, IDC_CHECK_OFFSET, m_bUseOffset);
     DDX_Check(pDX, IDC_CHECK_IGNORE_ENCRYPTED, m_bIgnoreEncryptedChannels);
@@ -173,6 +175,7 @@ void CTunerScanDlg::OnBnClickedStart()
         pTSD->FrequencyStart = m_ulFrequencyStart;
         pTSD->FrequencyStop  = m_ulFrequencyEnd;
         pTSD->Bandwidth      = m_ulBandwidth;
+        pTSD->SymbolRate     = m_ulSymbolRate;
         pTSD->Offset         = m_bUseOffset ? m_lOffset : 0;
         SaveScanSettings();
 
@@ -307,6 +310,7 @@ void CTunerScanDlg::SaveScanSettings()
     s.iBDAScanFreqEnd = m_ulFrequencyEnd;
     div_t bdw = div(m_ulBandwidth, 1000);
     s.iBDABandwidth = bdw.quot;
+    s.iBDASymbolRate = m_ulSymbolRate;
     s.fBDAUseOffset = !!m_bUseOffset;
     s.iBDAOffset = m_lOffset;
     s.fBDAIgnoreEncryptedChannels = !!m_bIgnoreEncryptedChannels;

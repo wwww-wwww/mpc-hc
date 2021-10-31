@@ -28,7 +28,8 @@
 #define FORMAT_VERSION_2       2
 #define FORMAT_VERSION_3       3
 #define FORMAT_VERSION_4       4
-#define FORMAT_VERSION_CURRENT 5
+#define FORMAT_VERSION_5       5
+#define FORMAT_VERSION_CURRENT 6
 
 #define BDA_MAX_AUDIO    10
 #define BDA_MAX_SUBTITLE 10
@@ -119,6 +120,7 @@ public:
     LPCTSTR GetName() const { return m_strName; };
     ULONG GetFrequency() const { return m_ulFrequency; };
     ULONG GetBandwidth() const { return m_ulBandwidth; }
+    ULONG GetSymbolRate() const { return m_ulSymbolRate; }
     int GetPrefNumber() const { return m_nPrefNumber; };
     int GetOriginNumber() const { return m_nOriginNumber; };
     ULONG GetONID() const { return m_ulONID; };
@@ -155,6 +157,7 @@ public:
     void SetName(LPCTSTR Value) { m_strName = Value; };
     void SetFrequency(ULONG Value) { m_ulFrequency = Value; };
     void SetBandwidth(ULONG ulBandwidth) { m_ulBandwidth = ulBandwidth; }
+    void SetSymbolRate(ULONG ulSymbolRate) { m_ulSymbolRate = ulSymbolRate; }
     void SetPrefNumber(int Value) { m_nPrefNumber = Value; };
     void SetOriginNumber(int Value) { m_nOriginNumber = Value; };
     void SetEncrypted(bool Value) { m_bEncrypted = Value; };
@@ -190,6 +193,7 @@ private:
     CString m_strName;
     ULONG m_ulFrequency             = 0;
     ULONG m_ulBandwidth             = 0;
+    ULONG m_ulSymbolRate            = 0;
     int m_nPrefNumber               = 0;
     int m_nOriginNumber             = 0;
     bool m_bEncrypted               = false;
