@@ -393,7 +393,7 @@ BOOL CTextFile::ReadString(CStringA& str)
                                 break;
                             case 1: // 110xxxxx 10xxxxxx
                             case 2: // 1110xxxx 10xxxxxx 10xxxxxx
-                            case 3:
+                            case 3: // 11110xxx 10xxxxxx 10xxxxxx 10xxxxxx
                                 // Unsupported for non unicode strings
                                 abuffer[nCharsRead] = '?';
                                 break;
@@ -612,9 +612,8 @@ BOOL CTextFile::ReadString(CStringW& str)
                             case 2: // 1110xxxx 10xxxxxx 10xxxxxx
                                 m_wbuffer[nCharsRead] = (m_buffer[m_posInBuffer] & 0x0f) << 12 | (m_buffer[m_posInBuffer + 1] & 0x3f) << 6 | (m_buffer[m_posInBuffer + 2] & 0x3f);
                                 break;
-                            case 3:
-                                // not supported
-                                m_wbuffer[nCharsRead] = ' ';
+                            case 3: // 11110xxx 10xxxxxx 10xxxxxx 10xxxxxx
+                                m_wbuffer[nCharsRead] = (m_buffer[m_posInBuffer] & 0x07) << 18 | (m_buffer[m_posInBuffer + 1] & 0x3f) << 12 | (m_buffer[m_posInBuffer + 2] & 0x3f) << 6 | (m_buffer[m_posInBuffer + 3] & 0x3f);
                                 break;
                         }
                         m_posInBuffer += nContinuationBytes;
