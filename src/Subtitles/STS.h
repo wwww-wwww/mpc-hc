@@ -71,7 +71,7 @@ public:
     DWORD      SrtResX = 1920;
     DWORD      SrtResY = 1080;
     bool       Kerning = false;
-    bool       ScaledBorderAndShadow = true;
+    bool       ScaledBorderAndShadow = false;
     CString    customTags;
 #endif
 
