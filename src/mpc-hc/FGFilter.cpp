@@ -434,6 +434,9 @@ CFGFilterVideoRenderer::CFGFilterVideoRenderer(HWND hWnd, const CLSID& clsid, CS
     , m_bHasHookReceiveConnection(false)
     , m_bIsPreview(preview)
 {
+    bool mpcvr = (clsid == CLSID_MPCVR || clsid == CLSID_MPCVRAllocatorPresenter);
+    bool madvr = (clsid == CLSID_madVR || clsid == CLSID_madVRAllocatorPresenter);
+
     // List is based on filter registration data from madVR.
     // ToDo: Some subtypes might only work with madVR. Figure out which ones and add them conditionally for extra efficiency.
 
@@ -489,8 +492,8 @@ CFGFilterVideoRenderer::CFGFilterVideoRenderer(HWND hWnd, const CLSID& clsid, CS
     AddType(MEDIATYPE_Video, MEDIASUBTYPE_RGB0);
     AddType(MEDIATYPE_Video, MEDIASUBTYPE_0RGB); // 50
     AddType(MEDIATYPE_Video, MEDIASUBTYPE_b48r);
-    AddType(MEDIATYPE_Video, MEDIASUBTYPE_RBA_at);
-    AddType(MEDIATYPE_Video, MEDIASUBTYPE_at_RBA);
+    AddType(MEDIATYPE_Video, MEDIASUBTYPE_RBA64);
+    AddType(MEDIATYPE_Video, MEDIASUBTYPE_64RBA);
     AddType(MEDIATYPE_Video, MEDIASUBTYPE_b64a);
     AddType(MEDIATYPE_Video, MEDIASUBTYPE_P010);
     AddType(MEDIATYPE_Video, MEDIASUBTYPE_P210);
@@ -504,6 +507,11 @@ CFGFilterVideoRenderer::CFGFilterVideoRenderer(HWND hWnd, const CLSID& clsid, CS
     AddType(MEDIATYPE_Video, MEDIASUBTYPE_v216);
     AddType(MEDIATYPE_Video, MEDIASUBTYPE_Y416);
     AddType(MEDIATYPE_Video, MEDIASUBTYPE_v416); // 66
+
+    if (mpcvr) {
+        AddType(MEDIATYPE_Video, MEDIASUBTYPE_Y8);
+        AddType(MEDIATYPE_Video, MEDIASUBTYPE_Y16);
+    }
 }
 
 CFGFilterVideoRenderer::~CFGFilterVideoRenderer()
