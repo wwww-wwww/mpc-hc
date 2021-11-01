@@ -14304,13 +14304,13 @@ bool CMainFrame::SearchInDir(bool bDirForward, bool bLoop /*= false*/)
 
     finder.Close();
 
-    if (files.size() <= 1) {
-        return false;
-    }
-
     // We make sure that the currently opened file is added to the list
     // even if it's of an unknown format.
     auto current = files.insert(filename).first;
+
+    if (files.size() < 2 && CPath(filename).FileExists()) {
+        return false;
+    }
 
     if (bDirForward) {
         current++;
