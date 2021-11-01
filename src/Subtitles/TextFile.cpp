@@ -373,34 +373,32 @@ BOOL CTextFile::ReadString(CStringA& str)
                     abuffer[nCharsRead] = m_buffer[m_posInBuffer] & 0x7f;
                 } else if (Utf8::isFirstOfMultibyte(m_buffer[m_posInBuffer])) {
                     int nContinuationBytes = Utf8::continuationBytes(m_buffer[m_posInBuffer]);
-                    bValid = (nContinuationBytes <= 2);
+                    ASSERT(bValid);
 
-                    // We don't support characters wider than 16 bits
-                    if (bValid) {
-                        if (m_posInBuffer + nContinuationBytes >= m_nInBuffer) {
-                            // If we are at the end of the file, the buffer won't be full
-                            // and we won't be able to read any more continuation bytes.
-                            bValid = (m_nInBuffer == TEXTFILE_BUFFER_SIZE);
-                            break;
-                        } else {
-                            for (int j = 1; j <= nContinuationBytes; j++) {
-                                if (!Utf8::isContinuation(m_buffer[m_posInBuffer + j])) {
-                                    bValid = false;
-                                }
+                    if (m_posInBuffer + nContinuationBytes >= m_nInBuffer) {
+                        // If we are at the end of the file, the buffer won't be full
+                        // and we won't be able to read any more continuation bytes.
+                        bValid = (m_nInBuffer == TEXTFILE_BUFFER_SIZE);
+                        break;
+                    } else {
+                        for (int j = 1; j <= nContinuationBytes; j++) {
+                            if (!Utf8::isContinuation(m_buffer[m_posInBuffer + j])) {
+                                bValid = false;
                             }
-
-                            switch (nContinuationBytes) {
-                                case 0: // 0xxxxxxx
-                                    abuffer[nCharsRead] = m_buffer[m_posInBuffer] & 0x7f;
-                                    break;
-                                case 1: // 110xxxxx 10xxxxxx
-                                case 2: // 1110xxxx 10xxxxxx 10xxxxxx
-                                    // Unsupported for non unicode strings
-                                    abuffer[nCharsRead] = '?';
-                                    break;
-                            }
-                            m_posInBuffer += nContinuationBytes;
                         }
+
+                        switch (nContinuationBytes) {
+                            case 0: // 0xxxxxxx
+                                abuffer[nCharsRead] = m_buffer[m_posInBuffer] & 0x7f;
+                                break;
+                            case 1: // 110xxxxx 10xxxxxx
+                            case 2: // 1110xxxx 10xxxxxx 10xxxxxx
+                            case 3:
+                                // Unsupported for non unicode strings
+                                abuffer[nCharsRead] = '?';
+                                break;
+                        }
+                        m_posInBuffer += nContinuationBytes;
                     }
                 } else {
                     bValid = false;
@@ -590,35 +588,36 @@ BOOL CTextFile::ReadString(CStringW& str)
                     m_wbuffer[nCharsRead] = m_buffer[m_posInBuffer] & 0x7f;
                 } else if (Utf8::isFirstOfMultibyte(m_buffer[m_posInBuffer])) {
                     int nContinuationBytes = Utf8::continuationBytes(m_buffer[m_posInBuffer]);
-                    bValid = (nContinuationBytes <= 2);
+                    ASSERT(bValid);
 
-                    // We don't support characters wider than 16 bits
-                    if (bValid) {
-                        if (m_posInBuffer + nContinuationBytes >= m_nInBuffer) {
-                            // If we are at the end of the file, the buffer won't be full
-                            // and we won't be able to read any more continuation bytes.
-                            bValid = (m_nInBuffer == TEXTFILE_BUFFER_SIZE);
-                            break;
-                        } else {
-                            for (int j = 1; j <= nContinuationBytes; j++) {
-                                if (!Utf8::isContinuation(m_buffer[m_posInBuffer + j])) {
-                                    bValid = false;
-                                }
+                    if (m_posInBuffer + nContinuationBytes >= m_nInBuffer) {
+                        // If we are at the end of the file, the buffer won't be full
+                        // and we won't be able to read any more continuation bytes.
+                        bValid = (m_nInBuffer == TEXTFILE_BUFFER_SIZE);
+                        break;
+                    } else {
+                        for (int j = 1; j <= nContinuationBytes; j++) {
+                            if (!Utf8::isContinuation(m_buffer[m_posInBuffer + j])) {
+                                bValid = false;
                             }
-
-                            switch (nContinuationBytes) {
-                                case 0: // 0xxxxxxx
-                                    m_wbuffer[nCharsRead] = m_buffer[m_posInBuffer] & 0x7f;
-                                    break;
-                                case 1: // 110xxxxx 10xxxxxx
-                                    m_wbuffer[nCharsRead] = (m_buffer[m_posInBuffer] & 0x1f) << 6 | (m_buffer[m_posInBuffer + 1] & 0x3f);
-                                    break;
-                                case 2: // 1110xxxx 10xxxxxx 10xxxxxx
-                                    m_wbuffer[nCharsRead] = (m_buffer[m_posInBuffer] & 0x0f) << 12 | (m_buffer[m_posInBuffer + 1] & 0x3f) << 6 | (m_buffer[m_posInBuffer + 2] & 0x3f);
-                                    break;
-                            }
-                            m_posInBuffer += nContinuationBytes;
                         }
+
+                        switch (nContinuationBytes) {
+                            case 0: // 0xxxxxxx
+                                m_wbuffer[nCharsRead] = m_buffer[m_posInBuffer] & 0x7f;
+                                break;
+                            case 1: // 110xxxxx 10xxxxxx
+                                m_wbuffer[nCharsRead] = (m_buffer[m_posInBuffer] & 0x1f) << 6 | (m_buffer[m_posInBuffer + 1] & 0x3f);
+                                break;
+                            case 2: // 1110xxxx 10xxxxxx 10xxxxxx
+                                m_wbuffer[nCharsRead] = (m_buffer[m_posInBuffer] & 0x0f) << 12 | (m_buffer[m_posInBuffer + 1] & 0x3f) << 6 | (m_buffer[m_posInBuffer + 2] & 0x3f);
+                                break;
+                            case 3:
+                                // not supported
+                                m_wbuffer[nCharsRead] = ' ';
+                                break;
+                        }
+                        m_posInBuffer += nContinuationBytes;
                     }
                 } else {
                     bValid = false;
