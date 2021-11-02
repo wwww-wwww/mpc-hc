@@ -7939,8 +7939,8 @@ void CMainFrame::OnPlayPlay()
                 SendMessage(WM_COMMAND, ID_PLAY_STOP);
             } else {
                 if (!m_fAudioOnly) {
-                    // after long pause (15min) or hibernation, reload file to avoid playback issues on some systems (with buggy drivers)
-                    if (m_dwLastPause && m_wndSeekBar.HasDuration() && (GetTickCount64() - m_dwLastPause >= 15 * 60 * 1000)) {
+                    // after long pause (30min) or hibernation, reload file to avoid playback issues on some systems (with buggy drivers)
+                    if (m_dwLastPause && m_wndSeekBar.HasDuration() && (GetTickCount64() - m_dwLastPause >= 30 * 60 * 1000)) {
                         m_dwReloadPos = m_wndSeekBar.GetPos();
                         OnFileReopen();
                         return;
