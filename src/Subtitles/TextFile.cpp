@@ -588,8 +588,6 @@ BOOL CTextFile::ReadString(CStringW& str)
                     m_wbuffer[nCharsRead] = m_buffer[m_posInBuffer] & 0x7f;
                 } else if (Utf8::isFirstOfMultibyte(m_buffer[m_posInBuffer])) {
                     int nContinuationBytes = Utf8::continuationBytes(m_buffer[m_posInBuffer]);
-                    ASSERT(bValid);
-
                     if (m_posInBuffer + nContinuationBytes >= m_nInBuffer) {
                         // If we are at the end of the file, the buffer won't be full
                         // and we won't be able to read any more continuation bytes.
@@ -597,24 +595,18 @@ BOOL CTextFile::ReadString(CStringW& str)
                         break;
                     } else {
                         for (int j = 1; j <= nContinuationBytes; j++) {
-                            if (!Utf8::isContinuation(m_buffer[m_posInBuffer + j])) {
+                            if (!Utf8::isContinuation(m_buffer[m_posInBuffer + j])) { //maybe redundant since MultiByteToWideChar should return zero if bad utf-8?
                                 bValid = false;
                             }
                         }
-
-                        switch (nContinuationBytes) {
-                            case 0: // 0xxxxxxx
-                                m_wbuffer[nCharsRead] = m_buffer[m_posInBuffer] & 0x7f;
-                                break;
-                            case 1: // 110xxxxx 10xxxxxx
-                                m_wbuffer[nCharsRead] = (m_buffer[m_posInBuffer] & 0x1f) << 6 | (m_buffer[m_posInBuffer + 1] & 0x3f);
-                                break;
-                            case 2: // 1110xxxx 10xxxxxx 10xxxxxx
-                                m_wbuffer[nCharsRead] = (m_buffer[m_posInBuffer] & 0x0f) << 12 | (m_buffer[m_posInBuffer + 1] & 0x3f) << 6 | (m_buffer[m_posInBuffer + 2] & 0x3f);
-                                break;
-                            case 3: // 11110xxx 10xxxxxx 10xxxxxx 10xxxxxx
-                                m_wbuffer[nCharsRead] = (m_buffer[m_posInBuffer] & 0x07) << 18 | (m_buffer[m_posInBuffer + 1] & 0x3f) << 12 | (m_buffer[m_posInBuffer + 2] & 0x3f) << 6 | (m_buffer[m_posInBuffer + 3] & 0x3f);
-                                break;
+                        if (bValid) {
+                            int nWchars = MultiByteToWideChar(CP_UTF8, 0, &m_buffer[m_posInBuffer], nContinuationBytes + 1, nullptr, 0);
+                            if (nWchars > 0) {
+                                MultiByteToWideChar(CP_UTF8, 0, &m_buffer[m_posInBuffer], nContinuationBytes + 1, &m_wbuffer[nCharsRead], nWchars);
+                                nCharsRead += nWchars - 1; //subtract one for loop increment
+                            } else {
+                                bValid = false;
+                            }
                         }
                         m_posInBuffer += nContinuationBytes;
                     }

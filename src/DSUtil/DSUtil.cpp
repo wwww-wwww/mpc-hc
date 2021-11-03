@@ -1473,7 +1473,7 @@ CStringW UTF8To16(LPCSTR utf8)
 {
     CStringW str;
     int n = MultiByteToWideChar(CP_UTF8, 0, utf8, -1, nullptr, 0) - 1;
-    if (n < 0) {
+    if (n <= 0) {
         return str;
     }
     str.ReleaseBuffer(MultiByteToWideChar(CP_UTF8, 0, utf8, -1, str.GetBuffer(n), n + 1) - 1);
