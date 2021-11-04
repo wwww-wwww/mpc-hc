@@ -422,6 +422,8 @@ private:
     bool m_fEndOfStream;
     ULONGLONG m_dwLastPause;
     ULONGLONG m_dwReloadPos;
+    int m_iReloadAudioIdx;
+    int m_iReloadSubIdx;
 
     bool m_bRememberFilePos;
 
@@ -669,6 +671,8 @@ public:
 
     void SetAudioTrackIdx(int index);
     void SetSubtitleTrackIdx(int index);
+    int GetCurrentAudioTrackIdx();
+    int GetCurrentSubtitleTrackIdx();
 
     void AddFavorite(bool fDisplayMessage = false, bool fShowDialog = true);
 
