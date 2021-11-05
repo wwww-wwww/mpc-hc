@@ -102,6 +102,7 @@ extern HRESULT LoadExternalFilter(LPCTSTR path, REFCLSID clsid, IBaseFilter** pp
 extern HRESULT LoadExternalPropertyPage(IPersist* pP, REFCLSID clsid, IPropertyPage** ppPP);
 extern bool UnloadUnusedExternalObjects();
 extern void ExtendMaxPathLengthIfNeeded(CString& path, int max_length = MAX_PATH);
+extern bool ContainsWildcard(CString& path);
 extern void ShortenLongPath(CString& path);
 extern CString MakeFullPath(LPCTSTR path);
 extern bool GetMediaTypeFourCC(const GUID& guid, CString& fourCC);

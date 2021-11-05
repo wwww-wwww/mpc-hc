@@ -234,64 +234,6 @@ void CPlayerPlaylistBar::ReplaceCurrentItem(CAtlList<CString>& fns, CAtlList<CSt
     }
 }
 
-static bool SearchFiles(CString mask, CAtlList<CString>& sl)
-{
-    if (PathUtils::IsURL(mask)) {
-        return false;
-    }
-
-    mask.Trim();
-    sl.RemoveAll();
-
-    CMediaFormats& mf = AfxGetAppSettings().m_Formats;
-
-    // support very long paths
-    ExtendMaxPathLengthIfNeeded(mask, MAX_PATH - 4);
-
-    WIN32_FILE_ATTRIBUTE_DATA fad;
-    bool isDir = (GetFileAttributesEx(mask, GetFileExInfoStandard, &fad) && (fad.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY));
-    if (isDir) {
-        mask = CString(mask).TrimRight(_T("\\/")) + _T("\\*.*");
-    }
-
-    {
-        CString dir = mask.Left(std::max(mask.ReverseFind('\\'), mask.ReverseFind('/')) + 1);
-
-        WIN32_FIND_DATA fd;
-        HANDLE h = FindFirstFile(mask, &fd);
-        if (h != INVALID_HANDLE_VALUE) {
-            do {
-                if (fd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) {
-                    continue;
-                }
-
-                CString fn = fd.cFileName;
-                CString ext = fn.Mid(fn.ReverseFind('.')).MakeLower();
-
-                if (!isDir || mf.FindExt(ext)) {
-                    for (size_t i = 0; i < mf.GetCount(); i++) {
-                        CMediaFormatCategory& mfc = mf.GetAt(i);
-                        if (mfc.FindExt(ext)) {
-                            /* playlist and cue files should be ignored when playing the contents of an entire directory */
-                            if (mf[i].GetLabel() != _T("pls") && ext != _T(".cue") && ext != _T(".m3u") && ext != _T(".m3u8") && ext != _T(".mpcpl") && ext != _T(".pls")) {
-                                CString path = dir + fn;
-                                ExtendMaxPathLengthIfNeeded(path);
-                                sl.AddTail(path);
-                            }
-                            break;
-                        }
-                    }
-                }
-
-            } while (FindNextFile(h, &fd));
-
-            FindClose(h);
-        }
-    }
-
-    return (!sl.IsEmpty() || mask.FindOneOf(_T("?*")) >= 0);
-}
-
 void CPlayerPlaylistBar::ParsePlayList(CString fn, CAtlList<CString>* subs, int redir_count)
 {
     TRACE(fn + _T("\n"));
@@ -317,6 +259,50 @@ void CPlayerPlaylistBar::ResolveLinkFiles(CAtlList<CString>& fns)
     }
 }
 
+bool CPlayerPlaylistBar::AddItemNoDuplicate(CString fn)
+{
+    POSITION pos = m_pl.GetHeadPosition();
+    while (pos) {
+        const CPlaylistItem& pli = m_pl.GetNext(pos);
+        POSITION subpos = pli.m_fns.GetHeadPosition();
+        while (subpos) {
+            CString cur = pli.m_fns.GetNext(subpos);
+            if (cur.MakeLower() == fn.MakeLower()) {
+                // duplicate
+                return false;
+            }
+        }
+    }
+
+    AddItem(fn);
+    return true;
+}
+
+bool CPlayerPlaylistBar::AddFromFilemask(CString mask)
+{
+    ASSERT(ContainsWildcard(mask));
+    bool added = false;
+
+    std::set<CString, CStringUtils::LogicalLess> filelist;
+    if (m_pMainFrame->WildcardFileSearch(mask, filelist)) {
+        auto it = filelist.begin();
+        while (it != filelist.end()) {
+            if (AddItemNoDuplicate(*it)) {
+                added = true;
+            }
+            it++;
+        }
+    }
+
+    return added;
+}
+
+bool CPlayerPlaylistBar::AddItemsInFolder(CString pathname)
+{
+    CString mask = CString(pathname).TrimRight(_T("\\/")) + _T("\\*.*");
+    return AddFromFilemask(mask);
+}
+
 void CPlayerPlaylistBar::ParsePlayList(CAtlList<CString>& fns, CAtlList<CString>* subs, int redir_count, CString label, CString ydl_src, CString cue, CAtlList<CYoutubeDLInstance::YDLSubInfo>* ydl_subs)
 {
     if (fns.IsEmpty()) {
@@ -333,18 +319,15 @@ void CPlayerPlaylistBar::ParsePlayList(CAtlList<CString>& fns, CAtlList<CString>
         // single entry can be a directory or file mask -> search for files
         // multiple filenames means video file plus audio dub
         if (fns.GetCount() == 1) {
-            CAtlList<CString> sl;
-            if (SearchFiles(fns.GetHead(), sl)) {
-                if (sl.GetCount() > 0) {
-                    if (sl.GetCount() > 1) {
-                        subs = nullptr;
-                    }
-                    POSITION pos = sl.GetHeadPosition();
-                    while (pos) {
-                        ParsePlayList(sl.GetNext(pos), subs, redir_count + 1);
-                    }
+            CString fname = fns.GetHead();
+            if (!PathUtils::IsURL(fname)) {
+                if (ContainsWildcard(fname)) {
+                    AddFromFilemask(fname);
+                    return;
+                } else if (PathUtils::IsDir(fname)) {
+                    AddItemsInFolder(fname);
+                    return;
                 }
-                return;
             }
         }
     }
@@ -641,8 +624,8 @@ bool CPlayerPlaylistBar::ParseM3UPlayList(CString fn) {
                             continue; // discard invalid EXTINF line
                         }
                         if (f.ReadString(str)) {
+                            pli = CPlaylistItem();
                             pli.m_label = value.Mid(findDelim + 1);
-                            pli.m_fns.RemoveAll();
                             str = CombinePath(base, str, isurl);
                             pli.m_fns.AddTail(str);
                             if (PathUtils::IsURL(str) && CMainFrame::IsOnYDLWhitelist(str)) {
@@ -650,7 +633,6 @@ bool CPlayerPlaylistBar::ParseM3UPlayList(CString fn) {
                                 pli.m_bYoutubeDL = true;
                             }
                             m_pl.AddTail(pli);
-                            pli = CPlaylistItem();
                             success = true;
                             continue;
                         }
@@ -673,17 +655,30 @@ bool CPlayerPlaylistBar::ParseM3UPlayList(CString fn) {
         }
 
         // parse as an entry without EXTINF
-        pli.m_label = _T("");
-        pli.m_fns.RemoveAll();
         str = CombinePath(base, str, isurl);
-        pli.m_fns.AddTail(str);
-        if (PathUtils::IsURL(str) && CMainFrame::IsOnYDLWhitelist(str)) {
-            pli.m_ydlSourceURL = str;
-            pli.m_bYoutubeDL = true;
+        if (!isurl && !PathUtils::IsURL(str) && ContainsWildcard(str)) {
+            // wildcard entry
+            std::set<CString, CStringUtils::LogicalLess> filelist;
+            if (m_pMainFrame->WildcardFileSearch(str, filelist)) {
+                auto it = filelist.begin();
+                while (it != filelist.end()) {
+                    pli = CPlaylistItem();
+                    pli.m_fns.AddTail(*it);
+                    m_pl.AddTail(pli);
+                    success = true;
+                    it++;
+                }
+            }
+        } else {
+            pli = CPlaylistItem();
+            pli.m_fns.AddTail(str);
+            if (PathUtils::IsURL(str) && CMainFrame::IsOnYDLWhitelist(str)) {
+                pli.m_ydlSourceURL = str;
+                pli.m_bYoutubeDL = true;
+            }
+            m_pl.AddTail(pli);
+            success = true;
         }
-        m_pl.AddTail(pli);
-        pli = CPlaylistItem();
-        success = true;
     }
 
     return success;
@@ -2070,79 +2065,11 @@ void CPlayerPlaylistBar::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
             break;
         case M_ADDFOLDER: {
             // add all media files in current playlist item folder that are not yet in the playlist
-            const CString currentFileName = m_pl.GetAt(pos).m_fns.GetHead();
-            const CString dirName = PathUtils::DirName(currentFileName);
+            const CString dirName = PathUtils::DirName(m_pl.GetAt(pos).m_fns.GetHead());
             if (PathUtils::IsDir(dirName)) {
-                CAtlList<CString> fileListAtl;
-                if (SearchFiles(dirName, fileListAtl)) {
-                    std::set<CString, CStringUtils::LogicalLess> fileList;
-                    {
-                        // convert to stl
-                        POSITION pos2 = fileListAtl.GetHeadPosition();
-                        while (pos2) {
-                            fileList.emplace_hint(fileList.end(), fileListAtl.GetNext(pos2));
-                        }
-
-                        // deduplicate
-                        pos2 = m_pl.GetHeadPosition();
-                        while (pos2) {
-                            const CPlaylistItem& pli = m_pl.GetNext(pos2);
-                            POSITION subpos = pli.m_fns.GetHeadPosition();
-                            while (subpos) {
-                                fileList.erase(pli.m_fns.GetNext(subpos));
-                            }
-                        }
-                    }
-
-                    CStringUtils::LogicalLess less;
-                    for (auto rit = fileList.crbegin(); rit != fileList.crend(); ++rit) {
-                        // determine insert position
-                        bool bLower = false;
-                        while (pos) {
-                            const CString& fileName = m_pl.GetAt(pos).m_fns.GetHead();
-                            if (!less(*rit, fileName) || PathUtils::DirName(fileName).CompareNoCase(PathUtils::DirName(*rit))) {
-                                break;
-                            }
-                            bLower = true;
-                            m_pl.GetPrev(pos);
-                        }
-                        if (!bLower) {
-                            m_pl.GetNext(pos);
-                            while (pos) {
-                                const CString& fileName = m_pl.GetAt(pos).m_fns.GetHead();
-                                if (!less(fileName, *rit) || PathUtils::DirName(fileName).CompareNoCase(PathUtils::DirName(*rit))) {
-                                    break;
-                                }
-                                m_pl.GetNext(pos);
-                            }
-                        }
-
-                        // insert new item
-                        CPlaylistItem pli;
-                        pli.m_fns.AddTail(*rit);
-                        if (bLower) {
-                            pos = pos ? m_pl.InsertAfter(pos, pli) : m_pl.AddHead(pli);
-                        } else {
-                            pos = pos ? m_pl.InsertBefore(pos, pli) : m_pl.AddTail(pli);
-                        }
-                    }
-
-                    // rebuild list and restore selection
-                    if (!fileList.empty()) {
-                        int insertedBefore = 0;
-                        for (const auto& fileName : fileList) {
-                            if (less(fileName, currentFileName)) {
-                                insertedBefore++;
-                            } else {
-                                break;
-                            }
-                        }
-                        Refresh();
-                        m_list.SetItemState(lvhti.iItem + insertedBefore, LVIS_SELECTED, LVIS_SELECTED);
-                        m_list.SetSelectionMark(lvhti.iItem + insertedBefore);
-                        m_list.EnsureVisible(lvhti.iItem + insertedBefore, TRUE);
-                        SavePlaylist();
-                    }
+                if (AddItemsInFolder(dirName)) {
+                    Refresh();
+                    SavePlaylist();
                 }
             }
             break;

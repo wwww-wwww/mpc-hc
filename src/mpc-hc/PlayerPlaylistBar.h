@@ -68,8 +68,11 @@ private:
     int m_nTimeColWidth;
     void ResizeListColumn();
 
-    void AddItem(CString fn, CAtlList<CString>* subs);
-    void AddItem(CAtlList<CString>& fns, CAtlList<CString>* subs, CString label = _T(""), CString ydl_src = _T(""), CString cue = _T(""), CAtlList<CYoutubeDLInstance::YDLSubInfo>* ydl_subs = nullptr);
+    void AddItem(CString fn, CAtlList<CString>* subs = nullptr);
+    void AddItem(CAtlList<CString>& fns, CAtlList<CString>* subs = nullptr, CString label = _T(""), CString ydl_src = _T(""), CString cue = _T(""), CAtlList<CYoutubeDLInstance::YDLSubInfo>* ydl_subs = nullptr);
+    bool AddItemNoDuplicate(CString fn);
+    bool AddFromFilemask(CString mask);
+    bool AddItemsInFolder(CString folder);
     void ParsePlayList(CString fn, CAtlList<CString>* subs, int redir_count = 0);
     void ParsePlayList(CAtlList<CString>& fns, CAtlList<CString>* subs, int redir_count = 0, CString label = _T(""), CString ydl_src = _T(""), CString cue = _T(""), CAtlList<CYoutubeDLInstance::YDLSubInfo>* ydl_subs = nullptr);
     void ResolveLinkFiles(CAtlList<CString>& fns);

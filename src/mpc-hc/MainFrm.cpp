@@ -14272,6 +14272,37 @@ void CMainFrame::CloseMediaPrivate()
 	m_FontInstaller.UninstallFonts();
 }
 
+bool CMainFrame::WildcardFileSearch(CString searchstr, std::set<CString, CStringUtils::LogicalLess>& results)
+{
+    // support very long paths
+    ExtendMaxPathLengthIfNeeded(searchstr, MAX_PATH);
+
+    CFileFind finder;
+    if (finder.FindFile(searchstr)) {
+        const CMediaFormats& mf = AfxGetAppSettings().m_Formats;
+        bool bHasNext = true;
+
+        while (bHasNext) {
+            bHasNext = finder.FindNextFile();
+
+            if (!finder.IsDirectory()) {
+                CString path = finder.GetFilePath();
+                CString ext = path.Mid(path.ReverseFind('.'));
+
+                if (mf.FindExt(ext)) {
+                    /* playlist and cue files should be ignored when searching dir for playable files */
+                    if (ext != _T(".m3u") && ext != _T(".m3u8") && ext != _T(".mpcpl") && ext != _T(".pls") && ext != _T(".cue") && ext != _T(".asx")) {
+                        results.insert(path);
+                    }
+                }
+            }
+        }
+    }
+    finder.Close();
+
+    return results.size() > 0;
+}
+
 bool CMainFrame::SearchInDir(bool bDirForward, bool bLoop /*= false*/)
 {
     ASSERT(GetPlaybackMode() == PM_FILE || CanSkipFromClosedFile());
@@ -14298,47 +14329,37 @@ bool CMainFrame::SearchInDir(bool bDirForward, bool bLoop /*= false*/)
         return false;
     }
 
-    std::set<CString, CStringUtils::LogicalLess> files;
-    const CMediaFormats& mf = AfxGetAppSettings().m_Formats;
-    CString mask = filename.Left(filename.ReverseFind(_T('\\')) + 1) + _T("*.*");
-    CFileFind finder;
-    BOOL bHasNext = finder.FindFile(mask);
-
-    while (bHasNext) {
-        bHasNext = finder.FindNextFile();
-
-        if (!finder.IsDirectory()) {
-            CString path = finder.GetFilePath();
-            CString ext = path.Mid(path.ReverseFind('.'));
-            if (mf.FindExt(ext)) {
-                files.insert(path);
-            }
-        }
+    int p = filename.ReverseFind(_T('\\'));
+    if (p < 0) {
+        return false;
     }
-
-    finder.Close();
+    CString filemask = filename.Left(p + 1) + _T("*.*");
+    std::set<CString, CStringUtils::LogicalLess> filelist;
+    if (!WildcardFileSearch(filemask, filelist)) {
+        return false;
+    }
 
     // We make sure that the currently opened file is added to the list
     // even if it's of an unknown format.
-    auto current = files.insert(filename).first;
+    auto current = filelist.insert(filename).first;
 
-    if (files.size() < 2 && CPath(filename).FileExists()) {
+    if (filelist.size() < 2 && CPath(filename).FileExists()) {
         return false;
     }
 
     if (bDirForward) {
         current++;
-        if (current == files.end()) {
+        if (current == filelist.end()) {
             if (bLoop) {
-                current = files.begin();
+                current = filelist.begin();
             } else {
                 return false;
             }
         }
     } else {
-        if (current == files.begin()) {
+        if (current == filelist.begin()) {
             if (bLoop) {
-                current = files.end();
+                current = filelist.end();
             } else {
                 return false;
             }
