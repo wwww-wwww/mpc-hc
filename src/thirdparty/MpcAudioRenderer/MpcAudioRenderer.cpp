@@ -1462,7 +1462,9 @@ HRESULT CMpcAudioRenderer::Transform(IMediaSample *pMediaSample)
 		return S_FALSE;
 	}
 
-	m_rtLastReceivedSampleTimeEnd = rtStart + SamplesToTime(lSize / m_pWaveFormatExInput->nBlockAlign, m_pWaveFormatExInput) / m_dRate;
+    if (m_pWaveFormatExInput) {
+        m_rtLastReceivedSampleTimeEnd = rtStart + SamplesToTime(lSize / m_pWaveFormatExInput->nBlockAlign, m_pWaveFormatExInput) / m_dRate;
+    }
 
 	if (!m_pRenderClient) {
 		if (!m_pAudioClient) {
