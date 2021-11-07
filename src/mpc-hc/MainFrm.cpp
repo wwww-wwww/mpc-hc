@@ -11388,9 +11388,13 @@ void CMainFrame::SetPreviewVideoPosition() {
             m_pCAP2_preview->SetPosition(wr, wr);
         }
 
-        m_pBV_preview->SetDefaultSourcePosition();
-        m_pBV_preview->SetDestinationPosition(vr.left, vr.top, vr.Width(), vr.Height());
-        m_pVW_preview->SetWindowPosition(wr.left, wr.top, wr.Width(), wr.Height());
+        if (m_pBV_preview) {
+            m_pBV_preview->SetDefaultSourcePosition();
+            m_pBV_preview->SetDestinationPosition(vr.left, vr.top, vr.Width(), vr.Height());
+        }
+        if (m_pVW_preview) {
+            m_pVW_preview->SetWindowPosition(wr.left, wr.top, wr.Width(), wr.Height());
+        }
     }
 }
 
