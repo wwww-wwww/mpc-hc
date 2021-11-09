@@ -142,8 +142,8 @@ pt_BR.WelcomeLabel2=Isto instalará o [name] no seu computador.%n%nÉ recomendad
 pt_BR.WinVersionTooLowError=O [name] requer Windows Vista ou mais novo pra rodar.
 
 ; Portuguese (Portugal)
-;pt_PT.WelcomeLabel2=Isto irá instalar o [name] no seu computador.%n%nÉ recomendado que feche todas as aplicações antes de continuar.
-;pt_PT.WinVersionTooLowError=[name] requer Windows Vista ou superior para ser executado.
+pt_PT.WelcomeLabel2=Isto irá instalar o [name] no seu computador.%n%nÉ recomendado que feche todas as aplicações antes de continuar.
+pt_PT.WinVersionTooLowError=[name] requer Windows Vista ou superior para ser executado.
 
 ; Romanian
 ro.WelcomeLabel2=Se va instala [name] pe calculatorul dumneavoastră.%n%nEste recomandat să închideți toate celelalte aplicații înainte de a continua.
@@ -693,21 +693,21 @@ pt_BR.types_CustomInstallation=Instalação personalizada
 pt_BR.ViewChangelog=Visualizar Changelog
 
 ; Portuguese (Portugal)
-;pt_PT.langid=00001046
-;pt_PT.comp_mpciconlib=Biblioteca de ícones
-;pt_PT.comp_mpcresources=Traduções
-;pt_PT.msg_DeleteSettings=Pretende também eliminar as definições do MPC-HC?%n%nSe planeia instalar o MPC-HC outra vez, então não necessita de as eliminar.
+pt_PT.langid=00001046
+pt_PT.comp_mpciconlib=Biblioteca de ícones
+pt_PT.comp_mpcresources=Traduções
+pt_PT.msg_DeleteSettings=Pretende também eliminar as definições do MPC-HC?%n%nSe planeia instalar o MPC-HC outra vez, então não necessita de as eliminar.
 #if defined(sse2_required)
-;pt_PT.msg_simd_sse2=Esta compilação do MPC-HC requer um processador com suporte para o SSE2.%n%nO seu processador não contém esta capacidade.
+pt_PT.msg_simd_sse2=Esta compilação do MPC-HC requer um processador com suporte para o SSE2.%n%nO seu processador não contém esta capacidade.
 #endif
-;pt_PT.run_DownloadToolbarImages=Visite o nosso Wiki para descarregar imagens de barra de ferramentas
-;pt_PT.tsk_AllUsers=Para todos os utilizadores
-;pt_PT.tsk_CurrentUser=Para o utilizador atual apenas
-;pt_PT.tsk_Other=Outras tarefas:
-;pt_PT.tsk_ResetSettings=Reiniciar definições
-;pt_PT.types_DefaultInstallation=Instalação por defeito
-;pt_PT.types_CustomInstallation=Instalação personalizada
-;pt_PT.ViewChangelog=Ver Changelog
+pt_PT.run_DownloadToolbarImages=Visite o nosso Wiki para descarregar imagens de barra de ferramentas
+pt_PT.tsk_AllUsers=Para todos os utilizadores
+pt_PT.tsk_CurrentUser=Para o utilizador atual apenas
+pt_PT.tsk_Other=Outras tarefas:
+pt_PT.tsk_ResetSettings=Reiniciar definições
+pt_PT.types_DefaultInstallation=Instalação por defeito
+pt_PT.types_CustomInstallation=Instalação personalizada
+pt_PT.ViewChangelog=Ver Changelog
 
 ; Romanian
 ro.langid=00001048
