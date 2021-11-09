@@ -212,10 +212,6 @@ Name: zh_TW; MessagesFile: Languages\ChineseTraditional.isl
 #include "custom_messages.iss"
 
 
-[Messages]
-BeveledLabel={#FullAppNameVer}
-
-
 [Types]
 Name: default;            Description: {cm:types_DefaultInstallation}
 Name: custom;             Description: {cm:types_CustomInstallation};                     Flags: iscustom
