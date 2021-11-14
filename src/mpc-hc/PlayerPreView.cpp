@@ -195,7 +195,7 @@ void CPreView::OnPaint() {
     // text
     mdc.SelectObject(&m_font);
     mdc.SetTextColor(m_crText);
-    mdc.DrawTextW(m_tooltipstr, m_tooltipstr.GetLength(), &rtime, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
+    mdc.DrawTextW(m_tooltipstr, m_tooltipstr.GetLength(), &rtime, DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_END_ELLIPSIS);
 
     dc.ExcludeClipRect(m_videorect);
     dc.BitBlt(0, 0, rcBar.Width(), rcBar.Height(), &mdc, 0, 0, SRCCOPY);
