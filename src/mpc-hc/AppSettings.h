@@ -604,6 +604,7 @@ public:
     bool            fReportFailedPins;
     bool            fAutoloadAudio;
     bool            fBlockVSFilter;
+    bool            bBlockRDP;
     UINT            nVolumeStep;
     UINT            nSpeedStep;
     int             nDefaultToolbarSize;

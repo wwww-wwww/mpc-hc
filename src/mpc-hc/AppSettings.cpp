@@ -102,6 +102,7 @@ CAppSettings::CAppSettings()
     , fReportFailedPins(true)
     , fAutoloadAudio(true)
     , fBlockVSFilter(true)
+    , bBlockRDP(false)
     , nVolumeStep(5)
     , nSpeedStep(0)
     , nDefaultToolbarSize(24)
@@ -883,6 +884,7 @@ void CAppSettings::SaveSettings()
     pApp->WriteProfileString(IDS_R_SETTINGS, IDS_RS_SUBTITLESLANGORDER, CString(strSubtitlesLanguageOrder));
     pApp->WriteProfileString(IDS_R_SETTINGS, IDS_RS_AUDIOSLANGORDER, CString(strAudiosLanguageOrder));
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_BLOCKVSFILTER, fBlockVSFilter);
+    pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_BLOCKRDP, bBlockRDP);
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_ENABLEWORKERTHREADFOROPENING, fEnableWorkerThreadForOpening);
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_REPORTFAILEDPINS, fReportFailedPins);
     pApp->WriteProfileString(IDS_R_SETTINGS, IDS_RS_DVDPATH, strDVDPath);
@@ -1454,6 +1456,7 @@ void CAppSettings::LoadSettings()
     strSubtitlesLanguageOrder = pApp->GetProfileString(IDS_R_SETTINGS, IDS_RS_SUBTITLESLANGORDER);
     strAudiosLanguageOrder = pApp->GetProfileString(IDS_R_SETTINGS, IDS_RS_AUDIOSLANGORDER);
     fBlockVSFilter = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_BLOCKVSFILTER, TRUE);
+    bBlockRDP = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_BLOCKRDP, FALSE);
     fEnableWorkerThreadForOpening = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_ENABLEWORKERTHREADFOROPENING, TRUE);
     fReportFailedPins = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_REPORTFAILEDPINS, TRUE);
     fAllowMultipleInst = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_MULTIINST, FALSE);

@@ -194,6 +194,7 @@ private:
         FILE_POS_AUDIO,
         COVER_SIZE_LIMIT,
         BLOCK_VSFILTER,
+        BLOCK_RDP,
         LOOP_FOLDER_NEXT_FILE,
         USE_YDL,
         YDL_MAX_HEIGHT,

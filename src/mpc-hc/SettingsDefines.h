@@ -173,6 +173,7 @@
 #define IDS_RS_SUBTITLESLANGORDER           _T("SubtitlesLanguageOrder")
 #define IDS_RS_AUDIOSLANGORDER              _T("AudiosLanguageOrder")
 #define IDS_RS_BLOCKVSFILTER                _T("BlockVSFilter")
+#define IDS_RS_BLOCKRDP                     _T("BlockRDP")
 #define IDS_RS_ACCELTBL                     _T("AccelTbl")
 #define IDS_RS_WINLIRCADDR                  _T("WinLircAddr")
 #define IDS_RS_WINLIRC                      _T("UseWinLirc")

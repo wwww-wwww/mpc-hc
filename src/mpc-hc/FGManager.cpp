@@ -34,6 +34,7 @@
 #include "mplayerc.h"
 #include "sanear/src/Factory.h"
 #include "../src/thirdparty/MpcAudioRenderer/MpcAudioRenderer.h"
+#include "DSUtil.h"
 #include <d3d9.h>
 #include <evr.h>
 #include <evr9.h>
@@ -771,13 +772,9 @@ HRESULT CFGManager::Connect(IPin* pPinOut, IPin* pPinIn, bool bContinueRender)
                     continue;
                 }
             } else if (candidate == CLSID_RDPDShowRedirectionFilter) {
-                #if _DEBUG
-                continue;
-                #else
                 if (clsid_pinout == __uuidof(CAudioSwitcherFilter)) {
                     continue;
                 }
-                #endif
             } else if (candidate == GUID_LAVAudio) {
                 if (clsid_pinout == __uuidof(CAudioSwitcherFilter)) {
                     continue;
@@ -809,7 +806,7 @@ HRESULT CFGManager::Connect(IPin* pPinOut, IPin* pPinIn, bool bContinueRender)
             CComPtr<IBaseFilter> pBF;
             CInterfaceList<IUnknown, &IID_IUnknown> pUnks;
             if (FAILED(pFGF->Create(&pBF, pUnks))) {
-                TRACE(_T("     --> Filter creation failed\n"));
+                TRACE(_T("FGM: Filter creation failed\n"));
                 // Check if selected video renderer fails to load
                 CLSID filter = pFGF->GetCLSID();
                 if (filter == CLSID_MPCVRAllocatorPresenter || filter == CLSID_madVRAllocatorPresenter || filter == CLSID_DXRAllocatorPresenter) {
@@ -831,7 +828,7 @@ HRESULT CFGManager::Connect(IPin* pPinOut, IPin* pPinIn, bool bContinueRender)
             }
 
             if (FAILED(hr = AddFilter(pBF, pFGF->GetName()))) {
-                TRACE(_T("     --> Adding the filter failed\n"));
+                TRACE(_T("FGM: Adding the filter failed\n"));
                 pUnks.RemoveAll();
                 pBF.Release();
                 continue;
@@ -880,7 +877,7 @@ HRESULT CFGManager::Connect(IPin* pPinOut, IPin* pPinIn, bool bContinueRender)
             }
             */
             if (SUCCEEDED(hr)) {
-                TRACE(_T("     --> Filter connected to %s\n"), CLSIDToString(clsid_pinout));
+                TRACE(_T("FGM: Filter connected to %s\n"), CLSIDToString(clsid_pinout));
                 if (!IsStreamEnd(pBF)) {
                     fDeadEnd = false;
                 }
@@ -949,10 +946,10 @@ HRESULT CFGManager::Connect(IPin* pPinOut, IPin* pPinIn, bool bContinueRender)
                 }
             }
 
-            TRACE(_T("     --> Failed to connect to %s\n"), CLSIDToString(clsid_pinout));
+            TRACE(_T("FGM: Failed to connect to %s\n"), CLSIDToString(clsid_pinout));
             CPinInfo infoPinOut;
             if (SUCCEEDED(pPinOut->QueryPinInfo(&infoPinOut))) {
-                TRACE(_T("     --> Output pin name: %s\n"), infoPinOut.achName);
+                TRACE(_T("FGM: Output pin name: %s\n"), infoPinOut.achName);
             }
             EXECUTE_ASSERT(SUCCEEDED(RemoveFilter(pBF)));
             pUnks.RemoveAll();
@@ -995,7 +992,7 @@ HRESULT CFGManager::RenderRFSFileEntry(LPCWSTR lpcwstrFileName, LPCWSTR lpcwstrP
 
 STDMETHODIMP CFGManager::RenderFile(LPCWSTR lpcwstrFileName, LPCWSTR lpcwstrPlayList)
 {
-    TRACE(_T("--> CFGManager::RenderFile on thread: %lu\n"), GetCurrentThreadId());
+    TRACE(_T("CFGManager::RenderFile on thread: %lu\n"), GetCurrentThreadId());
     CAutoLock cAutoLock(this);
 
     m_streampath.RemoveAll();
@@ -1031,6 +1028,7 @@ STDMETHODIMP CFGManager::RenderFile(LPCWSTR lpcwstrFileName, LPCWSTR lpcwstrPlay
             if (SUCCEEDED(hr = ConnectFilter(pBF, nullptr))) {
                 // insert null video renderer on next RenderFile call which is used for audio dubs
                 m_ignoreVideo = True;
+                TRACE(_T("CFGManager::RenderFile complete\n"));
                 return hr;
             }
 
@@ -2332,6 +2330,10 @@ void CFGManagerCustom::InsertBlockedFilters()
     // Morgan's Stream Switcher (mmswitch.ax)
     m_transform.AddTail(DEBUG_NEW CFGFilterRegistry(CLSID_MorganStreamSwitcher, MERIT64_DO_NOT_USE));
 
+    if (AfxGetAppSettings().bBlockRDP) {
+        m_transform.AddTail(DEBUG_NEW CFGFilterRegistry(CLSID_RDPDShowRedirectionFilter, MERIT64_DO_NOT_USE));
+    }
+
     // DCDSPFilter (early versions crash mpc)
     {
         CRegKey key;
@@ -2578,7 +2580,7 @@ CFGManagerPlayer::CFGManagerPlayer(LPCTSTR pName, LPUNKNOWN pUnk, HWND hWnd, boo
     : CFGManagerCustom(pName, pUnk, hWnd, IsPreview)
     , m_hWnd(hWnd)
 {
-    TRACE(_T("--> CFGManagerPlayer::CFGManagerPlayer on thread: %lu\n"), GetCurrentThreadId());
+    TRACE(_T("CFGManagerPlayer::CFGManagerPlayer on thread: %lu\n"), GetCurrentThreadId());
     CFGFilter* pFGF;
 
     const CAppSettings& s = AfxGetAppSettings();
