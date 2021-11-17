@@ -262,12 +262,13 @@ void CPlayerPlaylistBar::ResolveLinkFiles(CAtlList<CString>& fns)
 bool CPlayerPlaylistBar::AddItemNoDuplicate(CString fn)
 {
     POSITION pos = m_pl.GetHeadPosition();
+    CString fnLower = CString(fn).MakeLower();
     while (pos) {
         const CPlaylistItem& pli = m_pl.GetNext(pos);
         POSITION subpos = pli.m_fns.GetHeadPosition();
         while (subpos) {
             CString cur = pli.m_fns.GetNext(subpos);
-            if (cur.MakeLower() == fn.MakeLower()) {
+            if (cur.MakeLower() == fnLower) {
                 // duplicate
                 return false;
             }

@@ -14291,7 +14291,7 @@ bool CMainFrame::WildcardFileSearch(CString searchstr, std::set<CString, CString
 
             if (!finder.IsDirectory()) {
                 CString path = finder.GetFilePath();
-                CString ext = path.Mid(path.ReverseFind('.'));
+                CString ext = path.Mid(path.ReverseFind('.')).MakeLower();
 
                 if (mf.FindExt(ext)) {
                     /* playlist and cue files should be ignored when searching dir for playable files */
