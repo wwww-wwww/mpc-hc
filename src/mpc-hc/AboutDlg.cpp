@@ -30,6 +30,7 @@
 #include "FileVersionInfo.h"
 #include "PathUtils.h"
 #include "VersionInfo.h"
+#include <VersionHelpers.h>
 
 /////////////////////////////////////////////////////////////////////////////
 // CAboutDlg dialog used for App About
@@ -130,14 +131,95 @@ BOOL CAboutDlg::OnInitDialog()
     GetVersionEx(reinterpret_cast<LPOSVERSIONINFO>(&osVersion));
 #pragma warning(pop)
 
-    m_OSName.Format(_T("Windows NT %1u.%1u (build %u"),
-                    osVersion.dwMajorVersion, osVersion.dwMinorVersion, osVersion.dwBuildNumber);
-    if (osVersion.szCSDVersion[0]) {
-        m_OSName.AppendFormat(_T(", %s)"), osVersion.szCSDVersion);
+    if (osVersion.dwMajorVersion == 10 && osVersion.dwMinorVersion == 0) {
+        if (IsWindowsServer()) {
+            if (osVersion.dwBuildNumber > 20348) {
+                m_OSName = _T("Windows Server");
+            } else if (osVersion.dwBuildNumber == 20348) {
+                m_OSName = _T("Windows Server 2022");
+            } else if (osVersion.dwBuildNumber >= 19042) {
+                m_OSName = _T("Windows Server, version 20H2");
+            } else if (osVersion.dwBuildNumber >= 19041) {
+                m_OSName = _T("Windows Server, version 2004");
+            } else if (osVersion.dwBuildNumber >= 18363) {
+                m_OSName = _T("Windows Server, version 1909");
+            } else if (osVersion.dwBuildNumber >= 18362) {
+                m_OSName = _T("Windows Server, version 1903");
+            } else if (osVersion.dwBuildNumber >= 17763) {
+                m_OSName = _T("Windows Server 2019");
+            } else {
+                m_OSName = _T("Windows Server 2016");
+            }
+        } else {
+            if (osVersion.dwBuildNumber > 22000) {
+                m_OSName = _T("Windows 11");
+            } else if (osVersion.dwBuildNumber == 22000) {
+                m_OSName = _T("Windows 11 (Build 21H2)");
+            } else if (osVersion.dwBuildNumber >= 19044) {
+                m_OSName = _T("Windows 10 (Build 21H2)");
+            } else if (osVersion.dwBuildNumber == 19043) {
+                m_OSName = _T("Windows 10 (Build 21H1)");
+            } else if (osVersion.dwBuildNumber == 19042) {
+                m_OSName = _T("Windows 10 (Build 20H2)");
+            } else if (osVersion.dwBuildNumber == 19041) {
+                m_OSName = _T("Windows 10 (Build 2004)");
+            } else if (osVersion.dwBuildNumber >= 18363) {
+                m_OSName = _T("Windows 10 (Build 1909)");
+            } else if (osVersion.dwBuildNumber == 18362) {
+                m_OSName = _T("Windows 10 (Build 1903)");
+            } else if (osVersion.dwBuildNumber >= 17763) {
+                m_OSName = _T("Windows 10 (Build 1809)");
+            } else if (osVersion.dwBuildNumber >= 17134) {
+                m_OSName = _T("Windows 10 (Build 1803)");
+            } else if (osVersion.dwBuildNumber >= 16299) {
+                m_OSName = _T("Windows 10 (Build 1709)");
+            } else if (osVersion.dwBuildNumber >= 15063) {
+                m_OSName = _T("Windows 10 (Build 1703)");
+            } else if (osVersion.dwBuildNumber >= 14393) {
+                m_OSName = _T("Windows 10 (Build 1607)");
+            } else if (osVersion.dwBuildNumber >= 10586) {
+                m_OSName = _T("Windows 10 (Build 1511)");
+            } else if (osVersion.dwBuildNumber >= 10240) {
+                m_OSName = _T("Windows 10 (Build 1507)");
+            } else {
+                m_OSName = _T("Windows 10");
+            }
+        }
+    } else if (osVersion.dwMajorVersion == 6 && osVersion.dwMinorVersion == 3) {
+        if (IsWindowsServer()) {
+            m_OSName = _T("Windows Server 2012 R2");
+        } else {
+            m_OSName = _T("Windows 8.1");
+        }
+    } else if (osVersion.dwMajorVersion == 6 && osVersion.dwMinorVersion == 2) {
+        if (IsWindowsServer()) {
+            m_OSName = _T("Windows Server 2012");
+        } else {
+            m_OSName = _T("Windows 8");
+        }
+    } else if (osVersion.dwMajorVersion == 6 && osVersion.dwMinorVersion == 1) {
+        if (IsWindowsServer()) {
+            m_OSName = _T("Windows Server 2008 R2");
+        } else {
+            m_OSName = _T("Windows 7");
+        }
+    } else if (osVersion.dwMajorVersion == 6 && osVersion.dwMinorVersion == 0) {
+        if (IsWindowsServer()) {
+            m_OSName = _T("Windows Server 2008");
+        } else {
+            m_OSName = _T("Windows Vista");
+        }
     } else {
-        m_OSName += _T(")");
+        if (IsWindowsServer()) {
+            m_OSName = _T("Windows Server");
+        } else {
+            m_OSName = _T("Windows NT");
+        }
     }
-    m_OSVersion.Format(_T("%1u.%1u"), osVersion.dwMajorVersion, osVersion.dwMinorVersion);
+    if (osVersion.dwMajorVersion == 6 && osVersion.dwMinorVersion < 2 && osVersion.szCSDVersion[0]) {
+        m_OSName.AppendFormat(_T(" (%s)"), osVersion.szCSDVersion);
+    }
+    m_OSVersion.Format(_T("%1u.%1u.%u"), osVersion.dwMajorVersion, osVersion.dwMinorVersion, osVersion.dwBuildNumber);
 
 #if !defined(_WIN64)
     // 32-bit programs run on both 32-bit and 64-bit Windows
