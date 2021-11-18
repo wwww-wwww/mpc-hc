@@ -8483,7 +8483,9 @@ void CMainFrame::SetPlayingRate(double rate)
         if (GetMediaState() != State_Running) {
             SendMessage(WM_COMMAND, ID_PLAY_PLAY);
         }
-        hr = m_pMS->SetRate(rate);
+        if (m_pMS) {
+            hr = m_pMS->SetRate(rate);
+        }
     } else if (GetPlaybackMode() == PM_DVD) {
         if (GetMediaState() != State_Running) {
             SendMessage(WM_COMMAND, ID_PLAY_PLAY);
