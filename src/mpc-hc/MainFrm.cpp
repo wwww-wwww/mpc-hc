@@ -7942,9 +7942,10 @@ void CMainFrame::OnPlayPlay()
             if (m_fEndOfStream) {
                 SendMessage(WM_COMMAND, ID_PLAY_STOP);
             } else {
-                if (!m_fAudioOnly) {
-                    // after long pause (30min) or hibernation, reload file to avoid playback issues on some systems (with buggy drivers)
-                    if (m_dwLastPause && m_wndSeekBar.HasDuration() && (GetTickCount64() - m_dwLastPause >= 30 * 60 * 1000)) {
+                if (!m_fAudioOnly && m_dwLastPause && m_wndSeekBar.HasDuration()) {
+                    // after long pause or hibernation, reload video file to avoid playback issues on some systems (with buggy drivers)
+                    // in case of hibernate, m_dwLastPause equals 1
+                    if (m_dwLastPause == 1 || s.iReloadAfterLongPause > 0 && (GetTickCount64() - m_dwLastPause >= s.iReloadAfterLongPause * 60 * 1000)) {
                         m_dwReloadPos = m_wndSeekBar.GetPos();
                         m_iReloadAudioIdx = GetCurrentAudioTrackIdx();
                         m_iReloadSubIdx = GetCurrentSubtitleTrackIdx();

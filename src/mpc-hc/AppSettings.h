@@ -614,6 +614,7 @@ public:
     bool            bLoopFolderOnPlayNextFile;
     bool            bLockNoPause;
     bool            bUseSMTC;
+    int             iReloadAfterLongPause;
 
     enum class AfterPlayback {
         DO_NOTHING,

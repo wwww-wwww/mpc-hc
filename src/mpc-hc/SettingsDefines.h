@@ -99,6 +99,7 @@
 #define IDS_RS_USE_AUTOMATIC_CAPTIONS       _T("UseAutomaticCaptions")
 #define IDS_RS_LOCK_NOPAUSE                 _T("LockNoPause")
 #define IDS_RS_USE_SMTC                     _T("UseSMTC")
+#define IDS_RS_RELOAD_AFTER_LONG_PAUSE      _T("ReloadAfterLongPause")
 
 // Audio
 #define IDS_RS_VOLUME                       _T("Volume")
