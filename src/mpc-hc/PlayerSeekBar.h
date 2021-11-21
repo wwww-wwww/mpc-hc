@@ -41,7 +41,7 @@ private:
     enum { TIMER_SHOWHIDE_TOOLTIP = 1 };
 
     CMainFrame* m_pMainFrame;
-    REFERENCE_TIME m_rtStart, m_rtStop, m_rtPos;
+    REFERENCE_TIME m_rtStart, m_rtStop, m_rtPos, m_rtPosDraw;
 	REFERENCE_TIME m_pos_preview = 0;
     LONG m_last_pointx_preview = 0;
 
@@ -81,7 +81,7 @@ private:
     void CheckScrollDistance(CPoint point, REFERENCE_TIME minimum_duration_change);
     long ChannelPointFromPosition(REFERENCE_TIME rtPos) const;
     REFERENCE_TIME PositionFromClientPoint(const CPoint& point) const;
-    void SyncThumbToVideo(REFERENCE_TIME rtPos);
+    void SyncThumbToVideo(REFERENCE_TIME rtPos, REFERENCE_TIME rtPosDraw);
 
     void CreateThumb(bool bEnabled, CDC& parentDC);
     CRect GetChannelRect() const;

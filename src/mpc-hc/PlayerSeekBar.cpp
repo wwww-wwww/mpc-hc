@@ -39,6 +39,7 @@ CPlayerSeekBar::CPlayerSeekBar(CMainFrame* pMainFrame)
     , m_rtStart(0)
     , m_rtStop(0)
     , m_rtPos(0)
+    , m_rtPosDraw(0)
     , m_bEnabled(false)
     , m_bHasDuration(false)
     , m_rtHoverPos(0)
@@ -138,14 +139,15 @@ CSize CPlayerSeekBar::CalcFixedLayout(BOOL bStretch, BOOL bHorz)
 void CPlayerSeekBar::MoveThumb(const CPoint& point)
 {
     if (m_bHasDuration) {
-        REFERENCE_TIME rtPos = PositionFromClientPoint(point);
+        REFERENCE_TIME rtPosDraw = PositionFromClientPoint(point);
+        REFERENCE_TIME rtPos = rtPosDraw;
         const CAppSettings& s = AfxGetAppSettings();
         REFERENCE_TIME duration = m_rtStop - m_rtStart;
         if (duration >= 600000000LL && s.bFastSeek && (GetKeyState(VK_SHIFT) >= 0)) {
             REFERENCE_TIME rtMaxDiff = s.bAllowInaccurateFastseek ? 200000000LL : std::min(100000000LL, duration / 30);
             rtPos = m_pMainFrame->GetClosestKeyFrame(rtPos, rtMaxDiff, rtMaxDiff);
         }
-        SyncThumbToVideo(rtPos);
+        SyncThumbToVideo(rtPos, rtPosDraw);
     }
 }
 
@@ -196,9 +198,10 @@ REFERENCE_TIME CPlayerSeekBar::PositionFromClientPoint(const CPoint& point) cons
     return rtRet;
 }
 
-void CPlayerSeekBar::SyncThumbToVideo(REFERENCE_TIME rtPos)
+void CPlayerSeekBar::SyncThumbToVideo(REFERENCE_TIME rtPos, REFERENCE_TIME rtPosDraw)
 {
     m_rtPos = rtPos;
+    m_rtPosDraw = rtPosDraw;
     if (m_bHasDuration) {
         CRect newThumbRect(GetThumbRect());
         bool bSetTaskbar = (rtPos <= 0);
@@ -284,7 +287,7 @@ CRect CPlayerSeekBar::GetChannelRect() const
 CRect CPlayerSeekBar::GetThumbRect() const
 {
     const CRect channelRect(GetChannelRect());
-    const long x = channelRect.left + ChannelPointFromPosition(m_rtPos);
+    const long x = channelRect.left + ChannelPointFromPosition(m_rtPosDraw);
     CSize s;
     s.cy = m_pMainFrame->m_dpi.ScaleFloorY(SEEK_DRAGGER_OVERLAP);
     s.cx = m_pMainFrame->m_dpi.TransposeScaledY(channelRect.Height()) / 2 + s.cy;
@@ -332,7 +335,7 @@ void CPlayerSeekBar::UpdateTooltip(const CPoint& point)
             break;
         case TOOLTIP_VISIBLE:
             // Update the tooltip if needed
-            ASSERT(!m_bIgnoreLastTooltipPoint);
+            ASSERT(!m_bIgnoreLastTooltipPoint || !m_pMainFrame->CanPreviewUse()); // ??
             if (point != m_tooltipPoint) {
                 m_tooltipPoint = point;
                 if (!m_pMainFrame->CanPreviewUse()) {
@@ -513,7 +516,7 @@ void CPlayerSeekBar::SetPos(REFERENCE_TIME rtPos)
         return;
     }
 
-    SyncThumbToVideo(rtPos);
+    SyncThumbToVideo(rtPos, rtPos);
 }
 
 bool CPlayerSeekBar::HasDuration() const
