@@ -1143,6 +1143,9 @@ void CPlayerPlaylistBar::SetFirstSelected()
 void CPlayerPlaylistBar::SetFirst()
 {
     POSITION pos = m_pl.GetTailPosition(), org = pos;
+    if (!pos) {
+        return;
+    }
     while (m_pl.GetNextWrap(pos).m_fInvalid && pos != org) {
         ;
     }
