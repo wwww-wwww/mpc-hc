@@ -14287,6 +14287,8 @@ bool CMainFrame::WildcardFileSearch(CString searchstr, std::set<CString, CString
     CFileFind finder;
     if (finder.FindFile(searchstr)) {
         const CMediaFormats& mf = AfxGetAppSettings().m_Formats;
+        CString search_ext = searchstr.Mid(searchstr.ReverseFind('.')).MakeLower();
+        bool other_ext = (search_ext != _T(".*"));
         bool bHasNext = true;
 
         while (bHasNext) {
@@ -14296,10 +14298,19 @@ bool CMainFrame::WildcardFileSearch(CString searchstr, std::set<CString, CString
                 CString path = finder.GetFilePath();
                 CString ext = path.Mid(path.ReverseFind('.')).MakeLower();
 
+                if (ext.IsEmpty()) {
+                    continue;
+                }
+
                 if (mf.FindExt(ext)) {
                     /* playlist and cue files should be ignored when searching dir for playable files */
                     if (ext != _T(".m3u") && ext != _T(".m3u8") && ext != _T(".mpcpl") && ext != _T(".pls") && ext != _T(".cue") && ext != _T(".asx")) {
                         results.insert(path);
+                    }
+                } else if (other_ext && search_ext == ext) {
+                    results.insert(path);
+                    if (ext == _T(".rar")) {
+                        break;
                     }
                 }
             }
