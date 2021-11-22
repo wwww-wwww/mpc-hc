@@ -778,7 +778,7 @@ void CMainFrame::EventCallback(MpcEvent ev)
 // CMainFrame construction/destruction
 
 CMainFrame::CMainFrame()
-    : m_timer32Hz(this, TIMER_32HZ, 32)
+    : m_timerHider(this, TIMER_HIDER, 200)
     , m_timerOneTime(this, TIMER_ONETIME_START, TIMER_ONETIME_END - TIMER_ONETIME_START + 1)
     , m_bUsingDXVA(false)
     , m_HWAccelType(nullptr)
@@ -2413,8 +2413,8 @@ void CMainFrame::OnTimer(UINT_PTR nIDEvent)
             }
         }
         break;
-        case TIMER_32HZ:
-            m_timer32Hz.NotifySubscribers();
+        case TIMER_HIDER:
+            m_timerHider.NotifySubscribers();
             break;
         case TIMER_DELAYEDSEEK:
             KillTimer(TIMER_DELAYEDSEEK);

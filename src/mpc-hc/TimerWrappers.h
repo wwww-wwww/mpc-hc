@@ -69,9 +69,13 @@ public:
     }
 
     void NotifySubscribers() {
-        auto subscribers = m_subscribers;
-        for (const auto& kv : subscribers) {
-            kv.second();
+        if (m_pWnd->m_hWnd) {
+            auto subscribers = m_subscribers;
+            for (const auto& kv : subscribers) {
+                kv.second();
+            }
+        } else {
+            ASSERT(FALSE);
         }
     }
 

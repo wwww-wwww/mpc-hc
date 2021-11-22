@@ -128,16 +128,16 @@ void CMouse::StartMouseHider(const CPoint& screenPoint)
     m_mouseHiderStartScreenPoint = screenPoint;
     if (!m_bMouseHiderStarted) {
         // periodic timer is used here intentionally, recreating timer after each mouse move is more expensive
-        auto t = m_bD3DFS ? CMainFrame::Timer32HzSubscriber::CURSOR_HIDER_D3DFS : CMainFrame::Timer32HzSubscriber::CURSOR_HIDER;
-        m_pMainFrame->m_timer32Hz.Subscribe(t, std::bind(&CMouse::MouseHiderCallback, this));
+        auto t = m_bD3DFS ? CMainFrame::TimerHiderSubscriber::CURSOR_HIDER_D3DFS : CMainFrame::TimerHiderSubscriber::CURSOR_HIDER;
+        m_pMainFrame->m_timerHider.Subscribe(t, std::bind(&CMouse::MouseHiderCallback, this));
         m_bMouseHiderStarted = true;
     }
     m_dwMouseHiderStartTick = GetTickCount64();
 }
 void CMouse::StopMouseHider()
 {
-    auto t = m_bD3DFS ? CMainFrame::Timer32HzSubscriber::CURSOR_HIDER_D3DFS : CMainFrame::Timer32HzSubscriber::CURSOR_HIDER;
-    m_pMainFrame->m_timer32Hz.Unsubscribe(t);
+    auto t = m_bD3DFS ? CMainFrame::TimerHiderSubscriber::CURSOR_HIDER_D3DFS : CMainFrame::TimerHiderSubscriber::CURSOR_HIDER;
+    m_pMainFrame->m_timerHider.Unsubscribe(t);
     m_bMouseHiderStarted = false;
 }
 void CMouse::MouseHiderCallback()

@@ -184,12 +184,12 @@ public:
 
     DpiHelper m_dpi;
 
-    enum class Timer32HzSubscriber {
+    enum class TimerHiderSubscriber {
         TOOLBARS_HIDER,
         CURSOR_HIDER,
         CURSOR_HIDER_D3DFS,
     };
-    OnDemandTimer<Timer32HzSubscriber> m_timer32Hz;
+    OnDemandTimer<TimerHiderSubscriber> m_timerHider;
 
     enum class TimerOneTimeSubscriber {
         TOOLBARS_DELAY_NOTLOADED,
@@ -215,7 +215,7 @@ private:
         TIMER_STREAMPOSPOLLER2,
         TIMER_STATS,
         TIMER_UNLOAD_UNUSED_EXTERNAL_OBJECTS,
-        TIMER_32HZ,
+        TIMER_HIDER,
         TIMER_WINDOW_FULLSCREEN,
         TIMER_DELAYEDSEEK,
         TIMER_ONETIME_START,

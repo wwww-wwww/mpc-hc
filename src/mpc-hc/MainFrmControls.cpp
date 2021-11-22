@@ -141,7 +141,7 @@ CMainFrameControls::~CMainFrameControls()
 {
     DelayShowNotLoaded(false);
     if (!m_zoneHideTicks.empty()) {
-        m_pMainFrame->m_timer32Hz.Unsubscribe(CMainFrame::Timer32HzSubscriber::TOOLBARS_HIDER);
+        m_pMainFrame->m_timerHider.Unsubscribe(CMainFrame::TimerHiderSubscriber::TOOLBARS_HIDER);
     }
 }
 
@@ -653,12 +653,14 @@ void CMainFrameControls::UpdateToolbarsVisibility()
         autohideZone(DOCK_RIGHT);
     }
 
-    const bool bNeedTimer = !m_zoneHideTicks.empty();
-    if (bNoTimer && bNeedTimer) {
-        m_pMainFrame->m_timer32Hz.Subscribe(CMainFrame::Timer32HzSubscriber::TOOLBARS_HIDER,
-                                            std::bind(&CMainFrameControls::UpdateToolbarsVisibility, this));
-    } else if (!bNoTimer && !bNeedTimer) {
-        m_pMainFrame->m_timer32Hz.Unsubscribe(CMainFrame::Timer32HzSubscriber::TOOLBARS_HIDER);
+    if (uTimeout > 0) {
+        const bool bNeedTimer = !m_zoneHideTicks.empty();
+        if (bNoTimer && bNeedTimer) {
+            m_pMainFrame->m_timerHider.Subscribe(CMainFrame::TimerHiderSubscriber::TOOLBARS_HIDER,
+                std::bind(&CMainFrameControls::UpdateToolbarsVisibility, this));
+        } else if (!bNoTimer && !bNeedTimer) {
+            m_pMainFrame->m_timerHider.Unsubscribe(CMainFrame::TimerHiderSubscriber::TOOLBARS_HIDER);
+        }
     }
 
     if (bRecalcLayout) {
@@ -799,6 +801,6 @@ void CMainFrameControls::LockHideZone(DockZone zone)
     } else {
         m_zoneHideTicks[zone] = dwNewHideTick;
     }
-    m_pMainFrame->m_timer32Hz.Subscribe(CMainFrame::Timer32HzSubscriber::TOOLBARS_HIDER,
+    m_pMainFrame->m_timerHider.Subscribe(CMainFrame::TimerHiderSubscriber::TOOLBARS_HIDER,
                                         std::bind(&CMainFrameControls::UpdateToolbarsVisibility, this));
 }
