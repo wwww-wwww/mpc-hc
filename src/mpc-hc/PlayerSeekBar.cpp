@@ -647,7 +647,7 @@ void CPlayerSeekBar::OnPaint()
         // Channel
         {
             if (s.bModernSeekbar) {
-                long seekPos = ChannelPointFromPosition(m_rtPos);
+                long seekPos = ChannelPointFromPosition(m_rtPosDraw);
                 CRect r, playedRect, unplayedRect, curPosRect;
                 playedRect = channelRect;
                 playedRect.right = playedRect.left + seekPos - m_pMainFrame->m_dpi.ScaleX(2) + 1;
