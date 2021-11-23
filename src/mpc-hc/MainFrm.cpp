@@ -7954,7 +7954,9 @@ void CMainFrame::OnPlayPlay()
                     }
                 }
             }
-            m_pMS->SetRate(m_dSpeedRate);
+            if (m_pMS) {
+                m_pMS->SetRate(m_dSpeedRate);
+            }
         } else if (GetPlaybackMode() == PM_DVD) {
             m_dSpeedRate = 1.0;
             m_pDVDC->PlayForwards(m_dSpeedRate, DVD_CMD_FLAG_Block, nullptr);
