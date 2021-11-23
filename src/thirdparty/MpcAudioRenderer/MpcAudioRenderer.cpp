@@ -2365,6 +2365,12 @@ HRESULT CMpcAudioRenderer::CreateRenderClient(WAVEFORMATEX *pWaveFormatEx, const
 		return hr;
 	}
 
+    if (!m_pAudioClient) {
+        // based on crash dump, don't know why this occurs.
+        ASSERT(FALSE);
+        return E_FAIL;
+    }
+
 	// get the buffer size, which is aligned
 	hr = m_pAudioClient->GetBufferSize(&m_nFramesInBuffer);
 	EXIT_ON_ERROR(hr);
