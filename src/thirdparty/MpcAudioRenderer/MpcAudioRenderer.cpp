@@ -1477,7 +1477,9 @@ HRESULT CMpcAudioRenderer::Transform(IMediaSample *pMediaSample)
 		if (!m_pRenderClient) {
 			m_bReleased = false;
 
-			m_rtNextRenderedSampleTime = rtStart + SamplesToTime(lSize / m_pWaveFormatExInput->nBlockAlign, m_pWaveFormatExInput) / m_dRate;
+            if (m_pWaveFormatExInput) {
+                m_rtNextRenderedSampleTime = rtStart + SamplesToTime(lSize / m_pWaveFormatExInput->nBlockAlign, m_pWaveFormatExInput) / m_dRate;
+            }
 
 			const auto duration = m_rtStartTime + rtStart - m_pSyncClock->GetPrivateTime() - m_hnsBufferDuration;
 			if (duration >= OneMillisecond) {
