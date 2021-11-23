@@ -274,8 +274,10 @@ public:
     }
 
     void RemoveThread(SubtitlesThread* pThread) {
-        CAutoLock cAutoLock(&m_csThreads);
-        m_pThreads.remove(pThread);
+        {
+            CAutoLock cAutoLock(&m_csThreads);
+            m_pThreads.remove(pThread);
+        }
         delete pThread;
     }
 
