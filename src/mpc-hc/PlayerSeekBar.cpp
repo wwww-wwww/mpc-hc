@@ -156,15 +156,15 @@ void CPlayerSeekBar::SyncVideoToThumb()
     GetParent()->PostMessage(WM_HSCROLL, NULL, reinterpret_cast<LPARAM>(m_hWnd));
 }
 
-void CPlayerSeekBar::CheckScrollDistance(CPoint point, REFERENCE_TIME minimum_duration_change)
+void CPlayerSeekBar::CheckScrollDistance(CPoint point, REFERENCE_TIME minimum_duration_change, ULONGLONG minimum_elapsed_tickcount)
 {
     ULONGLONG tickcount = GetTickCount64();
     ULONGLONG ticks_since_last_seek = tickcount - m_lastDragSeekTickCount;
-    REFERENCE_TIME posdiff = m_rtHoverPos > m_rtPos ? m_rtHoverPos - m_rtPos : m_rtPos - m_rtHoverPos;
+    REFERENCE_TIME posdiff = m_rtHoverPos > m_rtPosDraw ? m_rtHoverPos - m_rtPosDraw : m_rtPosDraw - m_rtHoverPos;
 
-    if (minimum_duration_change == 0 || (ticks_since_last_seek >= 150ULL) && (posdiff >= minimum_duration_change) || (ticks_since_last_seek >= 1000ULL) && (posdiff >= minimum_duration_change / 2)) {
+    if (posdiff >= minimum_duration_change && ticks_since_last_seek >= minimum_elapsed_tickcount) {
         m_lastDragSeekTickCount = tickcount;
-        m_rtHoverPos = m_rtPos;
+        m_rtHoverPos = m_rtPosDraw;
         m_hoverPoint = point;
         SyncVideoToThumb();
     }
@@ -753,7 +753,7 @@ void CPlayerSeekBar::OnLButtonDown(UINT nFlags, CPoint point)
         SetCapture();
         m_bDraggingThumb = true;
         MoveThumb(point);
-        CheckScrollDistance(point, 0);
+        CheckScrollDistance(point, 0ULL, 0LL);
         invalidateThumb();
     } else {
         if (!m_pMainFrame->m_fFullScreen) {
@@ -773,7 +773,7 @@ void CPlayerSeekBar::OnLButtonUp(UINT nFlags, CPoint point)
     if (DraggingThumb()) {
         ReleaseCapture();
         // update video position if seekbar moved at least 250 ms or 1/100th of duration
-        CheckScrollDistance(point, std::min(2500000LL, m_rtStop / 100));
+        CheckScrollDistance(point, std::min(2500000LL, m_rtStop / 100), 0LL);
         invalidateThumb();
     }
     checkHover(point);
@@ -836,7 +836,7 @@ void CPlayerSeekBar::OnMouseMove(UINT nFlags, CPoint point)
     if (DraggingThumb() && (nFlags & MK_LBUTTON)) {
         MoveThumb(point);
         // update video position if seekbar moved at least 500ms or 1/30th of duration
-        CheckScrollDistance(point, std::min(5000000LL, m_rtStop / 30));
+        CheckScrollDistance(point, std::min(5000000LL, m_rtStop / 30), 150LL);
     }
     if (AfxGetAppSettings().fUseTimeTooltip) {
         UpdateTooltip(point);

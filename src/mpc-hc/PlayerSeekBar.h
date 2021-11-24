@@ -78,7 +78,7 @@ private:
     void SyncVideoToThumb();
     void checkHover(CPoint point);
     void invalidateThumb();
-    void CheckScrollDistance(CPoint point, REFERENCE_TIME minimum_duration_change);
+    void CheckScrollDistance(CPoint point, REFERENCE_TIME minimum_duration_change, ULONGLONG minimum_elapsed_tickcount);
     long ChannelPointFromPosition(REFERENCE_TIME rtPos) const;
     REFERENCE_TIME PositionFromClientPoint(const CPoint& point) const;
     void SyncThumbToVideo(REFERENCE_TIME rtPos, REFERENCE_TIME rtPosDraw);
