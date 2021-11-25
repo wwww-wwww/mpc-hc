@@ -1983,6 +1983,7 @@ void CAppSettings::LoadSettings()
 
     bLockNoPause = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_LOCK_NOPAUSE, FALSE);
     bUseSMTC = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_USE_SMTC, FALSE);
+    iReloadAfterLongPause = pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_RELOAD_AFTER_LONG_PAUSE, 30);
 
     if (fLaunchfullscreen && slFiles.GetCount() > 0) {
         nCLSwitches |= CLSW_FULLSCREEN;
