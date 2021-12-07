@@ -8083,7 +8083,7 @@ void CMainFrame::OnPlayPlaypause()
         } else if (fs == State_Stopped || fs == State_Paused) {
             SendMessage(WM_COMMAND, ID_PLAY_PLAY);
         }
-    } else if (GetLoadState() == MLS::CLOSED && !IsPlaylistEmpty()) {
+    } else if (GetLoadState() == MLS::CLOSED && !m_fFullScreen && !IsPlaylistEmpty()) {
         SendMessage(WM_COMMAND, ID_PLAY_PLAY);        
     }
 }
