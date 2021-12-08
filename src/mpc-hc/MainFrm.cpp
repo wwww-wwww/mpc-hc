@@ -12032,18 +12032,6 @@ void CMainFrame::SetBalance(int balance)
 // Open/Close
 //
 
-bool CMainFrame::IsRealEngineCompatible(CString strFilename) const
-{
-    // Real Media engine didn't support Unicode filename (nor filenames with # characters)
-    for (int i = 0; i < strFilename.GetLength(); i++) {
-        WCHAR Char = strFilename[i];
-        if (Char < 32 || Char > 126 || Char == 35) {
-            return false;
-        }
-    }
-    return true;
-}
-
 bool PathIsOnOpticalDisc(CString path)
 {
     if (path.GetLength() >= 3 && path[1] == L':' && path[2] == L'\\') {
