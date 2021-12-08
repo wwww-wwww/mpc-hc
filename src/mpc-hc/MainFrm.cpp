@@ -12044,6 +12044,16 @@ bool CMainFrame::IsRealEngineCompatible(CString strFilename) const
     return true;
 }
 
+bool PathIsOnOpticalDisc(CString path)
+{
+    if (path.GetLength() >= 3 && path[1] == L':' && path[2] == L'\\') {
+        CString drive = path.Left(3);
+        UINT type = GetDriveType(drive);
+        return type == DRIVE_CDROM && !IsDriveVirtual(drive);
+    }
+    return false;
+}
+
 // Called from GraphThread
 void CMainFrame::OpenCreateGraphObject(OpenMediaData* pOMD)
 {
@@ -12056,11 +12066,13 @@ void CMainFrame::OpenCreateGraphObject(OpenMediaData* pOMD)
 
     m_pGB_preview = nullptr;
     m_bUseSeekPreview = s.fSeekPreview && ::IsWindow(m_wndPreView.m_hWnd);
-    if (OpenFileData* pFileData = dynamic_cast<OpenFileData*>(pOMD)) {
-        CString fn = pFileData->fns.GetHead();
-        if (!fn.IsEmpty() && ((fn.Find(L"://") >= 0) || IsAudioFilename(fn))) {
-            // disable seek preview for streaming data and audio files
-            m_bUseSeekPreview = false;
+    if (m_bUseSeekPreview) {
+        if (OpenFileData* pFileData = dynamic_cast<OpenFileData*>(pOMD)) {
+            CString fn = pFileData->fns.GetHead();
+            if (!fn.IsEmpty() && ((fn.Find(L"://") >= 0) || IsAudioFilename(fn) || PathIsOnOpticalDisc(fn))) {
+                // disable seek preview for: streaming data, audio files, files on optical disc
+                m_bUseSeekPreview = false;
+            }
         }
     }
 
@@ -12099,9 +12111,7 @@ void CMainFrame::OpenCreateGraphObject(OpenMediaData* pOMD)
         m_pGB = DEBUG_NEW CFGManagerDVD(_T("CFGManagerDVD"), nullptr, m_pVideoWnd->m_hWnd);
 
         if (m_bUseSeekPreview) {
-            CString drive = pOpenDVDData->path.Left(2);
-            UINT type = GetDriveType(drive);
-            if (type != DRIVE_CDROM || IsDriveVirtual(drive)) { //no preview seeking for spinning disks
+            if (!PathIsOnOpticalDisc(pOpenDVDData->path)) {
                 m_pGB_preview = DEBUG_NEW CFGManagerDVD(L"CFGManagerDVD", nullptr, m_wndPreView.GetVideoHWND(), true);
             }
         }
