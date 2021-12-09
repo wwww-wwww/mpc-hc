@@ -12,11 +12,55 @@ The internal codecs are developed in an external project ([LAV Filters](https://
 
 If you are a programmer and want to help improve MPC-HC, then you can do so by submitting a pull request containing your patches.
 
+## Overview of features
+
+A lot of people seem to be unaware of some of the awesome features that have been added to MPC-HC in the past years. Here is a list of useful options and features that everyone should know about:
+* Dark interface
+Menu > View > Dark Theme
+When using dark theme it is also possible to change the height of the seekbar and size of the toolbar buttons.
+Options > Advanced
+* Video preview on the seekbar
+Options > Tweaks > Show preview on seek bar
+* Adjust playback speed
+Menu > Play > Playback rate
+The buttons in the player that control playback rate take a 2x step by default. This can be customized to smaller values (like 10%):
+Options > Playback > Speed step
+Adjusting playback speed works best with the internal audio renderer. This also has automatic pitch correction.
+Options > Playback > Output > Audio Renderer
+* MPC-HC can remember playback position, so you can resume from that point later
+Options > Player > History
+* You can quickly seek through a video with Ctrl + Mouse Scrollwheel.
+* You can jump to next/previous file in a folder by pressing PageUp/PageDown.
+* You can perform automatic actions at end of file. For example to go to next file or close player.
+Options > Playback > After Playback (permanent setting)
+Menu > Play > After Playback (for current file only)
+* A-B repeat
+You can loop a segment of a video. Press [ and ] to set start and stop markers.
+* You can rotate/flip/mirror/stretch/zoom the video
+Menu > View > Pan&Scan
+This is also easily done with hotkeys (see below).
+* There are lots of keyboard hotkeys and mouse actions to control the player. They can be customized as well.
+Options > Player > Keys
+Tip: there is a search box above the table.
+* You can stream videos directly from Youtube and many other video websites
+Put [yt-dlp.exe](https://github.com/yt-dlp/yt-dlp/releases) in the MPC-HC installation folder.
+Then you can open website URLs in the player: Menu > File > Open File/URL
+You can even download those videos: Menu > File > Save a copy
+Tip: to be able to download in best quality with yt-dlp/youtube-dl, it is recommended to also put [ffmpeg.exe](https://www.gyan.dev/ffmpeg/builds/) in the MPC-HC folder.
+Several YDL configuration options are found here: Options > Advanced
+This includes an option to specify the location of the .exe in case you don't want to put it in MPC-HC folder.
+Note: instead of yt-dlp.exe you can also use [youtube-dl.exe](https://youtube-dl.org/downloads/latest/youtube-dl.exe). I do however recommend using yt-dlp because that works better and has active development, while youtube-dl development is currently inactive.
+* Play HDR video
+This requires using [madVR](http://forum.doom9.org/showthread.php?t=146228) or [MPC Video Renderer](https://github.com/Aleksoid1978/VideoRenderer/releases).
+After installation these renderers can be selected here:
+Options > Playback > Output
+* Ability to search for and download subtitles, either automatically or manually (press D):
+Options > Subtitles > Misc
+* Besides all these (new) features, there have also been many bugfixes and internal improvements in the player in the past years that give better performance and stability. It also has updated internal codecs. Support was added for CUE sheets, WebVTT subtitles, etc.
+
 ## System Requirements
 
-* An SSE2-capable CPU
-* Windows Vista, 7, 8, 8.1, 10
-* Both 32-bit and 64-bit systems are supported
+* Windows Vista / 7 / 8 / 8.1 / 10 / 11
 
 ## License
 
