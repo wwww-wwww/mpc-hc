@@ -18897,7 +18897,7 @@ LRESULT CMainFrame::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
         }
     }
 
-    if (message == WM_NCLBUTTONDOWN && wParam == HTCAPTION) {
+    if (message == WM_NCLBUTTONDOWN && wParam == HTCAPTION && !m_pMVRSR) {
         CPoint pt = CPoint(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
         ScreenToClient(&pt);
         if (isSafeZone(pt)) {
