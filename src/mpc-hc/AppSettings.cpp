@@ -1450,6 +1450,9 @@ void CAppSettings::LoadSettings()
                                                IsVideoRendererAvailable(VIDRNDT_DS_EVR_CUSTOM) ? VIDRNDT_DS_EVR_CUSTOM : VIDRNDT_DS_VMR9RENDERLESS);
     nVolumeStep = pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_VOLUMESTEP, 5);
     nSpeedStep = pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_SPEEDSTEP, 0);
+    if (nSpeedStep > 75) {
+        nSpeedStep = 75;
+    }
 
     UpdateRenderersData(false);
 

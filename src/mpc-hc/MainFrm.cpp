@@ -8521,7 +8521,12 @@ void CMainFrame::OnPlayChangeRate(UINT nID)
 
         if (nID == ID_PLAY_INCRATE) {
             if (s.nSpeedStep > 0) {
-                SetPlayingRate(m_dSpeedRate + dSpeedStep);
+                if (m_dSpeedRate <= 0.05) {
+                    double newrate = 1.0 - (95 / s.nSpeedStep) * dSpeedStep;
+                    SetPlayingRate(newrate > 0.05 ? newrate : newrate + dSpeedStep);
+                } else {
+                    SetPlayingRate(m_dSpeedRate + dSpeedStep);
+                }
             } else {
                 SetPlayingRate(m_dSpeedRate * 2.0);
             }
