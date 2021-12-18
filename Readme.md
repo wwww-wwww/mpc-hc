@@ -49,7 +49,8 @@ You can even download those videos: Menu > File > Save a copy<br/>
 Tip: to be able to download in best quality with yt-dlp/youtube-dl, it is recommended to also put [ffmpeg.exe](https://www.gyan.dev/ffmpeg/builds/) in the MPC-HC folder.<br/>
 Several YDL configuration options are found here: Options > Advanced<br/>
 This includes an option to specify the location of the .exe in case you don't want to put it in MPC-HC folder.<br/>
-Note: instead of yt-dlp.exe you can also use [youtube-dl.exe](https://youtube-dl.org/downloads/latest/youtube-dl.exe). I do however recommend using yt-dlp because that works better and has active development, while youtube-dl development is currently inactive.
+Note: instead of yt-dlp.exe you can also use [youtube-dl.exe](https://youtube-dl.org/downloads/latest/youtube-dl.exe). I do however recommend using yt-dlp because that works better and has active development, while youtube-dl development is currently inactive.<br/>
+Note 2: You also need to install [Microsoft Visual C++ 2010 SP1 Redistributable Package (x86)](https://download.microsoft.com/download/1/6/5/165255E7-1014-4D0A-B094-B6A430A6BFFC/vcredist_x86.exe)
 * Play HDR video<br/>
 This requires using [madVR](http://forum.doom9.org/showthread.php?t=146228) or [MPC Video Renderer](https://github.com/Aleksoid1978/VideoRenderer/releases).<br/>
 After installation these renderers can be selected here:<br/>
