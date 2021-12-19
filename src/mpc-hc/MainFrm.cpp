@@ -19806,13 +19806,6 @@ bool CMainFrame::ProcessYoutubeDLURL(CString url, bool append, bool replace)
         return false;
     }
 
-    if (streams.GetCount() > 0) {
-        if (streams.GetHead().video_url != url && streams.GetHead().audio_url != url) {
-            m_sydlLastProcessURL.Empty();
-        }
-    }
-
-
     if (!append && !replace) {
         m_wndPlaylistBar.Empty();
     }
