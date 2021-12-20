@@ -501,8 +501,10 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWnd)
     ON_COMMAND(ID_VIEW_OSD_SHOW_FILENAME, OnViewOSDShowFileName)
     ON_COMMAND(ID_D3DFULLSCREEN_TOGGLE, OnD3DFullscreenToggle)
     ON_COMMAND_RANGE(ID_GOTO_PREV_SUB, ID_GOTO_NEXT_SUB, OnGotoSubtitle)
-    ON_COMMAND_RANGE(ID_SHIFT_SUB_DOWN, ID_SHIFT_SUB_UP, OnShiftSubtitle)
+    ON_COMMAND_RANGE(ID_SUBRESYNC_SHIFT_DOWN, ID_SUBRESYNC_SHIFT_UP, OnSubresyncShiftSub)
     ON_COMMAND_RANGE(ID_SUB_DELAY_DOWN, ID_SUB_DELAY_UP, OnSubtitleDelay)
+    ON_COMMAND_RANGE(ID_SUB_POS_DOWN, ID_SUB_POS_UP, OnSubtitlePos)
+    ON_COMMAND_RANGE(ID_SUB_FONT_SIZE_DEC, ID_SUB_FONT_SIZE_INC, OnSubtitleFontSize)
 
     ON_COMMAND(ID_PLAY_PLAY, OnPlayPlay)
     ON_COMMAND(ID_PLAY_PAUSE, OnPlayPause)
@@ -16299,6 +16301,11 @@ void CMainFrame::ReloadSubtitle()
             m_pSubStreams.GetNext(pos).pSubStream->Reload();
         }
     }
+
+    CAppSettings& s = AfxGetAppSettings();
+    s.m_RenderersSettings.subPicVerticalShift = 0;
+    s.m_RenderersSettings.fontScaleOverride = 1.0;
+
     SetSubtitle(0, true);
     m_wndSubresyncBar.ReloadSubtitle();
 }
@@ -17948,10 +17955,10 @@ afx_msg void CMainFrame::OnGotoSubtitle(UINT nID)
     }
 }
 
-afx_msg void CMainFrame::OnShiftSubtitle(UINT nID)
+afx_msg void CMainFrame::OnSubresyncShiftSub(UINT nID)
 {
     if (m_nCurSubtitle >= 0) {
-        long lShift = (nID == ID_SHIFT_SUB_DOWN) ? -100 : 100;
+        long lShift = (nID == ID_SUBRESYNC_SHIFT_DOWN) ? -100 : 100;
         CString strSubShift;
 
         if (m_wndSubresyncBar.ShiftSubtitle(m_nCurSubtitle, lShift, m_rtCurSubPos)) {
@@ -17976,6 +17983,52 @@ afx_msg void CMainFrame::OnSubtitleDelay(UINT nID)
 
     SetSubtitleDelay(nDelayStep, /*relative=*/ true);
 }
+
+afx_msg void CMainFrame::OnSubtitlePos(UINT nID)
+{
+    if (m_pCAP) {
+        CAppSettings& s = AfxGetAppSettings();
+        switch (nID) {
+        case ID_SUB_POS_DOWN:
+            s.m_RenderersSettings.subPicVerticalShift++;
+            break;
+        case ID_SUB_POS_UP:
+            s.m_RenderersSettings.subPicVerticalShift--;
+            break;
+        }
+
+        if (GetMediaState() != State_Running) {
+            m_pCAP->Paint(false);
+        }
+    }
+}
+
+afx_msg void CMainFrame::OnSubtitleFontSize(UINT nID)
+{
+    if (m_pCAP && m_pCurrentSubInput.pSubStream) {
+        CLSID clsid;
+        m_pCurrentSubInput.pSubStream->GetClassID(&clsid);
+        if (clsid == __uuidof(CRenderedTextSubtitle)) {
+            CAppSettings& s = AfxGetAppSettings();
+            switch (nID) {
+            case ID_SUB_FONT_SIZE_DEC:
+                s.m_RenderersSettings.fontScaleOverride -= 0.05;
+                break;
+            case ID_SUB_FONT_SIZE_INC:
+                s.m_RenderersSettings.fontScaleOverride += 0.05;
+                break;
+            }
+
+            CRenderedTextSubtitle* pRTS = (CRenderedTextSubtitle*)(ISubStream*)m_pCurrentSubInput.pSubStream;
+            pRTS->Deinit();
+
+            if (GetMediaState() != State_Running) {
+                m_pCAP->Paint(false);
+            }
+        }
+    }
+}
+
 
 void CMainFrame::ProcessAPICommand(COPYDATASTRUCT* pCDS)
 {

@@ -2651,6 +2651,14 @@ END
 
 STRINGTABLE
 BEGIN
+    IDS_SUB_POS_DOWN        "Move subtitle down"
+    IDS_SUB_POS_UP          "Move subtitle up"
+    IDS_SUB_FONT_SIZE_DEC   "Decrease subtitle text size"
+    IDS_SUB_FONT_SIZE_INC   "Increase subtitle text size"
+END
+
+STRINGTABLE
+BEGIN
     IDD_PPAGEPLAYBACK       "Playback"
     IDD_PPAGEPLAYER         "Player"
     IDD_PPAGEDVD            "Playback::DVD"

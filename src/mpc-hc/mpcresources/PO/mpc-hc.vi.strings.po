@@ -541,6 +541,22 @@ msgctxt "IDS_FILE_SAVE_THUMBNAILS"
 msgid "Save thumbnails"
 msgstr "Lưu hình thu nhỏ"
 
+msgctxt "IDS_SUB_POS_DOWN"
+msgid "Move subtitle down"
+msgstr ""
+
+msgctxt "IDS_SUB_POS_UP"
+msgid "Move subtitle up"
+msgstr ""
+
+msgctxt "IDS_SUB_FONT_SIZE_DEC"
+msgid "Decrease subtitle text size"
+msgstr ""
+
+msgctxt "IDS_SUB_FONT_SIZE_INC"
+msgid "Increase subtitle text size"
+msgstr ""
+
 msgctxt "IDD_PPAGEPLAYBACK"
 msgid "Playback"
 msgstr "Phát lại"
