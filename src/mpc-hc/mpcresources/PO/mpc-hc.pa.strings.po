@@ -1875,11 +1875,11 @@ msgid "Goto Next Subtitle"
 msgstr "ਅਗਲੇ ਸਬਟਾਈਟਲ ਉੱਤੇ ਜਾਓ"
 
 msgctxt "IDS_MPLAYERC_102"
-msgid "Shift Subtitle Left"
+msgid "Subresync: shift -100ms"
 msgstr ""
 
 msgctxt "IDS_MPLAYERC_103"
-msgid "Shift Subtitle Right"
+msgid "Subresync: shift +100ms"
 msgstr ""
 
 msgctxt "IDS_AG_SEEKSET"

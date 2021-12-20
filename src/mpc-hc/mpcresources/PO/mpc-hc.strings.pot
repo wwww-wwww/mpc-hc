@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2021-12-02 15:05:33+0000\n"
+"POT-Creation-Date: 2021-12-20 01:13:15+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1841,11 +1841,11 @@ msgid "Goto Next Subtitle"
 msgstr ""
 
 msgctxt "IDS_MPLAYERC_102"
-msgid "Shift Subtitle Left"
+msgid "Subresync: shift -100ms"
 msgstr ""
 
 msgctxt "IDS_MPLAYERC_103"
-msgid "Shift Subtitle Right"
+msgid "Subresync: shift +100ms"
 msgstr ""
 
 msgctxt "IDS_AG_SEEKSET"
