@@ -2391,7 +2391,7 @@ void CMainFrame::OnTimer(UINT_PTR nIDEvent)
                 SendNowPlayingToApi();
             }
 
-            if (GetMediaState() == State_Running && !m_fAudioOnly) {
+            if (m_CachedFilterState == State_Running && !m_fAudioOnly) {
                 BOOL fActive = FALSE;
                 if (SystemParametersInfo(SPI_GETSCREENSAVEACTIVE, 0, &fActive, 0) && fActive) {
                     SystemParametersInfo(SPI_SETSCREENSAVEACTIVE, FALSE,   nullptr, SPIF_SENDWININICHANGE);
@@ -2743,9 +2743,7 @@ LRESULT CMainFrame::OnGraphNotify(WPARAM wParam, LPARAM lParam)
         CComPtr<IDvdState> pStateData;
         switch (evCode) {
             case EC_PAUSED:
-                if (!m_fFrameSteppingActive && m_CachedFilterState != State_Paused) {
-                    UpdateCachedMediaState();
-                }
+                UpdateCachedMediaState();
                 break;
             case EC_COMPLETE:
                 UpdateCachedMediaState();
@@ -2763,6 +2761,7 @@ LRESULT CMainFrame::OnGraphNotify(WPARAM wParam, LPARAM lParam)
                 if (m_fFrameSteppingActive) {
                     m_nStepForwardCount++;
                 }
+                UpdateCachedMediaState();
                 break;
             case EC_DEVICE_LOST:
                 UpdateCachedMediaState();
@@ -7981,9 +7980,6 @@ void CMainFrame::OnPlayPlay()
             MoveVideoWindow(false, true);
         }
 
-        // Restart playback
-        MediaControlRun();
-
         if (m_fFrameSteppingActive) {
             m_pFS->CancelStep();
             m_fFrameSteppingActive = false;
@@ -7992,6 +7988,9 @@ void CMainFrame::OnPlayPlay()
             m_pBA->put_Volume(m_wndToolBar.Volume);
         }
         m_nStepForwardCount = 0;
+
+        // Restart playback
+        MediaControlRun();
 
         SetAlwaysOnTop(s.iOnTop);
 
@@ -8051,11 +8050,10 @@ void CMainFrame::OnPlayPause()
     }
 
     if (GetLoadState() == MLS::LOADED) {
-
         if (GetPlaybackMode() == PM_FILE
                 || GetPlaybackMode() == PM_DVD
                 || GetPlaybackMode() == PM_ANALOG_CAPTURE) {
-            MediaControlPause();
+            MediaControlPause(true);
         } else {
             ASSERT(FALSE);
         }
@@ -8243,11 +8241,18 @@ void CMainFrame::OnPlayFramestep(UINT nID)
     KillTimerDelayedSeek();
 
     m_OSD.EnableShowMessage(false);
-    if (nID == ID_PLAY_FRAMESTEP && m_pFS) {
-        if (GetMediaState() != State_Paused) {
-            SendMessage(WM_COMMAND, ID_PLAY_PAUSE);
-        }
 
+    if (m_CachedFilterState == State_Paused) {
+        // Double check the state, because graph may have silently gone into a running state after performing a framestep
+        if (UpdateCachedMediaState() != State_Paused) {
+            MediaControlPause(true);
+        }
+    } else {
+        KillTimer(TIMER_STATS);
+        MediaControlPause(true);
+    }
+
+    if (nID == ID_PLAY_FRAMESTEP && m_pFS) {
         // To support framestep back, store the initial position when
         // stepping forward
         if (m_nStepForwardCount == 0) {
@@ -8267,10 +8272,6 @@ void CMainFrame::OnPlayFramestep(UINT nID)
 
         m_pFS->Step(1, nullptr);
     } else if (m_pMS && (m_nStepForwardCount == 0) && (S_OK == m_pMS->IsFormatSupported(&TIME_FORMAT_FRAME))) {
-        if (GetMediaState() != State_Paused) {
-            SendMessage(WM_COMMAND, ID_PLAY_PAUSE);
-        }
-
         if (SUCCEEDED(m_pMS->SetTimeFormat(&TIME_FORMAT_FRAME))) {
             REFERENCE_TIME rtCurPos;
 
@@ -8282,10 +8283,6 @@ void CMainFrame::OnPlayFramestep(UINT nID)
             m_pMS->SetTimeFormat(&TIME_FORMAT_MEDIA_TIME);
         }
     } else { // nID == ID_PLAY_FRAMESTEP_BACK
-        if (GetMediaState() != State_Paused) {
-            SendMessage(WM_COMMAND, ID_PLAY_PAUSE);
-        }
-
         const REFERENCE_TIME rtAvgTimePerFrame = std::llround(GetAvgTimePerFrame() * 10000000LL);
         REFERENCE_TIME rtCurPos = 0;
         
@@ -10629,8 +10626,9 @@ OAFilterState CMainFrame::GetMediaState() const
     OAFilterState ret = -1;
     if (m_eMediaLoadState == MLS::LOADED) {
         if (m_CachedFilterState != -1) {
-            #if DEBUG & 0
-            ASSERT(GetMediaStateDirect() == m_CachedFilterState);
+            #if DEBUG & 1
+            ret = GetMediaStateDirect();
+            ASSERT(ret == m_CachedFilterState || m_fFrameSteppingActive);
             #endif
             return m_CachedFilterState;
         } else {
@@ -10640,9 +10638,10 @@ OAFilterState CMainFrame::GetMediaState() const
     return ret;
 }
 
-void CMainFrame::UpdateCachedMediaState()
+OAFilterState CMainFrame::UpdateCachedMediaState()
 {
     m_CachedFilterState = GetMediaStateDirect();
+    return m_CachedFilterState;
 }
 
 bool CMainFrame::MediaControlRun(bool waitforcompletion)
@@ -10669,7 +10668,6 @@ bool CMainFrame::MediaControlPause(bool waitforcompletion)
 {
     m_dwLastPause = GetTickCount64();
     if (m_pMC) {
-        ASSERT(m_CachedFilterState != State_Paused);
         m_CachedFilterState = State_Paused;
         if (FAILED(m_pMC->Pause())) {
             // still in transition to paused state

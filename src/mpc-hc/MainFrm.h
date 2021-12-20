@@ -636,7 +636,7 @@ public:
 
     OAFilterState GetMediaStateDirect() const;
     OAFilterState GetMediaState() const;
-    void CMainFrame::UpdateCachedMediaState();
+    OAFilterState CMainFrame::UpdateCachedMediaState();
     bool MediaControlRun(bool waitforcompletion = false);
     bool MediaControlPause(bool waitforcompletion = false);
     bool MediaControlStop(bool waitforcompletion = false);
