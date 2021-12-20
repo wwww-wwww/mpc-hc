@@ -16130,6 +16130,8 @@ void CMainFrame::SetSubtitle(const SubtitleInput& subInput, bool skip_lcid /* = 
     TRACE(_T("CMainFrame::SetSubtitle\n"));
 
     CAppSettings& s = AfxGetAppSettings();
+    s.m_RenderersSettings.subPicVerticalShift = 0;
+    s.m_RenderersSettings.fontScaleOverride = 1.0;
 
     {
         CAutoLock cAutoLock(&m_csSubLock);

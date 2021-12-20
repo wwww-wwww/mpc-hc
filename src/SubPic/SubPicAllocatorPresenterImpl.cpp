@@ -104,8 +104,10 @@ HRESULT CSubPicAllocatorPresenterImpl::AlphaBltSubPic(const CRect& windowRect,
     if (m_pSubPicQueue->LookupSubPic(m_rtNow, !IsRendering(), pSubPic)) {
         CRect rcSource, rcDest;
 
+        const CRenderersSettings& r = GetRenderersSettings();
+        int yOffset = yOffsetInPixels + r.subPicVerticalShift;
         if (SUCCEEDED(pSubPic->GetSourceAndDest(windowRect, videoRect, rcSource, rcDest,
-                                                videoStretchFactor, xOffsetInPixels, yOffsetInPixels))) {
+                                                videoStretchFactor, xOffsetInPixels, yOffset))) {
             return pSubPic->AlphaBlt(rcSource, rcDest, pTarget);
         }
     }

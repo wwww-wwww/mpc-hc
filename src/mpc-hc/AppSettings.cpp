@@ -2170,6 +2170,9 @@ void CAppSettings::UpdateRenderersData(bool fSave)
         r.subPicQueueSettings.nAnimationRate = pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_SUBTITLE_ANIMATION_RATE, 100);
         r.subPicQueueSettings.bAllowDroppingSubpic = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_ALLOW_DROPPING_SUBPIC, TRUE);
 
+        r.subPicVerticalShift = 0;
+        r.fontScaleOverride = 1.0;
+
         r.iEvrBuffers = pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_EVR_BUFFERS, 5);
         r.D3D9RenderDevice = pApp->GetProfileString(IDS_R_SETTINGS, IDS_RS_D3D9RENDERDEVICE);
     }
@@ -2959,6 +2962,7 @@ void CAppSettings::UpdateSettings()
 }
 
 #if USE_LIBASS
+// ToDo: move these settings into CRendererSettings or make an implementation similar to CRendererSettings that holds old subtitle settings
 SubRendererSettings CAppSettings::GetSubRendererSettings() {
     SubRendererSettings s;
     s.renderUsingLibass = this->bRenderSubtitlesUsingLibass;
