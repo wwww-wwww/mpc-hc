@@ -7537,17 +7537,13 @@ void CMainFrame::OnViewPanNScan(UINT nID)
 
     switch (nID) {
         case ID_VIEW_RESET:
-            {
             // Subtitle overrides
-            CAppSettings& s = AfxGetAppSettings();
-            s.m_RenderersSettings.subPicVerticalShift = 0;
-            s.m_RenderersSettings.fontScaleOverride = 1.0;
+            ResetSubtitlePosAndSize(true);
             // Pan&Scan
             m_ZoomX = m_ZoomY = 1.0;
             m_PosX = m_PosY = 0.5;
             m_AngleX = m_AngleY = m_AngleZ = 0;
             PerformFlipRotate();
-            }
             break;
         case ID_VIEW_INCSIZE:
             x = y = 1;
@@ -16139,8 +16135,7 @@ void CMainFrame::SetSubtitle(const SubtitleInput& subInput, bool skip_lcid /* = 
     TRACE(_T("CMainFrame::SetSubtitle\n"));
 
     CAppSettings& s = AfxGetAppSettings();
-    s.m_RenderersSettings.subPicVerticalShift = 0;
-    s.m_RenderersSettings.fontScaleOverride = 1.0;
+    ResetSubtitlePosAndSize(false);
 
     {
         CAutoLock cAutoLock(&m_csSubLock);
@@ -16309,9 +16304,7 @@ void CMainFrame::ReloadSubtitle()
         }
     }
 
-    CAppSettings& s = AfxGetAppSettings();
-    s.m_RenderersSettings.subPicVerticalShift = 0;
-    s.m_RenderersSettings.fontScaleOverride = 1.0;
+    ResetSubtitlePosAndSize(false);
 
     SetSubtitle(0, true);
     m_wndSubresyncBar.ReloadSubtitle();
@@ -18026,6 +18019,32 @@ afx_msg void CMainFrame::OnSubtitleFontSize(UINT nID)
                 break;
             }
 
+            CRenderedTextSubtitle* pRTS = (CRenderedTextSubtitle*)(ISubStream*)m_pCurrentSubInput.pSubStream;
+            {
+                CAutoLock cAutoLock(&m_csSubLock);
+                pRTS->Deinit();
+            }
+            InvalidateSubtitle();
+
+            if (GetMediaState() != State_Running) {
+                m_pCAP->Paint(false);
+            }
+        }
+    }
+}
+
+void CMainFrame::ResetSubtitlePosAndSize(bool repaint /* = false*/)
+{
+    CAppSettings& s = AfxGetAppSettings();
+    bool changed = (s.m_RenderersSettings.fontScaleOverride != 1.0) || (s.m_RenderersSettings.subPicVerticalShift != 0);
+
+    s.m_RenderersSettings.fontScaleOverride = 1.0;
+    s.m_RenderersSettings.subPicVerticalShift = 0;
+
+    if (changed && repaint && m_pCAP && m_pCurrentSubInput.pSubStream) {
+        CLSID clsid;
+        m_pCurrentSubInput.pSubStream->GetClassID(&clsid);
+        if (clsid == __uuidof(CRenderedTextSubtitle)) {
             CRenderedTextSubtitle* pRTS = (CRenderedTextSubtitle*)(ISubStream*)m_pCurrentSubInput.pSubStream;
             {
                 CAutoLock cAutoLock(&m_csSubLock);

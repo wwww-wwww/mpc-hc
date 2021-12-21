@@ -1174,7 +1174,7 @@ public:
     void        KillTimerDelayedSeek();
     void        KillTimersStop();
     void        AdjustStreamPosPoller(bool restart);
-
+    void        ResetSubtitlePosAndSize(bool repaint = false);
 
     // MPC API functions
     void        ProcessAPICommand(COPYDATASTRUCT* pCDS);
