@@ -7537,10 +7537,17 @@ void CMainFrame::OnViewPanNScan(UINT nID)
 
     switch (nID) {
         case ID_VIEW_RESET:
+            {
+            // Subtitle overrides
+            CAppSettings& s = AfxGetAppSettings();
+            s.m_RenderersSettings.subPicVerticalShift = 0;
+            s.m_RenderersSettings.fontScaleOverride = 1.0;
+            // Pan&Scan
             m_ZoomX = m_ZoomY = 1.0;
             m_PosX = m_PosY = 0.5;
             m_AngleX = m_AngleY = m_AngleZ = 0;
             PerformFlipRotate();
+            }
             break;
         case ID_VIEW_INCSIZE:
             x = y = 1;
