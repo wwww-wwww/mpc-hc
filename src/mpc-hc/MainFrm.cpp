@@ -17990,10 +17990,10 @@ afx_msg void CMainFrame::OnSubtitlePos(UINT nID)
         CAppSettings& s = AfxGetAppSettings();
         switch (nID) {
         case ID_SUB_POS_DOWN:
-            s.m_RenderersSettings.subPicVerticalShift++;
+            s.m_RenderersSettings.subPicVerticalShift += 2;
             break;
         case ID_SUB_POS_UP:
-            s.m_RenderersSettings.subPicVerticalShift--;
+            s.m_RenderersSettings.subPicVerticalShift -= 2;
             break;
         }
 
