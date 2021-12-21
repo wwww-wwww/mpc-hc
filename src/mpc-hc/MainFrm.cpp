@@ -18020,7 +18020,11 @@ afx_msg void CMainFrame::OnSubtitleFontSize(UINT nID)
             }
 
             CRenderedTextSubtitle* pRTS = (CRenderedTextSubtitle*)(ISubStream*)m_pCurrentSubInput.pSubStream;
-            pRTS->Deinit();
+            {
+                CAutoLock cAutoLock(&m_csSubLock);
+                pRTS->Deinit();
+            }
+            InvalidateSubtitle();
 
             if (GetMediaState() != State_Running) {
                 m_pCAP->Paint(false);
