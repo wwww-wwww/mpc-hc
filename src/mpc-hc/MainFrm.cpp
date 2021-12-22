@@ -4872,13 +4872,6 @@ void CMainFrame::OnDropFiles(CAtlList<CString>& slFiles, DROPEFFECT dropEffect)
                 if (onlysubs && !subInputSelected.pSubStream) {
                     // first one
                     subInputSelected = subInput;
-                    AfxGetAppSettings().fEnableSubtitles = true;
-                    SetSubtitle(subInputSelected);
-
-                    CPath fn(subfile);
-                    fn.StripPath();
-                    CString statusmsg(static_cast<LPCTSTR>(fn));
-                    SendStatusMessage(statusmsg + ResStr(IDS_SUB_LOADED_SUCCESS), 3000);
                 }
             }
         }
@@ -4888,6 +4881,13 @@ void CMainFrame::OnDropFiles(CAtlList<CString>& slFiles, DROPEFFECT dropEffect)
     }
 
     if (onlysubs && subInputSelected.pSubStream) {
+        AfxGetAppSettings().fEnableSubtitles = true;
+        SetSubtitle(subInputSelected);
+
+        CPath fn(subfile);
+        fn.StripPath();
+        CString statusmsg(static_cast<LPCTSTR>(fn));
+        SendStatusMessage(statusmsg + ResStr(IDS_SUB_LOADED_SUCCESS), 3000);
         // subtitles have been loaded, we are done now
         return;
     }
