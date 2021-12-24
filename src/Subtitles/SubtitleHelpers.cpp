@@ -36,7 +36,7 @@ namespace
     };
 
     LPCTSTR separators = _T(".\\-_");
-    LPCTSTR extListVid = _T("(avi)|(mkv)|(mp4)|((m2)?ts)");
+    LPCTSTR extListVid = _T("(avi)|(mkv)|(mp4)|(mov)|(webm)|(wmv)|(flv)|(ts)|(m2ts)");
 }
 
 LPCTSTR Subtitle::GetSubtitleFileExt(SubType type)
@@ -91,7 +91,7 @@ void Subtitle::GetSubFileNames(CString fn, const CAtlArray<CString>& paths, CAtl
 
     for (size_t k = 0; k < paths.GetCount(); k++) {
         CString path = paths[k];
-        path.Replace('\\', '/');
+        path.Replace('/', '\\');
 
         l = path.GetLength();
         if (l > 0 && path[l - 1] != '\\') {
@@ -100,9 +100,9 @@ void Subtitle::GetSubFileNames(CString fn, const CAtlArray<CString>& paths, CAtl
 
         if (path.Find(':') == -1 && path.Find(_T("\\\\")) != 0) {
             path = orgpath + path;
+            path.Replace(_T("\\.\\"), _T("\\"));
+            ExtendMaxPathLengthIfNeeded(path, MAX_PATH);
         }
-
-        path.Replace(_T("\\.\\"), _T("\\"));
 
         CAtlList<CString> subs, vids;
 
