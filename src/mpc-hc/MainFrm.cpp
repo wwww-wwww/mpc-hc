@@ -5702,6 +5702,7 @@ void CMainFrame::SaveThumbnails(LPCTSTR fn)
         CStringW fs;
         CString curfile = m_wndPlaylistBar.GetCurFileName();
         if (!PathUtils::IsURL(curfile)) {
+            ExtendMaxPathLengthIfNeeded(curfile, MAX_PATH);
             WIN32_FIND_DATA wfd;
             HANDLE hFind = FindFirstFile(curfile, &wfd);
             if (hFind != INVALID_HANDLE_VALUE) {
@@ -15932,6 +15933,7 @@ bool CMainFrame::LoadSubtitle(CString fn, SubtitleInput* pSubInput /*= nullptr*/
 
         // Temporarily load fonts from 'Fonts' folder - Begin
         CString path = PathUtils::DirName(fn) + L"\\fonts\\";
+        ExtendMaxPathLengthIfNeeded(path, MAX_PATH);
 
         if (::PathIsDirectory(path)) {
             WIN32_FIND_DATA fd = {0};
