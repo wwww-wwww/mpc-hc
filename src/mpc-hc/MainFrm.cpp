@@ -5443,11 +5443,11 @@ void CMainFrame::SaveThumbnails(LPCTSTR fn)
         return;
     }
 
-    OAFilterState filterState = GetMediaState();
+    OAFilterState filterState = UpdateCachedMediaState();
     bool bWasStopped = (filterState == State_Stopped);
     if (filterState != State_Paused) {
         OnPlayPause();
-        GetMediaState(); // wait for completion of the pause command
+        UpdateCachedMediaState(); // wait for completion of the pause command
     }
 
     CSize szVideoARCorrected, szVideo, szAR;
@@ -5536,6 +5536,11 @@ void CMainFrame::SaveThumbnails(LPCTSTR fn)
         return;
     }
 
+    m_nVolumeBeforeFrameStepping = m_wndToolBar.Volume;
+    if (m_pBA) {
+        m_pBA->put_Volume(-10000);
+    }
+
     // Draw the thumbnails
     int pics = cols * rows;
     REFERENCE_TIME rtInterval = rtDur / (pics + 1LL);
@@ -5550,13 +5555,12 @@ void CMainFrame::SaveThumbnails(LPCTSTR fn)
         DoSeekTo(rt, false);
         UpdateWindow();
 
-        m_nVolumeBeforeFrameStepping = m_wndToolBar.Volume;
-        m_pBA->put_Volume(-10000);
-
         HRESULT hr = m_pFS ? m_pFS->Step(1, nullptr) : E_FAIL;
 
         if (FAILED(hr)) {
-            m_pBA->put_Volume(m_nVolumeBeforeFrameStepping);
+            if (m_pBA) {
+                m_pBA->put_Volume(m_nVolumeBeforeFrameStepping);
+            }
             AfxMessageBox(IDS_FRAME_STEP_ERROR_RENDERER, MB_ICONEXCLAMATION | MB_OK, 0);
             return;
         }
@@ -5574,8 +5578,6 @@ void CMainFrame::SaveThumbnails(LPCTSTR fn)
                 }
             }
         }
-
-        m_pBA->put_Volume(m_nVolumeBeforeFrameStepping);
 
         int col = (i - 1) % cols;
         int row = (i - 1) / cols;
@@ -5604,6 +5606,9 @@ void CMainFrame::SaveThumbnails(LPCTSTR fn)
         BYTE* pData = nullptr;
         long size = 0;
         if (!GetDIB(&pData, size)) {
+            if (m_pBA) {
+                m_pBA->put_Volume(m_nVolumeBeforeFrameStepping);
+            }
             return;
         }
 
@@ -5614,6 +5619,9 @@ void CMainFrame::SaveThumbnails(LPCTSTR fn)
             strTemp.Format(IDS_THUMBNAILS_INVALID_FORMAT, bi->bmiHeader.biBitCount);
             AfxMessageBox(strTemp);
             delete [] pData;
+            if (m_pBA) {
+                m_pBA->put_Volume(m_nVolumeBeforeFrameStepping);
+            }
             return;
         }
 
@@ -5731,6 +5739,10 @@ void CMainFrame::SaveThumbnails(LPCTSTR fn)
     }
 
     SaveDIB(fn, (BYTE*)dib, dibsize);
+
+    if (m_pBA) {
+        m_pBA->put_Volume(m_nVolumeBeforeFrameStepping);
+    }
 
     if (bWasStopped) {
         OnPlayStop();
@@ -7992,9 +8004,13 @@ void CMainFrame::OnPlayPlay()
         if (m_fFrameSteppingActive) {
             m_pFS->CancelStep();
             m_fFrameSteppingActive = false;
-            m_pBA->put_Volume(m_nVolumeBeforeFrameStepping);
+            if (m_pBA) {
+                m_pBA->put_Volume(m_nVolumeBeforeFrameStepping);
+            }
         } else {
-            m_pBA->put_Volume(m_wndToolBar.Volume);
+            if (m_pBA) {
+                m_pBA->put_Volume(m_wndToolBar.Volume);
+            }
         }
         m_nStepForwardCount = 0;
 
@@ -8160,7 +8176,9 @@ void CMainFrame::OnPlayStop()
             m_pFS->CancelStep();
             m_fFrameSteppingActive = false;
             m_nStepForwardCount = 0;
-            m_pBA->put_Volume(m_nVolumeBeforeFrameStepping);
+            if (m_pBA) {
+                m_pBA->put_Volume(m_nVolumeBeforeFrameStepping);
+            }
         }
         m_nStepForwardCount = 0;
     } else if (GetLoadState() == MLS::CLOSING) {
@@ -8276,7 +8294,9 @@ void CMainFrame::OnPlayFramestep(UINT nID)
         if (!m_fFrameSteppingActive) {
             m_fFrameSteppingActive = true;
             m_nVolumeBeforeFrameStepping = m_wndToolBar.Volume;
-            m_pBA->put_Volume(-10000);
+            if (m_pBA) {
+                m_pBA->put_Volume(-10000);
+            }
         }
 
         m_pFS->Step(1, nullptr);
@@ -16548,7 +16568,9 @@ void CMainFrame::DoSeekTo(REFERENCE_TIME rtPos, bool bShowOSD /*= true*/)
         // Cancel pending frame steps
         m_pFS->CancelStep();
         m_fFrameSteppingActive = false;
-        m_pBA->put_Volume(m_nVolumeBeforeFrameStepping);
+        if (m_pBA) {
+            m_pBA->put_Volume(m_nVolumeBeforeFrameStepping);
+        }
     }
     m_nStepForwardCount = 0;
 
