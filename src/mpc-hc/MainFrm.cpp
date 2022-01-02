@@ -2742,7 +2742,6 @@ LRESULT CMainFrame::OnGraphNotify(WPARAM wParam, LPARAM lParam)
 
         hr = m_pME->FreeEventParams(evCode, evParam1, evParam2);
 
-        CComPtr<IDvdState> pStateData;
         switch (evCode) {
             case EC_PAUSED:
                 UpdateCachedMediaState();
