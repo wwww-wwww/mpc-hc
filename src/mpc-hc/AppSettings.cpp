@@ -331,6 +331,9 @@ CAppSettings::CAppSettings()
 #if INTERNAL_SOURCEFILTER_RFS
     SrcFiltersKeys[SRC_RFS] = FilterKey(_T("SRC_RFS"), true);
 #endif
+#if INTERNAL_SOURCEFILTER_MISC
+    SrcFiltersKeys[SRC_MISC] = FilterKey(_T("SRC_MISC"), true);
+#endif
 
     // Internal decoders
 #if INTERNAL_DECODER_MPEG1
