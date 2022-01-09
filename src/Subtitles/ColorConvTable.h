@@ -26,7 +26,8 @@ struct ColorConvTable {
     enum YuvMatrixType {
         NONE,
         BT601,
-        BT709
+        BT709,
+        BT2020
     };
 
     enum YuvRangeType {
@@ -54,6 +55,9 @@ struct ColorConvTable {
     static DWORD Ayuv2Argb_TV_BT709(DWORD ayuv);
     static DWORD A8Y8U8V8_To_ARGB_TV_BT709(int a8, int y8, int u8, int v8);
     static DWORD A8Y8U8V8_To_ARGB_PC_BT709(int a8, int y8, int u8, int v8);
+    static DWORD Ayuv2Argb_TV_BT2020(DWORD ayuv);
+    static DWORD A8Y8U8V8_To_ARGB_TV_BT2020( int a8, int y8, int u8, int v8 );
+    static DWORD A8Y8U8V8_To_ARGB_PC_BT2020( int a8, int y8, int u8, int v8 );
 
     static DWORD A8Y8U8V8_PC_To_TV(int a8, int y8, int u8, int v8);
     static DWORD A8Y8U8V8_TV_To_PC(int a8, int y8, int u8, int v8);
