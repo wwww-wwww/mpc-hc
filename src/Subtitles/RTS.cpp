@@ -3462,7 +3462,7 @@ STDMETHODIMP CRenderedTextSubtitle::SetSourceTargetInfo(CString yuvVideoMatrix, 
         parseMatrixString(yuvVideoMatrix);
     }
 
-    bool bTransformColors = !bIsVSFilter && !m_sYCbCrMatrix.IsEmpty();
+    bool bTransformColors = !bIsVSFilter && (!m_sYCbCrMatrix.IsEmpty() || !yuvVideoMatrix.IsEmpty());
     ColorConvTable::SetDefaultConvType(yuvMatrix, yuvRange, (targetWhiteLevel < 245), bTransformColors);
 
     return S_OK;
