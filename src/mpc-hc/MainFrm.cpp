@@ -19833,6 +19833,7 @@ LRESULT CMainFrame::OnGetSubtitles(WPARAM, LPARAM lParam)
 static const CString ydl_whitelist[] = {
     _T("youtube.com/"),
     _T("youtu.be/"),
+    _T("twitch.tv/"),
     _T("twitch.com/")
 };
 
