@@ -30,6 +30,12 @@
 #include "../filters/muxer/DSMMuxer/DSMMuxer.h"
 #include "../filters/transform/BufferFilter/BufferFilter.h"
 
+static CString NormalizeMediaName(const CString& displayName)
+{
+    CString normalizedName(displayName);
+    normalizedName.Replace(_T('\\'), _T('/'));
+    return normalizedName;
+}
 
 static bool LoadMediaType(CStringW displayName, AM_MEDIA_TYPE** ppmt)
 {
@@ -46,9 +52,10 @@ static bool LoadMediaType(CStringW displayName, AM_MEDIA_TYPE** ppmt)
 
     ZeroMemory(*ppmt, sizeof(AM_MEDIA_TYPE));
 
+    CString storeName(NormalizeMediaName(CString(displayName)));
     BYTE* pData;
     UINT len;
-    if (AfxGetApp()->GetProfileBinary(IDS_R_CAPTURE _T("\\") + CString(displayName), _T("MediaType"), &pData, &len)) {
+    if (AfxGetApp()->GetProfileBinary(IDS_R_CAPTURE _T("\\") + storeName, _T("MediaType"), &pData, &len)) {
         if (len != sizeof(AM_MEDIA_TYPE)) {
             CoTaskMemFree(*ppmt);
             delete [] pData;
@@ -62,7 +69,7 @@ static bool LoadMediaType(CStringW displayName, AM_MEDIA_TYPE** ppmt)
 
         fRet = true;
 
-        if (AfxGetApp()->GetProfileBinary(IDS_R_CAPTURE _T("\\") + CString(displayName), _T("Format"), &pData, &len)) {
+        if (AfxGetApp()->GetProfileBinary(IDS_R_CAPTURE _T("\\") + storeName, _T("Format"), &pData, &len)) {
             if (!len) {
                 delete [] pData;
                 return fRet;
@@ -83,8 +90,9 @@ static void SaveMediaType(CStringW displayName, AM_MEDIA_TYPE* pmt)
         return;
     }
 
-    AfxGetApp()->WriteProfileBinary(IDS_R_CAPTURE _T("\\") + CString(displayName), _T("MediaType"), (BYTE*)pmt, sizeof(AM_MEDIA_TYPE));
-    AfxGetApp()->WriteProfileBinary(IDS_R_CAPTURE _T("\\") + CString(displayName), _T("Format"), pmt->pbFormat, pmt->cbFormat);
+    CString storeName(NormalizeMediaName(CString(displayName)));
+    AfxGetApp()->WriteProfileBinary(IDS_R_CAPTURE _T("\\") + storeName, _T("MediaType"), (BYTE*)pmt, sizeof(AM_MEDIA_TYPE));
+    AfxGetApp()->WriteProfileBinary(IDS_R_CAPTURE _T("\\") + storeName, _T("Format"), pmt->pbFormat, pmt->cbFormat);
 }
 
 static void LoadDefaultCodec(CAtlArray<Codec>& codecs, CComboBox& box, const GUID& cat)
