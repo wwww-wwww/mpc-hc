@@ -384,6 +384,10 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWnd)
     ON_UPDATE_COMMAND_UI(ID_VIEW_ZOOM_AUTOFIT, OnUpdateViewZoom)
     ON_COMMAND(ID_VIEW_ZOOM_AUTOFIT_LARGER, OnViewZoomAutoFitLarger)
     ON_UPDATE_COMMAND_UI(ID_VIEW_ZOOM_AUTOFIT_LARGER, OnUpdateViewZoom)
+    ON_COMMAND_RANGE(ID_VIEW_ZOOM_ADD, ID_VIEW_ZOOM_ADD, OnViewModifySize)
+    ON_UPDATE_COMMAND_UI_RANGE(ID_VIEW_ZOOM_ADD, ID_VIEW_ZOOM_ADD, OnUpdateViewZoom)
+    ON_COMMAND_RANGE(ID_VIEW_ZOOM_SUB, ID_VIEW_ZOOM_SUB, OnViewModifySize)
+    ON_UPDATE_COMMAND_UI_RANGE(ID_VIEW_ZOOM_SUB, ID_VIEW_ZOOM_SUB, OnUpdateViewZoom)
     ON_COMMAND_RANGE(ID_VIEW_VF_HALF, ID_VIEW_VF_ZOOM2, OnViewDefaultVideoFrame)
     ON_UPDATE_COMMAND_UI_RANGE(ID_VIEW_VF_HALF, ID_VIEW_VF_ZOOM2, OnUpdateViewDefaultVideoFrame)
     ON_COMMAND(ID_VIEW_VF_SWITCHZOOM, OnViewSwitchVideoFrame)
@@ -7458,6 +7462,24 @@ void CMainFrame::OnViewZoomAutoFitLarger()
 {
     ZoomVideoWindow(ZOOM_AUTOFIT_LARGER);
     m_OSD.DisplayMessage(OSD_TOPLEFT, ResStr(IDS_OSD_ZOOM_AUTO_LARGER), 3000);
+}
+
+void CMainFrame::OnViewModifySize(UINT nID)
+{
+    CSize videoSize = m_fAudioOnly ? m_wndView.GetLogoSize() : GetVideoSize();
+    double videoRatio = double(videoSize.cy) / double(videoSize.cx);
+
+    CRect videoRect;
+    m_pVideoWnd->GetWindowRect(&videoRect);
+    LONG newWidth = videoRect.Width() + 32 * (nID == ID_VIEW_ZOOM_ADD ? 1 : ID_VIEW_ZOOM_SUB ? -1 : 0);
+    LONG newHeight = ceil(newWidth * videoRatio);
+
+    CRect rect;
+    GetWindowRect(&rect);
+    rect.right = rect.right + newWidth - videoRect.Width();
+    rect.bottom = rect.bottom + newHeight - videoRect.Height();
+    
+    MoveWindow(&rect);
 }
 
 void CMainFrame::OnViewDefaultVideoFrame(UINT nID)

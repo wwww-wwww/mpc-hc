@@ -553,6 +553,8 @@ static constexpr wmcmd_base default_wmcmds[] = {
     { ID_VIEW_ZOOM_200,                   '3', FVIRTKEY | FALT | FNOINVERT,             IDS_AG_ZOOM_200 },
     { ID_VIEW_ZOOM_AUTOFIT,               '4', FVIRTKEY | FALT | FNOINVERT,             IDS_AG_ZOOM_AUTO_FIT },
     { ID_VIEW_ZOOM_AUTOFIT_LARGER,        '5', FVIRTKEY | FALT | FNOINVERT,             IDS_AG_ZOOM_AUTO_FIT_LARGER },
+    { ID_VIEW_ZOOM_ADD,                     0, FVIRTKEY | FNOINVERT,                    IDS_AG_ZOOM_ADD },
+    { ID_VIEW_ZOOM_SUB,                     0, FVIRTKEY | FNOINVERT,                    IDS_AG_ZOOM_SUB },
     { ID_ASPECTRATIO_NEXT,                  0, FVIRTKEY | FNOINVERT,                    IDS_AG_NEXT_AR_PRESET },
     { ID_VIEW_VF_HALF,                      0, FVIRTKEY | FNOINVERT,                    IDS_AG_VIDFRM_HALF },
     { ID_VIEW_VF_NORMAL,                    0, FVIRTKEY | FNOINVERT,                    IDS_AG_VIDFRM_NORMAL },
