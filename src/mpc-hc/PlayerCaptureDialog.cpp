@@ -763,15 +763,18 @@ void CPlayerCaptureDialog::UpdateMediaTypes()
                 }
             }
 
-            BITMAPINFOHEADER* bih = (pmt->formattype == FORMAT_VideoInfo)
-                                    ? &((VIDEOINFOHEADER*)pmt->pbFormat)->bmiHeader
-                                    : (pmt->formattype == FORMAT_VideoInfo2)
-                                    ? &((VIDEOINFOHEADER2*)pmt->pbFormat)->bmiHeader
-                                    : nullptr;
-            if (bih) {
-                bih->biWidth = m_vidhor.GetPos32();
-                bih->biHeight = m_vidver.GetPos32();
-                bih->biSizeImage = bih->biWidth * bih->biHeight * bih->biBitCount >> 3;
+            CSize vidSize(m_vidhor.GetPos32(), m_vidver.GetPos32());
+            if (vidSize.cx && vidSize.cy) {
+                BITMAPINFOHEADER* bih = (pmt->formattype == FORMAT_VideoInfo)
+                    ? &((VIDEOINFOHEADER*)pmt->pbFormat)->bmiHeader
+                    : (pmt->formattype == FORMAT_VideoInfo2)
+                    ? &((VIDEOINFOHEADER2*)pmt->pbFormat)->bmiHeader
+                    : nullptr;
+                if (bih) {
+                    bih->biWidth = vidSize.cx;
+                    bih->biHeight = vidSize.cy;
+                    bih->biSizeImage = bih->biWidth * bih->biHeight * bih->biBitCount >> 3;
+                }
             }
             SaveMediaType(m_vidDisplayName, pmt);
 
