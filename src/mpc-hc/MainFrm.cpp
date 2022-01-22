@@ -4582,10 +4582,11 @@ BOOL CMainFrame::OnCopyData(CWnd* pWnd, COPYDATASTRUCT* pCDS)
             }
             OpenMedia(p);
         } else {
-            if (m_dwLastRun && ((GetTickCount64() - m_dwLastRun) < 1000ULL)) {
+            ULONGLONG tcnow = GetTickCount64();
+            if (m_dwLastRun && ((tcnow - m_dwLastRun) < 2000ULL)) {
                 s.nCLSwitches |= CLSW_ADD;
             }
-            m_dwLastRun = GetTickCount64();
+            m_dwLastRun = tcnow;
 
             if ((s.nCLSwitches & CLSW_ADD) && !IsPlaylistEmpty()) {             
                 POSITION pos2 = sl.GetHeadPosition();
