@@ -1692,6 +1692,7 @@
 #define IDS_ARS_WASAPI_METHOD           57618
 #define IDS_ARS_DUMMY_CHANNELS          57619
 #define IDS_AG_DEFAULT                  57620
+#define IDS_PPAGEADVANCED_OPEN_REC_PANEL_WHEN_OPENING_DEVICE 57621
 
 // Next default values for new objects
 // 

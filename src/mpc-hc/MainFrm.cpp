@@ -3820,22 +3820,27 @@ LRESULT CMainFrame::OnFilePostOpenmedia(WPARAM wParam, LPARAM lParam)
         UpdateControlState(CMainFrame::UPDATE_LOGO);
     }
 
-    if (GetPlaybackMode() == PM_DIGITAL_CAPTURE) {
-        // show navigation panel when it's available and not disabled
-        if (!s.fHideNavigation) {
-            m_wndNavigationBar.m_navdlg.UpdateElementList();
-            if (!m_controls.ControlChecked(CMainFrameControls::Panel::NAVIGATION)) {
-                m_controls.ToggleControl(CMainFrameControls::Panel::NAVIGATION);
-            } else {
-                ASSERT(FALSE);
+    if (s.bOpenRecPanelWhenOpeningDevice) {
+        if (GetPlaybackMode() == PM_DIGITAL_CAPTURE) {
+            // show navigation panel when it's available and not disabled
+            if (!s.fHideNavigation) {
+                m_wndNavigationBar.m_navdlg.UpdateElementList();
+                if (!m_controls.ControlChecked(CMainFrameControls::Panel::NAVIGATION)) {
+                    m_controls.ToggleControl(CMainFrameControls::Panel::NAVIGATION);
+                }
+                else {
+                    ASSERT(FALSE);
+                }
             }
         }
-    } else if (GetPlaybackMode() == PM_ANALOG_CAPTURE) {
-        // show capture bar
-        if (!m_controls.ControlChecked(CMainFrameControls::Panel::CAPTURE)) {
-            m_controls.ToggleControl(CMainFrameControls::Panel::CAPTURE);
-        } else {
-            ASSERT(FALSE);
+        else if (GetPlaybackMode() == PM_ANALOG_CAPTURE) {
+            // show capture bar
+            if (!m_controls.ControlChecked(CMainFrameControls::Panel::CAPTURE)) {
+                m_controls.ToggleControl(CMainFrameControls::Panel::CAPTURE);
+            }
+            else {
+                ASSERT(FALSE);
+            }
         }
     }
 
