@@ -1495,7 +1495,7 @@ void CPlayerPlaylistBar::OnNMDblclkList(NMHDR* pNMHDR, LRESULT* pResult)
             const CPlaylistItem& pli = m_pl.GetAt(pos);
 
             CAppSettings& s = AfxGetAppSettings();
-            s.filePositions.RemoveEntry(pli.m_fns.GetHead());
+//            s.filePositions.RemoveEntry(pli.m_fns.GetHead());
         } else {
             m_pl.SetPos(pos);
         }
