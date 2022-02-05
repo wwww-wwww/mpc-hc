@@ -1980,9 +1980,7 @@ void CMainFrame::OnTimer(UINT_PTR nIDEvent)
 
                             if (m_bRememberFilePos && !m_fEndOfStream) {
                                 auto* pMRU = &AfxGetAppSettings().MRU;
-                                if (pMRU->rfe_array.GetCount()) {
-                                    pMRU->UpdateCurrentFilePosition(rtNow);
-                                }
+                                pMRU->UpdateCurrentFilePosition(rtNow);
                             }
 
                             // Casimir666 : autosave subtitle sync after play
@@ -12561,6 +12559,7 @@ void CMainFrame::OpenFile(OpenFileData* pOFD)
                         r.cue = m_pli->m_cue_filename;
                     }
                     if (m_pli->m_subs.GetCount() > 0) {
+                        r.subs.RemoveAll();
                         r.subs.AddHeadList(&m_pli->m_subs);
                     }
                 }
@@ -15589,8 +15588,12 @@ void CMainFrame::SetupRecentFilesSubMenu()
     // Empty the menu
     while (subMenu.RemoveMenu(0, MF_BYPOSITION));
 
-    UINT id = ID_RECENT_FILE_START;
     auto& s = AfxGetAppSettings();
+   
+    if (!s.fKeepHistory) {
+        return;
+    }
+
     auto& MRU = s.MRU;
     MRU.ReadMediaHistory();
 
@@ -15604,7 +15607,7 @@ void CMainFrame::SetupRecentFilesSubMenu()
     if (bNoEmptyMRU) {
         VERIFY(subMenu.AppendMenu(MF_STRING | MF_ENABLED, ID_RECENT_FILES_CLEAR, ResStr(IDS_RECENT_FILES_CLEAR)));
         VERIFY(subMenu.AppendMenu(MF_SEPARATOR | MF_ENABLED));
-
+        UINT id = ID_RECENT_FILE_START;
         for (int i = 0; i < MRU.GetSize(); i++) {
             UINT flags = MF_BYCOMMAND | MF_STRING | MF_ENABLED;
             if (!MRU[i].fns.GetHead().IsEmpty()) {
@@ -15985,6 +15988,13 @@ bool CMainFrame::LoadSubtitle(CString fn, SubtitleInput* pSubInput /*= nullptr*/
 
         if (pSubInput) {
             *pSubInput = subInput;
+        }
+
+        if (!bAutoLoad) {
+            m_wndPlaylistBar.AddSubtitleToCurrent(fn);
+            if (s.fKeepHistory) {
+                s.MRU.AddSubToCurrent(fn);
+            }
         }
     }
 
@@ -17446,11 +17456,6 @@ void CMainFrame::CloseMedia(bool bNextIsQueued/* = false*/)
 
         // abort finished, unset the flag
         m_fOpeningAborted = false;
-    }
-
-    auto& s = AfxGetAppSettings();
-    if (s.fKeepHistory) {
-        updateRecentFileListSub();
     }
 
     // we are on the way
@@ -20084,16 +20089,6 @@ void CMainFrame::OnMouseHWheel(UINT nFlags, short zDelta, CPoint pt) {
         return;
     }
     __super::OnMouseHWheel(nFlags, zDelta, pt);
-}
-
-void CMainFrame::updateRecentFileListSub() {
-    if (m_pCurrentSubInput.pSubStream) {
-        auto& s = AfxGetAppSettings();
-        CStringW subpath = m_pCurrentSubInput.pSubStream->GetPath();
-        if (!subpath.IsEmpty()) {
-            s.MRU.AddSubToCurrent(subpath);
-        }
-    }
 }
 
 BOOL CMainFrame::AppendMenuEx(CMenu& menu, UINT nFlags, UINT_PTR nIDNewItem, CString& text)

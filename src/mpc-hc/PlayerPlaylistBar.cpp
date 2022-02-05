@@ -234,6 +234,16 @@ void CPlayerPlaylistBar::ReplaceCurrentItem(CAtlList<CString>& fns, CAtlList<CSt
     }
 }
 
+void CPlayerPlaylistBar::AddSubtitleToCurrent(CString fn)
+{
+    CPlaylistItem* pli = GetCur();
+    if (pli != nullptr) {
+        if (!pli->m_subs.Find(fn)) {
+            pli->m_subs.AddHead(fn);
+        }
+    }
+}
+
 void CPlayerPlaylistBar::ParsePlayList(CString fn, CAtlList<CString>* subs, int redir_count)
 {
     TRACE(fn + _T("\n"));

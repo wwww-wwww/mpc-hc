@@ -1202,10 +1202,12 @@ void CAppSettings::SaveSettings(bool write_full_history /* = false */)
     pApp->WriteProfileString(IDS_R_SETTINGS, IDS_RS_YDL_SUBS_PREFERENCE, sYDLSubsPreference);
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_USE_AUTOMATIC_CAPTIONS, bUseAutomaticCaptions);
 
-    if (write_full_history) {
-        MRU.SaveMediaHistory(true);
-    } else {
-        MRU.WriteCurrentEntry();
+    if (fKeepHistory) {
+        if (write_full_history) {
+            MRU.SaveMediaHistory(true);
+        } else {
+            MRU.WriteCurrentEntry();
+        }
     }
 
     pApp->FlushProfile();
@@ -2753,7 +2755,8 @@ void CAppSettings::CRecentFileListWithMoreInfo::AddSubToCurrent(CStringW subpath
     if (rfe_array.GetCount()) {
         bool found = rfe_array[0].subs.Find(subpath);
         if (!found) {
-            rfe_array[0].subs.AddTail(subpath);
+            rfe_array[0].subs.AddHead(subpath);
+            WriteMediaHistoryEntry(rfe_array[0]);
         }
     }
 }
@@ -2819,7 +2822,9 @@ void CAppSettings::CRecentFileListWithMoreInfo::ReadLegacyMediaHistory(std::map<
         CStringW t;
         t.Format(_T("File%zu"), i);
         CStringW fn = pApp->GetProfileStringW(legacySection, t);
-        if (fn.IsEmpty()) break;
+        if (fn.IsEmpty()) {
+            break;
+        }
         t.Format(_T("Title%zu"), i);
         CStringW title = pApp->GetProfileStringW(legacySection, t);
         t.Format(_T("Cue%zu"), i);
@@ -2875,22 +2880,27 @@ static CString SerializeHex(const BYTE* pBuffer, int nBufSize) {
 void CAppSettings::CRecentFileListWithMoreInfo::ReadLegacyMediaPosition(std::map<CStringW, size_t>& filenameToIndex) {
     auto pApp = AfxGetMyApp();
     bool hasNextEntry = true;
+    CStringW strFilename;
     CStringW strFilePos;
-    CStringW strDVDPos;
 
-    for (int i = 0; i < m_maxSize && hasNextEntry; i++) {
-        strFilePos.Format(_T("File Name %d"), i);
-        CStringW strFile = pApp->GetProfileString(IDS_R_SETTINGS, strFilePos);
+    for (int i = 0; i < 1000 && hasNextEntry; i++) {
+        strFilename.Format(_T("File Name %d"), i);
+        CStringW strFile = pApp->GetProfileString(IDS_R_SETTINGS, strFilename);
 
         if (strFile.IsEmpty()) {
             hasNextEntry = false;
-        } else if (filenameToIndex.count(strFile)) {
-            size_t index = filenameToIndex[strFile];
-            if (index < rfe_array.GetCount()) {
-                strFilePos.Format(_T("File Position %d"), i);
-                CStringW strValue = pApp->GetProfileString(IDS_R_SETTINGS, strFilePos);
-                rfe_array.GetAt(index).filePosition = _tstoi64(strValue);
+        } else {
+            strFilePos.Format(_T("File Position %d"), i);
+            if (filenameToIndex.count(strFile)) {
+                size_t index = filenameToIndex[strFile];
+                if (index < rfe_array.GetCount()) {
+                    CStringW strValue = pApp->GetProfileString(IDS_R_SETTINGS, strFilePos);
+                    rfe_array.GetAt(index).filePosition = _tstoi64(strValue);
+                }
             }
+            // remove old values
+            pApp->WriteProfileString(IDS_R_SETTINGS, strFilename, nullptr);
+            pApp->WriteProfileString(IDS_R_SETTINGS, strFilePos, nullptr);
         }
     }
 }
@@ -2963,7 +2973,8 @@ void CAppSettings::CRecentFileListWithMoreInfo::ReadMediaHistory() {
     auto pApp = AfxGetMyApp();
     std::list<CStringW> hashes = pApp->GetSectionSubKeys(m_section);
 
-    if (hashes.empty()) {
+    size_t maxsize = AfxGetAppSettings().fKeepHistory ? m_maxSize : 0;
+    if (hashes.empty() && maxsize > 0) {
         MigrateLegacyHistory();
         hashes = pApp->GetSectionSubKeys(m_section);
     }
@@ -2980,7 +2991,7 @@ void CAppSettings::CRecentFileListWithMoreInfo::ReadMediaHistory() {
     int entries = 0;
     for (auto iter = timeToHash.rbegin(); iter != timeToHash.rend(); ++iter, ++entries) {
         CStringW hash = iter->second;
-        if (entries < m_maxSize) {
+        if (entries < maxsize) {
             RecentFileEntry r;
             LoadMediaHistoryEntry(hash, r);
             rfe_array.Add(r);
@@ -2997,8 +3008,7 @@ void CAppSettings::CRecentFileListWithMoreInfo::WriteMediaHistoryEntry(RecentFil
     auto pApp = AfxGetMyApp();
 
     if (r.hash.IsEmpty()) {
-        ASSERT(FALSE);
-        return;
+        r.hash = getRFEHash(r.fns.GetHead());
     }
 
     CStringW hashName, subSection, t;

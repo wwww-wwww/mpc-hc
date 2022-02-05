@@ -1286,7 +1286,6 @@ public:
     bool OpenBD(CString Path);
 
     bool GetDecoderType(CString& type) const;
-    void updateRecentFileListSub();
 
     static bool IsOnYDLWhitelist(const CString url);
 
