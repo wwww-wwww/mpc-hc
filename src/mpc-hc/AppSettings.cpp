@@ -814,7 +814,7 @@ CString CAppSettings::SelectedAudioRenderer() const
     return strResult;
 }
 
-void CAppSettings::SaveSettings()
+void CAppSettings::SaveSettings(bool write_full_history /* = false */)
 {
     CMPlayerCApp* pApp = AfxGetMyApp();
     ASSERT(pApp);
@@ -1202,7 +1202,11 @@ void CAppSettings::SaveSettings()
     pApp->WriteProfileString(IDS_R_SETTINGS, IDS_RS_YDL_SUBS_PREFERENCE, sYDLSubsPreference);
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_USE_AUTOMATIC_CAPTIONS, bUseAutomaticCaptions);
 
-    MRU.SaveMediaHistory();
+    if (write_full_history) {
+        MRU.SaveMediaHistory(true);
+    } else {
+        MRU.WriteCurrentEntry();
+    }
 
     pApp->FlushProfile();
 }
@@ -2612,7 +2616,7 @@ CStringW getShortHash(PBYTE bytes, ULONG size) {
     NTSTATUS stat;
     CStringW shortHash = L"";
 
-    stat = BCryptOpenAlgorithmProvider(&algHandle, BCRYPT_SHA256_ALGORITHM, nullptr, BCRYPT_HASH_REUSABLE_FLAG);
+    stat = BCryptOpenAlgorithmProvider(&algHandle, BCRYPT_SHA1_ALGORITHM, nullptr, 0);
     if (NT_SUCCESS(stat)) {
         stat = BCryptGetProperty(algHandle, BCRYPT_HASH_LENGTH, (PBYTE)&hashLen, sizeof(hashLen), &cbResult, dwFlags);
         if (NT_SUCCESS(stat)) {
@@ -2652,6 +2656,11 @@ CStringW getShortHash(PBYTE bytes, ULONG size) {
     if (nullptr != algHandle) {
         BCryptCloseAlgorithmProvider(algHandle, dwFlags);
     }
+
+    if (shortHash.IsEmpty()) {
+        ASSERT(FALSE);
+    }
+
     return shortHash;
 }
 
@@ -2677,8 +2686,10 @@ CStringW getRFEHash(RecentFileEntry &r) {
 void CAppSettings::CRecentFileListWithMoreInfo::Remove(size_t nIndex) {
     if (nIndex >= 0 && nIndex < rfe_array.GetCount()) {
         auto pApp = AfxGetMyApp();
-        CStringW hash = getRFEHash(rfe_array[nIndex]);
-        pApp->RemoveProfileKey(m_section, hash);
+        CStringW& hash = rfe_array[nIndex].hash;
+        if (!hash.IsEmpty()) {
+            pApp->RemoveProfileKey(m_section, hash);
+        }
         rfe_array.RemoveAt(nIndex);
         rfe_array.FreeExtra();
     }
@@ -2776,7 +2787,15 @@ void CAppSettings::CRecentFileListWithMoreInfo::Add(RecentFileEntry r) {
 
     rfe_array.InsertAt(0, r);
 
+    // purge obsolete entry
     if (rfe_array.GetCount() > m_maxSize) {
+        CStringW hash = rfe_array.GetAt(m_maxSize).hash;
+        if (!hash.IsEmpty()) {
+            CStringW subSection;
+            subSection.Format(L"%s\\%s", m_section, static_cast<LPCWSTR>(hash));
+            auto pApp = AfxGetMyApp();
+            pApp->WriteProfileString(subSection, nullptr, nullptr);
+        }
         rfe_array.SetCount(m_maxSize);
     }
     rfe_array.FreeExtra();
@@ -2879,6 +2898,7 @@ void CAppSettings::CRecentFileListWithMoreInfo::ReadLegacyMediaPosition(std::map
 bool CAppSettings::CRecentFileListWithMoreInfo::LoadMediaHistoryEntryFN(CStringW fn, RecentFileEntry& r) {
     CStringW hash = getRFEHash(fn);
     if (!LoadMediaHistoryEntry(hash, r)) {
+        r.hash = hash;
         r.fns.AddHead(fn); //otherwise add a new entry
         return false;
     }
@@ -2899,7 +2919,7 @@ bool CAppSettings::CRecentFileListWithMoreInfo::LoadMediaHistoryEntry(CStringW h
     auto pApp = AfxGetMyApp();
     CStringW fn, subSection, t;
 
-    subSection.Format(L"%s\\%s", m_section, hash);
+    subSection.Format(L"%s\\%s", m_section, static_cast<LPCWSTR>(hash));
 
     if (!pApp->HasProfileEntry(subSection, L"LastOpened")) {
         return false;
@@ -2911,6 +2931,7 @@ bool CAppSettings::CRecentFileListWithMoreInfo::LoadMediaHistoryEntry(CStringW h
     CStringW cue = pApp->GetProfileStringW(subSection, L"Cue", L"");
     DWORD filePosition = pApp->GetProfileIntW(subSection, L"FilePosition", 0);
     CStringW dvdPosition = pApp->GetProfileStringW(subSection, L"DVDPosition", L"");
+    r.hash = hash;
     r.fns.AddTail(fn);
     r.title = title;
     r.cue = cue;
@@ -2950,7 +2971,7 @@ void CAppSettings::CRecentFileListWithMoreInfo::ReadMediaHistory() {
     std::map<CStringW, CStringW> timeToHash;
     for (auto const& hash : hashes) {
         CStringW lastOpened, subSection;
-        subSection.Format(L"%s\\%s", m_section, hash);
+        subSection.Format(L"%s\\%s", m_section, static_cast<LPCWSTR>(hash));
         lastOpened = pApp->GetProfileStringW(subSection, L"LastOpened");
         timeToHash[lastOpened] = hash;
     }
@@ -2965,8 +2986,7 @@ void CAppSettings::CRecentFileListWithMoreInfo::ReadMediaHistory() {
             rfe_array.Add(r);
         } else { //purge entry
             CStringW subSection;
-            auto pApp = AfxGetMyApp();
-            subSection.Format(L"%s\\%s", m_section, hash);
+            subSection.Format(L"%s\\%s", m_section, static_cast<LPCWSTR>(hash));
             pApp->WriteProfileString(subSection, nullptr, nullptr);
         }
     }
@@ -2976,10 +2996,13 @@ void CAppSettings::CRecentFileListWithMoreInfo::ReadMediaHistory() {
 void CAppSettings::CRecentFileListWithMoreInfo::WriteMediaHistoryEntry(RecentFileEntry& r, bool updateLastOpened /* = false */) {
     auto pApp = AfxGetMyApp();
 
-    CStringW hash = getRFEHash(r);
+    if (r.hash.IsEmpty()) {
+        ASSERT(FALSE);
+        return;
+    }
 
     CStringW hashName, subSection, t;
-    subSection.Format(L"%s\\%s", m_section, hash);
+    subSection.Format(L"%s\\%s", m_section, static_cast<LPCWSTR>(r.hash));
     pApp->WriteProfileStringW(subSection, L"Filename", r.fns.GetHead());
 
     if (r.fns.GetCount() > 1) {
@@ -3029,7 +3052,6 @@ void CAppSettings::CRecentFileListWithMoreInfo::WriteMediaHistoryEntry(RecentFil
 }
 
 void CAppSettings::CRecentFileListWithMoreInfo::SaveMediaHistory(bool updateLastOpened /* = false */) {
-    auto pApp = AfxGetMyApp();
     if (rfe_array.GetCount()) {
         //go in reverse in case we are setting last opened when migrating history (makes last appear oldest)
         for (size_t i = rfe_array.GetCount() - 1, j = 0; j < m_maxSize && j < rfe_array.GetCount(); i--, j++) {

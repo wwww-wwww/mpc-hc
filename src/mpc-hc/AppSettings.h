@@ -433,6 +433,7 @@ class RecentFileEntry {
 public:
     RecentFileEntry() {}
     void InitEntry(const RecentFileEntry& r) {
+        hash = r.hash;
         cue = r.cue;
         title = r.title;
         filePosition = r.filePosition;
@@ -446,6 +447,7 @@ public:
         InitEntry(r);
     }
 
+    CStringW hash;
     CString title;
     CAtlList<CString> fns;
     CString cue;
@@ -951,7 +953,7 @@ public:
 
     CAppSettings& operator = (const CAppSettings&) = delete;
 
-    void            SaveSettings();
+    void            SaveSettings(bool write_full_history = false);
     void            LoadSettings();
     void            SaveExternalFilters() {
         if (bInitialized) {

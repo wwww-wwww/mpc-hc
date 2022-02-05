@@ -836,7 +836,7 @@ bool CMPlayerCApp::ChangeSettingsLocation(bool useIni)
     m_s->SaveExternalFilters();
 
     // Write settings immediately
-    m_s->SaveSettings();
+    m_s->SaveSettings(true);
 
     return success;
 }
