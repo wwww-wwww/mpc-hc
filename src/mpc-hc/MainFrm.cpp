@@ -3629,10 +3629,10 @@ void CMainFrame::OnUpdatePlayerStatus(CCmdUI* pCmdUI)
             }
             if (msg_id) {
                 msg.LoadString(msg_id);
-            }
 
-            if (m_bUsingDXVA && (msg == ResStr(IDS_CONTROLS_PAUSED) || msg == ResStr(IDS_CONTROLS_PLAYING))) {
-                msg.AppendFormat(_T(" %s"), ResStr(IDS_HW_INDICATOR).GetString());
+                if (m_bUsingDXVA && (msg_id == IDS_CONTROLS_PAUSED || msg_id == IDS_CONTROLS_PLAYING)) {
+                    msg.AppendFormat(_T(" %s"), ResStr(IDS_HW_INDICATOR).GetString());
+                }
             }
 
             auto& s = AfxGetAppSettings();
