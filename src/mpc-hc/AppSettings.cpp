@@ -2945,7 +2945,7 @@ bool CAppSettings::CRecentFileListWithMoreInfo::LoadMediaHistoryEntry(CStringW h
     r.fns.AddTail(fn);
     r.title = title;
     r.cue = cue;
-    r.filePosition = filePosition;
+    r.filePosition = filePosition * 10000LL;
     if (!dvdPosition.IsEmpty()) {
         if (dvdPosition.GetLength() / 2 == sizeof(DVD_POSITION)) {
             DeserializeHex(dvdPosition, (BYTE*)&r.DVDPosition, sizeof(DVD_POSITION));
@@ -3050,7 +3050,7 @@ void CAppSettings::CRecentFileListWithMoreInfo::WriteMediaHistoryEntry(RecentFil
         pApp->WriteProfileString(subSection, t, strValue);
     } else {
         t = L"FilePosition";
-        pApp->WriteProfileInt(subSection, t, r.filePosition);
+        pApp->WriteProfileInt(subSection, t, r.filePosition / 10000LL);
         persistedFilePosition = r.filePosition;
     }
     if (updateLastOpened) {
