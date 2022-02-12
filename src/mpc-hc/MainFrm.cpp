@@ -1978,7 +1978,7 @@ void CMainFrame::OnTimer(UINT_PTR nIDEvent)
                                 return;
                             }
 
-                            if (m_bRememberFilePos && rtDur > 0LL && !m_fEndOfStream) {
+                            if (m_bRememberFilePos && !m_fEndOfStream) {
                                 auto* pMRU = &AfxGetAppSettings().MRU;
                                 pMRU->UpdateCurrentFilePosition(rtNow);
                             }
@@ -17407,14 +17407,10 @@ void CMainFrame::CloseMedia(bool bNextIsQueued/* = false*/)
     // save playback position
     if (GetLoadState() == MLS::LOADED) {
         auto& s = AfxGetAppSettings();
-        if (s.fKeepHistory && m_pMS) {
-            REFERENCE_TIME rtDur = 0;
-            m_pMS->GetDuration(&rtDur);
-            if (rtDur > 0) {
-                REFERENCE_TIME rtNow = 0;
-                m_pMS->GetCurrentPosition(&rtNow);
-                s.MRU.UpdateCurrentFilePosition(rtNow, true);
-            }
+        if (m_bRememberFilePos && m_pMS) {
+            REFERENCE_TIME rtNow = 0;
+            m_pMS->GetCurrentPosition(&rtNow);
+            s.MRU.UpdateCurrentFilePosition(rtNow, true);
         }
     }
 
