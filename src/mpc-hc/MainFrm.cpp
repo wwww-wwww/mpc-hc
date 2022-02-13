@@ -4789,6 +4789,18 @@ void CMainFrame::OnFileReopen()
     if (!m_LastOpenBDPath.IsEmpty() && OpenBD(m_LastOpenBDPath)) {
         return;
     }
+
+    // save playback position
+    if (GetLoadState() == MLS::LOADED) {
+        if (m_bRememberFilePos && !m_fEndOfStream && m_dwReloadPos == 0 && m_pMS) {
+            auto& s = AfxGetAppSettings();
+            REFERENCE_TIME rtNow = 0;
+            m_pMS->GetCurrentPosition(&rtNow);
+            m_dwReloadPos = rtNow;
+            s.MRU.UpdateCurrentFilePosition(rtNow, true);
+        }
+    }
+
     OpenCurPlaylistItem(0, true);
 }
 
@@ -17406,11 +17418,18 @@ void CMainFrame::CloseMedia(bool bNextIsQueued/* = false*/)
 
     // save playback position
     if (GetLoadState() == MLS::LOADED) {
-        auto& s = AfxGetAppSettings();
-        if (m_bRememberFilePos && m_pMS) {
+        if (m_bRememberFilePos && !m_fEndOfStream && m_dwReloadPos == 0 && m_pMS) {
+            auto& s = AfxGetAppSettings();
             REFERENCE_TIME rtNow = 0;
+            REFERENCE_TIME rtDur = 0;
             m_pMS->GetCurrentPosition(&rtNow);
-            s.MRU.UpdateCurrentFilePosition(rtNow, true);
+            m_pMS->GetDuration(&rtDur);
+            // if very close to end, assume we have reached the credits section of the movie, so reset to begin
+            if (rtNow < rtDur * 0.95) {
+                s.MRU.UpdateCurrentFilePosition(rtNow, true);
+            } else {
+                s.MRU.UpdateCurrentFilePosition(0LL, true);
+            }
         }
     }
 
