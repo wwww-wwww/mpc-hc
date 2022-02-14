@@ -61,7 +61,7 @@ Options > Subtitles > Misc
 
 ## System Requirements
 
-* Windows Vista / 7 / 8 / 8.1 / 10 / 11
+* Windows 7 / 8 / 8.1 / 10 / 11
 
 ## License
 
