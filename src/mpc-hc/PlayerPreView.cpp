@@ -41,14 +41,14 @@ BOOL CPreView::SetWindowTextW(LPCWSTR lpString) {
     GetClientRect(&rect);
 
     if (PREVIEW_TOOLTIP_BOTTOM) {
-        rect.top = rect.bottom - m_caption - m_border;
-        rect.bottom = rect.bottom - m_border;
+        rect.top    = rect.bottom - m_border - m_caption + 2;
+        rect.bottom = rect.bottom - m_border - 1;
     } else {
-        rect.top = m_border;
-        rect.bottom = m_caption + m_border;
+        rect.top    = m_border + 1;
+        rect.bottom = m_border + m_caption - 2;
     }
-    rect.left += 10;
-    rect.right -= 10;
+    rect.left  += m_border + 2;
+    rect.right -= m_border + 2;
 
     InvalidateRect(rect);
 
@@ -95,16 +95,10 @@ int CPreView::OnCreate(LPCREATESTRUCT lpCreateStruct) {
         return -1;
     }
 
-    m_caption = m_pMainFrame->m_dpi.ScaleY(20);
+    m_caption = m_pMainFrame->m_dpi.ScaleY(20) + 3; // 3 pixels of padding
 
     CRect rc;
     GetClientRect(&rc);
-
-    if (AfxGetAppSettings().bMPCTheme) {
-        m_border = 1;
-    } else {
-        m_border = 5;
-    }
 
     m_videorect.left = m_border;
     m_videorect.right = rc.right - m_border;
@@ -185,12 +179,14 @@ void CPreView::OnPaint() {
 
     CRect rtime(rcBar);
     if (PREVIEW_TOOLTIP_BOTTOM) {
-        rtime.top = rcBar.Height() - m_caption;
-        rtime.bottom = rcBar.Height();
+        rtime.top    = rtime.bottom - m_border - m_caption + 2;
+        rtime.bottom = rtime.bottom - m_border - 1;
     } else {
-        rtime.top = 0;
-        rtime.bottom = m_caption;
+        rtime.top    = m_border + 1;
+        rtime.bottom = m_border + m_caption - 2;
     }
+    rtime.left  += m_border + 2;
+    rtime.right -= m_border + 2;
 
     // text
     mdc.SelectObject(&m_font);
