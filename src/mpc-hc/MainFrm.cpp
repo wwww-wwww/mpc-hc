@@ -12606,6 +12606,64 @@ void CMainFrame::OpenFile(OpenFileData* pOFD)
     SetPlaybackMode(PM_FILE);
 }
 
+void CMainFrame::SetupExternalChapters()
+{
+    // .XCHP (eXternal CHaPters) file format:
+    // - UTF-8 text file.
+    // - Located in same folder as the audio/video file, and has same base filename.
+    // - It will override chapter metadata that is embedded in the file.
+    // - Each line defines a chapter: timecode, optionally followed by a space and chapter title.
+    // - Timecode must be in this format: HH:MM:SS.ddd
+
+    CPlaylistItem* pli = m_wndPlaylistBar.GetCur();
+    if (!pli) {
+        return;
+    }
+
+    CString fn = m_wndPlaylistBar.GetCurFileName(true);
+    if (PathUtils::IsURL(fn)) {
+        return;
+    }
+
+    CPath cp(fn);
+    cp.RenameExtension(_T(".xchp"));
+    if (!cp.FileExists()) {
+        return;
+    }
+    fn = cp.m_strPath;
+
+    CWebTextFile f(CTextFile::UTF8);
+    f.SetFallbackEncoding(CTextFile::ANSI);
+
+    CString str;
+    if (!f.Open(fn) || !f.ReadString(str)) {
+        return;
+    }
+
+    f.Seek(0, CFile::SeekPosition::begin);
+
+    while (f.ReadString(str)) {
+        REFERENCE_TIME rt = 0;
+        CString name = "";
+
+        if (str.GetLength() > 11) {
+            int lHour = 0;
+            int lMinute = 0;
+            int lSecond = 0;
+            int lMillisec = 0;
+            if (_stscanf_s(str.Left(12), _T("%02d:%02d:%02d.%03d"), &lHour, &lMinute, &lSecond, &lMillisec) == 4) {
+                rt = ((((lHour * 60) + lMinute) * 60 + lSecond) * MILLISECONDS + lMillisec) * (UNITS / MILLISECONDS);
+                if (str.GetLength() > 12) {
+                    name = str.Mid(12);
+                    name.Trim();
+                }
+                m_pCB->ChapAppend(rt, name);
+            }
+        }
+    }
+    m_pCB->ChapSort();
+}
+
 void CMainFrame::SetupChapters()
 {
     // Release the old chapter bag and create a new one.
@@ -12613,6 +12671,12 @@ void CMainFrame::SetupChapters()
     // be deleted until all classes release it.
     m_pCB.Release();
     m_pCB = DEBUG_NEW CDSMChapterBag(nullptr, nullptr);
+
+    SetupExternalChapters();
+    if (m_pCB->ChapGetCount() > 0) {
+        UpdateSeekbarChapterBag();
+        return;
+    }
 
     CInterfaceList<IBaseFilter> pBFs;
     BeginEnumFilters(m_pGB, pEF, pBF);
