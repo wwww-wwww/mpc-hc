@@ -10879,7 +10879,10 @@ void CMainFrame::ToggleFullscreen(bool fToNearest, bool fSwitchScreenResWhenHasT
         return; //swallow request if we are in the delay period
     }
 
-    CMonitor currentMonitor = CMonitors::GetNearestMonitor(this);
+    CMonitors monitors;
+    CMonitor defaultMonitor = monitors.GetPrimaryMonitor();
+    CMonitor currentMonitor = monitors.GetNearestMonitor(this);
+
     const CWnd* pInsertAfter = nullptr;
     CRect windowRect;
     DWORD dwRemove = 0, dwAdd = 0;
@@ -10906,7 +10909,6 @@ void CMainFrame::ToggleFullscreen(bool fToNearest, bool fSwitchScreenResWhenHasT
 
         CMonitor monitor;
         if (s.strFullScreenMonitor != _T("Current")) {
-            CMonitors monitors;
             for (int i = 0; i < monitors.GetCount(); i++) {
                 monitor = monitors.GetMonitor(i);
                 if (!monitor.IsMonitor()) {
@@ -10925,7 +10927,7 @@ void CMainFrame::ToggleFullscreen(bool fToNearest, bool fSwitchScreenResWhenHasT
         }
 
         dwRemove |= WS_CAPTION | WS_THICKFRAME;
-        if (s.fPreventMinimize && monitor != currentMonitor) {
+        if (s.fPreventMinimize && monitor != defaultMonitor) {
             dwRemove |= WS_MINIMIZEBOX;
         }
 
@@ -10945,7 +10947,7 @@ void CMainFrame::ToggleFullscreen(bool fToNearest, bool fSwitchScreenResWhenHasT
         }
 
         windowRect = m_lastWindowRect;
-        if (!CMonitors::IsOnScreen(windowRect)) {
+        if (!monitors.IsOnScreen(windowRect)) {
             currentMonitor.CenterRectToMonitor(windowRect, TRUE);
         }
 
