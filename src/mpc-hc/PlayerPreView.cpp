@@ -158,24 +158,16 @@ void CPreView::OnPaint() {
     CBitmap* pOldBm = mdc.SelectObject(&bm);
     mdc.SetBkMode(TRANSPARENT);
 
-    COLORREF bg = GetSysColor(COLOR_BTNFACE);
-    COLORREF frameLight = RGB(255, 255, 255);
-    COLORREF frameShadow = GetSysColor(COLOR_BTNSHADOW);
-
+    COLORREF bg;
     if (AfxGetAppSettings().bMPCTheme) {
         bg = CMPCTheme::CMPCTheme::MenuBGColor;
-        frameLight = frameShadow = CMPCTheme::NoBorderColor;
         m_crText = CMPCTheme::TextFGColor;
     } else {
-        m_crText = 0;
+        bg = GetSysColor(COLOR_BTNFACE);
+        m_crText = GetSysColor(COLOR_BTNTEXT);
     }
 
     mdc.FillSolidRect(0, 0, rcBar.Width(), rcBar.Height(), bg); //fill
-
-    mdc.FillSolidRect(0, 0, rcBar.Width(), 1, frameLight); //top border
-    mdc.FillSolidRect(0, rcBar.Height() - 1, rcBar.Width(), 1, frameShadow); //bottom border
-    mdc.FillSolidRect(0, 0, 1, rcBar.Height() - 1, frameLight); //left border
-    mdc.FillSolidRect(rcBar.right - 1, 0, 1, rcBar.Height(), frameShadow); //right border
 
     CRect rtime(rcBar);
     if (PREVIEW_TOOLTIP_BOTTOM) {
