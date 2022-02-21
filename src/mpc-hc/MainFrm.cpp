@@ -1094,7 +1094,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
     m_pSubtitlesProviders = std::make_unique<SubtitlesProviders>(this);
     m_wndSubtitlesDownloadDialog.Create(m_wndSubtitlesDownloadDialog.IDD, this);
-    m_wndSubtitlesDownloadDialog.ShowWindow(FALSE);
+    m_wndSubtitlesDownloadDialog.ShowWindow(SW_HIDE);
     //m_wndSubtitlesUploadDialog.Create(m_wndSubtitlesUploadDialog.IDD, this);
 
     if (s.nCmdlnWebServerPort != 0) {

@@ -29,6 +29,7 @@
 #include "PPageSubMisc.h"
 #include "CMPCTheme.h"
 #include "CMPCThemeMenu.h"
+#include "SysVersion.h"
 
 BEGIN_MESSAGE_MAP(CSubtitleDlDlgListCtrl, CMPCThemePlayerListCtrl)
     ON_NOTIFY_EX(TTN_NEEDTEXT, 0, OnToolNeedText)
@@ -285,6 +286,20 @@ BOOL CSubtitleDlDlg::PreTranslateMessage(MSG* pMsg)
     return __super::PreTranslateMessage(pMsg);
 }
 
+void CSubtitleDlDlg::HideDialog() {
+    // Just hide the dialog, since it's modeless we don't want to call EndDialog
+    if (SysVersion::IsWin11orLater()) {
+        //windows 11 bug with peek preview--shows hidden dialogs.  temporarily flag as tool window which is not a taskbar eligble window
+        ModifyStyleEx(0, WS_EX_TOOLWINDOW);
+        ShowWindow(SW_HIDE);
+        //remove bogus style so it renders properly next time
+        ModifyStyleEx(WS_EX_TOOLWINDOW, 0);
+    } else {
+        ShowWindow(SW_HIDE);
+    }
+}
+
+
 void CSubtitleDlDlg::OnOK()
 {
     if (IsDlgButtonChecked(IDC_CHECK1) == BST_CHECKED) {
@@ -312,15 +327,14 @@ void CSubtitleDlDlg::OnOK()
         }
     }
 
-    // Just hide the dialog, since it's modeless we don't want to call EndDialog
-    ShowWindow(SW_HIDE);
+    HideDialog();
 }
+
 
 
 void CSubtitleDlDlg::OnCancel()
 {
-    // Just hide the dialog, since it's modeless we don't want to call EndDialog
-    ShowWindow(SW_HIDE);
+    HideDialog();
 }
 
 void CSubtitleDlDlg::OnRefresh()

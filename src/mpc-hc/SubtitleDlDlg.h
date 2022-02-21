@@ -94,6 +94,7 @@ protected:
     virtual void DoDataExchange(CDataExchange* pDX);
     virtual BOOL OnInitDialog();
     virtual BOOL PreTranslateMessage(MSG* pMsg);
+    void HideDialog();
     virtual void OnOK();
     virtual void OnCancel();
 
