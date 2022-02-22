@@ -12584,9 +12584,10 @@ void CMainFrame::OpenFile(OpenFileData* pOFD)
                 SHAddToRecentDocs(SHARD_PATH, fn);
             }
             else {
-                CRecentFileList* pMRU = &s.MRUDub;
-                pMRU->Add(fn);
-                SHAddToRecentDocs(SHARD_PATH, fn);
+                CRecentFileList* pMRUDub = &s.MRUDub;
+                pMRUDub->ReadList();
+                pMRUDub->Add(fn);
+                pMRUDub->WriteList();
             }
         }
 
