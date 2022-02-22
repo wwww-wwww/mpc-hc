@@ -13942,10 +13942,10 @@ int CMainFrame::SetupSubtitleStreams()
                         rating += 4 + 2;
                     }
                     if (name.Find(_T("[forced]")) != -1) {
-                        rating += 4;
+                        rating += 2;
                     }
                     if (name.Find(_T("[default]")) != -1) {
-                        rating += 2;
+                        rating += 4;
                     }
                 }
 
