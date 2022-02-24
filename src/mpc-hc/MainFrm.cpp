@@ -10347,19 +10347,10 @@ void CMainFrame::OnRecentFile(UINT nID)
 
     // find corresponding item in MRU list, we can't directly use string from menu because it may have been shortened
     nID -= ID_RECENT_FILE_START;
-    for (int i = 0; i < MRU.GetSize(); i++) {
-        if (MRU[i].fns.GetCount() > 0 && !MRU[i].fns.GetHead().IsEmpty()) {
-            if (nID > 0) {
-                nID--;
-            }
-            else {
-                r = MRU[i];
-                fns.AddHeadList(&r.fns);
-                break;
-            }
-        }
-    }
-    if (fns.GetCount() < 1 || fns.GetHead().IsEmpty()) {
+    if (nID < MRU.GetSize()) {
+        r = MRU[nID];
+        fns.AddHeadList(&r.fns);
+    } else {
         ASSERT(false);
         return;
     }
@@ -15677,14 +15668,7 @@ void CMainFrame::SetupRecentFilesSubMenu()
     auto& MRU = s.MRU;
     MRU.ReadMediaHistory();
 
-    bool bNoEmptyMRU = false;
-    for (int i = 0; i < MRU.GetSize(); i++) {
-        if (MRU[i].fns.GetCount() > 0 && !MRU[i].fns.GetHead().IsEmpty()) {
-            bNoEmptyMRU = true;
-            break;
-        }
-    }
-    if (bNoEmptyMRU) {
+    if (MRU.GetSize() > 0) {
         VERIFY(subMenu.AppendMenu(MF_STRING | MF_ENABLED, ID_RECENT_FILES_CLEAR, ResStr(IDS_RECENT_FILES_CLEAR)));
         VERIFY(subMenu.AppendMenu(MF_SEPARATOR | MF_ENABLED));
         UINT id = ID_RECENT_FILE_START;
@@ -15719,6 +15703,8 @@ void CMainFrame::SetupRecentFilesSubMenu()
                 }
                 p.Replace(_T("&"), _T("&&"));
                 VERIFY(subMenu.AppendMenu(flags, id, p));
+            } else {
+                ASSERT(false);
             }
             id++;
         }
