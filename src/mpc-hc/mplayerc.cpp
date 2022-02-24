@@ -1240,12 +1240,10 @@ LONG CMPlayerCApp::RemoveProfileKey(LPCWSTR lpszSection, LPCWSTR lpszEntry) {
         }
 
         InitProfile();
-        m_ProfileMap.erase(sectionStr);
-        auto it1 = m_ProfileMap.begin();
+        auto it1 = m_ProfileMap.find(sectionStr + L"\\" + keyStr);
         if (it1 != m_ProfileMap.end()) {
-            if (it1->first.Find(sectionStr + L"\\") == 0) {
-                m_ProfileMap.erase(it1);
-            }
+            m_ProfileMap.erase(it1);
+            m_bQueuedProfileFlush = true;
         }
     }
     return 0;
