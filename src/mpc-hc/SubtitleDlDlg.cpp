@@ -288,7 +288,7 @@ BOOL CSubtitleDlDlg::PreTranslateMessage(MSG* pMsg)
 
 void CSubtitleDlDlg::HideDialog() {
     // Just hide the dialog, since it's modeless we don't want to call EndDialog
-    if (SysVersion::IsWin11orLater()) {
+    if (SysVersion::IsWin10orLater()) {
         //windows 11 bug with peek preview--shows hidden dialogs.  temporarily flag as tool window which is not a taskbar eligble window
         ModifyStyleEx(0, WS_EX_TOOLWINDOW);
         ShowWindow(SW_HIDE);
