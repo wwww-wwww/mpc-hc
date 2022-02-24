@@ -436,6 +436,7 @@ public:
         hash = r.hash;
         cue = r.cue;
         title = r.title;
+        lastOpened = r.lastOpened;
         filePosition = r.filePosition;
         DVDPosition = r.DVDPosition;
         fns.RemoveAll();
@@ -449,6 +450,7 @@ public:
 
     CStringW hash;
     CString title;
+    CString lastOpened;
     CAtlList<CString> fns;
     CString cue;
     CAtlList<CString> subs;
@@ -512,7 +514,7 @@ class CAppSettings
         void WriteCurrentEntry();
         void ReadMediaHistory();
         void WriteMediaHistoryEntry(RecentFileEntry& r, bool updateLastOpened = false);
-        void SaveMediaHistory(bool updateLastOpened = false);
+        void SaveMediaHistory();
         void ReadLegacyMediaHistory(std::map<CStringW, size_t> &filenameToIndex);
         void ReadLegacyMediaPosition(std::map<CStringW, size_t> &filenameToIndex);
         bool LoadMediaHistoryEntryFN(CStringW fn, RecentFileEntry& r);
