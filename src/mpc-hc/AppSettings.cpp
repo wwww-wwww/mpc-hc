@@ -2705,7 +2705,6 @@ void CAppSettings::CRecentFileListWithMoreInfo::Add(LPCTSTR fn) {
 void CAppSettings::CRecentFileListWithMoreInfo::Add(LPCTSTR fn, ULONGLONG llDVDGuid) {
     RecentFileEntry r;
     LoadMediaHistoryEntryDVD(llDVDGuid, fn, r);
-
     Add(r);
 }
 
@@ -2917,6 +2916,7 @@ bool CAppSettings::CRecentFileListWithMoreInfo::LoadMediaHistoryEntryFN(CStringW
 bool CAppSettings::CRecentFileListWithMoreInfo::LoadMediaHistoryEntryDVD(ULONGLONG llDVDGuid, CStringW fn, RecentFileEntry& r) {
     CStringW hash = getRFEHash(llDVDGuid);
     if (!LoadMediaHistoryEntry(hash, r)) {
+        r.hash = hash;
         r.fns.AddHead(fn); //otherwise add a new entry
         r.DVDPosition.llDVDGuid = llDVDGuid;
         return false;
@@ -2926,15 +2926,20 @@ bool CAppSettings::CRecentFileListWithMoreInfo::LoadMediaHistoryEntryDVD(ULONGLO
 
 bool CAppSettings::CRecentFileListWithMoreInfo::LoadMediaHistoryEntry(CStringW hash, RecentFileEntry &r) {
     auto pApp = AfxGetMyApp();
-    CStringW subSection, t;
+    CStringW fn, subSection, t;
 
     subSection.Format(L"%s\\%s", m_section, static_cast<LPCWSTR>(hash));
+
+    fn = pApp->GetProfileStringW(subSection, L"Filename", L"");
+    if (fn.IsEmpty()) {
+        return false;
+    }
 
     DWORD filePosition = pApp->GetProfileIntW(subSection, L"FilePosition", 0);
     CStringW dvdPosition = pApp->GetProfileStringW(subSection, L"DVDPosition", L"");
 
     r.hash = hash;
-    r.fns.AddTail(pApp->GetProfileStringW(subSection, L"Filename", L""));
+    r.fns.AddHead(fn);
     r.title = pApp->GetProfileStringW(subSection, L"Title", L"");
     r.cue   = pApp->GetProfileStringW(subSection, L"Cue", L"");;
     r.filePosition = filePosition * 10000LL;

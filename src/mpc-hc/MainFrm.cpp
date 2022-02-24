@@ -10375,16 +10375,14 @@ void CMainFrame::OnRecentFile(UINT nID)
         }
     }
 
-    CAtlList<CString> fnsl;
-    fnsl.AddHeadList(&fns);
     CAtlList<CString> subs;
     subs.AddHeadList(&r.subs);
 
     if (!m_wndPlaylistBar.SelectFileInPlaylist(fns.GetHead())) {
-        m_wndPlaylistBar.Open(fnsl, false, &subs, r.title, _T(""), r.cue);
+        m_wndPlaylistBar.Open(fns, false, &subs, r.title, _T(""), r.cue);
     }
     else {
-        m_wndPlaylistBar.ReplaceCurrentItem(fnsl, &subs, r.title, _T(""), r.cue);
+        m_wndPlaylistBar.ReplaceCurrentItem(fns, &subs, r.title, _T(""), r.cue);
     }
 
     OpenCurPlaylistItem();
