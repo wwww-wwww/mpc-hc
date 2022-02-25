@@ -295,7 +295,11 @@ STDMETHODIMP CSubPicAllocatorImpl::NonDelegatingQueryInterface(REFIID riid, void
 
 STDMETHODIMP CSubPicAllocatorImpl::SetCurSize(SIZE cursize)
 {
-    m_cursize = cursize;
+    if (m_cursize != cursize) {
+        TRACE(_T("CSubPicAllocatorImpl::SetCurSize: %dx%d\n"), cursize.cx, cursize.cy);
+        m_cursize = cursize;
+        FreeStatic();
+    }
     return S_OK;
 }
 
@@ -311,11 +315,6 @@ STDMETHODIMP CSubPicAllocatorImpl::GetStatic(ISubPic** ppSubPic)
 
     {
         CAutoLock cAutoLock(&m_staticLock);
-
-        SIZE maxSize;
-        if (m_pStatic && (FAILED(m_pStatic->GetMaxSize(&maxSize)) || maxSize.cx < m_cursize.cx || maxSize.cy < m_cursize.cy)) {
-            m_pStatic.Release();
-        }
 
         if (!m_pStatic) {
             if (!Alloc(true, &m_pStatic) || !m_pStatic) {

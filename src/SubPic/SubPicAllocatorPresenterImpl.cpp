@@ -149,7 +149,14 @@ STDMETHODIMP_(void) CSubPicAllocatorPresenterImpl::SetPosition(RECT w, RECT v)
 
     m_windowRect = w;
 
-    if (m_pAllocator && (bWindowPosChanged || bWindowSizeChanged)) {
+    CRect videoRect(v);
+    videoRect.OffsetRect(-m_windowRect.TopLeft());
+
+    bool bVideoRectChanged = !!(m_videoRect != videoRect);
+
+    m_videoRect = videoRect;
+
+    if (m_pAllocator && (bWindowPosChanged || bWindowSizeChanged || bVideoRectChanged)) {
         if (m_windowRect.Width() != m_curSubtitleTextureSize.cx || m_windowRect.Height() != m_curSubtitleTextureSize.cy) {
             int maxpixels = m_maxSubtitleTextureSize.cx * m_maxSubtitleTextureSize.cy;
             if (m_windowRect.Width() * m_windowRect.Height() <= maxpixels) {
@@ -175,20 +182,9 @@ STDMETHODIMP_(void) CSubPicAllocatorPresenterImpl::SetPosition(RECT w, RECT v)
                 m_pAllocator->SetMaxTextureSize(m_curSubtitleTextureSize);
             }
         }
-    }
 
-    CRect videoRect(v);
-    videoRect.OffsetRect(-m_windowRect.TopLeft());
-
-    bool bVideoRectChanged = !!(m_videoRect != videoRect);
-
-    m_videoRect = videoRect;
-
-    if (bWindowSizeChanged || bVideoRectChanged) {
-        if (m_pAllocator) {
-            m_pAllocator->SetCurSize(m_windowRect.Size());
-            m_pAllocator->SetCurVidRect(m_videoRect);
-        }
+        m_pAllocator->SetCurSize(m_windowRect.Size());
+        m_pAllocator->SetCurVidRect(m_videoRect);
 
         if (m_pSubPicQueue) {
             m_pSubPicQueue->Invalidate();
