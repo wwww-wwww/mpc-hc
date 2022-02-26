@@ -358,6 +358,8 @@ STDMETHODIMP CSubPicAllocatorImpl::ChangeDevice(IUnknown* pDev)
 STDMETHODIMP CSubPicAllocatorImpl::FreeStatic()
 {
     CAutoLock cAutoLock(&m_staticLock);
-    m_pStatic.Release();
+    if (m_pStatic) {
+        m_pStatic.Release();
+    }
     return S_OK;
 }
