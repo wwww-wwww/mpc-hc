@@ -457,9 +457,6 @@ public:
     REFERENCE_TIME filePosition=0;
     DVD_POSITION DVDPosition = {};
 
-    BOOL operator==(RecentFileEntry c) {
-        return this->fns.GetHead() == c.fns.GetHead() && cue == c.cue;
-    }
     void operator=(const RecentFileEntry &r) {
         InitEntry(r);
     }

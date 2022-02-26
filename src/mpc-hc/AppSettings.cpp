@@ -2779,7 +2779,7 @@ void CAppSettings::CRecentFileListWithMoreInfo::Add(RecentFileEntry r) {
         return;
     }
     for (size_t i = 0; i < rfe_array.GetCount(); i++) {
-        if (r == rfe_array[i]) {
+        if (r.hash == rfe_array[i].hash) {
             rfe_array.RemoveAt(i); //do not call Remove as it will purge reg key.  we are just resorting
             break;
         }
