@@ -12529,48 +12529,58 @@ void CMainFrame::OpenFile(OpenFileData* pOFD)
             if (bMainFile) {
                 auto* pMRU = &s.MRU;
                 RecentFileEntry r;
-                pMRU->LoadMediaHistoryEntryFN(fn, r);
-                CPlaylistItem* m_pli = m_wndPlaylistBar.GetCur();
-                if (m_pli && !m_pli->m_label.IsEmpty()) {
-                    if (m_pli->m_bYoutubeDL || !IsNameSimilar(m_pli->m_label, PathUtils::StripPathOrUrl(fn))) {
-                        if (!m_pli->m_bYoutubeDL || fn == m_pli->m_ydlSourceURL) r.title = m_pli->m_label;
-                        else {
-                            CString videoName(m_pli->m_label);
-                            int m = LastIndexOfCString(videoName, _T(" ("));
-                            if (m > 0) videoName = m_pli->m_label.Left(m);
-                            r.title = videoName;
+                CPlaylistItem* pli = m_wndPlaylistBar.GetCur();
+                if (pli) {
+                    if (pli->m_bYoutubeDL) {
+                        r.fns.AddHead(pli->m_ydlSourceURL);
+                    } else {
+                        pMRU->LoadMediaHistoryEntryFN(fn, r);
+                        if (pli->m_fns.GetCount() > r.fns.GetCount()) {
+                            r.fns.RemoveAll();
+                            r.fns.AddHeadList(&pli->m_fns);
                         }
+                        SHAddToRecentDocs(SHARD_PATH, fn);
                     }
-                }
-                else {
-                    CString title;
-                    if (m_pAMMC) {
-                        CComBSTR bstr;
-                        if (SUCCEEDED(m_pAMMC->get_Title(&bstr)) && bstr.Length()) {
-                            title = bstr.m_str;
-                            title.Trim();
-                        }
+                    if (pli->m_cue) {
+                        r.cue = pli->m_cue_filename;
                     }
-                    if (!title.IsEmpty() && !IsNameSimilar(title, PathUtils::StripPathOrUrl(fn))) r.title = title;
-                }
-                if (m_pli) {
-                    if (!m_pli->m_bYoutubeDL && m_pli->m_fns.GetCount() > 1) {
-                        r.fns.RemoveAll();
-                        r.fns.AddHeadList(&m_pli->m_fns);
-                    } else if (m_pli->m_bYoutubeDL) {
-                        r.fns.RemoveAll();
-                        r.fns.AddTail(m_pli->m_ydlSourceURL);
-                    }
-                    if (m_pli->m_cue) {
-                        r.cue = m_pli->m_cue_filename;
-                    }
-                    if (m_pli->m_subs.GetCount() > 0) {
+                    if (pli->m_subs.GetCount() > r.subs.GetCount()) {
                         r.subs.RemoveAll();
-                        r.subs.AddHeadList(&m_pli->m_subs);
+                        r.subs.AddHeadList(&pli->m_subs);
                     }
+
+                    if (pli->m_label.IsEmpty()) {
+                        CString title;
+                        if (m_pAMMC) {
+                            CComBSTR bstr;
+                            if (SUCCEEDED(m_pAMMC->get_Title(&bstr)) && bstr.Length()) {
+                                title = bstr.m_str;
+                                title.Trim();
+                            }
+                        }
+                        if (!title.IsEmpty() && !IsNameSimilar(title, PathUtils::StripPathOrUrl(fn))) {
+                            r.title = title;
+                        }
+                    } else {
+                        if (pli->m_bYoutubeDL || !IsNameSimilar(pli->m_label, PathUtils::StripPathOrUrl(fn))) {
+                            if (!pli->m_bYoutubeDL || fn == pli->m_ydlSourceURL) {
+                                r.title = pli->m_label;
+                            } else {
+                                CString videoName(pli->m_label);
+                                int m = LastIndexOfCString(videoName, _T(" ("));
+                                if (m > 0) {
+                                    videoName = pli->m_label.Left(m);
+                                }
+                                r.title = videoName;
+                            }
+                        }
+                    }
+                } else {
+                    ASSERT(false);
+                    r.fns.AddHead(fn);
                 }
+
                 pMRU->Add(r);
-                SHAddToRecentDocs(SHARD_PATH, fn);
             }
             else {
                 CRecentFileList* pMRUDub = &s.MRUDub;

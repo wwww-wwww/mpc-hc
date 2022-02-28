@@ -2778,6 +2778,9 @@ void CAppSettings::CRecentFileListWithMoreInfo::Add(RecentFileEntry r) {
     if (CString(r.fns.GetHead()).MakeLower().Find(_T("@device:")) >= 0) {
         return;
     }
+    if (r.hash.IsEmpty()) {
+        r.hash = getRFEHash(r);
+    }
     for (size_t i = 0; i < rfe_array.GetCount(); i++) {
         if (r.hash == rfe_array[i].hash) {
             rfe_array.RemoveAt(i); //do not call Remove as it will purge reg key.  we are just resorting
