@@ -10342,7 +10342,6 @@ void CMainFrame::OnRecentFile(UINT nID)
 {
     CAtlList<CString> fns;
     auto& MRU = AfxGetAppSettings().MRU;
-    MRU.ReadMediaHistory();
     RecentFileEntry r;
 
     // find corresponding item in MRU list, we can't directly use string from menu because it may have been shortened
