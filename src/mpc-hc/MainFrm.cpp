@@ -12497,6 +12497,7 @@ void CMainFrame::OpenFile(OpenFileData* pOFD)
                 }
 
                 if (FAILED(previewHR)) {
+                    m_bUseSeekPreview = false;
                     if (m_pGB_preview) {
                         m_pMFVP_preview = nullptr;
                         m_pMFVDC_preview = nullptr;
@@ -12518,7 +12519,6 @@ void CMainFrame::OpenFile(OpenFileData* pOFD)
                         m_pGB_preview.Release();
                         m_pGB_preview = nullptr;
                     }
-                    m_bUseSeekPreview = false;
                 }
             }
         }
@@ -17462,6 +17462,7 @@ void CMainFrame::CloseMedia(bool bNextIsQueued/* = false*/)
     TRACE(_T("CMainFrame::CloseMedia\n"));
 
     m_dwLastPause = 0;
+    m_bUseSeekPreview = false;
 
     if (GetLoadState() == MLS::CLOSING || GetLoadState() == MLS::CLOSED) {
         // double close, should be prevented
