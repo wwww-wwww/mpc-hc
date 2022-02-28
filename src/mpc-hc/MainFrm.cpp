@@ -15674,7 +15674,7 @@ void CMainFrame::SetupRecentFilesSubMenu()
         UINT id = ID_RECENT_FILE_START;
         for (int i = 0; i < 50 && i < MRU.GetSize(); i++) {
             UINT flags = MF_BYCOMMAND | MF_STRING | MF_ENABLED;
-            if (!MRU[i].fns.GetHead().IsEmpty()) {
+            if (!MRU[i].fns.IsEmpty() && !MRU[i].fns.GetHead().IsEmpty()) {
                 CString p = MRU[i].cue.IsEmpty() ? MRU[i].fns.GetHead() : MRU[i].cue;
                 if (s.bUseTitleInRecentFileList && !MRU[i].title.IsEmpty()) {
                     CString title(MRU[i].title);

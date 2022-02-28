@@ -2941,7 +2941,7 @@ bool CAppSettings::CRecentFileListWithMoreInfo::LoadMediaHistoryEntry(CStringW h
     r.hash = hash;
     r.fns.AddHead(fn);
     r.title = pApp->GetProfileStringW(subSection, L"Title", L"");
-    r.cue   = pApp->GetProfileStringW(subSection, L"Cue", L"");;
+    r.cue   = pApp->GetProfileStringW(subSection, L"Cue", L"");
     r.filePosition = filePosition * 10000LL;
     if (!dvdPosition.IsEmpty()) {
         if (dvdPosition.GetLength() / 2 == sizeof(DVD_POSITION)) {
@@ -2953,14 +2953,18 @@ bool CAppSettings::CRecentFileListWithMoreInfo::LoadMediaHistoryEntry(CStringW h
     for (;; k++) {
         t.Format(_T("Filename%03d"), k);
         CStringW ft = pApp->GetProfileStringW(subSection, t);
-        if (ft.IsEmpty()) break;
+        if (ft.IsEmpty()) {
+            break;
+        }
         r.fns.AddTail(ft);
     }
     k = 1;
     for (;; k++) {
         t.Format(_T("Sub%03d"), k);
         CStringW st = pApp->GetProfileStringW(subSection, t);
-        if (st.IsEmpty()) break;
+        if (st.IsEmpty()) {
+            break;
+        }
         r.subs.AddTail(st);
     }
     return true;
@@ -2988,14 +2992,19 @@ void CAppSettings::CRecentFileListWithMoreInfo::ReadMediaHistory() {
 
     rfe_array.RemoveAll();
     int entries = 0;
-    for (auto iter = timeToHash.rbegin(); iter != timeToHash.rend(); ++iter, ++entries) {
+    for (auto iter = timeToHash.rbegin(); iter != timeToHash.rend(); ++iter) {
+        bool purge_rfe = true;
         CStringW hash = iter->second;
         if (entries < maxsize) {
             RecentFileEntry r;
             r.lastOpened = iter->first;
-            LoadMediaHistoryEntry(hash, r);
-            rfe_array.Add(r);
-        } else { //purge entry
+            if (LoadMediaHistoryEntry(hash, r)) {
+                rfe_array.Add(r);
+                purge_rfe = false;
+                entries++;
+            }
+        }
+        if (purge_rfe) { //purge entry
             CStringW subSection;
             subSection.Format(L"%s\\%s", m_section, static_cast<LPCWSTR>(hash));
             pApp->WriteProfileString(subSection, nullptr, nullptr);
