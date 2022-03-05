@@ -182,9 +182,11 @@ STDMETHODIMP CSubPicImpl::GetSourceAndDest(RECT rcWindow, RECT rcVideo,
                        lround(rcTemp.bottom * scaleY));
         rcTemp.OffsetRect(offset);
 
-        LONG stretch = lround(rcTemp.Width() * (1.0 - 1.0 / videoStretchFactor) / 2.0);
-        rcTemp.left += stretch;
-        rcTemp.right -= stretch;
+        if (videoStretchFactor != 1.0) {
+            LONG stretch = lround(rcTemp.Width() * (1.0 - 1.0 / videoStretchFactor) / 2.0);
+            rcTemp.left += stretch;
+            rcTemp.right -= stretch;
+        }
 
         *pRcDest = rcTemp;
 
