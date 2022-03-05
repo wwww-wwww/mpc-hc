@@ -107,6 +107,8 @@
 #include "CMPCThemeDockBar.h"
 #include "CMPCThemeMiniDockFrameWnd.h"
 
+#include "FileHandle.h"
+
 #include <dwmapi.h>
 #undef SubclassWindow
 
@@ -4294,7 +4296,7 @@ void CMainFrame::OnFileOpenQuick()
         return;
     }
 
-    const CAppSettings& s = AfxGetAppSettings();
+    CAppSettings& s = AfxGetAppSettings();
     CString filter;
     CAtlArray<CString> mask;
     s.m_Formats.GetFilter(filter, mask);
@@ -4305,9 +4307,13 @@ void CMainFrame::OnFileOpenQuick()
     }
 
     COpenFileDlg fd(mask, true, nullptr, nullptr, dwFlags, filter, GetModalParent());
+    if (s.lastQuickOpenPath.GetLength()) {
+        fd.m_ofn.lpstrInitialDir = s.lastQuickOpenPath;
+    }
     if (fd.DoModal() != IDOK) {
         return;
     }
+    s.lastQuickOpenPath = GetFolderOnly(fd.m_ofn.lpstrFile);
 
     CAtlList<CString> fns;
 
@@ -5857,9 +5863,13 @@ void CMainFrame::OnFileSaveImage()
         fd.m_pOFN->nFilterIndex = 3;
     }
 
+    if (s.lastSaveImagePath.GetLength()) {
+        fd.m_ofn.lpstrInitialDir = s.lastSaveImagePath;
+    }
     if (fd.DoModal() != IDOK) {
         return;
     }
+    s.lastSaveImagePath = GetFolderOnly(fd.m_ofn.lpstrFile);
 
     if (fd.m_pOFN->nFilterIndex == 1) {
         s.strSnapshotExt = _T(".bmp");

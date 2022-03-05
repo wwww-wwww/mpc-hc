@@ -909,6 +909,9 @@ public:
     CString sYDLSubsPreference;
     bool bUseAutomaticCaptions;
 
+    CStringW lastQuickOpenPath;
+    CStringW lastSaveImagePath;
+
 private:
     struct FilterKey {
         CString name;
