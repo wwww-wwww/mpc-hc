@@ -593,6 +593,7 @@ DWORD CSubPicQueue::ThreadProc()
 
                         if (SUCCEEDED(hr2 = pSubPicProvider->GetTextureSize(pos, maxTextureSize, virtualSize, virtualTopLeft))) {
                             m_pAllocator->SetMaxTextureSize(maxTextureSize);
+                            m_pAllocator->SetCurSize(maxTextureSize);
                         }
 
                         CComPtr<ISubPic> pStatic;
