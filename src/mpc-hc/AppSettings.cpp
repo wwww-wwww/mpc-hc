@@ -245,7 +245,7 @@ CAppSettings::CAppSettings()
     , bUseAutomaticCaptions(false)
     , bLockNoPause(false)
     , bUseSMTC(false)
-    , iReloadAfterLongPause(30)
+    , iReloadAfterLongPause(-1)
     , bOpenRecPanelWhenOpeningDevice(true)
     , lastQuickOpenPath(L"")
     , lastSaveImagePath(L"")
@@ -1997,7 +1997,7 @@ void CAppSettings::LoadSettings()
 
     bLockNoPause = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_LOCK_NOPAUSE, FALSE);
     bUseSMTC = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_USE_SMTC, FALSE);
-    iReloadAfterLongPause = pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_RELOAD_AFTER_LONG_PAUSE, 30);
+    iReloadAfterLongPause = pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_RELOAD_AFTER_LONG_PAUSE, -1);
     bOpenRecPanelWhenOpeningDevice = pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_OPEN_REC_PANEL_WHEN_OPENING_DEVICE, TRUE);
 
     if (fLaunchfullscreen && slFiles.GetCount() > 0) {

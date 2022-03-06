@@ -7991,7 +7991,7 @@ void CMainFrame::OnPlayPlay()
             if (m_fEndOfStream) {
                 SendMessage(WM_COMMAND, ID_PLAY_STOP);
             } else {
-                if (!m_fAudioOnly && m_dwLastPause && m_wndSeekBar.HasDuration()) {
+                if (!m_fAudioOnly && m_dwLastPause && m_wndSeekBar.HasDuration() && s.iReloadAfterLongPause >= 0) {
                     // after long pause or hibernation, reload video file to avoid playback issues on some systems (with buggy drivers)
                     // in case of hibernate, m_dwLastPause equals 1
                     if (m_dwLastPause == 1 || s.iReloadAfterLongPause > 0 && (GetTickCount64() - m_dwLastPause >= s.iReloadAfterLongPause * 60 * 1000)) {

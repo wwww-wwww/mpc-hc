@@ -175,7 +175,7 @@ void CPPageAdvanced::InitSettings()
     addBoolItem(ADD_LANGCODE_WHEN_SAVE_SUBTITLES, IDS_RS_ADD_LANGCODE_WHEN_SAVE_SUBTITLES, false, s.bAddLangCodeWhenSaveSubtitles, StrRes(IDS_PPAGEADVANCED_ADD_LANGCODE_WHEN_SAVE_SUBTITLES));
     addBoolItem(USE_TITLE_IN_RECENT_FILE_LIST, IDS_RS_USE_TITLE_IN_RECENT_FILE_LIST, true, s.bUseTitleInRecentFileList, StrRes(IDS_PPAGEADVANCED_USE_TITLE_IN_RECENT_FILE_LIST));
     addBoolItem(LOCK_NOPAUSE, IDS_RS_LOCK_NOPAUSE, false, s.bLockNoPause, _T("Do not pause playback when locking the screen."));
-    addIntItem(RELOAD_AFTER_LONG_PAUSE, IDS_RS_RELOAD_AFTER_LONG_PAUSE, 30, s.iReloadAfterLongPause, std::make_pair(0, 1440), _T("Reload video file before resuming playback if it was paused for more than X minutes. Use 0 to disable automatic file reload."));
+    addIntItem(RELOAD_AFTER_LONG_PAUSE, IDS_RS_RELOAD_AFTER_LONG_PAUSE, -1, s.iReloadAfterLongPause, std::make_pair(-1, 1440), _T("Reload video file before resuming playback if it was paused for more than X minutes. Use 0 to disable automatic file reload after pause. Use -1 to also disable reload after hibernate/sleep."));
     addBoolItem(INACCURATE_FASTSEEK, IDS_RS_ALLOW_INACCURATE_FASTSEEK, true, s.bAllowInaccurateFastseek, StrRes(IDS_PPAGEADVANCED_ALLOW_INACCURATE_FASTSEEK));
     addIntItem(STREAMPOSPOLLER_INTERVAL, IDS_RS_TIME_REFRESH_INTERVAL, 100, s.nStreamPosPollerInterval, std::make_pair(40, 500), StrRes(IDS_PPAGEADVANCED_TIME_REFRESH_INTERVAL));
 #if !defined(_DEBUG) && USE_DRDUMP_CRASH_REPORTER
