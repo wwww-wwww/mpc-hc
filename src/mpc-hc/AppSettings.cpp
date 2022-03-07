@@ -2794,7 +2794,7 @@ void CAppSettings::CRecentFileListWithMoreInfo::SetCurrentTitle(CStringW title) 
 
 void CAppSettings::CRecentFileListWithMoreInfo::WriteCurrentEntry() {
     size_t idx;
-    if (GetCurrentIndex(idx)) {
+    if (!current_rfe_hash.IsEmpty() && GetCurrentIndex(idx)) {
         WriteMediaHistoryEntry(rfe_array[idx]);
     }
 }
