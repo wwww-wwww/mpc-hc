@@ -139,37 +139,37 @@ STDMETHODIMP CSubPicImpl::GetSourceAndDest(RECT rcWindow, RECT rcVideo,
             CPoint offset(0, 0);
             double scaleX;
             double scaleY;
-            if (m_relativeTo == BEST_FIT && m_virtualTextureSize.cx > 720) {
-                // Enable best fit only for HD contents since SD contents are often anamorphic and thus break the auto-fit logic
+
+            if (m_relativeTo == BEST_FIT && m_virtualTextureSize.cx > 720 && videoStretchFactor == 1.0) {
                 double scaleFactor;
-                LONG stretch = lround(videoRect.Width() * (1.0 - videoStretchFactor) / 2.0);
-                videoRect.left += stretch;
-                videoRect.right -= stretch;
-                CSize szVideo = videoRect.Size();
-
-
                 double subtitleAR = double(m_virtualTextureSize.cx) / m_virtualTextureSize.cy;
-                double videoAR = double(szVideo.cx) / szVideo.cy;
-
-                double dCRVideoWidth = szVideo.cy * subtitleAR;
-                double dCRVideoHeight = szVideo.cx / subtitleAR;
-
-                if ((dCRVideoHeight > dCRVideoWidth) != (videoAR > subtitleAR)) {
-                    if (dCRVideoHeight > windowRect.Height()) { //this must be letterbox cropped, and the window isn't showing the black bars, so subs could get lost
-                        scaleFactor = double(windowRect.Height()) / m_virtualTextureSize.cy;
-                        offset.y = lround((szVideo.cy - double(windowRect.Height())) / 2.0);
-                        offset.x += lround((dCRVideoHeight - windowRect.Height()) * subtitleAR / 2.0);
-                    } else {
-                        scaleFactor = dCRVideoHeight / m_virtualTextureSize.cy;
-                        offset.y = lround((szVideo.cy - dCRVideoHeight) / 2.0);
-                    }
-                } else {
-                    scaleFactor = dCRVideoWidth / m_virtualTextureSize.cx;
-                    offset.x = lround((szVideo.cx - dCRVideoWidth) / 2.0);
+                double windowAR   = double(windowRect.Width()) / windowRect.Height();
+                double videoAR    = double(videoRect.Width()) / videoRect.Height();
+                double vertical_stretch = 1.0;
+                if (videoAR * 2 - subtitleAR < 0.01) {
+                    // some PGS can be encoded with resolution at half height
+                    vertical_stretch = 2.0;
+                    subtitleAR /= 2.0;
                 }
 
-                scaleX = scaleY = scaleFactor;
-                offset += videoRect.TopLeft();
+                if (videoRect.Height() > windowRect.Height() || videoRect.Width() > windowRect.Width() || videoAR > subtitleAR) {
+                    // fit in window
+                    if (windowAR >= subtitleAR) {
+                        scaleFactor = double(windowRect.Height()) / (m_virtualTextureSize.cy * vertical_stretch);
+                        offset.x = lround((windowRect.Width() - scaleFactor * m_virtualTextureSize.cx) / 2.0);
+                    } else {
+                        scaleFactor = double(windowRect.Width()) / m_virtualTextureSize.cx;
+                        offset.y = lround((windowRect.Height() - scaleFactor * m_virtualTextureSize.cy * vertical_stretch) / 2.0);
+                    }
+                } else {
+                    // fit on video
+                    scaleFactor = double(videoRect.Width()) / m_virtualTextureSize.cx;
+                    offset.y = lround((videoRect.Height() - scaleFactor * m_virtualTextureSize.cy * vertical_stretch) / 2.0);
+                    offset += videoRect.TopLeft();
+                }
+
+                scaleX = scaleFactor;
+                scaleY = scaleFactor * vertical_stretch;
             } else {
                 CRect rcTarget = (m_relativeTo == WINDOW) ? windowRect : videoRect;
                 CSize szTarget = rcTarget.Size();
