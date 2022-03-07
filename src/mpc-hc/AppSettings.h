@@ -481,12 +481,17 @@ class CAppSettings
     class CRecentFileListWithMoreInfo
     {
     public:
-        CRecentFileListWithMoreInfo(LPCTSTR lpszSection, int nSize) : m_section(lpszSection), m_maxSize(nSize){}
+        CRecentFileListWithMoreInfo(LPCTSTR lpszSection, int nSize)
+        : m_section(lpszSection)
+        , m_maxSize(nSize)
+        , current_rfe_hash(L"")
+        {}
 
         CAtlArray<RecentFileEntry> rfe_array;
         size_t m_maxSize;
         LPCTSTR m_section;
         REFERENCE_TIME persistedFilePosition = 0;
+        CString current_rfe_hash;
 
         int GetSize() {
             return (int)rfe_array.GetCount();
@@ -500,7 +505,8 @@ class CAppSettings
         void Remove(size_t nIndex);
         void Add(LPCTSTR fn);
         void Add(LPCTSTR fn, ULONGLONG llDVDGuid);
-        void Add(RecentFileEntry r);
+        void Add(RecentFileEntry r, bool current_open = false);
+        bool GetCurrentIndex(size_t& idx);
         void UpdateCurrentFilePosition(REFERENCE_TIME time, bool forcePersist = false);
         REFERENCE_TIME GetCurrentFilePosition();
         void UpdateCurrentDVDTimecode(DVD_HMSF_TIMECODE *time);
