@@ -12589,7 +12589,7 @@ void CMainFrame::OpenFile(OpenFileData* pOFD)
                     r.fns.AddHead(fn);
                 }
 
-                pMRU->Add(r);
+                pMRU->Add(r, true);
             }
             else {
                 CRecentFileList* pMRUDub = &s.MRUDub;
@@ -20116,7 +20116,7 @@ bool CMainFrame::ProcessYoutubeDLURL(CString url, bool append, bool replace)
         else if (streams.GetCount() == 1) {
             r.title = f_title;
         }
-        mru->Add(r);
+        mru->Add(r, true);
     }
 
     if (!append && (!replace || !m_wndPlaylistBar.GetCur())) {
