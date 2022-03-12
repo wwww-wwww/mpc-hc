@@ -2872,15 +2872,14 @@ CSubtitle* CRenderedTextSubtitle::GetSubtitle(int entry)
         tmp.shadowDepthX  *= (fScaledBAS ? sub->m_scalex : 1.0) * 8.0;
         tmp.shadowDepthY  *= (fScaledBAS ? sub->m_scaley : 1.0) * 8.0;
 
-        if ((tmp.fontScaleX == tmp.fontScaleY && m_ePARCompensationType != EPCTAccurateSize_ISR)
-                || (tmp.fontScaleX != tmp.fontScaleY && m_ePARCompensationType == EPCTAccurateSize_ISR)) {
-            tmp.fontScaleX *= dFontScaleXCompensation;
-            tmp.fontScaleY *= dFontScaleYCompensation;
-        }
-
         if (m_nPolygon) {
             ParsePolygon(sub, str.Mid(iStart, iEnd - iStart), tmp);
         } else {
+            if (m_ePARCompensationType != EPCTDisabled) {
+                tmp.fontScaleX *= dFontScaleXCompensation;
+                tmp.fontScaleY *= dFontScaleYCompensation;
+            }
+
             ParseString(sub, str.Mid(iStart, iEnd - iStart), tmp);
         }
     }
