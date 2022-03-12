@@ -2746,7 +2746,9 @@ CSubtitle* CRenderedTextSubtitle::GetSubtitle(int entry)
     double dFontScaleXCompensation = 1.0;
     double dFontScaleYCompensation = 1.0;
 
-    if (m_ePARCompensationType == EPCTUpscale) {
+    if (m_ePARCompensationType == EPCTAccurateSize_ISR || m_ePARCompensationType == EPCTAccurateSize) {
+        dFontScaleXCompensation = m_dPARCompensation;
+    } else if (m_ePARCompensationType == EPCTUpscale) {
         if (m_dPARCompensation < 1.0) {
             dFontScaleYCompensation = 1.0 / m_dPARCompensation;
         } else {
@@ -2758,8 +2760,6 @@ CSubtitle* CRenderedTextSubtitle::GetSubtitle(int entry)
         } else {
             dFontScaleYCompensation = 1.0 / m_dPARCompensation;
         }
-    } else if (m_ePARCompensationType == EPCTAccurateSize || m_ePARCompensationType == EPCTAccurateSize_ISR) {
-        dFontScaleXCompensation = m_dPARCompensation;
     }
 
     const CRenderersSettings& r = GetRenderersSettings();
