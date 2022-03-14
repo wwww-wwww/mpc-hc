@@ -653,14 +653,12 @@ void CMainFrameControls::UpdateToolbarsVisibility()
         autohideZone(DOCK_RIGHT);
     }
 
-    if (uTimeout > 0 || s.bHideWindowedControls) {
-        const bool bNeedTimer = !m_zoneHideTicks.empty();
-        if (bNoTimer && bNeedTimer) {
-            m_pMainFrame->m_timerHider.Subscribe(CMainFrame::TimerHiderSubscriber::TOOLBARS_HIDER,
-                std::bind(&CMainFrameControls::UpdateToolbarsVisibility, this));
-        } else if (!bNoTimer && !bNeedTimer) {
-            m_pMainFrame->m_timerHider.Unsubscribe(CMainFrame::TimerHiderSubscriber::TOOLBARS_HIDER);
-        }
+    const bool bNeedTimer = !m_zoneHideTicks.empty();
+    if (bNoTimer && bNeedTimer) {
+        m_pMainFrame->m_timerHider.Subscribe(CMainFrame::TimerHiderSubscriber::TOOLBARS_HIDER,
+            std::bind(&CMainFrameControls::UpdateToolbarsVisibility, this));
+    } else if (!bNoTimer && !bNeedTimer) {
+        m_pMainFrame->m_timerHider.Unsubscribe(CMainFrame::TimerHiderSubscriber::TOOLBARS_HIDER);
     }
 
     if (bRecalcLayout) {
