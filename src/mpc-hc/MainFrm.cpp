@@ -12477,8 +12477,10 @@ void CMainFrame::OpenFile(OpenFileData* pOFD)
             if (!m_pAMOP) {
                 m_pAMOP = pBF;
             }
-            if (!m_pAMMC) {
-                m_pAMMC = pBF;
+            if (!m_pAMMC[0]) {
+                m_pAMMC[0] = pBF;
+            } else if (!m_pAMMC[1]) {
+                m_pAMMC[1] = pBF;
             }
             if (m_bUseSeekPreview && !bIsVideo && IsVideoRenderer(pBF)) {
                 bIsVideo = true;
@@ -12560,11 +12562,14 @@ void CMainFrame::OpenFile(OpenFileData* pOFD)
 
                     if (pli->m_label.IsEmpty()) {
                         CString title;
-                        if (m_pAMMC) {
-                            CComBSTR bstr;
-                            if (SUCCEEDED(m_pAMMC->get_Title(&bstr)) && bstr.Length()) {
-                                title = bstr.m_str;
-                                title.Trim();
+                        for (const auto& pAMMC : m_pAMMC) {
+                            if (pAMMC) {
+                                CComBSTR bstr;
+                                if (SUCCEEDED(pAMMC->get_Title(&bstr)) && bstr.Length()) {
+                                    title = bstr.m_str;
+                                    title.Trim();
+                                    break;
+                                }
                             }
                         }
                         if (!title.IsEmpty() && !IsNameSimilar(title, PathUtils::StripPathOrUrl(fn))) {
@@ -13370,28 +13375,32 @@ void CMainFrame::OpenSetupInfoBar(bool bClear /*= true*/)
     if (GetPlaybackMode() == PM_FILE) {
         CComBSTR bstr;
         CString title, author, copyright, rating, description;
-        if (m_pAMMC) {
-            if (SUCCEEDED(m_pAMMC->get_Title(&bstr)) && bstr.Length()) {
-                title = bstr.m_str;
-                title.Trim();
+        if (m_pAMMC[0]) {
+            for (const auto& pAMMC : m_pAMMC) {
+                if (pAMMC) {
+                    if (SUCCEEDED(pAMMC->get_Title(&bstr)) && bstr.Length()) {
+                        title = bstr.m_str;
+                        title.Trim();
+                    }
+                    bstr.Empty();
+                    if (SUCCEEDED(pAMMC->get_AuthorName(&bstr)) && bstr.Length()) {
+                        author = bstr.m_str;
+                    }
+                    bstr.Empty();
+                    if (SUCCEEDED(pAMMC->get_Copyright(&bstr)) && bstr.Length()) {
+                        copyright = bstr.m_str;
+                    }
+                    bstr.Empty();
+                    if (SUCCEEDED(pAMMC->get_Rating(&bstr)) && bstr.Length()) {
+                        rating = bstr.m_str;
+                    }
+                    bstr.Empty();
+                    if (SUCCEEDED(pAMMC->get_Description(&bstr)) && bstr.Length()) {
+                        description = bstr.m_str;
+                    }
+                    bstr.Empty();
+                }
             }
-            bstr.Empty();
-            if (SUCCEEDED(m_pAMMC->get_AuthorName(&bstr)) && bstr.Length()) {
-                author = bstr.m_str;
-            }
-            bstr.Empty();
-            if (SUCCEEDED(m_pAMMC->get_Copyright(&bstr)) && bstr.Length()) {
-                copyright = bstr.m_str;
-            }
-            bstr.Empty();
-            if (SUCCEEDED(m_pAMMC->get_Rating(&bstr)) && bstr.Length()) {
-                rating = bstr.m_str;
-            }
-            bstr.Empty();
-            if (SUCCEEDED(m_pAMMC->get_Description(&bstr)) && bstr.Length()) {
-                description = bstr.m_str;
-            }
-            bstr.Empty();
         }
 
         bRecalcLayout |= m_wndInfoBar.SetLine(StrRes(IDS_INFOBAR_TITLE), title);
@@ -14358,9 +14367,11 @@ void CMainFrame::CloseMediaPrivate()
     m_pMC.Release();
     m_pFSF.Release();
     m_pKFI.Release();
-    m_pAMMC.Release();
     m_pAMNS.Release();
     m_pDVS.Release();
+    for (auto& pAMMC : m_pAMMC) {
+        pAMMC.Release();
+    }
 
     if (m_pGB) {
         m_pGB->RemoveFromROT();
@@ -20206,16 +20217,18 @@ BOOL CMainFrame::AppendMenuEx(CMenu& menu, UINT nFlags, UINT_PTR nIDNewItem, CSt
 
 CString CMainFrame::getBestTitle(bool fTitleBarTextTitle) {
     CString title;
-    if (fTitleBarTextTitle) {
-        if (m_pAMMC) {
-            CComBSTR bstr;
-            if (SUCCEEDED(m_pAMMC->get_Title(&bstr)) && bstr.Length()) {
-                title = bstr.m_str;
-                title.Trim();
-                if (!title.IsEmpty()) {
-                    return title;
-                }
-            }
+    if (fTitleBarTextTitle && m_pAMMC[0]) {
+       for (const auto& pAMMC : m_pAMMC) {
+           if (pAMMC) {
+               CComBSTR bstr;
+               if (SUCCEEDED(pAMMC->get_Title(&bstr)) && bstr.Length()) {
+                   title = bstr.m_str;
+                   title.Trim();
+                   if (!title.IsEmpty()) {
+                       return title;
+                   }
+               }
+           }
         }
     }
 
@@ -20241,11 +20254,15 @@ void CMainFrame::MediaTransportControlSetMedia() {
         }
 
         CString author;
-        if (m_pAMMC) {
-            CComBSTR bstr;
-            if (SUCCEEDED(m_pAMMC->get_AuthorName(&bstr)) && bstr.Length()) {
-                author = bstr.m_str;
-                author.Trim();
+        if (m_pAMMC[0]) {
+            for (const auto& pAMMC : m_pAMMC) {
+                if (pAMMC) {
+                    CComBSTR bstr;
+                    if (SUCCEEDED(pAMMC->get_AuthorName(&bstr)) && bstr.Length()) {
+                        author = bstr.m_str;
+                        author.Trim();
+                    }
+                }
             }
         }
 

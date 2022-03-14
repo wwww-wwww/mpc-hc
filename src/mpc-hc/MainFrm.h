@@ -259,7 +259,7 @@ private:
     CComQIPtr<IQualProp, &IID_IQualProp> m_pQP;
     CComQIPtr<IBufferInfo> m_pBI;
     CComQIPtr<IAMOpenProgress> m_pAMOP;
-    CComQIPtr<IAMMediaContent, &IID_IAMMediaContent> m_pAMMC;
+    CComQIPtr<IAMMediaContent, &IID_IAMMediaContent> m_pAMMC[2];
     CComQIPtr<IAMNetworkStatus, &IID_IAMNetworkStatus> m_pAMNS;
     // SmarkSeek
     CComPtr<IGraphBuilder2>         m_pGB_preview;
