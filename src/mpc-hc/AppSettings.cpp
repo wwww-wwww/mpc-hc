@@ -2666,20 +2666,24 @@ CStringW getShortHash(PBYTE bytes, ULONG size) {
         BCryptCloseAlgorithmProvider(algHandle, dwFlags);
     }
 
-    if (shortHash.IsEmpty()) {
-        ASSERT(FALSE);
-    }
-
     return shortHash;
 }
 
 CStringW getRFEHash(CStringW fn) {
     fn.MakeLower();
-    return getShortHash((PBYTE)fn.GetString(), fn.GetLength() * sizeof(WCHAR));
+    CStringW hash = getShortHash((PBYTE)fn.GetString(), fn.GetLength() * sizeof(WCHAR));
+    if (hash.IsEmpty()) {
+        ASSERT(FALSE);
+        hash = fn.Right(30);
+        hash.Replace(L"\\", L"/");
+    }
+    return hash;
 }
 
 CStringW getRFEHash(ULONGLONG llDVDGuid) {
-    return getShortHash((PBYTE)&llDVDGuid, sizeof(ULONGLONG));
+    CStringW hash;
+    hash.Format(L"DVD%llu", llDVDGuid);
+    return hash;
 }
 
 CStringW getRFEHash(RecentFileEntry &r) {
@@ -2821,6 +2825,7 @@ void CAppSettings::CRecentFileListWithMoreInfo::Add(RecentFileEntry r, bool curr
     rfe_array.InsertAt(0, r);
     if (current_open) {
         current_rfe_hash = r.hash;
+        persistedFilePosition = r.filePosition;
     }
 
     // purge obsolete entry
