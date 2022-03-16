@@ -19086,6 +19086,12 @@ LRESULT CMainFrame::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
         ASSERT(false);
         return 0;
     }
+    if (message == WM_ACTIVATE || message == WM_SETFOCUS) {
+        if (AfxGetMyApp()->m_fClosingState) {
+            ASSERT(false);
+            return 0;
+        }
+    }
 
     if ((message == WM_COMMAND) && (THBN_CLICKED == HIWORD(wParam))) {
         int const wmId = LOWORD(wParam);
