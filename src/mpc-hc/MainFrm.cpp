@@ -17503,15 +17503,8 @@ void CMainFrame::CloseMedia(bool bNextIsQueued/* = false*/)
         if (m_bRememberFilePos && !m_fEndOfStream && m_dwReloadPos == 0 && m_pMS) {
             auto& s = AfxGetAppSettings();
             REFERENCE_TIME rtNow = 0;
-            REFERENCE_TIME rtDur = 0;
             m_pMS->GetCurrentPosition(&rtNow);
-            m_pMS->GetDuration(&rtDur);
-            // if very close to end, assume we have reached the credits section of the movie, so reset to begin
-            if (rtNow < rtDur * 0.95) {
-                s.MRU.UpdateCurrentFilePosition(rtNow, true);
-            } else {
-                s.MRU.UpdateCurrentFilePosition(0LL, true);
-            }
+            s.MRU.UpdateCurrentFilePosition(rtNow, true);
         }
     }
 
