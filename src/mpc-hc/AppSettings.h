@@ -918,6 +918,8 @@ public:
     CStringW lastQuickOpenPath;
     CStringW lastSaveImagePath;
 
+    int iRedirectOpenToAppendThreshold;
+
 private:
     struct FilterKey {
         CString name;

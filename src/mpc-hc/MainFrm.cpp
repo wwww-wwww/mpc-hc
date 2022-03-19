@@ -4571,7 +4571,7 @@ BOOL CMainFrame::OnCopyData(CWnd* pWnd, COPYDATASTRUCT* pCDS)
             OpenMedia(p);
         } else {
             ULONGLONG tcnow = GetTickCount64();
-            if (m_dwLastRun && ((tcnow - m_dwLastRun) < 2000ULL)) {
+            if (m_dwLastRun && ((tcnow - m_dwLastRun) < s.iRedirectOpenToAppendThreshold)) {
                 s.nCLSwitches |= CLSW_ADD;
             }
             m_dwLastRun = tcnow;
