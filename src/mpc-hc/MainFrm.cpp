@@ -15440,7 +15440,7 @@ void CMainFrame::SetupJumpToSubMenus(CMenu* parentMenu /*= nullptr*/, int iInser
             addSubMenuIfPossible(StrRes(IDS_NAVIGATE_BD_PLAYLISTS), m_BDPlaylistMenu);
         }
 
-        SetupChapters();
+        //SetupChapters();
         if (m_pCB && m_pCB->ChapGetCount() > 1) {
             REFERENCE_TIME rt = GetPos();
             DWORD j = m_pCB->ChapLookup(&rt, nullptr);
