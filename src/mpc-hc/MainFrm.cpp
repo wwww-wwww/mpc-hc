@@ -3640,21 +3640,40 @@ void CMainFrame::OnUpdatePlayerStatus(CCmdUI* pCmdUI)
 
             auto& s = AfxGetAppSettings();
 
-            if (s.bShowVideoInfoInStatusbar) {
-                if (!m_statusbarVideoFourCC.IsEmpty() || !m_statusbarVideoSize.IsEmpty()) {
-                    msg.Append(_T("\u2001["));
+            CString videoinfo;
+            CString fpsinfo;
+            if (s.bShowVideoInfoInStatusbar && (!m_statusbarVideoFourCC.IsEmpty() || !m_statusbarVideoSize.IsEmpty())) {                  
+                if(!m_statusbarVideoFourCC.IsEmpty()) {
+                    videoinfo.Append(m_statusbarVideoFourCC);
+                }
+                if(!m_statusbarVideoSize.IsEmpty()) {
                     if(!m_statusbarVideoFourCC.IsEmpty()) {
-                        msg.Append(m_statusbarVideoFourCC);
+                        videoinfo.AppendChar(_T(' '));
                     }
-                    if(!m_statusbarVideoSize.IsEmpty()) {
-                        if(!m_statusbarVideoFourCC.IsEmpty()) {
-                            msg.AppendChar(_T(' '));
-                        }
-                        msg.Append(m_statusbarVideoSize);
-                    }
-                    msg.Append(_T("]"));
+                    videoinfo.Append(m_statusbarVideoSize);
                 }
             }
+            if (s.bShowFPSInStatusbar && m_pCAP) {
+                if (m_dSpeedRate != 1.0) {
+                    fpsinfo.Format(_T("%.2lf fps (%.2lfx)"), m_pCAP->GetFPS(), m_dSpeedRate);
+                } else {
+                    fpsinfo.Format(_T("%.2lf fps"), m_pCAP->GetFPS());
+                }
+            }
+            if (!videoinfo.IsEmpty() || !fpsinfo.IsEmpty()) {
+                msg.Append(_T("\u2001["));
+                if (!videoinfo.IsEmpty()) {
+                    msg.Append(videoinfo);
+                }
+                if (!fpsinfo.IsEmpty()) {
+                    if (!videoinfo.IsEmpty()) {
+                        msg.AppendChar(_T(' '));
+                    }
+                    msg.Append(fpsinfo);
+                }
+                msg.Append(_T("]"));
+            }
+
             if (s.bShowLangInStatusbar) {
                 if (!currentAudioLang.IsEmpty() || !currentSubLang.IsEmpty()) {
                     msg.Append(_T("\u2001["));
@@ -3669,9 +3688,6 @@ void CMainFrame::OnUpdatePlayerStatus(CCmdUI* pCmdUI)
                     }
                     msg.Append(_T("]"));
                 }
-            }
-            if (s.bShowFPSInStatusbar && m_pCAP) {
-                msg.AppendFormat(_T("\u2001[%.2lf fps (%.2lfx)]"), m_pCAP->GetFPS(), m_dSpeedRate);
             }
             if (s.bShowABMarksInStatusbar) {
                 if (abRepeatPositionAEnabled || abRepeatPositionBEnabled) {
