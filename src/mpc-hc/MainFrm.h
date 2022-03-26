@@ -511,6 +511,8 @@ public:
     bool m_fFullScreen;
     bool m_fFirstFSAfterLaunchOnFS;
     bool m_fStartInD3DFullscreen;
+    bool m_fStartInFullscreenMainFrame;
+    bool m_bFullScreenWindowIsD3D;
 
     CComPtr<IBaseFilter> m_pRefClock; // Adjustable reference clock. GothSync
     CComPtr<ISyncClock> m_pSyncClock;
@@ -520,6 +522,9 @@ public:
     bool IsMenuHidden() const;
     bool IsPlaylistEmpty() const;
     bool IsInteractiveVideo() const;
+    bool IsFullScreenMode() const;
+    bool IsFullScreenMainFrame() const;
+    bool HasFullScreenWindow() const;
     bool IsD3DFullScreenMode() const;
     bool IsSubresyncBarVisible() const;
 
@@ -1162,7 +1167,7 @@ public:
     void        SetLoadState(MLS eState);
     MLS         GetLoadState() const;
     void        SetPlayState(MPC_PLAYSTATE iState);
-    bool        CreateFullScreenWindow();
+    bool        CreateFullScreenWindow(bool isD3D=true);
     void        SetupEVRColorControl();
     void        SetupVMR9ColorControl();
     void        SetColorControl(DWORD flags, int& brightness, int& contrast, int& hue, int& saturation);
