@@ -17946,6 +17946,7 @@ void CMainFrame::SetPlayState(MPC_PLAYSTATE iState)
 bool CMainFrame::CreateFullScreenWindow(bool isD3D /* = true */)
 {
     const CAppSettings& s = AfxGetAppSettings();
+    CMonitors monitors;
     CMonitor monitor;
 
     if (m_pFullscreenWnd->IsWindow()) {
@@ -17953,12 +17954,10 @@ bool CMainFrame::CreateFullScreenWindow(bool isD3D /* = true */)
     }
 
     if (s.iMonitor == 0) {
-        CMonitors monitors;
         monitor = monitors.GetMonitor(s.strFullScreenMonitor);
     }
-
     if (!monitor.IsMonitor()) {
-        monitor = CMonitors::GetNearestMonitor(this);
+        monitor = monitors.GetNearestMonitor(this);
     }
 
     CRect monitorRect;
