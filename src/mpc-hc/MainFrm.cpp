@@ -10915,7 +10915,7 @@ void CMainFrame::ToggleFullscreen(bool fToNearest, bool fSwitchScreenResWhenHasT
     DWORD dwRemove = 0, dwAdd = 0;
 
     bool fullScreenSecondMonitor = false;
-    if (fullscreenMonitor.IsMonitor() && fullscreenMonitor != currentMonitor) {
+    if (m_pMFVDC && fullscreenMonitor.IsMonitor() && fullscreenMonitor != currentMonitor) {
         fullScreenSecondMonitor = true;
     }
 
@@ -10942,7 +10942,7 @@ void CMainFrame::ToggleFullscreen(bool fToNearest, bool fSwitchScreenResWhenHasT
             m_OSD.SetVideoWindow(m_pVideoWnd);
             if (m_pMFVDC) {
                 m_pMFVDC->SetVideoWindow(m_pVideoWnd->m_hWnd);
-            } else {
+            } else if (m_pVMRWC) {
                 m_pVMRWC->SetVideoClippingWindow(m_pVideoWnd->m_hWnd);
             }
             m_wndView.Invalidate();
@@ -10953,7 +10953,7 @@ void CMainFrame::ToggleFullscreen(bool fToNearest, bool fSwitchScreenResWhenHasT
             m_OSD.SetVideoWindow(m_pVideoWnd);
             if (m_pMFVDC) {
                 m_pMFVDC->SetVideoWindow(m_pVideoWnd->m_hWnd);
-            } else {
+            } else if (m_pVMRWC) {
                 m_pVMRWC->SetVideoClippingWindow(m_pVideoWnd->m_hWnd);
             }
             if (s.autoChangeFSMode.bEnabled && s.autoChangeFSMode.bApplyDefaultModeAtFSExit && !s.autoChangeFSMode.modes.empty() && s.autoChangeFSMode.modes[0].bChecked) {
