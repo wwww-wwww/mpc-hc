@@ -162,7 +162,6 @@ STDMETHODIMP_(void) CSubPicAllocatorPresenterImpl::SetPosition(RECT w, RECT v)
             if (m_windowRect.Width() * m_windowRect.Height() <= maxpixels) {
                 // use window size
                 m_curSubtitleTextureSize = CSize(m_windowRect.Width(), m_windowRect.Height());
-                m_pAllocator->SetMaxTextureSize(m_curSubtitleTextureSize);
             } else {
                 bool correct_ar = false;
                 if (m_maxSubtitleTextureSize.cx == 2560 && m_windowRect.Width() >= 3800 && m_windowRect.Width() <= 4096) { // not 3840, to handle a maximized window as well
@@ -178,11 +177,10 @@ STDMETHODIMP_(void) CSubPicAllocatorPresenterImpl::SetPosition(RECT w, RECT v)
                     m_curSubtitleTextureSize.cx = lround(new_w);
                     m_curSubtitleTextureSize.cy = lround(new_h);
                 }
-
-                m_pAllocator->SetMaxTextureSize(m_curSubtitleTextureSize);
             }
         }
 
+        m_pAllocator->SetMaxTextureSize(m_curSubtitleTextureSize);
         m_pAllocator->SetCurSize(m_windowRect.Size());
         m_pAllocator->SetCurVidRect(m_videoRect);
 
