@@ -130,68 +130,120 @@ STDMETHODIMP CSubPicImpl::GetSourceAndDest(RECT rcWindow, RECT rcVideo,
         CRect videoRect(rcVideo);
         CRect windowRect(rcWindow);
 
-        CRect rcTemp = m_rcDirty;
-        *pRcSource = rcTemp;
-        rcTemp.OffsetRect(m_virtualTextureTopLeft + CPoint(xOffsetInPixels, yOffsetInPixels));
+        CRect originalDirtyRect = m_rcDirty;
+        originalDirtyRect.OffsetRect(m_virtualTextureTopLeft + CPoint(xOffsetInPixels, yOffsetInPixels));
+        *pRcSource = originalDirtyRect;
+
+        CRect targetDirtyRect;
 
         // check if scaling is needed
         if (videoRect.Size() != windowRect.Size() || videoRect.Size() != m_virtualTextureSize) {
-            CPoint offset(0, 0);
-            double scaleX;
-            double scaleY;
-
             if (m_relativeTo == BEST_FIT && m_virtualTextureSize.cx > 720 && videoStretchFactor == 1.0) {
+                CRect visibleRect;
+                visibleRect.top    = videoRect.top    > windowRect.top    ? (videoRect.top    > windowRect.bottom ? windowRect.bottom : videoRect.top)    : windowRect.top;
+                visibleRect.bottom = videoRect.bottom < windowRect.bottom ? (videoRect.bottom < windowRect.top    ? windowRect.top    : videoRect.bottom) : windowRect.bottom;
+                visibleRect.left   = videoRect.left   > windowRect.left   ? (videoRect.left   > windowRect.right  ? windowRect.right  : videoRect.left)   : windowRect.left;
+                visibleRect.right  = videoRect.right  < windowRect.right  ? (videoRect.right  < windowRect.left   ? windowRect.left   : videoRect.right)  : windowRect.right;
+                if (visibleRect.Width() <= 0 || visibleRect.Height() <= 0) {
+                    visibleRect = windowRect;
+                    ASSERT(false);
+                }
+                CPoint offset(0, 0);
                 double scaleFactor;
                 double subtitleAR = double(m_virtualTextureSize.cx) / m_virtualTextureSize.cy;
-                double windowAR   = double(windowRect.Width()) / windowRect.Height();
-                double videoAR    = double(videoRect.Width()) / videoRect.Height();
+                double visibleAR  = double(visibleRect.Width()) / visibleRect.Height();
                 double vertical_stretch = 1.0;
-                if (videoAR * 2 - subtitleAR < 0.01) {
+                if (visibleAR * 2 - subtitleAR < 0.01) {
                     // some PGS can be encoded with resolution at half height
                     vertical_stretch = 2.0;
                     subtitleAR /= 2.0;
                 }
 
-                if (videoRect.Height() > windowRect.Height() || videoRect.Width() > windowRect.Width() || videoAR > subtitleAR) {
-                    // fit in window
-                    if (windowAR >= subtitleAR) {
-                        scaleFactor = double(windowRect.Height()) / (m_virtualTextureSize.cy * vertical_stretch);
-                        offset.x = lround((windowRect.Width() - scaleFactor * m_virtualTextureSize.cx) / 2.0);
+                if (visibleAR == subtitleAR) {
+                    // exact same AR
+                    scaleFactor = double(visibleRect.Width()) / m_virtualTextureSize.cx;
+                    targetDirtyRect = CRect(lround(originalDirtyRect.left * scaleFactor), lround(originalDirtyRect.top * scaleFactor * vertical_stretch), lround(originalDirtyRect.right * scaleFactor), lround(originalDirtyRect.bottom * scaleFactor * vertical_stretch));
+                    targetDirtyRect.OffsetRect(visibleRect.TopLeft());
+                } else if (visibleAR > subtitleAR) {
+                    // video is cropped in height
+                    scaleFactor = double(visibleRect.Width()) / m_virtualTextureSize.cx;
+                    int extraheight = m_virtualTextureSize.cy * scaleFactor * vertical_stretch - visibleRect.Height();
+                    CRect expandedRect = visibleRect;
+                    expandedRect.top    -= extraheight / 2;
+                    expandedRect.bottom += extraheight - extraheight / 2;
+                    offset.x = expandedRect.left;
+                    offset.y = expandedRect.top;
+
+                    targetDirtyRect = CRect(lround(originalDirtyRect.left * scaleFactor), lround(originalDirtyRect.top * scaleFactor * vertical_stretch), lround(originalDirtyRect.right * scaleFactor), lround(originalDirtyRect.bottom * scaleFactor * vertical_stretch));
+                    targetDirtyRect.OffsetRect(offset);
+
+                    if (expandedRect.left >= windowRect.left && expandedRect.top >= windowRect.top && expandedRect.right <= windowRect.right && expandedRect.bottom <= windowRect.bottom) {
+                        // expanded fits in window
                     } else {
-                        scaleFactor = double(windowRect.Width()) / m_virtualTextureSize.cx;
-                        offset.y = lround((windowRect.Height() - scaleFactor * m_virtualTextureSize.cy * vertical_stretch) / 2.0);
+                        if (targetDirtyRect.left >= windowRect.left && targetDirtyRect.top >= windowRect.top && targetDirtyRect.right <= windowRect.right && targetDirtyRect.bottom <= windowRect.bottom) {
+                            // dirty rect fits in window
+                        } else {
+                            // does not fit yet, rescale based on available window height
+                            scaleFactor = double(windowRect.Height()) / m_virtualTextureSize.cy / vertical_stretch;
+                            offset.x = lround((windowRect.Width() - scaleFactor * m_virtualTextureSize.cx) / 2.0);
+                            offset.y = 0;
+
+                            targetDirtyRect = CRect(lround(originalDirtyRect.left * scaleFactor), lround(originalDirtyRect.top * scaleFactor * vertical_stretch), lround(originalDirtyRect.right * scaleFactor), lround(originalDirtyRect.bottom * scaleFactor * vertical_stretch));
+                            targetDirtyRect.OffsetRect(offset);
+                        }
                     }
                 } else {
-                    // fit on video
-                    scaleFactor = double(videoRect.Width()) / m_virtualTextureSize.cx;
-                    offset.y = lround((videoRect.Height() - scaleFactor * m_virtualTextureSize.cy * vertical_stretch) / 2.0);
-                    offset += videoRect.TopLeft();
-                }
+                    // video is cropped in width
+                    scaleFactor = double(visibleRect.Height()) / m_virtualTextureSize.cy / vertical_stretch;
+                    int extrawidth = m_virtualTextureSize.cx * scaleFactor - visibleRect.Width();
+                    CRect expandedRect = visibleRect;
+                    expandedRect.left  -= extrawidth / 2;
+                    expandedRect.right += extrawidth - extrawidth / 2;
+                    offset.x = expandedRect.left;
+                    offset.y = expandedRect.top;
 
-                scaleX = scaleFactor;
-                scaleY = scaleFactor * vertical_stretch;
+                    targetDirtyRect = CRect(lround(originalDirtyRect.left * scaleFactor), lround(originalDirtyRect.top * scaleFactor * vertical_stretch), lround(originalDirtyRect.right * scaleFactor), lround(originalDirtyRect.bottom * scaleFactor * vertical_stretch));
+                    targetDirtyRect.OffsetRect(offset);
+
+                    if (expandedRect.left >= windowRect.left && expandedRect.top >= windowRect.top && expandedRect.right <= windowRect.right && expandedRect.bottom <= windowRect.bottom) {
+                        // expanded fits in window
+                    } else {
+                        if (targetDirtyRect.left >= windowRect.left && targetDirtyRect.top >= windowRect.top && targetDirtyRect.right <= windowRect.right && targetDirtyRect.bottom <= windowRect.bottom) {
+                            // dirty rect fits in window
+                        } else {
+                            // does not fit yet, rescale based on available window width
+                            scaleFactor = double(windowRect.Width()) / m_virtualTextureSize.cx;
+                            offset.x = 0;
+                            offset.y = lround((windowRect.Height() - scaleFactor * m_virtualTextureSize.cy * vertical_stretch) / 2.0);
+
+                            targetDirtyRect = CRect(lround(originalDirtyRect.left * scaleFactor), lround(originalDirtyRect.top * scaleFactor * vertical_stretch), lround(originalDirtyRect.right * scaleFactor), lround(originalDirtyRect.bottom * scaleFactor * vertical_stretch));
+                            targetDirtyRect.OffsetRect(offset);
+                        }
+                    }
+                }
             } else {
                 CRect rcTarget = (m_relativeTo == WINDOW) ? windowRect : videoRect;
                 CSize szTarget = rcTarget.Size();
-                scaleX = double(szTarget.cx) / m_virtualTextureSize.cx;
-                scaleY = double(szTarget.cy) / m_virtualTextureSize.cy;
-                offset += rcTarget.TopLeft();
-            }
+                double scaleX = double(szTarget.cx) / m_virtualTextureSize.cx;
+                double scaleY = double(szTarget.cy) / m_virtualTextureSize.cy;
 
-            rcTemp = CRect(lround(rcTemp.left   * scaleX),
-                           lround(rcTemp.top    * scaleY),
-                           lround(rcTemp.right  * scaleX),
-                           lround(rcTemp.bottom * scaleY));
-            rcTemp.OffsetRect(offset);
+                targetDirtyRect = CRect(lround(originalDirtyRect.left * scaleX), lround(originalDirtyRect.top * scaleY), lround(originalDirtyRect.right * scaleX), lround(originalDirtyRect.bottom * scaleY));
+                targetDirtyRect.OffsetRect(rcTarget.TopLeft());
+            }
+        } else {
+            // no scaling needed
+            targetDirtyRect = originalDirtyRect;
         }
 
         if (videoStretchFactor != 1.0) {
-            LONG stretch = lround(rcTemp.Width() * (1.0 - 1.0 / videoStretchFactor) / 2.0);
-            rcTemp.left += stretch;
-            rcTemp.right -= stretch;
+            ASSERT(FALSE);
+            // FIXME: when is videoStretchFactor not equal to 1.0? Test that situation. Only madvr might possibly use it. Our own renderers do not.
+            LONG stretch = lround(targetDirtyRect.Width() * (1.0 - 1.0 / videoStretchFactor) / 2.0);
+            targetDirtyRect.left += stretch;
+            targetDirtyRect.right -= stretch;
         }
 
-        *pRcDest = rcTemp;
+        *pRcDest = targetDirtyRect;
         return S_OK;
     }
 
