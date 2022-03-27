@@ -693,7 +693,7 @@ pt_BR.types_CustomInstallation=Instalação personalizada
 pt_BR.ViewChangelog=Visualizar Changelog
 
 ; Portuguese (Portugal)
-pt_PT.langid=00001046
+pt_PT.langid=00002070
 pt_PT.comp_mpciconlib=Biblioteca de ícones
 pt_PT.comp_mpcresources=Traduções
 pt_PT.msg_DeleteSettings=Pretende também eliminar as definições do MPC-HC?%n%nSe planeia instalar o MPC-HC outra vez, então não necessita de as eliminar.
