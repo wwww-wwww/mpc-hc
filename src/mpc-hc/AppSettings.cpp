@@ -3100,7 +3100,7 @@ void CAppSettings::CRecentFileListWithMoreInfo::WriteMediaHistoryEntry(RecentFil
         pApp->WriteProfileString(subSection, t, strValue);
     } else {
         t = L"FilePosition";
-        pApp->WriteProfileInt(subSection, t, r.filePosition / 10000LL);
+        pApp->WriteProfileInt(subSection, t, int(r.filePosition / 10000LL));
         persistedFilePosition = r.filePosition;
     }
     if (updateLastOpened || r.lastOpened.IsEmpty()) {

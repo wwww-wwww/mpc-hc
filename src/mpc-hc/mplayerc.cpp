@@ -1110,7 +1110,7 @@ std::list<CStringW> CMPlayerCApp::GetSectionSubKeys(LPCWSTR lpszSection) {
                 RegQueryInfoKeyW(hSectionKey, NULL, NULL, NULL, &cSubKeys, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
                 if (cSubKeys) {
-                    for (int i = 0; i < cSubKeys; i++) {
+                    for (DWORD i = 0; i < cSubKeys; i++) {
                         cbName = MAX_REGKEY_LEN;
                         if (ERROR_SUCCESS == RegEnumKeyExW(hSectionKey, i, achKey, &cbName, NULL, NULL, NULL, NULL)){
                             keys.push_back(achKey);

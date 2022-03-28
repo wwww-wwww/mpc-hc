@@ -7503,7 +7503,7 @@ void CMainFrame::OnViewModifySize(UINT nID)
     CRect videoRect;
     m_pVideoWnd->GetWindowRect(&videoRect);
     LONG newWidth = videoRect.Width() + 32 * (nID == ID_VIEW_ZOOM_ADD ? 1 : ID_VIEW_ZOOM_SUB ? -1 : 0);
-    LONG newHeight = ceil(newWidth * videoRatio);
+    LONG newHeight = (LONG)ceil(newWidth * videoRatio);
 
     CRect rect;
     GetWindowRect(&rect);
@@ -20304,7 +20304,7 @@ void CMainFrame::OnMouseHWheel(UINT nFlags, short zDelta, CPoint pt) {
     __super::OnMouseHWheel(nFlags, zDelta, pt);
 }
 
-BOOL CMainFrame::AppendMenuEx(CMenu& menu, UINT nFlags, UINT_PTR nIDNewItem, CString& text)
+BOOL CMainFrame::AppendMenuEx(CMenu& menu, UINT nFlags, UINT nIDNewItem, CString& text)
 {
     text.Replace(_T("&"), _T("&&"));
     auto bResult = menu.AppendMenu(nFlags, nIDNewItem, text.GetString());
