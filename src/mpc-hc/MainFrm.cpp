@@ -11021,13 +11021,6 @@ void CMainFrame::ToggleFullscreen(bool fToNearest, bool fSwitchScreenResWhenHasT
             }
 
             m_pFullscreenWnd->DestroyWindow();
-            if (m_fFirstFSAfterLaunchOnFS) {
-                if (s.fRememberZoomLevel) {
-                    ZoomVideoWindow();
-                }
-                m_fFirstFSAfterLaunchOnFS = false;
-            }
-
 
             if (m_wndPlaylistBar.IsHiddenDueToFullscreen() && !m_controls.ControlChecked(CMainFrameControls::Panel::PLAYLIST)) {
                 m_wndPlaylistBar.SetHiddenDueToFullscreen(false);
