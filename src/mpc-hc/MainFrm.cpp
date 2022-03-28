@@ -11008,6 +11008,17 @@ void CMainFrame::ToggleFullscreen(bool fToNearest, bool fSwitchScreenResWhenHasT
         } else {
             m_eventc.FireEvent(MpcEvent::SWITCHING_FROM_FULLSCREEN);
 
+            if (m_pVideoWnd != &m_wndView) {
+                m_pVideoWnd = &m_wndView;
+                m_OSD.SetVideoWindow(m_pVideoWnd);
+                if (m_pMFVDC) {
+                    m_pMFVDC->SetVideoWindow(m_pVideoWnd->m_hWnd);
+                } else if (m_pVMRWC) {
+                    m_pVMRWC->SetVideoClippingWindow(m_pVideoWnd->m_hWnd);
+                }
+            }
+            m_pFullscreenWnd->DestroyWindow();
+
             if (s.autoChangeFSMode.bEnabled && s.autoChangeFSMode.bApplyDefaultModeAtFSExit && !s.autoChangeFSMode.modes.empty() && s.autoChangeFSMode.modes[0].bChecked) {
                 SetDispMode(s.strFullScreenMonitor, s.autoChangeFSMode.modes[0].dm, s.fAudioTimeShift ? s.iAudioTimeShift : 0); // Restore default time shift
             }
@@ -11024,8 +11035,6 @@ void CMainFrame::ToggleFullscreen(bool fToNearest, bool fSwitchScreenResWhenHasT
                     dwAdd |= WS_CAPTION;
                 }
             }
-
-            m_pFullscreenWnd->DestroyWindow();
 
             if (m_wndPlaylistBar.IsHiddenDueToFullscreen() && !m_controls.ControlChecked(CMainFrameControls::Panel::PLAYLIST)) {
                 m_wndPlaylistBar.SetHiddenDueToFullscreen(false);
