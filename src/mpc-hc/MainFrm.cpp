@@ -19167,7 +19167,7 @@ LRESULT CMainFrame::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
     }
     if (message == WM_ACTIVATE || message == WM_SETFOCUS) {
         if (AfxGetMyApp()->m_fClosingState) {
-            ASSERT(false);
+            TRACE(_T("Dropped WindowProc: message %u value %d\n"), message, LOWORD(wParam));
             return 0;
         }
     }
