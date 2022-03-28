@@ -10963,10 +10963,10 @@ void CMainFrame::ToggleFullscreen(bool fToNearest, bool fSwitchScreenResWhenHasT
             // Destroy the Fullscreen window and zoom the windowed video frame
             m_pFullscreenWnd->DestroyWindow();
             if (m_fFirstFSAfterLaunchOnFS) {
+                m_fFirstFSAfterLaunchOnFS = false;
                 if (s.fRememberZoomLevel) {
                     ZoomVideoWindow();
                 }
-                m_fFirstFSAfterLaunchOnFS = false;
             }
         }
         MoveVideoWindow();
