@@ -10581,6 +10581,11 @@ void CMainFrame::SetDefaultFullscreenState()
 {
     CAppSettings& s = AfxGetAppSettings();
 
+    if (s.fLaunchfullscreen) {
+        // delay going into fullscreen
+        return;
+    }
+
     bool clGoFullscreen = !(s.nCLSwitches & CLSW_ADD) && (s.nCLSwitches & CLSW_FULLSCREEN);
 
     if (clGoFullscreen && !s.slFiles.IsEmpty()) {
