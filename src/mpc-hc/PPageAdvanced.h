@@ -192,6 +192,7 @@ private:
         RECENT_FILES_NB,
         FILE_POS_LONGER,
         FILE_POS_AUDIO,
+        FULLSCREEN_SEPARATE_CONTROLS,
         COVER_SIZE_LIMIT,
         BLOCK_VSFILTER,
         BLOCK_RDP,

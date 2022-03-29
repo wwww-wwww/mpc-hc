@@ -10919,7 +10919,7 @@ void CMainFrame::ToggleFullscreen(bool fToNearest, bool fSwitchScreenResWhenHasT
     CRect windowRect;
     DWORD dwRemove = 0, dwAdd = 0;
 
-    bool fullScreenSecondMonitor = fullscreenMonitor.IsMonitor() && fullscreenMonitor != currentMonitor;
+    bool fullScreenSecondMonitor = s.bFullscreenSeparateControls && fullscreenMonitor.IsMonitor() && fullscreenMonitor != currentMonitor;
 
     if (!fullScreenSecondMonitor && s.iFullscreenDelay > 0 && IsWindows8OrGreater()) {//DWMWA_CLOAK not supported on 7
         BOOL setEnabled = TRUE;

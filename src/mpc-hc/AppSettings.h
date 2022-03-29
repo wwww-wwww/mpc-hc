@@ -919,6 +919,7 @@ public:
     CStringW lastSaveImagePath;
 
     int iRedirectOpenToAppendThreshold;
+    bool bFullscreenSeparateControls;
 
 private:
     struct FilterKey {
