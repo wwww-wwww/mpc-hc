@@ -441,7 +441,6 @@ void CMPCThemeMenu::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
         UINT accelStyle = 0;
         if (lpDrawItemStruct->itemState & ODS_NOACCEL) { //removing single &s before drawtext
             accelStyle = DT_HIDEPREFIX;
-        } else {
         }
         pDC->DrawTextW(left, rectText, DT_VCENTER | captionAlign | DT_SINGLELINE | accelStyle);
 

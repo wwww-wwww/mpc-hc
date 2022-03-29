@@ -26,6 +26,7 @@
 #include "mplayerc.h"
 #include "MainFrm.h"
 #include "CMPCTheme.h"
+#undef SubclassWindow
 
 // CFavoriteOrganizeDlg dialog
 
@@ -180,48 +181,75 @@ void CFavoriteOrganizeDlg::OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStr
     }
 
     int nItem = lpDrawItemStruct->itemID;
-    CRect rcItem = lpDrawItemStruct->rcItem;
+    if (m_list.IsItemVisible(nItem)) {
+        CEdit* pEdit = m_list.GetEditControl();
 
-    CDC* pDC = CDC::FromHandle(lpDrawItemStruct->hDC);
+        CRect rcItem = lpDrawItemStruct->rcItem;
+        CRect rText, rTime, rectDC = rcItem;
+        m_list.GetSubItemRect(nItem, 0, LVIR_LABEL, rText);
+        rText.left += 2; //magic number for column 0
+        m_list.GetSubItemRect(nItem, 1, LVIR_LABEL, rTime);
+        rTime.left += 6; //magic number for column >0
 
-    if (!!m_list.GetItemState(nItem, LVIS_SELECTED)) {
-        if (AppIsThemeLoaded()) {
-            CBrush b(CMPCTheme::ContentSelectedColor);
-            pDC->FillRect(rcItem, &b);
+        CDC* pDC = CDC::FromHandle(lpDrawItemStruct->hDC);
+        bool isSelected = !!m_list.GetItemState(nItem, LVIS_SELECTED);
+        bool isEdited = pEdit && ::IsWindow(pEdit->m_hWnd) && isSelected;
+
+        CDC dcMem;
+        CBitmap bmMem;
+        CMPCThemeUtil::initMemDC(pDC, dcMem, bmMem, rectDC);
+        rcItem.OffsetRect(-rectDC.TopLeft());
+        rText.OffsetRect(-rectDC.TopLeft());
+
+        if (isSelected) {
+            if (AppIsThemeLoaded()) {
+                CBrush b(CMPCTheme::ContentSelectedColor);
+                dcMem.FillRect(rcItem, &b);
+            } else {
+                CBrush b1, b2;
+                b1.CreateSolidBrush(0xf1dacc);
+                dcMem.FillRect(rcItem, &b1);
+                b1.DeleteObject();
+                b2.CreateSolidBrush(0xc56a31);
+                dcMem.FrameRect(rcItem, &b2);
+                b2.DeleteObject();
+            }
         } else {
-            CBrush b1, b2;
-            b1.CreateSolidBrush(0xf1dacc);
-            pDC->FillRect(rcItem, &b1);
-            b1.DeleteObject();
-            b2.CreateSolidBrush(0xc56a31);
-            pDC->FrameRect(rcItem, &b2);
-            b2.DeleteObject();
+            if (AppIsThemeLoaded()) {
+                CBrush b(CMPCTheme::ContentBGColor);
+                dcMem.FillRect(rcItem, &b);
+            } else {
+                CBrush b;
+                b.CreateSysColorBrush(COLOR_WINDOW);
+                dcMem.FillRect(rcItem, &b);
+            }
         }
-    } else {
+
+        COLORREF textcolor;
         if (AppIsThemeLoaded()) {
-            CBrush b(CMPCTheme::ContentBGColor);
-            pDC->FillRect(rcItem, &b);
+            textcolor = CMPCTheme::TextFGColor;
         } else {
-            CBrush b;
-            b.CreateSysColorBrush(COLOR_WINDOW);
-            pDC->FillRect(rcItem, &b);
+            textcolor = 0;
         }
-    }
+        dcMem.SetTextColor(textcolor);
 
-    COLORREF textcolor;
-    if (AppIsThemeLoaded()) {
-        textcolor = CMPCTheme::TextFGColor;
-    } else {
-        textcolor = 0;
-    }
-    pDC->SetTextColor(textcolor);
+        CString str;
 
-    CString str;
-    str = m_list.GetItemText(nItem, 0);
-    pDC->TextOut(rcItem.left + 3, (rcItem.top + rcItem.bottom - pDC->GetTextExtent(str).cy) / 2, str);
-    str = m_list.GetItemText(nItem, 1);
-    if (!str.IsEmpty()) {
-        pDC->TextOut(rcItem.right - pDC->GetTextExtent(str).cx - 3, (rcItem.top + rcItem.bottom - pDC->GetTextExtent(str).cy) / 2, str);
+        if (!isEdited) {
+            str = m_list.GetItemText(nItem, 0);
+            dcMem.DrawTextW(str, rText, DT_VCENTER | DT_SINGLELINE | DT_END_ELLIPSIS | DT_LEFT | DT_NOPREFIX);
+        }
+        str = m_list.GetItemText(nItem, 1);
+        if (!str.IsEmpty()) {
+            dcMem.DrawTextW(str, rTime, DT_VCENTER | DT_SINGLELINE | DT_END_ELLIPSIS | DT_LEFT | DT_NOPREFIX);
+        }
+        if (isEdited) { //added to reduce flicker while editing.  
+            CRect r;
+            pEdit->GetWindowRect(r);
+            m_list.ScreenToClient(r);
+            pDC->ExcludeClipRect(r);
+        }
+        CMPCThemeUtil::flushMemDC(pDC, dcMem, rectDC);
     }
 }
 
