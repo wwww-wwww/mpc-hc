@@ -234,6 +234,7 @@ STDMETHODIMP_(void) CSubPicAllocatorPresenterImpl::SetSubPicProvider(ISubPicProv
     if (m_pAllocator) {
         m_pAllocator->FreeStatic();
         m_pAllocator->SetMaxTextureSize(m_curSubtitleTextureSize);
+        m_pAllocator->SetCurSize(m_curSubtitleTextureSize);
     }
 
     if (m_pSubPicQueue) {
