@@ -10919,7 +10919,7 @@ void CMainFrame::ToggleFullscreen(bool fToNearest, bool fSwitchScreenResWhenHasT
     CRect windowRect;
     DWORD dwRemove = 0, dwAdd = 0;
 
-    bool fullScreenSecondMonitor = s.bFullscreenSeparateControls && fullscreenMonitor.IsMonitor() && fullscreenMonitor != currentMonitor;
+    bool fullScreenSecondMonitor = s.bFullscreenSeparateControls && (m_pMFVDC || m_pVMRWC || m_pVW) && fullscreenMonitor.IsMonitor() && fullscreenMonitor != currentMonitor;
 
     if (!fullScreenSecondMonitor && s.iFullscreenDelay > 0 && IsWindows8OrGreater()) {//DWMWA_CLOAK not supported on 7
         BOOL setEnabled = TRUE;
@@ -10946,7 +10946,7 @@ void CMainFrame::ToggleFullscreen(bool fToNearest, bool fSwitchScreenResWhenHasT
                 m_pMFVDC->SetVideoWindow(m_pVideoWnd->m_hWnd);
             } else if (m_pVMRWC) {
                 m_pVMRWC->SetVideoClippingWindow(m_pVideoWnd->m_hWnd);
-            } else {
+            } else if (m_pVW) {
                 m_pVW->put_Owner((OAHWND)m_pVideoWnd->m_hWnd);
             }
             m_wndView.Invalidate();
@@ -10959,7 +10959,7 @@ void CMainFrame::ToggleFullscreen(bool fToNearest, bool fSwitchScreenResWhenHasT
                 m_pMFVDC->SetVideoWindow(m_pVideoWnd->m_hWnd);
             } else if (m_pVMRWC) {
                 m_pVMRWC->SetVideoClippingWindow(m_pVideoWnd->m_hWnd);
-            } else {
+            } else if (m_pVW) {
                 m_pVW->put_Owner((OAHWND)m_pVideoWnd->m_hWnd);
             }
             if (s.autoChangeFSMode.bEnabled && s.autoChangeFSMode.bApplyDefaultModeAtFSExit && !s.autoChangeFSMode.modes.empty() && s.autoChangeFSMode.modes[0].bChecked) {
@@ -11016,7 +11016,7 @@ void CMainFrame::ToggleFullscreen(bool fToNearest, bool fSwitchScreenResWhenHasT
                     m_pMFVDC->SetVideoWindow(m_pVideoWnd->m_hWnd);
                 } else if (m_pVMRWC) {
                     m_pVMRWC->SetVideoClippingWindow(m_pVideoWnd->m_hWnd);
-                } else {
+                } else if (m_pVW) {
                     m_pVW->put_Owner((OAHWND)m_pVideoWnd->m_hWnd);
                 }
             }
