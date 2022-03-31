@@ -2710,6 +2710,10 @@ void CAppSettings::CRecentFileListWithMoreInfo::Remove(size_t nIndex) {
         rfe_array.RemoveAt(nIndex);
         rfe_array.FreeExtra();
     }
+    if (nIndex == 0 && rfe_array.GetCount() == 0) {
+        // list was cleared
+        current_rfe_hash.Empty();
+    }
 }
 
 void CAppSettings::CRecentFileListWithMoreInfo::Add(LPCTSTR fn) {
