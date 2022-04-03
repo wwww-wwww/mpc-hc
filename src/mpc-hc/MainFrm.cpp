@@ -12735,7 +12735,7 @@ void CMainFrame::SetupExternalChapters()
     }
     fn = cp.m_strPath;
 
-    CWebTextFile f(CTextFile::UTF8);
+    CTextFile f(CTextFile::UTF8);
     f.SetFallbackEncoding(CTextFile::ANSI);
 
     CString str;
@@ -12761,7 +12761,11 @@ void CMainFrame::SetupExternalChapters()
                     name.Trim();
                 }
                 m_pCB->ChapAppend(rt, name);
+            } else {
+                break;
             }
+        } else {
+            break;
         }
     }
     m_pCB->ChapSort();
