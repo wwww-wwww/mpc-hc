@@ -17319,7 +17319,7 @@ bool CMainFrame::StopCapture()
 void CMainFrame::ShowOptions(int idPage/* = 0*/)
 {
     // Disable the options dialog when using D3D fullscreen
-    if (IsD3DFullScreenMode()) {
+    if (IsFullScreenMainFrame() && IsD3DFullScreenMode()) {
         return;
     }
 
