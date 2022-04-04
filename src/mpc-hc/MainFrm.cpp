@@ -11180,6 +11180,7 @@ void CMainFrame::ToggleD3DFullscreen(bool fSwitchScreenResWhenHasTo)
             } else {
                 m_pVMRWC->SetVideoClippingWindow(m_pVideoWnd->m_hWnd);
             }
+            m_wndView.Invalidate();
 
             MoveVideoWindow();
 
