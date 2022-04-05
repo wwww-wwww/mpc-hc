@@ -17983,15 +17983,13 @@ bool CMainFrame::CreateFullScreenWindow(bool isD3D /* = true */)
     monitor.GetMonitorRect(monitorRect);
 
     m_bFullScreenWindowIsD3D = isD3D;
-    if (isD3D) { //for d3d window, we will take focus as no other window is visible
-        return !!m_pFullscreenWnd->CreateEx(WS_EX_TOPMOST | WS_EX_TOOLWINDOW, _T(""), ResStr(IDS_MAINFRM_136), WS_POPUP | WS_VISIBLE, monitorRect, nullptr, 0);
-    } else { //for second monitor fullscreen mode, allow the mainframe to keep focus
-        bool ret  = !!m_pFullscreenWnd->CreateEx(WS_EX_TOPMOST | WS_EX_TOOLWINDOW, _T(""), ResStr(IDS_MAINFRM_136), WS_POPUP, monitorRect, nullptr, 0);
-        if (ret) {
-            m_pFullscreenWnd->ShowWindow(SW_SHOWNOACTIVATE);
-        }
-        return ret;
+
+    // allow the mainframe to keep focus
+    bool ret = !!m_pFullscreenWnd->CreateEx(WS_EX_TOPMOST | WS_EX_TOOLWINDOW, _T(""), ResStr(IDS_MAINFRM_136), WS_POPUP, monitorRect, nullptr, 0);
+    if (ret) {
+        m_pFullscreenWnd->ShowWindow(SW_SHOWNOACTIVATE);
     }
+    return ret;
 }
 
 bool CMainFrame::IsFrameLessWindow() const
