@@ -11151,9 +11151,12 @@ void CMainFrame::ToggleD3DFullscreen(bool fSwitchScreenResWhenHasTo)
                 }
                 m_fFirstFSAfterLaunchOnFS = false;
             }
+
             MoveVideoWindow();
             m_OSD.EnableShowMessage(true);
         } else {
+            m_OSD.EnableShowMessage(false);
+
             // Set the fullscreen display mode
             if (s.autoChangeFSMode.bEnabled && fSwitchScreenResWhenHasTo) {
                 AutoChangeMonitorMode();
@@ -11163,10 +11166,6 @@ void CMainFrame::ToggleD3DFullscreen(bool fSwitchScreenResWhenHasTo)
             CreateFullScreenWindow();
 
             m_eventc.FireEvent(MpcEvent::SWITCHING_TO_FULLSCREEN_D3D);
-
-            // Turn on D3D Fullscreen
-            m_OSD.EnableShowSeekBar(true);
-            pD3DFS->SetD3DFullscreen(true);
 
             // Assign the windowed video frame and pass it to the relevant classes.
             m_pVideoWnd = m_pFullscreenWnd;
@@ -11179,6 +11178,11 @@ void CMainFrame::ToggleD3DFullscreen(bool fSwitchScreenResWhenHasTo)
             m_wndView.Invalidate();
 
             MoveVideoWindow();
+
+            // Turn on D3D Fullscreen
+            m_OSD.EnableShowSeekBar(true);
+            m_OSD.EnableShowMessage(true);
+            pD3DFS->SetD3DFullscreen(true);
 
             m_eventc.FireEvent(MpcEvent::SWITCHED_TO_FULLSCREEN_D3D);
         }
