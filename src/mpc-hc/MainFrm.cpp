@@ -3860,7 +3860,7 @@ LRESULT CMainFrame::OnFilePostOpenmedia(WPARAM wParam, LPARAM lParam)
         ZoomVideoWindow();
     }
 
-    if (s.fLaunchfullscreen && !HasFullScreenWindow() && !m_fAudioOnly) {
+    if (s.fLaunchfullscreen && !m_fAudioOnly && !IsFullScreenMode()) {
         OnViewFullscreen();
     }
 
@@ -10584,11 +10584,6 @@ void CMainFrame::SetDefaultWindowRect(int iMonitor)
 void CMainFrame::SetDefaultFullscreenState()
 {
     CAppSettings& s = AfxGetAppSettings();
-
-    if (s.fLaunchfullscreen) {
-        // delay going into fullscreen
-        return;
-    }
 
     bool clGoFullscreen = !(s.nCLSwitches & CLSW_ADD) && (s.nCLSwitches & CLSW_FULLSCREEN);
 

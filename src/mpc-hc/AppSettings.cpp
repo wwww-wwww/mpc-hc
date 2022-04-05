@@ -2048,6 +2048,10 @@ void CAppSettings::LoadSettings()
     // GUI theme can be used now
     static_cast<CMPlayerCApp*>(AfxGetApp())->m_bThemeLoaded = bMPCTheme;
 
+    if (fLaunchfullscreen && slFiles.GetCount() > 0) {
+        nCLSwitches |= CLSW_FULLSCREEN;
+    }
+
     bInitialized = true;
 }
 
