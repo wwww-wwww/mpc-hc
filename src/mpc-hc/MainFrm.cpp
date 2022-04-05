@@ -1100,8 +1100,6 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
     m_wndSubtitlesDownloadDialog.Create(m_wndSubtitlesDownloadDialog.IDD, this);
     m_wndSubtitlesDownloadDialog.ShowWindow(SW_HIDE);
     //m_wndSubtitlesUploadDialog.Create(m_wndSubtitlesUploadDialog.IDD, this);
-    m_wndFavoriteOrganizeDialog.Create(CFavoriteOrganizeDlg::IDD, this);
-    m_wndFavoriteOrganizeDialog.ShowWindow(SW_HIDE);
 
     if (s.nCmdlnWebServerPort != 0) {
         if (s.nCmdlnWebServerPort > 0) {
@@ -10238,6 +10236,9 @@ void CMainFrame::OnFavoritesQuickAddFavorite()
 
 void CMainFrame::OnFavoritesOrganize()
 {
+    if (!::IsWindow(m_wndFavoriteOrganizeDialog.m_hWnd)) {
+        m_wndFavoriteOrganizeDialog.Create(CFavoriteOrganizeDlg::IDD, this);
+    }
     m_wndFavoriteOrganizeDialog.ShowWindow(SW_SHOW);
 }
 

@@ -100,7 +100,7 @@ enum {
 };
 
 CSubtitleDlDlg::CSubtitleDlDlg(CMainFrame* pParentWnd)
-    : CMPCThemeResizableDialog(IDD, pParentWnd)
+    : CModelessResizableDialog(IDD, pParentWnd)
     , m_ps(nullptr, 0, 0)
     , m_bIsRefreshed(false)
     , m_pMainFrame(pParentWnd)
@@ -286,20 +286,6 @@ BOOL CSubtitleDlDlg::PreTranslateMessage(MSG* pMsg)
     return __super::PreTranslateMessage(pMsg);
 }
 
-void CSubtitleDlDlg::HideDialog() {
-    // Just hide the dialog, since it's modeless we don't want to call EndDialog
-    if (SysVersion::IsWin10orLater()) {
-        //windows 11 bug with peek preview--shows hidden dialogs.  temporarily flag as tool window which is not a taskbar eligble window
-        ModifyStyleEx(0, WS_EX_TOOLWINDOW);
-        ShowWindow(SW_HIDE);
-        //remove bogus style so it renders properly next time
-        ModifyStyleEx(WS_EX_TOOLWINDOW, 0);
-    } else {
-        ShowWindow(SW_HIDE);
-    }
-}
-
-
 void CSubtitleDlDlg::OnOK()
 {
     if (IsDlgButtonChecked(IDC_CHECK1) == BST_CHECKED) {
@@ -327,14 +313,7 @@ void CSubtitleDlDlg::OnOK()
         }
     }
 
-    HideDialog();
-}
-
-
-
-void CSubtitleDlDlg::OnCancel()
-{
-    HideDialog();
+    __super::OnOK();
 }
 
 void CSubtitleDlDlg::OnRefresh()
@@ -455,7 +434,7 @@ void CSubtitleDlDlg::DownloadSelectedSubtitles()
 }
 
 // ON_UPDATE_COMMAND_UI does not work for modeless dialogs
-BEGIN_MESSAGE_MAP(CSubtitleDlDlg, CMPCThemeResizableDialog)
+BEGIN_MESSAGE_MAP(CSubtitleDlDlg, CModelessResizableDialog)
     ON_WM_ERASEBKGND()
     ON_WM_SIZE()
     ON_COMMAND(IDC_BUTTON1, OnRefresh)

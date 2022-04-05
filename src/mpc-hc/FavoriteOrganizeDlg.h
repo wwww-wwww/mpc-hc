@@ -21,13 +21,13 @@
 
 #pragma once
 
-#include "CMPCThemeResizableDialog.h"
+#include "ModelessResizableDialog.h"
 #include "CMPCThemeTabCtrl.h"
 #include "CMPCThemePlayerListCtrl.h"
 
 // CFavoriteOrganizeDlg dialog
 
-class CFavoriteOrganizeDlg : public CMPCThemeResizableDialog
+class CFavoriteOrganizeDlg : public CModelessResizableDialog
 {
     //  DECLARE_DYNAMIC(CFavoriteOrganizeDlg)
 

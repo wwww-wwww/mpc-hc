@@ -32,7 +32,7 @@
 
 //IMPLEMENT_DYNAMIC(CFavoriteOrganizeDlg, CMPCThemeResizableDialog)
 CFavoriteOrganizeDlg::CFavoriteOrganizeDlg(CWnd* pParent /*=nullptr*/)
-    : CMPCThemeResizableDialog(CFavoriteOrganizeDlg::IDD, pParent)
+    : CModelessResizableDialog(CFavoriteOrganizeDlg::IDD, pParent)
 {
 }
 
@@ -100,7 +100,7 @@ void CFavoriteOrganizeDlg::DoDataExchange(CDataExchange* pDX)
 }
 
 
-BEGIN_MESSAGE_MAP(CFavoriteOrganizeDlg, CMPCThemeResizableDialog)
+BEGIN_MESSAGE_MAP(CFavoriteOrganizeDlg, CModelessResizableDialog)
     ON_NOTIFY(TCN_SELCHANGE, IDC_TAB1, OnTcnSelchangeTab1)
     ON_WM_DRAWITEM()
     ON_BN_CLICKED(IDC_BUTTON1, OnRenameBnClicked)
