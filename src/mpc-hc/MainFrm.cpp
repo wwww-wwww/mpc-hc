@@ -32,7 +32,6 @@
 #include "FakeFilterMapper2.h"
 
 #include "FavoriteAddDlg.h"
-#include "FavoriteOrganizeDlg.h"
 #include "GoToDlg.h"
 #include "MediaTypesDlg.h"
 #include "OpenFileDlg.h"
@@ -844,6 +843,7 @@ CMainFrame::CMainFrame()
     , m_bWasSnapped(false)
     , m_wndSubtitlesDownloadDialog(this)
     //, m_wndSubtitlesUploadDialog(this)
+    , m_wndFavoriteOrganizeDialog(this)
     , m_bTrayIcon(false)
     , m_fCapturing(false)
     , m_controls(this)
@@ -1100,6 +1100,8 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
     m_wndSubtitlesDownloadDialog.Create(m_wndSubtitlesDownloadDialog.IDD, this);
     m_wndSubtitlesDownloadDialog.ShowWindow(SW_HIDE);
     //m_wndSubtitlesUploadDialog.Create(m_wndSubtitlesUploadDialog.IDD, this);
+    m_wndFavoriteOrganizeDialog.Create(CFavoriteOrganizeDlg::IDD, this);
+    m_wndFavoriteOrganizeDialog.ShowWindow(SW_HIDE);
 
     if (s.nCmdlnWebServerPort != 0) {
         if (s.nCmdlnWebServerPort > 0) {
@@ -10236,8 +10238,7 @@ void CMainFrame::OnFavoritesQuickAddFavorite()
 
 void CMainFrame::OnFavoritesOrganize()
 {
-    CFavoriteOrganizeDlg dlg;
-    dlg.DoModal();
+    m_wndFavoriteOrganizeDialog.ShowWindow(SW_SHOW);
 }
 
 void CMainFrame::OnUpdateFavoritesOrganize(CCmdUI* pCmdUI)

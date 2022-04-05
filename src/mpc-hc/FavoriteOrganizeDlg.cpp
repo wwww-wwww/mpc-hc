@@ -215,22 +215,17 @@ void CFavoriteOrganizeDlg::OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStr
         rHighlight.OffsetRect(-rectDC.TopLeft());
 
         if (AppIsThemeLoaded()) {
-            CBrush b(CMPCTheme::ContentBGColor);
-            dcMem.FillRect(rcItem, &b);
+            dcMem.FillSolidRect(rcItem, CMPCTheme::ContentBGColor);
         } else {
-            CBrush b;
-            b.CreateSysColorBrush(COLOR_WINDOW);
-            dcMem.FillRect(rcItem, &b);
+            dcMem.FillSolidRect(rcItem, COLOR_WINDOW);
         }
 
         if (isSelected) {
             if (AppIsThemeLoaded()) {
                 dcMem.FillSolidRect(rHighlight, CMPCTheme::ContentSelectedColor);
             } else {
-                CBrush b1, b2;
-                b1.CreateSolidBrush(0xf1dacc);
-                dcMem.FillRect(rHighlight, &b1);
-                b1.DeleteObject();
+                CBrush b2;
+                dcMem.FillSolidRect(rHighlight, 0xf1dacc);
                 b2.CreateSolidBrush(0xc56a31);
                 dcMem.FrameRect(rHighlight, &b2);
                 b2.DeleteObject();
