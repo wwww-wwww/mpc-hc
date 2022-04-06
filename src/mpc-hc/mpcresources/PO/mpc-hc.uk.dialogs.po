@@ -214,8 +214,7 @@ msgstr ""
 
 msgctxt "IDD_ABOUTBOX_IDC_STATIC"
 msgid "English translation made by MPC-HC Team"
-msgstr ""
-"Українська локалізація зроблена небайдужими користувачами, чого і Вам бажаю."
+msgstr "Українська локалізація зроблена небайдужими користувачами."
 
 msgctxt "IDD_ABOUTBOX_IDC_STATIC"
 msgid "Build information"
@@ -335,7 +334,7 @@ msgstr "Зберігати історію відкритих файлів"
 
 msgctxt "IDD_PPAGEPLAYER_IDC_CHECK2"
 msgid "Remember last playlist"
-msgstr "Запам'ятовувати останній список відтворення"
+msgstr "Запам'ятовувати список відтворення"
 
 msgctxt "IDD_PPAGEPLAYER_IDC_FILE_POS"
 msgid "Remember File position"
@@ -347,15 +346,15 @@ msgstr "Запам'ятовувати позицію DVD"
 
 msgctxt "IDD_PPAGEPLAYER_IDC_CHECK6"
 msgid "Remember last window position"
-msgstr "Запам'ятовувати останню позицію вікна"
+msgstr "Запам'ятовувати позицію вікна"
 
 msgctxt "IDD_PPAGEPLAYER_IDC_CHECK7"
 msgid "Remember last window size"
-msgstr "Запам'ятовувати останній розмір вікна"
+msgstr "Запам'ятовувати розмір вікна"
 
 msgctxt "IDD_PPAGEPLAYER_IDC_CHECK11"
 msgid "Remember last Pan && Scan Zoom"
-msgstr "Запам'ятовувати останнє значення розташування та розміру кадра"
+msgstr "Запам'ятовувати розташування та розміру кадра"
 
 msgctxt "IDD_PPAGEDVD_IDC_STATIC"
 msgid "\"Open DVD/BD\" behavior"
@@ -1207,7 +1206,7 @@ msgstr "Реініціалізація при зміні дисплею"
 
 msgctxt "IDD_PPAGEOUTPUT_IDC_FULLSCREEN_MONITOR_CHECK"
 msgid "D3D Fullscreen"
-msgstr "Повноекранний Direct3D (зменшує дрижання)"
+msgstr "Повноекранний D3D (зменшує дрижання)"
 
 msgctxt "IDD_PPAGEOUTPUT_IDC_DSVMR9ALTERNATIVEVSYNC"
 msgid "Alternative VSync"

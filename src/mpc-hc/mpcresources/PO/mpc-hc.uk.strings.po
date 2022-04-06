@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2021-12-20 17:57:32+0000\n"
+"POT-Creation-Date: 2022-01-23 12:48:51+0000\n"
 "PO-Revision-Date: 2020-01-02 07:46+0000\n"
 "Last-Translator: Vlad Anisimov <uniss@ua.fm>, 2022\n"
 "Language-Team: Ukrainian (https://www.transifex.com/mpchc/teams/106126/uk/)\n"
@@ -36,7 +36,7 @@ msgstr "Субтитри"
 
 msgctxt "IDS_INFOBAR_CHAPTER"
 msgid "Chapter"
-msgstr "Розділ"
+msgstr "Глава"
 
 msgctxt "IDS_CONTROLS_COMPLETING"
 msgid "Completing..."
@@ -394,11 +394,11 @@ msgstr "Ввімк./Вимк."
 
 msgctxt "IDS_PPAGE_FS_CLN_FROM_FPS"
 msgid "From (FPS)"
-msgstr "Від (кадри/с)"
+msgstr "Від (к/с)"
 
 msgctxt "IDS_PPAGE_FS_CLN_TO_FPS"
 msgid "To (FPS)"
-msgstr "До (кадри/с)"
+msgstr "До (к/с)"
 
 msgctxt "IDS_PPAGE_FS_CLN_DISPLAY_MODE"
 msgid "Display mode (Hz)"
@@ -446,7 +446,7 @@ msgstr "О&чистити"
 
 msgctxt "IDS_PLAYLIST_COPYTOCLIPBOARD"
 msgid "&Copy to clipboard"
-msgstr "&Копіювати до \"буферу обміну\""
+msgstr "&Копіювати до буферу обміну"
 
 msgctxt "IDS_PLAYLIST_SAVE"
 msgid "Sa&ve"
@@ -458,11 +458,11 @@ msgstr "&Зберегти як..."
 
 msgctxt "IDS_PLAYLIST_SORTBYLABEL"
 msgid "Sort by &label"
-msgstr "Впорядкувати по &імені"
+msgstr "Впорядкувати за &іменем"
 
 msgctxt "IDS_PLAYLIST_SORTBYPATH"
 msgid "Sort by &path"
-msgstr "Впорядкувати по &шляху"
+msgstr "Впорядкувати за &шляхом"
 
 msgctxt "IDS_PLAYLIST_RANDOMIZE"
 msgid "R&andomize"
@@ -482,7 +482,7 @@ msgstr "&Видалити"
 
 msgctxt "IDS_SUBRESYNC_DUPLICATE"
 msgid "D&uplicate"
-msgstr "&Здублювати"
+msgstr "&Дублювати"
 
 msgctxt "IDS_SUBRESYNC_RESET"
 msgid "&Reset"
@@ -566,7 +566,7 @@ msgstr "Програвач"
 
 msgctxt "IDD_PPAGEDVD"
 msgid "Playback::DVD"
-msgstr "Playback::DVD"
+msgstr "Відтворення::DVD"
 
 msgctxt "IDD_PPAGESUBTITLES"
 msgid "Subtitles"
@@ -702,7 +702,7 @@ msgstr ""
 
 msgctxt "IDS_NAVIGATE_BD_PLAYLISTS"
 msgid "&Blu-Ray playlists"
-msgstr "&Список відтворення Blu-Ray"
+msgstr "&Списки відтворення Blu-Ray"
 
 msgctxt "IDS_NAVIGATE_PLAYLIST"
 msgid "&Playlist"
@@ -710,7 +710,7 @@ msgstr "&Список відтворення"
 
 msgctxt "IDS_NAVIGATE_CHAPTERS"
 msgid "&Chapters"
-msgstr "&Розділи"
+msgstr "&Глави"
 
 msgctxt "IDS_NAVIGATE_TITLES"
 msgid "&Titles"
@@ -2250,7 +2250,7 @@ msgstr "DVD - меню кута зору"
 
 msgctxt "IDS_MPLAYERC_68"
 msgid "DVD Chapter Menu"
-msgstr "DVD - меню сцен"
+msgstr "DVD - меню глав"
 
 msgctxt "IDS_AG_DVD_MENU_LEFT"
 msgid "DVD Menu Left"
@@ -2438,7 +2438,7 @@ msgstr "Буферів"
 
 msgctxt "IDS_MAINFRM_9"
 msgid "Volume: %02lu/%02lu, Title: %02lu/%02lu, Chapter: %02lu/%02lu"
-msgstr "Том: %02lu/%02lu, Розділ: %02lu/%02lu, Сцена: %02lu/%02lu"
+msgstr "Том: %02lu/%02lu, Назва: %02lu/%02lu, Глава: %02lu/%02lu"
 
 msgctxt "IDS_MAINFRM_10"
 msgid "Angle: %02lu/%02lu, %lux%lu %lu Hz %lu:%lu"
@@ -2681,7 +2681,7 @@ msgstr "Затримка аудіо: %I64d мс"
 
 msgctxt "IDS_AG_CHAPTER"
 msgid "Chapter %d"
-msgstr "Сцена %d"
+msgstr "Глава %d"
 
 msgctxt "IDS_AG_OUT_OF_MEMORY"
 msgid "Out of memory"
@@ -2709,7 +2709,7 @@ msgstr "Помилка відтворення файла"
 
 msgctxt "IDS_AG_CHAPTER2"
 msgid "Chapter: "
-msgstr "Сцена: "
+msgstr "Глава: "
 
 msgctxt "IDS_VOLUME_OSD"
 msgid "Vol: %d%%"
@@ -4455,7 +4455,7 @@ msgstr ""
 
 msgctxt "IDS_CMD_RANDOMIZE"
 msgid "/randomize\tRandomize the playlist"
-msgstr "/randomize\tРандомізувати список відтворення"
+msgstr "/randomize\tПеремішати список відтворення"
 
 msgctxt "IDS_CMD_REGVID"
 msgid "/regvid\t\tCreate file associations for video files"

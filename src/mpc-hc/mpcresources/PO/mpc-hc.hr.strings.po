@@ -2,15 +2,15 @@
 # Copyright (C) 2002 - 2017 see Authors.txt
 # This file is distributed under the same license as the MPC-HC package.
 # Translators:
-# MPC HC <adiposegithub@gmail.com>, 2020
 # Anton G, 2020
+# MPC HC <adiposegithub@gmail.com>, 2022
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2021-05-04 16:20:41+0000\n"
+"POT-Creation-Date: 2022-01-23 12:48:51+0000\n"
 "PO-Revision-Date: 2020-01-02 07:46+0000\n"
-"Last-Translator: Anton G, 2020\n"
+"Last-Translator: MPC HC <adiposegithub@gmail.com>, 2022\n"
 "Language-Team: Croatian (https://www.transifex.com/mpchc/teams/106126/hr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -4187,7 +4187,7 @@ msgid ""
 "\"pathname\"\tThe main file or directory to be loaded\n"
 "\t\t(wildcards allowed, \"-\" denotes standard input)"
 msgstr ""
-"\"putanja\"\t\tGlavna datoteka ili mapa za pokretanje\n"
+"\"putanja\"\tGlavna datoteka ili mapa za pokretanje\n"
 "\t\t(višeznačnici dopušteni, \"-\" označava standardni ulaz)"
 
 msgctxt "IDS_CMD_DUB"
@@ -4230,7 +4230,7 @@ msgstr "/dvdpos T#C\tPočni reprodukciju na naslovu T, poglavlju C"
 
 msgctxt "IDS_CMD_DVDPOS_TIME"
 msgid "/dvdpos T#P\tStart playback at title T, position P (hh:mm:ss)"
-msgstr "/dvdpos T#P⇥Počni reprodukciju na naslovu T, poziciji P (hh:mm:ss)"
+msgstr "/dvdpos T#P\tPočni reprodukciju na naslovu T, poziciji P (hh:mm:ss)"
 
 msgctxt "IDS_CMD_CD"
 msgid ""

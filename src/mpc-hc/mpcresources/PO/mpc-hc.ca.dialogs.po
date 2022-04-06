@@ -206,7 +206,7 @@ msgstr "Sobre"
 
 msgctxt "IDD_ABOUTBOX_IDC_AUTHORS_LINK"
 msgid "Copyright 2002-2022 clsid2 and others"
-msgstr ""
+msgstr "Copyright 2002-2022 clsid2 i altres"
 
 msgctxt "IDD_ABOUTBOX_IDC_STATIC"
 msgid ""
@@ -498,7 +498,7 @@ msgstr "Àudio:"
 
 msgctxt "IDD_PPAGEPLAYBACK_IDC_CHECK4"
 msgid "Allow overriding external splitter choice"
-msgstr "Permet elecció manual del divisor o \"splitter\" extern"
+msgstr "Permet sobreposar-se a l'elecció de l'splitter extern"
 
 msgctxt "IDD_PPAGEPLAYBACK_IDC_STATIC"
 msgid "Open settings"
@@ -602,7 +602,7 @@ msgid ""
 "videocard's settings, subtitles aren't going to look any better but it will "
 "surely eat your CPU."
 msgstr ""
-"Si activa manualment el suavitzat (antialiasing) a pantalla completa en "
+"Si activeu manualment el suavitzat (antialiasing) a pantalla completa en "
 "alguna de les opcions de la seva targeta gràfica, segurament es dissiparà "
 "l'ús de la CPU sense aconseguir cap millora en l'aspecte dels subtítols."
 
@@ -1138,7 +1138,7 @@ msgstr "Configuració dels LAV Filters interns"
 
 msgctxt "IDD_PPAGEINTERNALFILTERS_IDC_SPLITTER_CONF"
 msgid "Splitter"
-msgstr "Desmultiplexor (Splitter)"
+msgstr "Splitter"
 
 msgctxt "IDD_PPAGEINTERNALFILTERS_IDC_VIDEO_DEC_CONF"
 msgid "Video decoder"

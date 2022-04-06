@@ -11,7 +11,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2021-12-20 17:57:32+0000\n"
+"POT-Creation-Date: 2022-01-23 12:48:51+0000\n"
 "PO-Revision-Date: 2020-01-02 07:46+0000\n"
 "Last-Translator: lychichem <leichixian@outlook.com>, 2022\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/mpchc/teams/106126/zh_CN/)\n"
@@ -1913,11 +1913,11 @@ msgstr "转到下一个字幕"
 
 msgctxt "IDS_MPLAYERC_102"
 msgid "Subresync: shift -100ms"
-msgstr "字幕重新同步：向前100ms"
+msgstr "字幕时移-100ms"
 
 msgctxt "IDS_MPLAYERC_103"
 msgid "Subresync: shift +100ms"
-msgstr "字幕重新同步：向后100ms"
+msgstr "字幕时移+100ms"
 
 msgctxt "IDS_AG_SEEKSET"
 msgid "Jump to Beginning"
