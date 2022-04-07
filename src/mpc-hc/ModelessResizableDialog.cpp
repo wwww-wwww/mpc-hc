@@ -9,8 +9,13 @@ END_MESSAGE_MAP()
 CModelessResizableDialog::CModelessResizableDialog(UINT nIDTemplate, CWnd* pParent) : CMPCThemeResizableDialog(nIDTemplate, pParent) {
 }
 
+BOOL CModelessResizableDialog::Create(UINT nIDTemplate, CWnd* pParentWnd, bool showOnWindowPlacement /* = true */) {
+    this->showOnWindowPlacement = showOnWindowPlacement;
+    return CDialog::Create(nIDTemplate, pParentWnd);
+}
+
 void CModelessResizableDialog::HideDialog(INT_PTR ret) {
-    // Just hide the dialog, since it's modeless we don't want to call EndDialog
+    //EndDialog is ok because it doesn't destroy modeless dialogs, just hides them
     if (SysVersion::IsWin10orLater()) {
         //windows 11 bug with peek preview--shows hidden dialogs.  temporarily flag as tool window which is not a taskbar eligble window
         ModifyStyleEx(0, WS_EX_TOOLWINDOW);
