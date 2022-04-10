@@ -29,6 +29,7 @@
 #include "../Subtitles/TextFile.h"
 #include "CMPCThemeInlineEdit.h"
 #include "YoutubeDL.h"
+#include "AppSettings.h"
 
 
 class OpenMediaData;
@@ -151,7 +152,7 @@ public:
     void Open(CStringW vdn, CStringW adn, int vinput, int vchannel, int ainput);
     void Append(CStringW vdn, CStringW adn, int vinput, int vchannel, int ainput);
 
-    OpenMediaData* GetCurOMD(REFERENCE_TIME rtStart = 0);
+    OpenMediaData* GetCurOMD(REFERENCE_TIME rtStart = 0, ABRepeat abRepeat = ABRepeat());
 
     void LoadPlaylist(LPCTSTR filename);
     void SavePlaylist();

@@ -1213,7 +1213,7 @@ void CPlayerPlaylistBar::UpdateLabel(CString in) {
     Refresh();
 }
 
-OpenMediaData* CPlayerPlaylistBar::GetCurOMD(REFERENCE_TIME rtStart)
+OpenMediaData* CPlayerPlaylistBar::GetCurOMD(REFERENCE_TIME rtStart, ABRepeat abRepeat /* = ABRepeat() */)
 {
     CPlaylistItem* pli = GetCur();
     if (pli == nullptr) {
@@ -1249,6 +1249,7 @@ OpenMediaData* CPlayerPlaylistBar::GetCurOMD(REFERENCE_TIME rtStart)
             p->subs.AddTailList(&pli->m_subs);
             p->rtStart = rtStart;
             p->bAddToRecent = true;
+            p->abRepeat = abRepeat;
             return p;
         }
     }
