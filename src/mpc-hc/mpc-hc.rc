@@ -2863,7 +2863,7 @@ END
 STRINGTABLE
 BEGIN
     IDS_FAVORITES_ADD       "&Add to Favorites..."
-    IDS_FAVORITES_ORGANIZE  "&Organize Favorites..."
+    IDS_FAVORITES_ORGANIZE  "Organize Favorites..."
     IDS_PLAYLIST_SHUFFLE    "Sh&uffle"
     IDS_PLAYLIST_SHOWFOLDER "Ope&n file location"
     IDS_CONTROLS_CLOSING    "Closing..."

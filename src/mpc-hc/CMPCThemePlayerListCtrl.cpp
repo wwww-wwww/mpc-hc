@@ -321,7 +321,7 @@ void CMPCThemePlayerListCtrl::drawItem(CDC* pDC, int nItem, int nSubItem)
                 hdrCtrl->GetItem(nSubItem, &hditem);
                 align = hditem.fmt & HDF_JUSTIFYMASK;
             }
-            UINT textFormat = DT_VCENTER | DT_SINGLELINE | DT_END_ELLIPSIS | DT_HIDEPREFIX;
+            UINT textFormat = DT_VCENTER | DT_SINGLELINE | DT_END_ELLIPSIS | DT_NOPREFIX;
             if (align == HDF_CENTER) {
                 textFormat |= DT_CENTER;
             } else if (align == HDF_LEFT) {
