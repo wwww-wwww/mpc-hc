@@ -2476,8 +2476,13 @@ void CAppSettings::ParseCommandLine(CAtlList<CString>& cmdln)
         }
     }
 
+    if (abRepeat.positionA && abRepeat.positionB && abRepeat.positionA >= abRepeat.positionB) {
+        abRepeat.positionA = 0;
+        abRepeat.positionB = 0;
+    }
     if (abRepeat.positionA > rtStart || (abRepeat.positionB && abRepeat.positionB < rtStart)) {
         rtStart = abRepeat.positionA;
+        nCLSwitches |= CLSW_STARTVALID;
     }
 
     if (0 == (nCLSwitches & CLSW_AFTERPLAYBACK_MASK)) { //no changes to playback mask, so let's preserve existing
