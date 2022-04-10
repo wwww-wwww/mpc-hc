@@ -106,6 +106,9 @@ private:
 
     CString m_playListPath;
 
+    ULONGLONG m_tcLastSave;
+    bool m_SaveDelayed;
+
 public:
     CPlayerPlaylistBar(CMainFrame* pMainFrame);
     virtual ~CPlayerPlaylistBar();
@@ -155,7 +158,7 @@ public:
     OpenMediaData* GetCurOMD(REFERENCE_TIME rtStart = 0, ABRepeat abRepeat = ABRepeat());
 
     void LoadPlaylist(LPCTSTR filename);
-    void SavePlaylist();
+    void SavePlaylist(bool can_delay = false);
 
     bool SelectFileInPlaylist(LPCTSTR filename);
     bool DeleteFileInPlaylist(POSITION pos, bool recycle = true);
