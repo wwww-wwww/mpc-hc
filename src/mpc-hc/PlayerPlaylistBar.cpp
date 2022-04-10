@@ -881,7 +881,7 @@ bool CPlayerPlaylistBar::Empty()
 {
     bool bWasPlaying = m_pl.RemoveAll();
     m_list.DeleteAllItems();
-    SavePlaylist();
+    m_SaveDelayed = true;
 
     return bWasPlaying;
 }
@@ -2061,6 +2061,7 @@ void CPlayerPlaylistBar::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
             if (Empty()) {
                 m_pMainFrame->SendMessage(WM_COMMAND, ID_FILE_CLOSEMEDIA);
             }
+            SavePlaylist();
             break;
         case M_SORTBYID:
             m_pl.SortById();
