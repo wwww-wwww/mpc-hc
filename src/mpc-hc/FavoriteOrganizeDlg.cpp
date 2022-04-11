@@ -217,7 +217,7 @@ void CFavoriteOrganizeDlg::OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStr
         if (AppIsThemeLoaded()) {
             dcMem.FillSolidRect(rcItem, CMPCTheme::ContentBGColor);
         } else {
-            dcMem.FillSolidRect(rcItem, COLOR_WINDOW);
+            dcMem.FillSolidRect(rcItem, GetSysColor(COLOR_WINDOW));
         }
 
         if (isSelected) {
