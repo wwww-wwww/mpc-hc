@@ -10217,6 +10217,9 @@ void CMainFrame::AddFavorite(bool fDisplayMessage, bool fShowDialog)
         SendStatusMessage(osdMsgStr, 3000);
         m_OSD.DisplayMessage(OSD_TOPLEFT, osdMsgStr, 3000);
     }
+    if (::IsWindow(m_wndFavoriteOrganizeDialog.m_hWnd)) {
+        m_wndFavoriteOrganizeDialog.LoadList();
+    }
 }
 
 void CMainFrame::OnFavoritesAdd()
