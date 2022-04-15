@@ -54,6 +54,9 @@ void CFavoriteOrganizeDlg::SetupList(bool fSave)
             args.AddHead(m_list.GetItemText(j, 0));
             sl.AddTail(ImplodeEsc(args, _T(';')));
         }
+        m_sl[i].RemoveAll();
+        m_sl[i].AddTailList(&sl);
+        SetupList(false); //reload the list to invalide the old itemdata
     } else {
         m_list.DeleteAllItems();
 
