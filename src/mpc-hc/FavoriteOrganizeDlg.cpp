@@ -42,6 +42,7 @@ CFavoriteOrganizeDlg::~CFavoriteOrganizeDlg()
 
 void CFavoriteOrganizeDlg::SetupList(bool fSave)
 {
+
     int i = m_tab.GetCurSel();
 
     if (fSave) {
@@ -58,6 +59,7 @@ void CFavoriteOrganizeDlg::SetupList(bool fSave)
         m_sl[i].AddTailList(&sl);
         SetupList(false); //reload the list to invalide the old itemdata
     } else {
+        m_list.SetRedraw(FALSE);
         m_list.DeleteAllItems();
 
         for(POSITION pos = m_sl[i].GetHeadPosition(), tmp; pos; ) {
@@ -76,6 +78,8 @@ void CFavoriteOrganizeDlg::SetupList(bool fSave)
         }
 
         UpdateColumnsSizes();
+        m_list.SetRedraw(TRUE);
+        m_list.RedrawWindow(0, 0, RDW_INVALIDATE);
     }
 }
 
