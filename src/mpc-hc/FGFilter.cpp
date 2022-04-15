@@ -437,6 +437,7 @@ CFGFilterVideoRenderer::CFGFilterVideoRenderer(HWND hWnd, const CLSID& clsid, CS
 {
     bool mpcvr = (clsid == CLSID_MPCVR || clsid == CLSID_MPCVRAllocatorPresenter);
     bool madvr = (clsid == CLSID_madVR || clsid == CLSID_madVRAllocatorPresenter);
+    bool evr   = (clsid == CLSID_EnhancedVideoRenderer || clsid == CLSID_EVRAllocatorPresenter || clsid == CLSID_SyncAllocatorPresenter);
 
     // List is based on filter registration data from madVR.
     // ToDo: Some subtypes might only work with madVR. Figure out which ones and add them conditionally for extra efficiency.
@@ -512,6 +513,11 @@ CFGFilterVideoRenderer::CFGFilterVideoRenderer(HWND hWnd, const CLSID& clsid, CS
     if (mpcvr) {
         AddType(MEDIATYPE_Video, MEDIASUBTYPE_Y8);
         AddType(MEDIATYPE_Video, MEDIASUBTYPE_Y16);
+    }
+
+    if (mpcvr || evr) {
+        AddType(MEDIATYPE_Video, MEDIASUBTYPE_ARGB32);
+        AddType(MEDIATYPE_Video, MEDIASUBTYPE_A2R10G10B10);
     }
 }
 
