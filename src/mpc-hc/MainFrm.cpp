@@ -2525,7 +2525,7 @@ void CMainFrame::DoAfterPlaybackEvent()
 
 void CMainFrame::OnUpdateABRepeat(CCmdUI* pCmdUI) {
     bool canABRepeat = GetPlaybackMode() == PM_FILE || GetPlaybackMode() == PM_DVD;
-    bool abRepeatActive = abRepeat.positionA || abRepeat.positionB;
+    bool abRepeatActive = static_cast<bool>(abRepeat);
 
     switch (pCmdUI->m_nID) {
     case ID_PLAY_REPEAT_AB:
@@ -2554,7 +2554,7 @@ void CMainFrame::OnABRepeat(UINT nID) {
     CAppSettings& s = AfxGetAppSettings();
     switch (nID) {
     case ID_PLAY_REPEAT_AB:
-        if (abRepeat.positionA || abRepeat.positionB) { //only support disabling from the menu
+        if (abRepeat) { //only support disabling from the menu
             abRepeat = ABRepeat();
             m_wndSeekBar.Invalidate();
         }
@@ -2643,7 +2643,7 @@ void CMainFrame::DisableABRepeat() {
 
 bool CMainFrame::CheckABRepeat(REFERENCE_TIME& aPos, REFERENCE_TIME& bPos) {
     if (GetPlaybackMode() == PM_FILE || (GetPlaybackMode() == PM_DVD && m_iDVDTitle == abRepeat.dvdTitle)) {
-        if (abRepeat.positionA || abRepeat.positionB) {
+        if (abRepeat) {
             aPos = abRepeat.positionA;
             bPos = abRepeat.positionB;
             return true;
@@ -2677,7 +2677,7 @@ void CMainFrame::GraphEventComplete()
         bBreak = !!(s.nCLSwitches & CLSW_AFTERPLAYBACK_MASK);
     }
 
-    if (abRepeat.positionA || abRepeat.positionB) {
+    if (abRepeat) {
         PerformABRepeat();
     } else if (s.fLoopForever || m_nLoops < s.nLoops) {
         if (bBreak) {
@@ -3695,7 +3695,7 @@ void CMainFrame::OnUpdatePlayerStatus(CCmdUI* pCmdUI)
                 }
             }
             if (s.bShowABMarksInStatusbar) {
-                if (abRepeat.positionA || abRepeat.positionB) {
+                if (abRepeat) {
                     msg.Append(_T("\u2001[A-B "));
                     if(abRepeat.positionA) {
                         CString timeMarkA = ReftimeToString2(abRepeat.positionA);
@@ -3951,6 +3951,7 @@ LRESULT CMainFrame::OnOpenMediaFailed(WPARAM wParam, LPARAM lParam)
     m_bOpenMediaActive = false;
 
     m_dwReloadPos = 0;
+    reloadABRepeat = ABRepeat();
     m_iReloadAudioIdx = -1;
     m_iReloadSubIdx = -1;
 
@@ -4838,6 +4839,7 @@ void CMainFrame::OnFileReopen()
             m_dwReloadPos = rtNow;
             s.MRU.UpdateCurrentFilePosition(rtNow, true);
         }
+        reloadABRepeat = abRepeat;
     }
 
     OpenCurPlaylistItem(0, true);
@@ -8029,6 +8031,7 @@ void CMainFrame::OnPlayPlay()
                     // in case of hibernate, m_dwLastPause equals 1
                     if (m_dwLastPause == 1 || s.iReloadAfterLongPause > 0 && (GetTickCount64() - m_dwLastPause >= s.iReloadAfterLongPause * 60 * 1000)) {
                         m_dwReloadPos = m_wndSeekBar.GetPos();
+                        reloadABRepeat = abRepeat;
                         m_iReloadAudioIdx = GetCurrentAudioTrackIdx();
                         m_iReloadSubIdx = GetCurrentSubtitleTrackIdx();
                         OnFileReopen();
@@ -10113,7 +10116,7 @@ void CMainFrame::AddFavorite(bool fDisplayMessage, bool fShowDialog)
         // Name
         CString name;
         if (fShowDialog) {
-            BOOL bEnableABMarks = !!(abRepeat.positionA || abRepeat.positionB);
+            BOOL bEnableABMarks = static_cast<bool>(abRepeat);
             CFavoriteAddDlg dlg(desc, fn, bEnableABMarks);
             if (dlg.DoModal() != IDOK) {
                 return;
@@ -10130,7 +10133,7 @@ void CMainFrame::AddFavorite(bool fDisplayMessage, bool fShowDialog)
             posStr.Format(_T("%I64d"), GetPos());
         }
         // RememberABMarks
-        if (s.bFavRememberABMarks && (abRepeat.positionA || abRepeat.positionB )) {
+        if (s.bFavRememberABMarks && abRepeat) {
             posStr.AppendFormat(_T(":%I64d:%I64d"), abRepeat.positionA, abRepeat.positionB);
         }
         args.AddTail(posStr);
@@ -14259,12 +14262,16 @@ bool CMainFrame::OpenMediaPrivate(CAutoPtr<OpenMediaData> pOMD)
             if (pFileData->rtStart > 0) { // Check if an explicit start time was given
                 rtPos = pFileData->rtStart;
             }
-            if (pFileData->abRepeat.positionA || pFileData->abRepeat.positionB) { // Check if an explicit a/b repeat time was given
+            if (pFileData->abRepeat) { // Check if an explicit a/b repeat time was given
                 abRepeat = pFileData->abRepeat;
             }
             if (m_dwReloadPos > 0) {
                 rtPos = m_dwReloadPos;
                 m_dwReloadPos = 0;
+            }
+            if (reloadABRepeat) {
+                abRepeat = reloadABRepeat;
+                reloadABRepeat = ABRepeat();
             }
             if (m_bRememberFilePos) { // Check if we want to remember the position
                 auto* pMRU = &AfxGetAppSettings().MRU;
@@ -14275,12 +14282,12 @@ bool CMainFrame::OpenMediaPrivate(CAutoPtr<OpenMediaData> pOMD)
                     if (!rtPos) {
                         rtPos = pMRU->GetCurrentFilePosition();
                     }
-                    if (!abRepeat.positionA && !abRepeat.positionB) {
+                    if (!abRepeat) {
                         abRepeat = pMRU->GetCurrentABRepeat();
                     }
                 }
             }
-            if (abRepeat.positionA || abRepeat.positionB) {
+            if (abRepeat) {
                 m_wndSeekBar.Invalidate();
             }
 

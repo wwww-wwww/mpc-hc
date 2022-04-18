@@ -405,7 +405,7 @@ private:
     void AddTextPassThruFilter();
 
     int m_nLoops;
-    ABRepeat abRepeat;
+    ABRepeat abRepeat, reloadABRepeat;
     UINT m_nLastSkipDirection;
 
     int m_iStreamPosPollerInterval;

@@ -431,6 +431,7 @@ struct DVD_POSITION {
 
 struct ABRepeat {
     ABRepeat() : positionA(0), positionB(0), dvdTitle(-1) {}
+    operator bool() const { return positionA || positionB; };
     REFERENCE_TIME positionA, positionB;
     ULONG dvdTitle; //whatever title they saved last will be the only one we remember
 };

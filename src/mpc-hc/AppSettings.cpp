@@ -3157,7 +3157,7 @@ void CAppSettings::CRecentFileListWithMoreInfo::WriteMediaHistoryEntry(RecentFil
     } else {
         pApp->WriteProfileStringW(subSection, L"abRepeat.positionB", nullptr);
     }
-    if ((r.abRepeat.positionA || r.abRepeat.positionB) && r.abRepeat.dvdTitle != -1) {
+    if (r.abRepeat && r.abRepeat.dvdTitle != -1) {
         pApp->WriteProfileInt(subSection, L"abRepeat.dvdTitle", int(r.abRepeat.dvdTitle));
     } else {
         pApp->WriteProfileStringW(subSection, L"abRepeat.dvdTitle", nullptr);
