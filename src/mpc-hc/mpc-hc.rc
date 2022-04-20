@@ -4009,6 +4009,8 @@ BEGIN
                             "Display video info (codec name, resolution) in status bar."
     IDS_PPAGEADVANCED_OPEN_REC_PANEL_WHEN_OPENING_DEVICE
                             "Show the recording settings dialog automatically when opening a device."
+    IDS_PPAGEADVANCED_ALWAYS_USE_SHORT_MENU
+                            "Player Menu shortcuts and right-click show compact menu -- even when main menu is hidden."
 END
 
 STRINGTABLE

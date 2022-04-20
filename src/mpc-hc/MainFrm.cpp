@@ -3498,7 +3498,7 @@ BOOL CMainFrame::OnMenu(CMenu* pMenu)
 
 void CMainFrame::OnMenuPlayerShort()
 {
-    if (IsMenuHidden() || IsD3DFullScreenMode()) {
+    if (!AfxGetAppSettings().bAlwaysUseShortMenu && (IsMenuHidden() || IsD3DFullScreenMode())) {
         OnMenu(m_mainPopupMenu.GetSubMenu(0));
     } else {
         OnMenu(m_popupMenu.GetSubMenu(0));

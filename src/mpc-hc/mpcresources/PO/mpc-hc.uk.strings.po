@@ -4641,6 +4641,12 @@ msgid ""
 "Show the recording settings dialog automatically when opening a device."
 msgstr ""
 
+msgctxt "IDS_PPAGEADVANCED_ALWAYS_USE_SHORT_MENU"
+msgid ""
+"Player Menu shortcuts and right-click show compact menu -- even when main "
+"menu is hidden."
+msgstr ""
+
 msgctxt "IDS_ARS_WASAPI_MODE"
 msgid "WASAPI mode:"
 msgstr "Режим WASAPI:"

@@ -1693,6 +1693,7 @@
 #define IDS_ARS_DUMMY_CHANNELS          57619
 #define IDS_AG_DEFAULT                  57620
 #define IDS_PPAGEADVANCED_OPEN_REC_PANEL_WHEN_OPENING_DEVICE 57621
+#define IDS_PPAGEADVANCED_ALWAYS_USE_SHORT_MENU 57622
 
 // Next default values for new objects
 // 

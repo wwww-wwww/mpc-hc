@@ -4618,6 +4618,12 @@ msgstr ""
 "Автоматически показывать диалог с настройками записи при открытии "
 "устройства."
 
+msgctxt "IDS_PPAGEADVANCED_ALWAYS_USE_SHORT_MENU"
+msgid ""
+"Player Menu shortcuts and right-click show compact menu -- even when main "
+"menu is hidden."
+msgstr ""
+
 msgctxt "IDS_ARS_WASAPI_MODE"
 msgid "WASAPI mode:"
 msgstr "Режим WASAPI:"
