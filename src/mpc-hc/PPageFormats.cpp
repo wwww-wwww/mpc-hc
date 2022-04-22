@@ -133,7 +133,7 @@ void CPPageFormats::LoadSettings()
     m_bFileExtChanged = false;
     m_bHaveRegisteredCategory = false;
 
-    int fSetContextFiles = FALSE;
+    bool hasEnqueueContext = false;
 
     const auto& s = AfxGetAppSettings();
     m_mf = s.m_Formats;
@@ -156,8 +156,8 @@ void CPPageFormats::LoadSettings()
         }
         SetCheckedMediaCategory(iItem, (state == CFileAssoc::SOME_REGISTERED) ? BST_INDETERMINATE : (state == CFileAssoc::ALL_REGISTERED) ? BST_CHECKED : BST_UNCHECKED);
 
-        if (!fSetContextFiles && s.fileAssoc.AreRegisteredFileContextMenuEntries(m_mf[i]) != CFileAssoc::NOT_REGISTERED) {
-            fSetContextFiles = TRUE;
+        if (!hasEnqueueContext && s.fileAssoc.HasAnyEnqueueContextMenuEntries(m_mf[i]) != CFileAssoc::NOT_REGISTERED) {
+            hasEnqueueContext = true;
         }
     }
 
@@ -165,7 +165,7 @@ void CPPageFormats::LoadSettings()
     m_list.SetItemState(0, LVIS_SELECTED, LVIS_SELECTED);
     m_exts = m_mf[m_list.GetItemData(0)].GetExtsWithPeriod();
 
-    m_fContextFiles.SetCheck(fSetContextFiles);
+    m_fContextFiles.SetCheck(hasEnqueueContext || !m_bHaveRegisteredCategory);
 
     m_apvideo.SetCheck(s.fileAssoc.IsAutoPlayRegistered(CFileAssoc::AP_VIDEO));
     m_apmusic.SetCheck(s.fileAssoc.IsAutoPlayRegistered(CFileAssoc::AP_MUSIC));
@@ -259,7 +259,7 @@ BOOL CPPageFormats::OnApply()
 
         s.fileAssoc.RegisterApp();
 
-        int fSetContextFiles = m_fContextFiles.GetCheck();
+        int fSetEnqueueContext     = m_fContextFiles.GetCheck();
         int fSetAssociatedWithIcon = m_fAssociatedWithIcons.GetCheck();
 
         if (m_bFileExtChanged) {
@@ -278,7 +278,7 @@ BOOL CPPageFormats::OnApply()
                     continue;
                 }
 
-                s.fileAssoc.Register(m_mf[m_list.GetItemData(i)], !!iChecked, !!fSetContextFiles, !!fSetAssociatedWithIcon);
+                s.fileAssoc.Register(m_mf[m_list.GetItemData(i)], !!iChecked, !!fSetEnqueueContext, !!fSetAssociatedWithIcon);
             }
 
             m_bFileExtChanged = false;
