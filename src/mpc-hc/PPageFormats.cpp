@@ -380,11 +380,7 @@ void CPPageFormats::OnAssociateAllFormats()
 void CPPageFormats::OnAssociateVideoFormatsOnly()
 {
     for (int i = 0, cnt = m_list.GetItemCount(); i < cnt; i++) {
-        if (!m_mf[m_list.GetItemData(i)].GetLabel().CompareNoCase(_T("pls"))) {
-            SetCheckedMediaCategory(i, 0);
-        } else {
-            SetCheckedMediaCategory(i, !m_mf[m_list.GetItemData(i)].IsAudioOnly());
-        }
+        SetCheckedMediaCategory(i, m_mf[m_list.GetItemData(i)].IsVideoOnly());
     }
 
     m_apvideo.SetCheck(BST_CHECKED);
