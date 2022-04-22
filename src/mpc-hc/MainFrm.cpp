@@ -8447,7 +8447,7 @@ void CMainFrame::OnPlaySeek(UINT nID)
     if (s.bFastSeek && !m_kfs.empty()) {
         REFERENCE_TIME rtMaxForwardDiff;
         REFERENCE_TIME rtMaxBackwardDiff;
-        if (s.bAllowInaccurateFastseek && (nID != ID_PLAY_SEEKBACKWARDSMALL) && (nID != ID_PLAY_SEEKFORWARDSMALL)) {
+        if (s.bAllowInaccurateFastseek && (s.nJumpDistS >= 5000 || (nID != ID_PLAY_SEEKBACKWARDSMALL) && (nID != ID_PLAY_SEEKFORWARDSMALL))) {
             if (rtJumpDiff > 0) {
                 rtMaxForwardDiff  = 200000000LL;
                 rtMaxBackwardDiff = rtJumpDiff / 2;
