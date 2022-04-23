@@ -3024,11 +3024,11 @@ msgstr "Maus FS Modifier"
 
 msgctxt "IDS_AG_ZOOM_ADD"
 msgid "Zoom Window +"
-msgstr ""
+msgstr "Fenster-Zoom +"
 
 msgctxt "IDS_AG_ZOOM_SUB"
 msgid "Zoom Window -"
-msgstr ""
+msgstr "Fenster-Zoom -"
 
 msgctxt "IDS_AG_VIDFRM_ZOOM1"
 msgid "VidFrm Zoom 1"
@@ -4636,6 +4636,8 @@ msgctxt "IDS_PPAGEADVANCED_OPEN_REC_PANEL_WHEN_OPENING_DEVICE"
 msgid ""
 "Show the recording settings dialog automatically when opening a device."
 msgstr ""
+"Dialog für Aufzeichnungseinstellungen automatisch anzeigen, wenn ein Geräte "
+"geöffnet wird."
 
 msgctxt "IDS_PPAGEADVANCED_ALWAYS_USE_SHORT_MENU"
 msgid ""

@@ -2,15 +2,15 @@
 # Copyright (C) 2002 - 2017 see Authors.txt
 # This file is distributed under the same license as the MPC-HC package.
 # Translators:
-# Cyril Provence <ywa78408@eveav.com>, 2021
 # MPC HC <adiposegithub@gmail.com>, 2022
+# Cyril Provence <ywa78408@eveav.com>, 2022
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
 "POT-Creation-Date: 2022-01-23 12:48:51+0000\n"
 "PO-Revision-Date: 2020-01-02 07:46+0000\n"
-"Last-Translator: MPC HC <adiposegithub@gmail.com>, 2022\n"
+"Last-Translator: Cyril Provence <ywa78408@eveav.com>, 2022\n"
 "Language-Team: French (https://www.transifex.com/mpchc/teams/106126/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -3045,11 +3045,11 @@ msgstr "Modifieur de souris PE"
 
 msgctxt "IDS_AG_ZOOM_ADD"
 msgid "Zoom Window +"
-msgstr ""
+msgstr "Zoom fenêtre +"
 
 msgctxt "IDS_AG_ZOOM_SUB"
 msgid "Zoom Window -"
-msgstr ""
+msgstr "Zoom fenêtre -"
 
 msgctxt "IDS_AG_VIDFRM_ZOOM1"
 msgid "VidFrm Zoom 1"
@@ -4659,6 +4659,8 @@ msgctxt "IDS_PPAGEADVANCED_OPEN_REC_PANEL_WHEN_OPENING_DEVICE"
 msgid ""
 "Show the recording settings dialog automatically when opening a device."
 msgstr ""
+"Afficher automatiquement la boîte de dialogue des paramètres "
+"d'enregistrement lors de l'ouverture d'un périphérique."
 
 msgctxt "IDS_PPAGEADVANCED_ALWAYS_USE_SHORT_MENU"
 msgid ""

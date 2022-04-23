@@ -7,13 +7,14 @@
 # BCZJG6GT <luticliu@foxmail.com>, 2021
 # CyanVesper <SharpNight93@gmail.com>, 2021
 # lychichem <leichixian@outlook.com>, 2022
+# Jackson Chen, 2022
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
 "POT-Creation-Date: 2022-01-23 12:48:51+0000\n"
 "PO-Revision-Date: 2020-01-02 07:46+0000\n"
-"Last-Translator: lychichem <leichixian@outlook.com>, 2022\n"
+"Last-Translator: Jackson Chen, 2022\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/mpchc/teams/106126/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -2942,11 +2943,11 @@ msgstr "全屏状态的鼠标修饰键"
 
 msgctxt "IDS_AG_ZOOM_ADD"
 msgid "Zoom Window +"
-msgstr ""
+msgstr " 窗口缩放 +"
 
 msgctxt "IDS_AG_ZOOM_SUB"
 msgid "Zoom Window -"
-msgstr ""
+msgstr " 窗口缩放 -"
 
 msgctxt "IDS_AG_VIDFRM_ZOOM1"
 msgid "VidFrm Zoom 1"
@@ -4504,7 +4505,7 @@ msgstr "在状态栏中显示视频信息 (编码名称、分辨率) 。"
 msgctxt "IDS_PPAGEADVANCED_OPEN_REC_PANEL_WHEN_OPENING_DEVICE"
 msgid ""
 "Show the recording settings dialog automatically when opening a device."
-msgstr ""
+msgstr "打开设备时，自动显示录制设置对话框"
 
 msgctxt "IDS_PPAGEADVANCED_ALWAYS_USE_SHORT_MENU"
 msgid ""

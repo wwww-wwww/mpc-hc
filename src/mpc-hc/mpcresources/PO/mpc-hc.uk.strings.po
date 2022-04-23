@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2022-01-23 12:48:51+0000\n"
+"POT-Creation-Date: 2022-04-18 03:50:59+0000\n"
 "PO-Revision-Date: 2020-01-02 07:46+0000\n"
 "Last-Translator: Vlad Anisimov <uniss@ua.fm>, 2022\n"
 "Language-Team: Ukrainian (https://www.transifex.com/mpchc/teams/106126/uk/)\n"
@@ -260,7 +260,7 @@ msgstr "Панель навігації"
 
 msgctxt "IDS_SUBRESYNC_CAPTION"
 msgid "Subresync"
-msgstr "Синронізація субтитрів"
+msgstr "Синхронізація субтитрів"
 
 msgctxt "IDS_SUBRESYNC_CLN_TIME"
 msgid "Time"
@@ -362,7 +362,7 @@ msgstr "Опис"
 
 msgctxt "IDS_SUBDL_DLG_TITLES_COL"
 msgid "Title(s)"
-msgstr "Заголовок"
+msgstr "Заголовок(-ки)"
 
 msgctxt "IDS_SUBRESYNC_CLN_CHARSET"
 msgid "CharSet"
@@ -1381,11 +1381,11 @@ msgstr "Клавіша"
 
 msgctxt "IDS_AG_MOUSE"
 msgid "Mouse Windowed"
-msgstr "Миша (віконний режим)"
+msgstr "Миша - віконний режим"
 
 msgctxt "IDS_AG_MOUSE_FS"
 msgid "Mouse Fullscreen"
-msgstr "Миша (повноекранний режим)"
+msgstr "Миша - повноекранний режим"
 
 msgctxt "IDS_AG_APP_COMMAND"
 msgid "App Command"
@@ -1413,7 +1413,7 @@ msgstr "Швидко відкрити файл"
 
 msgctxt "IDS_AG_OPEN_FILE"
 msgid "Open File/URL"
-msgstr "Відкрити файл"
+msgstr "Відкрити файл/посилання"
 
 msgctxt "IDS_AG_OPEN_DVD"
 msgid "Open DVD/BD"
@@ -1496,7 +1496,7 @@ msgstr "Додати інші файли з теки файла"
 
 msgctxt "IDS_HW_INDICATOR"
 msgid "[H/W]"
-msgstr "[Апар./Декод.]"
+msgstr "[Апар. декод.]"
 
 msgctxt "IDS_TOOLTIP_SOFTWARE_DECODING"
 msgid "Software Decoding"
@@ -1667,7 +1667,7 @@ msgstr "Наприкінці відтворення: Перемотати фай
 
 msgctxt "IDS_AFTERPLAYBACK_CLOSE"
 msgid "After Playback: Close"
-msgstr "Наприкінці відтворення: Закрити файл"
+msgstr "Наприкінці відтворення: Закрити"
 
 msgctxt "IDS_FRAME_INIT_FAILED"
 msgid "MPC-HC encountered a problem during initialization."
@@ -1992,11 +1992,11 @@ msgstr "Перейти до наступних субтитрів"
 
 msgctxt "IDS_MPLAYERC_102"
 msgid "Subresync: shift -100ms"
-msgstr "Сдвиг -100мс"
+msgstr "Синхронізація субтитрів: зміщення -100мс"
 
 msgctxt "IDS_MPLAYERC_103"
 msgid "Subresync: shift +100ms"
-msgstr "Сдвиг +100мс"
+msgstr "Синхронізація субтитрів: зміщення +100мс"
 
 msgctxt "IDS_AG_SEEKSET"
 msgid "Jump to Beginning"
@@ -3021,23 +3021,23 @@ msgstr "Модифікатор миши"
 
 msgctxt "IDS_AG_MOUSE_FS_MODIFIER"
 msgid "Mouse FS Modifier"
-msgstr "Модифікатор миши FS"
+msgstr "Модифікатор миши - повний екран"
 
 msgctxt "IDS_AG_ZOOM_ADD"
 msgid "Zoom Window +"
-msgstr ""
+msgstr "Збільшити вікно"
 
 msgctxt "IDS_AG_ZOOM_SUB"
 msgid "Zoom Window -"
-msgstr ""
+msgstr "Зменшити вікно"
 
 msgctxt "IDS_AG_VIDFRM_ZOOM1"
 msgid "VidFrm Zoom 1"
-msgstr "Збільшення Кадру 1"
+msgstr "Збільшення кадру 1"
 
 msgctxt "IDS_AG_VIDFRM_ZOOM2"
 msgid "VidFrm Zoom 2"
-msgstr "Збільшення Кадру 2"
+msgstr "Збільшення кадру 2"
 
 msgctxt "IDS_AG_VIDFRM_SWITCHZOOM"
 msgid "VidFrm Switch Zoom"
@@ -3077,7 +3077,7 @@ msgstr "Фронтальний центральний"
 
 msgctxt "IDS_LOW_FREQUENCY"
 msgid "Low Frequency"
-msgstr "Низькочастотний(LFE)"
+msgstr "Низькочастотний (LFE)"
 
 msgctxt "IDS_BACK_LEFT"
 msgid "Back Left"
@@ -3553,19 +3553,19 @@ msgstr "D3D Повноекранний з GUI: Вимк."
 
 msgctxt "IDS_OSD_RS_10BIT_RBG_OUT_ON"
 msgid "10-bit RGB Output: On"
-msgstr "10-ти бітний RGB на виході: Ввімк."
+msgstr "10-бітний RGB на виході: Ввімк."
 
 msgctxt "IDS_OSD_RS_10BIT_RBG_OUT_OFF"
 msgid "10-bit RGB Output: Off"
-msgstr "10-ти бітний RGB на виході: Вимк."
+msgstr "10-бітний RGB на виході: Вимк."
 
 msgctxt "IDS_OSD_RS_10BIT_RBG_IN_ON"
 msgid "Force 10-bit RGB Input: On"
-msgstr "Форсувати 10-ти бітний RGB на вході: Ввімк."
+msgstr "Форсувати 10-бітний RGB на вході: Ввімк."
 
 msgctxt "IDS_OSD_RS_10BIT_RBG_IN_OFF"
 msgid "Force 10-bit RGB Input: Off"
-msgstr "Форсувати 10-ти бітний RGB на вході: Вимк."
+msgstr "Форсувати 10-бітний RGB на вході: Вимк."
 
 msgctxt "IDS_OSD_RS_FULL_FP_PROCESS_ON"
 msgid "Full Floating Point Processing: On"
@@ -4587,7 +4587,7 @@ msgstr "Перед-масштабов. піксельні шейдери: ні"
 
 msgctxt "IDS_PRESIZE_SHADERS_TOGGLE"
 msgid "Enable Pre-Resize Pixel Shaders"
-msgstr "Увімкнути перед-масштабов. піксельні шейдери"
+msgstr "Ввімкнути перед-масштабов. піксельні шейдери"
 
 msgctxt "IDS_POSTSIZE_SHADERS_ENABLED"
 msgid "Post-Resize Pixel Shaders: on"
@@ -4599,7 +4599,7 @@ msgstr "Після-масштабов. піксельні шейдери: ні"
 
 msgctxt "IDS_POSTSIZE_SHADERS_TOGGLE"
 msgid "Enable Post-Resize Pixel Shaders"
-msgstr "Увімкнути після-масштабов. піксельні шейдери"
+msgstr "Ввімкнути після-масштабов. піксельні шейдери"
 
 msgctxt "IDS_PPAGEADVANCED_TIME_REFRESH_INTERVAL"
 msgid "Refresh interval (in milliseconds) of time in status bar"
@@ -4640,12 +4640,16 @@ msgctxt "IDS_PPAGEADVANCED_OPEN_REC_PANEL_WHEN_OPENING_DEVICE"
 msgid ""
 "Show the recording settings dialog automatically when opening a device."
 msgstr ""
+"Відображати діалогове вікно налаштувань запису автоматично під час відкриття"
+" пристрою."
 
 msgctxt "IDS_PPAGEADVANCED_ALWAYS_USE_SHORT_MENU"
 msgid ""
 "Player Menu shortcuts and right-click show compact menu -- even when main "
 "menu is hidden."
 msgstr ""
+"Ярлики меню програвача та клацання правою кнопкою миші показують компактне "
+"меню — навіть якщо головне меню приховане."
 
 msgctxt "IDS_ARS_WASAPI_MODE"
 msgid "WASAPI mode:"
