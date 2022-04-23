@@ -4015,6 +4015,29 @@ END
 
 STRINGTABLE
 BEGIN
+    IDS_PPAGEADVANCED_FULLSCREEN_SEPARATE_CONTROLS
+                            "Keep main window controls visible on current monitor when going fullscreen on another monitor."
+    IDS_PPAGEADVANCED_BLOCKRDP
+                            "Block use of RDP Redirection Filter"
+    IDS_PPAGEADVANCED_YDL_EXEPATH
+                            "Full path of the Youtube-DL executable.\nJust the filename is enough in case it is located in same folder as MPC-HC.\nLeave empty to use default filename: youtube-dl.exe"
+    IDS_PPAGEADVANCED_YDL_SUBS_PREFERENCE
+                            "The language preference for loading subtitle streams extracted by Youtube-DL.\nIf empty, no subtitles are loaded.\nUse ISO639-1 two letter language code(s).\nExample: en de es pl zh ja nl"
+    IDS_PPAGEADVANCED_USE_AUTOMATIC_CAPTIONS
+                            "Use automatic generated captions from Youtube. Note: this can cause a small delay when loading the stream."
+    IDS_PPAGEADVANCED_USE_SMTC
+                            "Allow control of the player through System Media Transport Controls in Windows 8.1/10/11."
+    IDS_PPAGEADVANCED_LOCK_NOPAUSE
+                            "Do not pause playback when locking the screen."
+    IDS_PPAGEADVANCED_RELOAD_AFTER_LONG_PAUSE
+                            "Reload video file before resuming playback if it was paused for more than X minutes. Use 0 to disable automatic file reload after pause. Use -1 to also disable reload after hibernate/sleep."
+    IDS_PPAGEADVANCED_REDIRECT_OPEN_TO_APPEND_THRESHOLD
+                            "If a file is opened within this amount of milliseconds after a previous file, then it will be appended to playlist instead of replacing that previous file. This redirection is required for properly handling opening of a selection of files in Explorer. A too short threshold can result in only a part of your selection being added to playlist."
+END
+
+
+STRINGTABLE
+BEGIN
     IDS_ARS_WASAPI_MODE     "WASAPI mode:"
     IDS_ARS_EXCLUSIVE       "Exclusive"
     IDS_ARS_SHARED          "Shared"
