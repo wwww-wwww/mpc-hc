@@ -81,7 +81,7 @@ bool CYoutubeDLInstance::Run(CString url)
 
     YDL_LOG(url);
 
-    CString args = _T("\"") + GetYDLExePath() + _T("\" -J --no-warnings --youtube-skip-dash-manifest");
+    CString args = _T("\"") + GetYDLExePath() + _T("\" -J --no-warnings");
     if (!s.sYDLSubsPreference.IsEmpty()) {
         args.Append(_T(" --all-subs --write-sub"));
         if (s.bUseAutomaticCaptions) args.Append(_T(" --write-auto-sub"));
@@ -513,19 +513,21 @@ bool IsBetterYDLStream(YDLStreamDetails& first, YDLStreamDetails& second, int ma
             if (first.format != _T("none")) {
                 return false;
             } else {
-                if (second.format != _T("none")) return true;
+                if (second.format != _T("none")) {
+                    return true;
+                }
             }
         }
     }
 
-    // Prefer HTTP protocol
-    if (first.protocol.Left(4) == _T("http")) {
-        if (second.protocol.Left(4) != _T("http")) {
-            return false;
+    // Prefer HTTPS and m3u8_native protocols above http_dash_segments
+    if (first.protocol == _T("http_dash_segments")) {
+        if (second.protocol != _T("http_dash_segments")) {
+            return true;
         }
     } else {
-        if (second.protocol.Left(4) == _T("http")) {
-            return true;
+        if (second.protocol == _T("http_dash_segments")) {
+            return false;
         }
     }
 
@@ -539,6 +541,20 @@ bool IsBetterYDLStream(YDLStreamDetails& first, YDLStreamDetails& second, int ma
             return true;
         }
     }
+
+    // Prefer single stream
+    if (first.has_video && second.has_video) {
+        if (first.has_audio) {
+            if (!second.has_audio) {
+                return false;
+            }
+        } else {
+            if (second.has_audio) {
+                return true;
+            }
+        }
+    }
+
     return false;
 }
 
