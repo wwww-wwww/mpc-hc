@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2022-01-01 22:20:31+0000\n"
+"POT-Creation-Date: 2022-04-22 22:44:46+0000\n"
 "PO-Revision-Date: 2020-01-02 07:46+0000\n"
 "Last-Translator: Trần Anh Minh <anhminhvks@yahoo.com>, 2022\n"
 "Language-Team: Vietnamese (https://www.transifex.com/mpchc/teams/106126/vi/)\n"
@@ -220,7 +220,7 @@ msgstr "Được dịch bởi Trần Anh Minh - https://www.facebook.com/anhminh
 
 msgctxt "IDD_ABOUTBOX_IDC_STATIC"
 msgid "Build information"
-msgstr "Bản dựng"
+msgstr "Thông tin bản dựng"
 
 msgctxt "IDD_ABOUTBOX_IDC_STATIC"
 msgid "Version:"
@@ -639,7 +639,7 @@ msgstr "Thư mục"
 
 msgctxt "IDD_PPAGEFORMATS_IDC_CHECK7"
 msgid "Playlist"
-msgstr ""
+msgstr "Danh sách phát"
 
 msgctxt "IDD_PPAGEFORMATS_IDC_STATIC1"
 msgid "Autoplay"
