@@ -38,6 +38,9 @@ CSaveTextFileDialog::CSaveTextFileDialog(
 {
     // customization has to be done before OnInitDialog
     IFileDialogCustomize* pfdc = GetIFileDialogCustomize();
+    if (!pfdc) {
+        return;
+    }
 
     pfdc->StartVisualGroup(IDS_TEXTFILE_ENC, ResStr(IDS_TEXTFILE_ENC));
     pfdc->AddComboBox(IDC_COMBO1);
@@ -73,9 +76,11 @@ BOOL CSaveTextFileDialog::OnFileNameOK()
 {
     DWORD result;
     IFileDialogCustomize* pfdc = GetIFileDialogCustomize();
-    pfdc->GetSelectedControlItem(IDC_COMBO1, &result);
-    pfdc->Release();
-    m_e = (CTextFile::enc)result;
+    if (pfdc) {
+        pfdc->GetSelectedControlItem(IDC_COMBO1, &result);
+        pfdc->Release();
+        m_e = (CTextFile::enc)result;
+    }
 
     return __super::OnFileNameOK();
 }
