@@ -1320,4 +1320,6 @@ public:
     afx_msg void OnMouseHWheel(UINT nFlags, short zDelta, CPoint pt);
 private:
     void SetupExternalChapters();
+    void ApplyPanNScanPresetCommandLine();
+    void ValidatePanNScanParameters();
 };

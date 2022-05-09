@@ -3802,17 +3802,7 @@ LRESULT CMainFrame::OnFilePostOpenmedia(WPARAM wParam, LPARAM lParam)
     }
 
     // process /pns command-line arg, then discard it
-    if (!s.strPnSPreset.IsEmpty()) {
-        for (int i = 0; i < s.m_pnspresets.GetCount(); i++) {
-            int j = 0;
-            CString str = s.m_pnspresets[i];
-            CString label = str.Tokenize(_T(","), j);
-            if (s.strPnSPreset == label) {
-                OnViewPanNScanPresets(i + ID_PANNSCAN_PRESETS_START);
-            }
-        }
-        s.strPnSPreset.Empty();
-    }
+    ApplyPanNScanPresetCommandLine();
 
     // initiate toolbars with the new media
     OpenSetupInfoBar();
@@ -7703,6 +7693,32 @@ void CMainFrame::OnUpdateViewPanNScan(CCmdUI* pCmdUI)
     pCmdUI->Enable(GetLoadState() == MLS::LOADED && !m_fAudioOnly && AfxGetAppSettings().iDSVideoRendererType != VIDRNDT_DS_EVR);
 }
 
+void CMainFrame::ApplyPanNScanPresetCommandLine()
+{
+    auto& s = AfxGetAppSettings();
+
+    if (s.strPnSPreset.IsEmpty())
+        return;
+
+    if (s.strPnSPreset.Find(',') != -1) { // try to set raw values
+        if (_stscanf_s(s.strPnSPreset, _T("%lf,%lf,%lf,%lf"), &m_PosX, &m_PosY, &m_ZoomX, &m_ZoomY) == 4) {
+            ValidatePanNScanParameters();
+            MoveVideoWindow();
+        }
+    } else { // try to set named preset
+        for (int i = 0; i < s.m_pnspresets.GetCount(); i++) {
+            int j = 0;
+            CString str = s.m_pnspresets[i];
+            CString label = str.Tokenize(_T(","), j);
+            if (s.strPnSPreset == label) {
+                OnViewPanNScanPresets(i + ID_PANNSCAN_PRESETS_START);
+            }
+        }
+    }
+
+    s.strPnSPreset.Empty();
+}
+
 void CMainFrame::OnViewPanNScanPresets(UINT nID)
 {
     if (GetLoadState() != MLS::LOADED) {
@@ -7761,12 +7777,17 @@ void CMainFrame::OnViewPanNScanPresets(UINT nID)
         return;
     }
 
+    ValidatePanNScanParameters();
+
+    MoveVideoWindow(true);
+}
+
+void CMainFrame::ValidatePanNScanParameters()
+{
     m_PosX = std::min(std::max(m_PosX, -0.5), 1.5);
     m_PosY = std::min(std::max(m_PosY, -0.5), 1.5);
     m_ZoomX = std::min(std::max(m_ZoomX, 0.2), 5.0);
     m_ZoomY = std::min(std::max(m_ZoomY, 0.2), 5.0);
-
-    MoveVideoWindow(true);
 }
 
 void CMainFrame::OnUpdateViewPanNScanPresets(CCmdUI* pCmdUI)

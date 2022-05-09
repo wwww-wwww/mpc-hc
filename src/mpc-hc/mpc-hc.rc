@@ -3821,7 +3821,7 @@ END
 
 STRINGTABLE
 BEGIN
-    IDS_CMD_PNS             "/pns ""name""\tSpecify Pan & Scan preset name to use"
+    IDS_CMD_PNS             "/pns ""name or values""\tSpecify Pan & Scan preset name to use or direct position and zoom values in format ""px,py,zx,zy"""
     IDS_CMD_ICONASSOC       "/iconsassoc\tReassociate format icons"
     IDS_CMD_NOFOCUS         "/nofocus\t\tOpen MPC-HC in background"
     IDS_CMD_WEBPORT         "/webport N\tStart web interface on specified port"
