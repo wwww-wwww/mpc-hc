@@ -131,8 +131,8 @@ STDMETHODIMP CSubPicImpl::GetSourceAndDest(RECT rcWindow, RECT rcVideo,
         CRect windowRect(rcWindow);
 
         CRect originalDirtyRect = m_rcDirty;
-        originalDirtyRect.OffsetRect(m_virtualTextureTopLeft + CPoint(xOffsetInPixels, yOffsetInPixels));
         *pRcSource = originalDirtyRect;
+        originalDirtyRect.OffsetRect(m_virtualTextureTopLeft);
 
         CRect targetDirtyRect;
 
@@ -242,6 +242,8 @@ STDMETHODIMP CSubPicImpl::GetSourceAndDest(RECT rcWindow, RECT rcVideo,
             targetDirtyRect.left += stretch;
             targetDirtyRect.right -= stretch;
         }
+
+        targetDirtyRect.OffsetRect(CPoint(xOffsetInPixels, yOffsetInPixels));
 
         *pRcDest = targetDirtyRect;
         return S_OK;
