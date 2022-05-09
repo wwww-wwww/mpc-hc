@@ -4008,10 +4008,10 @@ msgid "Ready..."
 msgstr "Готово..."
 
 msgctxt "IDS_CMD_PNS"
-msgid "/pns \"name\"\tSpecify Pan & Scan preset name to use"
+msgid ""
+"/pns \"name or values\"\tSpecify Pan & Scan preset name to use or direct "
+"position and zoom values in format \"px,py,zx,zy\""
 msgstr ""
-"/pns \"name\"\tВизначає ім'я попередньо встановленого розташування та "
-"розміру кадра"
 
 msgctxt "IDS_CMD_ICONASSOC"
 msgid "/iconsassoc\tReassociate format icons"

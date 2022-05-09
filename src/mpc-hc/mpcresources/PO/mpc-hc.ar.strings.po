@@ -3947,7 +3947,9 @@ msgid "Ready..."
 msgstr "مستعد ..."
 
 msgctxt "IDS_CMD_PNS"
-msgid "/pns \"name\"\tSpecify Pan & Scan preset name to use"
+msgid ""
+"/pns \"name or values\"\tSpecify Pan & Scan preset name to use or direct "
+"position and zoom values in format \"px,py,zx,zy\""
 msgstr ""
 
 msgctxt "IDS_CMD_ICONASSOC"
