@@ -79,8 +79,6 @@ BOOL CSaveTextFileDialog::OnFileNameOK()
         pfdc->GetSelectedControlItem(IDC_COMBO1, &result);
         pfdc->Release();
         m_e = (CTextFile::enc)result;
-    } else {
-        m_e = CTextFile::DEFAULT_ENCODING;
     }
 
     return __super::OnFileNameOK();
