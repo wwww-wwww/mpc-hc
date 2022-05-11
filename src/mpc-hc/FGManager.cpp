@@ -2781,6 +2781,16 @@ STDMETHODIMP CFGManagerPlayer::ConnectDirect(IPin* pPinOut, IPin* pPinIn, const 
         if (!pMS || FAILED(pMS->GetDuration(&rtDur)) || rtDur <= 0) {
             return E_FAIL;
         }
+    } else if (GetCLSID(pPinOut) == CLSID_StillVideo) {
+        CComQIPtr<IMediaSeeking> pMS = pPinOut;
+        if (pMS) {
+            const CAppSettings& s = AfxGetAppSettings();
+            if (s.iStillVideoDuration > 0) {
+                REFERENCE_TIME rtCur = 0;
+                REFERENCE_TIME rtDur = s.iStillVideoDuration * 10000000LL;
+                pMS->SetPositions(&rtCur, AM_SEEKING_AbsolutePositioning, &rtDur, AM_SEEKING_AbsolutePositioning);
+            }
+        }
     }
 
     return __super::ConnectDirect(pPinOut, pPinIn, pmt);

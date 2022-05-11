@@ -104,6 +104,7 @@
 #define IDS_RS_REDIRECT_OPEN_TO_APPEND_THRESHOLD _T("RedirectOpenToAppendThreshold")
 #define IDS_RS_FULLSCREEN_SEPARATE_CONTROLS _T("FullscreenSeparateControls")
 #define IDS_RS_ALWAYS_USE_SHORT_MENU        _T("AlwaysUseShortMenu")
+#define IDS_RS_STILL_VIDEO_DURATION         _T("StillVideoDuration")
 
 // Audio
 #define IDS_RS_VOLUME                       _T("Volume")
