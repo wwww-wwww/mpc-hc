@@ -2775,13 +2775,14 @@ STDMETHODIMP CFGManagerPlayer::ConnectDirect(IPin* pPinOut, IPin* pPinIn, const 
 {
     CAutoLock cAutoLock(this);
 
-    if (GetCLSID(pPinOut) == CLSID_MPEG2Demultiplexer) {
+    CLSID pin_clsid = GetCLSID(pPinOut);
+    if (pin_clsid == CLSID_MPEG2Demultiplexer) {
         CComQIPtr<IMediaSeeking> pMS = pPinOut;
         REFERENCE_TIME rtDur = 0;
         if (!pMS || FAILED(pMS->GetDuration(&rtDur)) || rtDur <= 0) {
             return E_FAIL;
         }
-    } else if (GetCLSID(pPinOut) == CLSID_StillVideo) {
+    } else if (pin_clsid == CLSID_StillVideo || pin_clsid == CLSID_MPCImageSource) {
         CComQIPtr<IMediaSeeking> pMS = pPinOut;
         if (pMS) {
             const CAppSettings& s = AfxGetAppSettings();
