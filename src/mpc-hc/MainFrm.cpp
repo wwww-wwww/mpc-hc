@@ -16504,7 +16504,7 @@ void CMainFrame::SetSubtitle(const SubtitleInput& subInput, bool skip_lcid /* = 
 
         if (m_pCAP) {
             g_bExternalSubtitle = (std::find(m_ExternalSubstreams.cbegin(), m_ExternalSubstreams.cend(), subInput.pSubStream) != m_ExternalSubstreams.cend());
-            m_wndSubresyncBar.SetSubtitle(subInput.pSubStream, m_pCAP->GetFPS());
+            m_wndSubresyncBar.SetSubtitle(subInput.pSubStream, m_pCAP->GetFPS(), g_bExternalSubtitle);
         }
     }
 
@@ -18226,6 +18226,7 @@ afx_msg void CMainFrame::OnGotoSubtitle(UINT nID)
     if (!m_pSubStreams.IsEmpty() && !IsPlaybackCaptureMode()) {
         m_rtCurSubPos = m_wndSeekBar.GetPos();
         m_lSubtitleShift = 0;
+        m_wndSubresyncBar.RefreshEmbeddedTextSubtitleData();
         m_nCurSubtitle = m_wndSubresyncBar.FindNearestSub(m_rtCurSubPos, (nID == ID_GOTO_NEXT_SUB));
         if (m_nCurSubtitle >= 0 && m_pMS) {
             if (nID == ID_GOTO_PREV_SUB) {
