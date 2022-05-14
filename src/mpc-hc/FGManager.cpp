@@ -341,7 +341,11 @@ HRESULT CFGManager::EnumSourceFilters(LPCWSTR lpcwstrFileName, CFGFilterList& fl
                                 if (CheckBytes(hFile, CString(buff))) {
                                     CFGFilter* pFGF = LookupFilterRegistry(clsid, m_override);
                                     pFGF->AddType(majortype, subtype);
-                                    fl.Insert(pFGF, 9);
+                                    if (pFGF->GetMerit() >= MERIT64_ABOVE_DSHOW) {
+                                        fl.Insert(pFGF, 7);
+                                    } else {
+                                        fl.Insert(pFGF, 9);
+                                    }
                                     break;
                                 }
                             }
