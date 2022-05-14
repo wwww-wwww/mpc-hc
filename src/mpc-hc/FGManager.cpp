@@ -2792,7 +2792,15 @@ STDMETHODIMP CFGManagerPlayer::ConnectDirect(IPin* pPinOut, IPin* pPinIn, const 
             const CAppSettings& s = AfxGetAppSettings();
             if (s.iStillVideoDuration > 0) {
                 REFERENCE_TIME rtCur = 0;
-                REFERENCE_TIME rtDur = s.iStillVideoDuration * 10000000LL;
+                REFERENCE_TIME rtDur = 0;
+                REFERENCE_TIME rtDurOverride = s.iStillVideoDuration * 10000000LL;
+                pMS->GetDuration(&rtDur);
+                if (rtDur == 0 || rtDur >= 10 * 3600 * 10000000LL) {
+                    rtDur = rtDurOverride;
+                } else if (rtDur < rtDurOverride) {
+                    rtDur = (rtDurOverride / rtDur) * rtDur;
+                }
+                // always call SetPositions() to prevent infinite repeat by the source filter
                 pMS->SetPositions(&rtCur, AM_SEEKING_AbsolutePositioning, &rtDur, AM_SEEKING_AbsolutePositioning);
             }
         }
