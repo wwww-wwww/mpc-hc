@@ -2268,10 +2268,9 @@ void CAppSettings::ExtractDVDStartPos(CString& strParam)
 
 CString CAppSettings::ParseFileName(CString const& param)
 {
-    CString fullPathName;
-
     // Try to transform relative pathname into full pathname
     if (param.Find(_T(":")) < 0) {
+        CString fullPathName;
         DWORD dwLen = GetFullPathName(param, MAX_PATH, fullPathName.GetBuffer(MAX_PATH), nullptr);
         if (dwLen > 0 && dwLen < MAX_PATH) {
             fullPathName.ReleaseBuffer(dwLen);
@@ -2280,6 +2279,10 @@ CString CAppSettings::ParseFileName(CString const& param)
                 return fullPathName;
             }
         }
+    } else {
+        CString fullPathName = param;
+        ExtendMaxPathLengthIfNeeded(fullPathName, MAX_PATH);
+        return fullPathName;
     }
 
     return param;
@@ -2476,8 +2479,8 @@ void CAppSettings::ParseCommandLine(CAtlList<CString>& cmdln)
             if (param == _T("-")) { // Special case: standard input
                 slFiles.AddTail(_T("pipe://stdin"));
             } else {
-                const_cast<CString&>(param) = ParseFileName(param);
-                slFiles.AddTail(param);
+                CString strFile = ParseFileName(param);
+                slFiles.AddTail(strFile);
             }
         }
     }
