@@ -80,11 +80,12 @@ private:
 
     bool ParseBDMVPlayList(CString fn);
 
+    bool PlaylistCanStripPath(CString path);
     bool ParseMPCPlayList(CString fn);
-    bool SaveMPCPlayList(CString fn, CTextFile::enc e, bool fRemovePath);
+    bool SaveMPCPlayList(CString fn, CTextFile::enc e);
     bool ParseM3UPlayList(CString fn);
     bool ParseCUESheet(CString fn);
-
+    
     void SetupList();
     void UpdateList();
     void EnsureVisible(POSITION pos);
