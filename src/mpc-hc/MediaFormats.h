@@ -61,7 +61,7 @@ public:
     CString GetBackupExtsWithPeriod() const;
     bool IsAudioOnly() const { return m_fAudioOnly; }
     bool IsAssociable() const { return m_fAssociable; }
-    bool IsVideoOnly() const { return !m_fAudioOnly && !m_label.CompareNoCase(_T("pls")) && !m_label.CompareNoCase(_T("swf")); }
+    bool IsVideoOnly() const { return !m_fAudioOnly && m_label != _T("pls") && m_label != _T("cue") && m_label != _T("swf"); }
 };
 
 class CMediaFormats : public CAtlArray<CMediaFormatCategory>
