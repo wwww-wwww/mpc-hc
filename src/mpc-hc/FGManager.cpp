@@ -211,7 +211,11 @@ HRESULT CFGManager::EnumSourceFilters(LPCWSTR lpcwstrFileName, CFGFilterList& fl
     fl.RemoveAll();
 
     CStringW fn = CStringW(lpcwstrFileName).TrimLeft();
-    CStringW protocol = fn.Left(fn.Find(':') + 1).TrimRight(':').MakeLower();
+    CStringW cfn = fn;
+    if (cfn.Left(4) == "\\\\?\\") {
+        cfn = cfn.Mid(4);
+    }
+    CStringW protocol = cfn.Left(cfn.Find(':') + 1).TrimRight(':').MakeLower();
     CStringW ext = CPathW(fn).GetExtension().MakeLower();
 
     HANDLE hFile = INVALID_HANDLE_VALUE;

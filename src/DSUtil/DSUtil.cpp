@@ -1353,7 +1353,7 @@ bool UnloadUnusedExternalObjects()
 
 void ExtendMaxPathLengthIfNeeded(CString& path, int max_length /*= MAX_PATH*/, bool no_url /*= false */)
 {
-    if (path.GetLength() > max_length) {
+    if (path.GetLength() >= max_length) {
         if (no_url || path.Find(_T("://")) < 0) { // not URL
             if (path.Left(2) != _T("\\\\")) { // not UNC
                 if (path.Left(4) != _T("\\\\?\\")) { // not already have long path prefix
