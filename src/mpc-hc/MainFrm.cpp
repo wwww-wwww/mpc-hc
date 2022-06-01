@@ -4648,6 +4648,8 @@ BOOL CMainFrame::OnCopyData(CWnd* pWnd, COPYDATASTRUCT* pCDS)
             }
             s.nCLSwitches &= ~CLSW_ADD;
         }
+    } else if ((s.nCLSwitches & CLSW_PLAY) && !IsPlaylistEmpty()) {
+        OpenCurPlaylistItem();
     } else {
         applyRandomizeSwitch();
     }
