@@ -3741,7 +3741,7 @@ LRESULT CMainFrame::OnFilePostOpenmedia(WPARAM wParam, LPARAM lParam)
     ASSERT(GetMediaStateDirect() == State_Stopped);
 
     // destroy invisible top-level d3dfs window if there is no video renderer
-    if (HasFullScreenWindow() && !m_pMFVDC && !m_pVMRWC) {
+    if (HasFullScreenWindow() && !m_pMFVDC && !m_pVMRWC && !m_pVW) {
         m_pFullscreenWnd->DestroyWindow();
         if (s.IsD3DFullscreen()) {
             m_fStartInD3DFullscreen = true;
