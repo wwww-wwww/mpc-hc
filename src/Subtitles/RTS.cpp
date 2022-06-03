@@ -3456,6 +3456,8 @@ STDMETHODIMP CRenderedTextSubtitle::SetSourceTargetInfo(CString yuvVideoMatrix, 
             yuvMatrix = ColorConvTable::BT709;
         } else if (matrix == _T("601")) {
             yuvMatrix = ColorConvTable::BT601;
+        } else if (matrix == _T("2020")) {
+            yuvMatrix = ColorConvTable::BT2020;
         } else {
             yuvMatrix = ColorConvTable::NONE;
         }
