@@ -53,9 +53,7 @@ public:
         COL_DOWNLOADS,
         COL_DISC,
         COL_TITLES,
-#ifdef _DEBUG
         COL_SCORE,
-#endif
         COL_TOTAL_COLUMNS
     };
 
