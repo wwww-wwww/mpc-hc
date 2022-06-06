@@ -121,7 +121,6 @@ DWORD CXySubPicQueue::ThreadProc()
                                 break;
                             }
 
-                            pStatic->SetInverseAlpha(true);
                             hr = RenderTo(pStatic, rtStart, rtStop, fps, true);
 #if SUBPIC_TRACE_LEVEL > 0
                             CRect r;
@@ -288,7 +287,6 @@ STDMETHODIMP_(bool) CXySubPicQueueNoThread::LookupSubPic(REFERENCE_TIME rtNow, b
                     CComPtr<ISubPic> pStatic;
                     hr = m_pAllocator->GetStatic(&pStatic);
                     if (SUCCEEDED(hr)) {
-                        pStatic->SetInverseAlpha(true);
                         hr = RenderTo(pStatic, rtStart, rtStop, fps, true);
                     }
                     if (SUCCEEDED(hr)) {
@@ -299,7 +297,6 @@ STDMETHODIMP_(bool) CXySubPicQueueNoThread::LookupSubPic(REFERENCE_TIME rtNow, b
                         m_llSubId = id;
                     }
                 } else {
-                    pSubPic->SetInverseAlpha(true);
                     if (SUCCEEDED(RenderTo(pSubPic, rtStart, rtStop, fps, true))) {
                         ppSubPic = pSubPic;
                         m_llSubId = id;

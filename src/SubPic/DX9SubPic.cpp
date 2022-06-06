@@ -131,7 +131,7 @@ STDMETHODIMP CDX9SubPic::CopyTo(ISubPic* pSubPic)
     return SUCCEEDED(hr) ? S_OK : E_FAIL;
 }
 
-STDMETHODIMP CDX9SubPic::ClearDirtyRect(DWORD color)
+STDMETHODIMP CDX9SubPic::ClearDirtyRect()
 {
     if (m_rcDirty.IsRectEmpty()) {
         return S_FALSE;
@@ -141,6 +141,8 @@ STDMETHODIMP CDX9SubPic::ClearDirtyRect(DWORD color)
     if (!m_pSurface || FAILED(m_pSurface->GetDevice(&pD3DDev)) || !pD3DDev) {
         return E_FAIL;
     }
+
+    DWORD color = m_bInvAlpha ? 0x00000000 : 0xFF000000;
 
     SubPicDesc spd;
     if (SUCCEEDED(Lock(spd))) {
@@ -463,6 +465,7 @@ bool CDX9SubPicAllocator::Alloc(bool fStatic, ISubPic** ppSubPic)
     }
 
     (*ppSubPic)->AddRef();
+    (*ppSubPic)->SetInverseAlpha(m_bInvAlpha);
 
     if (!fStatic) {
         CAutoLock cAutoLock2(&ms_surfaceQueueLock);

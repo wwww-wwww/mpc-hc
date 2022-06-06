@@ -121,11 +121,8 @@ HRESULT CSubPicQueueImpl::RenderTo(ISubPic* pSubPic, REFERENCE_TIME rtStart, REF
         return hr;
     }
 
-    if (pSubPic->GetInverseAlpha()) {
-        hr = pSubPic->ClearDirtyRect(0x00000000);
-    } else {
-        hr = pSubPic->ClearDirtyRect(0xFF000000);
-    }
+
+    hr = pSubPic->ClearDirtyRect();
 
     SubPicDesc spd;
     if (SUCCEEDED(hr)) {
@@ -629,8 +626,8 @@ DWORD CSubPicQueue::ThreadProc()
                         } else {
                             hr = RenderTo(pStatic, rtStart, rtStopReal, fps, false);
                             // Non-animated subtitles aren't part of a segment
-                            pStatic->SetSegmentStart(ISubPic::INVALID_TIME);
-                            pStatic->SetSegmentStop(ISubPic::INVALID_TIME);
+                            pStatic->SetSegmentStart(ISubPic::INVALID_SUBPIC_TIME);
+                            pStatic->SetSegmentStop(ISubPic::INVALID_SUBPIC_TIME);
                             rtCurrent = rtStopReal;
                         }
 

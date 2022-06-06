@@ -304,11 +304,6 @@ STDMETHODIMP CSubPicImpl::SetVirtualTextureSize(const SIZE pSize, const POINT pT
     return S_OK;
 }
 
-STDMETHODIMP_(bool) CSubPicImpl::GetInverseAlpha() const
-{
-    return m_bInvAlpha;
-}
-
 STDMETHODIMP_(void) CSubPicImpl::SetInverseAlpha(bool bInverted)
 {
     m_bInvAlpha = bInverted;
@@ -420,4 +415,9 @@ STDMETHODIMP CSubPicAllocatorImpl::FreeStatic()
         m_pStatic.Release();
     }
     return S_OK;
+}
+
+STDMETHODIMP_(void) CSubPicAllocatorImpl::SetInverseAlpha(bool bInverted)
+{
+    m_bInvAlpha = bInverted;
 }
