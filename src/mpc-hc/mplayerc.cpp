@@ -2247,6 +2247,23 @@ int CMPlayerCApp::ExitInstance()
     return CWinAppEx::ExitInstance();
 }
 
+BOOL CMPlayerCApp::SaveAllModified()
+{
+    // CWinApp::SaveAllModified
+    // Called by the framework to save all documents
+    // when the application's main frame window is to be closed,
+    // or through a WM_QUERYENDSESSION message.
+    if (m_s && !m_fClosingState) {
+        if (auto pMainFrame = AfxFindMainFrame()) {
+            if (pMainFrame->GetLoadState() != MLS::CLOSED) {
+                pMainFrame->CloseMedia();
+            }
+        }
+    }
+
+    return TRUE;
+}
+
 // CMPlayerCApp message handlers
 
 BEGIN_MESSAGE_MAP(CMPlayerCApp, CWinAppEx)
