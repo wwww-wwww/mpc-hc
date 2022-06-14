@@ -196,11 +196,24 @@ STDMETHODIMP CDX11SubPic::CopyTo(ISubPic* pSubPic)
 	auto pDstMemPic = reinterpret_cast<MemPic_t*>(pSubPic->GetObject());
 
 	CRect copyRect(m_rcDirty);
-	copyRect.InflateRect(1, 1);
-	RECT subpicRect = { 0, 0, pDstMemPic->w, pDstMemPic->h };
-	if (!copyRect.IntersectRect(copyRect, &subpicRect)) {
-		return S_FALSE;
-	}
+#if 1
+    if (copyRect.left > 0) {
+        copyRect.left--;
+    }
+    if (copyRect.top > 0) {
+        copyRect.top--;
+    }
+    if (copyRect.right < m_MemPic.w) {
+        copyRect.right++;
+    }
+    if (copyRect.bottom < m_MemPic.h) {
+        copyRect.bottom++;
+    }
+#endif
+    if (copyRect.right > m_MemPic.w || copyRect.right > pDstMemPic->w || copyRect.bottom > m_MemPic.h || copyRect.bottom > pDstMemPic->h) {
+        ASSERT(FALSE);
+        return S_FALSE;
+    }
 
 	const UINT copyW_bytes = copyRect.Width() * 4;
 	UINT copyH = copyRect.Height();
