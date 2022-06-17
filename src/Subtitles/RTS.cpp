@@ -1594,6 +1594,7 @@ CRenderedTextSubtitle::CRenderedTextSubtitle(CCritSec* pLock)
     , m_bOverrideStyle(false)
     , m_bOverridePlacement(false)
     , m_overridePlacement(50, 90)
+    , m_webvtt_allow_clear(false)
 {
     m_size = CSize(0, 0);
 
