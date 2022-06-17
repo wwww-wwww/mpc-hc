@@ -7823,8 +7823,17 @@ bool CMainFrame::PerformFlipRotate()
             }
         }
     } else if (m_pCAP) {
-        // default angle has already been set, so only apply custom angle
-        hr = m_pCAP->SetVideoAngle(Vector(Vector::DegToRad(m_AngleX), Vector::DegToRad(m_AngleY), Vector::DegToRad(m_AngleZ)));
+        // EVR-CP behavior for custom angles is ignored when choosing video size and zoom
+        // We get better results if we treat the closest 90 as the standard rotation, and custom rotate the remainder (<45deg)
+        int z = m_AngleZ;
+        if (m_pCAP2) {
+            int nZ = nearest90(z);
+            z = z - nZ;
+            Vector defAngle = Vector(0, 0, Vector::DegToRad((nZ + m_iDefRotation) % 360));
+            m_pCAP2->SetDefaultVideoAngle(defAngle);
+        }
+        
+        hr = m_pCAP->SetVideoAngle(Vector(Vector::DegToRad(m_AngleX), Vector::DegToRad(m_AngleY), Vector::DegToRad(z)));
     }
 
     if (FAILED(hr)) {
