@@ -54,8 +54,6 @@
 #include "MediaTransControls.h"
 #include "FavoriteOrganizeDlg.h"
 
-#define AfxGetMainFrame() dynamic_cast<CMainFrame*>(AfxGetMainWnd())
-
 class CDebugShadersDlg;
 class CFullscreenWnd;
 class SkypeMoodMsgHandler;
