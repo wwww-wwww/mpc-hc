@@ -149,6 +149,17 @@ CMainFrame::PlaybackRateMap CMainFrame::dvdPlaybackRates = {
 };
 
 
+static bool EnsureDirectory(CString directory)
+{
+    int ret = SHCreateDirectoryEx(nullptr, directory, nullptr);
+    bool result = ret == ERROR_SUCCESS || ret == ERROR_ALREADY_EXISTS;
+    if (!result) {
+        AfxMessageBox(_T("Cannot create directory: ") + directory, MB_ICONEXCLAMATION | MB_OK);
+    }
+    return result;
+}
+
+
 #include "MediaInfo/MediaInfoDLL.h"
 using namespace MediaInfoDLL;
 
@@ -6074,7 +6085,7 @@ void CMainFrame::OnUpdateFileSubtitlesLoad(CCmdUI* pCmdUI)
     pCmdUI->Enable(GetLoadState() == MLS::LOADED && !IsPlaybackCaptureMode() && !m_fAudioOnly && m_pCAP);
 }
 
-void CMainFrame::OnFileSubtitlesSave()
+void CMainFrame::SubtitlesSave(const TCHAR* directory, bool silent)
 {
     int i = 0;
     SubtitleInput* pSubInput = GetSubtitleInput(i, true);
@@ -6088,6 +6099,9 @@ void CMainFrame::OnFileSubtitlesSave()
         CString suggestedFileName;
         CString curfile = m_wndPlaylistBar.GetCurFileName();
         if (PathUtils::IsURL(curfile)) {
+            if (silent) {
+                return;
+            }
             suggestedFileName = _T("subtitle");
         } else {
             CPath path(curfile);
@@ -6095,38 +6109,41 @@ void CMainFrame::OnFileSubtitlesSave()
             suggestedFileName = CString(path);
         }
 
+        if (directory && *directory) {
+            CPath suggestedPath(suggestedFileName);
+            int pos = suggestedPath.FindFileName();
+            CString fileName = suggestedPath.m_strPath.Mid(pos);
+            CPath dirPath(directory);
+            if (dirPath.IsRelative()) {
+                dirPath = CPath(suggestedPath.m_strPath.Left(pos)) += dirPath;
+            }
+            if (EnsureDirectory(dirPath)) {
+                suggestedFileName = CString(dirPath += fileName);
+            }
+            else if (silent) {
+                return;
+            }
+        }
+
         if (clsid == __uuidof(CVobSubFile)) {
             CVobSubFile* pVSF = (CVobSubFile*)(ISubStream*)pSubInput->pSubStream;
 
             // remember to set lpszDefExt to the first extension in the filter so that the save dialog autocompletes the extension
             // and tracks attempts to overwrite in a graceful manner
-            CSaveSubtitlesFileDialog fd(m_pCAP->GetSubtitleDelay(), _T("idx"), suggestedFileName,
-                                        _T("VobSub (*.idx, *.sub)|*.idx;*.sub||"), GetModalParent());
+            if (silent) {
+                pVSF->Save(suggestedFileName + _T(".idx"), m_pCAP->GetSubtitleDelay());
+            } else {
+                CSaveSubtitlesFileDialog fd(m_pCAP->GetSubtitleDelay(), _T("idx"), suggestedFileName,
+                    _T("VobSub (*.idx, *.sub)|*.idx;*.sub||"), GetModalParent());
 
-            if (fd.DoModal() == IDOK) {
-                CAutoLock cAutoLock(&m_csSubLock);
-                pVSF->Save(fd.GetPathName(), fd.GetDelay());
+                if (fd.DoModal() == IDOK) {
+                    CAutoLock cAutoLock(&m_csSubLock);
+                    pVSF->Save(fd.GetPathName(), fd.GetDelay());
+                }
             }
-        } else if (clsid == __uuidof(CRenderedTextSubtitle)) {
+        }
+        else if (clsid == __uuidof(CRenderedTextSubtitle)) {
             CRenderedTextSubtitle* pRTS = (CRenderedTextSubtitle*)(ISubStream*)pSubInput->pSubStream;
-
-            const std::vector<Subtitle::SubType> types = {
-                Subtitle::SRT,
-                Subtitle::SUB,
-                Subtitle::SMI,
-                Subtitle::PSB,
-                Subtitle::SSA,
-                Subtitle::ASS
-            };
-
-            CString filter;
-            filter += _T("SubRip (*.srt)|*.srt|");
-            filter += _T("MicroDVD (*.sub)|*.sub|");
-            filter += _T("SAMI (*.smi)|*.smi|");
-            filter += _T("PowerDivX (*.psb)|*.psb|");
-            filter += _T("SubStation Alpha (*.ssa)|*.ssa|");
-            filter += _T("Advanced SubStation Alpha (*.ass)|*.ass|");
-            filter += _T("|");
 
             CAppSettings& s = AfxGetAppSettings();
 
@@ -6141,13 +6158,49 @@ void CMainFrame::OnFileSubtitlesSave()
             }
 
             // same thing as in the case of CVobSubFile above for lpszDefExt
-            CSaveSubtitlesFileDialog fd(pRTS->m_encoding, m_pCAP->GetSubtitleDelay(), s.bSubSaveExternalStyleFile,
-                                        _T("srt"), suggestedFileName, filter, types, GetModalParent());
+            if (silent) {
+                Subtitle::SubType type;
+                switch (pRTS->m_subtitleType)
+                {
+                    case Subtitle::ASS:
+                    case Subtitle::SSA:
+                    case Subtitle::VTT:
+                        type = Subtitle::ASS;
+                        break;
+                    default:
+                        type = Subtitle::SRT;
+                }
 
-            if (fd.DoModal() == IDOK) {
-                CAutoLock cAutoLock(&m_csSubLock);
-                s.bSubSaveExternalStyleFile = fd.GetSaveExternalStyleFile();
-                pRTS->SaveAs(fd.GetPathName(), types[fd.m_ofn.nFilterIndex - 1], m_pCAP->GetFPS(), fd.GetDelay(), fd.GetEncoding(), fd.GetSaveExternalStyleFile());
+                pRTS->SaveAs(
+                    suggestedFileName, type, m_pCAP->GetFPS(), m_pCAP->GetSubtitleDelay(),
+                    CTextFile::DEFAULT_ENCODING, s.bSubSaveExternalStyleFile);
+            } else {
+                const std::vector<Subtitle::SubType> types = {
+                    Subtitle::SRT,
+                    Subtitle::SUB,
+                    Subtitle::SMI,
+                    Subtitle::PSB,
+                    Subtitle::SSA,
+                    Subtitle::ASS
+                };
+
+                CString filter;
+                filter += _T("SubRip (*.srt)|*.srt|");
+                filter += _T("MicroDVD (*.sub)|*.sub|");
+                filter += _T("SAMI (*.smi)|*.smi|");
+                filter += _T("PowerDivX (*.psb)|*.psb|");
+                filter += _T("SubStation Alpha (*.ssa)|*.ssa|");
+                filter += _T("Advanced SubStation Alpha (*.ass)|*.ass|");
+                filter += _T("|");
+
+                CSaveSubtitlesFileDialog fd(pRTS->m_encoding, m_pCAP->GetSubtitleDelay(), s.bSubSaveExternalStyleFile,
+                                            _T("srt"), suggestedFileName, filter, types, GetModalParent());
+
+                if (fd.DoModal() == IDOK) {
+                    CAutoLock cAutoLock(&m_csSubLock);
+                    s.bSubSaveExternalStyleFile = fd.GetSaveExternalStyleFile();
+                    pRTS->SaveAs(fd.GetPathName(), types[fd.m_ofn.nFilterIndex - 1], m_pCAP->GetFPS(), fd.GetDelay(), fd.GetEncoding(), fd.GetSaveExternalStyleFile());
+                }
             }
         } else {
             AfxMessageBox(_T("This operation is not supported.\r\nThe selected subtitles cannot be saved."), MB_ICONEXCLAMATION | MB_OK);
@@ -17658,6 +17711,24 @@ void CMainFrame::CloseMedia(bool bNextIsQueued/* = false*/)
             REFERENCE_TIME rtNow = 0;
             m_pMS->GetCurrentPosition(&rtNow);
             s.MRU.UpdateCurrentFilePosition(rtNow, true);
+        }
+    }
+
+    // save external subtitle
+    if (g_bExternalSubtitle &&
+        m_pCurrentSubInput.pSubStream && m_pCurrentSubInput.pSubStream->GetPath().IsEmpty()) {
+        const auto& s = AfxGetAppSettings();
+        if (s.bAutoSaveDownloadedSubtitles) {
+            CString dirBuffer;
+            LPCTSTR dir = nullptr;
+            if (!s.strSubtitlePaths.IsEmpty()) {
+                auto start = s.strSubtitlePaths.Left(2);
+                if (start != _T(".") && start != _T(".;")) {
+                    int pos = 0;
+                    dir = dirBuffer = s.strSubtitlePaths.Tokenize(_T(";"), pos);
+                }
+            }
+            SubtitlesSave(dir, true);
         }
     }
 

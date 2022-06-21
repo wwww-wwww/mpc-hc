@@ -702,6 +702,7 @@
 #define IDC_ASSOCIATE_AUDIO_FORMATS     22084
 #define IDC_CLEAR_ALL_ASSOCIATIONS      22085
 #define IDC_SEEK_PREVIEW                22086
+#define IDC_CHECK_AUTOSAVE_ONLINE_SUBTITLE 22087
 #define ID_SUB_DELAY_DOWN               24000
 #define ID_SUB_DELAY_UP                 24001
 #define IDS_MPLAYERC_104                24002
@@ -1708,9 +1709,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        20069
+#define _APS_NEXT_RESOURCE_VALUE        20070
 #define _APS_NEXT_COMMAND_VALUE         33460
-#define _APS_NEXT_CONTROL_VALUE         22087
+#define _APS_NEXT_CONTROL_VALUE         22088
 #define _APS_NEXT_SYMED_VALUE           24052
 #endif
 #endif

@@ -752,6 +752,7 @@ public:
     bool            fDisableInternalSubtitles;
     bool            bAllowOverridingExternalSplitterChoice;
     bool            bAutoDownloadSubtitles;
+    bool            bAutoSaveDownloadedSubtitles;
     int             nAutoDownloadScoreMovies;
     int             nAutoDownloadScoreSeries;
     CString         strAutoDownloadSubtitlesExclude;
