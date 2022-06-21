@@ -693,7 +693,7 @@ BOOL CMPlayerCApp::IsIdleMessage(MSG* pMsg)
             ret = FALSE;
         } else {
             auto pMainFrm = AfxGetMainFrame();
-            if (pMainFrm) {
+            if (pMainFrm && m_pMainWnd) {
                 const unsigned uTimeout = 100;
                 // delay next WM_MOUSEMOVE initiated idle for uTimeout ms
                 // if there will be no WM_MOUSEMOVE messages, WM_TIMER will initiate the idle
