@@ -5444,7 +5444,7 @@ void CMainFrame::SaveImage(LPCWSTR fn, bool displayed, bool includeSubtitles) {
         hr = GetDisplayedImage(dib, errmsg);
     } else {
         hr = GetCurrentFrame(dib, errmsg);
-        if (includeSubtitles && hr == S_OK) {
+        if (includeSubtitles && m_pCAP && hr == S_OK) {
             RenderCurrentSubtitles(dib.data());
         }
     }
