@@ -1122,6 +1122,10 @@ bool CEVRAllocatorPresenter::GetImageFromMixer()
 
         {
             llClockBefore = GetRenderersData()->GetPerfCounter();
+            if (!m_pMixer) {
+                ASSERT(FALSE);
+                break;
+            }
             hr = m_pMixer->ProcessOutput(0, 1, &dataBuffer, &dwStatus);
             llClockAfter = GetRenderersData()->GetPerfCounter();
         }
@@ -1227,9 +1231,9 @@ STDMETHODIMP CEVRAllocatorPresenter::ReleaseServicePointers()
 
     StopWorkerThreads();
 
-    m_pMixer = nullptr;
-    m_pSink  = nullptr;
-    m_pClock = nullptr;
+    m_pMixer.Release();
+    m_pSink.Release();
+    m_pClock.Release();
     return S_OK;
 }
 
