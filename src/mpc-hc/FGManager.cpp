@@ -1096,7 +1096,7 @@ STDMETHODIMP CFGManager::Abort()
     }
 
     // FIXME: this can hang
-    CAutoLock cAutoLock(this);
+    //CAutoLock cAutoLock(this);
 
     return CComQIPtr<IFilterGraph2>(m_pUnkInner)->Abort();
 }
