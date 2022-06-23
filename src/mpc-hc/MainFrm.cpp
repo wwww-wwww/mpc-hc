@@ -17704,31 +17704,35 @@ void CMainFrame::CloseMedia(bool bNextIsQueued/* = false*/)
         ASSERT(!m_bSettingUpMenus);
     }
 
-    // save playback position
     if (GetLoadState() == MLS::LOADED) {
+        // save playback position
         if (m_bRememberFilePos && !m_fEndOfStream && m_dwReloadPos == 0 && m_pMS) {
             auto& s = AfxGetAppSettings();
             REFERENCE_TIME rtNow = 0;
             m_pMS->GetCurrentPosition(&rtNow);
             s.MRU.UpdateCurrentFilePosition(rtNow, true);
         }
-    }
 
-    // save external subtitle
-    if (g_bExternalSubtitle &&
-        m_pCurrentSubInput.pSubStream && m_pCurrentSubInput.pSubStream->GetPath().IsEmpty()) {
-        const auto& s = AfxGetAppSettings();
-        if (s.bAutoSaveDownloadedSubtitles) {
-            CString dirBuffer;
-            LPCTSTR dir = nullptr;
-            if (!s.strSubtitlePaths.IsEmpty()) {
-                auto start = s.strSubtitlePaths.Left(2);
-                if (start != _T(".") && start != _T(".;")) {
-                    int pos = 0;
-                    dir = dirBuffer = s.strSubtitlePaths.Tokenize(_T(";"), pos);
+        // abort sub search
+        m_pSubtitlesProviders->Abort(SubtitlesThreadType(STT_SEARCH | STT_DOWNLOAD));
+        m_wndSubtitlesDownloadDialog.DoClear();
+
+        // save external subtitle
+        if (g_bExternalSubtitle &&
+            m_pCurrentSubInput.pSubStream && m_pCurrentSubInput.pSubStream->GetPath().IsEmpty()) {
+            const auto& s = AfxGetAppSettings();
+            if (s.bAutoSaveDownloadedSubtitles) {
+                CString dirBuffer;
+                LPCTSTR dir = nullptr;
+                if (!s.strSubtitlePaths.IsEmpty()) {
+                    auto start = s.strSubtitlePaths.Left(2);
+                    if (start != _T(".") && start != _T(".;")) {
+                        int pos = 0;
+                        dir = dirBuffer = s.strSubtitlePaths.Tokenize(_T(";"), pos);
+                    }
                 }
+                SubtitlesSave(dir, true);
             }
-            SubtitlesSave(dir, true);
         }
     }
 
@@ -17811,9 +17815,6 @@ void CMainFrame::CloseMedia(bool bNextIsQueued/* = false*/)
     }
 
     m_bSettingUpMenus = false;
-
-    m_pSubtitlesProviders->Abort(SubtitlesThreadType(STT_SEARCH | STT_DOWNLOAD));
-    m_wndSubtitlesDownloadDialog.DoClear();
 
     // initiate graph destruction
     if (m_pGraphThread && m_bOpenedThroughThread && !bGraphTerminated) {
