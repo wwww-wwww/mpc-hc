@@ -910,6 +910,7 @@ public:
     bool bUseYDL;
     int iYDLMaxHeight;
     int iYDLVideoFormat;
+    int iYDLAudioFormat;
     bool bYDLAudioOnly;
     CString sYDLExePath;
     CString sYDLCommandLine;

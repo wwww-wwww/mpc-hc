@@ -200,6 +200,7 @@ private:
         USE_YDL,
         YDL_MAX_HEIGHT,
         YDL_VIDEO_FORMAT,
+        YDL_AUDIO_FORMAT,
         YDL_AUDIO_ONLY,
         YDL_EXEPATH,
         YDL_COMMAND_LINE,

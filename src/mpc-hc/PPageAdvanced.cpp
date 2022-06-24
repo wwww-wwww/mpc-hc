@@ -163,6 +163,7 @@ void CPPageAdvanced::InitSettings()
     addBoolItem(USE_YDL, IDS_RS_USE_YDL, true, s.bUseYDL, StrRes(IDS_PPAGEADVANCED_USE_YDL));
     addIntItem(YDL_MAX_HEIGHT, IDS_RS_YDL_MAX_HEIGHT, 1440, s.iYDLMaxHeight, std::make_pair(0, INT_MAX), StrRes(IDS_PPAGEADVANCED_YDL_MAX_HEIGHT));
     addIntItem(YDL_VIDEO_FORMAT, IDS_RS_YDL_VIDEO_FORMAT, 0, s.iYDLVideoFormat, std::make_pair(0, 8), StrRes(IDS_PPAGEADVANCED_YDL_VIDEO_FORMAT));
+    addIntItem(YDL_AUDIO_FORMAT, IDS_RS_YDL_AUDIO_FORMAT, 0, s.iYDLAudioFormat, std::make_pair(0, 2), _T("Preferred audio format for stream that is selected from Youtube-DL results. Only applies if audio stream is separate from video stream.\n0: Automatic\n1: AAC\n2: OPUS"));
     addBoolItem(YDL_AUDIO_ONLY, IDS_RS_YDL_AUDIO_ONLY, false, s.bYDLAudioOnly, StrRes(IDS_PPAGEADVANCED_YDL_AUDIO_ONLY));
     addCStringItem(YDL_EXEPATH, IDS_RS_YDL_EXEPATH, _T(""), s.sYDLExePath, StrRes(IDS_PPAGEADVANCED_YDL_EXEPATH));
     addCStringItem(YDL_COMMAND_LINE, IDS_RS_YDL_COMMAND_LINE, _T(""), s.sYDLCommandLine, StrRes(IDS_PPAGEADVANCED_YDL_COMMAND_LINE));
