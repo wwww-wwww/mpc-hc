@@ -7548,7 +7548,7 @@ void CMainFrame::OnViewZoomAutoFitLarger()
 
 void CMainFrame::OnViewModifySize(UINT nID)
 {
-    if (m_fFullScreen || IsZoomed() || IsIconic()) {
+    if (m_fFullScreen || !m_pVideoWnd || IsZoomed() || IsIconic()) {
         return;
     }
 
