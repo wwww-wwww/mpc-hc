@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2022-05-09 13:58:21+0000\n"
+"POT-Creation-Date: 2022-06-24 16:57:41+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3899,6 +3899,10 @@ msgstr ""
 
 msgctxt "IDS_SUBTITLE_RENDERER_ASS_FILTER"
 msgid "AssFilter"
+msgstr ""
+
+msgctxt "IDS_SUBTITLE_RENDERER_NONE"
+msgid "None"
 msgstr ""
 
 msgctxt "IDS_SUBMENU_COPYURL"

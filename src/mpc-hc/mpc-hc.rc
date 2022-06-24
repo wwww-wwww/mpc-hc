@@ -3840,6 +3840,7 @@ BEGIN
     IDS_PPAGEADVANCED_USE_LEGACY_TOOLBAR 
                             "Use legacy toolbar instead of new vectorized one."
     IDS_SUBTITLE_RENDERER_ASS_FILTER "AssFilter"
+    IDS_SUBTITLE_RENDERER_NONE "None"
     IDS_SUBMENU_COPYURL     "Copy URL"
 END
 

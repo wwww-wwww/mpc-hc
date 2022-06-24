@@ -721,12 +721,16 @@ bool CAppSettings::IsISRAutoLoadEnabled() const
 
 CAppSettings::SubtitleRenderer CAppSettings::GetSubtitleRenderer() const
 {
-    if (IsSubtitleRendererSupported(SubtitleRenderer::INTERNAL, iDSVideoRendererType) ||
-            IsSubtitleRendererSupported(SubtitleRenderer::XY_SUB_FILTER, iDSVideoRendererType) ||
-            IsSubtitleRendererSupported(SubtitleRenderer::ASS_FILTER, iDSVideoRendererType)) {
-        return eSubtitleRenderer;
+    switch (eSubtitleRenderer) {
+        case SubtitleRenderer::INTERNAL:
+            return IsSubtitleRendererSupported(SubtitleRenderer::INTERNAL, iDSVideoRendererType) ? eSubtitleRenderer : SubtitleRenderer::VS_FILTER;
+        case SubtitleRenderer::XY_SUB_FILTER:
+            return IsSubtitleRendererSupported(SubtitleRenderer::XY_SUB_FILTER, iDSVideoRendererType) ? eSubtitleRenderer : SubtitleRenderer::VS_FILTER;
+        case SubtitleRenderer::ASS_FILTER:
+            return IsSubtitleRendererSupported(SubtitleRenderer::ASS_FILTER, iDSVideoRendererType) ? eSubtitleRenderer : SubtitleRenderer::VS_FILTER;
+        default:
+            return eSubtitleRenderer;
     }
-    return SubtitleRenderer::VS_FILTER;
 }
 
 bool CAppSettings::IsSubtitleRendererRegistered(SubtitleRenderer eSubtitleRenderer)
@@ -740,6 +744,8 @@ bool CAppSettings::IsSubtitleRendererRegistered(SubtitleRenderer eSubtitleRender
             return IsCLSIDRegistered(CLSID_XySubFilter);
         case SubtitleRenderer::ASS_FILTER:
             return IsCLSIDRegistered(CLSID_AssFilter);
+        case SubtitleRenderer::NONE:
+            return true;
         default:
             ASSERT(FALSE);
             return false;
@@ -775,6 +781,8 @@ bool CAppSettings::IsSubtitleRendererSupported(SubtitleRenderer eSubtitleRendere
                     return true;
             }
             break;
+        case SubtitleRenderer::NONE:
+            return true;
 
         default:
             ASSERT(FALSE);

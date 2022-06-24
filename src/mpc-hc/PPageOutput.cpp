@@ -731,6 +731,9 @@ void CPPageOutput::UpdateSubtitleRendererList()
             case CAppSettings::SubtitleRenderer::ASS_FILTER:
                 sName = ResStr(IDS_SUBTITLE_RENDERER_ASS_FILTER);
                 break;
+            case CAppSettings::SubtitleRenderer::NONE:
+                sName = ResStr(IDS_SUBTITLE_RENDERER_NONE);
+                break;
             default:
                 ASSERT(FALSE);
                 break;
@@ -749,6 +752,7 @@ void CPPageOutput::UpdateSubtitleRendererList()
     addSubtitleRenderer(CAppSettings::SubtitleRenderer::VS_FILTER);
     addSubtitleRenderer(CAppSettings::SubtitleRenderer::XY_SUB_FILTER);
     addSubtitleRenderer(CAppSettings::SubtitleRenderer::ASS_FILTER);
+    addSubtitleRenderer(CAppSettings::SubtitleRenderer::NONE);
     m_SubtitleRendererCtrl.SetCurSel(0);
     if (m_SubtitleRendererCtrl.IsWindowEnabled()) {
         for (int j = 0; j < m_SubtitleRendererCtrl.GetCount(); ++j) {

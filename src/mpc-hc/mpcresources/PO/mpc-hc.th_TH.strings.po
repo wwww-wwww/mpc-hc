@@ -4028,6 +4028,10 @@ msgctxt "IDS_SUBTITLE_RENDERER_ASS_FILTER"
 msgid "AssFilter"
 msgstr ""
 
+msgctxt "IDS_SUBTITLE_RENDERER_NONE"
+msgid "None"
+msgstr ""
+
 msgctxt "IDS_SUBMENU_COPYURL"
 msgid "Copy URL"
 msgstr ""

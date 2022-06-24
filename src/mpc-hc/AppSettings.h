@@ -887,6 +887,7 @@ public:
         VS_FILTER,
         XY_SUB_FILTER,
         ASS_FILTER,
+        NONE,
     };
 
     SubtitleRenderer GetSubtitleRenderer() const;
