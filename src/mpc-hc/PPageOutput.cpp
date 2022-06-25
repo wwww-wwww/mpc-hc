@@ -118,10 +118,7 @@ BOOL CPPageOutput::OnInitDialog()
     const CRenderersSettings& r = s.m_RenderersSettings;
 
     m_iDSVideoRendererType  = s.iDSVideoRendererType;
-
-    if (m_iDSVideoRendererType == VIDRNDT_DS_VMR9RENDERLESS || m_iDSVideoRendererType == VIDRNDT_DS_EVR_CUSTOM || m_iDSVideoRendererType == VIDRNDT_DS_SYNC || m_iDSVideoRendererType == VIDRNDT_DS_DXR || m_iDSVideoRendererType == VIDRNDT_DS_MADVR || m_iDSVideoRendererType == VIDRNDT_DS_MPCVR) {
-        m_lastSubrenderer = s.GetSubtitleRenderer();
-    }
+    m_lastSubrenderer = s.GetSubtitleRenderer();
 
     m_APSurfaceUsageCtrl.AddString(ResStr(IDS_PPAGE_OUTPUT_SURF_OFFSCREEN));
     m_APSurfaceUsageCtrl.AddString(ResStr(IDS_PPAGE_OUTPUT_SURF_2D));
@@ -519,6 +516,14 @@ void CPPageOutput::OnDSRendererChange()
     UpdateData();
     m_iDSVideoRendererType = (int)m_iDSVideoRendererTypeCtrl.GetItemData(m_iDSVideoRendererTypeCtrl.GetCurSel());
 
+    if (AfxGetAppSettings().iDSVideoRendererType != m_iDSVideoRendererType) {
+        if (CAppSettings::IsSubtitleRendererSupported(CAppSettings::SubtitleRenderer::INTERNAL, m_iDSVideoRendererType)) {
+            if (m_lastSubrenderer == CAppSettings::SubtitleRenderer::VS_FILTER || !CAppSettings::IsSubtitleRendererRegistered(m_lastSubrenderer)) {
+                m_lastSubrenderer = CAppSettings::SubtitleRenderer::INTERNAL;
+            }
+        }
+    }
+
     GetDlgItem(IDC_DX_SURFACE)->EnableWindow(FALSE);
     GetDlgItem(IDC_DX9RESIZER_COMBO)->EnableWindow(FALSE);
     GetDlgItem(IDC_FULLSCREEN_MONITOR_CHECK)->EnableWindow(FALSE);
@@ -704,6 +709,7 @@ void CPPageOutput::UpdateSubtitleSupport()
 
     bool supported = (m_iDSVideoRendererType != VIDRNDT_DS_NULL_COMP &&
                       m_iDSVideoRendererType != VIDRNDT_DS_NULL_UNCOMP &&
+                      subrenderer != CAppSettings::SubtitleRenderer::NONE &&
                       CAppSettings::IsSubtitleRendererRegistered(subrenderer) &&
                       CAppSettings::IsSubtitleRendererSupported(subrenderer, m_iDSVideoRendererType));
 
