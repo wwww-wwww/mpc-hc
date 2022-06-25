@@ -746,7 +746,7 @@ void CPPageOutput::UpdateSubtitleRendererList()
         }
 
         if (!CAppSettings::IsSubtitleRendererRegistered(nID)) {
-            sName.AppendFormat(_T(" %s"), ResStr(IDS_PPAGE_OUTPUT_UNAVAILABLE).GetString());
+            sName.AppendFormat(_T("   %s"), ResStr(IDS_PPAGE_OUTPUT_UNAVAILABLE).GetString());
         }
 
         m_SubtitleRendererCtrl.SetItemData(m_SubtitleRendererCtrl.AddString(sName), static_cast<int>(nID));
