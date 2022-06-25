@@ -358,7 +358,7 @@ void GetAudioScore(YDLStreamDetails& details) {
     CString acodec = details.acodec.Left(4);
 
     if (s.iYDLAudioFormat > 0) {
-        if (s.iYDLVideoFormat == YDL_FORMAT_AAC) {
+        if (s.iYDLAudioFormat == YDL_FORMAT_AAC) {
             if (acodec == L"mp4a") score += 32;
         } else {
             if (acodec == L"opus") score += 32;
