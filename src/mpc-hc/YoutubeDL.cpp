@@ -300,7 +300,7 @@ void GetVideoScore(YDLStreamDetails& details) {
         score += 1;
     }
 
-    if (s.iYDLMaxHeight >= details.height) {
+    if (s.iYDLMaxHeight > 0 && s.iYDLMaxHeight >= details.height) {
         score += 64;
     }
 
