@@ -305,42 +305,42 @@ void GetVideoScore(YDLStreamDetails& details) {
     }
 
     switch (s.iYDLVideoFormat) {
-        case YDL_FORMAT_H264_30: {
+        case YDL_FORMAT_H264_30:
             if (vcodec == _T("avc1")) score += 32;
             if (details.fps < 31) score += 8;
-        }
-        case YDL_FORMAT_H264_60: {
+            break;
+        case YDL_FORMAT_H264_60:
             if (vcodec == _T("avc1")) score += 32;
             if (details.fps >= 31) score += 8;
-        }
-        case YDL_FORMAT_VP9_30: {
+            break;
+        case YDL_FORMAT_VP9_30:
             if (vcodec == _T("vp9")) score += 32;
             else if (vcodec == _T("vp9.")) score += 16;
             if (details.fps < 31) score += 8;
-        }
-        case YDL_FORMAT_VP9_60: {
+            break;
+        case YDL_FORMAT_VP9_60:
             if (vcodec == _T("vp9")) score += 32;
             else if (vcodec == _T("vp9.")) score += 16;
             if (details.fps >= 31) score += 8;
-        }
-        case YDL_FORMAT_VP9P2_30: {
+            break;
+        case YDL_FORMAT_VP9P2_30:
             if (vcodec == _T("vp9")) score += 32;
             else if (details.vcodec == _T("vp9.2")) score += 32;
             if (details.fps < 31) score += 8;
-        }
-        case YDL_FORMAT_VP9P2_60: {
+            break;
+        case YDL_FORMAT_VP9P2_60:
             if (vcodec == _T("vp9")) score += 32;
             else if (details.vcodec == _T("vp9.2")) score += 32;
             if (details.fps >= 31) score += 8;
-        }
-        case YDL_FORMAT_AV1_30: {
+            break;
+        case YDL_FORMAT_AV1_30:
             if (vcodec == _T("av01")) score += 32;
             if (details.fps < 31) score += 8;
-        }
-        case YDL_FORMAT_AV1_60: {
+            break;
+        case YDL_FORMAT_AV1_60:
             if (vcodec == _T("av01")) score += 32;
             if (details.fps >= 31) score += 8;
-        }
+            break;
     }
 
     details.video_score = score;
