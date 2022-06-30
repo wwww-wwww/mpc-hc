@@ -292,6 +292,11 @@ STDMETHODIMP CDX11SubPic::AlphaBlt(RECT* pSrc, RECT* pDst, SubPicDesc* pTarget)
 	if (!pSrc || !pDst) {
 		return E_POINTER;
 	}
+    if (!m_pAllocator) {
+        ASSERT(FALSE);
+        return E_FAIL;
+    }
+
 	CRect rSrc(*pSrc), rDst(*pDst);
 
 	return m_pAllocator->Render(m_MemPic, m_rcDirty, rSrc, rDst);
