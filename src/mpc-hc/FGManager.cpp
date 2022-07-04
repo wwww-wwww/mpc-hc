@@ -61,6 +61,10 @@ CFGManager::CFGManager(LPCTSTR pName, LPUNKNOWN pUnk, HWND hWnd, bool IsPreview)
 	, m_bIsPreview(IsPreview)
     , m_bPreviewSupportsRotation(false)
     , m_ignoreVideo(false)
+    , m_source()
+    , m_transform()
+    , m_override()
+    , m_deadends()
 {
     m_pUnkInner.CoCreateInstance(CLSID_FilterGraph, GetOwner());
     m_pFM.CoCreateInstance(CLSID_FilterMapper2);
