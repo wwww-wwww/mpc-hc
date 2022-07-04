@@ -13620,12 +13620,14 @@ void CMainFrame::UpdateChapterInInfoBar()
             REFERENCE_TIME rtNow;
             m_pMS->GetCurrentPosition(&rtNow);
 
-            CComBSTR bstr;
-            long currentChap = m_pCB->ChapLookup(&rtNow, &bstr);
-            if (bstr.Length()) {
-                chapter.Format(_T("%s (%ld/%lu)"), bstr.m_str, std::max(0l, currentChap + 1l), dwChapCount);
-            } else {
-                chapter.Format(_T("%ld/%lu"), currentChap + 1, dwChapCount);
+            if (m_pCB) {
+                CComBSTR bstr;
+                long currentChap = m_pCB->ChapLookup(&rtNow, &bstr);
+                if (bstr.Length()) {
+                    chapter.Format(_T("%s (%ld/%lu)"), bstr.m_str, std::max(0l, currentChap + 1l), dwChapCount);
+                } else {
+                    chapter.Format(_T("%ld/%lu"), currentChap + 1, dwChapCount);
+                }
             }
         }
     }
