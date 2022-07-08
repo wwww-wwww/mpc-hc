@@ -4089,6 +4089,8 @@ void CMainFrame::OnFilePostClosemedia(bool bNextIsQueued/* = false*/)
         }
         m_pFullscreenWnd->DestroyWindow();
     }
+
+    UpdateWindow(); // redraw
 }
 
 void CMainFrame::OnBossKey()
@@ -4397,7 +4399,7 @@ void CMainFrame::OnFileOpenmedia()
     }
 
     if (!dlg.GetAppendToPlaylist()) {
-        SendMessage(WM_COMMAND, ID_FILE_CLOSEMEDIA);
+        CloseMediaBeforeOpen();
     }
 
     if (IsIconic()) {
@@ -10493,6 +10495,8 @@ void CMainFrame::OnRecentFile(UINT nID)
         ASSERT(false);
         return;
     }
+
+    CloseMediaBeforeOpen();
 
     if (fns.GetCount() == 1 && CanSendToYoutubeDL(r.fns.GetHead())) {
         SendMessage(WM_COMMAND, ID_FILE_CLOSEMEDIA);
@@ -17558,23 +17562,7 @@ void CMainFrame::OpenMedia(CAutoPtr<OpenMediaData> pOMD)
         }
     }
 
-    // Wait a little so we can maybe avoid having to close previous media while graph is still being created
-    int wait = 3000;
-    while (GetLoadState() == MLS::LOADING && wait > 0) {
-        SleepEx(200, false);
-        wait -= 200;
-    }
-
-    if (m_bSettingUpMenus) {
-        SleepEx(500, false);
-        ASSERT(!m_bSettingUpMenus);
-    }
-
-    // close the current graph before opening new media
-    if (GetLoadState() != MLS::CLOSED) {
-        CloseMedia(true);
-        ASSERT(GetLoadState() == MLS::CLOSED);
-    }
+    CloseMediaBeforeOpen();
 
     // if the file is on some removable drive and that drive is missing,
     // we yell at user before even trying to construct the graph
@@ -17695,6 +17683,22 @@ bool CMainFrame::DisplayChange()
         return m_pCAP->DisplayChange();
     }
     return true;
+}
+
+void CMainFrame::CloseMediaBeforeOpen()
+{
+    // Wait a little so we can maybe avoid having to close previous media while graph is still being created
+    int wait = 3000;
+    while (GetLoadState() == MLS::LOADING && wait > 0) {
+        SleepEx(200, false);
+        wait -= 200;
+    }
+
+    // close the current graph before opening new media
+    if (GetLoadState() != MLS::CLOSED) {
+        CloseMedia(true);
+        ASSERT(GetLoadState() == MLS::CLOSED);
+    }
 }
 
 void CMainFrame::CloseMedia(bool bNextIsQueued/* = false*/)
