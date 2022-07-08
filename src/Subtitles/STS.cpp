@@ -3694,6 +3694,9 @@ bool CSimpleTextSubtitle::SaveAs(CString fn, Subtitle::SubType type,
         file.WriteString(str2);
     }
 
+    m_provider = _T("Local");
+    m_path = fn;
+
     return true;
 }
 
