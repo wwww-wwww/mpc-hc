@@ -70,8 +70,8 @@ BOOL CSubtitleDlDlgListCtrl::OnToolNeedText(UINT id, NMHDR* pNMHDR, LRESULT*)
         return FALSE;
     }
 
-    static CString tooltipText;
-    tooltipText = SubtitlesProvidersUtils::JoinContainer(subtitleInfo->releaseNames, "\n").c_str();
+    static CStringW tooltipText;
+    tooltipText = SubtitlesProvidersUtils::JoinContainer(subtitleInfo->releaseNames, L"\n").c_str();
     ASSERT(!tooltipText.IsEmpty());
 
     pTTT->lpszText = tooltipText.GetBuffer();
