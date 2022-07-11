@@ -788,7 +788,8 @@ bool CPlayerPlaylistBar::PlaylistCanStripPath(CString path)
 {
     CPath p(path);
     p.RemoveFileSpec();
-    CString base = p.m_strPath;
+    CString base = p.m_strPath + L"\\";
+    int baselen = base.GetLength();
 
     POSITION pos = m_pl.GetHeadPosition();
     while (pos) {
@@ -800,14 +801,8 @@ bool CPlayerPlaylistBar::PlaylistCanStripPath(CString path)
             POSITION pos2 = pli.m_fns.GetHeadPosition();
             while (pos2) {
                 CString fn = pli.m_fns.GetNext(pos2);
-
-                if (PathUtils::IsURL(fn)) {
-                    return false;
-                }
-
-                CPath fnPath(fn);
-                fnPath.RemoveFileSpec();
-                if (base != fnPath.m_strPath) {
+                CString filebase = fn.Left(baselen);
+                if (base != filebase) {
                     return false;
                 }
             }
@@ -815,10 +810,22 @@ bool CPlayerPlaylistBar::PlaylistCanStripPath(CString path)
             pos2 = pli.m_subs.GetHeadPosition();
             while (pos2) {
                 CString fn = pli.m_subs.GetNext(pos2);
+                CString filebase = fn.Left(baselen);
+                if (base != filebase) {
+                    return false;
+                }
+            }
 
-                CPath fnPath(fn);
-                fnPath.RemoveFileSpec();
-                if (base != fnPath.m_strPath) {
+            if (pli.m_cue) {
+                CString filebase = pli.m_cue_filename.Left(baselen);
+                if (base != filebase) {
+                    return false;
+                }
+            }
+
+            if (!pli.m_cover.IsEmpty()) {
+                CString filebase = pli.m_cover.Left(baselen);
+                if (base != filebase) {
                     return false;
                 }
             }
@@ -835,7 +842,12 @@ bool CPlayerPlaylistBar::SaveMPCPlayList(CString fn, CTextFile::enc e)
         return false;
     }
 
-    bool fRemovePath = PlaylistCanStripPath(fn);
+    bool bRemovePath = PlaylistCanStripPath(fn);
+
+    CPath pl_path(fn);
+    pl_path.RemoveFileSpec();
+    CString pl_path_str = pl_path.m_strPath + L"\\";
+    int pl_path_len = pl_path_str.GetLength();
 
     f.WriteString(_T("MPCPLAYLIST\n"));
 
@@ -858,10 +870,8 @@ bool CPlayerPlaylistBar::SaveMPCPlayList(CString fn, CTextFile::enc e)
             pos2 = pli.m_fns.GetHeadPosition();
             while (pos2) {
                 CString fn2 = pli.m_fns.GetNext(pos2);
-                if (fRemovePath) {
-                    CPath p(fn2);
-                    p.StripPath();
-                    fn2 = (LPCTSTR)p;
+                if (bRemovePath && (pl_path_str == fn2.Left(pl_path_len))) {
+                    fn2 = fn2.Mid(pl_path_len);
                 }
                 f.WriteString(idx + _T(",filename,") + fn2 + _T("\n"));
             }
@@ -869,10 +879,8 @@ bool CPlayerPlaylistBar::SaveMPCPlayList(CString fn, CTextFile::enc e)
             pos2 = pli.m_subs.GetHeadPosition();
             while (pos2) {
                 CString fn2 = pli.m_subs.GetNext(pos2);
-                if (fRemovePath) {
-                    CPath p(fn2);
-                    p.StripPath();
-                    fn2 = (LPCTSTR)p;
+                if (bRemovePath && (pl_path_str == fn2.Left(pl_path_len))) {
+                    fn2 = fn2.Mid(pl_path_len);
                 }
                 f.WriteString(idx + _T(",subtitle,") + fn2 + _T("\n"));
             }
@@ -880,14 +888,22 @@ bool CPlayerPlaylistBar::SaveMPCPlayList(CString fn, CTextFile::enc e)
                 f.WriteString(idx + _T(",ydlSourceURL,") + pli.m_ydlSourceURL + _T("\n"));
             }
             if (pli.m_cue) {
-                f.WriteString(idx + _T(",cue_filename,") + pli.m_cue_filename + _T("\n"));
+                CString cue = pli.m_cue_filename;
+                if (bRemovePath && (pl_path_str == cue.Left(pl_path_len))) {
+                    cue = cue.Mid(pl_path_len);
+                }
+                f.WriteString(idx + _T(",cue_filename,") + cue + _T("\n"));
                 if (pli.m_cue_index > 0) {
                     str.Format(_T("%d,cue_index,%d"), i, pli.m_cue_index);
                     f.WriteString(str + _T("\n"));
                 }
             }
             if (!pli.m_cover.IsEmpty()) {
-                f.WriteString(idx + _T(",cover,") + pli.m_cover + _T("\n"));
+                CString cover = pli.m_cover;
+                if (bRemovePath && (pl_path_str == cover.Left(pl_path_len))) {
+                    cover = cover.Mid(pl_path_len);
+                }
+                f.WriteString(idx + _T(",cover,") + cover + _T("\n"));
             }
             if (pli.m_ydl_subs.GetCount() > 0) {
                 POSITION pos3 = pli.m_ydl_subs.GetHeadPosition();
