@@ -5559,12 +5559,16 @@ void CMainFrame::SaveThumbnails(LPCTSTR fn)
     spd.vidrect = CRect(0, 0, width, height);
     spd.bits = (BYTE*)(bih + 1) + (width * 4) * (height - 1);
 
+    int gradientBase = 0xe0;
+    if (AppIsThemeLoaded()) {
+        gradientBase = 0x00;
+    }
     // Paint the background
     {
         BYTE* p = (BYTE*)spd.bits;
         for (int y = 0; y < spd.h; y++, p += spd.pitch) {
             for (int x = 0; x < spd.w; x++) {
-                ((DWORD*)p)[x] = 0x010101 * (0xe0 + 0x08 * y / spd.h + 0x18 * (spd.w - x) / spd.w);
+                ((DWORD*)p)[x] = 0x010101 * (gradientBase + 0x08 * y / spd.h + 0x18 * (spd.w - x) / spd.w);
             }
         }
     }
@@ -5735,6 +5739,9 @@ void CMainFrame::SaveThumbnails(LPCTSTR fn)
 
         CStringW str;
         str.Format(L"{\\an9\\fs%d\\b1\\bord0\\shad0\\1c&Hffffff&}%s", infoheight - 10, L"MPC-HC");
+        if (AppIsThemeLoaded()) {
+            str.Replace(L"\\1c&Hffffff", L"\\1c&Hc8c8c8");
+        }
 
         rts.Add(str, true, 0, 1, _T("thumbs"), _T(""), _T(""), CRect(0, 0, 0, 0), -1);
 
@@ -5772,8 +5779,11 @@ void CMainFrame::SaveThumbnails(LPCTSTR fn)
         if (szAR.cx > 0 && szAR.cy > 0 && szAR.cx != szVideo.cx && szAR.cy != szVideo.cy) {
             ar.Format(L"(%ld:%ld)", szAR.cx, szAR.cy);
         }
-
-        str.Format(IDS_THUMBNAILS_INFO_HEADER,
+        CStringW fmt = ResStr(IDS_THUMBNAILS_INFO_HEADER);
+        if (AppIsThemeLoaded()) {
+            fmt.Replace(L"\\1c&H000000", L"\\1c&Hc8c8c8");
+        }
+        str.Format(fmt,
                    title.GetString(), fs.GetString(), szVideo.cx, szVideo.cy, ar.GetString(), hmsf.bHours, hmsf.bMinutes, hmsf.bSeconds);
         rts.Add(str, true, 0, 1, _T("thumbs"));
 
