@@ -5559,8 +5559,10 @@ void CMainFrame::SaveThumbnails(LPCTSTR fn)
     spd.vidrect = CRect(0, 0, width, height);
     spd.bits = (BYTE*)(bih + 1) + (width * 4) * (height - 1);
 
+    bool darktheme = AppIsThemeLoaded();
+
     int gradientBase = 0xe0;
-    if (AppIsThemeLoaded()) {
+    if (darktheme) {
         gradientBase = 0x00;
     }
     // Paint the background
@@ -5739,7 +5741,7 @@ void CMainFrame::SaveThumbnails(LPCTSTR fn)
 
         CStringW str;
         str.Format(L"{\\an9\\fs%d\\b1\\bord0\\shad0\\1c&Hffffff&}%s", infoheight - 10, L"MPC-HC");
-        if (AppIsThemeLoaded()) {
+        if (darktheme) {
             str.Replace(L"\\1c&Hffffff", L"\\1c&Hc8c8c8");
         }
 
@@ -5780,7 +5782,7 @@ void CMainFrame::SaveThumbnails(LPCTSTR fn)
             ar.Format(L"(%ld:%ld)", szAR.cx, szAR.cy);
         }
         CStringW fmt = ResStr(IDS_THUMBNAILS_INFO_HEADER);
-        if (AppIsThemeLoaded()) {
+        if (darktheme) {
             fmt.Replace(L"\\1c&H000000", L"\\1c&Hc8c8c8");
         }
         str.Format(fmt,
