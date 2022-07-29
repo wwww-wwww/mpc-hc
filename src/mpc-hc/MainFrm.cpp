@@ -18454,10 +18454,20 @@ void CMainFrame::ProcessAPICommand(COPYDATASTRUCT* pCDS)
 {
     CAtlList<CString> fns;
     REFERENCE_TIME rtPos = 0;
+    CString fn;
 
     switch (pCDS->dwData) {
         case CMD_OPENFILE:
-            fns.AddHead((LPCWSTR)pCDS->lpData);
+            fn = CString((LPCWSTR)pCDS->lpData);
+            if (CanSendToYoutubeDL(fn)) {
+                if (ProcessYoutubeDLURL(fn, false)) {
+                    OpenCurPlaylistItem();
+                    return;
+                } else if (IsOnYDLWhitelist(fn)) {
+                    return;
+                }
+            }
+            fns.AddHead(fn);
             m_wndPlaylistBar.Open(fns, false);
             OpenCurPlaylistItem();
             break;
@@ -18477,7 +18487,15 @@ void CMainFrame::ProcessAPICommand(COPYDATASTRUCT* pCDS)
             OnApiPause();
             break;
         case CMD_ADDTOPLAYLIST:
-            fns.AddHead((LPCWSTR)pCDS->lpData);
+            fn = CString((LPCWSTR)pCDS->lpData);
+            if (CanSendToYoutubeDL(fn)) {
+                if (ProcessYoutubeDLURL(fn, true)) {
+                    return;
+                } else if (IsOnYDLWhitelist(fn)) {
+                    return;
+                }
+            }
+            fns.AddHead(fn);
             m_wndPlaylistBar.Append(fns, true);
             break;
         case CMD_STARTPLAYLIST:
