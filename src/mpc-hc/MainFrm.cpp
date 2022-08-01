@@ -10820,7 +10820,7 @@ OAFilterState CMainFrame::GetMediaState() const
     OAFilterState ret = -1;
     if (m_eMediaLoadState == MLS::LOADED) {
         if (m_CachedFilterState != -1) {
-            #if DEBUG & 1
+            #if DEBUG & 0
             ret = GetMediaStateDirect();
             ASSERT(ret == m_CachedFilterState || m_fFrameSteppingActive);
             #endif
