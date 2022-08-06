@@ -106,7 +106,7 @@ CPPageFileMediaInfo::CPPageFileMediaInfo(CString path, IFileSourceFilter* pFSF, 
         MI.Option(_T("Complete"));
         MI.Option(_T("Language"), _T("  Config_Text_ColumnSize;30"));
 
-        if (m_path.IsEmpty() || MI.Open(filename) == 0) {
+        if (m_path.IsEmpty() || pAR && (m_path.Find(L".rar") > 0) || MI.Open(filename) == 0) {
             LONGLONG llSize, llAvailable;
             if (pAR && SUCCEEDED(pAR->Length(&llSize, &llAvailable))) {
                 size_t ret = MI.Open_Buffer_Init((MediaInfo_int64u)llSize);
