@@ -5411,7 +5411,7 @@ HRESULT CMainFrame::GetOriginalFrame(std::vector<BYTE>& dib, CString& errmsg) {
 }
 
 HRESULT CMainFrame::RenderCurrentSubtitles(BYTE* pData) {
-    ASSERT(AfxGetAppSettings().bSnapShotSubtitles && !m_pMVRFG && AfxGetAppSettings().fEnableSubtitles && AfxGetAppSettings().IsISRAutoLoadEnabled());
+    ASSERT(m_pCAP && AfxGetAppSettings().bSnapShotSubtitles && !m_pMVRFG && AfxGetAppSettings().fEnableSubtitles && AfxGetAppSettings().IsISRAutoLoadEnabled());
     CheckPointer(pData, E_FAIL);
     HRESULT hr = S_FALSE;
 
@@ -5421,7 +5421,7 @@ HRESULT CMainFrame::RenderCurrentSubtitles(BYTE* pData) {
         const int height = bih->biHeight;
 
         SubPicDesc spdRender;
-		spdRender.type    = MSP_RGB32;
+        spdRender.type = MSP_RGB32;
         spdRender.w = width;
         spdRender.h = abs(height);
         spdRender.bpp = 32;
@@ -5431,6 +5431,15 @@ HRESULT CMainFrame::RenderCurrentSubtitles(BYTE* pData) {
 
         REFERENCE_TIME rtNow = 0;
         m_pMS->GetCurrentPosition(&rtNow);
+
+        int delay = m_pCAP->GetSubtitleDelay();
+        if (delay != 0) {
+            if (delay > 0 && delay * 10000LL > rtNow) {
+                return S_FALSE;
+            } else {
+                rtNow -= delay * 10000LL;
+            }
+        }
 
         CComPtr<CMemSubPicAllocator> pSubPicAllocator = DEBUG_NEW CMemSubPicAllocator(spdRender.type, CSize(spdRender.w, spdRender.h));
 
