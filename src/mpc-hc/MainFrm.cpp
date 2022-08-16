@@ -1787,6 +1787,8 @@ LRESULT CMainFrame::OnDpiChanged(WPARAM wParam, LPARAM lParam)
     m_dpi.Override(LOWORD(wParam), HIWORD(wParam));
     m_eventc.FireEvent(MpcEvent::DPI_CHANGED);
     CMPCThemeMenu::clearDimensions();
+    NONCLIENTMETRICS m = { sizeof(NONCLIENTMETRICS) };
+    ::SystemParametersInfo(SPI_GETNONCLIENTMETRICS, sizeof(NONCLIENTMETRICS), &m, 0);
     if (!restoringWindowRect) { //do not adjust for DPI if restoring saved window position
         MoveWindow(reinterpret_cast<RECT*>(lParam));
     }
@@ -5746,7 +5748,7 @@ void CMainFrame::SaveThumbnails(LPCTSTR fn)
         STSStyle* style = DEBUG_NEW STSStyle();
         // Use System UI font.
         CFont tempFont;
-        CMPCThemeUtil::getFontByType(tempFont, nullptr, nullptr, CMPCThemeUtil::MessageFont);
+        CMPCThemeUtil::getFontByType(tempFont, nullptr, CMPCThemeUtil::MessageFont);
         LOGFONT lf;
         if (tempFont.GetLogFont(&lf)) {
             CString fontName(lf.lfFaceName);
@@ -20466,6 +20468,7 @@ void CMainFrame::OnSettingChange(UINT uFlags, LPCTSTR lpszSection)
 {
     __super::OnSettingChange(uFlags, lpszSection);
     if (SPI_SETNONCLIENTMETRICS == uFlags) {
+        CMPCThemeUtil::GetMetrics(true);
         CMPCThemeMenu::clearDimensions();
         if (nullptr != defaultMPCThemeMenu) {
             UpdateUILanguage(); //cheap way to rebuild menus--we want to do this to force them to re-measure
