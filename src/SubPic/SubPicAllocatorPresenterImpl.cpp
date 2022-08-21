@@ -276,7 +276,7 @@ STDMETHODIMP CSubPicAllocatorPresenterImpl::SetDefaultVideoAngle(Vector v)
 
         // In theory it should be a multiple of 90°
         int zAnglePi2 = std::lround(v.z / pi_2);
-        ASSERT(zAnglePi2 * pi_2 == v.z);
+        //ASSERT(zAnglePi2 * pi_2 == v.z);
 
         // Normalize the Z angle
         zAnglePi2 %= 4;

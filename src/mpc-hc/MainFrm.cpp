@@ -7924,8 +7924,8 @@ bool CMainFrame::PerformFlipRotate()
         int z = m_AngleZ;
         if (m_pCAP2) {
             int nZ = nearest90(z);
-            z = z - nZ;
-            Vector defAngle = Vector(0, 0, Vector::DegToRad((nZ + m_iDefRotation) % 360));
+            z = (z - nZ + 360) % 360;
+            Vector defAngle = Vector(0, 0, Vector::DegToRad((nZ - m_iDefRotation + 360) % 360));
             m_pCAP2->SetDefaultVideoAngle(defAngle);
         }
         
