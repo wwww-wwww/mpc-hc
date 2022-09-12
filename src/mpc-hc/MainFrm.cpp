@@ -1985,7 +1985,7 @@ void CMainFrame::OnTimer(UINT_PTR nIDEvent)
                             if (!m_pGB || !m_pMS) return; // can happen very rarely due to race condition
                             m_pMS->GetDuration(&rtDur);
 
-                            if (abRepeat.positionB && rtNow >= abRepeat.positionB) {
+                            if (abRepeat.positionB && rtNow >= abRepeat.positionB && GetMediaState() != State_Stopped) {
                                 PerformABRepeat();
                                 return;
                             }
@@ -2023,7 +2023,7 @@ void CMainFrame::OnTimer(UINT_PTR nIDEvent)
 
                                 rtNow = HMSF2RT(Location.TimeCode, fps);
 
-                                if (abRepeat.positionB && rtNow >= abRepeat.positionB) {
+                                if (abRepeat.positionB && rtNow >= abRepeat.positionB && GetMediaState() != State_Stopped) {
                                     PerformABRepeat();
                                     return;
                                 }
@@ -2650,6 +2650,9 @@ void CMainFrame::PerformABRepeat() {
 
 void CMainFrame::DisableABRepeat() {
     abRepeat = ABRepeat();
+
+    auto* pMRU = &AfxGetAppSettings().MRU;
+    pMRU->UpdateCurrentABRepeat(abRepeat);
 
     m_wndSeekBar.Invalidate();
 }
@@ -8404,7 +8407,9 @@ void CMainFrame::OnPlayStop()
         m_fEndOfStream = false;
     }
 
-    DisableABRepeat();
+    if (abRepeat.positionA || abRepeat.positionB) {
+        DisableABRepeat();
+    }
 
     SetPlayState(PS_STOP);
 }
@@ -10853,7 +10858,6 @@ bool CMainFrame::MediaControlRun(bool waitforcompletion)
 {
     m_dwLastPause = 0;
     if (m_pMC) {
-        ASSERT(m_CachedFilterState != State_Running);
         m_CachedFilterState = State_Running;
         if (FAILED(m_pMC->Run())) {
             // still in transition to running state
@@ -16915,6 +16919,10 @@ void CMainFrame::DoSeekTo(REFERENCE_TIME rtPos, bool bShowOSD /*= true*/)
         rtPos = 0;
     }
 
+    if (abRepeat.positionA && rtPos < abRepeat.positionA || abRepeat.positionB && rtPos > abRepeat.positionB) {
+        DisableABRepeat();
+    }
+
     if (m_fFrameSteppingActive) {
         // Cancel pending frame steps
         m_pFS->CancelStep();
@@ -16979,10 +16987,6 @@ void CMainFrame::DoSeekTo(REFERENCE_TIME rtPos, bool bShowOSD /*= true*/)
 
     OnTimer(TIMER_STREAMPOSPOLLER);
     OnTimer(TIMER_STREAMPOSPOLLER2);
-
-    if (abRepeat.positionA && rtPos < abRepeat.positionA || abRepeat.positionB && rtPos > abRepeat.positionB) {
-        DisableABRepeat();
-    }
 
     SendCurrentPositionToApi(true);
 }
