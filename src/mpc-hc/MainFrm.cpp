@@ -12465,6 +12465,31 @@ void CMainFrame::ShowMediaTypesDialog() {
     }
 }
 
+void CMainFrame::ReleasePreviewGraph()
+{
+    if (m_pGB_preview) {
+        m_pCAP2_preview.Release();
+        m_pMFVP_preview.Release();
+        m_pMFVDC_preview.Release();
+        m_pVMR9C_preview.Release();
+
+        m_pFS_preview.Release();
+        m_pMS_preview.Release();
+        m_pBV_preview.Release();
+        m_pVW_preview.Release();
+        m_pME_preview.Release();
+        m_pMC_preview.Release();
+
+        if (m_pDVDC_preview) {
+            m_pDVDC_preview.Release();
+            m_pDVDI_preview.Release();
+        }
+
+        m_pGB_preview->RemoveFromROT();
+        m_pGB_preview.Release();
+    }
+}
+
 HRESULT CMainFrame::PreviewWindowHide() {
     HRESULT hr = S_OK;
 
@@ -12744,27 +12769,7 @@ void CMainFrame::OpenFile(OpenFileData* pOFD)
 
                 if (FAILED(previewHR)) {
                     m_bUseSeekPreview = false;
-                    if (m_pGB_preview) {
-                        m_pMFVP_preview = nullptr;
-                        m_pMFVDC_preview = nullptr;
-                        m_pVMR9C_preview = nullptr;
-
-                        m_pMC_preview.Release();
-                        m_pME_preview.Release();
-                        m_pMS_preview.Release();
-                        m_pVW_preview.Release();
-                        m_pBV_preview.Release();
-                        m_pFS_preview.Release();
-
-                        if (m_pDVDC_preview) {
-                            m_pDVDC_preview.Release();
-                            m_pDVDI_preview.Release();
-                        }
-
-                        m_pGB_preview->RemoveFromROT();
-                        m_pGB_preview.Release();
-                        m_pGB_preview = nullptr;
-                    }
+                    ReleasePreviewGraph();
                 }
             }
         }
@@ -14635,25 +14640,7 @@ void CMainFrame::CloseMediaPrivate()
 
     if (m_pGB_preview) {
         PreviewWindowHide();
-        m_pCAP2_preview.Release();
-        m_pMFVP_preview.Release();
-        m_pMFVDC_preview.Release();
-        m_pVMR9C_preview.Release();
-
-        m_pFS_preview.Release();
-        m_pMS_preview.Release();
-        m_pBV_preview.Release();
-        m_pVW_preview.Release();
-        m_pME_preview.Release();
-        m_pMC_preview.Release();
-
-        if (m_pDVDC_preview) {
-            m_pDVDC_preview.Release();
-            m_pDVDI_preview.Release();
-        }
-
-        m_pGB_preview->RemoveFromROT();
-        m_pGB_preview.Release();
+        ReleasePreviewGraph();
     }
 
     m_pProv.Release();

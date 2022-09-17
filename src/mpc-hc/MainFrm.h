@@ -1147,9 +1147,10 @@ public:
 
     CMPC_Lcd m_Lcd;
 
-    // ==== Added by CASIMIR666
     CWnd*       m_pVideoWnd;            // Current Video (main display screen or 2nd)
     CPreView    m_wndPreView;           // SeekPreview
+
+    void ReleasePreviewGraph();
     HRESULT PreviewWindowHide();
     HRESULT PreviewWindowShow(REFERENCE_TIME rtCur2);
     bool CanPreviewUse();
