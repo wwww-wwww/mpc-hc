@@ -520,23 +520,55 @@ bool CText::CreatePath()
     HFONT hOldFont = SelectFont(g_hDC, font);
 
     if (m_style.fontSpacing) {
-        int width = 0;
-        bool bFirstPath = true;
-
-        for (LPCWSTR s = m_str; *s; s++) {
+        LONG cx;
+        auto getExtent = [&](LPCWSTR s) {
             CSize extent;
             if (!GetTextExtentPoint32W(g_hDC, s, 1, &extent)) {
                 SelectFont(g_hDC, hOldFont);
                 ASSERT(0);
                 return false;
             }
+            cx = extent.cx;
+            return true;
+        };
 
+        int width = 0;
+        bool bFirstPath = true;
+        bool failedPath = false;
+        int ftWidth = width;
+
+        for (LPCWSTR s = m_str; *s; s++) {
+            if (!getExtent(s)) {
+                return false;
+            }
             PartialBeginPath(g_hDC, bFirstPath);
             bFirstPath = false;
             TextOutW(g_hDC, 0, 0, s, 1);
+            int mp = mPathPoints;
             PartialEndPath(g_hDC, width, 0);
+            if (mp == mPathPoints && L' ' != s[0]) { //failed to add points, we will try again with FreeType as emulator
+                failedPath=true;
+                break;
+            }
+#if 0
+            GetPathFreeType(g_hDC, false, s[0], m_style.fontSize, width+ cx + (int)m_style.fontSpacing, 0);
+            GetPathFreeType(g_hDC, false, s[0], m_style.fontSize, width, m_style.fontSize*2);
+#endif
 
-            width += extent.cx + (int)m_style.fontSpacing;
+            width += cx + (int)m_style.fontSpacing;
+        }
+        if (failedPath) { //try freetype
+            width = ftWidth;
+            bFirstPath = true;
+
+            for (LPCWSTR s = m_str; *s; s++) {
+                if (!getExtent(s)) {
+                    return false;
+                }
+                GetPathFreeType(g_hDC, bFirstPath, m_style.fontName, s[0], m_style.fontSize, width, 0);
+                bFirstPath = false;
+                width += cx + (int)m_style.fontSpacing;
+            }
         }
     } else {
         CSize extent;
