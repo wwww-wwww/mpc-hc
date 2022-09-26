@@ -691,7 +691,8 @@ public:
     unsigned        uHideFullscreenControlsDelay;
     bool            bHideFullscreenDockedPanels;
     bool            fExitFullScreenAtTheEnd;
-    CStringW        strFullScreenMonitor;
+    CStringW        strFullScreenMonitorID;
+    CStringW        strFullScreenMonitorDeviceName;
     AutoChangeFullscreenMode autoChangeFSMode;
 
     // Sync Renderer Settings

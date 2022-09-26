@@ -235,6 +235,7 @@
 #define IDS_RS_THUMBCOLS                    _T("ThumbCols")
 #define IDS_RS_ENABLEEDLEDITOR              _T("EnableEDLEditor")
 #define IDS_RS_FULLSCREENMONITOR            _T("FullScreenMonitor")
+#define IDS_RS_FULLSCREENMONITORDEVICE      _T("FullScreenMonitorDevice")
 #define IDS_RS_PREVENT_MINIMIZE             _T("PreventMinimize")
 #define IDS_RS_ENHANCED_TASKBAR             _T("UseWin7TaskBar")
 #define IDS_RS_SEARCH_IN_FOLDER             _T("UseSearchInFolder")
