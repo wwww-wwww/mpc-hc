@@ -115,6 +115,7 @@ CMonitor CMonitors::GetMonitor(CStringW displayName, CStringW deviceName)
             if (deviceName == deviceName2) {
                 if (displayName == displayName2) {
                     // exact match
+                    best = -1;
                     break;
                 } else {
                     // there might be a better match in case of duplicate device names
