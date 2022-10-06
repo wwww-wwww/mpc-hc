@@ -2197,8 +2197,8 @@ struct OpenFunctStruct {
 static OpenFunctStruct OpenFuncts[] = {
     OpenSubRipper, TIME, Subtitle::SRT,
     OpenOldSubRipper, TIME, Subtitle::SRT,
-    OpenSubViewer, TIME, Subtitle::SUB,
-    OpenMicroDVD, FRAME, Subtitle::SSA,
+    OpenSubViewer, TIME, Subtitle::SRT,
+    OpenMicroDVD, FRAME, Subtitle::SUB,
     OpenVPlayer, TIME, Subtitle::SRT,
     OpenSubStationAlpha, TIME, Subtitle::SSA,
     OpenVTT, TIME, Subtitle::VTT,
