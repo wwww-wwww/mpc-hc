@@ -6097,7 +6097,7 @@ void CMainFrame::OnFileSubtitlesLoad()
         CPath defaultDir(curfile);
         defaultDir.RemoveFileSpec();
         if (!defaultDir.m_strPath.IsEmpty()) {
-            ofn.lpstrInitialDir = defaultDir;
+            ofn.lpstrInitialDir = defaultDir.m_strPath;
         }
     }
 
