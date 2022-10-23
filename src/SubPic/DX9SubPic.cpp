@@ -404,12 +404,11 @@ STDMETHODIMP CDX9SubPicAllocator::SetMaxTextureSize(SIZE maxTextureSize)
 {
     CAutoLock cAutoLock(this);
     if (maxTextureSize.cx > 0 && maxTextureSize.cy > 0 && m_maxsize != maxTextureSize) {
-        if (m_maxsize.cx < maxTextureSize.cx || m_maxsize.cy < maxTextureSize.cy) {
-            ClearCache();
-        }
+        ClearCache();
         m_maxsize = maxTextureSize;
         TRACE(_T("CDX9SubPicAllocator::SetMaxTextureSize %dx%d\n"), m_maxsize.cx, m_maxsize.cy);
     }
+
     return S_OK;
 }
 

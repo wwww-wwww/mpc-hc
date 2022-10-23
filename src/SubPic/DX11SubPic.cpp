@@ -372,14 +372,10 @@ STDMETHODIMP CDX11SubPicAllocator::SetMaxTextureSize(SIZE MaxTextureSize)
 {
 	CAutoLock cAutoLock(this);
 	if (m_maxsize != MaxTextureSize) {
-		if (m_maxsize.cx < MaxTextureSize.cx || m_maxsize.cy < MaxTextureSize.cy) {
-			ClearCache();
-		}
+		ClearCache();
 		m_maxsize = MaxTextureSize;
+        TRACE(_T("CDX11SubPicAllocator::SetMaxTextureSize %dx%d\n"), m_maxsize.cx, m_maxsize.cy);
 	}
-
-	SetCurSize(MaxTextureSize);
-	SetCurVidRect(CRect(CPoint(0,0), MaxTextureSize));
 
 	return S_OK;
 }
