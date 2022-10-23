@@ -3324,12 +3324,12 @@ void CAppSettings::UpdateSettings()
                 VERIFY(pApp->WriteProfileString(newSection, strTemp, strChannel));
             }
         }
-        // no break
+        [[fallthrough]];
         case 1: {
             // Internal decoding of WMV 1/2/3 is now disabled by default so we reinitialize its value
             pApp->WriteProfileInt(IDS_R_INTERNAL_FILTERS, _T("TRA_WMV"), FALSE);
         }
-        // no break
+        [[fallthrough]];
         case 2: {
             const CString section(_T("Settings"));
             if (pApp->HasProfileEntry(section, _T("FullScreenCtrls")) &&
@@ -3359,7 +3359,7 @@ void CAppSettings::UpdateSettings()
                 }
             }
         }
-        // no break
+        [[fallthrough]];
         case 3: {
 #pragma pack(push, 1)
             struct dispmode {
@@ -3432,16 +3432,16 @@ void CAppSettings::UpdateSettings()
 
             SaveSettingsAutoChangeFullScreenMode();
         }
-        // no break
+        [[fallthrough]];
         case 4: {
             bool bDisableSubtitleAnimation = !pApp->GetProfileInt(IDS_R_SETTINGS, _T("SPCAllowAnimationWhenBuffering"), TRUE);
             VERIFY(pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_DISABLE_SUBTITLE_ANIMATION, bDisableSubtitleAnimation));
         }
-        // no break
+        [[fallthrough]];
         case 5:
             copyInt(IDS_R_INTERNAL_FILTERS, _T("SRC_DTSAC3"), IDS_R_INTERNAL_FILTERS, _T("SRC_DTS"));
             copyInt(IDS_R_INTERNAL_FILTERS, _T("SRC_DTSAC3"), IDS_R_INTERNAL_FILTERS, _T("SRC_AC3"));
-        // no break
+        [[fallthrough]];
         case 6: {
             SubtitleRenderer subrenderer = SubtitleRenderer::INTERNAL;
             if (!pApp->GetProfileInt(IDS_R_SETTINGS, _T("AutoloadSubtitles"), TRUE)) {
@@ -3458,7 +3458,7 @@ void CAppSettings::UpdateSettings()
             }
             VERIFY(pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_SUBTITLE_RENDERER, static_cast<int>(subrenderer)));
         }
-        // no break
+        [[fallthrough]];
         case 7:
             // Update the settings after the removal of DirectX 7 renderers
             switch (pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_DSVIDEORENDERERTYPE, VIDRNDT_DS_DEFAULT)) {
@@ -3469,7 +3469,7 @@ void CAppSettings::UpdateSettings()
                     VERIFY(pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_DSVIDEORENDERERTYPE, VIDRNDT_DS_VMR9RENDERLESS));
                     break;
             }
-        // no break
+        [[fallthrough]];
         default:
             pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_R_VERSION, APPSETTINGS_VERSION);
     }

@@ -7960,7 +7960,7 @@ void CMainFrame::OnViewRotate(UINT nID)
             m_AngleX += 2;
             break;
         }
-        // fall through for m_pCAP3
+        [[fallthrough]]; // fall through for m_pCAP3
     case ID_PANSCAN_ROTATEXM:
         if (m_AngleX >= 180) {
             m_AngleX = 0;
@@ -7973,6 +7973,7 @@ void CMainFrame::OnViewRotate(UINT nID)
             m_AngleY += 2;
             break;
         }
+        [[fallthrough]];
     case ID_PANSCAN_ROTATEYM:
         if (m_AngleY >= 180) {
             m_AngleY = 0;
@@ -7996,6 +7997,7 @@ void CMainFrame::OnViewRotate(UINT nID)
             m_AngleZ += 2;
             break;
         }
+        [[fallthrough]];
     case ID_PANSCAN_ROTATEZ270:
         if (m_AngleZ < 90) {
             m_AngleZ = 90;
@@ -9429,47 +9431,42 @@ void CMainFrame::OnPlayColor(UINT nID)
         int& saturation = s.iSaturation;
         CString tmp, str;
         switch (nID) {
-
             case ID_COLOR_BRIGHTNESS_INC:
                 brightness += 2;
-            // no break
+                [[fallthrough]];
             case ID_COLOR_BRIGHTNESS_DEC:
                 brightness -= 1;
                 SetColorControl(ProcAmp_Brightness, brightness, contrast, hue, saturation);
                 tmp.Format(brightness ? _T("%+d") : _T("%d"), brightness);
                 str.Format(IDS_OSD_BRIGHTNESS, tmp.GetString());
                 break;
-
             case ID_COLOR_CONTRAST_INC:
                 contrast += 2;
-            // no break
+                [[fallthrough]];
             case ID_COLOR_CONTRAST_DEC:
                 contrast -= 1;
                 SetColorControl(ProcAmp_Contrast, brightness, contrast, hue, saturation);
                 tmp.Format(contrast ? _T("%+d") : _T("%d"), contrast);
                 str.Format(IDS_OSD_CONTRAST, tmp.GetString());
                 break;
-
             case ID_COLOR_HUE_INC:
                 hue += 2;
-            // no break
+                [[fallthrough]];
             case ID_COLOR_HUE_DEC:
                 hue -= 1;
                 SetColorControl(ProcAmp_Hue, brightness, contrast, hue, saturation);
                 tmp.Format(hue ? _T("%+d") : _T("%d"), hue);
                 str.Format(IDS_OSD_HUE, tmp.GetString());
                 break;
-
             case ID_COLOR_SATURATION_INC:
                 saturation += 2;
-            // no break
+                [[fallthrough]];
             case ID_COLOR_SATURATION_DEC:
                 saturation -= 1;
                 SetColorControl(ProcAmp_Saturation, brightness, contrast, hue, saturation);
                 tmp.Format(saturation ? _T("%+d") : _T("%d"), saturation);
                 str.Format(IDS_OSD_SATURATION, tmp.GetString());
                 break;
-
             case ID_COLOR_RESET:
                 brightness = AfxGetMyApp()->GetColorControl(ProcAmp_Brightness)->DefaultValue;
                 contrast   = AfxGetMyApp()->GetColorControl(ProcAmp_Contrast)->DefaultValue;
@@ -9554,7 +9551,7 @@ void CMainFrame::OnAfterplayback(UINT nID)
                 break;
             default:
                 ASSERT(FALSE);
-            // no break
+                [[fallthrough]];
             case CAppSettings::AfterPlayback::DO_NOTHING:
                 osdMsg = IDS_AFTERPLAYBACK_DONOTHING;
                 break;
@@ -11524,10 +11521,17 @@ void CMainFrame::MoveVideoWindow(bool fShowStats/* = false*/, bool bSetStoppedVi
                     break;
                 default:
                     ASSERT(FALSE);
-                // Fallback to "Touch Window From Inside" if settings were corrupted.
+                    [[fallthrough]]; // Fallback to "Touch Window From Inside" if settings were corrupted.
                 case DVS_FROMINSIDE:
+                    if (dWRWidth < dVRWidth) {
+                        dVRWidth = dWRWidth;
+                        dVRHeight = dVRWidth / dVideoAR;
+                    } else {
+                        dVRHeight = dWRHeight;
+                    }
+                    break;
                 case DVS_FROMOUTSIDE:
-                    if ((dWRWidth < dVRWidth) != (iDefaultVideoSize == DVS_FROMOUTSIDE)) {
+                    if (dWRWidth > dVRWidth) {
                         dVRWidth = dWRWidth;
                         dVRHeight = dVRWidth / dVideoAR;
                     } else {
