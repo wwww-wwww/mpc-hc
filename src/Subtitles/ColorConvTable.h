@@ -24,10 +24,11 @@
 
 struct ColorConvTable {
     enum YuvMatrixType {
-        NONE,
+        AUTO,
         BT601,
         BT709,
-        BT2020
+        BT2020,
+        NONE_RGB
     };
 
     enum YuvRangeType {

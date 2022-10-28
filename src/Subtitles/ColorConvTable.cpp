@@ -201,7 +201,7 @@ private:
     //m_matrix[in_level][in_type][out_level][out_type]
     int* m_matrix[LEVEL_COUNT][COLOR_COUNT][LEVEL_COUNT][COLOR_COUNT];
 
-    int m_matrix_vsfilter_compact_corretion[LEVEL_COUNT][3][4];
+    int m_matrix_vsfilter_compact_correction[LEVEL_COUNT][3][4];
 };
 
 ConvMatrix::ConvMatrix()
@@ -290,7 +290,7 @@ void ConvMatrix::InitMatrix(int in_level, int in_type, int out_level, int out_ty
 
 void ConvMatrix::InitColorCorrectionMatrix()
 {
-    int* out_matrix = &m_matrix_vsfilter_compact_corretion[LEVEL_PC][0][0];
+    int* out_matrix = &m_matrix_vsfilter_compact_correction[LEVEL_PC][0][0];
 
     float matrix[3][4];
     float* p_matrix = &matrix[0][0];
@@ -301,7 +301,7 @@ void ConvMatrix::InitColorCorrectionMatrix()
         ASSERT(out_matrix[i] < (1 << 24));
     }
 
-    out_matrix = &m_matrix_vsfilter_compact_corretion[LEVEL_TV][0][0];
+    out_matrix = &m_matrix_vsfilter_compact_correction[LEVEL_TV][0][0];
     memcpy(p_matrix, MATRIX_QUAN[LEVEL_TV][COLOR_RGB], 3 * 4 * sizeof(float));
     MultiplyMatrix(p_matrix, MATRIX_INV_TRANS[COLOR_YUV_709]);
     MultiplyMatrix(p_matrix, MATRIX_TRANS[COLOR_YUV_601]);
@@ -340,7 +340,7 @@ DWORD ConvMatrix::DoConvert(int x1, int x2, int x3, const int* matrix)
 DWORD ConvMatrix::ColorCorrection(int r8, int g8, int b8, int output_rgb_level)
 {
     ASSERT(output_rgb_level == LEVEL_PC || output_rgb_level == LEVEL_TV);
-    return DoConvert(r8, g8, b8, &m_matrix_vsfilter_compact_corretion[output_rgb_level][0][0]);
+    return DoConvert(r8, g8, b8, &m_matrix_vsfilter_compact_correction[output_rgb_level][0][0]);
 }
 
 const int FRACTION_BITS = 16;
@@ -413,6 +413,7 @@ DWORD func(int y8, int u8, int v8)                                              
     return (r<<16) | (g<<8) | b;                                                          \
 }
 
+#if INLCUDE_YUV_CONV
 #define DEFINE_PREMUL_ARGB2AYUV_FUNC(func, RGB_LEVEL, YUV_LEVEL, Kr, Kg, Kb, YUV_POS)     \
 DWORD func(int a8, int r8, int g8, int b8)                                                \
 {                                                                                         \
@@ -457,6 +458,7 @@ DWORD func(int r8, int g8, int b8)                                              
     y = clip(y, 255);                                                                        \
     return y;                                                                                \
 }
+#endif
 
 #if INLCUDE_YUV_CONV
 DWORD RGB_PC_TO_YUV_TV_601(int r8, int g8, int b8);
@@ -555,7 +557,7 @@ public:
     YuvMatrixType m_eYuvType;
     YuvRangeType  m_eRangeType;
     bool          m_bOutputTVRange;
-    bool          m_bVSFilterCorrection;
+    bool          m_bTransformColors;
 
     ConvMatrix    m_convMatrix; //for YUV to YUV or other complicated conversions
 };
@@ -640,14 +642,15 @@ bool ConvFunc::InitConvFunc(YuvMatrixType yuv_type, YuvRangeType range)
 #endif
         m_eYuvType = ColorConvTable::BT601;
         m_eRangeType = ColorConvTable::RANGE_TV;
+        ASSERT(yuv_type == ColorConvTable::AUTO);
     }
 
     return result;
 }
 
-ConvFunc::ConvFunc(YuvMatrixType yuv_type, YuvRangeType range, bool bOutputTVRange, bool bVSFilterCorrection)
+ConvFunc::ConvFunc(YuvMatrixType yuv_type, YuvRangeType range, bool bOutputTVRange, bool bTransformColors)
     : m_bOutputTVRange(bOutputTVRange)
-    , m_bVSFilterCorrection(bVSFilterCorrection)
+    , m_bTransformColors(bTransformColors)
 {
     m_convMatrix.InitMatrix(
         ConvMatrix::LEVEL_TV, ConvMatrix::COLOR_YUV_601,
@@ -740,13 +743,13 @@ ColorConvTable::YuvRangeType ColorConvTable::GetDefaultRangeType()
     return ConvFuncInst().m_eRangeType;
 }
 
-void ColorConvTable::SetDefaultConvType(YuvMatrixType yuv_type, YuvRangeType range, bool bOutputTVRange, bool bVSFilterCorrection)
+void ColorConvTable::SetDefaultConvType(YuvMatrixType yuv_type, YuvRangeType range, bool bOutputTVRange, bool bTransformColors)
 {
-    if (ConvFuncInst().m_eYuvType != yuv_type || ConvFuncInst().m_eRangeType != range) {
+    if (yuv_type != NONE_RGB && (ConvFuncInst().m_eYuvType != yuv_type || ConvFuncInst().m_eRangeType != range)) {
         ConvFuncInst().InitConvFunc(yuv_type, range);
     }
     ConvFuncInst().m_bOutputTVRange = bOutputTVRange;
-    ConvFuncInst().m_bVSFilterCorrection = bVSFilterCorrection;
+    ConvFuncInst().m_bTransformColors = bTransformColors;
 }
 
 #if INLCUDE_YUV_CONV
@@ -951,13 +954,15 @@ DWORD ColorConvTable::A8Y8U8V8_TO_ARGB(int a8, int y8, int u8, int v8, YuvMatrix
 
 DWORD ColorConvTable::ColorCorrection(DWORD argb)
 {
-    if (ConvFuncInst().m_bVSFilterCorrection) {
+    if (ConvFuncInst().m_bTransformColors) {
         int r = (argb & 0x00ff0000) >> 16;
         int g = (argb & 0x0000ff00) >> 8;
         int b = (argb & 0x000000ff);
         return (argb & 0xff000000) |
                ConvFuncInst().m_convMatrix.ColorCorrection(r, g, b,
                                                            ConvFuncInst().m_bOutputTVRange ? ConvMatrix::LEVEL_TV : ConvMatrix::LEVEL_PC);
+    } else if (ConvFuncInst().m_bOutputTVRange) {
+        return RGB_PC_TO_TV(argb);
     }
     return argb;
 }

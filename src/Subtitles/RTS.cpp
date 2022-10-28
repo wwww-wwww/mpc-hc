@@ -3470,18 +3470,20 @@ STDMETHODIMP CRenderedTextSubtitle::Reload()
 
 STDMETHODIMP CRenderedTextSubtitle::SetSourceTargetInfo(CString yuvVideoMatrix, int targetBlackLevel, int targetWhiteLevel)
 {
-    bool bIsVSFilter = !!yuvVideoMatrix.Replace(_T(".VSFilter"), _T(""));
     ColorConvTable::YuvMatrixType yuvMatrix = ColorConvTable::BT601;
     ColorConvTable::YuvRangeType  yuvRange = ColorConvTable::RANGE_TV;
+
+    yuvVideoMatrix.MakeUpper();
 
     auto parseMatrixString = [&](const CString & sYuvMatrix) {
         int nPos = 0;
         CString range = sYuvMatrix.Tokenize(_T("."), nPos);
         CString matrix = sYuvMatrix.Mid(nPos);
 
-        yuvRange = ColorConvTable::RANGE_TV;
         if (range == _T("PC")) {
             yuvRange = ColorConvTable::RANGE_PC;
+        } else {
+            yuvRange = ColorConvTable::RANGE_TV;
         }
 
         if (matrix == _T("709")) {
@@ -3493,17 +3495,26 @@ STDMETHODIMP CRenderedTextSubtitle::SetSourceTargetInfo(CString yuvVideoMatrix, 
         } else if (matrix == _T("2020")) {
             yuvMatrix = ColorConvTable::BT2020;
         } else {
-            yuvMatrix = ColorConvTable::NONE;
+            yuvMatrix = ColorConvTable::AUTO;
         }
     };
 
     if (!m_sYCbCrMatrix.IsEmpty()) {
-        parseMatrixString(m_sYCbCrMatrix);
+        if (m_sYCbCrMatrix == _T("NONE")) {
+            yuvMatrix = ColorConvTable::NONE_RGB;
+            yuvRange = ColorConvTable::RANGE_PC;
+        } else {
+            parseMatrixString(m_sYCbCrMatrix);
+        }
     } else {
-        parseMatrixString(yuvVideoMatrix);
+        if (yuvVideoMatrix == _T("NONE")) {
+            yuvMatrix = ColorConvTable::AUTO;
+        } else {
+            parseMatrixString(yuvVideoMatrix);
+        }
     }
 
-    bool bTransformColors = !bIsVSFilter && (!m_sYCbCrMatrix.IsEmpty() || !yuvVideoMatrix.IsEmpty());
+    bool bTransformColors = (yuvMatrix != ColorConvTable::NONE_RGB) && (!m_sYCbCrMatrix.IsEmpty() || !yuvVideoMatrix.IsEmpty());
     ColorConvTable::SetDefaultConvType(yuvMatrix, yuvRange, (targetWhiteLevel < 245), bTransformColors);
 
     return S_OK;

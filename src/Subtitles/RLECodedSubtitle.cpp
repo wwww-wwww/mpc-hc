@@ -123,7 +123,7 @@ STDMETHODIMP CRLECodedSubtitle::SetSourceTargetInfo(CString yuvMatrix, int targe
     } else if (matrix == _T("2020")) {
         m_eSourceMatrix = ColorConvTable::BT2020;
     } else {
-        m_eSourceMatrix = ColorConvTable::NONE;
+        m_eSourceMatrix = ColorConvTable::AUTO;
     }
 
     ColorConvTable::SetDefaultConvType(m_eSourceMatrix, sourceRange, (targetWhiteLevel < 245), false); // Matrix isn't relevant here.
