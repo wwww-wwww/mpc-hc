@@ -33,6 +33,7 @@
 #include "WinAPIUtils.h"
 #include "CMPCTheme.h"
 #include "CoverArt.h"
+#include "FileHandle.h"
 #undef SubclassWindow
 
 
@@ -683,6 +684,22 @@ bool CPlayerPlaylistBar::ParseM3UPlayList(CString fn) {
                 }
             }
         } else {
+            // check for nested playlist
+            CString ext = GetFileExt(str);
+            if (ext == L".m3u" || ext == L".m3u8") {
+                if (ParseM3UPlayList(str)) {
+                    success = true;
+                    continue;
+                }
+            } else if (ext == L".pls") {
+                int count = m_pl.GetCount();
+                ParsePlayList(str, nullptr, 1);
+                if (m_pl.GetCount() > count) {
+                    success = true;
+                    continue;
+                }
+            }
+
             pli = CPlaylistItem();
             pli.m_fns.AddTail(str);
             if (PathUtils::IsURL(str) && CMainFrame::IsOnYDLWhitelist(str)) {
