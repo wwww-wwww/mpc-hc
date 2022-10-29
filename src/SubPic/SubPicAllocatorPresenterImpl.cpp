@@ -509,6 +509,9 @@ STDMETHODIMP CSubPicAllocatorPresenterImpl::GetString(LPCSTR field, LPWSTR* valu
                     case DXVA2_VideoTransferMatrix_SMPTE240M:
                         ret.Append(L"240M");
                         break;
+                    case 4:
+                        ret.Append(L"2020");
+                        break;
                     default:
                         ret = L"None";
                         break;

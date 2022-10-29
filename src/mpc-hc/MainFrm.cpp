@@ -16496,6 +16496,52 @@ bool CMainFrame::SetSubtitle(int i, bool bIsOffset /*= false*/, bool bDisplayMes
     return success;
 }
 
+void CMainFrame::UpdateSubtitleColorInfo()
+{
+    if (!m_pCAP || !m_pCurrentSubInput.pSubStream) {
+        return;
+    }
+
+    // store video mediatype, so colorspace information can be extracted when present
+    // FIXME: mediatype extended colorinfo may be absent on initial connection, call this again after first frame has been decoded?
+    if (m_pCAP) {
+        CComQIPtr<IBaseFilter> pBF = m_pCAP;
+        CComPtr<IPin> pPin = GetFirstPin(pBF);
+        if (pPin) {
+            AM_MEDIA_TYPE mt;
+            if (SUCCEEDED(pPin->ConnectionMediaType(&mt))) {
+                m_pCAP->SetVideoMediaType(CMediaType(mt));
+            }
+        }
+    }
+
+    CComQIPtr<ISubRenderOptions> pSRO = m_pCAP;
+
+    LPWSTR yuvMatrix = nullptr;
+    int nLen;
+    if (m_pMVRI) {
+        m_pMVRI->GetString("yuvMatrix", &yuvMatrix, &nLen);
+    } else if (pSRO) {
+        pSRO->GetString("yuvMatrix", &yuvMatrix, &nLen);
+    }
+
+    int targetBlackLevel = 0, targetWhiteLevel = 255;
+    if (m_pMVRS) {
+        m_pMVRS->SettingsGetInteger(L"Black", &targetBlackLevel);
+        m_pMVRS->SettingsGetInteger(L"White", &targetWhiteLevel);
+    } else if (pSRO) {
+        int range = 0;
+        pSRO->GetInt("supportedLevels", &range);
+        if (range == 3) {
+            targetBlackLevel = 16;
+            targetWhiteLevel = 235;
+        }
+    }
+
+    m_pCurrentSubInput.pSubStream->SetSourceTargetInfo(yuvMatrix, targetBlackLevel, targetWhiteLevel);
+    LocalFree(yuvMatrix);
+}
+
 void CMainFrame::SetSubtitle(const SubtitleInput& subInput, bool skip_lcid /* = false */)
 {
     TRACE(_T("CMainFrame::SetSubtitle\n"));
@@ -16563,35 +16609,11 @@ void CMainFrame::SetSubtitle(const SubtitleInput& subInput, bool skip_lcid /* = 
                 pRTS->SetAlignment(s.fOverridePlacement, s.nHorPos, s.nVerPos);
                 pRTS->Deinit();
             }
-
-            CComQIPtr<ISubRenderOptions> pSRO = m_pCAP;
-
-            LPWSTR yuvMatrix = nullptr;
-            int nLen;
-            if (m_pMVRI) {
-                m_pMVRI->GetString("yuvMatrix", &yuvMatrix, &nLen);
-            } else if (pSRO) {
-                pSRO->GetString("yuvMatrix", &yuvMatrix, &nLen);
-            }
-
-            int targetBlackLevel = 0, targetWhiteLevel = 255;
-            if (m_pMVRS) {
-                m_pMVRS->SettingsGetInteger(L"Black", &targetBlackLevel);
-                m_pMVRS->SettingsGetInteger(L"White", &targetWhiteLevel);
-            } else if (pSRO) {
-                int range = 0;
-                pSRO->GetInt("supportedLevels", &range);
-                if (range == 3) {
-                    targetBlackLevel = 16;
-                    targetWhiteLevel = 235;
-                }
-            }
-
-            subInput.pSubStream->SetSourceTargetInfo(yuvMatrix, targetBlackLevel, targetWhiteLevel);
-            LocalFree(yuvMatrix);
         }
 
         m_pCurrentSubInput = subInput;
+
+        UpdateSubtitleColorInfo();
 
         if (!skip_lcid) {
             LCID lcid = 0;
