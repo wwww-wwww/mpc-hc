@@ -3507,8 +3507,9 @@ STDMETHODIMP CRenderedTextSubtitle::SetSourceTargetInfo(CString yuvVideoMatrix, 
             parseMatrixString(m_sYCbCrMatrix);
         }
     } else {
-        if (yuvVideoMatrix == _T("NONE")) {
-            yuvMatrix = ColorConvTable::AUTO;
+        if (m_subtitleType != Subtitle::ASS && m_subtitleType != Subtitle::SSA || yuvVideoMatrix == _T("NONE")) {
+            yuvMatrix = ColorConvTable::NONE_RGB;
+            yuvRange = ColorConvTable::RANGE_PC;
         } else {
             parseMatrixString(yuvVideoMatrix);
         }
