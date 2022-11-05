@@ -264,11 +264,11 @@ private:
     // SmarkSeek
     CComPtr<IGraphBuilder2>         m_pGB_preview;
     CComQIPtr<IMediaControl>        m_pMC_preview;
-    CComQIPtr<IMediaEventEx>        m_pME_preview;
+    //CComQIPtr<IMediaEventEx>        m_pME_preview;
     CComQIPtr<IMediaSeeking>        m_pMS_preview;
     CComQIPtr<IVideoWindow>         m_pVW_preview;
     CComQIPtr<IBasicVideo>          m_pBV_preview;
-    CComQIPtr<IVideoFrameStep>      m_pFS_preview;
+    //CComQIPtr<IVideoFrameStep>      m_pFS_preview;
     CComQIPtr<IDvdControl2>         m_pDVDC_preview;
     CComQIPtr<IDvdInfo2>            m_pDVDI_preview; // VtX: usually not necessary but may sometimes be necessary.
     CComPtr<IMFVideoDisplayControl> m_pMFVDC_preview;

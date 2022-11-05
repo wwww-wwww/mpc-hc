@@ -12420,13 +12420,11 @@ void CMainFrame::OpenCreateGraphObject(OpenMediaData* pOMD)
         m_pGB_preview->AddToROT();
 
         m_pMC_preview = m_pGB_preview;
-        m_pME_preview = m_pGB_preview;
+        //m_pME_preview = m_pGB_preview;
         m_pMS_preview = m_pGB_preview; // general
-
         m_pVW_preview = m_pGB_preview;
         m_pBV_preview = m_pGB_preview;
-
-        m_pFS_preview = m_pGB_preview;
+        //m_pFS_preview = m_pGB_preview;
     }
 
     if (!(m_pMC && m_pME && m_pMS)
@@ -12477,11 +12475,11 @@ void CMainFrame::ReleasePreviewGraph()
         m_pMFVDC_preview.Release();
         m_pVMR9C_preview.Release();
 
-        m_pFS_preview.Release();
+        //m_pFS_preview.Release();
         m_pMS_preview.Release();
         m_pBV_preview.Release();
         m_pVW_preview.Release();
-        m_pME_preview.Release();
+        //m_pME_preview.Release();
         m_pMC_preview.Release();
 
         if (m_pDVDC_preview) {
