@@ -328,20 +328,21 @@ bool Rasterizer::PartialBeginPath(HDC hdc, bool bClearPath)
 }
 
 bool Rasterizer::ResizePath(int nPoints) {
-    BYTE* pNewTypes;
-    POINT* pNewPoints;
-
-    pNewTypes = (BYTE*)realloc(mpPathTypes, (mPathPoints + nPoints) * sizeof(BYTE));
-    pNewPoints = (POINT*)realloc(mpPathPoints, (mPathPoints + nPoints) * sizeof(POINT));
-
+    BYTE* pNewTypes = (BYTE*)realloc(mpPathTypes, (mPathPoints + nPoints) * sizeof(BYTE));
     if (pNewTypes) {
         mpPathTypes = pNewTypes;
+    } else {
+        return false;
     }
 
+    POINT* pNewPoints = (POINT*)realloc(mpPathPoints, (mPathPoints + nPoints) * sizeof(POINT));
     if (pNewPoints) {
         mpPathPoints = pNewPoints;
+    } else {
+        return false;
     }
-    return pNewTypes && pNewPoints;
+
+    return true;
 }
 
 bool Rasterizer::PartialEndPath(HDC hdc, long dx, long dy)
@@ -1999,12 +2000,14 @@ bool Rasterizer::GetPathFreeType(HDC hdc, bool bClearPath, CStringW fontName, wc
                 }
 #endif
                 int nPoints = pd.ftPoints.size();
-                if (ResizePath(nPoints)) {
+                if (nPoints > 0 && ResizePath(nPoints)) {
                     for (int a = 0; a < pd.ftPoints.size(); a++) {
                         mpPathTypes[mPathPoints + a] = pd.ftTypes[a];
                         mpPathPoints[mPathPoints + a] = pd.ftPoints[a];
                     }
                     mPathPoints += nPoints;
+                } else {
+                    error = true;
                 }
 #if 0
                 for (int a = mPathPoints - nPoints; a < mPathPoints; a++) {
