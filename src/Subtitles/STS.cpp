@@ -3506,18 +3506,16 @@ bool CSimpleTextSubtitle::SaveAs(CString fn, Subtitle::SubType type,
         CString str;
 
         str  = _T("[Script Info]\n");
-        str += (type == Subtitle::SSA) ? _T("; This is a Sub Station Alpha v4 script.\n") : _T("; This is an Advanced Sub Station Alpha v4+ script.\n");
-        str += _T(";\n");
-        if (type == Subtitle::ASS) {
-            str += _T("; Advanced Sub Station Alpha script format developed by #Anime-Fansubs@EfNET\n");
-            str += _T(";\n");
-        }
         str += _T("; Note: This file was saved by MPC-HC.\n");
-        str += _T(";\n");
         str += (type == Subtitle::SSA) ? _T("ScriptType: v4.00\n") : _T("ScriptType: v4.00+\n");
         str += (m_collisions == 0) ? _T("Collisions: Normal\n") : _T("Collisions: Reverse\n");
         if (type == Subtitle::ASS && m_fScaledBAS) {
             str += _T("ScaledBorderAndShadow: Yes\n");
+        }
+        if (m_sYCbCrMatrix.IsEmpty()) {
+            str += _T("YCbCr Matrix: None\n");
+        } else {
+            str += _T("YCbCr Matrix: ") + m_sYCbCrMatrix + _T("\n");
         }
         str.AppendFormat(_T("PlayResX: %d\n"), m_dstScreenSize.cx);
         str.AppendFormat(_T("PlayResY: %d\n"), m_dstScreenSize.cy);
