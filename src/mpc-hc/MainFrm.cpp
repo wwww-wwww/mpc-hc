@@ -19377,6 +19377,7 @@ bool CMainFrame::isSafeZone(CPoint pt) {
     m_wndSeekBar.GetClientRect(r);
     m_wndSeekBar.MapWindowPoints(this, r);
     r.InflateRect(0, m_dpi.ScaleY(16));
+    if (r.top < 0) r.top = 0;
 
     if (r.PtInRect(pt)) {
         TRACE(_T("Click was inside safezone!\n"));
