@@ -14051,7 +14051,7 @@ bool MatchSubtrackWithISOLang(CString& tname, const ISOLangT<CString>& l)
         }
 
         for (auto& substr : langlist) {
-            p = tname.Find(_T("/t") + substr);
+            p = tname.Find(_T("\t") + substr);
             if (p > 0) {
                 return true;
             }
@@ -14088,6 +14088,7 @@ int CMainFrame::SetupSubtitleStreams()
     int selected = -1;
 
     if (!m_pSubStreams.IsEmpty()) {
+        bool is_external = false;
         bool externalPriority = false;
         bool has_off_lang = false;
         std::list<ISOLangT<CString>> langs;
@@ -14110,10 +14111,12 @@ int CMainFrame::SetupSubtitleStreams()
         }
 
         int i = 0;
-        int maxrating = has_off_lang ? 0 : -1;
+        int subcount = m_pSubStreams.GetSize();
+        int maxrating = 0;
         POSITION pos = m_pSubStreams.GetHeadPosition();
         while (pos) {
             if (m_posFirstExtSub == pos) {
+                is_external = true;
                 externalPriority = s.fPrioritizeExternalSubtitles;
             }
             SubtitleInput& subInput = m_pSubStreams.GetNext(pos);
@@ -14195,18 +14198,37 @@ int CMainFrame::SetupSubtitleStreams()
                     rating += 16 * int(langs.size() - k);
                     break;
                 }
-                if (externalPriority && (!has_off_lang || rating > 0)) { // external tracks are preferred
-                    rating += 16 * int(langs.size() + 1);
-                }
-                if (!externalPriority && s.bPreferDefaultForcedSubtitles) {
-                    if (name.Find(_T("[default,forced]")) != -1) { // for LAV Splitter
-                        rating += 4 + 2;
+
+                if (is_external) {
+                    if (rating > 0) {
+                        if (externalPriority) {
+                            rating += 16 * int(langs.size() + 1);
+                        }
+                    } else {
+                        if (langs.size() == 0 || name.Find(_T("\t")) == -1) {
+                            // no preferred language or unknown sub language
+                            if (externalPriority) {
+                                rating += 16 * int(langs.size() + 1);
+                            } else {
+                                rating = 1;
+                            }
+                        }
                     }
-                    if (name.Find(_T("[forced]")) != -1) {
-                        rating += 2;
+                } else {
+                    if (s.bPreferDefaultForcedSubtitles) {
+                        if (name.Find(_T("[default,forced]")) != -1) { // for LAV Splitter
+                            rating += 4 + 2;
+                        }
+                        if (name.Find(_T("[forced]")) != -1) {
+                            rating += 2;
+                        }
+                        if (name.Find(_T("[default]")) != -1) {
+                            rating += 4;
+                        }
                     }
-                    if (name.Find(_T("[default]")) != -1) {
-                        rating += 4;
+                    if (rating == 0 && bAllowOverridingSplitterChoice && langs.size() == 0) {
+                        // use first embedded track as fallback if there is no preferred language
+                        rating = 1;
                     }
                 }
 
