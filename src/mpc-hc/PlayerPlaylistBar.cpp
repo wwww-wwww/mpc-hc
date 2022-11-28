@@ -1146,19 +1146,25 @@ bool CPlayerPlaylistBar::IsAtEnd()
 
 bool CPlayerPlaylistBar::GetCur(CPlaylistItem& pli) const
 {
-    if (!m_pl.GetPos()) {
-        return false;
+    if (!m_pl.IsEmpty()) {
+        POSITION p = m_pl.GetPos();
+        if (p) {
+            pli = m_pl.GetAt(p);
+            return true;
+        }
     }
-    pli = m_pl.GetAt(m_pl.GetPos());
-    return true;
+    return false;
 }
 
 CPlaylistItem* CPlayerPlaylistBar::GetCur()
 {
-    if (!m_pl.GetPos()) {
-        return nullptr;
+    if (!m_pl.IsEmpty()) {
+        POSITION p = m_pl.GetPos();
+        if (p) {
+            return &m_pl.GetAt(p);
+        }
     }
-    return &m_pl.GetAt(m_pl.GetPos());
+    return nullptr;
 }
 
 CString CPlayerPlaylistBar::GetCurFileName(bool use_ydl_source)
