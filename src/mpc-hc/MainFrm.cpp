@@ -14226,10 +14226,12 @@ int CMainFrame::SetupSubtitleStreams()
                             rating += 4;
                         }
                     }
+#if 0
                     if (rating == 0 && bAllowOverridingSplitterChoice && langs.size() == 0) {
                         // use first embedded track as fallback if there is no preferred language
                         rating = 1;
                     }
+#endif
                 }
 
                 if (rating > maxrating) {
