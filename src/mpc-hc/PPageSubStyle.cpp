@@ -218,7 +218,8 @@ BOOL CPPageSubStyle::OnApply()
         if (stss != m_stss) {
             stss = m_stss;
             if (CMainFrame* pMainFrame = AfxGetMainFrame()) {
-                pMainFrame->UpdateSubDefaultStyle();
+                pMainFrame->UpdateSubtitleRenderingParameters();
+                pMainFrame->RepaintVideo();
             }
         }
     }

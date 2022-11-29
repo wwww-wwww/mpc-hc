@@ -492,11 +492,14 @@ public:
 
     // call to signal this RTS to ignore any of the styles and apply the given override style
     void SetOverride(bool bOverride, const STSStyle& styleOverride) {
-        m_bOverrideStyle = bOverride;
-        m_styleOverride = styleOverride;
+        bool changed = (m_bOverrideStyle != bOverride) || (m_styleOverride != styleOverride);
+        if (changed) {
+            m_bOverrideStyle = bOverride;
+            m_styleOverride = styleOverride;
 #if USE_LIBASS
-        ResetASS(); //styles may change the way the libass file was loaded, so we reload it here
+            ResetASS(); //styles may change the way the libass file was loaded, so we reload it here
 #endif
+        }
     }
 
     void SetAlignment(bool bOverridePlacement, LONG lHorPos, LONG lVerPos) {
