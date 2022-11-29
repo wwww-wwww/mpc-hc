@@ -156,7 +156,7 @@ void Subtitle::GetSubFileNames(CString fn, const CAtlArray<CString>& paths, CAtl
             do {
                 CString fn2 = path + wfd.cFileName;
                 CString ext = CPath(fn2).GetExtension();
-                if (ext == L".srt" || ext == L".ass" || ext == L".ssa" || ext == L".vtt") {
+                if (ext == L".srt" || ext == L".ass" || ext == L".ssa" || ext == L".webvtt" || ext == L".vtt") {
                     SubFile f;
                     f.fn = fn2;
                     ret.Add(f);

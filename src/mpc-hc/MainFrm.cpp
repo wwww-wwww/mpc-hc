@@ -4876,7 +4876,7 @@ DROPEFFECT CMainFrame::OnDropAccept(COleDataObject* pDataObject, DWORD dwKeyStat
 
 BOOL IsSubtitleExtension(CString ext)
 {
-    return (ext == _T(".srt") || ext == _T(".ssa") || ext == _T(".ass") || ext == _T(".idx") || ext == _T(".sub") || ext == _T(".vtt") || ext == _T(".sup") || ext == _T(".smi") || ext == _T(".psb") || ext == _T(".usf") || ext == _T(".xss") || ext == _T(".rt")|| ext == _T(".txt"));
+    return (ext == _T(".srt") || ext == _T(".ssa") || ext == _T(".ass") || ext == _T(".idx") || ext == _T(".sub") || ext == _T(".webvtt") || ext == _T(".vtt") || ext == _T(".sup") || ext == _T(".smi") || ext == _T(".psb") || ext == _T(".usf") || ext == _T(".xss") || ext == _T(".rt")|| ext == _T(".txt"));
 }
 
 BOOL IsSubtitleFilename(CString filename)
@@ -6096,7 +6096,7 @@ void CMainFrame::OnFileSubtitlesLoad()
         dwFlags |= OFN_DONTADDTORECENT;
     }
     CString filters;
-    filters.Format(_T("%s|*.srt;*.sub;*.ssa;*.ass;*.smi;*.psb;*.txt;*.idx;*.usf;*.xss;*.rt;*.sup;*.vtt|%s"),
+    filters.Format(_T("%s|*.srt;*.sub;*.ssa;*.ass;*.smi;*.psb;*.txt;*.idx;*.usf;*.xss;*.rt;*.sup;*.webvtt;*.vtt|%s"),
                    ResStr(IDS_SUBTITLE_FILES_FILTER).GetString(), ResStr(IDS_ALL_FILES_FILTER).GetString());
 
     CFileDialog fd(TRUE, nullptr, nullptr, dwFlags, filters, GetModalParent());
