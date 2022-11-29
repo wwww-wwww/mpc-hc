@@ -412,7 +412,9 @@ public:
     int m_topborder, m_bottomborder;
     bool m_clipInverse;
 
-    double m_scalex, m_scaley;
+    double m_target_scale_x, m_target_scale_y;
+    double m_script_scale_x, m_script_scale_y;
+    double m_total_scale_x,  m_total_scale_y;
 
 public:
     CSubtitle(RenderingCaches& renderingCaches);
