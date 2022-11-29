@@ -840,7 +840,8 @@ static bool OpenVTT(CTextFile* file, CSimpleTextSubtitle& ret, int CharSet) {
         }
     }
 
-    return !ret.IsEmpty();
+    // in case of embedded data, we initially might only get the header, so always return true
+    return true;
 }
 
 
@@ -1758,6 +1759,9 @@ static bool OpenSubStationAlpha(CTextFile* file, CSimpleTextSubtitle& ret, int C
         if (first_line) {
             if (buff == L"1") {
                 // SRT file
+                return false;
+            }
+            if (buff == L"WEBVTT") {
                 return false;
             }
             first_line = false;

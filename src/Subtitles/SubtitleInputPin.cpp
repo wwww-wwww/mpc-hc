@@ -164,15 +164,17 @@ HRESULT CSubtitleInputPin::CompleteConnect(IPin* pReceivePin)
                     mt.pbFormat[dwOffset + 2] = 0xbf;
                 }
 
+                bool succes = false;
 #if USE_LIBASS
                 if (pRTS->m_renderUsingLibass) {
                     pRTS->SetPin(pReceivePin);
-                    pRTS->LoadASSTrack((char*)m_mt.Format() + psi->dwOffset, m_mt.FormatLength() - psi->dwOffset,
+                    succes = pRTS->LoadASSTrack((char*)m_mt.Format() + psi->dwOffset, m_mt.FormatLength() - psi->dwOffset,
                         m_mt.subtype == MEDIASUBTYPE_UTF8 ? Subtitle::SRT : Subtitle::ASS);
                 }
-                if (!pRTS->m_assloaded)
+                if (!succes || !pRTS->m_assloaded)
 #endif
-                    pRTS->Open(mt.pbFormat + dwOffset, mt.cbFormat - dwOffset, DEFAULT_CHARSET, pRTS->m_name);
+                    succes = pRTS->Open(mt.pbFormat + dwOffset, mt.cbFormat - dwOffset, DEFAULT_CHARSET, pRTS->m_name);
+                ASSERT(succes);
             }
         } else if (m_mt.subtype == MEDIASUBTYPE_VOBSUB) {
             if (!(m_pSubStream = DEBUG_NEW CVobSubStream(m_pSubLock))) {
