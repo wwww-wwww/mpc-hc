@@ -1818,7 +1818,7 @@ void CRenderedTextSubtitle::ParseEffect(CSubtitle* sub, CString str)
         }
 
         sub->m_effects[e->type = EF_BANNER] = e;
-        e->param[0] = std::lround(std::max(1.0 * delay / sub->m_total_scale_x, 1.0));
+        e->param[0] = (int)(std::max(1.0 * delay / sub->m_total_scale_x, 1.0));
         e->param[1] = lefttoright;
         e->param[2] = std::lround(sub->m_total_scale_x * fadeawaywidth);
 
@@ -1848,7 +1848,7 @@ void CRenderedTextSubtitle::ParseEffect(CSubtitle* sub, CString str)
         sub->m_effects[e->type = EF_SCROLL] = e;
         e->param[0] = std::lround(sub->m_total_scale_y * top * 8.0);
         e->param[1] = std::lround(sub->m_total_scale_y * bottom * 8.0);
-        e->param[2] = std::lround(std::max(double(delay) / sub->m_total_scale_y, 1.0));
+        e->param[2] = (int)(std::max(double(delay) / sub->m_total_scale_y, 1.0));
         e->param[3] = (effect.GetLength() == 12);
         e->param[4] = std::lround(sub->m_total_scale_y * fadeawayheight);
     }
