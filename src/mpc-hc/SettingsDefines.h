@@ -106,6 +106,7 @@
 #define IDS_RS_FULLSCREEN_SEPARATE_CONTROLS _T("FullscreenSeparateControls")
 #define IDS_RS_ALWAYS_USE_SHORT_MENU        _T("AlwaysUseShortMenu")
 #define IDS_RS_STILL_VIDEO_DURATION         _T("StillVideoDuration")
+#define IDS_RS_MOUSE_LEFTUP_DELAY           _T("MouseLeftUpDelay")
 
 // Audio
 #define IDS_RS_VOLUME                       _T("Volume")

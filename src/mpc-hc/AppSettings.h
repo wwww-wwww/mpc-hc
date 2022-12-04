@@ -938,6 +938,7 @@ public:
     bool bFullscreenSeparateControls;
     bool bAlwaysUseShortMenu;
     int iStillVideoDuration;
+    int iMouseLeftUpDelay;
 
 private:
     struct FilterKey {

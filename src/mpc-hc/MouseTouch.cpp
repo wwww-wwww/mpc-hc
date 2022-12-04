@@ -374,12 +374,12 @@ void CMouse::InternalOnLButtonUp(UINT nFlags, const CPoint& point)
     if (!MVRUp(nFlags, point) && !m_bLeftUpIgnoreNext) {
         bool bIsOnFS = IsOnFullscreenWindow();
         if (!(m_bD3DFS && bIsOnFS && m_pMainFrame->m_OSD.OnLButtonUp(nFlags, point)) && m_bLeftDown) {
-            UINT dctime = GetDoubleClickTime();
-            if (dctime <= 900u && m_pMainFrame->GetLoadState() == MLS::LOADED) {
+            UINT delay = (UINT)AfxGetAppSettings().iMouseLeftUpDelay;
+            if (delay > 0 && m_pMainFrame->GetLoadState() == MLS::LOADED) {
                 ASSERT(!m_bLeftUpDelayed);
                 m_bLeftUpDelayed = true;
                 m_LeftUpPoint = point;
-                SetTimer(GetWnd(), (UINT_PTR)this, dctime, OnTimerLeftUp);
+                SetTimer(GetWnd(), (UINT_PTR)this, std::min(delay, GetDoubleClickTime()), OnTimerLeftUp);
             } else {
                 OnButton(wmcmd::LUP, point, bIsOnFS);
             }
