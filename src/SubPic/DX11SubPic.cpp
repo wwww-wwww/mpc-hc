@@ -500,8 +500,9 @@ HRESULT CDX11SubPicAllocator::Render(const MemPic_t& memPic, const CRect& dirtyR
 
 	CRect copyRect(dirtyRect);
 	if (stretching) {
-		RECT subpicRect = { 0, 0, memPic.w, memPic.h };
-		EXECUTE_ASSERT(copyRect.IntersectRect(copyRect, &subpicRect));
+        RECT subpicRect = { 0, 0, memPic.w, memPic.h };
+        copyRect.InflateRect(1, 1);
+        EXECUTE_ASSERT(copyRect.IntersectRect(copyRect, &subpicRect));
 	}
 
 	CComPtr<ID3D11DeviceContext> pDeviceContext;

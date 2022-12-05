@@ -206,6 +206,7 @@ STDMETHODIMP CDX9SubPic::Unlock(RECT* pDirtyRect)
     if (pDirtyRect) {
         m_rcDirty = pDirtyRect;
         if (!m_rcDirty.IsRectEmpty()) {
+            m_rcDirty.InflateRect(1, 1);
             m_rcDirty.IntersectRect(m_rcDirty, CRect(0, 0, m_size.cx, m_size.cy));
 
             CComPtr<IDirect3DTexture9> pTexture = (IDirect3DTexture9*)GetObject();
