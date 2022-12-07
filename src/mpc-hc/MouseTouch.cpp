@@ -302,7 +302,7 @@ void CMouse::InternalOnLButtonDown(UINT nFlags, const CPoint& point)
         return;
     }
 
-    ASSERT(!m_bLeftUpIgnoreNext);
+    //ASSERT(!m_bLeftUpIgnoreNext);
 
     m_bLeftDown = true;
     bool bDouble = false;
