@@ -6139,6 +6139,10 @@ void CMainFrame::OnUpdateFileSubtitlesLoad(CCmdUI* pCmdUI)
 
 void CMainFrame::SubtitlesSave(const TCHAR* directory, bool silent)
 {
+    if (lastOpenFile.IsEmpty()) {
+        return;
+    }
+
     CAppSettings& s = AfxGetAppSettings();
 
     int i = 0;
@@ -6153,14 +6157,13 @@ void CMainFrame::SubtitlesSave(const TCHAR* directory, bool silent)
     }
 
     CString suggestedFileName;
-    CString curfile = m_wndPlaylistBar.GetCurFileName();
-    if (PathUtils::IsURL(curfile)) {
+    if (PathUtils::IsURL(lastOpenFile)) {
         if (silent) {
             return;
         }
         suggestedFileName = _T("subtitle");
     } else {
-        CPath path(curfile);
+        CPath path(lastOpenFile);
         path.RemoveExtension();
         suggestedFileName = CString(path);
     }
@@ -13203,6 +13206,8 @@ void CMainFrame::SetupDVDChapters()
 // Called from GraphThread
 void CMainFrame::OpenDVD(OpenDVDData* pODD)
 {
+    lastOpenFile.Empty();
+
     HRESULT hr = m_pGB->RenderFile(CStringW(pODD->path), nullptr);
 
     CAppSettings& s = AfxGetAppSettings();
@@ -13289,6 +13294,8 @@ void CMainFrame::OpenDVD(OpenDVDData* pODD)
 // Called from GraphThread
 HRESULT CMainFrame::OpenBDAGraph()
 {
+    lastOpenFile.Empty();
+
     HRESULT hr = m_pGB->RenderFile(L"", L"");
     if (SUCCEEDED(hr)) {
         SetPlaybackMode(PM_DIGITAL_CAPTURE);
@@ -13300,6 +13307,8 @@ HRESULT CMainFrame::OpenBDAGraph()
 // Called from GraphThread
 void CMainFrame::OpenCapture(OpenDeviceData* pODD)
 {
+    lastOpenFile.Empty();
+
     m_wndCaptureBar.InitControls();
 
     CStringW vidfrname, audfrname;
