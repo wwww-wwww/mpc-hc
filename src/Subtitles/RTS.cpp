@@ -3432,11 +3432,13 @@ STDMETHODIMP CRenderedTextSubtitle::GetStreamInfo(int iStream, WCHAR** ppName, L
         *pLCID = m_lcid;
     }
 
+    ASSERT(!m_langname.IsEmpty());
+
     CString strLanguage;
     if (m_lcid && m_lcid != LCID(-1)) {
         WCHAR dispName[1024];
         memset(dispName, 0, 1024 * sizeof(WCHAR));
-        if (0 == GetLocaleInfoEx(m_langname, LOCALE_SLOCALIZEDDISPLAYNAME, (LPWSTR)&dispName, 1024)) {
+        if (0 == GetLocaleInfoEx(m_langname, LOCALE_SLOCALIZEDLANGUAGENAME, (LPWSTR)&dispName, 1024)) {
             int len = GetLocaleInfo(m_lcid, LOCALE_SENGLANGUAGE, strLanguage.GetBuffer(64), 64);
             strLanguage.ReleaseBufferSetLength(std::max(len - 1, 0));
         } else {
@@ -3449,7 +3451,7 @@ STDMETHODIMP CRenderedTextSubtitle::GetStreamInfo(int iStream, WCHAR** ppName, L
     }
 
     if (!strLanguage.IsEmpty() && m_eHearingImpaired == Subtitle::HI_YES) {
-        strLanguage = '[' + strLanguage + ']';
+        strLanguage = strLanguage + L" [HI]";
     }
     CStringW strName;
     if (!m_provider.IsEmpty()) {

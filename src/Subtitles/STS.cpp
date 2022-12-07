@@ -3191,6 +3191,10 @@ bool CSimpleTextSubtitle::Open(CString data, CTextFile::enc SaveCharSet, int Rea
 bool CSimpleTextSubtitle::Open(CTextFile* f, int CharSet, CString name) {
     Empty();
 
+    if (m_langname.IsEmpty() && m_lcid > 0) {
+        m_langname = ISOLang::LCIDToLanguage(m_lcid);
+    }
+
 #if USE_LIBASS
     if (m_renderUsingLibass) {
         if (lstrcmpi(PathFindExtensionW(f->GetFilePath()), L".ass") == 0 || lstrcmpi(PathFindExtensionW(f->GetFilePath()), L".ssa") == 0) {
@@ -3474,12 +3478,11 @@ void CSimpleTextSubtitle::LoadASSSample(char *data, int dataSize, REFERENCE_TIME
 
 bool CSimpleTextSubtitle::Open(CString provider, BYTE* data, int len, int CharSet, CString name, Subtitle::HearingImpairedType eHearingImpaired, LCID lcid)
 {
-    bool fRet = Open(data, len, CharSet, name);
-
     m_provider = provider;
     m_eHearingImpaired = eHearingImpaired;
     m_lcid = lcid;
-    return fRet;
+
+    return Open(data, len, CharSet, name);
 }
 
 bool CSimpleTextSubtitle::Open(BYTE* data, int len, int CharSet, CString name)
