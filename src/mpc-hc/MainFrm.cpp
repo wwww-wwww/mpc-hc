@@ -3821,7 +3821,7 @@ LRESULT CMainFrame::OnFilePostOpenmedia(WPARAM wParam, LPARAM lParam)
     }
 
     // process /pns command-line arg, then discard it
-    ApplyPanNScanPresetCommandLine();
+    ApplyPanNScanPresetString();
 
     // initiate toolbars with the new media
     OpenSetupInfoBar();
@@ -7813,7 +7813,7 @@ void CMainFrame::OnUpdateViewPanNScan(CCmdUI* pCmdUI)
     pCmdUI->Enable(GetLoadState() == MLS::LOADED && !m_fAudioOnly && AfxGetAppSettings().iDSVideoRendererType != VIDRNDT_DS_EVR);
 }
 
-void CMainFrame::ApplyPanNScanPresetCommandLine()
+void CMainFrame::ApplyPanNScanPresetString()
 {
     auto& s = AfxGetAppSettings();
 
@@ -18619,6 +18619,10 @@ void CMainFrame::ProcessAPICommand(COPYDATASTRUCT* pCDS)
             break;
         case CMD_SETSPEED:
             SetPlayingRate(_wtof((LPCWSTR)pCDS->lpData));
+            break;
+        case CMD_SETPANSCAN:
+            AfxGetAppSettings().strPnSPreset = (LPCWSTR)pCDS->lpData;
+            ApplyPanNScanPresetString();
             break;
         case CMD_OSDSHOWMESSAGE:
             ShowOSDCustomMessageApi((MPC_OSDDATA*)pCDS->lpData);
