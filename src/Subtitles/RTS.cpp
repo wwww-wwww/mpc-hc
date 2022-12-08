@@ -206,13 +206,18 @@ void CWord::Paint(const CPoint& p, const CPoint& org)
 
 void CWord::Transform(CPoint org)
 {
+    if ((fabs(m_style.fontAngleX) > 0.000001) || (fabs(m_style.fontAngleY) > 0.000001) || (fabs(m_style.fontAngleZ) > 0.000001) ||
+        (fabs(m_style.fontShiftX) > 0.000001) || (fabs(m_style.fontShiftY) > 0.000001)) {
 #if defined(_M_IX86_FP) && _M_IX86_FP < 2
-    if (!m_bUseSSE2) {
-        Transform_C(org);
-    } else
+        if (!m_bUseSSE2) {
+            Transform_C(org);
+        } else
 #endif
-    {
-        Transform_SSE2(org);
+        {
+            Transform_SSE2(org);
+        }
+    } else if ((fabs(m_style.fontScaleX - 100) > 0.000001) || (fabs(m_style.fontScaleY - 100) > 0.000001) || (fabs(m_scalex - 1.0) > 0.000001) || (fabs(m_scaley - 1.0) > 0.000001)) {
+        Transform_quick(org);
     }
 }
 
@@ -298,6 +303,32 @@ void CWord::Transform_C(const CPoint& org)
 
         x = xx * xzoomf / std::max((zz + xzoomf), 1000.0);
         y = yy * yzoomf / std::max((zz + yzoomf), 1000.0);
+
+        // round to integer
+        mpPathPoints[i].x = std::lround(x) + org.x;
+        mpPathPoints[i].y = std::lround(y) + org.y;
+    }
+}
+
+void CWord::Transform_quick(const CPoint& org)
+{
+    const double scalex = m_style.fontScaleX / 100.0;
+    const double scaley = m_style.fontScaleY / 100.0;
+    const double xzoomf = m_scalex * 20000.0;
+    const double yzoomf = m_scaley * 20000.0;
+    const double xzoomfdiv = std::max((xzoomf), 1000.0);
+    const double yzoomfdiv = std::max((yzoomf), 1000.0);
+
+    double dOrgX = static_cast<double>(org.x), dOrgY = static_cast<double>(org.y);
+    for (ptrdiff_t i = 0; i < mPathPoints; i++) {
+        double x, y, z;
+
+        x = scalex * mpPathPoints[i].x - dOrgX;
+        y = scaley * mpPathPoints[i].y - dOrgY;
+        z = 0;
+
+        x = x * xzoomf / xzoomfdiv;
+        y = y * yzoomf / yzoomfdiv;
 
         // round to integer
         mpPathPoints[i].x = std::lround(x) + org.x;
