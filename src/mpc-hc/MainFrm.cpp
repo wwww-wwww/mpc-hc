@@ -20038,7 +20038,7 @@ void CMainFrame::UpdateSubtitleRenderingParameters()
         if (s.bSubtitleARCompensation && szAspectRatio.cx && szAspectRatio.cy && szVideoFrame.cx && szVideoFrame.cy && bKeepAspectRatio) {
             if (pRTS->m_layoutRes.cx > 0) {
                 dPARCompensation = (double)szAspectRatio.cx * pRTS->m_layoutRes.cy / (szAspectRatio.cy * pRTS->m_layoutRes.cx);
-            } else if (pRTS->m_layoutRes != szVideoFrame) {
+            } else {
                 dPARCompensation = (double)szAspectRatio.cx * szVideoFrame.cy / (szAspectRatio.cy * szVideoFrame.cx);
             }
         }
