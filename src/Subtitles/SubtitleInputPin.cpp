@@ -90,6 +90,7 @@ HRESULT CSubtitleInputPin::CompleteConnect(IPin* pReceivePin)
         }
         CRenderedTextSubtitle* pRTS = (CRenderedTextSubtitle*)(ISubStream*)m_pSubStream;
         pRTS->m_name = CString(GetPinName(pReceivePin)) + _T(" (embedded)");
+        pRTS->m_storageRes = pRTS->m_playRes = CSize(384, 288);
         pRTS->CreateDefaultStyle(DEFAULT_CHARSET);
     } else if (m_mt.majortype == MEDIATYPE_Subtitle) {
         SUBTITLEINFO* psi = (SUBTITLEINFO*)m_mt.pbFormat;
@@ -146,7 +147,7 @@ HRESULT CSubtitleInputPin::CompleteConnect(IPin* pReceivePin)
             if (lcid > 0) {
                 pRTS->m_langname = ISOLang::LCIDToLanguage(lcid);
             }
-            pRTS->m_playRes = CSize(384, 288);
+            pRTS->m_storageRes = pRTS->m_playRes = CSize(384, 288);
             pRTS->CreateDefaultStyle(DEFAULT_CHARSET);
 
             if (m_mt.subtype == MEDIASUBTYPE_WEBVTT) {

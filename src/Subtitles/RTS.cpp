@@ -2747,6 +2747,15 @@ CSubtitle* CRenderedTextSubtitle::GetSubtitle(int entry)
 
     CStringW str = GetStrW(entry, true);
 
+    if (m_playRes.cx <= 0 || m_playRes.cy <= 0) {
+        ASSERT(false);
+        m_playRes = CSize(384, 288);
+    }
+    if (m_storageRes.cx <= 0 || m_storageRes.cy <= 0) {
+        ASSERT(false);
+        m_storageRes = m_playRes;
+    }
+
     STSStyle stss;
     bool fScaledBAS = m_fScaledBAS;
     if (m_bOverrideStyle) {

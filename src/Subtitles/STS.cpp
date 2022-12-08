@@ -3281,10 +3281,10 @@ bool CSimpleTextSubtitle::Open(CTextFile* f, int CharSet, CString name) {
 
         ChangeUnknownStylesToDefault();
 
-        if (m_storageRes.cx <= 0 || m_storageRes.cy <= 0) {
-            if (m_layoutRes.cx > 0 && m_layoutRes.cy > 0) {
-                m_storageRes = m_layoutRes;
-            } else if (m_playRes.cx > 0 && m_playRes.cy > 0) {
+        if (m_layoutRes.cx > 0 && m_layoutRes.cy > 0) {
+            m_storageRes = m_layoutRes;
+        } else if (m_storageRes.cx <= 0 || m_storageRes.cy <= 0) {
+            if (m_playRes.cx > 0 && m_playRes.cy > 0) {
                 m_storageRes = m_playRes;
             } else {
                 m_storageRes = CSize(384, 288);
