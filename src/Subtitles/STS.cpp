@@ -2623,6 +2623,10 @@ void CSimpleTextSubtitle::AddStyle(CString name, STSStyle* style)
         name = _T("Default");
     }
 
+    if (m_bUsingPlayerDefaultStyle && name == _T("Default")) {
+        m_bUsingPlayerDefaultStyle = false;
+    }
+
     STSStyle* val;
     if (m_styles.Lookup(name, val)) {
         if (*val == *style) {
