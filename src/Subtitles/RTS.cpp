@@ -2300,8 +2300,9 @@ bool CRenderedTextSubtitle::CreateSubFromSSATag(CSubtitle* sub, const SSATagsLis
                     if (scale < 1) {
                         scale = 1;
                     }
+                    long scalediv = (1 << (scale - 1));
                     sub->m_pClipper = std::make_shared<CClipper>(tag.params[0], CSize(m_size.cx >> 3, m_size.cy >> 3),
-                                                                 sub->m_total_scale_x / (1 << (scale - 1)), sub->m_total_scale_y / (1 << (scale - 1)), invert,
+                                                                 sub->m_total_scale_x / scalediv, sub->m_total_scale_y / scalediv, invert,
                                                                  (sub->m_relativeTo == STSStyle::VIDEO) ? CPoint(m_vidrect.left, m_vidrect.top) : CPoint(0, 0),
                                                                  m_renderingCaches);
                 } else if (nParamsInt == 4) {

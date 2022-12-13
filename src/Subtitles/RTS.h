@@ -283,7 +283,11 @@ using CClipperSharedPtr = std::shared_ptr<CClipper>;
 class CLine : public CAtlList<CWord*>
 {
 public:
-    int m_width, m_ascent, m_descent, m_borderX, m_borderY;
+    int m_width   = 0;
+    int m_ascent  = 0;
+    int m_descent = 0;
+    int m_borderX = 0;
+    int m_borderY = 0;
 
     virtual ~CLine();
 

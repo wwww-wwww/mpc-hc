@@ -72,6 +72,7 @@ Rasterizer::Rasterizer()
     , mEdgeNext(0)
     , mpScanBuffer(nullptr)
     , ftInitialized(false)
+    , ftLibrary(nullptr)
 {
     int cpuinfo[4];
     __cpuid(cpuinfo, 1);
