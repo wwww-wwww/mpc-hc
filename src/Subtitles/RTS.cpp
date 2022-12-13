@@ -2859,8 +2859,8 @@ CSubtitle* CRenderedTextSubtitle::GetSubtitle(int entry)
         sub->m_total_scale_x = sub->m_target_scale_x;
         sub->m_total_scale_y = sub->m_target_scale_y;
     } else {
-        sub->m_script_scale_x = m_storageRes.cx / m_playRes.cx;
-        sub->m_script_scale_y = m_storageRes.cy / m_playRes.cy;
+        sub->m_script_scale_x = static_cast<double>(m_storageRes.cx) / m_playRes.cx;
+        sub->m_script_scale_y = static_cast<double>(m_storageRes.cy) / m_playRes.cy;
         sub->m_total_scale_x = sub->m_target_scale_x * sub->m_script_scale_x;
         sub->m_total_scale_y = sub->m_target_scale_y * sub->m_script_scale_y;
     }
