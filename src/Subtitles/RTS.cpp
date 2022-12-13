@@ -2259,7 +2259,7 @@ bool CRenderedTextSubtitle::CreateSubFromSSATag(CSubtitle* sub, const SSATagsLis
             case SSA_blur:
                 if (!tag.paramsReal.IsEmpty()) {
                     double n = CalcAnimation(tag.paramsReal[0], style.fGaussianBlur, fAnimate);
-                    style.fGaussianBlur = (n < 0 ? 0 : n);
+                    style.fGaussianBlur = (n < 0 ? 0 : n * sub->m_target_scale_y);
                 } else {
                     style.fGaussianBlur = org.fGaussianBlur;
                 }
