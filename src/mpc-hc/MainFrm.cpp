@@ -16608,12 +16608,11 @@ void CMainFrame::SetSubtitle(const SubtitleInput& subInput, bool skip_lcid /* = 
             if (!found) {
                 return;
             }
-
-            UpdateSubtitleRenderingParameters();
         }
 
         m_pCurrentSubInput = subInput;
 
+        UpdateSubtitleRenderingParameters();
         UpdateSubtitleColorInfo();
 
         if (!skip_lcid) {

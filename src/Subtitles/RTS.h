@@ -501,6 +501,9 @@ public:
         if (changed) {
             m_bOverrideStyle = bOverride;
             m_styleOverride = styleOverride;
+            if (bOverride) {
+                m_storageRes = m_playRes; // needed to get correct font scaling with default style
+            }
 #if USE_LIBASS
             ResetASS(); //styles may change the way the libass file was loaded, so we reload it here
 #endif
