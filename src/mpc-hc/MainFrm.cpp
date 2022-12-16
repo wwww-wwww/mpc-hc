@@ -20046,15 +20046,24 @@ void CMainFrame::UpdateSubtitleRenderingParameters()
         }
 
         if (pRTS->m_subtitleType == Subtitle::ASS || pRTS->m_subtitleType == Subtitle::SSA) {
-            if (pRTS->m_layoutRes.cx == 0 && !s.fUseDefaultSubtitlesStyle && szVideoFrame.cx > 0 && szVideoFrame != pRTS->m_storageRes) {
-                bChangeStorageRes = true;
+            if (!s.fUseDefaultSubtitlesStyle && szVideoFrame.cx > 0) {
+                if (pRTS->m_layoutRes.cx == 0 || pRTS->m_layoutRes.cy == 0) {
+                    bChangeStorageRes = (pRTS->m_storageRes != szVideoFrame);
+                } else {
+
+                    bChangeStorageRes = (pRTS->m_storageRes != pRTS->m_layoutRes);
+                }
             }
         }
 
         {
             CAutoLock cAutoLock(&m_csSubLock);
             if (bChangeStorageRes) {
-                pRTS->m_storageRes = szVideoFrame;
+                if (pRTS->m_layoutRes.cx == 0 || pRTS->m_layoutRes.cy == 0) {
+                    pRTS->m_storageRes = szVideoFrame;
+                } else {
+                    pRTS->m_storageRes = pRTS->m_layoutRes;
+                }
             }
             if (bChangePARComp) {
                 pRTS->m_ePARCompensationType = CSimpleTextSubtitle::EPARCompensationType::EPCTAccurateSize_ISR;
