@@ -8621,6 +8621,10 @@ void CMainFrame::OnPlaySeekSet()
     const REFERENCE_TIME rtPos = m_wndSeekBar.GetPos();
     REFERENCE_TIME rtStart, rtStop;
     m_wndSeekBar.GetRange(rtStart, rtStop);
+
+    if (abRepeat.positionA > rtStart && abRepeat.positionA < rtStop) {
+        rtStart = abRepeat.positionA;
+    }
     if (rtPos != rtStart) {
         SeekTo(rtStart);
     }
