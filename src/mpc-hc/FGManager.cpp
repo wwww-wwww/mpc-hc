@@ -1866,17 +1866,24 @@ void CFGManagerCustom::InsertLAVSplitter(bool IsPreview)
         pFGLAVSplitterLM->AddType(MEDIATYPE_Stream, MEDIASUBTYPE_NULL);
         pFGLAVSplitterLM->AddEnabledFormat("*");
         // Explicitly disable all common subtitles format
+        pFGLAVSplitterLM->AddDisabledFormat("aqtitle");
         pFGLAVSplitterLM->AddDisabledFormat("ass");
+        pFGLAVSplitterLM->AddDisabledFormat("dvbsub");
+        pFGLAVSplitterLM->AddDisabledFormat("dvbtxt");
+        pFGLAVSplitterLM->AddDisabledFormat("jacosub");
+        pFGLAVSplitterLM->AddDisabledFormat("lrc");
         pFGLAVSplitterLM->AddDisabledFormat("microdvd");
         pFGLAVSplitterLM->AddDisabledFormat("mpl2");
         pFGLAVSplitterLM->AddDisabledFormat("mpsub");
         pFGLAVSplitterLM->AddDisabledFormat("realtext");
         pFGLAVSplitterLM->AddDisabledFormat("sami");
         pFGLAVSplitterLM->AddDisabledFormat("srt");
+        pFGLAVSplitterLM->AddDisabledFormat("stl");
         pFGLAVSplitterLM->AddDisabledFormat("subviewer");
         pFGLAVSplitterLM->AddDisabledFormat("subviewer1");
         pFGLAVSplitterLM->AddDisabledFormat("sup");
         pFGLAVSplitterLM->AddDisabledFormat("vobsub");
+        pFGLAVSplitterLM->AddDisabledFormat("vplayer");
         pFGLAVSplitterLM->AddDisabledFormat("webvtt");
         m_transform.AddTail(pFGLAVSplitterLM.Detach());
     }
