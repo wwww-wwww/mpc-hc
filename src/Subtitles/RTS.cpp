@@ -3528,15 +3528,10 @@ STDMETHODIMP CRenderedTextSubtitle::Reload()
 
 STDMETHODIMP CRenderedTextSubtitle::SetSourceTargetInfo(CString yuvVideoMatrix, int targetBlackLevel, int targetWhiteLevel)
 {
-    ColorConvTable::YuvMatrixType yuvMatrix = ColorConvTable::BT601;
-    ColorConvTable::YuvRangeType  yuvRange = ColorConvTable::RANGE_TV;
-
-    yuvVideoMatrix.MakeUpper();
-
-    auto parseMatrixString = [&](const CString & sYuvMatrix) {
+    auto parseMatrixString = [&](const CString& input, ColorConvTable::YuvRangeType& yuvRange, ColorConvTable::YuvMatrixType& yuvMatrix) {
         int nPos = 0;
-        CString range = sYuvMatrix.Tokenize(_T("."), nPos);
-        CString matrix = sYuvMatrix.Mid(nPos);
+        CString range = input.Tokenize(_T("."), nPos);
+        CString matrix = input.Mid(nPos);
 
         if (range == _T("PC")) {
             yuvRange = ColorConvTable::RANGE_PC;
@@ -3557,24 +3552,31 @@ STDMETHODIMP CRenderedTextSubtitle::SetSourceTargetInfo(CString yuvVideoMatrix, 
         }
     };
 
-    if (!m_sYCbCrMatrix.IsEmpty()) {
-        if (m_sYCbCrMatrix == _T("NONE")) {
-            yuvMatrix = ColorConvTable::NONE_RGB;
-            yuvRange = ColorConvTable::RANGE_PC;
-        } else {
-            parseMatrixString(m_sYCbCrMatrix);
-        }
-    } else {
-        if (m_subtitleType != Subtitle::ASS && m_subtitleType != Subtitle::SSA || yuvVideoMatrix == _T("NONE")) {
-            yuvMatrix = ColorConvTable::NONE_RGB;
-            yuvRange = ColorConvTable::RANGE_PC;
-        } else {
-            parseMatrixString(yuvVideoMatrix);
-        }
+    ColorConvTable::YuvMatrixType video_matrix = ColorConvTable::AUTO;
+    ColorConvTable::YuvRangeType video_range = ColorConvTable::RANGE_TV;
+
+    yuvVideoMatrix.MakeUpper();
+    if (!yuvVideoMatrix.IsEmpty() && yuvVideoMatrix != _T("NONE")) {
+        parseMatrixString(yuvVideoMatrix, video_range, video_matrix);
     }
 
-    bool bTransformColors = (yuvMatrix != ColorConvTable::NONE_RGB) && (!m_sYCbCrMatrix.IsEmpty() || !yuvVideoMatrix.IsEmpty());
-    ColorConvTable::SetDefaultConvType(yuvMatrix, yuvRange, (targetWhiteLevel < 245), bTransformColors);
+    bool bCorrect601to709 = false;
+    if (m_subtitleType == Subtitle::ASS || m_subtitleType == Subtitle::SSA) {
+        ColorConvTable::YuvMatrixType script_matrix = ColorConvTable::BT601;
+        ColorConvTable::YuvRangeType script_range = ColorConvTable::RANGE_TV;
+
+        if (!m_sYCbCrMatrix.IsEmpty()) {
+            if (m_sYCbCrMatrix == _T("NONE")) {
+                script_matrix = ColorConvTable::NONE_RGB;
+                script_range = ColorConvTable::RANGE_PC;
+            } else {
+                parseMatrixString(m_sYCbCrMatrix, script_range, script_matrix);
+            }
+        }
+
+        bCorrect601to709 = (script_matrix == ColorConvTable::BT601) && (video_matrix == ColorConvTable::BT709);
+    }
+    ColorConvTable::SetDefaultConvType(video_matrix, video_range, (targetWhiteLevel < 245), bCorrect601to709);
 
     return S_OK;
 }
