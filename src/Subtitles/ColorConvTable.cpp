@@ -186,13 +186,16 @@ public:
     virtual ~ConvMatrix();
 
     bool Init();
+#if INCLUDE_COLOR_CONVERT
+    void InitMatrix(int in_level, int in_type, int out_level, int out_type);
     DWORD Convert(int x1, int x2, int x3, int in_level, int in_type, int out_level, int out_type);
+#endif
     static DWORD DoConvert(int x1, int x2, int x3, const int* matrix);
 
     DWORD ColorCorrection(int r8, int g8, int b8, int output_rgb_level);
-    void InitMatrix(int in_level, int in_type, int out_level, int out_type);
     void InitColorCorrectionMatrix();
 private:
+#if INCLUDE_COLOR_CONVERT
     const float* MATRIX_DE_QUAN[LEVEL_COUNT][COLOR_COUNT];
     const float* MATRIX_INV_TRANS[COLOR_COUNT];
     const float* MATRIX_TRANS[COLOR_COUNT];
@@ -200,26 +203,31 @@ private:
 
     //m_matrix[in_level][in_type][out_level][out_type]
     int* m_matrix[LEVEL_COUNT][COLOR_COUNT][LEVEL_COUNT][COLOR_COUNT];
-
+#endif
     int m_matrix_vsfilter_compact_correction[LEVEL_COUNT][3][4];
 };
 
 ConvMatrix::ConvMatrix()
 {
+#if INCLUDE_COLOR_CONVERT
     ZeroMemory(m_matrix, LEVEL_COUNT * COLOR_COUNT * LEVEL_COUNT * COLOR_COUNT * sizeof(float*));
+#endif
     Init();
 }
 
 ConvMatrix::~ConvMatrix()
 {
+#if INCLUDE_COLOR_CONVERT
     int** p_matrix = (int**)m_matrix;
     for (int i = 0; i < LEVEL_COUNT * COLOR_COUNT * LEVEL_COUNT * COLOR_COUNT; i++) {
         SAFE_DELETE(p_matrix[i]);
     }
+#endif
 }
 
 bool ConvMatrix::Init()
 {
+#if INCLUDE_COLOR_CONVERT
     MATRIX_DE_QUAN[LEVEL_TV][COLOR_YUV_601] = &YUV_TV_INV[0][0];
     MATRIX_DE_QUAN[LEVEL_TV][COLOR_YUV_709] = &YUV_TV_INV[0][0];
     MATRIX_DE_QUAN[LEVEL_TV][COLOR_YUV_2020] = &YUV_TV_INV[0][0];
@@ -249,24 +257,14 @@ bool ConvMatrix::Init()
     MATRIX_QUAN[LEVEL_PC][COLOR_YUV_709] = &YUV_PC[0][0];
     MATRIX_QUAN[LEVEL_PC][COLOR_YUV_2020] = &YUV_PC[0][0];
     MATRIX_QUAN[LEVEL_PC][COLOR_RGB] = &RGB_PC[0][0];
+#endif
 
     InitColorCorrectionMatrix();
-    //InitMatrix(LEVEL_PC, COLOR_RGB, LEVEL_TV, COLOR_YUV_601);
-    //InitMatrix(LEVEL_PC, COLOR_RGB, LEVEL_TV, COLOR_YUV_709);
-    //InitMatrix(LEVEL_PC, COLOR_RGB, LEVEL_TV, COLOR_YUV_2020);
-    //InitMatrix(LEVEL_TV, COLOR_YUV_601, LEVEL_PC, COLOR_RGB);
-    //InitMatrix(LEVEL_TV, COLOR_YUV_709, LEVEL_PC, COLOR_RGB);
-    //InitMatrix(LEVEL_TV, COLOR_YUV_2020, LEVEL_PC, COLOR_RGB);
 
-    //InitMatrix(LEVEL_TV, COLOR_RGB, LEVEL_TV, COLOR_YUV_601);
-    //InitMatrix(LEVEL_TV, COLOR_RGB, LEVEL_TV, COLOR_YUV_709);
-    //InitMatrix(LEVEL_TV, COLOR_RGB, LEVEL_TV, COLOR_YUV_2020);
-    //InitMatrix(LEVEL_TV, COLOR_YUV_601, LEVEL_TV, COLOR_RGB);
-    //InitMatrix(LEVEL_TV, COLOR_YUV_709, LEVEL_TV, COLOR_RGB);
-    //InitMatrix(LEVEL_TV, COLOR_YUV_2020, LEVEL_TV, COLOR_RGB);
     return true;
 };
 
+#if INCLUDE_COLOR_CONVERT
 void ConvMatrix::InitMatrix(int in_level, int in_type, int out_level, int out_type)
 {
     int*& out_matrix = m_matrix[in_level][in_type][out_level][out_type];
@@ -287,6 +285,7 @@ void ConvMatrix::InitMatrix(int in_level, int in_type, int out_level, int out_ty
         ASSERT(out_matrix[i] < (1 << 24));
     }
 }
+#endif
 
 void ConvMatrix::InitColorCorrectionMatrix()
 {
@@ -294,24 +293,25 @@ void ConvMatrix::InitColorCorrectionMatrix()
 
     float matrix[3][4];
     float* p_matrix = &matrix[0][0];
-    memcpy(p_matrix, MATRIX_INV_TRANS[COLOR_YUV_709], 3 * 4 * sizeof(float));
-    MultiplyMatrix(p_matrix, MATRIX_TRANS[COLOR_YUV_601]);
+    memcpy(p_matrix, &MATRIX_BT_709_INV[0][0], 3 * 4 * sizeof(float));
+    MultiplyMatrix(p_matrix, &MATRIX_BT_601[0][0]);
     for (int i = 0; i < 3 * 4; i++) {
         out_matrix[i] = std::lround(p_matrix[i] * (1 << 16));
         ASSERT(out_matrix[i] < (1 << 24));
     }
 
     out_matrix = &m_matrix_vsfilter_compact_correction[LEVEL_TV][0][0];
-    memcpy(p_matrix, MATRIX_QUAN[LEVEL_TV][COLOR_RGB], 3 * 4 * sizeof(float));
-    MultiplyMatrix(p_matrix, MATRIX_INV_TRANS[COLOR_YUV_709]);
-    MultiplyMatrix(p_matrix, MATRIX_TRANS[COLOR_YUV_601]);
-    MultiplyMatrix(p_matrix, MATRIX_DE_QUAN[LEVEL_PC][COLOR_RGB]);
+    memcpy(p_matrix, &RGB_TV[0][0], 3 * 4 * sizeof(float));
+    MultiplyMatrix(p_matrix, &MATRIX_BT_709_INV[0][0]);
+    MultiplyMatrix(p_matrix, &MATRIX_BT_601[0][0]);
+    MultiplyMatrix(p_matrix, &RGB_PC_INV[0][0]);
     for (int i = 0; i < 3 * 4; i++) {
         out_matrix[i] = std::lround(p_matrix[i] * (1 << 16));
         ASSERT(out_matrix[i] < (1 << 24));
     }
 }
 
+#if INCLUDE_COLOR_CONVERT
 DWORD ConvMatrix::Convert(int x1, int x2, int x3, int in_level, int in_type, int out_level, int out_type)
 {
     int*& matrix_int = m_matrix[in_level][in_type][out_level][out_type];
@@ -324,6 +324,7 @@ DWORD ConvMatrix::Convert(int x1, int x2, int x3, int in_level, int in_type, int
     }
     return DoConvert(x1, x2, x3, matrix_int);
 }
+#endif
 
 DWORD ConvMatrix::DoConvert(int x1, int x2, int x3, const int* matrix)
 {
@@ -458,6 +459,7 @@ ConvFunc::ConvFunc(YuvMatrixType yuv_type, YuvRangeType range, bool bOutputTVRan
     , m_eYuvType(yuv_type)
     , m_eRangeType(range)
 {
+#if INCLUDE_COLOR_CONVERT
     m_convMatrix.InitMatrix(
         ConvMatrix::LEVEL_TV, ConvMatrix::COLOR_YUV_601,
         ConvMatrix::LEVEL_TV, ConvMatrix::COLOR_YUV_709);
@@ -532,6 +534,7 @@ ConvFunc::ConvFunc(YuvMatrixType yuv_type, YuvRangeType range, bool bOutputTVRan
     m_convMatrix.InitMatrix(
         ConvMatrix::LEVEL_PC, ConvMatrix::COLOR_YUV_2020,
         ConvMatrix::LEVEL_PC, ConvMatrix::COLOR_YUV_709);
+#endif
 }
 
 //

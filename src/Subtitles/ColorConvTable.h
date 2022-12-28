@@ -20,6 +20,8 @@
 
 #pragma once
 
+#define INCLUDE_COLOR_CONVERT 0
+
 struct ColorConvTable {
     enum YuvMatrixType {
         AUTO,
