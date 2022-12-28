@@ -192,7 +192,7 @@ public:
 #endif
     static DWORD DoConvert(int x1, int x2, int x3, const int* matrix);
 
-    DWORD ColorCorrection(int r8, int g8, int b8, int output_rgb_level);
+    DWORD Correct601to709(int r8, int g8, int b8, int output_rgb_level);
     void InitColorCorrectionMatrix();
 private:
 #if INCLUDE_COLOR_CONVERT
@@ -338,7 +338,7 @@ DWORD ConvMatrix::DoConvert(int x1, int x2, int x3, const int* matrix)
     return (tmp1 << 16) | (tmp2 << 8) | tmp3;
 }
 
-DWORD ConvMatrix::ColorCorrection(int r8, int g8, int b8, int output_rgb_level)
+DWORD ConvMatrix::Correct601to709(int r8, int g8, int b8, int output_rgb_level)
 {
     ASSERT(output_rgb_level == LEVEL_PC || output_rgb_level == LEVEL_TV);
     return DoConvert(r8, g8, b8, &m_matrix_vsfilter_compact_correction[output_rgb_level][0][0]);
@@ -439,8 +439,8 @@ public:
 
     typedef DWORD(*R8G8B8ToYuvFunc)(int r8, int g8, int b8);
     typedef R8G8B8ToYuvFunc Y8U8V8ToRGBFunc;
-    YuvMatrixType m_eYuvType;
-    YuvRangeType  m_eRangeType;
+    YuvMatrixType m_videoYuvType;
+    YuvRangeType  m_videoRangeType;
     bool          m_bOutputTVRange;
     bool          m_bCorrect601to709;
 
@@ -456,8 +456,8 @@ static ConvFunc& ConvFuncInst()
 ConvFunc::ConvFunc(YuvMatrixType yuv_type, YuvRangeType range, bool bOutputTVRange, bool bCorrect601to709)
     : m_bOutputTVRange(bOutputTVRange)
     , m_bCorrect601to709(bCorrect601to709)
-    , m_eYuvType(yuv_type)
-    , m_eRangeType(range)
+    , m_videoYuvType(yuv_type)
+    , m_videoRangeType(range)
 {
 #if INCLUDE_COLOR_CONVERT
     m_convMatrix.InitMatrix(
@@ -542,8 +542,8 @@ ConvFunc::ConvFunc(YuvMatrixType yuv_type, YuvRangeType range, bool bOutputTVRan
 //
 void ColorConvTable::SetDefaultConvType(YuvMatrixType yuv_type, YuvRangeType range, bool bOutputTVRange, bool bCorrect601to709)
 {
-    ConvFuncInst().m_eYuvType = yuv_type;
-    ConvFuncInst().m_eRangeType = range;
+    ConvFuncInst().m_videoYuvType = yuv_type;
+    ConvFuncInst().m_videoRangeType = range;
     ConvFuncInst().m_bOutputTVRange = bOutputTVRange;
     ConvFuncInst().m_bCorrect601to709 = bCorrect601to709;
 }
@@ -575,7 +575,7 @@ DWORD ColorConvTable::A8Y8U8V8_TO_ARGB(int a8, int y8, int u8, int v8, YuvMatrix
             {YUV_PC_TO_RGB_TV_2020, YUV_PC_TO_RGB_PC_2020}
         }
     };
-    return (a8 << 24) | funcs[ConvFuncInst().m_eRangeType == RANGE_PC ? 1 : 0][in_type == BT709 ? 1 : (in_type == BT2020 ? 2 : 0)][ConvFuncInst().m_bOutputTVRange ? 0 : 1](y8, u8, v8);
+    return (a8 << 24) | funcs[ConvFuncInst().m_videoRangeType == RANGE_PC ? 1 : 0][in_type == BT709 ? 1 : (in_type == BT2020 ? 2 : 0)][ConvFuncInst().m_bOutputTVRange ? 0 : 1](y8, u8, v8);
 }
 
 DWORD ColorConvTable::ColorCorrection(DWORD argb)
@@ -585,7 +585,7 @@ DWORD ColorConvTable::ColorCorrection(DWORD argb)
         int g = (argb & 0x0000ff00) >> 8;
         int b = (argb & 0x000000ff);
         return (argb & 0xff000000) |
-               ConvFuncInst().m_convMatrix.ColorCorrection(r, g, b,
+               ConvFuncInst().m_convMatrix.Correct601to709(r, g, b,
                                                            ConvFuncInst().m_bOutputTVRange ? ConvMatrix::LEVEL_TV : ConvMatrix::LEVEL_PC);
     } else if (ConvFuncInst().m_bOutputTVRange) {
         return RGB_PC_TO_TV(argb);
