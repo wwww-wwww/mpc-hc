@@ -9710,7 +9710,7 @@ bool CMainFrame::SeekToFileChapter(int iChapter, bool bRelative /*= false*/)
         REFERENCE_TIME rt;
 
         if (bRelative) {
-            if (SUCCEEDED(m_pMS->GetCurrentPosition(&rt))) {
+            if (m_pMS && SUCCEEDED(m_pMS->GetCurrentPosition(&rt))) {
                 if (iChapter < 0) {
                     // Add a small threshold to jump back at least that amount of time
                     // This is needed when rt is near start of current chapter
@@ -9741,7 +9741,7 @@ bool CMainFrame::SeekToFileChapter(int iChapter, bool bRelative /*= false*/)
             ret = true;
 
             REFERENCE_TIME rtDur;
-            if (SUCCEEDED(m_pMS->GetDuration(&rtDur))) {
+            if (m_pMS && SUCCEEDED(m_pMS->GetDuration(&rtDur))) {
                 const CAppSettings& s = AfxGetAppSettings();
                 CString strOSD;
 
