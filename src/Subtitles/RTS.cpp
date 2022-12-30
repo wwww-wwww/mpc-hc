@@ -544,26 +544,25 @@ bool CText::CreatePath()
 
     HFONT hOldFont = SelectFont(g_hDC, font);
 
-    if (m_style.fontSpacing) {
-        LONG cx;
-        auto getExtent = [&](LPCWSTR s) {
-            CSize extent;
-            if (!GetTextExtentPoint32W(g_hDC, s, 1, &extent)) {
-                SelectFont(g_hDC, hOldFont);
-                ASSERT(0);
-                return false;
-            }
-            cx = extent.cx;
-            return true;
-        };
+    LONG cx = 0;
+    auto getExtent = [&](LPCWSTR s, int len) {
+        CSize extent;
+        if (!GetTextExtentPoint32W(g_hDC, s, len, &extent)) {
+            SelectFont(g_hDC, hOldFont);
+            ASSERT(0);
+            return false;
+        }
+        cx = extent.cx;
+        return true;
+    };
 
+    if (m_style.fontSpacing) {
         int width = 0;
         bool bFirstPath = true;
         bool failedPath = false;
-        int ftWidth = width;
 
         for (LPCWSTR s = m_str; *s; s++) {
-            if (!getExtent(s)) {
+            if (!getExtent(s, 1)) {
                 return false;
             }
             PartialBeginPath(g_hDC, bFirstPath);
@@ -571,7 +570,7 @@ bool CText::CreatePath()
             TextOutW(g_hDC, 0, 0, s, 1);
             int mp = mPathPoints;
             PartialEndPath(g_hDC, width, 0);
-            if (mp == mPathPoints && L' ' != s[0]) { //failed to add points, we will try again with FreeType as emulator
+            if (mp == mPathPoints && !CStringW::StrTraits::IsSpace(s[0])) { //failed to add points, we will try again with FreeType as emulator
                 failedPath=true;
                 break;
             }
@@ -583,29 +582,42 @@ bool CText::CreatePath()
             width += cx + (int)m_style.fontSpacing;
         }
         if (failedPath) { //try freetype
-            width = ftWidth;
+            int ftWidth = 0;
             bFirstPath = true;
-
             for (LPCWSTR s = m_str; *s; s++) {
-                if (!getExtent(s)) {
+                if (!getExtent(s, 1)) {
                     return false;
                 }
-                GetPathFreeType(g_hDC, bFirstPath, m_style.fontName, s[0], m_style.fontSize, width, 0);
+                if (!GetPathFreeType(g_hDC, bFirstPath, m_style.fontName, s[0], m_style.fontSize, ftWidth, 0)) {
+                    break;
+                }
                 bFirstPath = false;
-                width += cx + (int)m_style.fontSpacing;
+                ftWidth += cx + (int)m_style.fontSpacing;
             }
         }
     } else {
-        CSize extent;
-        if (!GetTextExtentPoint32W(g_hDC, m_str, m_str.GetLength(), &extent)) {
-            SelectFont(g_hDC, hOldFont);
-            ASSERT(0);
+        if (!getExtent(m_str, m_str.GetLength())) {
             return false;
         }
 
         BeginPath(g_hDC);
         TextOutW(g_hDC, 0, 0, m_str, m_str.GetLength());
         EndPath(g_hDC);
+
+        if (mPathPoints == 0 && m_str.GetLength() > 0) { // try freetype
+            int ftWidth = 0;
+            bool bFirstPath = true;
+            for (LPCWSTR s = m_str; *s; s++) {
+                if (!getExtent(s, 1)) {
+                    return false;
+                }
+                if (!GetPathFreeType(g_hDC, bFirstPath, m_style.fontName, s[0], m_style.fontSize, ftWidth, 0)) {
+                    break;
+                }
+                bFirstPath = false;
+                ftWidth += cx;
+            }
+        }
     }
 
     SelectFont(g_hDC, hOldFont);

@@ -2013,7 +2013,7 @@ bool Rasterizer::GetPathFreeType(HDC hdc, bool bClearPath, CStringW fontName, wc
                     }
                     mPathPoints += nPoints;
                 } else {
-                    error = true;
+                    error = nPoints > 0 || !CStringW::StrTraits::IsSpace(ch);
                 }
 #if 0
                 for (int a = mPathPoints - nPoints; a < mPathPoints; a++) {
