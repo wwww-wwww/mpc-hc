@@ -1958,7 +1958,12 @@ bool Rasterizer::GetPathFreeType(HDC hdc, bool bClearPath, CStringW fontName, wc
             error = FT_Set_Pixel_Sizes(face, faceCache[fontNameK].ratio, faceCache[fontNameK].ratio);
         } else {
             DWORD fontSize = GetFontData(hdc, 0, 0, NULL, 0);
-            FT_Byte* fontData = DEBUG_NEW FT_Byte[fontSize];
+            FT_Byte* fontData = nullptr;
+            try {
+                fontData = DEBUG_NEW FT_Byte[fontSize];
+            } catch (...) {
+                return false;
+            }
             GetFontData(hdc, 0, 0, fontData, fontSize);
             error = FT_New_Memory_Face(ftLibrary, fontData, fontSize, 0, &face);
             if (!error) {
