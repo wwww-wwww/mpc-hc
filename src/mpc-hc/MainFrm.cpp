@@ -4020,6 +4020,7 @@ void CMainFrame::OnFilePostClosemedia(bool bNextIsQueued/* = false*/)
 
     m_bOpenMediaActive = false;
 
+    abRepeat = ABRepeat();
     m_kfs.clear();
 
     m_nCurSubtitle = -1;
@@ -14450,7 +14451,9 @@ bool CMainFrame::OpenMediaPrivate(CAutoPtr<OpenMediaData> pOMD)
             // Don't try to save file position if source isn't seekable
             REFERENCE_TIME rtPos = 0;
             REFERENCE_TIME rtDur = 0;
-            m_pMS->GetDuration(&rtDur);
+            if (m_pMS) {
+                m_pMS->GetDuration(&rtDur);
+            }
 
             m_bRememberFilePos = s.fKeepHistory && s.fRememberFilePos && rtDur > (s.iRememberPosForLongerThan * 10000000i64 * 60i64) && (s.bRememberPosForAudioFiles || !m_fAudioOnly);
 
@@ -14484,10 +14487,16 @@ bool CMainFrame::OpenMediaPrivate(CAutoPtr<OpenMediaData> pOMD)
                 }
             }
             if (abRepeat) {
+                // validate
+                if (abRepeat.positionB > rtDur || abRepeat.positionA >= abRepeat.positionB) {
+                    abRepeat = ABRepeat();
+                }
+            }
+            if (abRepeat) {
                 m_wndSeekBar.Invalidate();
             }
 
-            if (rtPos) {
+            if (rtPos && rtDur) {
                 m_pMS->SetPositions(&rtPos, AM_SEEKING_AbsolutePositioning, nullptr, AM_SEEKING_NoPositioning);
             }
 
