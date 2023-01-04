@@ -2132,7 +2132,7 @@ void CMainFrame::OnTimer(UINT_PTR nIDEvent)
             break;
         case TIMER_STATS: {
             CString rate;
-            rate.Format(_T("%.2fx"), m_dSpeedRate);
+            rate.Format(_T("%.4fx"), m_dSpeedRate);
             if (m_pQP) {
                 CString info;
                 int tmp, tmp1;
@@ -8724,13 +8724,6 @@ void CMainFrame::SetPlayingRate(double rate)
     }
     HRESULT hr = E_FAIL;
     if (GetPlaybackMode() == PM_FILE) {
-        if (rate < 0.05) {
-            if (m_dSpeedRate > 0.05) {
-                rate = 0.05;
-            } else {
-                return;
-            }
-        }
         if (GetMediaState() != State_Running) {
             SendMessage(WM_COMMAND, ID_PLAY_PLAY);
         }
@@ -8771,16 +8764,16 @@ void CMainFrame::OnPlayChangeRate(UINT nID)
                     double newrate = 1.0 - (95 / s.nSpeedStep) * dSpeedStep;
                     SetPlayingRate(newrate > 0.05 ? newrate : newrate + dSpeedStep);
                 } else {
-                    SetPlayingRate(m_dSpeedRate + dSpeedStep);
+                    SetPlayingRate(std::max(0.05, m_dSpeedRate + dSpeedStep));
                 }
             } else {
-                SetPlayingRate(m_dSpeedRate * 2.0);
+                SetPlayingRate(std::max(0.0625, m_dSpeedRate * 2.0));
             }
         } else if (nID == ID_PLAY_DECRATE) {
             if (s.nSpeedStep > 0) {
-                SetPlayingRate(m_dSpeedRate - dSpeedStep);
+                SetPlayingRate(std::max(0.05, m_dSpeedRate - dSpeedStep));
             } else {
-                SetPlayingRate(m_dSpeedRate / 2.0);
+                SetPlayingRate(std::max(0.0625, m_dSpeedRate / 2.0));
             }
         } else if (nID > ID_PLAY_PLAYBACKRATE_START && nID < ID_PLAY_PLAYBACKRATE_END) {
             if (filePlaybackRates.count(nID) != 0) {
