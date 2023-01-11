@@ -1,6 +1,6 @@
 #ifndef ISPP_INVOKED
 /*
- * (C) 2010-2021 see Authors.txt
+ * (C) 2010-2023 see Authors.txt
  *
  * This file is part of MPC-HC.
  *
@@ -46,9 +46,9 @@
 #include "../build/version_rev.h"
 #endif
 
-#define MPC_VERSION_MAJOR       1
-#define MPC_VERSION_MINOR       9
-#define MPC_VERSION_PATCH       24
+#define MPC_VERSION_MAJOR       2
+#define MPC_VERSION_MINOR       0
+#define MPC_VERSION_PATCH       0
 
 #if MPC_VERSION_REV > 0
 #define MPC_NIGHTLY_RELEASE     1
