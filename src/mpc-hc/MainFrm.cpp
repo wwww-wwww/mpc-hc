@@ -8965,6 +8965,9 @@ void CMainFrame::SetAudioDelay(REFERENCE_TIME rtShift)
 void CMainFrame::SetSubtitleDelay(int delay_ms, bool relative)
 {
     if (!m_pCAP && !m_pDVS) {
+        if (GetLoadState() == MLS::LOADED) {
+            SendStatusMessage(L"Delay is not supported by current subtitle renderer", 3000);
+        }
         return;
     }
 
