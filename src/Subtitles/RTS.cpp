@@ -565,6 +565,11 @@ bool CText::CreatePath()
             if (!getExtent(s, 1)) {
                 return false;
             }
+            if (cx == 0) {
+                // possible unhandled unprintable character
+                ASSERT(*s == L'\x202a' || *s == L'\x202b');
+                continue;
+            }
             PartialBeginPath(g_hDC, bFirstPath);
             bFirstPath = false;
             TextOutW(g_hDC, 0, 0, s, 1);
@@ -588,6 +593,11 @@ bool CText::CreatePath()
                 if (!getExtent(s, 1)) {
                     return false;
                 }
+                if (cx == 0) {
+                    // possible unhandled unprintable character
+                    ASSERT(false);
+                    continue;
+                }
                 if (!GetPathFreeType(g_hDC, bFirstPath, m_style.fontName, s[0], m_style.fontSize, ftWidth, 0)) {
                     break;
                 }
@@ -596,7 +606,9 @@ bool CText::CreatePath()
             }
         }
     } else {
-        if (!getExtent(m_str, m_str.GetLength())) {
+        if (!getExtent(m_str, m_str.GetLength()) || cx == 0) {
+            // possible unhandled unprintable character
+            ASSERT(false);
             return false;
         }
 
@@ -1894,6 +1906,12 @@ void CRenderedTextSubtitle::ParseString(CSubtitle* sub, CStringW str, STSStyle& 
 {
     if (!sub) {
         return;
+    }
+
+    if (str.GetLength() == 1) {
+        if (str[0] == L'\x202a' || str[0] == L'\x202b') {
+            return; // ignore Unicode control character
+        }
     }
 
     str.Replace(L"<br>", L"\n");
