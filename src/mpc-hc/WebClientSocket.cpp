@@ -212,6 +212,7 @@ void CWebClientSocket::HandleRequest()
         }
 
         reshdr +=
+            "Access-Control-Allow-Origin: *\r\n"
             "Server: MPC-HC WebServer\r\n"
             "Connection: close\r\n"
             "\r\n";
