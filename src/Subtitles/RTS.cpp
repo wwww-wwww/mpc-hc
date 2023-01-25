@@ -2980,10 +2980,17 @@ CSubtitle* CRenderedTextSubtitle::GetSubtitle(int entry)
 
         tmp.fontSize      *= sub->m_total_scale_y * 64.0;
         tmp.fontSpacing   *= sub->m_total_scale_x * 64.0;
-        tmp.outlineWidthX *= (fScaledBAS ? sub->m_total_scale_x : sub->m_script_scale_x) * 8.0;
-        tmp.outlineWidthY *= (fScaledBAS ? sub->m_total_scale_y : sub->m_script_scale_y) * 8.0;
-        tmp.shadowDepthX  *= (fScaledBAS ? sub->m_total_scale_x : sub->m_script_scale_x) * 8.0;
-        tmp.shadowDepthY  *= (fScaledBAS ? sub->m_total_scale_y : sub->m_script_scale_y) * 8.0;
+        if (fScaledBAS) {
+            tmp.outlineWidthX *= sub->m_total_scale_x * 8.0;
+            tmp.outlineWidthY *= sub->m_total_scale_y * 8.0;
+            tmp.shadowDepthX  *= sub->m_total_scale_x * 8.0;
+            tmp.shadowDepthY  *= sub->m_total_scale_y * 8.0;
+        } else {
+            tmp.outlineWidthX *= sub->m_target_scale_x * 8.0;
+            tmp.outlineWidthY *= sub->m_target_scale_y * 8.0;
+            tmp.shadowDepthX  *= sub->m_target_scale_x * 8.0;
+            tmp.shadowDepthY  *= sub->m_target_scale_y * 8.0;
+        }
 
         if (m_nPolygon) {
             ParsePolygon(sub, str.Mid(iStart, iEnd - iStart), tmp);
