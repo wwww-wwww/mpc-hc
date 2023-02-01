@@ -584,6 +584,7 @@ CString ISOLang::ISO6392ToLanguage(LPCSTR code)
     CHAR tmp[3 + 1];
     strncpy_s(tmp, code, 3);
     tmp[3] = 0;
+    ASSERT(tmp[2] != '-');
     _strlwr_s(tmp);
     for (size_t i = 0, cnt = _countof(s_isolangs); i < cnt; i++) {
         if (!strcmp(s_isolangs[i].iso6392, tmp)) {
@@ -628,7 +629,11 @@ CString ISOLang::ISO639XToLanguage(LPCSTR code, bool bCheckForFullLangName /*= f
             lang = ISO6391ToLanguage(code);
             break;
         case 3:
-            lang = ISO6392ToLanguage(code);
+            if (code[2] == '-') { // Truncated BCP47
+                lang = ISO6391ToLanguage(code);
+            } else {
+                lang = ISO6392ToLanguage(code);
+            }
             if (lang == code) { // When it can't find a match, ISO6392ToLanguage returns the input string
                 lang.Empty();
             }
@@ -678,6 +683,10 @@ LCID ISOLang::ISO6392ToLcid(LPCSTR code)
     CHAR tmp[3 + 1];
     strncpy_s(tmp, code, 3);
     tmp[3] = 0;
+    if (tmp[2] == '-') { // Truncated BCP47
+        tmp[2] = 0;
+        return ISO6391ToLcid(tmp);
+    }
     _strlwr_s(tmp);
     for (size_t i = 0, cnt = _countof(s_isolangs); i < cnt; i++) {
         if (!strcmp(s_isolangs[i].iso6392, tmp)) {
@@ -706,6 +715,7 @@ BOOL ISOLang::IsISO6392(LPCSTR code)
     CHAR tmp[3 + 1];
     strncpy_s(tmp, code, 3);
     tmp[3] = 0;
+    ASSERT(tmp[2] != '-');
     _strlwr_s(tmp);
     for (size_t i = 0, cnt = _countof(s_isolangs); i < cnt; i++) {
         if (!strcmp(s_isolangs[i].iso6392, tmp)) {
@@ -733,6 +743,7 @@ CString ISOLang::ISO6392To6391(LPCSTR code)
 {
     CHAR tmp[3 + 1];
     strncpy_s(tmp, code, 3);
+    ASSERT(tmp[2] != '-');
     tmp[3] = 0;
     _strlwr_s(tmp);
     for (size_t i = 0, cnt = _countof(s_isolangs); i < cnt; i++) {
@@ -779,6 +790,7 @@ ISOLang ISOLang::ISO6392ToISOLang(LPCSTR code)
     CHAR tmp[3 + 1];
     strncpy_s(tmp, code, 3);
     tmp[3] = 0;
+    ASSERT(tmp[2] != '-');
     _strlwr_s(tmp);
     for (size_t i = 0, cnt = _countof(s_isolangs); i < cnt; i++) {
         if (!strcmp(s_isolangs[i].iso6392, tmp)) {

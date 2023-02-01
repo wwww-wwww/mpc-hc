@@ -14062,6 +14062,10 @@ bool MatchSubtrackWithISOLang(CString& tname, const ISOLangT<CString>& l)
         if (p > 0) {
             return true;
         }
+        p = tname.Find(_T("[") + l.iso6391 + _T("-]")); // truncated BCP47
+        if (p > 0) {
+            return true;
+        }
     }
 
      if (!l.name.IsEmpty()) {
@@ -14124,15 +14128,21 @@ int CMainFrame::SetupSubtitleStreams()
         CString lang = s.strSubtitlesLanguageOrder.Tokenize(_T(",; "), tPos);
         while (tPos != -1) {
             lang.MakeLower();
-            ISOLangT<CString> l = ISOLang::ISO639XToISOLang(CStringA(lang));
-            if (l.name.IsEmpty()) {
-                l.name = lang;
-                if (lang == _T("off")) {
-                    has_off_lang = true;
-                }
+            ISOLangT<CString> l = ISOLangT<CString>(lang, L"", L"", 0);
+
+            if (lang == _T("off")) {
+                has_off_lang = true;
+            } else if (lang.Find(L'-') == 2) {
+                // BCP 47
             } else {
-                l.name.MakeLower();
+                l = ISOLang::ISO639XToISOLang(CStringA(lang));
+                if (l.name.IsEmpty()) { // not an ISO code
+                    l.name = lang;
+                } else {
+                    l.name.MakeLower();
+                }
             }
+
             langs.emplace_back(l);
 
             lang = s.strSubtitlesLanguageOrder.Tokenize(_T(",; "), tPos);

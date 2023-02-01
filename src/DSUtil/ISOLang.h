@@ -36,8 +36,8 @@ struct ISOLangT {
         : name(isoLang.name), iso6392(isoLang.iso6392), iso6391(isoLang.iso6391), lcid(isoLang.lcid)
     {};
 
-    template<typename StringType2>
-    ISOLangT& operator=(const ISOLangT<StringType2>& isoLang) = delete;
+    //template<typename StringType2>
+    //ISOLangT& operator=(const ISOLangT<StringType2>& isoLang) = delete;
 };
 
 struct ISOLang : public ISOLangT<LPCSTR> {
