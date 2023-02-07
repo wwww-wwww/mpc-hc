@@ -12536,7 +12536,7 @@ HRESULT CMainFrame::PreviewWindowHide() {
         AnimationInfo.iMinAnimate = WindowAnimationType;
         ::SystemParametersInfo(SPI_SETANIMATION, sizeof(ANIMATIONINFO), &AnimationInfo, 0);
 
-        if (m_pGB_preview) {
+        if (m_pGB_preview && m_pMC_preview) {
             m_pMC_preview->Pause();
         }
     }
