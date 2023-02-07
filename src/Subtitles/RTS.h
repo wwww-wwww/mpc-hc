@@ -288,6 +288,7 @@ public:
     int m_descent = 0;
     int m_borderX = 0;
     int m_borderY = 0;
+    int m_linePadding = 0;
 
     virtual ~CLine();
 

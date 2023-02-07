@@ -1430,7 +1430,7 @@ CLine* CSubtitle::GetNextLine(POSITION& pos, int maxwidth)
         return nullptr;
     }
 
-    ret->m_width = ret->m_ascent = ret->m_descent = ret->m_borderX = ret->m_borderY = 0;
+    ret->m_width = ret->m_ascent = ret->m_descent = ret->m_borderX = ret->m_borderY = ret->m_linePadding = 0;
 
     maxwidth = GetWrapWidth(pos, maxwidth);
 
@@ -1450,6 +1450,9 @@ CLine* CSubtitle::GetNextLine(POSITION& pos, int maxwidth)
         }
         if (ret->m_borderY < w->m_style.outlineWidthY) {
             ret->m_borderY = (int)(w->m_style.outlineWidthY + 0.5);
+        }
+        if (w->m_style.borderStyle == 1 && (ret->m_linePadding < ret->m_borderY * 2)) {
+            ret->m_linePadding = ret->m_borderY * 2;
         }
 
         if (w->m_fLineBreak) {
@@ -1561,7 +1564,7 @@ void CSubtitle::MakeLines(CSize size, const CRect& marginRect)
         }
 
         spaceNeeded.cx = std::max<long>(l->m_width + l->m_borderX, spaceNeeded.cx);
-        spaceNeeded.cy += l->m_ascent + l->m_descent;
+        spaceNeeded.cy += l->m_ascent + l->m_descent + l->m_linePadding;
 
         AddTail(l);
     }
@@ -3400,11 +3403,8 @@ STDMETHODIMP CRenderedTextSubtitle::Render(SubPicDesc& spd, REFERENCE_TIME rt, d
             org2 = org;
         }
 
-        CPoint p, p2(0, r.top);
-
+        CPoint p(0, r.top);
         POSITION pos;
-
-        p = p2;
 
         // Rectangles for inverse clip
         CRect iclipRect[4];
@@ -3425,50 +3425,20 @@ STDMETHODIMP CRenderedTextSubtitle::Render(SubPicDesc& spd, REFERENCE_TIME rt, d
                 bbox2 |= l->PaintShadow(spd, iclipRect[1], pAlphaMask, p, org2, m_time, alpha);
                 bbox2 |= l->PaintShadow(spd, iclipRect[2], pAlphaMask, p, org2, m_time, alpha);
                 bbox2 |= l->PaintShadow(spd, iclipRect[3], pAlphaMask, p, org2, m_time, alpha);
-            } else {
-                bbox2 |= l->PaintShadow(spd, clipRect, pAlphaMask, p, org2, m_time, alpha);
-            }
-            p.y += l->m_ascent + l->m_descent;
-        }
-
-        p = p2;
-
-        pos = s->GetHeadPosition();
-        while (pos) {
-            CLine* l = s->GetNext(pos);
-
-            p.x = (s->m_scrAlignment % 3) == 1 ? org.x
-                  : (s->m_scrAlignment % 3) == 0 ? org.x - l->m_width
-                  :                            org.x - (l->m_width / 2);
-            if (s->m_clipInverse) {
                 bbox2 |= l->PaintOutline(spd, iclipRect[0], pAlphaMask, p, org2, m_time, alpha);
                 bbox2 |= l->PaintOutline(spd, iclipRect[1], pAlphaMask, p, org2, m_time, alpha);
                 bbox2 |= l->PaintOutline(spd, iclipRect[2], pAlphaMask, p, org2, m_time, alpha);
                 bbox2 |= l->PaintOutline(spd, iclipRect[3], pAlphaMask, p, org2, m_time, alpha);
-            } else {
-                bbox2 |= l->PaintOutline(spd, clipRect, pAlphaMask, p, org2, m_time, alpha);
-            }
-            p.y += l->m_ascent + l->m_descent;
-        }
-
-        p = p2;
-
-        pos = s->GetHeadPosition();
-        while (pos) {
-            CLine* l = s->GetNext(pos);
-
-            p.x = (s->m_scrAlignment % 3) == 1 ? org.x
-                  : (s->m_scrAlignment % 3) == 0 ? org.x - l->m_width
-                  :                            org.x - (l->m_width / 2);
-            if (s->m_clipInverse) {
                 bbox2 |= l->PaintBody(spd, iclipRect[0], pAlphaMask, p, org2, m_time, alpha);
                 bbox2 |= l->PaintBody(spd, iclipRect[1], pAlphaMask, p, org2, m_time, alpha);
                 bbox2 |= l->PaintBody(spd, iclipRect[2], pAlphaMask, p, org2, m_time, alpha);
                 bbox2 |= l->PaintBody(spd, iclipRect[3], pAlphaMask, p, org2, m_time, alpha);
             } else {
+                bbox2 |= l->PaintShadow(spd, clipRect, pAlphaMask, p, org2, m_time, alpha);
+                bbox2 |= l->PaintOutline(spd, clipRect, pAlphaMask, p, org2, m_time, alpha);
                 bbox2 |= l->PaintBody(spd, clipRect, pAlphaMask, p, org2, m_time, alpha);
             }
-            p.y += l->m_ascent + l->m_descent;
+            p.y += l->m_ascent + l->m_descent + l->m_linePadding;
         }
     }
 
