@@ -2530,9 +2530,6 @@ void CMPlayerCApp::UpdateColorControlRange(bool isEVR)
         m_ColorControl[0].DefaultValue  = (int)floor(m_VMR9ColorControl[0].DefaultValue + 0.5);
         m_ColorControl[0].StepSize      = std::max(1, (int)(m_VMR9ColorControl[0].StepSize + 0.5));
         // Contrast
-        /*if (m_VMR9ColorControl[1].MinValue == 0.0999908447265625) {
-              m_VMR9ColorControl[1].MinValue = 0.11;    //fix NVIDIA bug
-          }*/
         if (*(int*)&m_VMR9ColorControl[1].MinValue == 1036830720) {
             m_VMR9ColorControl[1].MinValue = 0.11f;    //fix NVIDIA bug
         }
@@ -2560,6 +2557,9 @@ void CMPlayerCApp::UpdateColorControlRange(bool isEVR)
         m_ColorControl[0].MaxValue = 100;
     }
     // Contrast
+    if (m_ColorControl[1].MinValue == m_ColorControl[1].MaxValue) { // when ProcAmp is unsupported
+        m_ColorControl[1].MinValue = m_ColorControl[1].MaxValue = m_ColorControl[1].DefaultValue = 0;
+    }
     if (m_ColorControl[1].MinValue < -100) {
         m_ColorControl[1].MinValue = -100;
     }
@@ -2574,6 +2574,9 @@ void CMPlayerCApp::UpdateColorControlRange(bool isEVR)
         m_ColorControl[2].MaxValue = 180;
     }
     // Saturation
+    if (m_ColorControl[3].MinValue == m_ColorControl[3].MaxValue) { // when ProcAmp is unsupported
+        m_ColorControl[3].MinValue = m_ColorControl[3].MaxValue = m_ColorControl[3].DefaultValue = 0;
+    }
     if (m_ColorControl[3].MinValue < -100) {
         m_ColorControl[3].MinValue = -100;
     }
