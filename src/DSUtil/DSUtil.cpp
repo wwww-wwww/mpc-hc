@@ -746,6 +746,7 @@ void FindFiles(CString fn, CAtlList<CString>& files)
     path = path.Left(path.ReverseFind('\\') + 1);
 
     WIN32_FIND_DATA findData;
+    ZeroMemory(&findData, sizeof(WIN32_FIND_DATA));
     HANDLE h = FindFirstFile(fn, &findData);
     if (h != INVALID_HANDLE_VALUE) {
         do {

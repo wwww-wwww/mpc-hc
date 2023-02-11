@@ -14725,42 +14725,41 @@ void CMainFrame::CloseMediaPrivate()
 
 bool CMainFrame::WildcardFileSearch(CString searchstr, std::set<CString, CStringUtils::LogicalLess>& results)
 {
-    // support very long paths
     ExtendMaxPathLengthIfNeeded(searchstr);
 
-    CFileFind finder;
-    if (finder.FindFile(searchstr)) {
+    CString path = searchstr;
+    path.Replace('/', '\\');
+    int p = path.ReverseFind('\\');
+    if (p < 0) return false;
+    path = path.Left(p + 1);
+
+    WIN32_FIND_DATA findData;
+    ZeroMemory(&findData, sizeof(WIN32_FIND_DATA));
+    HANDLE h = FindFirstFile(searchstr, &findData);
+    if (h != INVALID_HANDLE_VALUE) {
         const CMediaFormats& mf = AfxGetAppSettings().m_Formats;
         CString search_ext = searchstr.Mid(searchstr.ReverseFind('.')).MakeLower();
         bool other_ext = (search_ext != _T(".*"));
-        bool bHasNext = true;
 
-        while (bHasNext) {
-            bHasNext = finder.FindNextFile();
+        do {
+            CString filename = findData.cFileName;
+            CString ext = filename.Mid(filename.ReverseFind('.')).MakeLower();
 
-            if (!finder.IsDirectory()) {
-                CString path = finder.GetFilePath();
-                CString ext = path.Mid(path.ReverseFind('.')).MakeLower();
-
-                if (ext.IsEmpty()) {
-                    continue;
+            if (mf.FindExt(ext)) {
+                /* playlist and cue files should be ignored when searching dir for playable files */
+                if (ext != _T(".m3u") && ext != _T(".m3u8") && ext != _T(".mpcpl") && ext != _T(".pls") && ext != _T(".cue") && ext != _T(".asx")) {
+                    results.insert(path + filename);
                 }
-
-                if (mf.FindExt(ext)) {
-                    /* playlist and cue files should be ignored when searching dir for playable files */
-                    if (ext != _T(".m3u") && ext != _T(".m3u8") && ext != _T(".mpcpl") && ext != _T(".pls") && ext != _T(".cue") && ext != _T(".asx")) {
-                        results.insert(path);
-                    }
-                } else if (other_ext && search_ext == ext) {
-                    results.insert(path);
-                    if (ext == _T(".rar")) {
-                        break;
-                    }
+            } else if (other_ext && search_ext == ext) {
+                results.insert(path + filename);
+                if (ext == _T(".rar")) {
+                    break;
                 }
             }
-        }
+        } while (FindNextFile(h, &findData));
+
+        FindClose(h);
     }
-    finder.Close();
 
     return results.size() > 0;
 }
