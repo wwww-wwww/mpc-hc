@@ -1971,7 +1971,7 @@ static bool OpenSubStationAlpha(CTextFile* file, CSimpleTextSubtitle& ret, int C
             if (nBuffLength) {
                 buff = GetStrW(pszBuff, nBuffLength);
                 buff.MakeLower();
-                ret.m_fScaledBAS = buff.Find(L"yes") >= 0;
+                ret.m_scaledBAS = (buff.Find(L"yes") >= 0) ? 1 : 0;
             }
         } else if (entry == L"[v4 styles]") {
             fRet = true;
@@ -2287,7 +2287,7 @@ CSimpleTextSubtitle::CSimpleTextSubtitle()
     , m_layoutRes(CSize(0, 0))
     , m_defaultWrapStyle(0)
     , m_collisions(0)
-    , m_fScaledBAS(false)
+    , m_scaledBAS(-1)
     , m_bUsingPlayerDefaultStyle(false)
     , m_ePARCompensationType(EPCTDisabled)
     , m_dPARCompensation(1.0)
@@ -2341,7 +2341,7 @@ void CSimpleTextSubtitle::Copy(CSimpleTextSubtitle& sts)
         m_layoutRes = sts.m_layoutRes;
         m_defaultWrapStyle = sts.m_defaultWrapStyle;
         m_collisions = sts.m_collisions;
-        m_fScaledBAS = sts.m_fScaledBAS;
+        m_scaledBAS = sts.m_scaledBAS;
         m_encoding = sts.m_encoding;
         m_bUsingPlayerDefaultStyle = sts.m_bUsingPlayerDefaultStyle;
         m_provider = sts.m_provider;
@@ -3565,8 +3565,12 @@ bool CSimpleTextSubtitle::SaveAs(CString fn, Subtitle::SubType type,
         str += _T("; Note: This file was saved by MPC-HC.\n");
         str += (type == Subtitle::SSA) ? _T("ScriptType: v4.00\n") : _T("ScriptType: v4.00+\n");
         str += (m_collisions == 0) ? _T("Collisions: Normal\n") : _T("Collisions: Reverse\n");
-        if (type == Subtitle::ASS && m_fScaledBAS) {
-            str += _T("ScaledBorderAndShadow: Yes\n");
+        if (type == Subtitle::ASS && m_scaledBAS >= 0) {
+            if (m_scaledBAS == 1) {
+                str += _T("ScaledBorderAndShadow: yes\n");
+            } else {
+                str += _T("ScaledBorderAndShadow: no\n");
+            }
         }
         if (m_sYCbCrMatrix.IsEmpty()) {
             str += _T("YCbCr Matrix: None\n");

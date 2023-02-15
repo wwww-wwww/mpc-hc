@@ -166,7 +166,7 @@ public:
 
     int m_defaultWrapStyle;
     int m_collisions;
-    bool m_fScaledBAS;
+    int m_scaledBAS; // -1 = unknown, 0 = no, 1 = yes
     CString m_sYCbCrMatrix;
 
     bool m_bUsingPlayerDefaultStyle;

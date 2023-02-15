@@ -2815,7 +2815,7 @@ CSubtitle* CRenderedTextSubtitle::GetSubtitle(int entry)
     }
 
     STSStyle stss;
-    bool fScaledBAS = m_fScaledBAS;
+    int scaledBAS = m_scaledBAS;
     if (m_bOverrideStyle) {
         // this RTS has been signaled to ignore embedded styles, use the built-in one
         stss = m_styleOverride;
@@ -2832,7 +2832,7 @@ CSubtitle* CRenderedTextSubtitle::GetSubtitle(int entry)
         stss.marginRect.top    = std::lround(scaleY * stss.marginRect.top);
         stss.marginRect.right  = std::lround(scaleX * stss.marginRect.right);
         stss.marginRect.bottom = std::lround(scaleY * stss.marginRect.bottom);
-        fScaledBAS = false;
+        scaledBAS = 0;
     } else {
         // find the appropriate embedded style
         GetStyle(entry, stss);
@@ -2983,16 +2983,22 @@ CSubtitle* CRenderedTextSubtitle::GetSubtitle(int entry)
 
         tmp.fontSize      *= sub->m_total_scale_y * 64.0;
         tmp.fontSpacing   *= sub->m_total_scale_x * 64.0;
-        if (fScaledBAS) {
+        if (scaledBAS == 1) {
+            tmp.outlineWidthX *= sub->m_total_scale_x * 8.0;
+            tmp.outlineWidthY *= sub->m_total_scale_y * 8.0;
+            tmp.shadowDepthX  *= sub->m_total_scale_x * 8.0;
+            tmp.shadowDepthY  *= sub->m_total_scale_y * 8.0;
+        } else if (sub->m_script_scale_y <= 0.9 && scaledBAS == -1 && m_layoutRes.cx == 0 && (m_subtitleType == Subtitle::ASS || m_subtitleType == Subtitle::SSA)) {
+            // If PlayRes is bigger than video, it usually is a buggy script where ScaledBorderAndShadow was intended
             tmp.outlineWidthX *= sub->m_total_scale_x * 8.0;
             tmp.outlineWidthY *= sub->m_total_scale_y * 8.0;
             tmp.shadowDepthX  *= sub->m_total_scale_x * 8.0;
             tmp.shadowDepthY  *= sub->m_total_scale_y * 8.0;
         } else {
-            tmp.outlineWidthX *= sub->m_target_scale_x * 8.0;
-            tmp.outlineWidthY *= sub->m_target_scale_y * 8.0;
-            tmp.shadowDepthX  *= sub->m_target_scale_x * 8.0;
-            tmp.shadowDepthY  *= sub->m_target_scale_y * 8.0;
+            tmp.outlineWidthX *= 8.0;
+            tmp.outlineWidthY *= 8.0;
+            tmp.shadowDepthX  *= 8.0;
+            tmp.shadowDepthY  *= 8.0;
         }
 
         if (m_nPolygon) {
