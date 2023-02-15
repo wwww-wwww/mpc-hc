@@ -2697,10 +2697,8 @@ void CMainFrame::GraphEventComplete()
         PerformABRepeat();
     } else if (s.fLoopForever || m_nLoops < s.nLoops) {
         if (bBreak) {
-            m_bRememberFilePos = false;
             DoAfterPlaybackEvent();
         } else if ((m_wndPlaylistBar.GetCount() > 1) && (s.eLoopMode == CAppSettings::LoopMode::PLAYLIST)) {
-            m_bRememberFilePos = false;
             int nLoops = m_nLoops;
             SendMessage(WM_COMMAND, ID_NAVIGATE_SKIPFORWARDFILE);
             m_nLoops = nLoops;
@@ -2719,7 +2717,6 @@ void CMainFrame::GraphEventComplete()
             }
         }
     } else {
-        m_bRememberFilePos = false;
         DoAfterPlaybackEvent();
     }
 }
@@ -17790,6 +17787,13 @@ void CMainFrame::CloseMedia(bool bNextIsQueued/* = false*/)
             auto& s = AfxGetAppSettings();
             REFERENCE_TIME rtNow = 0;
             m_pMS->GetCurrentPosition(&rtNow);
+            if (rtNow > 0) {
+                REFERENCE_TIME rtDur = 0;
+                m_pMS->GetDuration(&rtDur);
+                if (rtNow > rtDur || rtDur - rtNow < 50000000LL) { // at end of file
+                    rtNow = 0;
+                }
+            }
             s.MRU.UpdateCurrentFilePosition(rtNow, true);
         }
 
