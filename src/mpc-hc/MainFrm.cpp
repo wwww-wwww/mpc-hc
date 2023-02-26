@@ -12825,8 +12825,8 @@ void CMainFrame::OpenFile(OpenFileData* pOFD)
                 RecentFileEntry r;
                 CPlaylistItem* pli = m_wndPlaylistBar.GetCur();
                 if (pli) {
-                    if (pli->m_bYoutubeDL) {
-                        r.fns.AddHead(pli->m_ydlSourceURL);
+                    if (pli->m_bYoutubeDL && !pli->m_ydlSourceURL.IsEmpty()) {
+                        pMRU->LoadMediaHistoryEntryFN(pli->m_ydlSourceURL, r);
                     } else {
                         pMRU->LoadMediaHistoryEntryFN(fn, r);
                         if (pli->m_fns.GetCount() > r.fns.GetCount()) {
