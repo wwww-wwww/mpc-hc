@@ -6095,7 +6095,7 @@ void CMainFrame::OnUpdateFileSaveThumbnails(CCmdUI* pCmdUI)
 
 void CMainFrame::OnFileSubtitlesLoad()
 {
-    if (!m_pCAP || !m_pDVS) {
+    if (!m_pCAP && !m_pDVS) {
         AfxMessageBox(IDS_CANNOT_LOAD_SUB, MB_ICONINFORMATION | MB_OK, 0);
         return;
     }
