@@ -635,7 +635,7 @@ STDMETHODIMP CEVRAllocatorPresenter::ProcessMessage(MFVP_MESSAGE_TYPE eMessage, 
                 4) The EVR sets the media type on the substreams.
             */
             m_bPendingRenegotiate = true;
-            while (*((volatile bool*)&m_bPendingRenegotiate)) {
+            while (m_bPendingRenegotiate) {
                 Sleep(1);
             }
             break;
