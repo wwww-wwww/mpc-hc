@@ -71,6 +71,7 @@ CAppSettings::CAppSettings()
     , bRememberPlaylistItems(true)
     , fRememberWindowPos(false)
     , fRememberWindowSize(false)
+    , rcLastWindowPos(CRect(100, 100, 400, 300))
     , fSavePnSZoom(false)
     , dZoomX(1.0)
     , dZoomY(1.0)
@@ -882,8 +883,10 @@ void CAppSettings::SaveSettings(bool write_full_history /* = false */)
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_REMEMBERWINDOWSIZE, fRememberWindowSize);
     if (fRememberWindowSize || fRememberWindowPos) {
         pApp->WriteProfileBinary(IDS_R_SETTINGS, IDS_RS_LASTWINDOWRECT, (BYTE*)&rcLastWindowPos, sizeof(rcLastWindowPos));
-        pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_LASTWINDOWTYPE, nLastWindowType);
     }
+    pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_LASTWINDOWTYPE, nLastWindowType);
+    pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_LASTFULLSCREEN, fLastFullScreen);
+
     if (fSavePnSZoom) {
         CString str;
         str.Format(_T("%.3f,%.3f"), dZoomX, dZoomY);
@@ -1042,9 +1045,6 @@ void CAppSettings::SaveSettings(bool write_full_history /* = false */)
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_FILEPOS, fRememberFilePos);
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_FILEPOSLONGER, iRememberPosForLongerThan);
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_FILEPOSAUDIO, bRememberPosForAudioFiles);
-
-    pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_LASTFULLSCREEN, fLastFullScreen);
-    // CASIMIR666 : end of new settings
 
     pApp->WriteProfileString(IDS_R_SETTINGS _T("\\") IDS_RS_PNSPRESETS, nullptr, nullptr);
     for (INT_PTR i = 0, j = m_pnspresets.GetCount(); i < j; i++) {
@@ -1599,17 +1599,19 @@ void CAppSettings::LoadSettings()
     iRecentFilesNumber = std::max(0, (int)pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_RECENT_FILES_NUMBER, 100));
     MRU.SetSize(iRecentFilesNumber);
 
-    if (pApp->GetProfileBinary(IDS_R_SETTINGS, IDS_RS_LASTWINDOWRECT, &ptr, &len)) {
-        if (len == sizeof(CRect)) {
-            memcpy(&rcLastWindowPos, ptr, sizeof(CRect));
-        } else {
-            fRememberWindowPos = false;
+    if (fRememberWindowPos || fRememberWindowSize) {
+        if (pApp->GetProfileBinary(IDS_R_SETTINGS, IDS_RS_LASTWINDOWRECT, &ptr, &len)) {
+            if (len == sizeof(CRect)) {
+                memcpy(&rcLastWindowPos, ptr, sizeof(CRect));
+                if (rcLastWindowPos.Width() < 400 || rcLastWindowPos.Height() < 100) {
+                    rcLastWindowPos = CRect(100, 100, 400, 300);
+                }
+            }
+            delete[] ptr;
         }
-        delete [] ptr;
-    } else {
-        fRememberWindowPos = false;
     }
     nLastWindowType = pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_LASTWINDOWTYPE, SIZE_RESTORED);
+    fLastFullScreen = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_LASTFULLSCREEN, FALSE);
 
     bShufflePlaylistItems = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_SHUFFLEPLAYLISTITEMS, FALSE);
     bRememberPlaylistItems = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_REMEMBERPLAYLISTITEMS, TRUE);
@@ -1987,8 +1989,6 @@ void CAppSettings::LoadSettings()
 
     // playback positions for last played DVDs
     fRememberDVDPos = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_DVDPOS, FALSE);
-
-    fLastFullScreen = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_LASTFULLSCREEN, FALSE);
 
     bToggleShader = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_TOGGLESHADER, TRUE);
     bToggleShaderScreenSpace = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_TOGGLESHADERSSCREENSPACE, TRUE);
