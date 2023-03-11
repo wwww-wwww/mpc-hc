@@ -74,6 +74,12 @@ STDMETHODIMP CSubPicQueueImpl::SetSubPicProvider(ISubPicProvider* pSubPicProvide
 {
     CAutoLock cAutoLock(&m_csSubPicProvider);
 
+    if (m_pSubPicProviderWithSharedLock && m_pSubPicProviderWithSharedLock->pSubPicProvider != pSubPicProvider) {
+        m_pSubPicProviderWithSharedLock->Lock();
+        m_pSubPicProviderWithSharedLock->Unlock();
+        // queue is now not processing anything
+    }
+
     m_pSubPicProviderWithSharedLock = std::make_shared<SubPicProviderWithSharedLock>(pSubPicProvider);
 
     Invalidate();

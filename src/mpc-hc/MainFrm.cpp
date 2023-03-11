@@ -16652,6 +16652,10 @@ void CMainFrame::SetSubtitle(const SubtitleInput& subInput, bool skip_lcid /* = 
             }
         }
 
+        if (m_pCAP && m_pCurrentSubInput.pSubStream && m_pCurrentSubInput.pSubStream != subInput.pSubStream) {
+            m_pCAP->SetSubPicProvider(nullptr);
+        }
+
         m_pCurrentSubInput = subInput;
 
         UpdateSubtitleRenderingParameters();
