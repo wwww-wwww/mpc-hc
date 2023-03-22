@@ -298,7 +298,7 @@ bool CPlayerPlaylistBar::AddFromFilemask(CString mask)
     bool added = false;
 
     std::set<CString, CStringUtils::LogicalLess> filelist;
-    if (m_pMainFrame->WildcardFileSearch(mask, filelist)) {
+    if (m_pMainFrame->WildcardFileSearch(mask, filelist, true)) {
         auto it = filelist.begin();
         while (it != filelist.end()) {
             if (AddItemNoDuplicate(*it)) {
@@ -673,7 +673,7 @@ bool CPlayerPlaylistBar::ParseM3UPlayList(CString fn) {
         if (!isurl && !PathUtils::IsURL(str) && ContainsWildcard(str)) {
             // wildcard entry
             std::set<CString, CStringUtils::LogicalLess> filelist;
-            if (m_pMainFrame->WildcardFileSearch(str, filelist)) {
+            if (m_pMainFrame->WildcardFileSearch(str, filelist, true)) {
                 auto it = filelist.begin();
                 while (it != filelist.end()) {
                     pli = CPlaylistItem();

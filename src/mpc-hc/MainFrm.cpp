@@ -14747,7 +14747,7 @@ void CMainFrame::CloseMediaPrivate()
 	m_FontInstaller.UninstallFonts();
 }
 
-bool CMainFrame::WildcardFileSearch(CString searchstr, std::set<CString, CStringUtils::LogicalLess>& results)
+bool CMainFrame::WildcardFileSearch(CString searchstr, std::set<CString, CStringUtils::LogicalLess>& results, bool recurse_dirs)
 {
     ExtendMaxPathLengthIfNeeded(searchstr);
 
@@ -14767,6 +14767,14 @@ bool CMainFrame::WildcardFileSearch(CString searchstr, std::set<CString, CString
 
         do {
             CString filename = findData.cFileName;
+
+            if (findData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) {
+                if (recurse_dirs && search_ext == L".*" && filename != L"." && filename != L"..") {
+                    WildcardFileSearch(path + filename + L"\\*.*", results, true);
+                }
+                continue;
+            }
+
             CString ext = filename.Mid(filename.ReverseFind('.')).MakeLower();
 
             if (mf.FindExt(ext)) {
@@ -14820,7 +14828,7 @@ bool CMainFrame::SearchInDir(bool bDirForward, bool bLoop /*= false*/)
     }
     CString filemask = filename.Left(p + 1) + _T("*.*");
     std::set<CString, CStringUtils::LogicalLess> filelist;
-    if (!WildcardFileSearch(filemask, filelist)) {
+    if (!WildcardFileSearch(filemask, filelist, false)) {
         return false;
     }
 
