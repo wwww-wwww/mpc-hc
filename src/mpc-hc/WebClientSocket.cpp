@@ -703,6 +703,7 @@ bool CWebClientSocket::OnVariables(CStringA& hdr, CStringA& body, CStringA& mime
 {
     CString path = m_pMainFrame->m_wndPlaylistBar.GetCurFileName();
     CString dir;
+    CString strName;
 
     if (!path.IsEmpty() && !PathUtils::IsURL(path)) {
         CPath p(path);
@@ -755,6 +756,10 @@ bool CWebClientSocket::OnVariables(CStringA& hdr, CStringA& body, CStringA& mime
     body.Replace("[size]", UTF8(GetSize()));
     body.Replace("[reloadtime]", UTF8(reloadtime));
     body.Replace("[version]", UTF8(AfxGetMyApp()->m_strVersion));
+    m_pMainFrame->GetCurrentAudioTrackIdx(&strName);
+    body.Replace("[audiotrack]", UTF8(strName));
+    m_pMainFrame->GetCurrentSubtitleTrackIdx(&strName);
+    body.Replace("[subtitletrack]", UTF8(strName));
 
     return true;
 }

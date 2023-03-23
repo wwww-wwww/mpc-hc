@@ -676,8 +676,8 @@ public:
 
     void SetAudioTrackIdx(int index);
     void SetSubtitleTrackIdx(int index);
-    int GetCurrentAudioTrackIdx();
-    int GetCurrentSubtitleTrackIdx();
+    int GetCurrentAudioTrackIdx(CString *pstrName = nullptr);
+    int GetCurrentSubtitleTrackIdx(CString *pstrName = nullptr);
 
     void AddFavorite(bool fDisplayMessage = false, bool fShowDialog = true);
 

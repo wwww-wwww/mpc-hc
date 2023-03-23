@@ -16790,17 +16790,23 @@ void CMainFrame::SetAudioTrackIdx(int index)
     }
 }
 
-int CMainFrame::GetCurrentAudioTrackIdx()
+int CMainFrame::GetCurrentAudioTrackIdx(CString *pstrName)
 {
+    if(pstrName)
+        pstrName->Empty();
+
     if (GetLoadState() == MLS::LOADED && GetPlaybackMode() == PM_FILE && m_pGB) {
         CComQIPtr<IAMStreamSelect> pSS = FindFilter(__uuidof(CAudioSwitcherFilter), m_pGB);
 
         DWORD cStreams = 0;
         if (pSS && SUCCEEDED(pSS->Count(&cStreams))) {
-            for (int i = 0; i < cStreams; i++) {
+            for (int i = 0; i < (int)cStreams; i++) {
                 DWORD dwFlags = 0;
-                if (SUCCEEDED(pSS->Info(i, nullptr, &dwFlags, nullptr, nullptr, nullptr, nullptr, nullptr))) {
+                CComHeapPtr<WCHAR> pName;
+                if (SUCCEEDED(pSS->Info(i, nullptr, &dwFlags, nullptr, nullptr, &pName, nullptr, nullptr))) {
                     if (dwFlags & AMSTREAMSELECTINFO_ENABLED) {
+                        if(pstrName)
+                            *pstrName = pName;
                         return i;
                     }
                 } else {
@@ -16812,44 +16818,89 @@ int CMainFrame::GetCurrentAudioTrackIdx()
     return -1;
 }
 
-int CMainFrame::GetCurrentSubtitleTrackIdx()
+int CMainFrame::GetCurrentSubtitleTrackIdx(CString *pstrName)
 {
-    if (GetLoadState() == MLS::LOADED && GetPlaybackMode() == PM_FILE && m_pCAP && !m_pSubStreams.IsEmpty()) {
-        int idx = 0;
-        POSITION pos = m_pSubStreams.GetHeadPosition();
-        while (pos) {
-            SubtitleInput& subInput = m_pSubStreams.GetNext(pos);
-            if (CComQIPtr<IAMStreamSelect> pSSF = subInput.pSourceFilter) {
-                DWORD cStreams;
-                if (FAILED(pSSF->Count(&cStreams))) {
-                    continue;
-                }
-                for (int j = 0, cnt = (int)cStreams; j < cnt; j++) {
-                    DWORD dwFlags, dwGroup;
-                    if (FAILED(pSSF->Info(j, nullptr, &dwFlags, nullptr, &dwGroup, nullptr, nullptr, nullptr))) {
-                        continue;
-                    }
-                    if (dwGroup != 2) {
-                        continue;
-                    }
+    if(pstrName)
+        pstrName->Empty();
 
+    if (GetLoadState() == MLS::LOADED && GetPlaybackMode() == PM_FILE && m_pCAP) {
+        int idx = 0;
+        if (!m_pSubStreams.IsEmpty()) {
+            POSITION pos = m_pSubStreams.GetHeadPosition();
+            while (pos) {
+                SubtitleInput& subInput = m_pSubStreams.GetNext(pos);
+                if (CComQIPtr<IAMStreamSelect> pSSF = subInput.pSourceFilter) {
+                    DWORD cStreams;
+                    if (FAILED(pSSF->Count(&cStreams))) {
+                        continue;
+                    }
+                    for (int j = 0, cnt = (int)cStreams; j < cnt; j++) {
+                        DWORD dwFlags, dwGroup;
+                        CComHeapPtr<WCHAR> pName;
+                        if (FAILED(pSSF->Info(j, nullptr, &dwFlags, nullptr, &dwGroup, &pName, nullptr, nullptr))) {
+                            continue;
+                        }
+                        if (dwGroup != 2) {
+                            continue;
+                        }
+
+                        if (subInput.pSubStream == m_pCurrentSubInput.pSubStream) {
+                            if (dwFlags & (AMSTREAMSELECTINFO_ENABLED | AMSTREAMSELECTINFO_EXCLUSIVE)) {
+                                if (pstrName)
+                                    *pstrName = pName;
+                                return idx;
+                            }
+                        }
+                        idx++;
+                    }
+                } else {
+                    CComPtr<ISubStream> pSubStream = subInput.pSubStream;
+                    if (!pSubStream) {
+                        continue;
+                    }
                     if (subInput.pSubStream == m_pCurrentSubInput.pSubStream) {
-                        if (dwFlags & (AMSTREAMSELECTINFO_ENABLED | AMSTREAMSELECTINFO_EXCLUSIVE)) {
-                            return idx;
+                        if (pstrName) {
+                            CComHeapPtr<WCHAR> pName;
+                            pSubStream->GetStreamInfo(pSubStream->GetStream(), &pName, nullptr);
+                            *pstrName = pName;
+                        }
+                        return idx + pSubStream->GetStream();
+                    }
+                    idx += pSubStream->GetStreamCount();
+                }
+            }
+        }
+        else
+        {
+            CComQIPtr<IAMStreamSelect> pSS;
+
+            BeginEnumFilters(m_pGB, pEF, pBF) {
+                if (GetCLSID(pBF) == __uuidof(CAudioSwitcherFilter))
+                    continue;
+
+                if (pSS = pBF) {
+                    DWORD cStreams;
+                    if (SUCCEEDED(pSS->Count(&cStreams))) {
+                        for (int i = 0; i < (int)cStreams; i++) {
+                            DWORD dwFlags, dwGroup;
+                            CComHeapPtr<WCHAR> pszName;
+
+                            if (FAILED(pSS->Info(i, nullptr, &dwFlags, nullptr, &dwGroup, &pszName, nullptr, nullptr)))
+                                continue;
+
+                            if (dwGroup != 2)
+                                continue;
+
+                            if (dwFlags & (AMSTREAMSELECTINFO_ENABLED | AMSTREAMSELECTINFO_EXCLUSIVE)) {
+                                if (pstrName)
+                                    *pstrName = pszName;
+                                return i;
+                            }
                         }
                     }
-                    idx++;
                 }
-            } else {
-                CComPtr<ISubStream> pSubStream = subInput.pSubStream;
-                if (!pSubStream) {
-                    continue;
-                }
-                if (subInput.pSubStream == m_pCurrentSubInput.pSubStream) {
-                    return idx + pSubStream->GetStream();
-                }
-                idx += pSubStream->GetStreamCount();
             }
+            EndEnumFilters
         }
     }
     return -1;
@@ -18651,6 +18702,12 @@ void CMainFrame::ProcessAPICommand(COPYDATASTRUCT* pCDS)
             break;
         case CMD_GETAUDIOTRACKS:
             SendAudioTracksToApi();
+            break;
+        case CMD_GETCURRENTAUDIOTRACK:
+            SendAPICommand(CMD_CURRENTAUDIOTRACK, L"%d", GetCurrentAudioTrackIdx());
+            break;
+        case CMD_GETCURRENTSUBTITLETRACK:
+            SendAPICommand(CMD_CURRENTSUBTITLETRACK, L"%d", GetCurrentSubtitleTrackIdx());
             break;
         case CMD_GETCURRENTPOSITION:
             SendCurrentPositionToApi();
