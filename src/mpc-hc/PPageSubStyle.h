@@ -70,6 +70,7 @@ public:
 
     void InitStyle(const CString& title, const STSStyle& stss);
     void GetStyle(STSStyle& stss) const { stss = m_stss; }
+    CString GetStyleName() { return m_title; }
 
     // Dialog Data
     enum { IDD = IDD_PPAGESUBSTYLE };
