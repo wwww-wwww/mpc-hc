@@ -9290,7 +9290,7 @@ void CMainFrame::OnPlaySubtitles(UINT nID)
 
                             for (size_t l = 0; l < pages.GetCount(); l++) {
                                 pages[l]->GetStyle(*styles[l]);
-                                if (pages[l]->GetStyleName() == L"Default") {
+                                if (pRTS->m_bUsingPlayerDefaultStyle && pages[l]->GetStyleName() == L"Default") {
                                     if (*styles[l] != s.subtitlesDefStyle) {
                                         pRTS->m_bUsingPlayerDefaultStyle = false;
                                     }
