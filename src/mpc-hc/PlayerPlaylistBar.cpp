@@ -158,6 +158,20 @@ void CPlayerPlaylistBar::SetHiddenDueToFullscreen(bool bHiddenDueToFullscreen)
     m_bHiddenDueToFullscreen = bHiddenDueToFullscreen;
 }
 
+void CPlayerPlaylistBar::AddItem(CString fn)
+{
+    if (fn.IsEmpty()) {
+        return;
+    }
+
+    CPlaylistItem pli;
+    pli.m_fns.AddTail(fn);
+
+    pli.AutoLoadFiles();
+
+    m_pl.AddTail(pli);
+}
+
 void CPlayerPlaylistBar::AddItem(CString fn, CAtlList<CString>* subs)
 {
     CAtlList<CString> sl;

@@ -69,7 +69,8 @@ private:
     int m_nTimeColWidth;
     void ResizeListColumn();
 
-    void AddItem(CString fn, CAtlList<CString>* subs = nullptr);
+    void AddItem(CString fn);
+    void AddItem(CString fn, CAtlList<CString>* subs);
     void AddItem(CAtlList<CString>& fns, CAtlList<CString>* subs = nullptr, CString label = _T(""), CString ydl_src = _T(""), CString cue = _T(""), CAtlList<CYoutubeDLInstance::YDLSubInfo>* ydl_subs = nullptr);
     bool AddItemNoDuplicate(CString fn);
     bool AddFromFilemask(CString mask, bool recurse_dirs = false);
