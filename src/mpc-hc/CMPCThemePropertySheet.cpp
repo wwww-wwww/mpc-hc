@@ -56,5 +56,5 @@ HBRUSH CMPCThemePropertySheet::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 
 INT_PTR CMPCThemePropertySheet::DoModal() {
     PreDoModalRTL(&m_psh);
-    return CPropertySheet::DoModal();
+    return __super::DoModal();
 }

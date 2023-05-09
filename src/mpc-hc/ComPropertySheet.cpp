@@ -279,5 +279,5 @@ HBRUSH CComPropertySheet::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 
 INT_PTR CComPropertySheet::DoModal() {
     PreDoModalRTL(&m_psh);
-    return CComPropertySheet::DoModal();
+    return __super::DoModal();
 }

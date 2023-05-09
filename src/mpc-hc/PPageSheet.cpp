@@ -356,7 +356,7 @@ LRESULT CPPageSheet::OnDpiChanged(WPARAM wParam, LPARAM lParam) {
 
 INT_PTR CPPageSheet::DoModal() {
     PreDoModalRTL(&m_psh);
-    return CPropertySheet::DoModal();
+    return __super::DoModal();
 }
 
 
