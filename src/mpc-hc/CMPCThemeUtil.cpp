@@ -11,6 +11,7 @@
 #include "CMPCThemeTitleBarControlButton.h"
 #include "CMPCThemeInternalPropertyPageWnd.h"
 #include "CMPCThemeWin10Api.h"
+#include "Translations.h"
 #undef SubclassWindow
 
 CBrush CMPCThemeUtil::contentBrush;
@@ -921,4 +922,26 @@ void CMPCThemeUtil::enableWindows10DarkFrame(CWnd* window)
             }
         }
     }
+}
+
+int CALLBACK PropSheetCallBackRTL(HWND hWnd, UINT message, LPARAM lParam) {
+    switch (message) {
+    case PSCB_PRECREATE:
+    {
+        //arabic or hebrew
+        if (Translations::IsLangRTL(AfxGetAppSettings().language)) {
+            LPDLGTEMPLATE lpTemplate = (LPDLGTEMPLATE)lParam;
+            lpTemplate->dwExtendedStyle |= WS_EX_LAYOUTRTL;
+        }
+    }
+    break;
+    }
+    return 0;
+}
+
+void CMPCThemeUtil::PreDoModalRTL(LPPROPSHEETHEADERW m_psh) {
+    //see RTLWindowsLayoutCbtFilterHook and Translations::SetLanguage.
+    //We handle here to avoid Windows 11 bug with SetWindowLongPtr
+    m_psh->dwFlags |= PSH_USECALLBACK;
+    m_psh->pfnCallback = PropSheetCallBackRTL;
 }

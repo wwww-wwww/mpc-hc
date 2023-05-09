@@ -6,6 +6,7 @@
 #include "CMPCThemeToolTipCtrl.h"
 
 class CMPCThemeTitleBarControlButton;
+int CALLBACK PropSheetCallBackRTL(HWND hWnd, UINT message, LPARAM lParam);
 
 class CMPCThemeUtil
 {
@@ -71,6 +72,8 @@ public:
     static void drawParentDialogBGClr(CWnd* wnd, CDC* pDC, CRect r, bool fill = true);
     static void fulfillThemeReqs(CProgressCtrl* ctl);
     static void enableWindows10DarkFrame(CWnd* window);
+
+    void PreDoModalRTL(LPPROPSHEETHEADERW m_psh);
 
     enum CheckBoxStyle {
         CheckBoxRegular = 0,
