@@ -1768,7 +1768,7 @@ void CMainFrame::OnDisplayChange() // untested, not sure if it's working...
 
 void CMainFrame::OnWindowPosChanging(WINDOWPOS* lpwndpos)
 {
-    if (IsFullScreenMainFrame() && !(lpwndpos->flags & SWP_NOMOVE)) {
+    if (!(lpwndpos->flags & SWP_NOMOVE) && IsFullScreenMainFrame()) {
         HMONITOR hm = MonitorFromPoint(CPoint(lpwndpos->x, lpwndpos->y), MONITOR_DEFAULTTONULL);
         MONITORINFO mi = { sizeof(mi) };
         if (GetMonitorInfo(hm, &mi)) {
