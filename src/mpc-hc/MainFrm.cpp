@@ -1048,11 +1048,11 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
         m_wndSubresyncBar.SetHeight(200);
         m_controls.m_panels[CMainFrameControls::Panel::SUBRESYNC] = &m_wndSubresyncBar;
     }
-    bResult = bResult && m_wndPlaylistBar.Create(this, AFX_IDW_DOCKBAR_BOTTOM);
+    bResult = bResult && m_wndPlaylistBar.Create(this, AFX_IDW_DOCKBAR_RIGHT);
     if (bResult) {
         m_wndPlaylistBar.SetBarStyle(m_wndPlaylistBar.GetBarStyle() | CBRS_TOOLTIPS | CBRS_FLYBY | CBRS_SIZE_DYNAMIC);
         m_wndPlaylistBar.EnableDocking(CBRS_ALIGN_ANY);
-        m_wndPlaylistBar.SetHeight(100);
+        m_wndPlaylistBar.SetWidth(300);
         m_controls.m_panels[CMainFrameControls::Panel::PLAYLIST] = &m_wndPlaylistBar;
         //m_wndPlaylistBar.LoadPlaylist(GetRecentFile()); //adipose 2019-11-12; do this later after activating the frame
     }
