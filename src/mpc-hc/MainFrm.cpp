@@ -1786,9 +1786,8 @@ LRESULT CMainFrame::OnDpiChanged(WPARAM wParam, LPARAM lParam)
 {
     m_dpi.Override(LOWORD(wParam), HIWORD(wParam));
     m_eventc.FireEvent(MpcEvent::DPI_CHANGED);
+    CMPCThemeUtil::GetMetrics(true); //force reset metrics used by util class
     CMPCThemeMenu::clearDimensions();
-    NONCLIENTMETRICS m = { sizeof(NONCLIENTMETRICS) };
-    ::SystemParametersInfo(SPI_GETNONCLIENTMETRICS, sizeof(NONCLIENTMETRICS), &m, 0);
     if (!restoringWindowRect) { //do not adjust for DPI if restoring saved window position
         MoveWindow(reinterpret_cast<RECT*>(lParam));
     }

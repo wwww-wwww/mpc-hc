@@ -94,9 +94,7 @@ CSize CPlayerStatusBar::CalcFixedLayout(BOOL bStretch, BOOL bHorz)
 {
     CSize ret = __super::CalcFixedLayout(bStretch, bHorz);
     ret.cy = std::max<long>(ret.cy, 24);
-    if (!DpiHelper::CanUsePerMonitorV2()) {
-        ret.cy = m_pMainFrame->m_dpi.ScaleSystemToOverrideY(ret.cy);
-    }
+    ret.cy = m_pMainFrame->m_dpi.ScaleSystemToOverrideY(ret.cy);
     return ret;
 }
 

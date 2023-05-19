@@ -27,6 +27,8 @@
 #include "CrashReporter.h"
 #include "ExceptionHandler.h"
 
+IMPLEMENT_DYNAMIC(CPPageAdvanced, CMPCThemePPageBase)
+
 CPPageAdvanced::CPPageAdvanced()
     : CMPCThemePPageBase(IDD, IDD)
 {
@@ -46,15 +48,7 @@ void CPPageAdvanced::DoDataExchange(CDataExchange* pDX)
 BOOL CPPageAdvanced::OnInitDialog()
 {
     __super::OnInitDialog();
-
-    if (CFont* pFont = m_list.GetFont()) {
-        if (!m_fontBold.m_hObject) {
-            LOGFONT logfont;
-            pFont->GetLogFont(&logfont);
-            logfont.lfWeight = FW_BOLD;
-            m_fontBold.CreateFontIndirect(&logfont);
-        }
-    }
+    initBoldFont();
 
     SetRedraw(FALSE);
     m_list.SetExtendedStyle(m_list.GetExtendedStyle() /* | LVS_EX_FULLROWSELECT */ | LVS_EX_AUTOSIZECOLUMNS /*| LVS_EX_DOUBLEBUFFER */ | LVS_EX_INFOTIP);
@@ -516,4 +510,24 @@ void CPPageAdvanced::OnEnChangeEdit()
             SetModified();
         }
     }
+}
+
+void CPPageAdvanced::initBoldFont() {
+    if (CFont* pFont = m_list.GetFont()) {
+        if (!m_fontBold.m_hObject) {
+            LOGFONT logfont;
+            pFont->GetLogFont(&logfont);
+            logfont.lfWeight = FW_BOLD;
+            m_fontBold.CreateFontIndirect(&logfont);
+        }
+    }
+}
+
+void CPPageAdvanced::DoDPIChanged()
+{
+    if (m_fontBold.m_hObject) {
+        m_fontBold.DeleteObject();
+    }
+    initBoldFont();
+    m_list.DoDPIChanged(); //themed listctrl stores its own font, and isn't drawn through CPPageAdvanced::OnNMCustomdraw
 }
