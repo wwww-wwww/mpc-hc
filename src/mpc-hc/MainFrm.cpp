@@ -13608,11 +13608,13 @@ void CMainFrame::OpenSetupVideo()
         m_pVW_preview->put_WindowStyle(WS_CHILD | WS_CLIPSIBLINGS | WS_CLIPCHILDREN);
     }
 
-    if (!m_fAudioOnly) {
+    if (m_fAudioOnly) {
+        if (HasFullScreenWindow()) {
+            m_pFullscreenWnd->DestroyWindow();
+        }
+    } else {
         m_statusbarVideoSize.Format(_T("%dx%d"), vs.cx, vs.cy);
         UpdateDXVAStatus();
-    } else if (HasFullScreenWindow()) {
-        m_pFullscreenWnd->DestroyWindow();
     }
 }
 
