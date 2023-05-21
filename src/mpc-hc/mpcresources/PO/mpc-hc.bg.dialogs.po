@@ -715,8 +715,8 @@ msgstr ""
 " когато има само един елемент в плейлиста"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_CHECK8"
-msgid "Show time tooltip:"
-msgstr "Покажи подсказка за времето:"
+msgid "Show time tooltip (and preview):"
+msgstr ""
 
 msgctxt "IDD_PPAGETWEAKS_IDC_STATIC"
 msgid "OSD font:"

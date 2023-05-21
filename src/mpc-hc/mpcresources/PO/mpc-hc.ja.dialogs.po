@@ -707,8 +707,8 @@ msgid ""
 msgstr "再生リストに項目が 1 つしかない場合、 「戻る/進む」 でフォルダ内の前/次のファイルを開く"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_CHECK8"
-msgid "Show time tooltip:"
-msgstr "タイム ツールヒントを表示する:"
+msgid "Show time tooltip (and preview):"
+msgstr ""
 
 msgctxt "IDD_PPAGETWEAKS_IDC_STATIC"
 msgid "OSD font:"

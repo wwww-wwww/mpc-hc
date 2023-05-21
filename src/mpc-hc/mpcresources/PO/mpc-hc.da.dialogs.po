@@ -716,8 +716,8 @@ msgstr ""
 "ét element i spillelisten"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_CHECK8"
-msgid "Show time tooltip:"
-msgstr "Vis værktøjstip om tid:"
+msgid "Show time tooltip (and preview):"
+msgstr ""
 
 msgctxt "IDD_PPAGETWEAKS_IDC_STATIC"
 msgid "OSD font:"

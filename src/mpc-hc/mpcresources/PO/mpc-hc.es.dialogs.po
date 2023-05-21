@@ -728,8 +728,8 @@ msgstr ""
 "cuando sólo haya un elemento en la lista de reproducción"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_CHECK8"
-msgid "Show time tooltip:"
-msgstr "Mostrar etiqueta emergente de tiempo:"
+msgid "Show time tooltip (and preview):"
+msgstr ""
 
 msgctxt "IDD_PPAGETWEAKS_IDC_STATIC"
 msgid "OSD font:"

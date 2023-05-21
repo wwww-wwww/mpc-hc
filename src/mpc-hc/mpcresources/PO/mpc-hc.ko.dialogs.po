@@ -702,8 +702,8 @@ msgid ""
 msgstr "재생 목록에 항목이 하나만 있는 경우 \"뒤로/앞으로 건너뛰기\"에서 폴더의 이전/다음 파일 열기"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_CHECK8"
-msgid "Show time tooltip:"
-msgstr "시간 툴팁 사용 :"
+msgid "Show time tooltip (and preview):"
+msgstr ""
 
 msgctxt "IDD_PPAGETWEAKS_IDC_STATIC"
 msgid "OSD font:"

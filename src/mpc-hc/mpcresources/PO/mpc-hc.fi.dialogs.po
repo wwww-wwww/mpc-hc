@@ -713,8 +713,8 @@ msgstr ""
 " kun toistolistassa on vain yksi nimike."
 
 msgctxt "IDD_PPAGETWEAKS_IDC_CHECK8"
-msgid "Show time tooltip:"
-msgstr "Käytä aika-työkaluvihjettä:"
+msgid "Show time tooltip (and preview):"
+msgstr ""
 
 msgctxt "IDD_PPAGETWEAKS_IDC_STATIC"
 msgid "OSD font:"

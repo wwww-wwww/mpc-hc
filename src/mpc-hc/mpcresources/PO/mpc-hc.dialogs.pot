@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2022-06-21 19:15:32+0000\n"
+"POT-Creation-Date: 2023-05-21 03:16:13+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -695,7 +695,7 @@ msgid ""
 msgstr ""
 
 msgctxt "IDD_PPAGETWEAKS_IDC_CHECK8"
-msgid "Show time tooltip:"
+msgid "Show time tooltip (and preview):"
 msgstr ""
 
 msgctxt "IDD_PPAGETWEAKS_IDC_STATIC"

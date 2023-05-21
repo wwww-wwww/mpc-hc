@@ -712,8 +712,8 @@ msgstr ""
 "عندما يكون هناك شيء واحد في قائمة التشغيل"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_CHECK8"
-msgid "Show time tooltip:"
-msgstr "أظهر تلميح الوقت:"
+msgid "Show time tooltip (and preview):"
+msgstr ""
 
 msgctxt "IDD_PPAGETWEAKS_IDC_STATIC"
 msgid "OSD font:"

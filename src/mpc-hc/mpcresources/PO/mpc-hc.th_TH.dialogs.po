@@ -710,8 +710,8 @@ msgstr ""
 "หากมีเพียงรายการเดียวในบัญชีการเล่น"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_CHECK8"
-msgid "Show time tooltip:"
-msgstr "ใช้ตัวบอกเวลา:"
+msgid "Show time tooltip (and preview):"
+msgstr ""
 
 msgctxt "IDD_PPAGETWEAKS_IDC_STATIC"
 msgid "OSD font:"

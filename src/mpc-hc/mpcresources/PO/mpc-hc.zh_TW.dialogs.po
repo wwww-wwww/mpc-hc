@@ -701,8 +701,8 @@ msgid ""
 msgstr "當播放清單中只有一個項目時，點擊「前一段/後一段」時自動開啟前/後一個檔案"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_CHECK8"
-msgid "Show time tooltip:"
-msgstr "在工具提示顯示顯示時間："
+msgid "Show time tooltip (and preview):"
+msgstr ""
 
 msgctxt "IDD_PPAGETWEAKS_IDC_STATIC"
 msgid "OSD font:"

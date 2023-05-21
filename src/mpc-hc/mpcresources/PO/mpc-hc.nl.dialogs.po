@@ -716,8 +716,8 @@ msgstr ""
 " map, indien er maar één bestand in de afspeellijst staat."
 
 msgctxt "IDD_PPAGETWEAKS_IDC_CHECK8"
-msgid "Show time tooltip:"
-msgstr "Laat tijd in tooltip zien:"
+msgid "Show time tooltip (and preview):"
+msgstr ""
 
 msgctxt "IDD_PPAGETWEAKS_IDC_STATIC"
 msgid "OSD font:"

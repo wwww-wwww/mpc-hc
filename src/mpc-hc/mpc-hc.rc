@@ -428,7 +428,7 @@ BEGIN
                     "Button",BS_AUTOCHECKBOX | BS_TOP | BS_MULTILINE | WS_TABSTOP,6,168,343,16
     CONTROL         "Open previous/next file in folder on ""Skip back/forward"" when there is only one item in playlist",IDC_CHECK7,
                     "Button",BS_AUTOCHECKBOX | BS_TOP | BS_MULTILINE | WS_TABSTOP,6,184,343,16
-    CONTROL         "Show time tooltip:",IDC_CHECK8,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,6,210,193,8
+    CONTROL         "Show time tooltip (and preview):",IDC_CHECK8,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,6,210,193,8
     COMBOBOX        IDC_COMBO3,203,207,146,64,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
     LTEXT           "OSD font:",IDC_STATIC,6,227,135,8
     COMBOBOX        IDC_COMBO1,145,225,168,61,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP

@@ -703,8 +703,8 @@ msgid ""
 msgstr "在播放列表中仅有一个项目时使用 \"向前/后跳转\" 后打开文件中的下一个/上一个文件"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_CHECK8"
-msgid "Show time tooltip:"
-msgstr "使用时间工具提示:"
+msgid "Show time tooltip (and preview):"
+msgstr ""
 
 msgctxt "IDD_PPAGETWEAKS_IDC_STATIC"
 msgid "OSD font:"

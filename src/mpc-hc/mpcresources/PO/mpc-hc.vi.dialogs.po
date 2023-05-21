@@ -717,8 +717,8 @@ msgstr ""
 "lại/Chuyển tiếp\" khi chỉ có một mục trong danh sách phát"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_CHECK8"
-msgid "Show time tooltip:"
-msgstr "Hiển thị chú giải thời gian:"
+msgid "Show time tooltip (and preview):"
+msgstr ""
 
 msgctxt "IDD_PPAGETWEAKS_IDC_STATIC"
 msgid "OSD font:"
