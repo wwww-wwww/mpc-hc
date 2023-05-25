@@ -24,9 +24,9 @@
 #include "FullscreenWnd.h"
 #include "MainFrm.h"
 
-IMPLEMENT_DYNAMIC(CFullscreenWnd, CMouseWnd)
+IMPLEMENT_DYNAMIC(CFullscreenWnd, CMouseWndWithArtView)
 CFullscreenWnd::CFullscreenWnd(CMainFrame* pMainFrame)
-    : CMouseWnd(pMainFrame, true)
+    : CMouseWndWithArtView(pMainFrame, true)
     , m_pMainFrame(pMainFrame)
 {
 }
@@ -75,7 +75,8 @@ END_MESSAGE_MAP()
 
 BOOL CFullscreenWnd::OnEraseBkgnd(CDC* pDC)
 {
-    return FALSE;
+    return __super::OnEraseBkgnd(pDC);
+    //return FALSE;
 }
 
 void CFullscreenWnd::OnDestroy()

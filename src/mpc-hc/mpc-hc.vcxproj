@@ -215,6 +215,7 @@
     <ClCompile Include="ModelessResizableDialog.cpp" />
     <ClCompile Include="Monitors.cpp" />
     <ClCompile Include="MouseTouch.cpp" />
+    <ClCompile Include="MouseWndWithArtView.cpp" />
     <ClCompile Include="MPCPngImage.cpp" />
     <ClCompile Include="Mpeg2SectionData.cpp" />
     <ClCompile Include="mplayerc.cpp" />
@@ -404,6 +405,7 @@
     <ClInclude Include="ModelessResizableDialog.h" />
     <ClInclude Include="Monitors.h" />
     <ClInclude Include="MouseTouch.h" />
+    <ClInclude Include="MouseWndWithArtView.h" />
     <ClInclude Include="MpcApi.h" />
     <ClInclude Include="MPCPngImage.h" />
     <ClInclude Include="Mpeg2SectionData.h" />

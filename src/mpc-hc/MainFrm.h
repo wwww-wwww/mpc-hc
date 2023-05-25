@@ -242,6 +242,7 @@ private:
     friend class CMouse;
     friend class CPlayerSeekBar; // for accessing m_controls.ControlChecked()
     friend class CChildView; // for accessing m_controls.DelayShowNotLoaded()
+    friend class CMouseWndWithArtView; // for accessing m_controls.DelayShowNotLoaded()
     friend class SubtitlesProvider;
 
     // TODO: wrap these graph objects into a class to make it look cleaner
@@ -523,7 +524,7 @@ public:
     bool IsInteractiveVideo() const;
     bool IsFullScreenMode() const;
     bool IsFullScreenMainFrame() const;
-    bool HasFullScreenWindow() const;
+    bool HasDedicatedFSVideoWindow() const;
     bool IsD3DFullScreenMode() const;
     bool IsSubresyncBarVisible() const;
 
@@ -1154,7 +1155,7 @@ public:
     HRESULT PreviewWindowShow(REFERENCE_TIME rtCur2);
     bool CanPreviewUse();
 
-    CFullscreenWnd* m_pFullscreenWnd;
+    CFullscreenWnd* m_pDedicatedFSVideoWnd;
     CVMROSD     m_OSD;
     bool        m_bOSDDisplayTime;
     int         m_nCurSubtitle;
@@ -1229,6 +1230,10 @@ protected:
     void UpdateSkypeHandler();
     void UpdateSeekbarChapterBag();
     void UpdateAudioSwitcher();
+
+    void LoadArtToViews(const CString& imagePath);
+    void LoadArtToViews(std::vector<BYTE> buffer);
+    void ClearArtFromViews();
 
     void UpdateUILanguage();
 
