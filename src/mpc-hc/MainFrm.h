@@ -1291,6 +1291,8 @@ public:
 
     void UpdateControlState(UpdateControlTarget target);
 
+    void ReloadMenus();
+
     // TODO: refactor it outside of MainFrm
     GUID GetTimeFormat();
 

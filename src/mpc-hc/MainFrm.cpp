@@ -1788,6 +1788,7 @@ LRESULT CMainFrame::OnDpiChanged(WPARAM wParam, LPARAM lParam)
     m_eventc.FireEvent(MpcEvent::DPI_CHANGED);
     CMPCThemeUtil::GetMetrics(true); //force reset metrics used by util class
     CMPCThemeMenu::clearDimensions();
+    ReloadMenus();
     if (!restoringWindowRect) { //do not adjust for DPI if restoring saved window position
         MoveWindow(reinterpret_cast<RECT*>(lParam));
     }
@@ -19853,8 +19854,7 @@ void CMainFrame::UpdateControlState(UpdateControlTarget target)
     }
 }
 
-void CMainFrame::UpdateUILanguage()
-{
+void CMainFrame::ReloadMenus() {
     //    CMenu  defaultMenu;
     CMenu* oldMenu;
 
@@ -19886,6 +19886,12 @@ void CMainFrame::UpdateUILanguage()
 
     // Reload the dynamic menus
     CreateDynamicMenus();
+}
+
+
+void CMainFrame::UpdateUILanguage()
+{
+    ReloadMenus();
 
     // Reload the static bars
     OpenSetupInfoBar();
