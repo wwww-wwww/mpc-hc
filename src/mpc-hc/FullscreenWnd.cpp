@@ -75,8 +75,15 @@ END_MESSAGE_MAP()
 
 BOOL CFullscreenWnd::OnEraseBkgnd(CDC* pDC)
 {
-    return __super::OnEraseBkgnd(pDC);
-    //return FALSE;
+    if (m_pMainFrame->m_fAudioOnly) {
+        return __super::OnEraseBkgnd(pDC);
+    }
+    else {
+        CRect r;
+        GetClientRect(r);
+        pDC->FillSolidRect(r, 0);
+        return FALSE;
+    }
 }
 
 void CFullscreenWnd::OnDestroy()

@@ -242,6 +242,7 @@ private:
     friend class CMouse;
     friend class CPlayerSeekBar; // for accessing m_controls.ControlChecked()
     friend class CChildView; // for accessing m_controls.DelayShowNotLoaded()
+    friend class CFullscreenWnd; // for accessing m_controls.DelayShowNotLoaded()
     friend class CMouseWndWithArtView; // for accessing m_controls.DelayShowNotLoaded()
     friend class SubtitlesProvider;
 
@@ -511,7 +512,7 @@ public:
     bool m_fFullScreen;
     bool m_fFirstFSAfterLaunchOnFS;
     bool m_fStartInD3DFullscreen;
-    bool m_fStartInFullscreenMainFrame;
+    bool m_fStartInFullscreen;
     bool m_bFullScreenWindowIsD3D;
     bool m_bFullScreenWindowIsOnSeparateDisplay;
 

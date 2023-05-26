@@ -830,7 +830,7 @@ CMainFrame::CMainFrame()
     , m_bFullScreenWindowIsOnSeparateDisplay(false)
     , m_fFirstFSAfterLaunchOnFS(false)
     , m_fStartInD3DFullscreen(false)
-    , m_fStartInFullscreenMainFrame(false)
+    , m_fStartInFullscreen(false)
     , m_pLastBar(nullptr)
     , m_bFirstPlay(false)
     , m_bOpeningInAutochangedMonitorMode(false)
@@ -3763,7 +3763,7 @@ LRESULT CMainFrame::OnFilePostOpenmedia(WPARAM wParam, LPARAM lParam)
         if (s.IsD3DFullscreen()) {
             m_fStartInD3DFullscreen = true;
         } else {
-            m_fStartInFullscreenMainFrame = true;
+            m_fStartInFullscreen = true;
         }
     }
 
@@ -4092,9 +4092,11 @@ void CMainFrame::OnFilePostClosemedia(bool bNextIsQueued/* = false*/)
         if (IsD3DFullScreenMode()) {
             m_fStartInD3DFullscreen = true;
         } else {
-            m_fStartInFullscreenMainFrame = true;
+            m_fStartInFullscreen = true;
         }
-        m_pDedicatedFSVideoWnd->DestroyWindow();
+        if (!bNextIsQueued) {
+            m_pDedicatedFSVideoWnd->DestroyWindow();
+        }
     }
 
     UpdateWindow(); // redraw
@@ -17797,10 +17799,10 @@ void CMainFrame::OpenMedia(CAutoPtr<OpenMediaData> pOMD)
         CreateFullScreenWindow();
         m_pVideoWnd = m_pDedicatedFSVideoWnd;
         m_fStartInD3DFullscreen = false;
-    } else if (m_fStartInFullscreenMainFrame) {
+    } else if (m_fStartInFullscreen) {
         CreateFullScreenWindow(false);
         m_pVideoWnd = m_pDedicatedFSVideoWnd;
-        m_fStartInFullscreenMainFrame = false;
+        m_fStartInFullscreen = false;
     } else {
         m_pVideoWnd = &m_wndView;
     }
@@ -18287,6 +18289,9 @@ void CMainFrame::SetPlayState(MPC_PLAYSTATE iState)
 
 bool CMainFrame::CreateFullScreenWindow(bool isD3D /* = true */)
 {
+    if (m_bFullScreenWindowIsD3D == isD3D && HasDedicatedFSVideoWindow()) {
+        return false;
+    }
     const CAppSettings& s = AfxGetAppSettings();
     CMonitors monitors;
     CMonitor monitor, currentMonitor;
