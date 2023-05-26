@@ -827,6 +827,7 @@ CMainFrame::CMainFrame()
     , m_bOpenMediaActive(false)
     , m_fFullScreen(false)
     , m_bFullScreenWindowIsD3D(false)
+    , m_bFullScreenWindowIsOnSeparateDisplay(false)
     , m_fFirstFSAfterLaunchOnFS(false)
     , m_fStartInD3DFullscreen(false)
     , m_fStartInFullscreenMainFrame(false)
@@ -17616,7 +17617,7 @@ bool CMainFrame::StopCapture()
 void CMainFrame::ShowOptions(int idPage/* = 0*/)
 {
     // Disable the options dialog when using D3D fullscreen
-    if (IsFullScreenMainFrame() && IsD3DFullScreenMode()) {
+    if (IsD3DFullScreenMode() && !m_bFullScreenWindowIsOnSeparateDisplay) {
         return;
     }
 
@@ -18288,23 +18289,25 @@ bool CMainFrame::CreateFullScreenWindow(bool isD3D /* = true */)
 {
     const CAppSettings& s = AfxGetAppSettings();
     CMonitors monitors;
-    CMonitor monitor;
+    CMonitor monitor, currentMonitor;
 
     if (m_pDedicatedFSVideoWnd->IsWindow()) {
         m_pDedicatedFSVideoWnd->DestroyWindow();
     }
 
+    currentMonitor = monitors.GetNearestMonitor(this);
     if (s.iMonitor == 0) {
         monitor = monitors.GetMonitor(s.strFullScreenMonitorID, s.strFullScreenMonitorDeviceName);
     }
     if (!monitor.IsMonitor()) {
-        monitor = monitors.GetNearestMonitor(this);
+        monitor = currentMonitor;
     }
 
     CRect monitorRect;
     monitor.GetMonitorRect(monitorRect);
 
     m_bFullScreenWindowIsD3D = isD3D;
+    m_bFullScreenWindowIsOnSeparateDisplay = monitor != currentMonitor;
 
     // allow the mainframe to keep focus
     bool ret = !!m_pDedicatedFSVideoWnd->CreateEx(WS_EX_TOPMOST | WS_EX_TOOLWINDOW, _T(""), ResStr(IDS_MAINFRM_136), WS_POPUP, monitorRect, nullptr, 0);
