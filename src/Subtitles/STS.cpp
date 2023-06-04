@@ -500,15 +500,32 @@ static CStringW SubRipper2SSA(CStringW str)
     return str;
 }
 
-static void WebVTTCueStrip(CStringW& str)
+CStringW WebVTTCueStrip(CStringW& str)
 {
+    CStringW cues;
     int p = str.Find(L'\n');
-    if (p > 0) {
-        if (str.Left(6) == _T("align:") || str.Left(9) == _T("position:") || str.Left(9) == _T("vertical:") || str.Left(5) == _T("line:") || str.Left(5) == _T("size:")) {
-            str.Delete(0, p);
-            str.TrimLeft();
+    if (p == 0) p = str.Find(L'\r');
+    if (p > 0 && p < 6) { // check for optional cue id: https://w3c.github.io/webvtt/#webvtt-cue-identifier
+        int cueid;
+        WCHAR cr;
+        int c = swscanf_s(str.Left(p), L"%d%c", &cueid, &cr, 1);
+        if (c == 1 || c == 2 && cr == L'\r') {
+            str.Delete(0, p + 1);
+            p = str.Find(L'\n');
+            if (p == 0) p = str.Find(L'\r');
         }
     }
+    if (p > 0) {
+        if (str.Left(6) == _T("align:") || str.Left(9) == _T("position:") || str.Left(9) == _T("vertical:") || str.Left(5) == _T("line:") || str.Left(5) == _T("size:")) {
+            if (p > 1 && str[p - 1] == L'\r') {
+                cues = str.Left(p - 1);
+            } else {
+                cues = str.Left(p);
+            }
+            str.Delete(0, p + 1);
+        }
+    }
+    return cues;
 }
 
 using WebVTTcolorData = struct _WebVTTcolorData { std::wstring color; std::wstring bg; bool applied = false; };
@@ -2445,8 +2462,9 @@ void CSimpleTextSubtitle::Add(CStringW str, bool fUnicode, REFERENCE_TIME start,
     }
     //TRACE(_T("CSimpleTextSubtitle::Add (%d) = %s\n"), m_segments.GetCount(), str.GetString());
     if (m_subtitleType == Subtitle::VTT) {
-        WebVTTCueStrip(str);
-        WebVTT2SSA(str);
+        CStringW cueTags = WebVTTCueStrip(str);
+        WebVTTcolorMap clrMap;
+        WebVTT2SSA(str, cueTags, clrMap);
         if (str.IsEmpty()) return;
     }
 
