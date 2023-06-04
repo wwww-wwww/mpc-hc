@@ -15851,8 +15851,8 @@ void CMainFrame::SetupNavStreamSelectSubMenu(CMenu& subMenu, UINT id, DWORD dwSe
         for (DWORD i = 0; i < cStreams; i++) {
             DWORD dwFlags, dwGroup;
             CComHeapPtr<WCHAR> pszName;
-
-            if (FAILED(pSS->Info(i, nullptr, &dwFlags, nullptr, &dwGroup, &pszName, nullptr, nullptr))
+            LCID lcid = 0;
+            if (FAILED(pSS->Info(i, nullptr, &dwFlags, &lcid, &dwGroup, &pszName, nullptr, nullptr))
                     || !pszName) {
                 continue;
             }
@@ -15868,6 +15868,11 @@ void CMainFrame::SetupNavStreamSelectSubMenu(CMenu& subMenu, UINT id, DWORD dwSe
                 name.LoadString(IDS_AG_DISABLED);
             }
             */
+            if (dwGroup == 2 && lcid != 0 && name.Find(L'\t') < 0) {
+                CString lcidstr;
+                GetLocaleString(lcid, LOCALE_SENGLANGUAGE, lcidstr);
+                name.Append(_T("\t") + lcidstr);
+            }
 
             UINT flags = MF_BYCOMMAND | MF_STRING | MF_ENABLED;
             if (dwFlags) {
