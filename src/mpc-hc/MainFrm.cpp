@@ -9249,6 +9249,7 @@ void CMainFrame::OnPlaySubtitles(UINT nID)
         if (CBDAChannel* pChannel = m_pDVBState->pChannel) {
             OnNavStreamSelectSubMenu(i, 2);
             pChannel->SetDefaultSubtitle(i);
+            SetSubtitle(i);
         }
     } else if (!m_pSubStreams.IsEmpty()) {
         // Currently the subtitles menu contains 5 items apart from the actual subtitles list when the ISR is used
