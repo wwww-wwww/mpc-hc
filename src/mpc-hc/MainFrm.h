@@ -373,7 +373,7 @@ private:
     bool SetupShadersSubMenu();
     void SetupRecentFilesSubMenu();
 
-    void SetupNavStreamSelectSubMenu(CMenu& subMenu, UINT id, DWORD dwSelGroup);
+    DWORD SetupNavStreamSelectSubMenu(CMenu& subMenu, UINT id, DWORD dwSelGroup);
     void OnNavStreamSelectSubMenu(UINT id, DWORD dwSelGroup);
     void OnStreamSelect(bool forward, DWORD dwSelGroup);
     static CString GetStreamOSDString(CString name, LCID lcid, DWORD dwSelGroup);

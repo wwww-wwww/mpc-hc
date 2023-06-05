@@ -15484,7 +15484,10 @@ void CMainFrame::SetupSubtitlesSubMenu()
     POSITION pos = m_pSubStreams.GetHeadPosition();
 
     if (GetPlaybackMode() == PM_DIGITAL_CAPTURE) {
-        SetupNavStreamSelectSubMenu(subMenu, id, 2);
+        DWORD selected = SetupNavStreamSelectSubMenu(subMenu, id, 2);
+        if (selected != -1) {
+            SetSubtitle(selected - ID_SUBTITLES_SUBITEM_START);
+        }
     } else if (pos) { // Internal subtitles renderer
         int nItemsBeforeStart = id - ID_SUBTITLES_SUBITEM_START;
         if (nItemsBeforeStart > 0) {
@@ -15838,9 +15841,10 @@ void CMainFrame::SetupJumpToSubMenus(CMenu* parentMenu /*= nullptr*/, int iInser
     }
 }
 
-void CMainFrame::SetupNavStreamSelectSubMenu(CMenu& subMenu, UINT id, DWORD dwSelGroup)
+DWORD CMainFrame::SetupNavStreamSelectSubMenu(CMenu& subMenu, UINT id, DWORD dwSelGroup)
 {
     bool bAddSeparator = false;
+    DWORD selected = -1;
 
     auto addStreamSelectFilter = [&](CComPtr<IAMStreamSelect> pSS) {
         DWORD cStreams;
@@ -15878,6 +15882,7 @@ void CMainFrame::SetupNavStreamSelectSubMenu(CMenu& subMenu, UINT id, DWORD dwSe
             UINT flags = MF_BYCOMMAND | MF_STRING | MF_ENABLED;
             if (dwFlags) {
                 flags |= MF_CHECKED;
+                selected = id;
             }
 
             if (bAddSeparator) {
@@ -15912,6 +15917,7 @@ void CMainFrame::SetupNavStreamSelectSubMenu(CMenu& subMenu, UINT id, DWORD dwSe
     if (pSS = m_pGB) {
         addStreamSelectFilter(pSS);
     }
+    return selected;
 }
 
 void CMainFrame::OnNavStreamSelectSubMenu(UINT id, DWORD dwSelGroup)
