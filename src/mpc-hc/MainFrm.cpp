@@ -11679,6 +11679,8 @@ void CMainFrame::MoveVideoWindow(bool fShowStats/* = false*/, bool bSetStoppedVi
 
         if (!HasDedicatedFSVideoWindow()) {
             m_wndView.SetVideoRect(&windowRect);
+        } else {
+            m_pDedicatedFSVideoWnd->SetVideoRect(&windowRect);
         }
         m_OSD.SetSize(windowRect, videoRect);
     } else {

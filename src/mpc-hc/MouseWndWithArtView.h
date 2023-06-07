@@ -38,6 +38,8 @@ public:
     void LoadImg(const CString& imagePath = _T(""));
     void LoadImg(std::vector<BYTE> buffer);
     bool IsCustomImgLoaded() const { return m_bCustomImgLoaded; };
+    void SetVideoRect(const CRect& r = CRect(0, 0, 0, 0));
+    CRect GetVideoRect() const { return m_vrect; }
 
 protected:
     CMPCPngImage m_img;

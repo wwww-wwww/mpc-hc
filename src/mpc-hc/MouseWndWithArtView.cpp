@@ -175,3 +175,10 @@ BOOL CMouseWndWithArtView::OnEraseBkgnd(CDC* pDC)
 
     return TRUE;
 }
+
+void CMouseWndWithArtView::SetVideoRect(const CRect& r)
+{
+    m_vrect = r;
+
+    Invalidate();
+}

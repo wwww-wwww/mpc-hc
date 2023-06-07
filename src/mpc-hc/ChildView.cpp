@@ -108,13 +108,6 @@ BOOL CChildView::PreTranslateMessage(MSG* pMsg)
     return CWnd::PreTranslateMessage(pMsg);
 }
 
-void CChildView::SetVideoRect(const CRect& r)
-{
-    m_vrect = r;
-
-    Invalidate();
-}
-
 IMPLEMENT_DYNAMIC(CChildView, CMouseWnd)
 
 BEGIN_MESSAGE_MAP(CChildView, CMouseWnd)
