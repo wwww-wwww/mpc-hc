@@ -25,8 +25,6 @@
 
 class CChildView : public CMouseWndWithArtView
 {
-    CRect m_vrect;
-
     bool m_bSwitchingFullscreen;
     bool m_bFirstMedia;
 

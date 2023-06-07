@@ -117,8 +117,7 @@ BOOL CMouseWndWithArtView::OnEraseBkgnd(CDC* pDC)
 
     if ((m_pMainFrame->GetLoadState() != MLS::CLOSED || (!m_bFirstMedia && m_pMainFrame->m_controls.DelayShowNotLoaded())) &&
             !m_pMainFrame->HasDedicatedFSVideoWindow() && !m_pMainFrame->m_fAudioOnly) {
-        //pDC->ExcludeClipRect(m_vrect);
-        return FALSE;
+        pDC->ExcludeClipRect(m_vrect);
     } else {
         CImage img;
         img.Attach(m_img);
