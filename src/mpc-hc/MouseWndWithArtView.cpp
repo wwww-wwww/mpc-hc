@@ -28,7 +28,8 @@
 #include "ColorProfileUtil.h"
 
 CMouseWndWithArtView::CMouseWndWithArtView(CMainFrame* pMainFrame, bool bD3DFS/* = false*/)
-    : CMouseWnd(pMainFrame, bD3DFS)
+    : m_vrect(0, 0, 0, 0)
+    , CMouseWnd(pMainFrame, bD3DFS)
     , m_pMainFrame(pMainFrame)
 {
     LoadImg();

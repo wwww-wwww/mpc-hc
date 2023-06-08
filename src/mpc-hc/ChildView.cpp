@@ -28,8 +28,7 @@
 #include "ColorProfileUtil.h"
 
 CChildView::CChildView(CMainFrame* pMainFrame)
-    : m_vrect(0, 0, 0, 0)
-    , CMouseWndWithArtView(pMainFrame)
+    : CMouseWndWithArtView(pMainFrame)
     , m_bSwitchingFullscreen(false)
     , m_bFirstMedia(true)
 {
