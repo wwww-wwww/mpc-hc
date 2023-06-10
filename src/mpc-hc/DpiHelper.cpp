@@ -36,6 +36,7 @@ namespace
 
     typedef int (WINAPI* tpGetSystemMetricsForDpi)(int nIndex, UINT dpi);
     HRESULT WINAPI GetDpiForMonitor(HMONITOR hmonitor, MONITOR_DPI_TYPE dpiType, UINT* dpiX, UINT* dpiY);
+    UINT GetDpiForWindow(HWND hwnd);
 }
 
 DpiHelper::DpiHelper()
@@ -46,6 +47,15 @@ DpiHelper::DpiHelper()
     ::ReleaseDC(nullptr, hDC);
     m_dpix = m_sdpix;
     m_dpiy = m_sdpiy;
+}
+
+UINT DpiHelper::GetDPIForWindow(HWND wnd) {
+    const WinapiFunc<decltype(GetDpiForWindow)>
+    fnGetDpiForWindow = { _T("user32.dll"), "GetDpiForWindow" };
+    if (fnGetDpiForWindow) {
+        return fnGetDpiForWindow(wnd);
+    }
+    return 0;
 }
 
 void DpiHelper::Override(HWND hWindow)

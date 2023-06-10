@@ -19,6 +19,7 @@ CBrush CMPCThemeUtil::windowBrush;
 CBrush CMPCThemeUtil::controlAreaBrush;
 CBrush CMPCThemeUtil::W10DarkThemeFileDialogInjectedBGBrush;
 NONCLIENTMETRICS CMPCThemeUtil::nonClientMetrics = { 0 };
+bool CMPCThemeUtil::metricsNeedCalculation = true;
 
 CMPCThemeUtil::CMPCThemeUtil():
     themedDialogToolTipParent(nullptr)
@@ -553,9 +554,13 @@ CSize CMPCThemeUtil::GetTextSizeDiff(CString str, HDC hDC, CWnd* wnd, int type, 
 void CMPCThemeUtil::GetMetrics(bool reset /* = false */)
 {
     NONCLIENTMETRICS *m = &nonClientMetrics;
-    if (m->cbSize == 0 || reset) {
+    if (m->cbSize == 0 || metricsNeedCalculation || reset) {
         m->cbSize = sizeof(NONCLIENTMETRICS);
         ::SystemParametersInfo(SPI_GETNONCLIENTMETRICS, sizeof(NONCLIENTMETRICS), m, 0);
+        if (AfxGetMainWnd() == nullptr) {//this used to happen when CPreView::OnCreate was calling ScaleFont, should no longer occur
+            return; //we can do nothing more if main window not found yet, and metricsNeedCalculation will remain set
+        }
+
         DpiHelper dpi, dpiWindow;
         dpiWindow.Override(AfxGetMainWnd()->GetSafeHwnd());
 
@@ -567,6 +572,7 @@ void CMPCThemeUtil::GetMetrics(bool reset /* = false */)
             m->lfStatusFont.lfHeight = dpiWindow.ScaleSystemToOverrideY(m->lfStatusFont.lfHeight);
             m->lfMessageFont.lfHeight = dpiWindow.ScaleSystemToOverrideY(m->lfMessageFont.lfHeight);
         }
+        metricsNeedCalculation = false;
     }
 }
 

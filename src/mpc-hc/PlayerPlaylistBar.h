@@ -60,10 +60,11 @@ private:
     CImageList m_fakeImageList;
     CMPCThemePlayerListCtrl m_list;
 
-	int m_itemHeight = 0;
-	bool createdWindow;
+    int m_itemHeight = 0;
+    int m_initialWindowDPI = 0;
+    bool createdWindow;
 
-	EventClient m_eventc;
+    EventClient m_eventc;
     void EventCallback(MpcEvent ev);
 
     int m_nTimeColWidth;
