@@ -422,6 +422,8 @@ public:
     double m_script_scale_x, m_script_scale_y;
     double m_total_scale_x,  m_total_scale_y;
 
+    bool m_allowLinePadding;
+
 public:
     CSubtitle(RenderingCaches& renderingCaches);
     virtual ~CSubtitle();

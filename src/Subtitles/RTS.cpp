@@ -1324,6 +1324,7 @@ CSubtitle::CSubtitle(RenderingCaches& renderingCaches)
     , m_script_scale_y(1.0)
     , m_total_scale_x(1.0)
     , m_total_scale_y(1.0)
+    , m_allowLinePadding(false)
 {
     ZeroMemory(m_effects, sizeof(Effect*)*EF_NUMBEROFEFFECTS);
 }
@@ -1451,7 +1452,7 @@ CLine* CSubtitle::GetNextLine(POSITION& pos, int maxwidth)
         if (ret->m_borderY < w->m_style.outlineWidthY) {
             ret->m_borderY = (int)(w->m_style.outlineWidthY + 0.5);
         }
-        if (w->m_style.borderStyle == 1 && (ret->m_linePadding < ret->m_borderY * 2)) {
+        if (w->m_style.borderStyle == 1 && m_allowLinePadding && (ret->m_linePadding < ret->m_borderY * 2)) {
             ret->m_linePadding = ret->m_borderY * 2;
         }
 
@@ -1560,6 +1561,7 @@ void CSubtitle::MakeLines(CSize size, const CRect& marginRect)
 
         if (fFirstLine) {
             m_topborder = l->m_borderY;
+            l->m_linePadding = 0;
             fFirstLine = false;
         }
 
@@ -2813,6 +2815,8 @@ CSubtitle* CRenderedTextSubtitle::GetSubtitle(int entry)
         ASSERT(false);
         m_storageRes = m_playRes;
     }
+
+    sub->m_allowLinePadding = (m_subtitleType != Subtitle::ASS && m_subtitleType != Subtitle::SSA);
 
     STSStyle stss;
     int scaledBAS = m_scaledBAS;
