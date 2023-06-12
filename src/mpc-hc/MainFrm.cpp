@@ -19909,6 +19909,7 @@ void CMainFrame::ReloadMenus() {
         SetMenu(defaultMPCThemeMenu);
         // and then destroy the old one
         oldMenu->DestroyMenu();
+        delete oldMenu;
     }
     //we don't detach because we retain the cmenu
     //m_hMenuDefault = defaultMenu.Detach();
