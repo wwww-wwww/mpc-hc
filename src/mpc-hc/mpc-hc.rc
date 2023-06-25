@@ -4014,6 +4014,8 @@ BEGIN
                             "Show the recording settings dialog automatically when opening a device."
     IDS_PPAGEADVANCED_ALWAYS_USE_SHORT_MENU
                             "Player Menu shortcuts and right-click show compact menu -- even when main menu is hidden."
+    IDS_PPAGEADVANCED_USE_FREETYPE
+                            "Use FreeType for subtitle rendering.  Enables support for per-language glyphs."
 END
 
 STRINGTABLE

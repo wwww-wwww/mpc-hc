@@ -20285,6 +20285,8 @@ void CMainFrame::UpdateSubtitleRenderingParameters()
             }
             pRTS->SetOverride(s.fUseDefaultSubtitlesStyle, s.subtitlesDefStyle);
             pRTS->SetAlignment(s.fOverridePlacement, s.nHorPos, s.nVerPos);
+            pRTS->SetUseFreeType(s.bUseFreeType);
+            pRTS->SetOpenTypeLangHint(s.strOpenTypeLangHint);
             pRTS->Deinit();
         }
         m_pCAP->Invalidate();

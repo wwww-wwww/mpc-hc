@@ -168,17 +168,19 @@ public:
     friend class COutlineKey;
 };
 
+class CRenderedTextSubtitle;
 class CText : public CWord
 {
 protected:
     virtual bool CreatePath();
-
+    CRenderedTextSubtitle* m_RTS;
 public:
     CText(const STSStyle& style, CStringW str, int ktype, int kstart, int kend, double scalex, double scaley,
           RenderingCaches& renderingCaches);
 
     virtual CWord* Copy();
     virtual bool Append(CWord* w);
+    void SetRts(CRenderedTextSubtitle* RTS) { m_RTS = RTS; };
 };
 
 class CPolygon : public CWord
@@ -475,6 +477,7 @@ class __declspec(uuid("537DCACA-2812-4a4f-B2C6-1A34C17ADEB0"))
     int m_polygonBaselineOffset;
     bool m_bOverrideStyle;
     bool m_bOverridePlacement;
+    bool m_bUseFreeType;
     CSize m_overridePlacement;
 
     void ParseEffect(CSubtitle* sub, CString str);
@@ -512,6 +515,8 @@ public:
 #endif
         }
     }
+    void SetUseFreeType(bool useFreeType) { m_bUseFreeType = useFreeType; }
+    bool GetUseFreeType() { return m_bUseFreeType; }
 
     void SetAlignment(bool bOverridePlacement, LONG lHorPos, LONG lVerPos) {
         m_bOverridePlacement = bOverridePlacement;
@@ -524,6 +529,9 @@ public:
     CString GetPath();
 
     bool m_webvtt_allow_clear;
+    //FT cache for RTS
+    FTLibraryData m_ftLibrary;
+    //end FT cache
 
     DECLARE_IUNKNOWN
     STDMETHODIMP NonDelegatingQueryInterface(REFIID riid, void** ppv);

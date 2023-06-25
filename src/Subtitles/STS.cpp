@@ -2001,6 +2001,8 @@ static bool OpenSubStationAlpha(CTextFile* file, CSimpleTextSubtitle& ret, int C
             sver = 6;
         } else if (entry == L"[events]") {
             fRet = true;
+        } else if (entry == L"language") {
+            ret.openTypeLangHint = WToA(GetStrW(pszBuff, nBuffLength));
         } else if (entry == L"fontname") {
             LoadUUEFont(file);
         } else if (entry == L"ycbcr matrix") {

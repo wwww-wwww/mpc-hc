@@ -151,6 +151,7 @@ public:
     CString m_name;
     LCID m_lcid;
     CString m_langname;
+    CStringA openTypeLangHint;
     Subtitle::SubType m_subtitleType;
     tmode m_mode;
     CTextFile::enc m_encoding;
@@ -240,6 +241,7 @@ public:
 
     void SetStr(int i, CStringA str, bool fUnicode /* ignored */);
     void SetStr(int i, CStringW str, bool fUnicode);
+    void SetOpenTypeLangHint(CStringA openTypeLangHint) { this->openTypeLangHint = openTypeLangHint; }
 
 public:
     STSStyle m_styleOverride; // the app can decide to use this style instead of a built-in one
@@ -248,9 +250,9 @@ public:
 public:
     bool m_renderUsingLibass;
     OpenTypeLang::HintStr m_openTypeLangHint;
-
     SubRendererSettings subRendererSettings;
     void SetSubRenderSettings(SubRendererSettings settings);
+
 
 
     bool m_assloaded;

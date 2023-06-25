@@ -49,6 +49,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Ellipse.cpp" />
+    <ClCompile Include="FreeTypePathTools.cpp" />
     <ClCompile Include="OpenTypeLangTags.cpp" />
     <ClCompile Include="RenderingCache.cpp" />
     <ClCompile Include="CCDecoder.cpp" />
@@ -78,6 +79,7 @@
     <ClInclude Include="..\..\include\Utf8.h" />
     <ClInclude Include="Ellipse.h" />
     <ClInclude Include="ColorConvTable.h" />
+    <ClInclude Include="FreeTypePathTools.h" />
     <ClInclude Include="OpenTypeLangTags.h" />
     <ClInclude Include="RenderingCache.h" />
     <ClInclude Include="CCDecoder.h" />

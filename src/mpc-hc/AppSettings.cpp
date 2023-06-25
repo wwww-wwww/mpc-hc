@@ -35,7 +35,6 @@
 #include "../thirdparty/sanear/src/Factory.h"
 #include <VersionHelpersInternal.h>
 #include <mvrInterfaces.h>
-#include "../Subtitles/SubRendererSettings.h"
 #include <chrono>
 #include "date/date.h"
 
@@ -257,6 +256,7 @@ CAppSettings::CAppSettings()
     , bAlwaysUseShortMenu(false)
     , iStillVideoDuration(10)
     , iMouseLeftUpDelay(0)
+    , bUseFreeType(false)
 {
     // Internal source filter
 #if INTERNAL_SOURCEFILTER_CDDA
@@ -923,9 +923,10 @@ void CAppSettings::SaveSettings(bool write_full_history /* = false */)
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_MENULANG, idMenuLang);
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_AUDIOLANG, idAudioLang);
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_SUBTITLESLANG, idSubtitlesLang);
+    pApp->WriteProfileString(IDS_R_SETTINGS, IDS_RS_OPENTYPELANGHINT, CString(strOpenTypeLangHint));
+    pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_USE_FREETYPE, bUseFreeType);
 #if USE_LIBASS
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_RENDERSUBTITLESUSINGLIBASS, bRenderSubtitlesUsingLibass);
-    pApp->WriteProfileString(IDS_R_SETTINGS, IDS_RS_OPENTYPELANGHINT, CString(strOpenTypeLangHint));
 #endif
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_CLOSEDCAPTIONS, fClosedCaptions);
     CString style;
@@ -1627,9 +1628,11 @@ void CAppSettings::LoadSettings()
     idSubtitlesLang = pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_SUBTITLESLANG, 0);
 #if USE_LIBASS
     bRenderSubtitlesUsingLibass = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_RENDERSUBTITLESUSINGLIBASS, FALSE);
+#endif
     CT2A tmpLangHint(pApp->GetProfileString(IDS_R_SETTINGS, IDS_RS_OPENTYPELANGHINT, _T("")));
     strOpenTypeLangHint = tmpLangHint;
-#endif
+    bUseFreeType= !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_USE_FREETYPE, FALSE);
+
     fClosedCaptions = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_CLOSEDCAPTIONS, FALSE);
     {
         CString temp = pApp->GetProfileString(IDS_R_SETTINGS, IDS_RS_SPSTYLE);
@@ -3489,10 +3492,7 @@ void CAppSettings::UpdateSettings()
 SubRendererSettings CAppSettings::GetSubRendererSettings() {
     SubRendererSettings s;
     s.renderUsingLibass = this->bRenderSubtitlesUsingLibass;
-    int otlLen = this->strOpenTypeLangHint.GetLength();
-    if (otlLen > 0) {
-        strncpy_s(s.openTypeLangHint, _countof(s.openTypeLangHint), this->strOpenTypeLangHint.GetBuffer(), std::min(OpenTypeLang::OTLangHintLen, otlLen + 1));
-    }
+    OpenTypeLang::CStringAtoHintStr(s.openTypeLangHint, this->strOpenTypeLangHint);
     return s;
 }
 #endif
