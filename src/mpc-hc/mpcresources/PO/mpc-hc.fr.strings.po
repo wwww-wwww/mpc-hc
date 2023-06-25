@@ -4679,6 +4679,12 @@ msgstr ""
 "Les raccourcis du menu du lecteur et le clic droit révèlent le menu compact "
 "-- même lorsque le menu principal est masqué."
 
+msgctxt "IDS_PPAGEADVANCED_USE_FREETYPE"
+msgid ""
+"Use FreeType for subtitle rendering.  Enables support for per-language "
+"glyphs."
+msgstr ""
+
 msgctxt "IDS_PPAGEADVANCED_FULLSCREEN_SEPARATE_CONTROLS"
 msgid ""
 "Keep main window controls visible on current monitor when going fullscreen "

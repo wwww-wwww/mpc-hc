@@ -4538,6 +4538,12 @@ msgid ""
 "menu is hidden."
 msgstr "플레이어 메뉴 바로 가기 및 마우스 오른쪽 버튼을 클릭하면 기본 메뉴가 숨겨져 있어도 간단한 메뉴가 표시됩니다."
 
+msgctxt "IDS_PPAGEADVANCED_USE_FREETYPE"
+msgid ""
+"Use FreeType for subtitle rendering.  Enables support for per-language "
+"glyphs."
+msgstr ""
+
 msgctxt "IDS_PPAGEADVANCED_FULLSCREEN_SEPARATE_CONTROLS"
 msgid ""
 "Keep main window controls visible on current monitor when going fullscreen "
