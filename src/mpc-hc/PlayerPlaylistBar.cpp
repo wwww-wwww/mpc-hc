@@ -1507,8 +1507,8 @@ END_MESSAGE_MAP()
 void CPlayerPlaylistBar::ScaleFont()
 {
     LOGFONT lf;
-    GetMessageFont(&lf);
-    lf.lfHeight = m_pMainFrame->m_dpi.ScaleSystemToOverrideY(lf.lfHeight);
+    m_pMainFrame->m_dpi.GetMessageFont(&lf);
+    //lf.lfHeight = m_pMainFrame->m_dpi.ScaleSystemToOverrideY(lf.lfHeight);
 
     m_font.DeleteObject();
     if (m_font.CreateFontIndirect(&lf)) {
@@ -1640,19 +1640,21 @@ void CPlayerPlaylistBar::OnNMDblclkList(NMHDR* pNMHDR, LRESULT* pResult)
 void CPlayerPlaylistBar::OnMeasureItem(int nIDCtl, LPMEASUREITEMSTRUCT lpMeasureItemStruct)
 {
     __super::OnMeasureItem(nIDCtl, lpMeasureItemStruct);
-
+    lpMeasureItemStruct->itemHeight = m_pMainFrame->m_dpi.CalculateListCtrlItemHeight((CListCtrl*)&m_list);
+#if 0
     if (createdWindow) {
         //after creation, measureitem is called once for every window resize.  we will cache the default height before DPI scaling
         if (m_itemHeight == 0) {
             m_itemHeight = lpMeasureItemStruct->itemHeight;
         }
         lpMeasureItemStruct->itemHeight = m_pMainFrame->m_dpi.ScaleArbitraryToOverrideY(m_itemHeight, m_initialWindowDPI); //we must scale by initial DPI, NOT current DPI
-    } else { 
+    } else {
         //before creation, we must return a valid DPI scaled value, to prevent visual glitches when icon height has been tweaked.
         //we cannot cache this value as it may be different from that calculated after font has been set
         lpMeasureItemStruct->itemHeight = m_pMainFrame->m_dpi.ScaleSystemToOverrideY(lpMeasureItemStruct->itemHeight);
         m_initialWindowDPI = m_pMainFrame->m_dpi.DPIY(); //the initial DPI is always cached by ListCtrl and is never updated for future calculations of OnMeasureItem
     }
+#endif
 }
 
 /*

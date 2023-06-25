@@ -19,6 +19,7 @@
  */
 
 #pragma once
+#include <afxcmn.h>
 
 class DpiHelper final
 {
@@ -29,7 +30,11 @@ public:
     void Override(HWND hWindow);
     void Override(int dpix, int dpiy);
     int GetSystemMetricsDPI(int nIndex);
+    void GetMessageFont(LOGFONT* lf);
+    bool GetNonClientMetrics(PNONCLIENTMETRICSW, bool& dpiCorrected);
+    int GetSystemMetrics(int type);
     static UINT GetDPIForWindow(HWND wnd);
+    int CalculateListCtrlItemHeight(CListCtrl* wnd);
 
     inline double ScaleFactorX() const { return m_dpix / 96.0; }
     inline double ScaleFactorY() const { return m_dpiy / 96.0; }
