@@ -116,7 +116,7 @@
   <ItemDefinitionGroup>
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <AdditionalIncludeDirectories>..\libxml2\libxml2\include;..\libxml2\generated;..\libiconv\libiconv-for-Windows\libiconv-1.16\include;..\freetype2\freetype2\include;fontconfig\SMP\src;fontconfig\SMP;fontconfig;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\libxml2\libxml2\include;..\libxml2\generated;..\libiconv\libiconv-for-Windows\libiconv\include;..\freetype2\freetype2\include;fontconfig\SMP\src;fontconfig\SMP;fontconfig;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="$(Configuration.Contains('Release'))">
