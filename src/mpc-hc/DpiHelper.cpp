@@ -159,12 +159,12 @@ int DpiHelper::CalculateListCtrlItemHeight(CListCtrl* wnd) {
 
         nItemHeight = tm.tmHeight + 4;
         CImageList* ilist;
-        if (ilist = wnd->GetImageList(LVSIL_STATE)) {
+        if ((ilist = wnd->GetImageList(LVSIL_STATE)) != 0) {
             int cx, cy;
             ImageList_GetIconSize(ilist->m_hImageList, &cx, &cy);
             nItemHeight = std::max(nItemHeight, ScaleY(cy + 1));
         }
-        if (ilist = wnd->GetImageList(LVSIL_SMALL)) {
+        if ((ilist = wnd->GetImageList(LVSIL_SMALL)) != 0) {
             int cx, cy;
             ImageList_GetIconSize(ilist->m_hImageList, &cx, &cy);
             nItemHeight = std::max(nItemHeight, ScaleY(cy + 1));

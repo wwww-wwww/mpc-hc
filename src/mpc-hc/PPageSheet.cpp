@@ -333,7 +333,7 @@ LRESULT CPPageSheet::OnDpiChanged(WPARAM wParam, LPARAM lParam) {
                 }
             }
             CPPageAdvanced* ppa;
-            if (ppa = DYNAMIC_DOWNCAST(CPPageAdvanced, pChild)) {
+            if ((ppa = DYNAMIC_DOWNCAST(CPPageAdvanced, pChild)) != 0) {
                 ppa->DoDPIChanged();
             }
             pChild = pChild->GetNextWindow();
