@@ -26,11 +26,11 @@
     <ClInclude Include="libass\libass\ass_compat.h" />
     <ClInclude Include="libass\libass\ass_directwrite.h" />
     <ClInclude Include="libass\libass\ass_drawing.h" />
+    <ClCompile Include="libass\libass\ass_filesystem.h" />
     <ClInclude Include="libass\libass\ass_font.h" />
     <ClInclude Include="libass\libass\ass_fontconfig.h" />
     <ClInclude Include="libass\libass\ass_fontselect.h" />
     <ClInclude Include="libass\libass\ass_func_template.h" />
-    <ClInclude Include="libass\libass\ass_library.h" />
     <ClInclude Include="libass\libass\ass_outline.h" />
     <ClInclude Include="libass\libass\ass_parse.h" />
     <ClInclude Include="libass\libass\ass_rasterizer.h" />
@@ -50,6 +50,7 @@
     <ClCompile Include="libass\libass\ass_cache.c" />
     <ClCompile Include="libass\libass\ass_directwrite.c" />
     <ClCompile Include="libass\libass\ass_drawing.c" />
+    <ClCompile Include="libass\libass\ass_filesystem.c" />
     <ClCompile Include="libass\libass\ass_font.c" />
     <ClCompile Include="libass\libass\ass_fontconfig.c" />
     <ClCompile Include="libass\libass\ass_fontselect.c" />
