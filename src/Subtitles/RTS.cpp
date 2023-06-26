@@ -33,6 +33,8 @@
 static HDC g_hDC;
 static int g_hDC_refcnt = 0;
 
+#define MAXGDIFONTSIZE 39999
+
 static long revcolor(long c)
 {
     return ((c & 0xff0000) >> 16) + (c & 0xff00) + ((c & 0xff) << 16);
@@ -49,6 +51,23 @@ void alpha_mask_deleter::operator()(CAlphaMask* ptr) const noexcept
     }
 }
 
+
+bool GetTextExtent(HDC hdc, LPCWSTR s, int c, LPSIZE lpsz, STSStyle style) {
+    bool ret;
+    if (style.fontSize > MAXGDIFONTSIZE) {
+        double oldFontSize = style.fontSize;
+        style.fontSize = MAXGDIFONTSIZE;
+        CMyFont font(style);
+        HFONT hOldFont = SelectFont(g_hDC, font);
+        ret = GetTextExtentPoint32W(hdc, s, c, lpsz);
+        SelectFont(g_hDC, hOldFont);
+        lpsz->cx = MulDiv(lpsz->cx, oldFontSize, MAXGDIFONTSIZE);
+        lpsz->cy = MulDiv(lpsz->cy, oldFontSize, MAXGDIFONTSIZE);
+    } else {
+        ret = GetTextExtentPoint32W(hdc, s, c, lpsz);
+    }
+    return ret;
+}
 // CMyFont
 
 CMyFont::CMyFont(const STSStyle& style)
@@ -492,7 +511,7 @@ CText::CText(const STSStyle& style, CStringW str, int ktype, int kstart, int ken
         if (m_style.fontSpacing) {
             for (LPCWSTR s = m_str; *s; s++) {
                 CSize extent;
-                if (!GetTextExtentPoint32W(g_hDC, s, 1, &extent)) {
+                if (!GetTextExtent(g_hDC, s, 1, &extent, m_style)) {
                     SelectFont(g_hDC, hOldFont);
                     ASSERT(0);
                     return;
@@ -502,7 +521,7 @@ CText::CText(const STSStyle& style, CStringW str, int ktype, int kstart, int ken
             // m_width -= (int)m_style.fontSpacing; // TODO: subtract only at the end of the line
         } else {
             CSize extent;
-            if (!GetTextExtentPoint32W(g_hDC, m_str, str.GetLength(), &extent)) {
+            if (!GetTextExtent(g_hDC, m_str, str.GetLength(), &extent, m_style)) {
                 SelectFont(g_hDC, hOldFont);
                 ASSERT(0);
                 return;
@@ -540,14 +559,19 @@ bool CText::Append(CWord* w)
 
 bool CText::CreatePath()
 {
-    CMyFont font(m_style);
+    STSStyle tStyle(m_style);
+    if (m_style.fontSize > MAXGDIFONTSIZE) {
+        tStyle.fontSize = MAXGDIFONTSIZE;
+    }
+
+    CMyFont font(tStyle);
 
     HFONT hOldFont = SelectFont(g_hDC, font);
 
     LONG cx = 0;
     auto getExtent = [&](LPCWSTR s, int len) {
         CSize extent;
-        if (!GetTextExtentPoint32W(g_hDC, s, len, &extent)) {
+        if (!GetTextExtent(g_hDC, s, len, &extent, m_style)) {
             SelectFont(g_hDC, hOldFont);
             ASSERT(0);
             return false;
@@ -653,9 +677,15 @@ bool CText::CreatePath()
             }
         }
     }
-
     SelectFont(g_hDC, hOldFont);
 
+    if (m_style.fontSize > MAXGDIFONTSIZE) {
+        double fact = m_style.fontSize / MAXGDIFONTSIZE;
+        for (ptrdiff_t i = 0; i < mPathPoints; i++) {
+            mpPathPoints[i].x *= fact;
+            mpPathPoints[i].y *= fact;
+        }
+    }
     return true;
 }
 
