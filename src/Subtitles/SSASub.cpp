@@ -2,7 +2,6 @@
 #include "stdafx.h"
 #include "../../include/mpc-hc_config.h"
 
-#if USE_LIBASS
 #pragma comment( lib, "libass" )
 #include <ios>
 #include <algorithm>
@@ -12,6 +11,11 @@
 #include "SSASub.h"
 #include "STS.h"
 #include "Utf8.h"
+#include "../DSUtil/PathUtils.h"
+#include <sstream>
+#include "../DSUtil/DSMPropertyBag.h"
+#include  <comutil.h>
+#include <ppl.h>
 
 std::string ConsumeAttribute(const char** ppsz_subtitle, std::string& attribute_value) {
     const char* psz_subtitle = *ppsz_subtitle;
@@ -290,10 +294,10 @@ void srt_header(char (&outBuffer)[1024], const STSStyle& style, const SubRendere
         (int)std::round(style.marginRect.right * resx), (int)std::round(style.marginRect.top * resy));
 }
 
-ASS_Track* srt_read_file(ASS_Library* library, char* fname, const UINT codePage, const STSStyle& style, const SubRendererSettings& subRendererSettings) {
+ASS_Track* srt_read_file(ASS_Library* library, CStringW fname, const UINT codePage, const STSStyle& style, const SubRendererSettings& subRendererSettings) {
     std::ifstream srtFile(fname, std::ios::in);
     ASS_Track* track = ass_new_track(library);
-    track->name = _strdup(fname);
+    track->name = _strdup(UTF16To8(fname));
     return srt_read_data(library, track, srtFile, codePage, style, subRendererSettings);
 }
 
@@ -366,6 +370,13 @@ ASS_Track* srt_read_data(ASS_Library* library, ASS_Track* track, std::istream &s
     }
     ass_process_force_style(track);
     return track;
+}
+
+ASS_Track* ass_read_fileW(ASS_Library* library, CStringW fname) {
+    std::ifstream t(fname, std::ios::in);
+    std::stringstream buffer;
+    buffer << t.rdbuf();
+    return ass_read_memory(library, (char*)buffer.str().c_str(), buffer.str().size(), "UTF-8");
 }
 
 void ConvertCPToUTF8(UINT CP, std::string& codepage_str) {
@@ -472,4 +483,298 @@ std::string ws2s(const std::wstring& wstr) {
     return converterX.to_bytes(wstr);
 }
 
-#endif
+namespace {
+    inline POINT GetRectPos(RECT rect) {
+        return { rect.left, rect.top };
+    }
+
+    inline SIZE GetRectSize(RECT rect) {
+        return { rect.right - rect.left, rect.bottom - rect.top };
+    }
+}
+
+
+SSAUtil::SSAUtil(CSimpleTextSubtitle* sts)
+    : m_STS(sts)
+    , m_renderUsingLibass(false)
+    , m_openTypeLangHint()
+    , m_assloaded(false)
+    , m_assfontloaded(false)
+    , m_pGraph(nullptr)
+    , m_pPin(nullptr)
+    , m_ass(nullptr)
+    , m_renderer(nullptr)
+    , m_track(nullptr)
+{
+    LoadDefStyle();
+}
+
+SSAUtil::~SSAUtil() {
+    Unload();
+}
+
+void SSAUtil::SetSubRenderSettings(SubRendererSettings settings) {
+    bool wasUsingLibass = subRendererSettings.LibassEnabled(m_STS);
+    subRendererSettings = settings;
+    if (settings.LibassEnabled(m_STS) || wasUsingLibass) {
+        ResetASS();
+    }
+}
+
+void SSAUtil::ResetASS() {
+    if (subRendererSettings.LibassEnabled(m_STS)) { 
+        m_renderUsingLibass = true;
+        if (!m_STS->m_path.IsEmpty()) {
+            LoadASSFile(m_STS->m_subtitleType);
+        }
+    } else {
+        if (m_assloaded) {
+            Unload();
+        }
+        m_renderUsingLibass = false;
+    }
+}
+
+bool SSAUtil::LoadASSFile(Subtitle::SubType subType) {
+    if (m_STS->m_path.IsEmpty() || !PathUtils::Exists(m_STS->m_path) ) return false;
+    Unload();
+
+    m_assfontloaded = false;
+
+    m_ass = decltype(m_ass)(ass_library_init());
+    ass_set_extract_fonts(m_ass.get(), true);
+    ass_set_style_overrides(m_ass.get(), NULL);
+
+    m_renderer = decltype(m_renderer)(ass_renderer_init(m_ass.get()));
+    ass_set_use_margins(m_renderer.get(), false);
+    ass_set_font_scale(m_renderer.get(), 1.0);
+
+    if (subType == Subtitle::SRT) {
+        m_track = decltype(m_track)(srt_read_file(m_ass.get(), m_STS->m_path, defStyle.charSet, defStyle, subRendererSettings));
+        if (m_STS->m_storageRes == CSize(0, 0)) {
+            m_STS->m_storageRes = CSize(defStyle.SrtResX, defStyle.SrtResY);
+        }
+    } else { //subType == Subtitle::SSA/ASS
+        m_track = decltype(m_track)(ass_read_fileW(m_ass.get(), m_STS->m_path));
+        if (m_STS->m_storageRes == CSize(0, 0)) {
+            m_STS->m_storageRes = CSize(defStyle.SrtResX, defStyle.SrtResY);
+        }
+    }
+
+    if (!m_track) return false;
+
+    CT2CA tmpFontName(defStyle.fontName);
+    ass_set_fonts(m_renderer.get(), NULL, std::string(tmpFontName).c_str(), ASS_FONTPROVIDER_DIRECTWRITE, NULL, 0);
+
+    m_assloaded = true;
+    m_assfontloaded = true;
+
+    return true;
+}
+
+bool SSAUtil::LoadASSTrack(char* data, int size, Subtitle::SubType subType) {
+    Unload();
+    m_assfontloaded = false;
+
+    m_ass = decltype(m_ass)(ass_library_init());
+    m_renderer = decltype(m_renderer)(ass_renderer_init(m_ass.get()));
+    m_track = decltype(m_track)(ass_new_track(m_ass.get()));
+
+    if (!m_track) return false;
+
+    if (subType == Subtitle::SRT) {
+        std::stringstream srtData;
+        srtData.write(data, size);
+        srt_read_data(m_ass.get(), m_track.get(), srtData, defStyle.charSet, defStyle, subRendererSettings);
+    } else { //subType == Subtitle::SSA/ASS
+        ass_process_codec_private(m_track.get(), data, size);
+    }
+    CT2CA tmpFontName(defStyle.fontName);
+    ass_set_fonts(m_renderer.get(), NULL, std::string(tmpFontName).c_str(), ASS_FONTPROVIDER_DIRECTWRITE, NULL, 0);
+    //don't set m_assfontloaded here, in case we can load embedded fonts later?
+
+    m_assloaded = true;
+    return true;
+}
+
+void SSAUtil::LoadASSFont() {
+    if (m_assfontloaded || !m_pPin) return;
+    ASS_Library* ass = m_ass.get();
+    ASS_Renderer* renderer = m_renderer.get();
+    // Try to load fonts in the container
+    CComPtr<IAMGraphStreams> graphStreams;
+    CComPtr<IDSMResourceBag> bag;
+    if (m_pGraph && SUCCEEDED(m_pGraph->QueryInterface(IID_PPV_ARGS(&graphStreams))) &&
+        SUCCEEDED(graphStreams->FindUpstreamInterface(m_pPin, IID_PPV_ARGS(&bag), AM_INTF_SEARCH_FILTER))) {
+        for (DWORD i = 0; i < bag->ResGetCount(); ++i) {
+            _bstr_t name, desc, mime;
+            BYTE* pData = nullptr;
+            DWORD len = 0;
+            if (SUCCEEDED(bag->ResGet(i, &name.GetBSTR(), &desc.GetBSTR(), &mime.GetBSTR(), &pData, &len, nullptr))) {
+                if (wcscmp(mime.GetBSTR(), L"application/x-truetype-font") == 0 ||
+                    wcscmp(mime.GetBSTR(), L"application/vnd.ms-opentype") == 0) // TODO: more mimes?
+                {
+                    ass_add_font(ass, (char*)name, (char*)pData, len);
+                    // TODO: clear these fonts somewhere?
+                }
+                CoTaskMemFree(pData);
+            }
+        }
+        m_assfontloaded = true;
+        CT2CA tmpFontName(defStyle.fontName);
+        ass_set_fonts(renderer, NULL, std::string(tmpFontName).c_str(), ASS_FONTPROVIDER_DIRECTWRITE, NULL, 0);
+    }
+}
+
+CRect SSAUtil::GetSPDRect(SubPicDesc& spd) {
+    CRect spdRect;
+    if (m_STS->m_subtitleType == Subtitle::SubType::SRT && defStyle.relativeTo != STSStyle::VIDEO
+        || defStyle.relativeTo == STSStyle::WINDOW) {
+        spdRect = CRect(0, 0, spd.w, spd.h);
+    } else {
+        spdRect = CRect(spd.vidrect);
+    }
+    return spdRect;
+}
+
+STDMETHODIMP SSAUtil::Render(REFERENCE_TIME rt, SubPicDesc& spd, RECT& bbox, CSize& size, CRect& vidRect) {
+    if (m_assloaded) {
+        if (spd.bpp != 32) {
+            ASSERT(FALSE);
+            return E_INVALIDARG;
+        }
+
+        LoadASSFont();
+
+        vidRect = GetSPDRect(spd);
+        size = CSize(vidRect.Width(), vidRect.Height());
+        SetFrameSize(vidRect.Width(), vidRect.Height());
+
+        CRect rcDirty;
+
+        if (!RenderFrame(rt / 10000, spd, rcDirty)) {
+            return E_FAIL;
+        }
+
+        bbox = rcDirty;
+        return S_OK;
+    }
+    return E_POINTER;
+}
+
+bool SSAUtil::RenderFrame(long long now, SubPicDesc& spd, CRect& rcDirty) {
+    int changed = 1;
+    ASS_Image* image = ass_render_frame(m_renderer.get(), m_track.get(), now, &changed);
+    if (!image) return false;
+    AssFlatten(image, spd, rcDirty);
+    return true;
+}
+
+void SSAUtil::AssFlatten(ASS_Image* image, SubPicDesc& spd, CRect& rcDirty) {
+    if (image) {
+        CRect pRect;
+        for (auto i = image; i != nullptr; i = i->next) {
+            CRect rect2(i->dst_x, i->dst_y, i->dst_x + i->w, i->dst_y + i->h);
+            pRect.UnionRect(pRect, rect2);
+        }
+        CRect spdRect = GetSPDRect(spd);
+        rcDirty.IntersectRect(pRect + spdRect.TopLeft(), spdRect);
+
+        BYTE* pixelBytes = (BYTE*)(spd.bits + spd.pitch * rcDirty.top + rcDirty.left * 4);
+
+        for (auto i = image; i != nullptr; i = i->next) {
+            concurrency::parallel_for(0, i->h, [&](int y)
+                {
+                    for (int x = 0; x < i->w; ++x) {
+                        BYTE* dst = &pixelBytes[((ptrdiff_t)i->dst_y + y - pRect.top) * spd.pitch + ((ptrdiff_t)i->dst_x + x - pRect.left) * 4];
+
+                        uint32_t srcA = (i->bitmap[y * i->stride + x] * (0xff - (i->color & 0x000000ff))) >> 8;
+                        uint32_t compA = 0xff - srcA;
+
+
+                        dst[3] = 0xff - (srcA + (((0xff - dst[3]) * compA) >> 8)); //A.  this is inverted alpha, so we invert it before multiplying and then invert it again
+                        dst[2] = (((i->color & 0xff000000) >> 24) * srcA + (dst[2]) * compA) >> 8; //R
+                        dst[1] = (((i->color & 0x00ff0000) >> 16) * srcA + dst[1] * compA) >> 8; //G
+                        dst[0] = (((i->color & 0x0000ff00) >> 8) * srcA + dst[0] * compA) >> 8; //B
+
+                    }
+                }, concurrency::static_partitioner());
+        }
+    }
+}
+
+void SSAUtil::SetFrameSize(int w, int h) {
+    ass_set_frame_size(m_renderer.get(), w, h);
+}
+
+void SSAUtil::Unload() {
+    m_assloaded = false;
+    if (m_track) m_track.reset();
+    if (m_renderer) m_renderer.reset();
+    if (m_ass) m_ass.reset();
+}
+
+void SSAUtil::LoadASSSample(char *data, int dataSize, REFERENCE_TIME tStart, REFERENCE_TIME tStop) {
+    if (m_renderUsingLibass) {
+        if (m_STS->m_subtitleType == Subtitle::SRT) { //received SRT sample, try to use libass to handle
+            if (!m_assloaded) { //create ass header
+                Unload();
+                m_assfontloaded = false;
+
+                m_ass = decltype(m_ass)(ass_library_init());
+                m_renderer = decltype(m_renderer)(ass_renderer_init(m_ass.get()));
+                m_track = decltype(m_track)(ass_new_track(m_ass.get()));
+
+                char outBuffer[1024];
+                srt_header(outBuffer, defStyle, subRendererSettings);
+                ass_process_codec_private(m_track.get(), outBuffer, static_cast<int>(strnlen_s(outBuffer, sizeof(outBuffer))));
+                m_assloaded = true;
+            }
+
+            if (m_assloaded) {
+                char subLineData[1024]{};
+                strncpy_s(subLineData, _countof(subLineData), data, dataSize);
+                std::string str = subLineData;
+
+                // This is the way i use to get a unique id for the subtitle line
+                // It will only fail in the case there is 2 or more lines with the same start timecode
+                // (Need to check if the matroska muxer join lines in such a case)
+                REFERENCE_TIME m_iSubLineCount = tStart / 10000;
+
+                // Change srt tags to ass tags
+                ParseSrtLine(str, defStyle);
+
+                // Add the custom tags
+                CT2CA tmpCustomTags(defStyle.customTags);
+                str.insert(0, std::string(tmpCustomTags));
+
+                // Add blur
+                char blur[20]{};
+                _snprintf_s(blur, _TRUNCATE, "{\\blur%u}", defStyle.fBlur);
+                str.insert(0, blur);
+
+                // ASS in MKV: ReadOrder, Layer, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+                char outBuffer[1024]{};
+                _snprintf_s(outBuffer, _TRUNCATE, "%lld,0,Default,Main,0,0,0,,%s", m_iSubLineCount, str.c_str());
+                ass_process_chunk(m_track.get(), outBuffer, static_cast<int>(strnlen_s(outBuffer, sizeof(outBuffer))), tStart / 10000, (tStop - tStart) / 10000);
+            }
+        }
+    }
+}
+
+void SSAUtil::LoadDefStyle() {
+    if (m_STS) {
+        m_STS->GetDefaultStyle(defStyle);
+    }
+}
+
+void SSAUtil::DefaultStyleChanged() {
+    Unload();
+    LoadDefStyle();
+    if (subRendererSettings.LibassEnabled(m_STS)) { //styles may change the way the libass file was loaded, so we reload it here
+        m_renderUsingLibass = true;
+        LoadASSFile(m_STS->m_subtitleType);
+    } else {
+        m_renderUsingLibass = false;
+    }
+}

@@ -26,73 +26,12 @@
 #include "TextFile.h"
 #include "SubtitleHelpers.h"
 #include "../../include/mpc-hc_config.h"
-#if USE_LIBASS
 #include "SSASub.h"
 #include "SubRendererSettings.h"
-#endif
 #include "OpenTypeLangTags.h"
+#include "STSStyle.h"
 
 enum tmode { TIME, FRAME }; // the meaning of STSEntry::start/end
-
-class STSStyle
-{
-public:
-    enum RelativeTo {
-        WINDOW,
-        VIDEO,
-        AUTO // ~video for SSA/ASS, ~window for the rest
-    };
-
-    CRect      marginRect;             // measured from the sides
-    int        scrAlignment;           // 1 - 9: as on the numpad, 0: default
-    int        borderStyle;            // 0: outline, 1: opaque box
-    double     outlineWidthX, outlineWidthY;
-    double     shadowDepthX, shadowDepthY;
-    std::array<COLORREF, 4> colors;    // usually: {primary, secondary, outline/background, shadow}
-    std::array<BYTE, 4> alpha;
-    int        charSet;
-    CString    fontName;
-    double     fontSize;               // height
-    double     fontScaleX, fontScaleY; // percent
-    double     fontSpacing;            // +/- pixels
-    LONG       fontWeight;
-    int        fItalic;
-    int        fUnderline;
-    int        fStrikeOut;
-    int        fBlur;
-    double     fGaussianBlur;
-    double     fontAngleZ, fontAngleX, fontAngleY;
-    double     fontShiftX, fontShiftY;
-
-    RelativeTo relativeTo;
-
-#if USE_LIBASS
-    // libass stuff
-    DWORD      SrtResX = 1920;
-    DWORD      SrtResY = 1080;
-    bool       Kerning = false;
-    bool       ScaledBorderAndShadow = false;
-    CString    customTags;
-#endif
-
-    STSStyle();
-
-    void SetDefault();
-
-    bool operator == (const STSStyle& s) const;
-    bool operator != (const STSStyle& s) const {
-        return !(*this == s);
-    };
-    bool IsFontStyleEqual(const STSStyle& s) const;
-
-    STSStyle& operator = (LOGFONT& lf);
-
-    friend LOGFONTA& operator <<= (LOGFONTA& lfa, const STSStyle& s);
-    friend LOGFONTW& operator <<= (LOGFONTW& lfw, const STSStyle& s);
-
-    friend CString& operator <<= (CString& style, const STSStyle& s);
-    friend STSStyle& operator <<= (STSStyle& s, const CString& style);
-};
 
 class CSTSStyleMap : public CAtlMap<CString, STSStyle*, CStringElementTraits<CString>>
 {
@@ -245,36 +184,7 @@ public:
 
 public:
     STSStyle m_styleOverride; // the app can decide to use this style instead of a built-in one
-
-#if USE_LIBASS
-public:
-    bool m_renderUsingLibass;
-    OpenTypeLang::HintStr m_openTypeLangHint;
-    SubRendererSettings subRendererSettings;
-    void SetSubRenderSettings(SubRendererSettings settings);
-
-
-
-    bool m_assloaded;
-    bool m_assfontloaded;
-
-    IFilterGraph* m_pGraph;
-    std::unique_ptr<ASS_Library, ASS_LibraryDeleter> m_ass;
-    std::unique_ptr<ASS_Renderer, ASS_RendererDeleter> m_renderer;
-    std::unique_ptr<ASS_Track, ASS_TrackDeleter> m_track;
-
-    void ResetASS();
-    bool LoadASSFile(Subtitle::SubType subType);
-    bool LoadASSTrack(char* data, int size, Subtitle::SubType subType);
-    void UnloadASS();
-    void LoadASSSample(char* data, int dataSize, REFERENCE_TIME tStart, REFERENCE_TIME tStop);
-    void LoadASSFont(IPin* pPin, ASS_Library* ass, ASS_Renderer* renderer);
-    void SetFilterGraph(IFilterGraph* g) { m_pGraph = g; };
-    void SetPin(IPin* i) { m_pPin = i; };
-
-protected:
-    IPin* m_pPin;
-#endif
+    SSAUtil m_SSAUtil;
 };
 
 extern const BYTE CharSetList[];
