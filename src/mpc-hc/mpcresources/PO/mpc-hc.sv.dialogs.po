@@ -1114,7 +1114,11 @@ msgid "Libass Options"
 msgstr ""
 
 msgctxt "IDD_PPAGESUBSTYLE_IDC_CHECK2"
-msgid "Render Subtitles Using libass"
+msgid "Use libass for SSA/ASS"
+msgstr ""
+
+msgctxt "IDD_PPAGESUBSTYLE_IDC_CHECK3"
+msgid "Use libass for SRT"
 msgstr ""
 
 msgctxt "IDD_PPAGEINTERNALFILTERS_IDC_STATIC"
