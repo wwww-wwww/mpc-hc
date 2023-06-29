@@ -126,15 +126,15 @@ HRESULT CSubtitleInputPin::CompleteConnect(IPin* pReceivePin)
         name.Replace(_T(""), _T(""));
         name.Replace(_T(""), _T(""));
 
-        if (m_mt.subtype == MEDIASUBTYPE_UTF8
-                /*|| m_mt.subtype == MEDIASUBTYPE_USF*/
-                || m_mt.subtype == MEDIASUBTYPE_WEBVTT
-                || m_mt.subtype == MEDIASUBTYPE_SSA
-                || m_mt.subtype == MEDIASUBTYPE_ASS
-                || m_mt.subtype == MEDIASUBTYPE_ASS2) {
+        bool subtype_utf8 = m_mt.subtype == MEDIASUBTYPE_UTF8;
+        bool subtype_vtt  = m_mt.subtype == MEDIASUBTYPE_WEBVTT;
+        bool subtype_ass  = m_mt.subtype == MEDIASUBTYPE_SSA || m_mt.subtype == MEDIASUBTYPE_ASS || m_mt.subtype == MEDIASUBTYPE_ASS2;
+
+        if (subtype_utf8 || subtype_ass || subtype_vtt) {
             if (!(m_pSubStream = DEBUG_NEW CRenderedTextSubtitle(m_pSubLock))) {
                 return E_FAIL;
             }
+
             CRenderedTextSubtitle* pRTS = (CRenderedTextSubtitle*)(ISubStream*)m_pSubStream;
             if (pRTS->m_SSAUtil.m_renderUsingLibass) {
                 IFilterGraph* fg = GetGraphFromFilter(m_pFilter);
@@ -148,7 +148,7 @@ HRESULT CSubtitleInputPin::CompleteConnect(IPin* pReceivePin)
             pRTS->m_storageRes = pRTS->m_playRes = CSize(384, 288);
             pRTS->CreateDefaultStyle(DEFAULT_CHARSET);
 
-            if (m_mt.subtype == MEDIASUBTYPE_WEBVTT) {
+            if (subtype_vtt) {
                 pRTS->m_subtitleType = Subtitle::VTT;
             }
 
@@ -166,11 +166,12 @@ HRESULT CSubtitleInputPin::CompleteConnect(IPin* pReceivePin)
                 bool succes = false;
                 if (pRTS->m_SSAUtil.m_renderUsingLibass) {
                     pRTS->m_SSAUtil.SetPin(pReceivePin);
-                    succes = pRTS->m_SSAUtil.LoadASSTrack((char*)m_mt.Format() + psi->dwOffset, m_mt.FormatLength() - psi->dwOffset,
-                        m_mt.subtype == MEDIASUBTYPE_UTF8 ? Subtitle::SRT : Subtitle::ASS);
+                    succes = pRTS->m_SSAUtil.LoadASSTrack((char*)m_mt.Format() + psi->dwOffset, m_mt.FormatLength() - psi->dwOffset, subtype_ass ? Subtitle::ASS : Subtitle::SRT);
                 }
-                if (!succes || !pRTS->m_SSAUtil.m_assloaded)
+                if (!succes || !pRTS->m_SSAUtil.m_assloaded) {
+                    pRTS->m_SSAUtil.m_renderUsingLibass = false;
                     succes = pRTS->Open(mt.pbFormat + dwOffset, mt.cbFormat - dwOffset, DEFAULT_CHARSET, pRTS->m_name);
+                }
                 ASSERT(succes);
             }
         } else if (m_mt.subtype == MEDIASUBTYPE_VOBSUB) {
