@@ -107,6 +107,7 @@ public:
 
     bool m_assloaded;
     bool m_assfontloaded;
+    std::string m_trackData;
 
     IFilterGraph* m_pGraph;
     std::unique_ptr<ASS_Library, ASS_LibraryDeleter> m_ass;
@@ -119,6 +120,7 @@ public:
     bool LoadASSTrack(char* data, int size, Subtitle::SubType subType);
     void Unload();
     void LoadASSSample(char* data, int dataSize, REFERENCE_TIME tStart, REFERENCE_TIME tStop);
+    void LoadTrackData(ASS_Track* track, char* data, int size);
     void DefaultStyleChanged();
     void LoadDefStyle();
     void LoadASSFont();

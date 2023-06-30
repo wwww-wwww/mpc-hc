@@ -543,4 +543,5 @@ public:
     STDMETHODIMP SetStream(int iStream);
     STDMETHODIMP Reload();
     STDMETHODIMP SetSourceTargetInfo(CString yuvMatrix, int targetBlackLevel, int targetWhiteLevel);
+    void SetSubtitleTypeFromGUID(GUID subtype);
 };

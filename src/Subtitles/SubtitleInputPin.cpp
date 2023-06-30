@@ -29,6 +29,7 @@
 #include <uuids.h>
 #include "moreuuids.h"
 #include "../DSUtil/ISOLang.h"
+#include "../mpc-hc/mplayerc.h"
 
 // our first format id
 #define __GAB1__ "GAB1"
@@ -136,6 +137,8 @@ HRESULT CSubtitleInputPin::CompleteConnect(IPin* pReceivePin)
             }
 
             CRenderedTextSubtitle* pRTS = (CRenderedTextSubtitle*)(ISubStream*)m_pSubStream;
+            pRTS->SetSubtitleTypeFromGUID(m_mt.subtype);
+            pRTS->m_SSAUtil.SetSubRenderSettings(AfxGetAppSettings().GetSubRendererSettings());
             if (pRTS->m_SSAUtil.m_renderUsingLibass) {
                 IFilterGraph* fg = GetGraphFromFilter(m_pFilter);
                 pRTS->m_SSAUtil.SetFilterGraph(fg);
@@ -148,10 +151,6 @@ HRESULT CSubtitleInputPin::CompleteConnect(IPin* pReceivePin)
             pRTS->m_storageRes = pRTS->m_playRes = CSize(384, 288);
             pRTS->CreateDefaultStyle(DEFAULT_CHARSET);
 
-            if (subtype_vtt) {
-                pRTS->m_subtitleType = Subtitle::VTT;
-            }
-
             if (dwOffset > 0 && m_mt.cbFormat - dwOffset > 0) {
                 CMediaType mt = m_mt;
                 if (mt.pbFormat[dwOffset + 0] != 0xef
@@ -163,16 +162,16 @@ HRESULT CSubtitleInputPin::CompleteConnect(IPin* pReceivePin)
                     mt.pbFormat[dwOffset + 2] = 0xbf;
                 }
 
-                bool succes = false;
+                bool success = false;
                 if (pRTS->m_SSAUtil.m_renderUsingLibass) {
                     pRTS->m_SSAUtil.SetPin(pReceivePin);
-                    succes = pRTS->m_SSAUtil.LoadASSTrack((char*)m_mt.Format() + psi->dwOffset, m_mt.FormatLength() - psi->dwOffset, subtype_ass ? Subtitle::ASS : Subtitle::SRT);
+                    success = pRTS->m_SSAUtil.LoadASSTrack((char*)m_mt.Format() + psi->dwOffset, m_mt.FormatLength() - psi->dwOffset, subtype_ass ? Subtitle::ASS : Subtitle::SRT);
                 }
-                if (!succes || !pRTS->m_SSAUtil.m_assloaded) {
+                if (!success || !pRTS->m_SSAUtil.m_assloaded) {
                     pRTS->m_SSAUtil.m_renderUsingLibass = false;
-                    succes = pRTS->Open(mt.pbFormat + dwOffset, mt.cbFormat - dwOffset, DEFAULT_CHARSET, pRTS->m_name);
+                    success = pRTS->Open(mt.pbFormat + dwOffset, mt.cbFormat - dwOffset, DEFAULT_CHARSET, pRTS->m_name);
                 }
-                ASSERT(succes);
+                ASSERT(success);
             }
         } else if (m_mt.subtype == MEDIASUBTYPE_VOBSUB) {
             if (!(m_pSubStream = DEBUG_NEW CVobSubStream(m_pSubLock))) {

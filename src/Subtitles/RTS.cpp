@@ -26,6 +26,7 @@
 #include "RTS.h"
 #include "../DSUtil/PathUtils.h"
 #include "../filters/renderer/VideoRenderers/RenderersSettings.h"
+#include "moreuuids.h"
 
 #define MAXGDIFONTSIZE 36000
 
@@ -3579,4 +3580,16 @@ STDMETHODIMP CRenderedTextSubtitle::SetSourceTargetInfo(CString yuvVideoMatrix, 
     ColorConvTable::SetDefaultConvType(video_matrix, video_range, (targetWhiteLevel < 245), bCorrect601to709);
 
     return S_OK;
+}
+
+void CRenderedTextSubtitle::SetSubtitleTypeFromGUID(GUID subtype) {
+    if (subtype== MEDIASUBTYPE_UTF8) {
+        m_subtitleType = Subtitle::SRT;
+    } else if (subtype == MEDIASUBTYPE_SSA) {
+        m_subtitleType = Subtitle::SSA;
+    } else if (subtype == MEDIASUBTYPE_ASS || subtype == MEDIASUBTYPE_ASS2) {
+        m_subtitleType = Subtitle::ASS;
+    } else if (subtype == MEDIASUBTYPE_WEBVTT) {
+        m_subtitleType = Subtitle::VTT;
+    }
 }

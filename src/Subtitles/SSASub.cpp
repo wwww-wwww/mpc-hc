@@ -521,11 +521,19 @@ void SSAUtil::SetSubRenderSettings(SubRendererSettings settings) {
     }
 }
 
+void SSAUtil::DefaultStyleChanged() {
+    LoadDefStyle();
+    ResetASS();
+}
+
+
 void SSAUtil::ResetASS() {
     if (subRendererSettings.LibassEnabled(m_STS)) { 
         m_renderUsingLibass = true;
         if (!m_STS->m_path.IsEmpty()) {
             LoadASSFile(m_STS->m_subtitleType);
+        } else if (!m_trackData.empty()) {
+            LoadASSTrack((char*)m_trackData.c_str(), m_trackData.length(), m_STS->m_subtitleType);
         }
     } else {
         if (m_assloaded) {
@@ -536,7 +544,7 @@ void SSAUtil::ResetASS() {
 }
 
 bool SSAUtil::LoadASSFile(Subtitle::SubType subType) {
-    if (m_STS->m_path.IsEmpty() || !PathUtils::Exists(m_STS->m_path) ) return false;
+    if (m_STS->m_path.IsEmpty() || !PathUtils::Exists(m_STS->m_path)) return false;
     Unload();
 
     m_assfontloaded = false;
@@ -564,7 +572,7 @@ bool SSAUtil::LoadASSFile(Subtitle::SubType subType) {
     if (!m_track) return false;
 
     CT2CA tmpFontName(defStyle.fontName);
-    ass_set_fonts(m_renderer.get(), NULL, std::string(tmpFontName).c_str(), ASS_FONTPROVIDER_DIRECTWRITE, NULL, 0);
+    ass_set_fonts(m_renderer.get(), NULL, std::string(tmpFontName).c_str(), ASS_FONTPROVIDER_AUTODETECT, NULL, 0);
 
     m_assloaded = true;
     m_assfontloaded = true;
@@ -587,10 +595,10 @@ bool SSAUtil::LoadASSTrack(char* data, int size, Subtitle::SubType subType) {
         srtData.write(data, size);
         srt_read_data(m_ass.get(), m_track.get(), srtData, defStyle.charSet, defStyle, subRendererSettings);
     } else { //subType == Subtitle::SSA/ASS
-        ass_process_codec_private(m_track.get(), data, size);
+        LoadTrackData(m_track.get(), data, size);
     }
     CT2CA tmpFontName(defStyle.fontName);
-    ass_set_fonts(m_renderer.get(), NULL, std::string(tmpFontName).c_str(), ASS_FONTPROVIDER_DIRECTWRITE, NULL, 0);
+    ass_set_fonts(m_renderer.get(), NULL, std::string(tmpFontName).c_str(), ASS_FONTPROVIDER_AUTODETECT, NULL, 0);
     //don't set m_assfontloaded here, in case we can load embedded fonts later?
 
     m_assloaded = true;
@@ -622,7 +630,7 @@ void SSAUtil::LoadASSFont() {
         }
         m_assfontloaded = true;
         CT2CA tmpFontName(defStyle.fontName);
-        ass_set_fonts(renderer, NULL, std::string(tmpFontName).c_str(), ASS_FONTPROVIDER_DIRECTWRITE, NULL, 0);
+        ass_set_fonts(renderer, NULL, std::string(tmpFontName).c_str(), ASS_FONTPROVIDER_AUTODETECT, NULL, 0);
     }
 }
 
@@ -711,7 +719,10 @@ void SSAUtil::Unload() {
     m_assloaded = false;
     if (m_track) m_track.reset();
     if (m_renderer) m_renderer.reset();
-    if (m_ass) m_ass.reset();
+    if (m_ass) {
+        ass_clear_fonts(m_ass.get());
+        m_ass.reset();
+    }
 }
 
 void SSAUtil::LoadASSSample(char *data, int dataSize, REFERENCE_TIME tStart, REFERENCE_TIME tStop) {
@@ -727,7 +738,7 @@ void SSAUtil::LoadASSSample(char *data, int dataSize, REFERENCE_TIME tStart, REF
 
                 char outBuffer[1024];
                 srt_header(outBuffer, defStyle, subRendererSettings);
-                ass_process_codec_private(m_track.get(), outBuffer, static_cast<int>(strnlen_s(outBuffer, sizeof(outBuffer))));
+                LoadTrackData(m_track.get(), outBuffer, static_cast<int>(strnlen_s(outBuffer, sizeof(outBuffer))));
                 m_assloaded = true;
             }
 
@@ -762,19 +773,13 @@ void SSAUtil::LoadASSSample(char *data, int dataSize, REFERENCE_TIME tStart, REF
     }
 }
 
+void SSAUtil::LoadTrackData(ASS_Track* track, char* data, int size) {
+    m_trackData = data;
+    ass_process_codec_private(m_track.get(), data, size);
+}
+
 void SSAUtil::LoadDefStyle() {
     if (m_STS) {
         m_STS->GetDefaultStyle(defStyle);
-    }
-}
-
-void SSAUtil::DefaultStyleChanged() {
-    Unload();
-    LoadDefStyle();
-    if (subRendererSettings.LibassEnabled(m_STS)) { //styles may change the way the libass file was loaded, so we reload it here
-        m_renderUsingLibass = true;
-        LoadASSFile(m_STS->m_subtitleType);
-    } else {
-        m_renderUsingLibass = false;
     }
 }
