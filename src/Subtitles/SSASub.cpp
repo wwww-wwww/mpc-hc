@@ -543,13 +543,19 @@ void SSAUtil::ResetASS() {
     }
 }
 
+void SSAUtil::InitLibASS() {
+    Unload();
+    m_assfontloaded = false;
+    m_ass = decltype(m_ass)(ass_library_init());
+    ass_set_fonts_dir(m_ass.get(), NULL); //initialize it or we get free() errors in debug mode
+    m_renderer = decltype(m_renderer)(ass_renderer_init(m_ass.get()));
+    m_track = decltype(m_track)(ass_new_track(m_ass.get()));
+}
+
 bool SSAUtil::LoadASSFile(Subtitle::SubType subType) {
     if (m_STS->m_path.IsEmpty() || !PathUtils::Exists(m_STS->m_path)) return false;
-    Unload();
 
-    m_assfontloaded = false;
-
-    m_ass = decltype(m_ass)(ass_library_init());
+    InitLibASS();
     ass_set_extract_fonts(m_ass.get(), true);
     ass_set_style_overrides(m_ass.get(), NULL);
 
@@ -581,12 +587,7 @@ bool SSAUtil::LoadASSFile(Subtitle::SubType subType) {
 }
 
 bool SSAUtil::LoadASSTrack(char* data, int size, Subtitle::SubType subType) {
-    Unload();
-    m_assfontloaded = false;
-
-    m_ass = decltype(m_ass)(ass_library_init());
-    m_renderer = decltype(m_renderer)(ass_renderer_init(m_ass.get()));
-    m_track = decltype(m_track)(ass_new_track(m_ass.get()));
+    InitLibASS();
 
     if (!m_track) return false;
 
@@ -720,7 +721,6 @@ void SSAUtil::Unload() {
     if (m_track) m_track.reset();
     if (m_renderer) m_renderer.reset();
     if (m_ass) {
-        ass_clear_fonts(m_ass.get());
         m_ass.reset();
     }
 }
@@ -729,12 +729,7 @@ void SSAUtil::LoadASSSample(char *data, int dataSize, REFERENCE_TIME tStart, REF
     if (m_renderUsingLibass) {
         if (m_STS->m_subtitleType == Subtitle::SRT) { //received SRT sample, try to use libass to handle
             if (!m_assloaded) { //create ass header
-                Unload();
-                m_assfontloaded = false;
-
-                m_ass = decltype(m_ass)(ass_library_init());
-                m_renderer = decltype(m_renderer)(ass_renderer_init(m_ass.get()));
-                m_track = decltype(m_track)(ass_new_track(m_ass.get()));
+                InitLibASS();
 
                 char outBuffer[1024];
                 srt_header(outBuffer, defStyle, subRendererSettings);
