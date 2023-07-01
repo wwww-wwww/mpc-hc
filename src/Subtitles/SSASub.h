@@ -116,6 +116,7 @@ public:
     STSStyle defStyle;
 
     void ResetASS();
+    void InitLibASS();
     bool LoadASSFile(Subtitle::SubType subType);
     bool LoadASSTrack(char* data, int size, Subtitle::SubType subType);
     void Unload();
