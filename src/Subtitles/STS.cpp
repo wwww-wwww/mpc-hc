@@ -2310,7 +2310,9 @@ CSimpleTextSubtitle::CSimpleTextSubtitle()
     , m_bUsingPlayerDefaultStyle(false)
     , m_ePARCompensationType(EPCTDisabled)
     , m_dPARCompensation(1.0)
+#if USE_LIBASS
     , m_SSAUtil(this)
+#endif
 {
 }
 
@@ -2354,10 +2356,11 @@ void CSimpleTextSubtitle::Copy(CSimpleTextSubtitle& sts)
         CopyStyles(sts.m_styles);
         m_segments.Copy(sts.m_segments);
         __super::Copy(sts);
-
+#if USE_LIBASS
         if (m_SSAUtil.m_assloaded) {
             m_SSAUtil.LoadASSFile(m_subtitleType);
         }
+#endif
     }
 }
 
@@ -2686,7 +2689,9 @@ bool CSimpleTextSubtitle::SetDefaultStyle(const STSStyle& s)
         m_styles[L"Default"] = val;
         m_bUsingPlayerDefaultStyle = true;
     }
+#if USE_LIBASS
     m_SSAUtil.DefaultStyleChanged();
+#endif
     return true;
 }
 
@@ -3231,6 +3236,7 @@ bool CSimpleTextSubtitle::Open(CTextFile* f, int CharSet, CString name) {
         m_mode = mode;
     };
 
+#if USE_LIBASS
     if (m_SSAUtil.m_renderUsingLibass) {
         if (lstrcmpi(PathFindExtensionW(f->GetFilePath()), L".ass") == 0 || lstrcmpi(PathFindExtensionW(f->GetFilePath()), L".ssa") == 0) {
             CreateDefaultStyle(CharSet);
@@ -3256,6 +3262,7 @@ bool CSimpleTextSubtitle::Open(CTextFile* f, int CharSet, CString name) {
             Empty();
         }
     }
+#endif
 
     ULONGLONG pos = f->GetPosition();
 

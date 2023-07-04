@@ -1834,7 +1834,9 @@ void CRenderedTextSubtitle::SetOverride(bool bOverride, const STSStyle& styleOve
         if (bOverride) {
             m_storageRes = m_playRes; // needed to get correct font scaling with default style
         }
+#if USE_LIBASS
         m_SSAUtil.ResetASS(); //styles may change the way the libass file was loaded, so we reload it here
+#endif
     }
 }
 
@@ -3186,10 +3188,12 @@ STDMETHODIMP CRenderedTextSubtitle::Render(SubPicDesc& spd, REFERENCE_TIME rt, d
         return S_FALSE;
     }
 
+#if USE_LIBASS
     HRESULT libassResult = m_SSAUtil.Render(rt, spd, bbox, m_size, m_vidrect);
     if (libassResult != E_POINTER) { //libass not initialized
         return libassResult;
     }
+#endif
 
     Init(CSize(spd.w, spd.h), spd.vidrect);
 

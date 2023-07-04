@@ -184,7 +184,9 @@ public:
 
 public:
     STSStyle m_styleOverride; // the app can decide to use this style instead of a built-in one
+#if USE_LIBASS
     SSAUtil m_SSAUtil;
+#endif
 };
 
 extern const BYTE CharSetList[];

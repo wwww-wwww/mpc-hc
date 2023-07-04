@@ -16407,10 +16407,14 @@ bool CMainFrame::LoadSubtitle(CString fn, SubtitleInput* pSubInput /*= nullptr*/
     if (!pSubStream && ext != _T(".idx") && ext != _T(".sup")) {
         CAutoPtr<CRenderedTextSubtitle> pRTS(DEBUG_NEW CRenderedTextSubtitle(&m_csSubLock));
         if (pRTS) {
+#if USE_LIBASS
             SubRendererSettings srs = AfxGetAppSettings().GetSubRendererSettings();
             pRTS->m_SSAUtil.SetSubRenderSettings(srs);
+#endif
             if (pRTS->Open(fn, DEFAULT_CHARSET, _T(""), videoName) && pRTS->GetStreamCount() > 0) {
+#if USE_LIBASS
                 pRTS->m_SSAUtil.SetFilterGraph(m_pGB);
+#endif
                 pSubStream = pRTS.Detach();
             }
         }
@@ -16507,8 +16511,10 @@ bool CMainFrame::LoadSubtitle(CYoutubeDLInstance::YDLSubInfo& sub) {
 
     CAutoPtr<CRenderedTextSubtitle> pRTS(DEBUG_NEW CRenderedTextSubtitle(&m_csSubLock));
     if (pRTS) {
+#if USE_LIBASS
         SubRendererSettings srs = AfxGetAppSettings().GetSubRendererSettings();
         pRTS->m_SSAUtil.SetSubRenderSettings(srs);
+#endif
         bool opened = false;
         if (!sub.url.IsEmpty()) {
             SubtitlesProvidersUtils::stringMap strmap{};
@@ -16539,7 +16545,9 @@ bool CMainFrame::LoadSubtitle(CYoutubeDLInstance::YDLSubInfo& sub) {
             opened = pRTS->Open(sub.data, CTextFile::enc::UTF8, DEFAULT_CHARSET, _T("YoutubeDL"), langt, sub.ext);  // Do not modify charset, Now it wroks with Unicode char.
         }
         if (opened && pRTS->GetStreamCount() > 0) {
+#if USE_LIBASS
             pRTS->m_SSAUtil.SetFilterGraph(m_pGB);
+#endif
             pSubStream = pRTS.Detach();
         }
     }
@@ -20378,14 +20386,18 @@ LRESULT CMainFrame::OnLoadSubtitles(WPARAM wParam, LPARAM lParam)
 
     CAutoPtr<CRenderedTextSubtitle> pRTS(DEBUG_NEW CRenderedTextSubtitle(&m_csSubLock));
     if (pRTS) {
+#if USE_LIBASS
         SubRendererSettings srs = AfxGetAppSettings().GetSubRendererSettings();
         pRTS->m_SSAUtil.SetSubRenderSettings(srs);
+#endif
         if (pRTS->Open(CString(data.pSubtitlesInfo->Provider()->Name().c_str()),
             (BYTE*)(LPCSTR)data.fileContents.c_str(), (int)data.fileContents.length(), DEFAULT_CHARSET,
             UTF8To16(data.fileName.c_str()), Subtitle::HearingImpairedType(data.pSubtitlesInfo->hearingImpaired),
             ISOLang::ISO6391ToLcid(data.pSubtitlesInfo->languageCode.c_str())) && pRTS->GetStreamCount() > 0) {
             m_wndSubtitlesDownloadDialog.DoDownloaded(*data.pSubtitlesInfo);
+#if USE_LIBASS
             pRTS->m_SSAUtil.SetFilterGraph(m_pGB);
+#endif
             SubtitleInput subElement = pRTS.Detach();
             m_pSubStreams.AddTail(subElement);
             if (data.bActivate) {

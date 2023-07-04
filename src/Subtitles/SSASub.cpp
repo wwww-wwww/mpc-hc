@@ -2,6 +2,7 @@
 #include "stdafx.h"
 #include "../../include/mpc-hc_config.h"
 
+#if USE_LIBASS
 #pragma comment( lib, "libass" )
 #include <ios>
 #include <algorithm>
@@ -786,3 +787,5 @@ void SSAUtil::LoadDefStyle() {
         m_STS->GetDefaultStyle(defStyle);
     }
 }
+
+#endif // USE_LIBASS

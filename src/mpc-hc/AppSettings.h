@@ -759,8 +759,10 @@ public:
     CString         strAutoDownloadSubtitlesExclude;
     bool            bAutoUploadSubtitles;
     bool            bPreferHearingImpairedSubtitles;
+#if USE_LIBASS
     bool            bRenderSSAUsingLibass;
     bool            bRenderSRTUsingLibass;
+#endif
     bool            bMPCTheme;
     bool            bWindows10DarkThemeActive;
     bool            bWindows10AccentColorsEnabled;

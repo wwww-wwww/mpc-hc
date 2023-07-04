@@ -63,8 +63,10 @@ private:
     std::array<CMPCThemeSliderCtrl, 4> m_alphaSliders;
     BOOL m_bLinkAlphaSliders;
     int m_iRelativeTo;
+#if USE_LIBASS
     int iRenderSSAUsingLibass;
     int iRenderSRTUsingLibass;
+#endif
 
     void AskColor(int i);
 

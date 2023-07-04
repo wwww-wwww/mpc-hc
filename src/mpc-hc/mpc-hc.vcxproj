@@ -311,6 +311,7 @@
     <ClCompile Include="YoutubeDL.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\include\mpc-hc_config.h" />
     <ClInclude Include="..\thirdparty\MessageBoxDialog\MessageBoxDialog.h" />
     <ClInclude Include="..\thirdparty\XeScrollBar\xescrollbarbase.h" />
     <ClInclude Include="AboutDlg.h" />

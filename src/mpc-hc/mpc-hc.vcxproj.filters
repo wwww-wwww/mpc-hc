@@ -1139,6 +1139,7 @@
     <ClInclude Include="MouseWndWithArtView.h">
       <Filter>Main View</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\mpc-hc_config.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\ani.avi">

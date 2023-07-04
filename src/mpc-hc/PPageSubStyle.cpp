@@ -43,8 +43,10 @@ CPPageSubStyle::CPPageSubStyle()
     , m_margin(0, 0, 0, 0)
     , m_bLinkAlphaSliders(FALSE)
     , m_iRelativeTo(0)
+#if USE_LIBASS
     , iRenderSRTUsingLibass(false)
     , iRenderSSAUsingLibass(false)
+#endif
 {
 }
 
@@ -113,8 +115,10 @@ void CPPageSubStyle::DoDataExchange(CDataExchange* pDX)
     DDX_Control(pDX, IDC_SLIDER4, m_alphaSliders[3]);
     DDX_Check(pDX, IDC_CHECK1, m_bLinkAlphaSliders);
     DDX_Check(pDX, IDC_CHECK_RELATIVETO, m_iRelativeTo);
+#if USE_LIBASS
     DDX_Check(pDX, IDC_CHECK2, iRenderSSAUsingLibass);
     DDX_Check(pDX, IDC_CHECK3, iRenderSRTUsingLibass);
+#endif
 }
 
 
@@ -166,8 +170,15 @@ BOOL CPPageSubStyle::OnInitDialog()
         }
     }
 
+#if USE_LIBASS
     iRenderSSAUsingLibass = subRenderSettings.renderSSAUsingLibass;
     iRenderSRTUsingLibass = subRenderSettings.renderSRTUsingLibass;
+#else
+    GetDlgItem(IDC_STATIC_LIBASS)->ShowWindow(false);
+    GetDlgItem(IDC_CHECK2)->ShowWindow(false);
+    GetDlgItem(IDC_CHECK3)->ShowWindow(false);
+#endif
+
     // TODO: allow floats in these edit boxes
     m_spacing.SetRange(-100.0f, 100.0f);
     m_spacing = m_stss.fontSpacing;
@@ -227,8 +238,10 @@ BOOL CPPageSubStyle::OnApply()
         s.strOpenTypeLangHint = OpenTypeLang::OpenTypeLangTags[i].lang;
     }
 
+#if USE_LIBASS
     s.bRenderSSAUsingLibass = iRenderSSAUsingLibass;
     s.bRenderSRTUsingLibass = iRenderSRTUsingLibass;
+#endif
     m_stss.fontSpacing = m_spacing;
     m_stss.fontAngleZ = m_angle;
     m_stss.fontScaleX = m_scalex;
