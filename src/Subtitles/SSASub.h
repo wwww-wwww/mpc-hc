@@ -130,9 +130,12 @@ public:
     bool RenderFrame(long long now, SubPicDesc& spd, CRect& rcDirty);
     void SetFilterGraph(IFilterGraph* g) { m_pGraph = g; };
     void SetPin(IPin* i) { m_pPin = i; };
+    void AssFlattenSSE2(ASS_Image* imagee, SubPicDesc& spd, CRect& rcDirty);
     void AssFlatten(ASS_Image* image, SubPicDesc& spd, CRect& rcDirty);
     void SetFrameSize(int w, int h);
 protected:
     CSimpleTextSubtitle* m_STS;
     IPin* m_pPin;
+    std::unique_ptr<uint32_t[]> m_pixels;
+    CRect lastDirty;
 };
