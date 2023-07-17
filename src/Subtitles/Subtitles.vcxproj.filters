@@ -74,7 +74,7 @@
     <ClCompile Include="ColorConvTable.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SSASub.cpp">
+    <ClCompile Include="LibassContext.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="OpenTypeLangTags.cpp">
@@ -157,7 +157,7 @@
     <ClInclude Include="ColorConvTable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SSASub.h">
+    <ClInclude Include="LibassContext.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="OpenTypeLangTags.h">

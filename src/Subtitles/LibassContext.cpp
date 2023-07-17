@@ -9,7 +9,7 @@
 #include <fstream>
 #include <codecvt>
 #include <Shlwapi.h>
-#include "SSASub.h"
+#include "LibassContext.h"
 #include "STS.h"
 #include "Utf8.h"
 #include "../DSUtil/PathUtils.h"
@@ -495,7 +495,7 @@ namespace {
 }
 
 
-SSAUtil::SSAUtil(CSimpleTextSubtitle* sts)
+LibassContext::LibassContext(CSimpleTextSubtitle* sts)
     : m_STS(sts)
     , m_renderUsingLibass(false)
     , m_openTypeLangHint()
@@ -506,15 +506,17 @@ SSAUtil::SSAUtil(CSimpleTextSubtitle* sts)
     , m_ass(nullptr)
     , m_renderer(nullptr)
     , m_track(nullptr)
+    , rtCurrent(0)
+    , curTimeInitialized(false)
 {
     LoadDefStyle();
 }
 
-SSAUtil::~SSAUtil() {
+LibassContext::~LibassContext() {
     Unload();
 }
 
-void SSAUtil::SetSubRenderSettings(SubRendererSettings settings) {
+void LibassContext::SetSubRenderSettings(SubRendererSettings settings) {
     bool wasUsingLibass = subRendererSettings.LibassEnabled(m_STS);
     subRendererSettings = settings;
     if (settings.LibassEnabled(m_STS) || wasUsingLibass) {
@@ -522,13 +524,13 @@ void SSAUtil::SetSubRenderSettings(SubRendererSettings settings) {
     }
 }
 
-void SSAUtil::DefaultStyleChanged() {
+void LibassContext::DefaultStyleChanged() {
     LoadDefStyle();
     ResetASS();
 }
 
 
-void SSAUtil::ResetASS() {
+void LibassContext::ResetASS() {
     if (subRendererSettings.LibassEnabled(m_STS)) { 
         m_renderUsingLibass = true;
         if (!m_STS->m_path.IsEmpty()) {
@@ -544,7 +546,7 @@ void SSAUtil::ResetASS() {
     }
 }
 
-void SSAUtil::InitLibASS() {
+void LibassContext::InitLibASS() {
     Unload();
     m_assfontloaded = false;
     m_ass = decltype(m_ass)(ass_library_init());
@@ -553,7 +555,7 @@ void SSAUtil::InitLibASS() {
     m_track = decltype(m_track)(ass_new_track(m_ass.get()));
 }
 
-bool SSAUtil::LoadASSFile(Subtitle::SubType subType) {
+bool LibassContext::LoadASSFile(Subtitle::SubType subType) {
     if (m_STS->m_path.IsEmpty() || !PathUtils::Exists(m_STS->m_path)) return false;
 
     InitLibASS();
@@ -587,7 +589,7 @@ bool SSAUtil::LoadASSFile(Subtitle::SubType subType) {
     return true;
 }
 
-bool SSAUtil::LoadASSTrack(char* data, int size, Subtitle::SubType subType) {
+bool LibassContext::LoadASSTrack(char* data, int size, Subtitle::SubType subType) {
     InitLibASS();
 
     if (!m_track) return false;
@@ -607,7 +609,7 @@ bool SSAUtil::LoadASSTrack(char* data, int size, Subtitle::SubType subType) {
     return true;
 }
 
-void SSAUtil::LoadASSFont() {
+void LibassContext::LoadASSFont() {
     if (m_assfontloaded || !m_pPin) return;
     ASS_Library* ass = m_ass.get();
     ASS_Renderer* renderer = m_renderer.get();
@@ -636,7 +638,7 @@ void SSAUtil::LoadASSFont() {
     }
 }
 
-CRect SSAUtil::GetSPDRect(SubPicDesc& spd) {
+CRect LibassContext::GetSPDRect(SubPicDesc& spd) {
     CRect spdRect;
     if (m_STS->m_subtitleType == Subtitle::SubType::SRT && defStyle.relativeTo != STSStyle::VIDEO
         || defStyle.relativeTo == STSStyle::WINDOW) {
@@ -647,7 +649,27 @@ CRect SSAUtil::GetSPDRect(SubPicDesc& spd) {
     return spdRect;
 }
 
-STDMETHODIMP SSAUtil::Render(REFERENCE_TIME rt, SubPicDesc& spd, RECT& bbox, CSize& size, CRect& vidRect) {
+POSITION LibassContext::GetStartPosition(REFERENCE_TIME rt, double fps) {
+    if (m_assloaded) {
+        rtCurrent = rt;
+        curTimeInitialized = true;
+        return (POSITION)1;
+    }
+    return (POSITION)0;
+}
+
+POSITION LibassContext::GetNext(POSITION pos) {
+    return (POSITION)0;
+}
+
+REFERENCE_TIME LibassContext::GetCurrent(POSITION pos) {
+    if (m_assloaded && curTimeInitialized) {
+        return rtCurrent;
+    }
+    return 0;
+}
+
+STDMETHODIMP LibassContext::Render(REFERENCE_TIME rt, SubPicDesc& spd, RECT& bbox, CSize& size, CRect& vidRect) {
     if (m_assloaded) {
         if (spd.bpp != 32) {
             ASSERT(FALSE);
@@ -689,7 +711,7 @@ void AlphaBlendToInverted(const BYTE* src, int w, int h, int pitch, BYTE* dst, i
     }
 }
 
-bool SSAUtil::RenderFrame(long long now, SubPicDesc& spd, CRect& rcDirty) {
+bool LibassContext::RenderFrame(long long now, SubPicDesc& spd, CRect& rcDirty) {
     int changed = 1;
     ASS_Image* image = ass_render_frame(m_renderer.get(), m_track.get(), now, &changed);
     if (!image) return false;
@@ -827,7 +849,7 @@ static __forceinline void packed_pix_mix_sse2(BYTE* dst, const BYTE* alpha, int 
     }
 }
 
-void SSAUtil::AssFlattenSSE2(ASS_Image* image, SubPicDesc& spd, CRect& rcDirty) {
+void LibassContext::AssFlattenSSE2(ASS_Image* image, SubPicDesc& spd, CRect& rcDirty) {
     if (image) {
         CRect pRect;
         for (auto i = image; i != nullptr; i = i->next) {
@@ -851,7 +873,7 @@ void SSAUtil::AssFlattenSSE2(ASS_Image* image, SubPicDesc& spd, CRect& rcDirty) 
     }
 }
 
-void SSAUtil::AssFlatten(ASS_Image* image, SubPicDesc& spd, CRect& rcDirty) {
+void LibassContext::AssFlatten(ASS_Image* image, SubPicDesc& spd, CRect& rcDirty) {
     if (image) {
         CRect pRect;
         for (auto i = image; i != nullptr; i = i->next) {
@@ -892,12 +914,14 @@ void SSAUtil::AssFlatten(ASS_Image* image, SubPicDesc& spd, CRect& rcDirty) {
     }
 }
 
-void SSAUtil::SetFrameSize(int w, int h) {
-    ass_set_storage_size(m_renderer.get(), m_STS->m_storageRes.cx, m_STS->m_storageRes.cy);
+void LibassContext::SetFrameSize(int w, int h) {
+    if (m_STS->m_subtitleType != Subtitle::SRT) {
+        ass_set_storage_size(m_renderer.get(), m_STS->m_storageRes.cx, m_STS->m_storageRes.cy);
+    }
     ass_set_frame_size(m_renderer.get(), w, h);
 }
 
-void SSAUtil::Unload() {
+void LibassContext::Unload() {
     m_assloaded = false;
     if (m_track) m_track.reset();
     if (m_renderer) m_renderer.reset();
@@ -906,7 +930,7 @@ void SSAUtil::Unload() {
     }
 }
 
-void SSAUtil::LoadASSSample(char *data, int dataSize, REFERENCE_TIME tStart, REFERENCE_TIME tStop) {
+void LibassContext::LoadASSSample(char *data, int dataSize, REFERENCE_TIME tStart, REFERENCE_TIME tStop) {
     if (m_renderUsingLibass) {
         if (m_STS->m_subtitleType == Subtitle::SRT) { //received SRT sample, try to use libass to handle
             if (!m_assloaded) { //create ass header
@@ -949,12 +973,12 @@ void SSAUtil::LoadASSSample(char *data, int dataSize, REFERENCE_TIME tStart, REF
     }
 }
 
-void SSAUtil::LoadTrackData(ASS_Track* track, char* data, int size) {
+void LibassContext::LoadTrackData(ASS_Track* track, char* data, int size) {
     m_trackData = data;
     ass_process_codec_private(m_track.get(), data, size);
 }
 
-void SSAUtil::LoadDefStyle() {
+void LibassContext::LoadDefStyle() {
     if (m_STS) {
         m_STS->GetDefaultStyle(defStyle);
     }

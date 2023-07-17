@@ -139,10 +139,10 @@ HRESULT CSubtitleInputPin::CompleteConnect(IPin* pReceivePin)
             CRenderedTextSubtitle* pRTS = (CRenderedTextSubtitle*)(ISubStream*)m_pSubStream;
             pRTS->SetSubtitleTypeFromGUID(m_mt.subtype);
 #if USE_LIBASS
-            pRTS->m_SSAUtil.SetSubRenderSettings(AfxGetAppSettings().GetSubRendererSettings());
-            if (pRTS->m_SSAUtil.m_renderUsingLibass) {
+            pRTS->m_LibassContext.SetSubRenderSettings(AfxGetAppSettings().GetSubRendererSettings());
+            if (pRTS->m_LibassContext.m_renderUsingLibass) {
                 IFilterGraph* fg = GetGraphFromFilter(m_pFilter);
-                pRTS->m_SSAUtil.SetFilterGraph(fg);
+                pRTS->m_LibassContext.SetFilterGraph(fg);
             }
 #endif
             pRTS->m_name = name;
@@ -166,14 +166,14 @@ HRESULT CSubtitleInputPin::CompleteConnect(IPin* pReceivePin)
 
                 bool success = false;
 #if USE_LIBASS
-                if (pRTS->m_SSAUtil.m_renderUsingLibass) {
-                    pRTS->m_SSAUtil.SetPin(pReceivePin);
-                    success = pRTS->m_SSAUtil.LoadASSTrack((char*)m_mt.Format() + psi->dwOffset, m_mt.FormatLength() - psi->dwOffset, subtype_ass ? Subtitle::ASS : Subtitle::SRT);
+                if (pRTS->m_LibassContext.m_renderUsingLibass) {
+                    pRTS->m_LibassContext.SetPin(pReceivePin);
+                    success = pRTS->m_LibassContext.LoadASSTrack((char*)m_mt.Format() + psi->dwOffset, m_mt.FormatLength() - psi->dwOffset, subtype_ass ? Subtitle::ASS : Subtitle::SRT);
                 }
 #endif
 #if USE_LIBASS
-                if (!success || !pRTS->m_SSAUtil.m_assloaded) {
-                    pRTS->m_SSAUtil.m_renderUsingLibass = false;
+                if (!success || !pRTS->m_LibassContext.IsLibassActive()) {
+                    pRTS->m_LibassContext.m_renderUsingLibass = false;
 #endif
                     success = pRTS->Open(mt.pbFormat + dwOffset, mt.cbFormat - dwOffset, DEFAULT_CHARSET, pRTS->m_name);
 #if USE_LIBASS
@@ -458,66 +458,65 @@ REFERENCE_TIME CSubtitleInputPin::DecodeSample(const std::unique_ptr<SubtitleSam
     } else if (m_mt.majortype == MEDIATYPE_Subtitle) {
         if (m_mt.subtype == MEDIASUBTYPE_UTF8 || m_mt.subtype == MEDIASUBTYPE_WEBVTT) {
             CRenderedTextSubtitle* pRTS = (CRenderedTextSubtitle*)(ISubStream*)m_pSubStream;
-
-            CStringW str = UTF8To16(CStringA((LPCSTR)pSample->data.data(), (int)pSample->data.size()));
-            FastTrim(str);
-            if (!str.IsEmpty()) {
-                pRTS->Add(str, true, pSample->rtStart, pSample->rtStop);
-                bInvalidate = true;
-                if (pRTS->m_subtitleType == Subtitle::VTT) {
-                    pRTS->m_webvtt_allow_clear = true;
-                }
-            }
 #if USE_LIBASS
-            if (pRTS->m_SSAUtil.m_assloaded) {
+            if (pRTS->m_LibassContext.IsLibassActive()) {
                 LPCSTR data = (LPCSTR)pSample->data.data();
                 int dataSize = (int)pSample->data.size();
                 IFilterGraph* fg = GetGraphFromFilter(m_pFilter);
-                pRTS->m_SSAUtil.SetFilterGraph(fg);
-                pRTS->m_SSAUtil.SetPin(this);
-                pRTS->m_SSAUtil.LoadASSSample((char*)data, dataSize, pSample->rtStart, pSample->rtStop);
-            }
+                pRTS->m_LibassContext.SetFilterGraph(fg);
+                pRTS->m_LibassContext.SetPin(this);
+                pRTS->m_LibassContext.LoadASSSample((char*)data, dataSize, pSample->rtStart, pSample->rtStop);
+            } else
 #endif
+            {
+                CStringW str = UTF8To16(CStringA((LPCSTR)pSample->data.data(), (int)pSample->data.size()));
+                FastTrim(str);
+                if (!str.IsEmpty()) {
+                    pRTS->Add(str, true, pSample->rtStart, pSample->rtStop);
+                    bInvalidate = true;
+                    if (pRTS->m_subtitleType == Subtitle::VTT) {
+                        pRTS->m_webvtt_allow_clear = true;
+                    }
+                }
+            }
         } else if (m_mt.subtype == MEDIASUBTYPE_SSA || m_mt.subtype == MEDIASUBTYPE_ASS || m_mt.subtype == MEDIASUBTYPE_ASS2) {
             CRenderedTextSubtitle* pRTS = (CRenderedTextSubtitle*)(ISubStream*)m_pSubStream;
-
-            CStringW str = UTF8To16(CStringA((LPCSTR)pSample->data.data(), (int)pSample->data.size()));
-            FastTrim(str);
-            if (!str.IsEmpty()) {
-                STSEntry stse;
-
-                int fields = m_mt.subtype == MEDIASUBTYPE_ASS2 ? 10 : 9;
-
-                CAtlList<CStringW> sl;
-                ExplodeNoTrim(str, sl, ',', fields);
-                if (sl.GetCount() == (size_t)fields) {
-                    stse.readorder = wcstol(sl.RemoveHead(), nullptr, 10);
-                    stse.layer = wcstol(sl.RemoveHead(), nullptr, 10);
-                    stse.style = sl.RemoveHead(); // no trim, its value is a lookup key
-                    stse.actor = sl.RemoveHead().Trim();
-                    stse.marginRect.left = wcstol(sl.RemoveHead(), nullptr, 10);
-                    stse.marginRect.right = wcstol(sl.RemoveHead(), nullptr, 10);
-                    stse.marginRect.top = stse.marginRect.bottom = wcstol(sl.RemoveHead(), nullptr, 10);
-                    if (fields == 10) {
-                        stse.marginRect.bottom = wcstol(sl.RemoveHead(), nullptr, 10);
-                    }
-                    stse.effect = sl.RemoveHead().Trim();
-                    stse.str = sl.RemoveHead().Trim();
-                }
-
-                if (!stse.str.IsEmpty()) {
-                    pRTS->Add(stse.str, true, pSample->rtStart, pSample->rtStop,
-                        stse.style, stse.actor, stse.effect, stse.marginRect, stse.layer, stse.readorder);
-                    bInvalidate = true;
-                }
-
 #if USE_LIBASS
-                if (pRTS->m_SSAUtil.m_assloaded) {
-                    // FIXME: The code above from ISR native subtitle parser is required because the subtitle data is needed in LookupSubPic()
-                    // Improve LookupSubPic so that it does not need this info or gets it from libass instead? 
-                    ass_process_chunk(pRTS->m_SSAUtil.m_track.get(), (char*)pSample->data.data(), (int)pSample->data.size(), pSample->rtStart / 10000, (pSample->rtStop - pSample->rtStart) / 10000);
-                }
+            if (pRTS->m_LibassContext.IsLibassActive()) {
+                ass_process_chunk(pRTS->m_LibassContext.m_track.get(), (char*)pSample->data.data(), (int)pSample->data.size(), pSample->rtStart / 10000, (pSample->rtStop - pSample->rtStart) / 10000);
+            } else
 #endif
+            {
+                CStringW str = UTF8To16(CStringA((LPCSTR)pSample->data.data(), (int)pSample->data.size()));
+                FastTrim(str);
+                if (!str.IsEmpty()) {
+                    STSEntry stse;
+
+                    int fields = m_mt.subtype == MEDIASUBTYPE_ASS2 ? 10 : 9;
+
+                    CAtlList<CStringW> sl;
+                    ExplodeNoTrim(str, sl, ',', fields);
+                    if (sl.GetCount() == (size_t)fields) {
+                        stse.readorder = wcstol(sl.RemoveHead(), nullptr, 10);
+                        stse.layer = wcstol(sl.RemoveHead(), nullptr, 10);
+                        stse.style = sl.RemoveHead(); // no trim, its value is a lookup key
+                        stse.actor = sl.RemoveHead().Trim();
+                        stse.marginRect.left = wcstol(sl.RemoveHead(), nullptr, 10);
+                        stse.marginRect.right = wcstol(sl.RemoveHead(), nullptr, 10);
+                        stse.marginRect.top = stse.marginRect.bottom = wcstol(sl.RemoveHead(), nullptr, 10);
+                        if (fields == 10) {
+                            stse.marginRect.bottom = wcstol(sl.RemoveHead(), nullptr, 10);
+                        }
+                        stse.effect = sl.RemoveHead().Trim();
+                        stse.str = sl.RemoveHead().Trim();
+                    }
+
+                    if (!stse.str.IsEmpty()) {
+                        pRTS->Add(stse.str, true, pSample->rtStart, pSample->rtStop,
+                            stse.style, stse.actor, stse.effect, stse.marginRect, stse.layer, stse.readorder);
+                        bInvalidate = true;
+                    }
+                }
             }
         } else if (m_mt.subtype == MEDIASUBTYPE_VOBSUB) {
             CVobSubStream* pVSS = (CVobSubStream*)(ISubStream*)m_pSubStream;

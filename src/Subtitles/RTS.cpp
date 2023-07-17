@@ -1835,7 +1835,7 @@ void CRenderedTextSubtitle::SetOverride(bool bOverride, const STSStyle& styleOve
             m_storageRes = m_playRes; // needed to get correct font scaling with default style
         }
 #if USE_LIBASS
-        m_SSAUtil.ResetASS(); //styles may change the way the libass file was loaded, so we reload it here
+        m_LibassContext.ResetASS(); //styles may change the way the libass file was loaded, so we reload it here
 #endif
     }
 }
@@ -1872,6 +1872,9 @@ bool CRenderedTextSubtitle::Init(CSize size, const CRect& vidrect)
         Deinit();
         m_size = newSize;
         m_vidrect = newVidRect;
+#if USE_LIBASS
+        m_LibassContext.ResetASS();
+#endif
     }
 
     return true;
@@ -3110,6 +3113,13 @@ STDMETHODIMP CRenderedTextSubtitle::NonDelegatingQueryInterface(REFIID riid, voi
 
 STDMETHODIMP_(POSITION) CRenderedTextSubtitle::GetStartPosition(REFERENCE_TIME rt, double fps)
 {
+#if USE_LIBASS
+    if (m_LibassContext.IsLibassActive()) {
+        POSITION p;
+        return m_LibassContext.GetStartPosition(rt, fps);
+    }
+#endif
+
     int iSegment = -1;
     SearchSubs(rt, fps, &iSegment, nullptr);
 
@@ -3128,6 +3138,12 @@ CString CRenderedTextSubtitle::GetPath() {
 
 STDMETHODIMP_(POSITION) CRenderedTextSubtitle::GetNext(POSITION pos)
 {
+#if USE_LIBASS
+    if (m_LibassContext.IsLibassActive()) {
+        return m_LibassContext.GetNext(pos);
+    }
+#endif
+
     __assume((INT_PTR)pos >= INT_MIN && (INT_PTR)pos <= INT_MAX);
     int iSegment = (int)(INT_PTR)pos;
 
@@ -3142,18 +3158,33 @@ STDMETHODIMP_(POSITION) CRenderedTextSubtitle::GetNext(POSITION pos)
 
 STDMETHODIMP_(REFERENCE_TIME) CRenderedTextSubtitle::GetStart(POSITION pos, double fps)
 {
+#if USE_LIBASS
+    if (m_LibassContext.IsLibassActive()) {
+        return m_LibassContext.GetCurrent(pos);
+    }
+#endif
     __assume((INT_PTR)pos - 1 >= INT_MIN && (INT_PTR)pos <= INT_MAX);
     return TranslateSegmentStart((int)(INT_PTR)pos - 1, fps);
 }
 
 STDMETHODIMP_(REFERENCE_TIME) CRenderedTextSubtitle::GetStop(POSITION pos, double fps)
 {
+#if USE_LIBASS
+    if (m_LibassContext.IsLibassActive()) {
+        return m_LibassContext.GetCurrent(pos) + 1;
+    }
+#endif
     __assume((INT_PTR)pos - 1 >= INT_MIN && (INT_PTR)pos <= INT_MAX);
     return TranslateSegmentEnd((int)(INT_PTR)pos - 1, fps);
 }
 
 STDMETHODIMP_(bool) CRenderedTextSubtitle::IsAnimated(POSITION pos)
 {
+#if USE_LIBASS
+    if (m_LibassContext.IsLibassActive()) {
+        return false;
+    }
+#endif
     __assume((INT_PTR)pos - 1 >= INT_MIN && (INT_PTR)pos <= INT_MAX);
     int iSegment = (int)(INT_PTR)pos - 1;
 
@@ -3189,7 +3220,7 @@ STDMETHODIMP CRenderedTextSubtitle::Render(SubPicDesc& spd, REFERENCE_TIME rt, d
     }
 
 #if USE_LIBASS
-    HRESULT libassResult = m_SSAUtil.Render(rt, spd, bbox, m_size, m_vidrect);
+    HRESULT libassResult = m_LibassContext.Render(rt, spd, bbox, m_size, m_vidrect);
     if (libassResult != E_POINTER) { //libass not initialized
         return libassResult;
     }

@@ -33,7 +33,7 @@
 #include "../DSUtil/DSUtil.h"
 #include  <comutil.h>
 #include <regex>
-#include "SSASub.h"
+#include "LibassContext.h"
 #include "../mpc-hc/RegexUtil.h"
 #include "../mpc-hc/SubtitlesProvidersUtils.h"
 #include "../DSUtil/ISOLang.h"
@@ -2311,7 +2311,7 @@ CSimpleTextSubtitle::CSimpleTextSubtitle()
     , m_ePARCompensationType(EPCTDisabled)
     , m_dPARCompensation(1.0)
 #if USE_LIBASS
-    , m_SSAUtil(this)
+    , m_LibassContext(this)
 #endif
 {
 }
@@ -2357,8 +2357,8 @@ void CSimpleTextSubtitle::Copy(CSimpleTextSubtitle& sts)
         m_segments.Copy(sts.m_segments);
         __super::Copy(sts);
 #if USE_LIBASS
-        if (m_SSAUtil.m_assloaded) {
-            m_SSAUtil.LoadASSFile(m_subtitleType);
+        if (m_LibassContext.IsLibassActive()) {
+            m_LibassContext.LoadASSFile(m_subtitleType);
         }
 #endif
     }
@@ -2690,7 +2690,7 @@ bool CSimpleTextSubtitle::SetDefaultStyle(const STSStyle& s)
         m_bUsingPlayerDefaultStyle = true;
     }
 #if USE_LIBASS
-    m_SSAUtil.DefaultStyleChanged();
+    m_LibassContext.DefaultStyleChanged();
 #endif
     return true;
 }
@@ -3237,23 +3237,23 @@ bool CSimpleTextSubtitle::Open(CTextFile* f, int CharSet, CString name) {
     };
 
 #if USE_LIBASS
-    if (m_SSAUtil.m_renderUsingLibass) {
+    if (m_LibassContext.m_renderUsingLibass) {
         if (lstrcmpi(PathFindExtensionW(f->GetFilePath()), L".ass") == 0 || lstrcmpi(PathFindExtensionW(f->GetFilePath()), L".ssa") == 0) {
             CreateDefaultStyle(CharSet);
             m_path = f->GetFilePath();
-            m_SSAUtil.LoadASSFile(Subtitle::SubType::SSA);
+            m_LibassContext.LoadASSFile(Subtitle::SubType::SSA);
             m_subtitleType = Subtitle::SubType::SSA;
             OpenSubStationAlpha(f, *this, CharSet);
             loadSSAStyle();
         } else if (lstrcmpi(PathFindExtensionW(f->GetFilePath()), L".srt") == 0) {
             CreateDefaultStyle(CharSet);
             m_path = f->GetFilePath();
-            m_SSAUtil.LoadASSFile(Subtitle::SubType::SRT);
+            m_LibassContext.LoadASSFile(Subtitle::SubType::SRT);
             m_subtitleType = Subtitle::SubType::SRT;
             OpenSubRipper(f, *this, CharSet);
         }
 
-        if (m_SSAUtil.m_assloaded) {
+        if (m_LibassContext.IsLibassActive()) {
             setVars(name, f->GetEncoding(), TIME);
             ChangeUnknownStylesToDefault();
             initRes();

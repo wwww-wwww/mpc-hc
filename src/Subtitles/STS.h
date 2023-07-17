@@ -26,7 +26,7 @@
 #include "TextFile.h"
 #include "SubtitleHelpers.h"
 #include "../../include/mpc-hc_config.h"
-#include "SSASub.h"
+#include "LibassContext.h"
 #include "SubRendererSettings.h"
 #include "OpenTypeLangTags.h"
 #include "STSStyle.h"
@@ -185,7 +185,7 @@ public:
 public:
     STSStyle m_styleOverride; // the app can decide to use this style instead of a built-in one
 #if USE_LIBASS
-    SSAUtil m_SSAUtil;
+    LibassContext m_LibassContext;
 #endif
 };
 

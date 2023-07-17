@@ -16409,11 +16409,11 @@ bool CMainFrame::LoadSubtitle(CString fn, SubtitleInput* pSubInput /*= nullptr*/
         if (pRTS) {
 #if USE_LIBASS
             SubRendererSettings srs = AfxGetAppSettings().GetSubRendererSettings();
-            pRTS->m_SSAUtil.SetSubRenderSettings(srs);
+            pRTS->m_LibassContext.SetSubRenderSettings(srs);
 #endif
             if (pRTS->Open(fn, DEFAULT_CHARSET, _T(""), videoName) && pRTS->GetStreamCount() > 0) {
 #if USE_LIBASS
-                pRTS->m_SSAUtil.SetFilterGraph(m_pGB);
+                pRTS->m_LibassContext.SetFilterGraph(m_pGB);
 #endif
                 pSubStream = pRTS.Detach();
             }
@@ -16513,7 +16513,7 @@ bool CMainFrame::LoadSubtitle(CYoutubeDLInstance::YDLSubInfo& sub) {
     if (pRTS) {
 #if USE_LIBASS
         SubRendererSettings srs = AfxGetAppSettings().GetSubRendererSettings();
-        pRTS->m_SSAUtil.SetSubRenderSettings(srs);
+        pRTS->m_LibassContext.SetSubRenderSettings(srs);
 #endif
         bool opened = false;
         if (!sub.url.IsEmpty()) {
@@ -16546,7 +16546,7 @@ bool CMainFrame::LoadSubtitle(CYoutubeDLInstance::YDLSubInfo& sub) {
         }
         if (opened && pRTS->GetStreamCount() > 0) {
 #if USE_LIBASS
-            pRTS->m_SSAUtil.SetFilterGraph(m_pGB);
+            pRTS->m_LibassContext.SetFilterGraph(m_pGB);
 #endif
             pSubStream = pRTS.Detach();
         }
@@ -20388,7 +20388,7 @@ LRESULT CMainFrame::OnLoadSubtitles(WPARAM wParam, LPARAM lParam)
     if (pRTS) {
 #if USE_LIBASS
         SubRendererSettings srs = AfxGetAppSettings().GetSubRendererSettings();
-        pRTS->m_SSAUtil.SetSubRenderSettings(srs);
+        pRTS->m_LibassContext.SetSubRenderSettings(srs);
 #endif
         if (pRTS->Open(CString(data.pSubtitlesInfo->Provider()->Name().c_str()),
             (BYTE*)(LPCSTR)data.fileContents.c_str(), (int)data.fileContents.length(), DEFAULT_CHARSET,
@@ -20396,7 +20396,7 @@ LRESULT CMainFrame::OnLoadSubtitles(WPARAM wParam, LPARAM lParam)
             ISOLang::ISO6391ToLcid(data.pSubtitlesInfo->languageCode.c_str())) && pRTS->GetStreamCount() > 0) {
             m_wndSubtitlesDownloadDialog.DoDownloaded(*data.pSubtitlesInfo);
 #if USE_LIBASS
-            pRTS->m_SSAUtil.SetFilterGraph(m_pGB);
+            pRTS->m_LibassContext.SetFilterGraph(m_pGB);
 #endif
             SubtitleInput subElement = pRTS.Detach();
             m_pSubStreams.AddTail(subElement);
