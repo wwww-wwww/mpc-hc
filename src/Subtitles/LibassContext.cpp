@@ -281,7 +281,7 @@ void srt_header(char (&outBuffer)[1024], const STSStyle& style, const SubRendere
         "Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, "
         "BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, "
         "BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding\n"
-        "Style: Default,%s,%u,&H%X,&H%X,&H%X,&H%X,0,0,0,0,%lf,%lf,%lf,0,%u,%lf,%lf,%u,%u,%u,%u,0"
+        "Style: Default,%s,%u,&H%X,&H%X,&H%X,&H%X,%u,%u,0,0,%lf,%lf,%lf,0,%u,%lf,%lf,%u,%u,%u,%u,0"
         "\n\n[Events]\n"
         "Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text\n\n",
         style.ScaledBorderAndShadow ? "yes" : "no",
@@ -290,6 +290,8 @@ void srt_header(char (&outBuffer)[1024], const STSStyle& style, const SubRendere
         (LPCSTR)langTagStr,
         std::string(tmpFontName).c_str(), (int)std::round(style.fontSize * resy), style.colors[0],
         style.colors[1], style.colors[2], style.colors[3],
+        style.fontWeight == FW_BOLD ? 1 : 0,
+        style.fItalic ? 1 : 0,
         style.fontScaleX, style.fontScaleY, style.fontSpacing, (style.borderStyle == 1 ? 4 : 1), style.outlineWidthX,
         style.shadowDepthX, style.scrAlignment, (int)std::round(style.marginRect.left * resx),
         (int)std::round(style.marginRect.right * resx), (int)std::round(style.marginRect.top * resy));
