@@ -3115,7 +3115,6 @@ STDMETHODIMP_(POSITION) CRenderedTextSubtitle::GetStartPosition(REFERENCE_TIME r
 {
 #if USE_LIBASS
     if (m_LibassContext.IsLibassActive()) {
-        POSITION p;
         return m_LibassContext.GetStartPosition(rt, fps);
     }
 #endif

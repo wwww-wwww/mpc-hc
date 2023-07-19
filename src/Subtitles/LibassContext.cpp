@@ -511,7 +511,7 @@ LibassContext::LibassContext(CSimpleTextSubtitle* sts)
     , rtCurrent(0)
     , curTimeInitialized(false)
 {
-    LoadDefStyle();
+    UpdateDefaultStyle();
 }
 
 LibassContext::~LibassContext() {
@@ -527,8 +527,9 @@ void LibassContext::SetSubRenderSettings(SubRendererSettings settings) {
 }
 
 void LibassContext::DefaultStyleChanged() {
-    LoadDefStyle();
-    ResetASS();
+    if (UpdateDefaultStyle()) {
+        ResetASS();
+    }
 }
 
 
@@ -980,10 +981,17 @@ void LibassContext::LoadTrackData(ASS_Track* track, char* data, int size) {
     ass_process_codec_private(m_track.get(), data, size);
 }
 
-void LibassContext::LoadDefStyle() {
+boolean LibassContext::UpdateDefaultStyle() {
+    STSStyle newStyle;
     if (m_STS) {
-        m_STS->GetDefaultStyle(defStyle);
+        m_STS->GetDefaultStyle(newStyle);
     }
+    if (defStyle == newStyle) {
+        return false;
+    } else {
+        defStyle = newStyle;
+    }
+    return true;
 }
 
 #endif // USE_LIBASS
