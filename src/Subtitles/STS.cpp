@@ -3632,14 +3632,14 @@ bool STSStyle::operator == (const STSStyle& s) const
     return (marginRect == s.marginRect
             && scrAlignment == s.scrAlignment
             && borderStyle == s.borderStyle
-            && outlineWidthX == s.outlineWidthX
-            && outlineWidthY == s.outlineWidthY
-            && shadowDepthX == s.shadowDepthX
-            && shadowDepthY == s.shadowDepthY
+            && abs(outlineWidthX - s.outlineWidthX) < 0.00000001
+            && abs(outlineWidthY - s.outlineWidthY) < 0.00000001
+            && abs(shadowDepthX - s.shadowDepthX) < 0.00000001
+            && abs(shadowDepthY - s.shadowDepthY) < 0.00000001
             && colors == s.colors
             && alpha == s.alpha
             && fBlur == s.fBlur
-            && fGaussianBlur == s.fGaussianBlur
+            && abs(fGaussianBlur - s.fGaussianBlur) < 0.00000001
             && relativeTo == s.relativeTo
             && IsFontStyleEqual(s));
 }
@@ -3650,19 +3650,18 @@ bool STSStyle::IsFontStyleEqual(const STSStyle& s) const
                charSet == s.charSet
                && fontName == s.fontName
                && fontSize == s.fontSize
-               && fontScaleX == s.fontScaleX
-               && fontScaleY == s.fontScaleY
-               && fontSpacing == s.fontSpacing
+               && abs(fontScaleX - s.fontScaleX) < 0.00000001
+               && abs(fontScaleY - s.fontScaleY) < 0.00000001
+               && abs(fontSpacing - s.fontSpacing) < 0.00000001
                && fontWeight == s.fontWeight
                && fItalic == s.fItalic
                && fUnderline == s.fUnderline
                && fStrikeOut == s.fStrikeOut
-               && fontAngleZ == s.fontAngleZ
-               && fontAngleX == s.fontAngleX
-               && fontAngleY == s.fontAngleY
-               // patch f001. fax fay patch (many instances at line)
-               && fontShiftX == s.fontShiftX
-               && fontShiftY == s.fontShiftY);
+               && abs(fontAngleZ - s.fontAngleZ) < 0.00000001
+               && abs(fontAngleX - s.fontAngleX) < 0.00000001
+               && abs(fontAngleY - s.fontAngleY) < 0.00000001
+               && abs(fontShiftX - s.fontShiftX) < 0.00000001
+               && abs(fontShiftY - s.fontShiftY) < 0.00000001);
 }
 
 STSStyle& STSStyle::operator = (LOGFONT& lf)
