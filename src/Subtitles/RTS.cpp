@@ -1827,7 +1827,7 @@ void CRenderedTextSubtitle::Empty()
 }
 
 void CRenderedTextSubtitle::SetOverride(bool bOverride, const STSStyle& styleOverride) {
-    bool changed = (m_bOverrideStyle != bOverride) || (m_styleOverride != styleOverride);
+    bool changed = (m_bOverrideStyle != bOverride) || bOverride && (m_styleOverride != styleOverride);
     if (changed) {
         m_bOverrideStyle = bOverride;
         m_styleOverride = styleOverride;
@@ -1872,9 +1872,6 @@ bool CRenderedTextSubtitle::Init(CSize size, const CRect& vidrect)
         Deinit();
         m_size = newSize;
         m_vidrect = newVidRect;
-#if USE_LIBASS
-        m_LibassContext.ResetASS();
-#endif
     }
 
     return true;
