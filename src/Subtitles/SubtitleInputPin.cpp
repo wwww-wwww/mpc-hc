@@ -139,8 +139,7 @@ HRESULT CSubtitleInputPin::CompleteConnect(IPin* pReceivePin)
             CRenderedTextSubtitle* pRTS = (CRenderedTextSubtitle*)(ISubStream*)m_pSubStream;
             pRTS->SetSubtitleTypeFromGUID(m_mt.subtype);
 #if USE_LIBASS
-            pRTS->m_LibassContext.SetSubRenderSettings(AfxGetAppSettings().GetSubRendererSettings());
-            if (pRTS->m_LibassContext.m_renderUsingLibass) {
+            if (pRTS->m_LibassContext.CheckSubType()) {
                 IFilterGraph* fg = GetGraphFromFilter(m_pFilter);
                 pRTS->m_LibassContext.SetFilterGraph(fg);
             }

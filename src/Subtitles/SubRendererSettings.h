@@ -1,14 +1,17 @@
 #pragma once
 #include "OpenTypeLangTags.h"
-
-class CSimpleTextSubtitle;
+#include "STSStyle.h"
 
 class SubRendererSettings {
 public:
     SubRendererSettings() {}
     virtual ~SubRendererSettings() {}
+
+    STSStyle defaultStyle;
+    bool overrideDefaultStyle = false;
+
     bool renderSSAUsingLibass = false;
     bool renderSRTUsingLibass = false;
-    bool LibassEnabled(CSimpleTextSubtitle* sts);
+
     OpenTypeLang::HintStr openTypeLangHint = { 0 };
 };

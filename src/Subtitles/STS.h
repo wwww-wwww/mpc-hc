@@ -87,6 +87,8 @@ protected:
     virtual void OnChanged() {}
 
 public:
+    SubRendererSettings m_SubRendererSettings;
+
     CString m_name;
     LCID m_lcid;
     CString m_langname;

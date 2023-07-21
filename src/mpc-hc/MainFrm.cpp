@@ -5683,6 +5683,7 @@ void CMainFrame::SaveThumbnails(LPCTSTR fn)
         CRect r(p, szThumbnail);
 
         CRenderedTextSubtitle rts(&csSubLock);
+        rts.m_SubRendererSettings.renderSSAUsingLibass = false;
         rts.CreateDefaultStyle(0);
         rts.m_storageRes = rts.m_playRes = CSize(width, height);
         STSStyle* style = DEBUG_NEW STSStyle();
@@ -5774,6 +5775,7 @@ void CMainFrame::SaveThumbnails(LPCTSTR fn)
     // Draw the file information
     {
         CRenderedTextSubtitle rts(&csSubLock);
+        rts.m_SubRendererSettings.renderSSAUsingLibass = false;
         rts.CreateDefaultStyle(0);
         rts.m_storageRes = rts.m_playRes = CSize(width, height);
         STSStyle* style = DEBUG_NEW STSStyle();
@@ -7399,7 +7401,20 @@ void CMainFrame::OnViewSubresync()
 void CMainFrame::OnUpdateViewSubresync(CCmdUI* pCmdUI)
 {
     pCmdUI->SetCheck(m_controls.ControlChecked(CMainFrameControls::Panel::SUBRESYNC));
-    pCmdUI->Enable(m_pCAP && !m_pSubStreams.IsEmpty() && !IsPlaybackCaptureMode());
+    bool enabled = m_pCAP && m_pCurrentSubInput.pSubStream && !IsPlaybackCaptureMode();
+    if (enabled) {
+        CLSID clsid;
+        m_pCurrentSubInput.pSubStream->GetClassID(&clsid);
+        if (clsid == __uuidof(CRenderedTextSubtitle)) {
+#if USE_LIBASS
+            CRenderedTextSubtitle* pRTS = (CRenderedTextSubtitle*)(ISubStream*)m_pCurrentSubInput.pSubStream;
+            enabled = !pRTS->m_LibassContext.IsLibassActive();
+#endif
+        } else {
+            enabled = false;
+        }
+    }
+    pCmdUI->Enable(enabled);
 }
 
 void CMainFrame::OnViewPlaylist()
@@ -16407,13 +16422,11 @@ bool CMainFrame::LoadSubtitle(CString fn, SubtitleInput* pSubInput /*= nullptr*/
     if (!pSubStream && ext != _T(".idx") && ext != _T(".sup")) {
         CAutoPtr<CRenderedTextSubtitle> pRTS(DEBUG_NEW CRenderedTextSubtitle(&m_csSubLock));
         if (pRTS) {
-#if USE_LIBASS
-            SubRendererSettings srs = AfxGetAppSettings().GetSubRendererSettings();
-            pRTS->m_LibassContext.SetSubRenderSettings(srs);
-#endif
             if (pRTS->Open(fn, DEFAULT_CHARSET, _T(""), videoName) && pRTS->GetStreamCount() > 0) {
 #if USE_LIBASS
-                pRTS->m_LibassContext.SetFilterGraph(m_pGB);
+                if (pRTS->m_LibassContext.IsLibassActive()) {
+                    pRTS->m_LibassContext.SetFilterGraph(m_pGB);
+                }
 #endif
                 pSubStream = pRTS.Detach();
             }
@@ -16511,10 +16524,6 @@ bool CMainFrame::LoadSubtitle(CYoutubeDLInstance::YDLSubInfo& sub) {
 
     CAutoPtr<CRenderedTextSubtitle> pRTS(DEBUG_NEW CRenderedTextSubtitle(&m_csSubLock));
     if (pRTS) {
-#if USE_LIBASS
-        SubRendererSettings srs = AfxGetAppSettings().GetSubRendererSettings();
-        pRTS->m_LibassContext.SetSubRenderSettings(srs);
-#endif
         bool opened = false;
         if (!sub.url.IsEmpty()) {
             SubtitlesProvidersUtils::stringMap strmap{};
@@ -16546,7 +16555,9 @@ bool CMainFrame::LoadSubtitle(CYoutubeDLInstance::YDLSubInfo& sub) {
         }
         if (opened && pRTS->GetStreamCount() > 0) {
 #if USE_LIBASS
-            pRTS->m_LibassContext.SetFilterGraph(m_pGB);
+            if (pRTS->m_LibassContext.IsLibassActive()) {
+                pRTS->m_LibassContext.SetFilterGraph(m_pGB);
+            }
 #endif
             pSubStream = pRTS.Detach();
         }
@@ -16730,7 +16741,18 @@ void CMainFrame::SetSubtitle(const SubtitleInput& subInput, bool skip_lcid /* = 
 
         if (m_pCAP) {
             g_bExternalSubtitle = (std::find(m_ExternalSubstreams.cbegin(), m_ExternalSubstreams.cend(), subInput.pSubStream) != m_ExternalSubstreams.cend());
-            m_wndSubresyncBar.SetSubtitle(subInput.pSubStream, m_pCAP->GetFPS(), g_bExternalSubtitle);
+            bool use_subresync = false;
+            if (auto pRTS = dynamic_cast<CRenderedTextSubtitle*>((ISubStream*)m_pCurrentSubInput.pSubStream)) {
+#if USE_LIBASS
+                if (!pRTS->m_LibassContext.IsLibassActive())
+#endif
+                    use_subresync = true;
+            }
+            if (use_subresync) {
+                m_wndSubresyncBar.SetSubtitle(subInput.pSubStream, m_pCAP->GetFPS(), g_bExternalSubtitle);
+            } else {
+                m_wndSubresyncBar.SetSubtitle(nullptr, m_pCAP->GetFPS(), g_bExternalSubtitle);
+            }
         }
     }
 
@@ -20386,17 +20408,15 @@ LRESULT CMainFrame::OnLoadSubtitles(WPARAM wParam, LPARAM lParam)
 
     CAutoPtr<CRenderedTextSubtitle> pRTS(DEBUG_NEW CRenderedTextSubtitle(&m_csSubLock));
     if (pRTS) {
-#if USE_LIBASS
-        SubRendererSettings srs = AfxGetAppSettings().GetSubRendererSettings();
-        pRTS->m_LibassContext.SetSubRenderSettings(srs);
-#endif
         if (pRTS->Open(CString(data.pSubtitlesInfo->Provider()->Name().c_str()),
             (BYTE*)(LPCSTR)data.fileContents.c_str(), (int)data.fileContents.length(), DEFAULT_CHARSET,
             UTF8To16(data.fileName.c_str()), Subtitle::HearingImpairedType(data.pSubtitlesInfo->hearingImpaired),
             ISOLang::ISO6391ToLcid(data.pSubtitlesInfo->languageCode.c_str())) && pRTS->GetStreamCount() > 0) {
             m_wndSubtitlesDownloadDialog.DoDownloaded(*data.pSubtitlesInfo);
 #if USE_LIBASS
-            pRTS->m_LibassContext.SetFilterGraph(m_pGB);
+            if (pRTS->m_LibassContext.IsLibassActive()) {
+                pRTS->m_LibassContext.SetFilterGraph(m_pGB);
+            }
 #endif
             SubtitleInput subElement = pRTS.Detach();
             m_pSubStreams.AddTail(subElement);

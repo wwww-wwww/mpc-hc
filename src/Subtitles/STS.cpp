@@ -2314,6 +2314,7 @@ CSimpleTextSubtitle::CSimpleTextSubtitle()
     , m_LibassContext(this)
 #endif
 {
+    m_SubRendererSettings = AfxGetAppSettings().GetSubRendererSettings();
 }
 
 CSimpleTextSubtitle::~CSimpleTextSubtitle()
@@ -2689,9 +2690,16 @@ bool CSimpleTextSubtitle::SetDefaultStyle(const STSStyle& s)
         m_styles[L"Default"] = val;
         m_bUsingPlayerDefaultStyle = true;
     }
+
+    bool changed = (s != m_SubRendererSettings.defaultStyle);
+    if (changed) {
+        m_SubRendererSettings.defaultStyle = s;
 #if USE_LIBASS
-    m_LibassContext.DefaultStyleChanged();
+        if (m_LibassContext.IsLibassActive()) {
+            m_LibassContext.DefaultStyleChanged();
+        }
 #endif
+    }
     return true;
 }
 
@@ -3236,34 +3244,6 @@ bool CSimpleTextSubtitle::Open(CTextFile* f, int CharSet, CString name) {
         m_mode = mode;
     };
 
-#if USE_LIBASS
-    if (m_LibassContext.m_renderUsingLibass) {
-        if (lstrcmpi(PathFindExtensionW(f->GetFilePath()), L".ass") == 0 || lstrcmpi(PathFindExtensionW(f->GetFilePath()), L".ssa") == 0) {
-            CreateDefaultStyle(CharSet);
-            m_path = f->GetFilePath();
-            m_LibassContext.LoadASSFile(Subtitle::SubType::SSA);
-            m_subtitleType = Subtitle::SubType::SSA;
-            OpenSubStationAlpha(f, *this, CharSet);
-            loadSSAStyle();
-        } else if (lstrcmpi(PathFindExtensionW(f->GetFilePath()), L".srt") == 0) {
-            CreateDefaultStyle(CharSet);
-            m_path = f->GetFilePath();
-            m_LibassContext.LoadASSFile(Subtitle::SubType::SRT);
-            m_subtitleType = Subtitle::SubType::SRT;
-            OpenSubRipper(f, *this, CharSet);
-        }
-
-        if (m_LibassContext.IsLibassActive()) {
-            setVars(name, f->GetEncoding(), TIME);
-            ChangeUnknownStylesToDefault();
-            initRes();
-            return true;
-        } else {
-            Empty();
-        }
-    }
-#endif
-
     ULONGLONG pos = f->GetPosition();
 
     auto functs = PreferredOpenFuncts(f->GetFilePath());
@@ -3288,9 +3268,22 @@ bool CSimpleTextSubtitle::Open(CTextFile* f, int CharSet, CString name) {
         m_path = f->GetFilePath();
         m_subtitleType = OpenFuncts[i].type;
         setVars(name, f->GetEncoding(), OpenFuncts[i].mode);
-        // No need to call Sort() or CreateSegments(), everything is done on the fly
-        loadSSAStyle();
         CreateDefaultStyle(CharSet);
+
+#if USE_LIBASS
+        if ((m_subtitleType == Subtitle::SubType::SSA || m_subtitleType == Subtitle::SubType::ASS) && m_SubRendererSettings.renderSSAUsingLibass) {
+            m_LibassContext.LoadASSFile(Subtitle::SubType::SSA);
+        } else if (m_subtitleType == Subtitle::SubType::SRT && m_SubRendererSettings.renderSRTUsingLibass) {
+            m_LibassContext.LoadASSFile(Subtitle::SubType::SRT);
+        }
+        if (m_LibassContext.IsLibassActive()) {
+            // we are done now
+            // note: the subtitle data loaded by internal parser is kept so that saving (downloaded) subtitle works
+            return true;
+        }
+#endif
+
+        loadSSAStyle();
         ChangeUnknownStylesToDefault();
         initRes();
 

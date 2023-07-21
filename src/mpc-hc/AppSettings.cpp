@@ -3495,6 +3495,8 @@ void CAppSettings::UpdateSettings()
 // ToDo: move these settings into CRendererSettings or make an implementation similar to CRendererSettings that holds old subtitle settings
 SubRendererSettings CAppSettings::GetSubRendererSettings() {
     SubRendererSettings s;
+    s.defaultStyle = this->subtitlesDefStyle;
+    s.overrideDefaultStyle = this->fUseDefaultSubtitlesStyle;
 #if USE_LIBASS
     s.renderSSAUsingLibass = this->bRenderSSAUsingLibass;
     s.renderSRTUsingLibass = this->bRenderSRTUsingLibass;
