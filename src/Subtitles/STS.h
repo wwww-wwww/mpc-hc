@@ -111,6 +111,7 @@ public:
     int m_scaledBAS; // -1 = unknown, 0 = no, 1 = yes
     CString m_sYCbCrMatrix;
 
+    STSStyle m_originalDefaultStyle;
     bool m_bUsingPlayerDefaultStyle;
 
     CSTSStyleMap m_styles;

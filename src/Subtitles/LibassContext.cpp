@@ -120,8 +120,7 @@ void ParseSrtLine(std::string& srtLine, const STSStyle& style) {
                         } else if (attribute_name == "family") {
                         }
                         if (attribute_name == "size") {
-                            double resy = style.SrtResY / 288.0;
-                            int font_size = (int)std::round(std::stod(attribute_value) * resy);
+                            int font_size = (int)std::round(std::stod(attribute_value));
                             subtitle_output.append("{\\fs" + std::to_string(font_size) + "}");
                         } else if (attribute_name == "color") {
                             MatchColorSrt(attribute_value);
@@ -163,8 +162,7 @@ void ParseSrtLine(std::string& srtLine, const STSStyle& style) {
                     } else if (tagname == "s") {
                         subtitle_output.append("{\\s0}");
                     } else if (tagname == "font") {
-                        double resy = style.SrtResY / 288.0;
-                        int font_size = (int)std::round(style.fontSize * resy);
+                        int font_size = (int)std::round(style.fontSize);
                         subtitle_output.append("{\\c}");
                         CT2CA tmpFontName(style.fontName);
                         subtitle_output.append("{\\fn" + std::string(tmpFontName) + "}");
@@ -226,9 +224,7 @@ void ParseSrtLine(std::string& srtLine, const STSStyle& style) {
             } else if (psz_subtitle[1] == 'S' || psz_subtitle[1] == 's') {
                 int size = atoi(&psz_subtitle[3]);
                 if (size) {
-                    double resy = style.SrtResY / 288.0;
-                    int font_size = (int)std::round(size * resy);
-                    subtitle_output.append("{\\fs" + std::to_string(font_size) + "}");
+                    subtitle_output.append("{\\fs" + std::to_string(size) + "}");
                 }
             }
             // Hide other {x:y} atrocities, notably {o:x}
@@ -253,9 +249,6 @@ void ParseSrtLine(std::string& srtLine, const STSStyle& style) {
 }
 
 void srt_header(char (&outBuffer)[1024], const STSStyle& style, OpenTypeLang::HintStr openTypeLangHint) {
-    double resx = style.SrtResX / 384.0;
-    double resy = style.SrtResY / 288.0;
-
     CT2CA tmpFontName(style.fontName);
 
     // Generate a standard ass header
@@ -273,8 +266,8 @@ void srt_header(char (&outBuffer)[1024], const STSStyle& style, OpenTypeLang::Hi
         "ScaledBorderAndShadow: %s\n"
         "Kerning: %s\n"
         "YCbCr Matrix: TV.709\n"
-        "PlayResX: %u\n"
-        "PlayResY: %u\n"
+        "PlayResX: 384\n"
+        "PlayResY: 288\n"
         "%s" /*language if set*/
         "[V4+ Styles]\n"
         "Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, "
@@ -285,15 +278,13 @@ void srt_header(char (&outBuffer)[1024], const STSStyle& style, OpenTypeLang::Hi
         "Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text\n\n",
         style.ScaledBorderAndShadow ? "yes" : "no",
         style.Kerning ? "yes" : "no",
-        style.SrtResX, style.SrtResY,
         (LPCSTR)langTagStr,
-        std::string(tmpFontName).c_str(), (int)std::round(style.fontSize * resy), style.colors[0],
+        std::string(tmpFontName).c_str(), (int)std::round(style.fontSize), style.colors[0],
         style.colors[1], style.colors[2], style.colors[3],
         style.fontWeight == FW_BOLD ? 1 : 0,
         style.fItalic ? 1 : 0,
-        style.fontScaleX, style.fontScaleY, style.fontSpacing, (style.borderStyle == 1 ? 4 : 1), style.outlineWidthX,
-        style.shadowDepthX, style.scrAlignment, (int)std::round(style.marginRect.left * resx),
-        (int)std::round(style.marginRect.right * resx), (int)std::round(style.marginRect.top * resy));
+        style.fontScaleX, style.fontScaleY, style.fontSpacing, (style.borderStyle == 1 ? 4 : 1), style.outlineWidthX / 5,
+        style.shadowDepthX / 5, style.scrAlignment, (int)style.marginRect.left, (int)style.marginRect.right, (int)style.marginRect.top);
 }
 
 ASS_Track* srt_read_file(ASS_Library* library, CStringW fname, const STSStyle& style, OpenTypeLang::HintStr openTypeLangHint) {
@@ -526,19 +517,175 @@ boolean LibassContext::CheckSubType() {
     return m_renderUsingLibass;
 }
 
-void LibassContext::DefaultStyleChanged() {
-    if (m_STS->m_subtitleType == Subtitle::SubType::SRT || m_STS->m_SubRendererSettings.overrideDefaultStyle) {
-        std::unique_ptr<char* []> overrides = std::make_unique<char* []>(2);
-        overrides[0] = "Default.FontName=Arial"; // ToDo: add all properties from default style
-        overrides[1] = nullptr;
-        ass_set_style_overrides(m_ass.get(), overrides.get());
-    } else {
-        std::unique_ptr<char* []> overrides = std::make_unique<char* []>(1);
-        overrides[0] = nullptr;
-        ass_set_style_overrides(m_ass.get(), overrides.get());
+static void detect_style_changes(STSStyle* before, STSStyle* after, const wchar_t* name, std::vector<CStringA>& styles_overrides) {
+    if (!after) return;
+    CStringA prefix;
+    if (name) {
+        prefix = UTF16To8(name);
+        prefix.AppendChar('.');
+    } else prefix = "";
+    const char* prefix_cstr = prefix.GetString();
+    if (!before || before->fontName != after->fontName) {
+        CStringA tmp;
+        CStringA font_name_utf8 = UTF16To8(after->fontName);
+        tmp.Format("%sFontName=%s", prefix_cstr, font_name_utf8.GetString());
+        styles_overrides.push_back(std::move(tmp));
     }
-    ass_process_force_style(m_track.get());
-    // FIXME: styles can be changed just once? libass does not seem to react to subsequent changes
+    if (!before || before->colors[0] != after->colors[0] || before->alpha[0] != after->alpha[0]) {
+        CStringA tmp;
+        tmp.Format("%sPrimaryColour=&H%8X", prefix_cstr, (after->alpha[0] << 24) | after->colors[0]);
+        styles_overrides.push_back(std::move(tmp));
+    }
+    if (!before || before->colors[1] != after->colors[1] || before->alpha[1] != after->alpha[1]) {
+        CStringA tmp;
+        tmp.Format("%sSecondaryColour=&H%8X", prefix_cstr, (after->alpha[1] << 24) | after->colors[1]);
+        styles_overrides.push_back(std::move(tmp));
+    }
+    if (!before || before->colors[2] != after->colors[2] || before->alpha[2] != after->alpha[2]) {
+        CStringA tmp;
+        tmp.Format("%sOutlineColour=&H%8X", prefix_cstr, (after->alpha[2] << 24) | after->colors[2]);
+        styles_overrides.push_back(std::move(tmp));
+    }
+    if (!before || before->colors[3] != after->colors[3] || before->alpha[3] != after->alpha[3]) {
+        CStringA tmp;
+        tmp.Format("%sBackColour=&H%8X", prefix_cstr, (after->alpha[3] << 24) | after->colors[3]);
+        styles_overrides.push_back(std::move(tmp));
+    }
+    if (!before || before->fontSize != after->fontSize) {
+        CStringA tmp;
+        tmp.Format("%sFontSize=%f", prefix_cstr, after->fontSize);
+        styles_overrides.push_back(std::move(tmp));
+    }
+    if (!before || before->fontWeight != after->fontWeight) {
+        CStringA tmp;
+        tmp.Format("%sBold=%d", prefix_cstr, after->fontWeight);
+        styles_overrides.push_back(std::move(tmp));
+    }
+    if (!before || before->fItalic != after->fItalic) {
+        CStringA tmp;
+        tmp.Format("%sItalic=%d", prefix_cstr, after->fItalic ? 1 : 0);
+        styles_overrides.push_back(std::move(tmp));
+    }
+    if (!before || before->fUnderline != after->fUnderline) {
+        CStringA tmp;
+        tmp.Format("%sUnderline=%d", prefix_cstr, after->fUnderline ? 1 : 0);
+        styles_overrides.push_back(std::move(tmp));
+    }
+    if (!before || before->fStrikeOut != after->fStrikeOut) {
+        CStringA tmp;
+        tmp.Format("%sStrikeOut=%d", prefix_cstr, after->fStrikeOut ? 1 : 0);
+        styles_overrides.push_back(std::move(tmp));
+    }
+    if (!before || before->fontSpacing != after->fontSpacing) {
+        CStringA tmp;
+        tmp.Format("%sSpacing=%f", prefix_cstr, after->fontSpacing);
+        styles_overrides.push_back(std::move(tmp));
+    }
+    if (!before || before->fontAngleZ != after->fontAngleZ) {
+        CStringA tmp;
+        tmp.Format("%sAngle=%f", prefix_cstr, after->fontAngleZ);
+        styles_overrides.push_back(std::move(tmp));
+    }
+    if (!before || before->borderStyle != after->borderStyle) {
+        CStringA tmp;
+        tmp.Format("%sBorderStyle=%d", prefix_cstr, after->borderStyle ? 3 : 1);
+        styles_overrides.push_back(std::move(tmp));
+    }
+    if (!before || before->scrAlignment != after->scrAlignment) {
+        int Alignment = ((after->scrAlignment - 1) % 3) + 1;  // horizontal alignment
+        if (after->scrAlignment <= 3)
+            Alignment |= VALIGN_SUB;
+        else if (after->scrAlignment <= 6)
+            Alignment |= VALIGN_CENTER;
+        else
+            Alignment |= VALIGN_TOP;
+        CStringA tmp;
+        tmp.Format("%sAlignment=%d", prefix_cstr, Alignment);
+        styles_overrides.push_back(std::move(tmp));
+    }
+    if (!before || before->marginRect != after->marginRect) {
+        const CRect& r = after->marginRect;
+        CStringA tmp1, tmp2, tmp3;
+        tmp1.Format("%sMarginL=%ld", prefix_cstr, r.left);
+        tmp2.Format("%sMarginR=%ld", prefix_cstr, r.right);
+        tmp3.Format("%sMarginV=%ld", prefix_cstr, r.bottom); // may not equal to r.top
+        styles_overrides.push_back(std::move(tmp1));
+        styles_overrides.push_back(std::move(tmp2));
+        styles_overrides.push_back(std::move(tmp3));
+    }
+    if (!before || before->charSet != after->charSet) {
+        CStringA tmp;
+        tmp.Format("%sEncoding=%d", prefix_cstr, after->charSet);
+        styles_overrides.push_back(std::move(tmp));
+    }
+    if (!before || before->fontScaleX != after->fontScaleX) {
+        CStringA tmp;
+        tmp.Format("%sScaleX=%f", prefix_cstr, after->fontScaleX / 100.0);
+        styles_overrides.push_back(std::move(tmp));
+    }
+    if (!before || before->fontScaleY != after->fontScaleY) {
+        CStringA tmp;
+        tmp.Format("%sScaleY=%f", prefix_cstr, after->fontScaleY / 100.0);
+        styles_overrides.push_back(std::move(tmp));
+    }
+    if (!before || before->outlineWidthX != after->outlineWidthX) {
+        CStringA tmp;
+        tmp.Format("%sOutline=%f", prefix_cstr, after->outlineWidthX / 5); // equal to outlineWidthY
+        styles_overrides.push_back(std::move(tmp));
+    }
+    if (!before || before->shadowDepthX != after->shadowDepthX) {
+        CStringA tmp;
+        tmp.Format("%sShadow=%f", prefix_cstr, after->shadowDepthX / 5); // equal to shadowDepthY
+        styles_overrides.push_back(std::move(tmp));
+    }
+    if (!before || before->fGaussianBlur != after->fGaussianBlur) {
+        CStringA tmp;
+        tmp.Format("%sBlur=%f", prefix_cstr, after->fGaussianBlur); // maybe not equal to fBlur
+        styles_overrides.push_back(std::move(tmp));
+    }
+}
+
+void LibassContext::DefaultStyleChanged() {
+    if (!m_assloaded) {
+        ASSERT(false);
+        return;
+    }
+
+    if (m_STS->m_subtitleType == Subtitle::SubType::SRT || m_STS->m_SubRendererSettings.overrideDefaultStyle) {
+        std::vector<CStringA> styles_overrides;
+
+        if (m_STS->m_subtitleType == Subtitle::SubType::SRT) {
+            STSStyle defStyle = m_STS->m_SubRendererSettings.defaultStyle;
+            if (defStyle == m_STS->m_originalDefaultStyle) {
+                return;
+            }
+            detect_style_changes(nullptr, &defStyle, nullptr, styles_overrides);
+        } else if (m_STS->m_SubRendererSettings.overrideDefaultStyle) {
+            STSStyle defStyle = m_STS->m_SubRendererSettings.defaultStyle;
+            detect_style_changes(nullptr, &defStyle, nullptr, styles_overrides);
+        }
+
+        std::unique_ptr<char* []> tmp = std::make_unique<char* []>(styles_overrides.size() + 1);
+        for (size_t i = 0; i < styles_overrides.size(); ++i) {
+            tmp[i] = const_cast<char*>(styles_overrides[i].GetString());
+        }
+        tmp[styles_overrides.size()] = NULL;
+
+        ass_set_style_overrides(m_ass.get(), tmp.get());
+        ass_process_force_style(m_track.get());
+
+    } else {
+        // this doesn't seem to have effect
+        ass_set_style_overrides(m_ass.get(), NULL);
+        ass_process_force_style(m_track.get());
+
+        // Reload to get original styles back
+        if (!m_STS->m_path.IsEmpty()) {
+            LoadASSFile(m_STS->m_subtitleType);
+        } else if (!m_trackData.empty()) {
+            LoadASSTrack((char*)m_trackData.c_str(), m_trackData.length(), m_STS->m_subtitleType);
+        }
+    }
 }
 
 
@@ -566,14 +713,8 @@ bool LibassContext::LoadASSFile(Subtitle::SubType subType) {
 
     if (subType == Subtitle::SRT) {
         m_track = decltype(m_track)(srt_read_file(m_ass.get(), m_STS->m_path, defStyle, m_STS->m_SubRendererSettings.openTypeLangHint));
-        if (m_STS->m_storageRes == CSize(0, 0)) {
-            m_STS->m_storageRes = CSize(defStyle.SrtResX, defStyle.SrtResY);
-        }
     } else { //subType == Subtitle::SSA/ASS
         m_track = decltype(m_track)(ass_read_fileW(m_ass.get(), m_STS->m_path));
-        if (m_STS->m_storageRes == CSize(0, 0)) {
-            m_STS->m_storageRes = CSize(defStyle.SrtResX, defStyle.SrtResY);
-        }
     }
 
     if (!m_track) return false;

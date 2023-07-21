@@ -2310,11 +2310,11 @@ CSimpleTextSubtitle::CSimpleTextSubtitle()
     , m_bUsingPlayerDefaultStyle(false)
     , m_ePARCompensationType(EPCTDisabled)
     , m_dPARCompensation(1.0)
+    , m_SubRendererSettings(AfxGetAppSettings().GetSubRendererSettings())
 #if USE_LIBASS
     , m_LibassContext(this)
 #endif
 {
-    m_SubRendererSettings = AfxGetAppSettings().GetSubRendererSettings();
 }
 
 CSimpleTextSubtitle::~CSimpleTextSubtitle()
@@ -2594,6 +2594,8 @@ STSStyle* CSimpleTextSubtitle::CreateDefaultStyle(int CharSet)
 
         m_bUsingPlayerDefaultStyle = true;
     }
+
+    m_originalDefaultStyle = *ret;
 
     return ret;
 }

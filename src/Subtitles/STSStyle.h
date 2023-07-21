@@ -58,8 +58,6 @@ public:
 
 #if USE_LIBASS
     // libass stuff
-    DWORD      SrtResX = 1920;
-    DWORD      SrtResY = 1080;
     bool       Kerning = false;
     bool       ScaledBorderAndShadow = false;
     CString    customTags;
