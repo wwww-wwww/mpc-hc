@@ -4053,6 +4053,10 @@ void CMainFrame::OnFilePostClosemedia(bool bNextIsQueued/* = false*/)
     m_statusbarVideoFourCC.Empty();
     m_statusbarVideoSize.Empty();
 
+    m_VidDispName.Empty();
+    m_AudDispName.Empty();
+    m_HWAccelType = L"";
+
     if (!bNextIsQueued) {
         UpdateControlState(CMainFrame::UPDATE_LOGO);
         RecalcLayout();
@@ -14779,9 +14783,6 @@ void CMainFrame::CloseMediaPrivate()
 
     m_fCustomGraph = m_fShockwaveGraph = false;
 
-    m_VidDispName.Empty();
-    m_AudDispName.Empty();
-
     m_lastOMD.Free();
 	
 	m_FontInstaller.UninstallFonts();
@@ -20203,12 +20204,8 @@ GUID CMainFrame::GetTimeFormat()
 void CMainFrame::UpdateDXVAStatus()
 {
     CString DXVADecoderDescription = GetDXVADecoderDescription();
-    m_HWAccelType = GetDXVAVersion();
     m_bUsingDXVA = (_T("Not using DXVA") != DXVADecoderDescription && _T("Unknown") != DXVADecoderDescription);
-
     CString DXVAInfo;
-    DXVAInfo.Format(_T("%-13s: %s"), m_HWAccelType, DXVADecoderDescription.GetString());
-
     // If LAV Video is in the graph, we query it since it's always more reliable than the hook.
     if (CComQIPtr<ILAVVideoStatus> pLAVVideoStatus = FindFilter(GUID_LAVVideo, m_pGB)) {
         const LPCWSTR decoderName = pLAVVideoStatus->GetActiveDecoderName();
@@ -20226,6 +20223,11 @@ void CMainFrame::UpdateDXVAStatus()
             }
         }
     }
+    if (DXVAInfo.IsEmpty()) {
+        m_HWAccelType = GetDXVAVersion();
+        DXVAInfo.Format(_T("%-13s: %s"), m_HWAccelType, DXVADecoderDescription.GetString());
+    }
+
     GetRenderersData()->m_strDXVAInfo = DXVAInfo;
 }
 
