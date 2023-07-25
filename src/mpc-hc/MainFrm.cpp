@@ -3792,12 +3792,16 @@ LRESULT CMainFrame::OnFilePostOpenmedia(WPARAM wParam, LPARAM lParam)
     // remember OpenMediaData for later use
     m_lastOMD.Free();
     m_lastOMD.Attach((OpenMediaData*)lParam);
+    if (!m_lastOMD->title) {
+        ASSERT(false);
+        m_lastOMD->title = L"";
+    }
 
     // the media opened successfully, we don't want to jump trough it anymore
     m_nLastSkipDirection = 0;
 
     // let the EDL do its magic
-    if (s.fEnableEDLEditor) {
+    if (s.fEnableEDLEditor && !m_lastOMD->title.IsEmpty()) {
         m_wndEditListEditor.OpenFile(m_lastOMD->title);
     }
 
@@ -3951,6 +3955,10 @@ LRESULT CMainFrame::OnOpenMediaFailed(WPARAM wParam, LPARAM lParam)
 
     m_lastOMD.Free();
     m_lastOMD.Attach((OpenMediaData*)lParam);
+    if (!m_lastOMD->title) {
+        ASSERT(false);
+        m_lastOMD->title = L"";
+    }
 
     bool bOpenNextInPlaylist = false;
     bool bAfterPlaybackEvent = false;
@@ -14844,7 +14852,7 @@ bool CMainFrame::SearchInDir(bool bDirForward, bool bLoop /*= false*/)
     CString filename;
 
     auto pFileData = dynamic_cast<OpenFileData*>(m_lastOMD.m_p);
-    if (!pFileData) {
+    if (!pFileData || !pFileData->title || pFileData->title.IsEmpty()) {
         if (CanSkipFromClosedFile()) {
             if (m_wndPlaylistBar.GetCount() == 1) {
                 filename = m_wndPlaylistBar.m_pl.GetHead().m_fns.GetHead();
