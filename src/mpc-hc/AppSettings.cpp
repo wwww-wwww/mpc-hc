@@ -1878,15 +1878,11 @@ void CAppSettings::LoadSettings()
     strWebServerCGI = pApp->GetProfileString(IDS_R_SETTINGS, IDS_RS_WEBSERVERCGI);
 
     CString MyPictures;
-
     CRegKey key;
-    // grrrrr
-    // if (!SHGetSpecialFolderPath(nullptr, MyPictures.GetBufferSetLength(MAX_PATH), CSIDL_MYPICTURES, TRUE)) MyPictures.Empty();
-    // else MyPictures.ReleaseBuffer();
     if (ERROR_SUCCESS == key.Open(HKEY_CURRENT_USER, _T("Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders"), KEY_READ)) {
-        ULONG lenValue = MAX_PATH;
-        if (ERROR_SUCCESS == key.QueryStringValue(_T("My Pictures"), MyPictures.GetBuffer(MAX_PATH), &lenValue)) {
-            MyPictures.ReleaseBufferSetLength(lenValue);
+        ULONG lenValue = 1024;
+        if (ERROR_SUCCESS == key.QueryStringValue(_T("My Pictures"), MyPictures.GetBuffer((int)lenValue), &lenValue)) {
+            MyPictures.ReleaseBufferSetLength((int)lenValue);
         } else {
             MyPictures.Empty();
         }
@@ -2306,8 +2302,8 @@ CString CAppSettings::ParseFileName(CString const& param)
     if (param.Find(_T(":")) < 0 && param.Left(2) != L"\\\\") {
         // Try to transform relative pathname into full pathname
         CString fullPathName;
-        DWORD dwLen = GetFullPathName(param, MAX_PATH, fullPathName.GetBuffer(MAX_PATH), nullptr);
-        if (dwLen > 0 && dwLen < MAX_PATH) {
+        DWORD dwLen = GetFullPathName(param, 2048, fullPathName.GetBuffer(2048), nullptr);
+        if (dwLen > 0 && dwLen < 2048) {
             fullPathName.ReleaseBuffer(dwLen);
 
             if (!fullPathName.IsEmpty() && PathUtils::Exists(fullPathName)) {

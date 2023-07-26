@@ -4588,7 +4588,7 @@ BOOL CMainFrame::OnCopyData(CWnd* pWnd, COPYDATASTRUCT* pCDS)
             GetOpticalDiskType(s.slFiles.GetHead()[0], sl);
         } else {
             CString dir;
-            dir.ReleaseBufferSetLength(GetCurrentDirectory(MAX_PATH, dir.GetBuffer(MAX_PATH)));
+            dir.ReleaseBufferSetLength(GetCurrentDirectory(2048, dir.GetBuffer(2048)));
 
             GetOpticalDiskType(dir[0], sl);
 
