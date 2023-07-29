@@ -283,6 +283,7 @@ void CPPageSubStyle::OnChooseFont()
     if (m_iCharset >= 0) {
         lf.lfCharSet = (BYTE)m_cbCharset.GetItemData(m_iCharset);
     }
+    BYTE prev_charset = lf.lfCharSet;
 
     CFontDialog dlg(&lf, CF_SCREENFONTS | CF_INITTOLOGFONTSTRUCT | CF_FORCEFONTEXIST | CF_SCALABLEONLY);
     if (dlg.DoModal() == IDOK) {
@@ -291,6 +292,10 @@ void CPPageSubStyle::OnChooseFont()
             str = str.Left(14) + _T("...");
         }
         m_font.SetWindowText(str);
+
+        if (lf.lfCharSet == ANSI_CHARSET && prev_charset != ANSI_CHARSET) {
+            lf.lfCharSet = prev_charset;
+        }
 
         for (int i = 0, count = m_cbCharset.GetCount(); i < count; i++) {
             if (m_cbCharset.GetItemData(i) == lf.lfCharSet) {
