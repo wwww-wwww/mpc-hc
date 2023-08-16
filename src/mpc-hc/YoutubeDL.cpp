@@ -592,15 +592,14 @@ bool IsBetterYDLStream(YDLStreamDetails& first, YDLStreamDetails& second, int ma
             return false;
         }
     }
-
-    // Bitrate
-    if (first.has_video) {
-        if (second.vbr > first.vbr) {
+    // Prefer HTTPS above m3u8_native
+    if (second.protocol == _T("https")) {
+        if (first.protocol != _T("https")) {
             return true;
         }
     } else {
-        if (second.abr > first.abr) {
-            return true;
+        if (first.protocol == _T("https")) {
+            return false;
         }
     }
 
@@ -614,6 +613,17 @@ bool IsBetterYDLStream(YDLStreamDetails& first, YDLStreamDetails& second, int ma
             if (second.has_audio) {
                 return true;
             }
+        }
+    }
+
+    // Bitrate
+    if (first.has_video) {
+        if (second.vbr > first.vbr) {
+            return true;
+        }
+    } else {
+        if (second.abr > first.abr) {
+            return true;
         }
     }
 
