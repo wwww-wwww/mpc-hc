@@ -1735,6 +1735,11 @@ HRESULT CDX9RenderingEngine::SetCustomPixelShader(LPCSTR pSrcData, LPCSTR pTarge
     Shader.m_SourceData = pSrcData;
     Shader.m_SourceTarget = pTarget;
 
+    if (Shader.m_SourceData.Find("$MinimumShaderProfile: ps_4_0") > 0 || Shader.m_SourceData.Find("$MinimumShaderProfile: ps_5_0") > 0) {
+        // incompatible shader
+        return E_INVALIDARG;
+    }
+
     CComPtr<IDirect3DPixelShader9> pPixelShader;
 
     HRESULT hr = Shader.Compile(m_pPSC);

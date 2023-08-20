@@ -12143,7 +12143,10 @@ ShaderC* CMainFrame::GetShader(CString path, bool bD3D11)
 					file.SeekToBegin();
 				}
 
-                if (bD3D11) {
+                if (shader.profile == L"ps_4_0" && !bD3D11 || shader.profile == L"ps_5_0") {
+                    ASSERT(false);
+                    return nullptr;
+                } else if (bD3D11) {
                     shader.profile = L"ps_4_0";
                 } else if (shader.profile == L"ps_3_sw") {
 					shader.profile = L"ps_3_0";
@@ -12151,7 +12154,7 @@ ShaderC* CMainFrame::GetShader(CString path, bool bD3D11)
 						&& shader.profile != L"ps_2_a"
 						&& shader.profile != L"ps_2_b"
 						&& shader.profile != L"ps_3_0") {
-					shader.profile = L"ps_2_0";
+                    shader.profile = L"ps_3_0";
 				}
 
 				while (file.ReadString(str)) {
