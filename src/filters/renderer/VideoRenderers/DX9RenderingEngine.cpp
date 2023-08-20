@@ -591,8 +591,8 @@ HRESULT CDX9RenderingEngine::InitTemporaryScreenSpaceTextures(int count)
 
     for (int i = 0; i < count; i++) {
         if (m_pTemporaryScreenSpaceTextures[i] == nullptr) {
-            m_TemporaryScreenSpaceTextureSize = CSize(std::min(m_ScreenSize.cx, (long)m_Caps.MaxTextureWidth),
-                                                      std::min(std::max(m_ScreenSize.cy, m_nativeVideoSize.cy), (long)m_Caps.MaxTextureHeight));
+            m_TemporaryScreenSpaceTextureSize = CSize(std::min(std::max(m_BackBufferSize.cx, m_nativeVideoSize.cx), (long)m_Caps.MaxTextureWidth),
+                                                      std::min(std::max(m_BackBufferSize.cy, m_nativeVideoSize.cy), (long)m_Caps.MaxTextureHeight));
             hr = m_pD3DDev->CreateTexture(
                      m_TemporaryScreenSpaceTextureSize.cx,
                      m_TemporaryScreenSpaceTextureSize.cy,
