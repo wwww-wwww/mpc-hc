@@ -11706,16 +11706,14 @@ void CMainFrame::MoveVideoWindow(bool fShowStats/* = false*/, bool bSetStoppedVi
             }
         }
 
-        if (!HasDedicatedFSVideoWindow()) {
-            m_wndView.SetVideoRect(&windowRect);
-        } else {
+        if (HasDedicatedFSVideoWindow()) {
             m_pDedicatedFSVideoWnd->SetVideoRect(&windowRect);
+        } else {
+            m_wndView.SetVideoRect(&windowRect);
         }
         m_OSD.SetSize(windowRect, videoRect);
     } else {
-        if (!HasDedicatedFSVideoWindow()) {
-            m_wndView.SetVideoRect();
-        }
+        m_wndView.SetVideoRect();
     }
 }
 
@@ -19673,6 +19671,8 @@ LRESULT CMainFrame::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
     if (m_pMVRSR) {
         // call madVR window proc directly when the interface is available
         switch (message) {
+            case WM_CLOSE:
+                break;
             case WM_MOUSEMOVE:
             case WM_LBUTTONDOWN:
             case WM_LBUTTONUP:
