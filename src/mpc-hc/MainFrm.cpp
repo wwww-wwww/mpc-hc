@@ -12430,7 +12430,7 @@ void CMainFrame::OpenCreateGraphObject(OpenMediaData* pOMD)
     const CAppSettings& s = AfxGetAppSettings();
 
     m_pGB_preview = nullptr;
-    m_bUseSeekPreview = s.fSeekPreview && ::IsWindow(m_wndPreView.m_hWnd);
+    m_bUseSeekPreview = s.fSeekPreview && m_wndPreView && ::IsWindow(m_wndPreView.m_hWnd);
     if (m_bUseSeekPreview) {
         if (OpenFileData* pFileData = dynamic_cast<OpenFileData*>(pOMD)) {
             CString fn = pFileData->fns.GetHead();
@@ -17737,10 +17737,9 @@ void CMainFrame::SendStatusMessage(CString msg, int nTimeOut)
 }
 
 bool CMainFrame::CanPreviewUse() {
-    return (m_bUseSeekPreview
+    return (m_bUseSeekPreview && m_wndPreView && !m_fAudioOnly
         && m_eMediaLoadState == MLS::LOADED
         && (GetPlaybackMode() == PM_DVD || GetPlaybackMode() == PM_FILE)
-        && !m_fAudioOnly
         && AfxGetAppSettings().fSeekPreview);
 }
 
