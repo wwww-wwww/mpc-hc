@@ -109,6 +109,8 @@
 #include "RarEntrySelectorDialog.h"
 #include "FileHandle.h"
 
+#include <chrono>
+
 #include <dwmapi.h>
 #undef SubclassWindow
 
@@ -5970,47 +5972,14 @@ void CMainFrame::SaveThumbnails(LPCTSTR fn)
 CString CMainFrame::MakeSnapshotFileName(BOOL thumbnails)
 {
     CAppSettings& s = AfxGetAppSettings();
-    CString prefix;
+
+    CTime t = CTime::GetCurrentTime();
+
+    uint64_t ms = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count() % 1000;
+
     CString fn;
+    fn.Format(_T("vlcsnap-%s%03d%s"), t.Format(_T("%Y-%m-%d-%Hh%Mm%Ss")).GetString(), ms, s.strSnapshotExt.GetString());
 
-    ASSERT(!thumbnails || GetPlaybackMode() == PM_FILE);
-
-    auto videoFn = GetFileName();
-    if (!s.bSnapShotKeepVideoExtension) {
-        int nPos = videoFn.ReverseFind('.');
-        if (nPos != -1) {
-            videoFn = videoFn.Left(nPos);
-        }
-    }
-
-    if (GetPlaybackMode() == PM_FILE) {
-        if (thumbnails) {
-            prefix.Format(_T("%s_thumbs"), videoFn.GetString());
-        } else {
-            if (s.bSaveImagePosition) {
-                prefix.Format(_T("%s_snapshot_%s"), videoFn.GetString(), GetVidPos().GetString());
-            } else {
-                prefix.Format(_T("%s"), videoFn.GetString());
-            }
-        }
-    } else if (GetPlaybackMode() == PM_DVD) {
-        if (s.bSaveImagePosition) {
-            prefix.Format(_T("dvd_snapshot_%s"), GetVidPos().GetString());
-        } else {
-            prefix = _T("dvd_snapshot");
-        }
-    } else if (GetPlaybackMode() == PM_DIGITAL_CAPTURE) {
-        prefix.Format(_T("%s_snapshot"), m_pDVBState->sChannelName.GetString());
-    } else {
-        prefix = _T("snapshot");
-    }
-
-    if (!thumbnails && s.bSaveImageCurrentTime) {
-        CTime t = CTime::GetCurrentTime();
-        fn.Format(_T("%s_[%s]%s"), PathUtils::FilterInvalidCharsFromFileName(prefix).GetString(), t.Format(_T("%Y.%m.%d_%H.%M.%S")).GetString(), s.strSnapshotExt.GetString());
-    } else {
-        fn.Format(_T("%s%s"), PathUtils::FilterInvalidCharsFromFileName(prefix).GetString(), s.strSnapshotExt.GetString());
-    }
     return fn;
 }
 
@@ -14255,7 +14224,7 @@ void CMainFrame::OpenSetupStatusBar()
 // Called from GraphThread
 void CMainFrame::OpenSetupWindowTitle(bool reset /*= false*/)
 {
-    CString title(StrRes(IDR_MAINFRAME));
+    CString title(_T("VLC media player"));
 #ifdef MPCHC_LITE
     title += _T(" Lite");
 #endif
