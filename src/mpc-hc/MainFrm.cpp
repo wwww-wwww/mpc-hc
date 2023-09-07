@@ -11670,11 +11670,18 @@ void CMainFrame::MoveVideoWindow(bool fShowStats/* = false*/, bool bSetStoppedVi
                     L"touchInside"
                 };
 
+                // workaround for rotated video with MadVR
+                bool swapxy = ((m_iDefRotation + m_AngleZ) / 90) & 1;
+                double mvr_ZoomX = swapxy ? m_ZoomY : m_ZoomX;
+                double mvr_ZoomY = swapxy ? m_ZoomX : m_ZoomY;
+                double mvr_PosX = swapxy ? m_PosY : m_PosX;
+                double mvr_PosY = swapxy ? m_PosX : m_PosY;
+
                 m_pMVRC->SendCommandString("setZoomMode", const_cast<LPWSTR>(madVRModesMap[iDefaultVideoSize]));
-                m_pMVRC->SendCommandDouble("setZoomFactorX", madVRZoomFactor * m_ZoomX);
-                m_pMVRC->SendCommandDouble("setZoomFactorY", madVRZoomFactor * m_ZoomY);
-                m_pMVRC->SendCommandDouble("setZoomOffsetX", 2 * m_PosX - 1.0);
-                m_pMVRC->SendCommandDouble("setZoomOffsetY", 2 * m_PosY - 1.0);
+                m_pMVRC->SendCommandDouble("setZoomFactorX", madVRZoomFactor * mvr_ZoomX);
+                m_pMVRC->SendCommandDouble("setZoomFactorY", madVRZoomFactor * mvr_ZoomY);
+                m_pMVRC->SendCommandDouble("setZoomOffsetX", 2 * mvr_PosX - 1.0);
+                m_pMVRC->SendCommandDouble("setZoomOffsetY", 2 * mvr_PosY - 1.0);
             }
 
             if (fShowStats) {
