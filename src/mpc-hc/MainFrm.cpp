@@ -14576,7 +14576,7 @@ bool CMainFrame::OpenMediaPrivate(CAutoPtr<OpenMediaData> pOMD)
                     }
                 }
             }
-            if (abRepeat) {
+            if (abRepeat && abRepeat.positionB > 0) {
                 // validate
                 if (abRepeat.positionB > rtDur || abRepeat.positionA >= abRepeat.positionB) {
                     abRepeat = ABRepeat();
