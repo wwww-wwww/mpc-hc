@@ -16472,19 +16472,13 @@ bool CMainFrame::LoadSubtitle(CString fn, SubtitleInput* pSubInput /*= nullptr*/
             WIN32_FIND_DATA fd = {0};
             HANDLE hFind;
             
-            hFind = FindFirstFile(path + L"*.ttf", &fd);
+            hFind = FindFirstFile(path + L"*.?t?", &fd);
             if (hFind != INVALID_HANDLE_VALUE) {
                 do {
-                    m_FontInstaller.InstallTempFontFile(path + fd.cFileName);
-                } while (FindNextFile(hFind, &fd));
-                
-                FindClose(hFind);
-            }
-
-            hFind = FindFirstFile(path + L"*.otf", &fd);
-            if (hFind != INVALID_HANDLE_VALUE) {
-                do {
-                    m_FontInstaller.InstallTempFontFile(path + fd.cFileName);
+                    CStringW ext = GetFileExt(fd.cFileName);
+                    if (ext == ".ttf" || ext == ".otf" || ext == ".ttc") {
+                        m_FontInstaller.InstallTempFontFile(path + fd.cFileName);
+                    }
                 } while (FindNextFile(hFind, &fd));
                 
                 FindClose(hFind);
