@@ -1189,7 +1189,7 @@ public:
     // MPC API functions
     void        ProcessAPICommand(COPYDATASTRUCT* pCDS);
     void        SendAPICommand(MPCAPI_COMMAND nCommand, LPCWSTR fmt, ...);
-    void        SendNowPlayingToApi();
+    void        SendNowPlayingToApi(bool sendtrackinfo = true);
     void        SendSubtitleTracksToApi();
     void        SendAudioTracksToApi();
     void        SendPlaylistToApi();
