@@ -4642,7 +4642,7 @@ msgctxt "IDS_ARS_DEVICE_PERIOD"
 msgid "Device buffer:"
 msgstr ""
 
-msgctxt "IDS_ARS_CHECK_FORMAT"
+msgctxt "IDS_ARS_ALT_CHECK_FORMAT"
 msgid "Do not check format support"
 msgstr ""
 
@@ -4688,4 +4688,18 @@ msgstr ""
 
 msgctxt "IDS_AG_DEFAULT"
 msgid "Default"
+msgstr ""
+
+msgctxt "IDS_FILTER_RESET_SETTINGS"
+msgid "Reset"
+msgstr ""
+
+msgctxt "IDS_ARS_TIP_BITEXACT_OUTPUT"
+msgid ""
+"If possible, the audio will be sent out in its original format.\n"
+"Otherwise, the format specified in the system settings will be used."
+msgstr ""
+
+msgctxt "IDS_ARS_TIP_ALT_CHECK_FORMAT"
+msgid "The renderer will try to initialize the device skipping some checks."
 msgstr ""
