@@ -46,12 +46,12 @@ copy_libs() {
   cp lib*/*-lav-*.dll ${FFMPEG_DLL_PATH}
   if [ "${COMPILER}" == "GCC" ]; then
     #${cross_prefix}strip ${FFMPEG_DLL_PATH}/*-lav-*.dll
-    ${CV2PDB_PATH} ${FFMPEG_DLL_PATH}/avcodec-lav-59.dll
-    ${CV2PDB_PATH} ${FFMPEG_DLL_PATH}/avfilter-lav-8.dll
-    ${CV2PDB_PATH} ${FFMPEG_DLL_PATH}/avformat-lav-59.dll
-    ${CV2PDB_PATH} ${FFMPEG_DLL_PATH}/avutil-lav-57.dll
+    ${CV2PDB_PATH} ${FFMPEG_DLL_PATH}/avcodec-lav-60.dll
+    ${CV2PDB_PATH} ${FFMPEG_DLL_PATH}/avfilter-lav-9.dll
+    ${CV2PDB_PATH} ${FFMPEG_DLL_PATH}/avformat-lav-60.dll
+    ${CV2PDB_PATH} ${FFMPEG_DLL_PATH}/avutil-lav-58.dll
     ${CV2PDB_PATH} ${FFMPEG_DLL_PATH}/swresample-lav-4.dll
-    ${CV2PDB_PATH} ${FFMPEG_DLL_PATH}/swscale-lav-6.dll
+    ${CV2PDB_PATH} ${FFMPEG_DLL_PATH}/swscale-lav-7.dll
   fi
   cp -u lib*/*.lib ${FFMPEG_LIB_PATH}
 }
