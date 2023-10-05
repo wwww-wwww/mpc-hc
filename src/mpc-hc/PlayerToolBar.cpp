@@ -544,6 +544,8 @@ void CPlayerToolBar::OnLButtonUp(UINT nFlags, CPoint point)
 
 void CPlayerToolBar::OnRButtonUp(UINT nFlags, CPoint point)
 {
+    CToolBar::OnRButtonUp(nFlags, point);
+
     int buttonId = getHitButtonIdx(point);
 
     if (buttonId >= 0 && !(GetButtonStyle(buttonId) & (TBBS_SEPARATOR | TBBS_DISABLED))) {
@@ -574,7 +576,6 @@ void CPlayerToolBar::OnRButtonUp(UINT nFlags, CPoint point)
         }     
 
         if (messageId > 0) {
-            CToolBar::OnRButtonUp(nFlags, point);
             m_pMainFrame->PostMessage(WM_COMMAND, messageId);
         }
     }
