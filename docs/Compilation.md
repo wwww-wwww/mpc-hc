@@ -2,7 +2,7 @@
 
 ## Part A: Preparing the Visual Studio environment
 
-### Visual Studio 2019 (or 2017)
+### Visual Studio 2019
 
 1. Install Visual Studio (any edition will work fine). Select at minimum the following components:
     - C++ core features
