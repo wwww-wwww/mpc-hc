@@ -39,7 +39,8 @@ CPlayerToolBar::CPlayerToolBar(CMainFrame* pMainFrame)
     : m_pMainFrame(pMainFrame)
     , m_nButtonHeight(16)
     , m_volumeMinSizeInc(0)
-    , mouseDown(false)
+    , mouseDownL(false)
+    , mouseDownR(false)
 {
     GetEventd().Connect(m_eventc, {
         MpcEvent::DPI_CHANGED,
@@ -310,6 +311,7 @@ BEGIN_MESSAGE_MAP(CPlayerToolBar, CToolBar)
     ON_COMMAND_EX(ID_VOLUME_DOWN, OnVolumeDown)
     ON_WM_NCPAINT()
     ON_WM_LBUTTONDOWN()
+    ON_WM_RBUTTONDOWN()
     ON_WM_SETCURSOR()
     ON_NOTIFY_EX(TTN_NEEDTEXT, 0, OnToolTipNotify)
     ON_WM_LBUTTONUP()
@@ -368,7 +370,7 @@ void CPlayerToolBar::OnCustomDraw(NMHDR* pNMHDR, LRESULT* pResult)
                     if (pTBCD->nmcd.uItemState & CDIS_CHECKED) {
                         drawButtonBG(pTBCD->nmcd, CMPCTheme::PlayerButtonCheckedColor);
                     } else if (pTBCD->nmcd.uItemState & CDIS_HOT) {
-                        drawButtonBG(pTBCD->nmcd, mouseDown ? CMPCTheme::PlayerButtonClickedColor : CMPCTheme::PlayerButtonHotColor);
+                        drawButtonBG(pTBCD->nmcd, mouseDownL ? CMPCTheme::PlayerButtonClickedColor : CMPCTheme::PlayerButtonHotColor);
                     }
                 }
             }
@@ -472,13 +474,26 @@ BOOL CPlayerToolBar::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 void CPlayerToolBar::OnLButtonDown(UINT nFlags, CPoint point)
 {
     int i = getHitButtonIdx(point);
-    mouseDown = true;
+    mouseDownL = true;
 
     if (!m_pMainFrame->m_fFullScreen && (i < 0 || (GetButtonStyle(i) & (TBBS_SEPARATOR | TBBS_DISABLED)))) {
         ClientToScreen(&point);
         m_pMainFrame->PostMessage(WM_NCLBUTTONDOWN, HTCAPTION, MAKELPARAM(point.x, point.y));
     } else {
         __super::OnLButtonDown(nFlags, point);
+    }
+}
+
+void CPlayerToolBar::OnRButtonDown(UINT nFlags, CPoint point) {
+    int i = getHitButtonIdx(point);
+    mouseDownR = true;
+
+    if (!m_pMainFrame->m_fFullScreen && (i < 0 || (GetButtonStyle(i) & (TBBS_SEPARATOR | TBBS_DISABLED)))) {
+        ClientToScreen(&point);
+        m_pMainFrame->PostMessage(WM_NCRBUTTONDOWN, HTCAPTION, MAKELPARAM(point.x, point.y));
+    } else {
+        rightButtonIndex = i;
+        __super::OnRButtonDown(nFlags, point);
     }
 }
 
@@ -538,42 +553,40 @@ BOOL CPlayerToolBar::OnToolTipNotify(UINT id, NMHDR* pNMHDR, LRESULT* pResult)
 
 void CPlayerToolBar::OnLButtonUp(UINT nFlags, CPoint point)
 {
-    mouseDown = false;
+    mouseDownL = false;
     CToolBar::OnLButtonUp(nFlags, point);
 }
 
-void CPlayerToolBar::OnRButtonUp(UINT nFlags, CPoint point)
-{
+void CPlayerToolBar::OnRButtonUp(UINT nFlags, CPoint point) {
     CToolBar::OnRButtonUp(nFlags, point);
+    mouseDownR = false;
 
     int buttonId = getHitButtonIdx(point);
-
-    if (buttonId >= 0 && !(GetButtonStyle(buttonId) & (TBBS_SEPARATOR | TBBS_DISABLED))) {
+    if (buttonId >= 0 && rightButtonIndex == buttonId) {
         int itemId = GetItemID(buttonId);
 
         UINT messageId = 0;
 
-        switch (itemId)
-        {
-        case ID_PLAY_PLAY:
-            messageId = ID_FILE_OPENMEDIA;
-            break;
-        case ID_PLAY_FRAMESTEP:
-            messageId = ID_PLAY_FRAMESTEP_BACK;
-            break;
-        case ID_PLAY_STOP:
-            messageId = ID_FILE_CLOSE_AND_RESTORE;
-            break;
-        case ID_NAVIGATE_SKIPFORWARD:
-            messageId = ID_NAVIGATE_SKIPFORWARDFILE;
-            break;
-        case ID_NAVIGATE_SKIPBACK:
-            messageId = ID_NAVIGATE_SKIPBACKFILE;
-            break;
-        case ID_VOLUME_MUTE:
-            messageId = ID_STREAM_AUDIO_NEXT;
-            break;
-        }     
+        switch (itemId) {
+            case ID_PLAY_PLAY:
+                messageId = ID_FILE_OPENMEDIA;
+                break;
+            case ID_PLAY_FRAMESTEP:
+                messageId = ID_PLAY_FRAMESTEP_BACK;
+                break;
+            case ID_PLAY_STOP:
+                messageId = ID_FILE_CLOSE_AND_RESTORE;
+                break;
+            case ID_NAVIGATE_SKIPFORWARD:
+                messageId = ID_NAVIGATE_SKIPFORWARDFILE;
+                break;
+            case ID_NAVIGATE_SKIPBACK:
+                messageId = ID_NAVIGATE_SKIPBACKFILE;
+                break;
+            case ID_VOLUME_MUTE:
+                messageId = ID_STREAM_AUDIO_NEXT;
+                break;
+        }
 
         if (messageId > 0) {
             m_pMainFrame->PostMessage(WM_COMMAND, messageId);
