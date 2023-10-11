@@ -19333,7 +19333,7 @@ void CMainFrame::OnFileOpendirectory()
 
 HRESULT CMainFrame::CreateThumbnailToolbar()
 {
-    if (!AfxGetAppSettings().bUseEnhancedTaskBar || !IsWindows7OrGreater()) {
+    if (!this || !AfxGetAppSettings().bUseEnhancedTaskBar) {
         return E_FAIL;
     }
 
