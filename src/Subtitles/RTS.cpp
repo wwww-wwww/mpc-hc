@@ -575,17 +575,15 @@ bool CText::CreatePath()
         return true;
     };
 
-    std::wstring fontNameK;
-
-
     bool useFreetypePath = false;
+    std::wstring fontNameFT;
     CStringA langHint = "";
     if (m_RTS) {
         langHint = m_RTS->openTypeLangHint;
         useFreetypePath = m_RTS->GetUseFreeType();
         if (useFreetypePath) {
-            fontNameK = CW2W(m_style.fontName);
-            fontNameK += std::to_wstring(m_style.fontSize);
+            fontNameFT = CW2W(m_style.fontName);
+            fontNameFT += std::to_wstring(m_style.fontSize);
         }
     }
 
@@ -609,7 +607,9 @@ bool CText::CreatePath()
                 int mp = mPathPoints;
                 PartialEndPath(g_hDC, width, 0);
                 if (mp == mPathPoints && !CStringW::StrTraits::IsSpace(s[0]) && m_RTS) { //failed to add points, we will try again with FreeType as emulator
-                    useFreetypePath=true;
+                    useFreetypePath = true;
+                    fontNameFT = CW2W(m_style.fontName);
+                    fontNameFT += std::to_wstring(m_style.fontSize);
                     break;
                 }
 #if 0
@@ -623,8 +623,8 @@ bool CText::CreatePath()
         if (useFreetypePath) { //try freetype
             int ftWidth = 0;
             bFirstPath = true;
-            m_RTS->m_ftLibrary.LoadCodeFaceData(g_hDC, fontNameK);
-            m_RTS->m_ftLibrary.LoadCodePoints(m_str, fontNameK, langHint);
+            m_RTS->m_ftLibrary.LoadCodeFaceData(g_hDC, fontNameFT);
+            m_RTS->m_ftLibrary.LoadCodePoints(m_str, fontNameFT, langHint);
             for (LPCWSTR s = m_str; *s; s++) {
                 if (!getExtent(s, 1)) {
                     return false;
@@ -635,7 +635,7 @@ bool CText::CreatePath()
                     continue;
                 }
 
-                if (!GetPathFreeType(g_hDC, bFirstPath, fontNameK, s[0], ftWidth, 0, langHint, &m_RTS->m_ftLibrary)) {
+                if (!GetPathFreeType(g_hDC, bFirstPath, fontNameFT, s[0], ftWidth, 0, langHint, &m_RTS->m_ftLibrary)) {
                     break;
                 }
                 bFirstPath = false;
@@ -643,7 +643,9 @@ bool CText::CreatePath()
             }
         }
     } else {
-        if (!getExtent(m_str, m_str.GetLength()) || cx == 0) {
+        int strlen = m_str.GetLength();
+
+        if (!getExtent(m_str, strlen) || cx == 0) {
             // possible unhandled unprintable character
             ASSERT(false);
             return false;
@@ -651,20 +653,27 @@ bool CText::CreatePath()
 
         if (!useFreetypePath) {
             BeginPath(g_hDC);
-            TextOutW(g_hDC, 0, 0, m_str, m_str.GetLength());
+            TextOutW(g_hDC, 0, 0, m_str, strlen);
             EndPath(g_hDC);
+
+
+            if (mPathPoints == 0 && m_RTS && strlen > 0) { // try freetype as fallback
+                useFreetypePath = true;
+                fontNameFT = CW2W(m_style.fontName);
+                fontNameFT += std::to_wstring(m_style.fontSize);
+            }
         }
 
-        if ((useFreetypePath || mPathPoints == 0) && m_str.GetLength() > 0) { // try freetype
+        if (useFreetypePath && strlen > 0) {
             int ftWidth = 0;
             bool bFirstPath = true;
-            m_RTS->m_ftLibrary.LoadCodeFaceData(g_hDC, fontNameK);
-            m_RTS->m_ftLibrary.LoadCodePoints(m_str, fontNameK, langHint);
+            m_RTS->m_ftLibrary.LoadCodeFaceData(g_hDC, fontNameFT);
+            m_RTS->m_ftLibrary.LoadCodePoints(m_str, fontNameFT, langHint);
             for (LPCWSTR s = m_str; *s; s++) {
                 if (!getExtent(s, 1)) {
                     return false;
                 }
-                if (!GetPathFreeType(g_hDC, bFirstPath, fontNameK, s[0], ftWidth, 0, langHint, &m_RTS->m_ftLibrary)) {
+                if (!GetPathFreeType(g_hDC, bFirstPath, fontNameFT, s[0], ftWidth, 0, langHint, &m_RTS->m_ftLibrary)) {
                     break;
                 }
                 bFirstPath = false;
