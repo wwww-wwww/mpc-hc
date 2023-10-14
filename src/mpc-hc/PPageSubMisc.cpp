@@ -103,7 +103,7 @@ BOOL CPPageSubMisc::OnInitDialog()
     if (columnWidth.GetCount() != COL_TOTAL_COLUMNS) {
         // default sizes
         columnWidth.RemoveAll();
-        columnWidth.Add(120);
+        columnWidth.Add(130);
         columnWidth.Add(75);
         columnWidth.Add(300);
     }
@@ -117,7 +117,7 @@ BOOL CPPageSubMisc::OnInitDialog()
 
     int i = 0;
     for (const auto& iter : m_pSubtitlesProviders->Providers()) {
-        int iItem = m_list.InsertItem(i++, CString(iter->Name().c_str()), iter->GetIconIndex());
+        int iItem = m_list.InsertItem(i++, CString(iter->DisplayName().c_str()), iter->GetIconIndex());
         m_list.SetItemText(iItem, COL_USERNAME, UTF8To16(iter->UserName().c_str()));
         m_list.SetItemText(iItem, COL_LANGUAGES, ResStr(IDS_SUBPP_DLG_FETCHING_LANGUAGES));
         m_list.SetCheck(iItem, iter->Enabled(SPF_SEARCH));
