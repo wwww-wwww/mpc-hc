@@ -3798,6 +3798,7 @@ LRESULT CMainFrame::OnFilePostOpenmedia(WPARAM wParam, LPARAM lParam)
     }
 
     // the media opened successfully, we don't want to jump trough it anymore
+    UINT lastSkipDirection = m_nLastSkipDirection;
     m_nLastSkipDirection = 0;
 
     // let the EDL do its magic
@@ -3874,7 +3875,7 @@ LRESULT CMainFrame::OnFilePostOpenmedia(WPARAM wParam, LPARAM lParam)
         ZoomVideoWindow();
     }
 
-    if (s.fLaunchfullscreen && !m_fAudioOnly && !IsFullScreenMode()) {
+    if (s.fLaunchfullscreen && !m_fAudioOnly && !IsFullScreenMode() && lastSkipDirection == 0) {
         OnViewFullscreen();
     }
 
