@@ -19,7 +19,7 @@
 ; Requirements:
 ; Inno Setup Unicode: http://www.jrsoftware.org/isdl.php
 
-
+#define localize = "whatever"
 #if VER < EncodeVer(5,5,9)
   #error Update your Inno Setup version (5.5.9 or newer)
 #endif
@@ -64,7 +64,7 @@
 #define quick_launch    "{userappdata}\Microsoft\Internet Explorer\Quick Launch"
 
 #define base_bindir     = "..\bin"
-
+#define x64Build 1
 #ifdef x64Build
   #define bindir        = AddBackslash(base_bindir) + "mpc-hc_x64"
   #define mpchc_exe     = "mpc-hc64.exe"
