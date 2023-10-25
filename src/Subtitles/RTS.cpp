@@ -624,7 +624,9 @@ bool CText::CreatePath()
             int ftWidth = 0;
             bFirstPath = true;
             m_RTS->m_ftLibrary.LoadCodeFaceData(g_hDC, fontNameFT);
-            m_RTS->m_ftLibrary.LoadCodePoints(m_str, fontNameFT, langHint);
+            if (!langHint.IsEmpty()) {
+                m_RTS->m_ftLibrary.LoadCodePoints(m_str, fontNameFT, langHint);
+            }
             for (LPCWSTR s = m_str; *s; s++) {
                 if (!getExtent(s, 1)) {
                     return false;
@@ -668,7 +670,9 @@ bool CText::CreatePath()
             int ftWidth = 0;
             bool bFirstPath = true;
             m_RTS->m_ftLibrary.LoadCodeFaceData(g_hDC, fontNameFT);
-            m_RTS->m_ftLibrary.LoadCodePoints(m_str, fontNameFT, langHint);
+            if (!langHint.IsEmpty()) {
+                m_RTS->m_ftLibrary.LoadCodePoints(m_str, fontNameFT, langHint);
+            }
             for (LPCWSTR s = m_str; *s; s++) {
                 if (!getExtent(s, 1)) {
                     return false;

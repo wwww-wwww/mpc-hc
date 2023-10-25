@@ -85,31 +85,36 @@ bool FTLibraryData::LoadCodeFaceData(HDC hdc, std::wstring fontNameK) {
 }
 
 void FTLibraryData::LoadCodePoints(CStringW str, std::wstring fontNameK, const char* langHint) {
-    std::wstring wstr(str);
-    auto& fd = faceCache[fontNameK];
-    if (nullptr != langHint && langHint[0] != 0) {
-        if (!fd.hbFont) {
-            fd.hbFont = hb_ft_font_create(fd.face, NULL);
-        }
-        hb_buffer_t* buf = hb_buffer_create();
-        hb_buffer_add_utf16(buf, (uint16_t*)wstr.c_str(), -1, 0, -1);
-        hb_buffer_guess_segment_properties(buf);
-        hb_segment_properties_t props;
-        hb_buffer_get_segment_properties(buf, &props);
-        props.language = hb_language_from_string(langHint, -1);
-        hb_buffer_set_segment_properties(buf, &props);
+    ASSERT(nullptr != langHint && langHint[0] != 0);
 
-        unsigned int glyphCount;
-        hb_shape(fd.hbFont, buf, NULL, 0);
-        hb_glyph_info_t* glyphInfo = hb_buffer_get_glyph_infos(buf, &glyphCount);
-        if (glyphCount > 0) {
-            for (unsigned int i = 0; i < glyphCount; i++) {
-                wchar_t ch = wstr.at(glyphInfo[i].cluster);
-                if (fd.codePoints.count(ch) == 0) {
-                    fd.codePoints[ch] = glyphInfo[i].codepoint;
-                }
+    auto& fd = faceCache[fontNameK];
+    if (!fd.face) {
+        ASSERT(false);
+        return;
+    }
+    if (!fd.hbFont) {
+        fd.hbFont = hb_ft_font_create(fd.face, NULL);
+    }
+
+    std::wstring wstr(str);
+    hb_buffer_t* buf = hb_buffer_create();
+    hb_buffer_add_utf16(buf, (uint16_t*)wstr.c_str(), -1, 0, -1);
+    hb_buffer_guess_segment_properties(buf);
+    hb_segment_properties_t props;
+    hb_buffer_get_segment_properties(buf, &props);
+    props.language = hb_language_from_string(langHint, -1);
+    hb_buffer_set_segment_properties(buf, &props);
+
+    unsigned int glyphCount;
+    hb_shape(fd.hbFont, buf, NULL, 0);
+    hb_glyph_info_t* glyphInfo = hb_buffer_get_glyph_infos(buf, &glyphCount);
+    if (glyphCount > 0) {
+        for (unsigned int i = 0; i < glyphCount; i++) {
+            wchar_t ch = wstr.at(glyphInfo[i].cluster);
+            if (fd.codePoints.count(ch) == 0) {
+                fd.codePoints[ch] = glyphInfo[i].codepoint;
             }
         }
-        hb_buffer_destroy(buf);
     }
+    hb_buffer_destroy(buf);
 }
