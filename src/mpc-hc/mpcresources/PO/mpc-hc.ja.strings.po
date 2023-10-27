@@ -5,15 +5,15 @@
 # MPC HC <adiposegithub@gmail.com>, 2020
 # O SA, 2020
 # Sonozaki Shion <mskt01a@gmail.com>, 2021
-# ever_green, 2022
+# ever_green, 2023
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2022-06-24 16:57:41+0000\n"
+"POT-Creation-Date: 2022-12-04 16:41:19+0000\n"
 "PO-Revision-Date: 2020-01-02 07:46+0000\n"
-"Last-Translator: ever_green, 2022\n"
-"Language-Team: Japanese (https://www.transifex.com/mpchc/teams/106126/ja/)\n"
+"Last-Translator: ever_green, 2023\n"
+"Language-Team: Japanese (https://app.transifex.com/mpchc/teams/106126/ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -4540,7 +4540,7 @@ msgctxt "IDS_PPAGEADVANCED_ALWAYS_USE_SHORT_MENU"
 msgid ""
 "Player Menu shortcuts and right-click show compact menu -- even when main "
 "menu is hidden."
-msgstr "プレーヤー メニューのショートカットと右クリックでコンパクト メニューを表示します - メイン メニューが非表示の場合でも。"
+msgstr "プレーヤー メニューのショートカットと右クリックでコンパクト メニューを表示します ー メイン メニューが非表示の場合でも。"
 
 msgctxt "IDS_PPAGEADVANCED_USE_FREETYPE"
 msgid ""
@@ -4552,11 +4552,11 @@ msgctxt "IDS_PPAGEADVANCED_FULLSCREEN_SEPARATE_CONTROLS"
 msgid ""
 "Keep main window controls visible on current monitor when going fullscreen "
 "on another monitor."
-msgstr "メイン ウィンドウ コントロールは、別のモニターで全画面表示になるときに現在のモニターに表示されたままにします。"
+msgstr "別のモニタで全画面表示するときは、メイン ウィンドウ コントロールを現在のモニタに表示したままにします。"
 
 msgctxt "IDS_PPAGEADVANCED_BLOCKRDP"
 msgid "Block use of RDP Redirection Filter"
-msgstr "RDP リダイレクト フィルターの使用をブロックします"
+msgstr "RDP リダイレクト フィルタの使用をブロックします"
 
 msgctxt "IDS_PPAGEADVANCED_YDL_EXEPATH"
 msgid ""
@@ -4585,7 +4585,7 @@ msgid ""
 "Use automatic generated captions from Youtube. Note: this can cause a small "
 "delay when loading the stream."
 msgstr ""
-"YouTubeから自動生成されたキャプションを使用します。注: これにより、ストリームの読み込み時にわずかな遅延が発生する可能性があります。"
+"YouTube から自動生成されたキャプションを使用します。注: これにより、ストリームの読み込み時にわずかな遅延が発生する可能性があります。"
 
 msgctxt "IDS_PPAGEADVANCED_USE_SMTC"
 msgid ""
@@ -4597,7 +4597,7 @@ msgctxt "IDS_PPAGEADVANCED_MOUSE_LEFTUP_DELAY"
 msgid ""
 "Maximum delay in milliseconds of mouse LeftUp event when clicking on the "
 "video."
-msgstr ""
+msgstr "ビデオをクリックしたときのマウスの LeftUp イベントの最大遅延 (ミリ秒単位)。"
 
 msgctxt "IDS_PPAGEADVANCED_LOCK_NOPAUSE"
 msgid "Do not pause playback when locking the screen."

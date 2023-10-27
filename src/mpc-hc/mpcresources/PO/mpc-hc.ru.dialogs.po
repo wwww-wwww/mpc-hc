@@ -9,7 +9,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2022-06-21 19:15:32+0000\n"
+"POT-Creation-Date: 2023-06-30 03:41:53+0000\n"
 "PO-Revision-Date: 2020-01-02 07:46+0000\n"
 "Last-Translator: CoolCmd, 2023\n"
 "Language-Team: Russian (https://app.transifex.com/mpchc/teams/106126/ru/)\n"
@@ -715,7 +715,7 @@ msgstr ""
 
 msgctxt "IDD_PPAGETWEAKS_IDC_CHECK8"
 msgid "Show time tooltip (and preview):"
-msgstr ""
+msgstr "Показывать подсказки со временем и предпросмотром:"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_STATIC"
 msgid "OSD font:"
@@ -1103,23 +1103,23 @@ msgstr "Связать альфа-каналы"
 
 msgctxt "IDD_PPAGESUBSTYLE_IDC_STATIC21"
 msgid "8-bit Character Set"
-msgstr ""
+msgstr "8-битная кодировка символов"
 
 msgctxt "IDD_PPAGESUBSTYLE_IDC_STATIC22"
 msgid "OpenType Language"
-msgstr ""
+msgstr "Язык OpenType"
 
 msgctxt "IDD_PPAGESUBSTYLE_IDC_STATIC_LIBASS"
 msgid "Libass Options"
-msgstr ""
+msgstr "Настройки libass"
 
 msgctxt "IDD_PPAGESUBSTYLE_IDC_CHECK2"
 msgid "Use libass for SSA/ASS"
-msgstr ""
+msgstr "Использовать libass для SSA/ASS"
 
 msgctxt "IDD_PPAGESUBSTYLE_IDC_CHECK3"
 msgid "Use libass for SRT"
-msgstr ""
+msgstr "Использовать libass для SRT"
 
 msgctxt "IDD_PPAGEINTERNALFILTERS_IDC_STATIC"
 msgid ""

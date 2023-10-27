@@ -11,7 +11,7 @@ msgstr ""
 "POT-Creation-Date: 2021-08-25 14:36:40+0000\n"
 "PO-Revision-Date: 2020-01-02 07:46+0000\n"
 "Last-Translator: Hack茶ん, 2023\n"
-"Language-Team: Korean (https://www.transifex.com/mpchc/teams/106126/ko/)\n"
+"Language-Team: Korean (https://app.transifex.com/mpchc/teams/106126/ko/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -84,7 +84,7 @@ msgstr "자막 다운로드(&D)..."
 
 msgctxt "ID_FILE_PROPERTIES"
 msgid "P&roperties"
-msgstr "등록정보(&R)"
+msgstr "속성(&R)"
 
 msgctxt "ID_FILE_OPEN_LOCATION"
 msgid "Open File &Location"
@@ -100,7 +100,7 @@ msgstr "보기(&V)"
 
 msgctxt "ID_VIEW_CAPTIONMENU"
 msgid "Caption&&Menu"
-msgstr "제목표시줄 && 메뉴"
+msgstr "제목 표시줄 && 메뉴"
 
 msgctxt "ID_VIEW_SEEKER"
 msgid "See&k Bar"
@@ -120,7 +120,7 @@ msgstr "통계(&T)"
 
 msgctxt "ID_VIEW_STATUS"
 msgid "St&atus"
-msgstr "상태표시줄(&A)"
+msgstr "상태  표시줄(&A)"
 
 msgctxt "ID_VIEW_SUBRESYNC"
 msgid "Su&bresync"
@@ -152,11 +152,11 @@ msgstr "간단히(&C)"
 
 msgctxt "ID_VIEW_PRESETS_NORMAL"
 msgid "&Normal"
-msgstr "표준(&N)"
+msgstr "기본(&N)"
 
 msgctxt "ID_VIEW_MPCTHEME"
 msgid "Dark Theme (restart)"
-msgstr "다크 테마 (다시 시작)"
+msgstr "다크 테마(다시 시작)"
 
 msgctxt "ID_VIEW_FULLSCREEN"
 msgid "F&ull Screen"
@@ -188,7 +188,7 @@ msgstr "화면에 맞춰 자동 크기 조정"
 
 msgctxt "ID_VIEW_ZOOM_AUTOFIT_LARGER"
 msgid "Auto Fit (&Larger Only)"
-msgstr "자동 크기 조정 (크게만)"
+msgstr "자동 크기 조정(확대)"
 
 msgctxt "POPUP"
 msgid "R&enderer Settings"
@@ -292,15 +292,15 @@ msgstr "주변광(&L)"
 
 msgctxt "ID_VIEW_CM_AMBIENTLIGHT_BRIGHT"
 msgid "&Bright (2.2 Gamma)"
-msgstr "밝게 (2.2 감마)"
+msgstr "밝게(2.2 감마)"
 
 msgctxt "ID_VIEW_CM_AMBIENTLIGHT_DIM"
 msgid "&Dim (2.35 Gamma)"
-msgstr "조금 어둡게 (2.35 감마)"
+msgstr "조금 어둡게(2.35 감마)"
 
 msgctxt "ID_VIEW_CM_AMBIENTLIGHT_DARK"
 msgid "D&ark (2.4 Gamma)"
-msgstr "어둡게 (2.4 감마)"
+msgstr "어둡게(2.4 감마)"
 
 msgctxt "POPUP"
 msgid "&Rendering Intent"
@@ -332,7 +332,7 @@ msgstr "수직 동기화(&V)"
 
 msgctxt "ID_VIEW_VSYNCACCURATE"
 msgid "&Accurate VSync"
-msgstr "정확한 수직 동기화(&A)"
+msgstr "정밀 수직 동기화(&A)"
 
 msgctxt "ID_VIEW_ALTERNATIVEVSYNC"
 msgid "A&lternative VSync"
@@ -384,7 +384,7 @@ msgstr "절반 크기(&H)"
 
 msgctxt "ID_VIEW_VF_NORMAL"
 msgid "&Normal Size"
-msgstr "원래 크기(&N)"
+msgstr "기본 크기(&N)"
 
 msgctxt "ID_VIEW_VF_DOUBLE"
 msgid "&Double Size"
@@ -416,7 +416,7 @@ msgstr "종횡비(&A)"
 
 msgctxt "ID_ASPECTRATIO_DAR"
 msgid "&Default (DAR)"
-msgstr "기본값 (&DAR)"
+msgstr "기본값(&DAR)"
 
 msgctxt "ID_ASPECTRATIO_4_3"
 msgid "&4:3"
@@ -440,11 +440,11 @@ msgstr "&185:100"
 
 msgctxt "ID_ASPECTRATIO_SAR"
 msgid "Assume &square pixels (SAR)"
-msgstr "사각형 픽셀 추정 (&SAR)"
+msgstr "사각형 픽셀 추정(&SAR)"
 
 msgctxt "ID_VIEW_VF_COMPMONDESKARDIFF"
 msgid "&Correct Monitor/Desktop AR Diff"
-msgstr "모니터/바탕화면 종횡비 보정(&C)"
+msgstr "모니터/바탕 화면 종횡비 보정(&C)"
 
 msgctxt "POPUP"
 msgid "Pa&n && Scan"
@@ -504,11 +504,11 @@ msgstr "반시계 방향으로 회전(&W)"
 
 msgctxt "ID_PANSCAN_ROTATEXM"
 msgid "&Flip Vertically"
-msgstr "상하반전(&F)"
+msgstr "상하 반전(&F)"
 
 msgctxt "ID_PANSCAN_ROTATEYM"
 msgid "&Mirror"
-msgstr "좌우반전(&M)"
+msgstr "좌우 반전(&M)"
 
 msgctxt "ID_VIEW_RESET"
 msgid "Re&set"
@@ -516,7 +516,7 @@ msgstr "초기화(&S)"
 
 msgctxt "POPUP"
 msgid "On &Top"
-msgstr "앞에 표시(&T)"
+msgstr "항상 위에 유지(&T)"
 
 msgctxt "ID_ONTOP_DEFAULT"
 msgid "&Default"
@@ -544,11 +544,11 @@ msgstr "재생(&P)"
 
 msgctxt "ID_PLAY_PLAYPAUSE"
 msgid "&Play/Pause"
-msgstr "재생/일시 정지(&P)"
+msgstr "재생/일시 중지(&P)"
 
 msgctxt "ID_PLAY_STOP"
 msgid "&Stop"
-msgstr "정지(&S)"
+msgstr "중지(&S)"
 
 msgctxt "ID_PLAY_FRAMESTEP"
 msgid "Fra&me Step"
@@ -572,15 +572,15 @@ msgstr "재생 목록(&P)"
 
 msgctxt "ID_PLAY_REPEAT_AB"
 msgid "A-B (&Reset)"
-msgstr "A-B (초기화(&R))"
+msgstr "구간 : 초기화(&R)"
 
 msgctxt "ID_PLAY_REPEAT_AB_MARK_A"
 msgid "A-B (Mark &A)"
-msgstr "A-B (&A 위치 지정)"
+msgstr "구간 : 시작(&A) 지점 지정"
 
 msgctxt "ID_PLAY_REPEAT_AB_MARK_B"
 msgid "A-B (Mark &B)"
-msgstr "A-B (&B 위치 지정)"
+msgstr "구간 : 끝(&B) 지점 지정"
 
 msgctxt "POPUP"
 msgid "&Playback Rate"
