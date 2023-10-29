@@ -47,7 +47,7 @@
 #endif
 
 #define MPC_VERSION_MAJOR       2
-#define MPC_VERSION_MINOR       0
+#define MPC_VERSION_MINOR       1
 #define MPC_VERSION_PATCH       0
 
 #if MPC_VERSION_REV > 0
