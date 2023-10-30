@@ -5,7 +5,7 @@
 #include "mplayerc.h"
 #undef SubclassWindow
 
-CMPCThemePlayerListCtrl::CMPCThemePlayerListCtrl(int tStartEditingDelay) : CPlayerListCtrl(tStartEditingDelay)
+CMPCThemePlayerListCtrl::CMPCThemePlayerListCtrl() : CListCtrl()
 {
     themeGridLines = false;
     fullRowSelect = false;
@@ -43,12 +43,12 @@ void CMPCThemePlayerListCtrl::PreSubclassWindow()
         }
         subclassHeader();
     }
-    CPlayerListCtrl::PreSubclassWindow();
+    CListCtrl::PreSubclassWindow();
 }
 
-IMPLEMENT_DYNAMIC(CMPCThemePlayerListCtrl, CPlayerListCtrl)
+IMPLEMENT_DYNAMIC(CMPCThemePlayerListCtrl, CListCtrl)
 
-BEGIN_MESSAGE_MAP(CMPCThemePlayerListCtrl, CPlayerListCtrl)
+BEGIN_MESSAGE_MAP(CMPCThemePlayerListCtrl, CListCtrl)
     ON_WM_NCPAINT()
     ON_WM_CREATE()
     ON_NOTIFY_REFLECT_EX(LVN_ENDSCROLL, OnLvnEndScroll)

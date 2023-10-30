@@ -1,5 +1,4 @@
 #pragma once
-#include "PlayerListCtrl.h"
 #include "CMPCThemeScrollBarHelper.h"
 #include "CMPCThemeToolTipCtrl.h"
 #include "CMPCThemeUtil.h"
@@ -13,10 +12,10 @@ public:
     virtual void GetCustomGridColors(int nItem, COLORREF& horzGridColor, COLORREF& vertGridColor) = 0;
 };
 
-class CMPCThemePlayerListCtrl : public CPlayerListCtrl, CMPCThemeUtil, CMPCThemeScrollable
+class CMPCThemePlayerListCtrl : public CListCtrl, CMPCThemeUtil, CMPCThemeScrollable
 {
 public:
-    CMPCThemePlayerListCtrl(int tStartEditingDelay = 500);
+    CMPCThemePlayerListCtrl();
     virtual ~CMPCThemePlayerListCtrl();
     DECLARE_DYNAMIC(CMPCThemePlayerListCtrl)
 

@@ -23,7 +23,7 @@
 
 #include <afxcoll.h>
 #include "CMPCThemePlayerBar.h"
-#include "CMPCThemePlayerListCtrl.h"
+#include "PlayerListCtrl.h"
 #include "Playlist.h"
 #include "DropTarget.h"
 #include "../Subtitles/TextFile.h"
@@ -58,7 +58,7 @@ private:
     void ScaleFont();
 
     CImageList m_fakeImageList;
-    CMPCThemePlayerListCtrl m_list;
+    CPlayerListCtrl m_list;
 
     int m_itemHeight = 0;
     int m_initialWindowDPI = 0;
