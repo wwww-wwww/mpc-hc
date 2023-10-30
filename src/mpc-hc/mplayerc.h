@@ -217,6 +217,7 @@ public:
 #define GetEventd() AfxGetMyApp()->m_eventd
 
 #define AppIsThemeLoaded() (static_cast<CMPlayerCApp*>(AfxGetApp())->m_bThemeLoaded)
+#define AppNeedsThemedControls() (AppIsThemeLoaded() && CMPCTheme::drawThemedControls)
 
 #define AfxGetMainFrame()   static_cast<CMainFrame*>(AfxGetMainWnd())
 #define AfxFindMainFrame()  dynamic_cast<CMainFrame*>(AfxGetMainWnd())

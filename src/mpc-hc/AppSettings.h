@@ -34,6 +34,7 @@
 #include "../Subtitles/SubRendererSettings.h"
 #include <afxadv.h>
 #include <afxsock.h>
+#include "CMPCTheme.h"
 
 class FilterOverride;
 
@@ -768,6 +769,9 @@ public:
     bool            bWindows10AccentColorsEnabled;
     bool            bModernSeekbar;
     int             iModernSeekbarHeight;
+
+    CMPCTheme::ModernThemeMode eModernThemeMode;
+
     int             iFullscreenDelay;
 
     enum class verticalAlignVideoType {

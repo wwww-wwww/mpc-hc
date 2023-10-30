@@ -1173,6 +1173,20 @@ BEGIN
     GROUPBOX        "Autoplay",IDC_STATIC2,152,256,197,29
 END
 
+IDD_PPAGETHEME DIALOGEX 0, 0, 356, 289
+STYLE DS_SETFONT | DS_NOFAILCREATE | WS_CHILD
+FONT 9, "Segoe UI", 400, 0, 0x1
+BEGIN
+    GROUPBOX        "Modern Theme Settings (require restart)",IDC_STATIC1,6,6,343,164
+    CONTROL         "Use Modern Theme",IDC_CHECK1,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,12,20,114,8
+    CONTROL         "Use Modern Seekbar",IDC_CHECK2,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,12,36,114,8
+    LTEXT           "Modern Seekbar height:",IDC_STATIC,12,52,82,8
+    EDITTEXT        IDC_MODERNSEEKBARHEIGHT,120,52,42,14,ES_CENTER | ES_AUTOHSCROLL | ES_NUMBER
+    CONTROL         "",IDC_MODERNSEEKBARHEIGHT_SPIN,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS | UDS_HOTTRACK,150,52,13,14
+    LTEXT           "Modern Theme Color:",IDC_STATIC2,12,75,58,8
+    COMBOBOX        IDC_COMBO1,78,74,84,47,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -1444,6 +1458,13 @@ BEGIN
         VERTGUIDE, 12
         HORZGUIDE, 199
     END
+
+    IDD_PPAGETHEME, DIALOG
+    BEGIN
+        RIGHTMARGIN, 355
+        VERTGUIDE, 8
+        VERTGUIDE, 78
+    END
 END
 #endif    // APSTUDIO_INVOKED
 
@@ -1535,8 +1556,6 @@ BEGIN
             MENUITEM "&Compact",                    ID_VIEW_PRESETS_COMPACT
             MENUITEM "&Normal",                     ID_VIEW_PRESETS_NORMAL
         END
-        MENUITEM SEPARATOR
-        MENUITEM "Dark Theme (restart)",        ID_VIEW_MPCTHEME
         MENUITEM SEPARATOR
         MENUITEM "F&ull Screen",                ID_VIEW_FULLSCREEN
         POPUP "&Zoom"
@@ -1935,8 +1954,6 @@ BEGIN
                 MENUITEM "&Compact",                    ID_VIEW_PRESETS_COMPACT
                 MENUITEM "&Normal",                     ID_VIEW_PRESETS_NORMAL
             END
-            MENUITEM SEPARATOR
-            MENUITEM "Dark Theme (restart)",        ID_VIEW_MPCTHEME
         END
         POPUP "R&enderer Settings"
         BEGIN
@@ -2062,8 +2079,6 @@ BEGIN
                 MENUITEM "&Compact",                    ID_VIEW_PRESETS_COMPACT
                 MENUITEM "&Normal",                     ID_VIEW_PRESETS_NORMAL
             END
-            MENUITEM SEPARATOR
-            MENUITEM "Dark Theme (restart)",        ID_VIEW_MPCTHEME
             MENUITEM SEPARATOR
             MENUITEM "F&ull Screen",                ID_VIEW_FULLSCREEN
             POPUP "&Zoom"
@@ -2388,6 +2403,16 @@ IDB_DT_RADIO_192        PNG                     "res\\darktheme\\radios-192.png"
 
 IDB_NOIMAGE             PNG                     "res\\noimage.png"
 
+IDB_GRIPPER_168         PNG                     "res\\darktheme\\gripper-168.png"
+
+IDB_GRIPPER_144         PNG                     "res\\darktheme\\gripper-144.png"
+
+IDB_GRIPPER_192         PNG                     "res\\darktheme\\gripper-192.png"
+
+IDB_GRIPPER_96          PNG                     "res\\darktheme\\gripper-96.png"
+
+IDB_GRIPPER_120         PNG                     "res\\darktheme\\gripper-120.png"
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -2474,6 +2499,11 @@ BEGIN
     0
 END
 
+IDD_PPAGETHEME AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -2507,6 +2537,9 @@ BEGIN
     IDS_PLAYLOOPMODE_AB_MARK_A "A-B Repeat: Mark A Position"
     IDS_PLAYLOOPMODE_AB_MARK_B "A-B Repeat: Mark B Position"
     IDS_SNAPSHOT_SUBTITLES  "Include Subtitles"
+    IDS_THEMEMODE_DARK      "Dark"
+    IDS_THEMEMODE_LIGHT     "Light"
+    IDS_THEMEMODE_WINDOWS   "Windows Default"
 END
 
 STRINGTABLE
@@ -2726,6 +2759,7 @@ BEGIN
     IDD_PPAGESUBSTYLE       "Subtitles::Default Style"
     IDD_PPAGEINTERNALFILTERS "Internal Filters"
     IDD_PPAGELOGO           "Player::Logo"
+    IDD_PPAGETHEME          "Player::Theme"
     IDD_PPAGEOUTPUT         "Playback::Output"
     IDD_PPAGEWEBSERVER      "Player::Web Interface"
 END
@@ -3846,8 +3880,16 @@ BEGIN
     IDS_PPAGEADVANCED_USE_LEGACY_TOOLBAR 
                             "Use legacy toolbar instead of new vectorized one."
     IDS_SUBTITLE_RENDERER_ASS_FILTER "AssFilter"
-    IDS_SUBTITLE_RENDERER_NONE "None"
     IDS_SUBMENU_COPYURL     "Copy URL"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_SUBTITLE_RENDERER_NONE "None"
+    IDS_PPAGEADVANCED_MOUSE_LEFTUP_DELAY 
+                            "Maximum delay in milliseconds of mouse LeftUp event when clicking on the video."
+    IDS_PPAGEADVANCED_USE_FREETYPE 
+                            "Use FreeType for subtitle rendering.  Enables support for per-language glyphs."
 END
 
 STRINGTABLE
@@ -4016,38 +4058,32 @@ BEGIN
                             "Display current A-B repeat marks in status bar."
     IDS_PPAGEADVANCED_SHOW_VIDEOINFO_STATUSBAR 
                             "Display video info (codec name, resolution) in status bar."
-    IDS_PPAGEADVANCED_OPEN_REC_PANEL_WHEN_OPENING_DEVICE
-                            "Show the recording settings dialog automatically when opening a device."
-    IDS_PPAGEADVANCED_ALWAYS_USE_SHORT_MENU
-                            "Player Menu shortcuts and right-click show compact menu -- even when main menu is hidden."
-    IDS_PPAGEADVANCED_USE_FREETYPE
-                            "Use FreeType for subtitle rendering.  Enables support for per-language glyphs."
 END
 
 STRINGTABLE
 BEGIN
-    IDS_PPAGEADVANCED_FULLSCREEN_SEPARATE_CONTROLS
+    IDS_PPAGEADVANCED_OPEN_REC_PANEL_WHEN_OPENING_DEVICE 
+                            "Show the recording settings dialog automatically when opening a device."
+    IDS_PPAGEADVANCED_ALWAYS_USE_SHORT_MENU 
+                            "Player Menu shortcuts and right-click show compact menu -- even when main menu is hidden."
+    IDS_PPAGEADVANCED_FULLSCREEN_SEPARATE_CONTROLS 
                             "Keep main window controls visible on current monitor when going fullscreen on another monitor."
-    IDS_PPAGEADVANCED_BLOCKRDP
-                            "Block use of RDP Redirection Filter"
-    IDS_PPAGEADVANCED_YDL_EXEPATH
+    IDS_PPAGEADVANCED_BLOCKRDP "Block use of RDP Redirection Filter"
+    IDS_PPAGEADVANCED_YDL_EXEPATH 
                             "Full path of the Youtube-DL executable.\nJust the filename is enough in case it is located in same folder as MPC-HC.\nLeave empty to use default filename: youtube-dl.exe"
-    IDS_PPAGEADVANCED_YDL_SUBS_PREFERENCE
+    IDS_PPAGEADVANCED_YDL_SUBS_PREFERENCE 
                             "The language preference for loading subtitle streams extracted by Youtube-DL.\nIf empty, no subtitles are loaded.\nUse ISO639-1 two letter language code(s).\nExample: en de es pl zh ja nl"
-    IDS_PPAGEADVANCED_USE_AUTOMATIC_CAPTIONS
+    IDS_PPAGEADVANCED_USE_AUTOMATIC_CAPTIONS 
                             "Use automatic generated captions from Youtube. Note: this can cause a small delay when loading the stream."
-    IDS_PPAGEADVANCED_USE_SMTC
+    IDS_PPAGEADVANCED_USE_SMTC 
                             "Allow control of the player through System Media Transport Controls in Windows 8.1/10/11."
-    IDS_PPAGEADVANCED_MOUSE_LEFTUP_DELAY
-                            "Maximum delay in milliseconds of mouse LeftUp event when clicking on the video."
-    IDS_PPAGEADVANCED_LOCK_NOPAUSE
+    IDS_PPAGEADVANCED_LOCK_NOPAUSE 
                             "Do not pause playback when locking the screen."
-    IDS_PPAGEADVANCED_RELOAD_AFTER_LONG_PAUSE
+    IDS_PPAGEADVANCED_RELOAD_AFTER_LONG_PAUSE 
                             "Reload video file before resuming playback if it was paused for more than X minutes. Use 0 to disable automatic file reload after pause. Use -1 to also disable reload after hibernate/sleep."
-    IDS_PPAGEADVANCED_REDIRECT_OPEN_TO_APPEND_THRESHOLD
+    IDS_PPAGEADVANCED_REDIRECT_OPEN_TO_APPEND_THRESHOLD 
                             "If a file is opened within this amount of milliseconds after a previous file, then it will be appended to playlist instead of replacing that previous file. This redirection is required for properly handling opening of a selection of files in Explorer. A too short threshold can result in only a part of your selection being added to playlist."
 END
-
 
 STRINGTABLE
 BEGIN
@@ -4060,25 +4096,27 @@ BEGIN
     IDS_ARS_RELEASE_DEVICE_IDLE "Release device when idle"
     IDS_ARS_CROSSFEED       "Enable stereo crossfeed (for headphones)"
     IDS_ARS_DEVICE_PERIOD   "Device buffer:"
-    IDS_ARS_ALT_CHECK_FORMAT    "Do not check format support"
+    IDS_ARS_ALT_CHECK_FORMAT "Do not check format support"
     IDS_ARS_STATUS          "Status"
     IDS_ARS_DEVICE          "Device:"
-    IDS_ARS_MODE            "Mode:"
-    IDS_ARS_INPUT           "Input"
-    IDS_ARS_OUTPUT          "Output"
-    IDS_ARS_FORMAT          "Format:"
 END
 
 STRINGTABLE
 BEGIN
+    IDS_ARS_MODE            "Mode:"
+    IDS_ARS_INPUT           "Input"
+    IDS_ARS_OUTPUT          "Output"
+    IDS_ARS_FORMAT          "Format:"
     IDS_ARS_SAMPLERATE      "Sample rate:"
     IDS_ARS_CHANNELS        "Channels:"
     IDS_ARS_WASAPI_METHOD   "WASAPI method:"
     IDS_ARS_DUMMY_CHANNELS  "Don't fill channels when upmixing"
+    IDS_ARS_TIP_BITEXACT_OUTPUT 
+                            "If possible, the audio will be sent out in its original format.\nOtherwise, the format specified in the system settings will be used."
+    IDS_ARS_TIP_ALT_CHECK_FORMAT 
+                            "The renderer will try to initialize the device skipping some checks."
+    IDS_FILTER_RESET_SETTINGS "Reset"
     IDS_AG_DEFAULT          "Default"
-    IDS_FILTER_RESET_SETTINGS      "Reset"
-    IDS_ARS_TIP_BITEXACT_OUTPUT    "If possible, the audio will be sent out in its original format.\nOtherwise, the format specified in the system settings will be used."
-    IDS_ARS_TIP_ALT_CHECK_FORMAT   "The renderer will try to initialize the device skipping some checks."
 END
 
 #endif    // English (United States) resources

@@ -75,6 +75,7 @@
 #define IDS_RS_MPCTHEME                     _T("MPCTheme")
 #define IDS_RS_MODERNSEEKBAR                _T("ModernSeekbar")
 #define IDS_RS_MODERNSEEKBARHEIGHT          _T("ModernSeekbarHeight")
+#define IDS_RS_MODERNTHEMEMODE              _T("ModernThemeMode")
 #define IDS_RS_FULLSCREEN_DELAY             _T("FullscreenDelay")
 #define IDS_RS_VERTICALALIGNVIDEO          _T("VerticalAlignVideo")
 #define IDS_RS_SUBTITLEPATHS                _T("SubtitlePaths")

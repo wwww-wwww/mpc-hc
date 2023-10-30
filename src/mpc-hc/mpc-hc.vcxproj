@@ -265,6 +265,7 @@
     <ClCompile Include="PPageSubStyle.cpp" />
     <ClCompile Include="PPageSubtitles.cpp" />
     <ClCompile Include="PPageSync.cpp" />
+    <ClCompile Include="PPageTheme.cpp" />
     <ClCompile Include="PPageTweaks.cpp" />
     <ClCompile Include="PPageWebServer.cpp" />
     <ClCompile Include="RegexUtil.cpp" />
@@ -457,6 +458,7 @@
     <ClInclude Include="PPageSubStyle.h" />
     <ClInclude Include="PPageSubtitles.h" />
     <ClInclude Include="PPageSync.h" />
+    <ClInclude Include="PPageTheme.h" />
     <ClInclude Include="PPageTweaks.h" />
     <ClInclude Include="PPageWebServer.h" />
     <ClInclude Include="RegexUtil.h" />
@@ -804,6 +806,11 @@
     <Image Include="res\darktheme\checkboxes-144.png" />
     <Image Include="res\darktheme\checkboxes-192.png" />
     <Image Include="res\darktheme\checkboxes-96.png" />
+    <Image Include="res\darktheme\gripper-120.png" />
+    <Image Include="res\darktheme\gripper-144.png" />
+    <Image Include="res\darktheme\gripper-168.png" />
+    <Image Include="res\darktheme\gripper-192.png" />
+    <Image Include="res\darktheme\gripper-96.png" />
     <Image Include="res\darktheme\radios-120.png" />
     <Image Include="res\darktheme\radios-144.png" />
     <Image Include="res\darktheme\radios-192.png" />

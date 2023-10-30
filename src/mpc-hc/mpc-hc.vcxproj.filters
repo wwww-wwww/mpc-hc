@@ -600,6 +600,9 @@
     <ClCompile Include="MouseWndWithArtView.cpp">
       <Filter>Main View</Filter>
     </ClCompile>
+    <ClCompile Include="PPageTheme.cpp">
+      <Filter>Property Dialogs\Player Options\Pages</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AppSettings.h">
@@ -1140,6 +1143,9 @@
       <Filter>Main View</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\mpc-hc_config.h" />
+    <ClInclude Include="PPageTheme.h">
+      <Filter>Property Dialogs\Player Options\Pages</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\ani.avi">
@@ -1406,6 +1412,11 @@
       <Filter>MPCTheme\resources</Filter>
     </Image>
     <Image Include="res\noimage.png" />
+    <Image Include="res\darktheme\gripper-168.png" />
+    <Image Include="res\darktheme\gripper-144.png" />
+    <Image Include="res\darktheme\gripper-192.png" />
+    <Image Include="res\darktheme\gripper-96.png" />
+    <Image Include="res\darktheme\gripper-120.png" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\subtitles\favicon_opensubtitles.ico">

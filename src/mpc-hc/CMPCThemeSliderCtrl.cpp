@@ -76,10 +76,6 @@ void CMPCThemeSliderCtrl::OnNMCustomdraw(NMHDR* pNMHDR, LRESULT* pResult)
                     }
 
 
-                    CPen shadow;
-                    CPen light;
-                    shadow.CreatePen(PS_SOLID, 1, CMPCTheme::ShadowColor);
-                    light.CreatePen(PS_SOLID, 1, CMPCTheme::LightColor);
                     dc.FillSolidRect(r, CMPCTheme::SliderChannelColor);
                     CBrush fb;
                     fb.CreateSolidBrush(CMPCTheme::NoBorderColor);
@@ -87,8 +83,6 @@ void CMPCThemeSliderCtrl::OnNMCustomdraw(NMHDR* pNMHDR, LRESULT* pResult)
                     fb.DeleteObject();
 
                     dc.Detach();
-                    light.DeleteObject();
-                    shadow.DeleteObject();
                     lr = CDRF_SKIPDEFAULT;
                 } else if (pNMCD->dwItemSpec == TBCD_THUMB) {
                     CDC dc;

@@ -29,7 +29,7 @@ CMPCThemePlayerListCtrl::~CMPCThemePlayerListCtrl()
 
 void CMPCThemePlayerListCtrl::PreSubclassWindow()
 {
-    if (!AppIsThemeLoaded()) {
+    if (!AppNeedsThemedControls()) {
         EnableToolTips(TRUE);
     } else {
         if (CMPCThemeUtil::canUseWin10DarkTheme()) {
@@ -74,7 +74,7 @@ void CMPCThemePlayerListCtrl::subclassHeader()
 
 void CMPCThemePlayerListCtrl::setAdditionalStyles(DWORD styles)
 {
-    if (AppIsThemeLoaded()) {
+    if (AppNeedsThemedControls()) {
         DWORD stylesToAdd = styles, stylesToRemove = 0;
         if (styles & LVS_EX_GRIDLINES) {
             stylesToAdd &= ~LVS_EX_GRIDLINES;
@@ -221,7 +221,7 @@ LRESULT CMPCThemePlayerListCtrl::WindowProc(UINT message, WPARAM wParam, LPARAM 
 
 void CMPCThemePlayerListCtrl::updateToolTip(CPoint point)
 {
-    if (AppIsThemeLoaded() && nullptr != themedToolTip) {
+    if (AppNeedsThemedControls() && nullptr != themedToolTip) {
         TOOLINFO ti = { 0 };
         UINT_PTR tid = OnToolHitTest(point, &ti);
         //OnToolHitTest returns -1 on failure but doesn't update uId to match
@@ -464,7 +464,7 @@ void CMPCThemePlayerListCtrl::drawItem(CDC* pDC, int nItem, int nSubItem)
 
 BOOL CMPCThemePlayerListCtrl::OnCustomDraw(NMHDR* pNMHDR, LRESULT* pResult)
 {
-    if (AppIsThemeLoaded()) {
+    if (AppNeedsThemedControls()) {
         NMLVCUSTOMDRAW* pLVCD = reinterpret_cast<NMLVCUSTOMDRAW*>(pNMHDR);
 
         *pResult = CDRF_DODEFAULT;
@@ -505,7 +505,7 @@ BOOL CMPCThemePlayerListCtrl::OnCustomDraw(NMHDR* pNMHDR, LRESULT* pResult)
 
 BOOL CMPCThemePlayerListCtrl::OnEraseBkgnd(CDC* pDC)
 {
-    if (AppIsThemeLoaded()) {
+    if (AppNeedsThemedControls()) {
         CRect r;
         GetClientRect(r);
         int dcState = pDC->SaveDC();
@@ -579,7 +579,7 @@ HBRUSH CMPCThemePlayerListCtrl::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 void CMPCThemePlayerListCtrl::OnHdnEndtrack(NMHDR* pNMHDR, LRESULT* pResult)
 {
     //    LPNMHEADER phdr = reinterpret_cast<LPNMHEADER>(pNMHDR);
-    if (AppIsThemeLoaded()) {
+    if (AppNeedsThemedControls()) {
         if (nullptr != themedSBHelper) {
             themedSBHelper->updateScrollInfo();
         }
@@ -596,7 +596,7 @@ LRESULT CMPCThemePlayerListCtrl::OnDelayed_updateListCtrl(WPARAM, LPARAM)
 BOOL CMPCThemePlayerListCtrl::OnLvnItemchanged(NMHDR* pNMHDR, LRESULT* pResult)
 {
     //LPNMLISTVIEW pNMLV = reinterpret_cast<LPNMLISTVIEW>(pNMHDR);
-    if (AppIsThemeLoaded()) {
+    if (AppNeedsThemedControls()) {
         ::PostMessage(m_hWnd, PLAYER_PLAYLIST_LVN_ITEMCHANGED, 0, 0);
     }
     *pResult = 0;
