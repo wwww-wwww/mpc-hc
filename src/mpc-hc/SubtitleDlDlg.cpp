@@ -526,13 +526,26 @@ void CSubtitleDlDlg::OnItemChanging(NMHDR* pNMHDR, LRESULT* pResult)
 {
     LPNMLISTVIEW pNMLV = (LPNMLISTVIEW)(pNMHDR);
 
-    if (pNMLV->uOldState == 0 && pNMLV->uNewState == 0x1000 && pNMLV->lParam) {
+    if (pNMLV->uOldState == 0 && pNMLV->uNewState == LVIS_UNCHECKED && pNMLV->lParam) {
         *pResult = TRUE;
     }
 }
 
 void CSubtitleDlDlg::OnItemChanged(NMHDR* pNMHDR, LRESULT* pResult)
 {
+    LPNMLISTVIEW pNMLV = reinterpret_cast<LPNMLISTVIEW>(pNMHDR);
+    if (pNMLV->uChanged & LVIF_STATE) { //sync checkboxes and highlighted/selected rows
+        if (pNMLV->uNewState & LVIS_CHECKED) {
+            m_list.SetItemState(pNMLV->iItem, LVIS_SELECTED, LVIS_SELECTED);
+        } else if (pNMLV->uNewState & LVIS_UNCHECKED) {
+            m_list.SetItemState(pNMLV->iItem, 0, LVIS_SELECTED);
+        } else if (pNMLV->uNewState & LVIS_SELECTED) { //selection was changed
+            m_list.SetCheck(pNMLV->iItem, 1);
+        } else if (pNMLV->uOldState & LVIS_SELECTED) { //selection was removed
+            m_list.SetCheck(pNMLV->iItem, 0);
+        }
+    }
+
     UpdateDialogControls(this, FALSE);
 }
 

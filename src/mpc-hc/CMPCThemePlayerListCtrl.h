@@ -4,6 +4,10 @@
 #include "CMPCThemeUtil.h"
 #include "CMPCThemeHeaderCtrl.h"
 
+//undocumented state changes for LVS_EX_CHECKBOXES
+#define LVIS_UNCHECKED  0x1000
+#define LVIS_CHECKED    0x2000
+
 class CMPCThemeListCtrlCustomInterface
 {
 public:
