@@ -766,11 +766,15 @@ void LibassContext::LoadASSFont() {
             BYTE* pData = nullptr;
             DWORD len = 0;
             if (SUCCEEDED(bag->ResGet(i, &name.GetBSTR(), &desc.GetBSTR(), &mime.GetBSTR(), &pData, &len, nullptr))) {
-                if (wcscmp(mime.GetBSTR(), L"application/x-truetype-font") == 0 // TODO: more mimes?
+                if (wcscmp(mime.GetBSTR(), L"application/x-truetype-font") == 0 // see https://gitlab.com/mbunkus/mkvtoolnix/-/issues/3137
                     || wcscmp(mime.GetBSTR(), L"application/vnd.ms-opentype") == 0
+                    || wcscmp(mime.GetBSTR(), L"application/x-font-ttf") == 0
+                    || wcscmp(mime.GetBSTR(), L"application/font-sfnt") == 0
                     || wcscmp(mime.GetBSTR(), L"font/otf") == 0
                     || wcscmp(mime.GetBSTR(), L"font/ttf") == 0
-                    )
+                    || wcscmp(mime.GetBSTR(), L"font/sfnt") == 0
+                    || wcscmp(mime.GetBSTR(), L"font/collection") == 0
+                )
                 {
                     ass_add_font(ass, (char*)name, (char*)pData, len);
                     // TODO: clear these fonts somewhere?
