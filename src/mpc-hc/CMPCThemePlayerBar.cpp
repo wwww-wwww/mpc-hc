@@ -52,7 +52,7 @@ void CMPCThemePlayerBar::paintHideButton(CDC* pDC, CSCBButton b) //derived from 
 
     auto& dpi = m_pMainFrame->m_dpi;
 
-    CMPCThemeUtil::drawToolbarHideButton(pDC, this, rc, CMPCThemeUtil::getIconPathByDPI(m_pMainFrame, TOOLBAR_HIDE_ICON), dpi.ScaleFactorX(), true);
+    CMPCThemeUtil::drawToolbarHideButton(pDC, this, rc, CMPCThemeUtil::getIconPathByDPI(m_pMainFrame, TOOLBAR_HIDE_ICON), dpi.ScaleFactorX(), true, b.bPushed||b.bRaised);
 }
 
 void CMPCThemePlayerBar::NcCalcClient(LPRECT pRc, UINT nDockBarID) { //derived from CSizingControlBarG::NcCalcClient to support DPI changes

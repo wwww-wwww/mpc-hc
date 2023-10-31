@@ -125,7 +125,7 @@ CSize CPlayerSeekBar::CalcFixedLayout(BOOL bStretch, BOOL bHorz)
 {
     CSize ret = __super::CalcFixedLayout(bStretch, bHorz);
     const CAppSettings& s = AfxGetAppSettings();
-    if (s.bMPCTheme && s.bModernSeekbar) {
+    if (s.bMPCTheme) {
         ret.cy = m_pMainFrame->m_dpi.ScaleY(5 + s.iModernSeekbarHeight); //expand the toolbar if using "fill" mode
     } else {
         ret.cy = m_pMainFrame->m_dpi.ScaleY(20);
@@ -274,7 +274,7 @@ CRect CPlayerSeekBar::GetChannelRect() const
     }
 
     const CAppSettings& s = AfxGetAppSettings();
-    if (s.bMPCTheme && s.bModernSeekbar) { //no thumb so we can use all the space
+    if (s.bMPCTheme) { //no thumb so we can use all the space
         r.DeflateRect(m_pMainFrame->m_dpi.ScaleFloorX(2), m_pMainFrame->m_dpi.ScaleFloorX(2));
     } else {
         CSize sz(m_pMainFrame->m_dpi.ScaleFloorX(8), m_pMainFrame->m_dpi.ScaleFloorY(7) + 1);
@@ -596,32 +596,8 @@ void CPlayerSeekBar::OnPaint()
     const CAppSettings& s = AfxGetAppSettings();
     if (s.bMPCTheme) {
         // Thumb
-        if (!s.bModernSeekbar) { //no thumb while showing seek progress
-            CRect r(GetThumbRect());
-            if (DraggingThumb()) {
-                dc.FillSolidRect(r, CMPCTheme::ScrollThumbDragColor);
-            } else if (m_bHoverThumb) {
-                dc.FillSolidRect(r, CMPCTheme::ScrollThumbHoverColor);
-            } else if (m_bEnabled) {
-                dc.FillSolidRect(r, CMPCTheme::ScrollThumbColor);
-            } else {
-                dc.FillSolidRect(r, CMPCTheme::ScrollBGColor);
-            }
-            CBrush fb;
-            fb.CreateSolidBrush(CMPCTheme::NoBorderColor);
-            dc.FrameRect(r, &fb);
-            fb.DeleteObject();
-
-            CRgn rg;
-            VERIFY(rg.CreateRectRgnIndirect(&r));
-            ExtSelectClipRgn(dc, rg, RGN_XOR);
-            rg.DeleteObject();
-
-            m_lastThumbRect = r;
-        } else {
-            CRect r(GetThumbRect());
-            m_lastThumbRect = r;
-        }
+        CRect r(GetThumbRect());
+        m_lastThumbRect = r;
 
         if (m_bHasDuration) {
             // A-B Repeat
@@ -651,7 +627,7 @@ void CPlayerSeekBar::OnPaint()
 
         // Channel
         {
-            if (s.bModernSeekbar) {
+            {
                 long seekPos = ChannelPointFromPosition(m_rtPosDraw);
                 CRect r, playedRect, unplayedRect, curPosRect;
                 playedRect = channelRect;
@@ -664,8 +640,6 @@ void CPlayerSeekBar::OnPaint()
                 curPosRect.left = playedRect.right;
                 curPosRect.right = unplayedRect.left;
                 dc.FillSolidRect(&curPosRect, CMPCTheme::SeekbarCurrentPositionColor);
-            } else {
-                dc.FillSolidRect(&channelRect, m_bEnabled ? CMPCTheme::ScrollBGColor : CMPCTheme::ScrollBGColor);
             }
             CRect r(channelRect);
             CBrush fb;

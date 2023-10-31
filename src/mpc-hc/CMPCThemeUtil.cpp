@@ -791,7 +791,7 @@ const std::vector<CMPCTheme::pathPoint> CMPCThemeUtil::getIconPathByDPI(CMPCThem
     return getIconPathByDPI(button, button->getButtonType());
 }
 
-void CMPCThemeUtil::drawToolbarHideButton(CDC* pDC, CWnd* window, CRect iconRect, std::vector<CMPCTheme::pathPoint> icon, double dpiScaling, bool antiAlias) {
+void CMPCThemeUtil::drawToolbarHideButton(CDC* pDC, CWnd* window, CRect iconRect, std::vector<CMPCTheme::pathPoint> icon, double dpiScaling, bool antiAlias, bool hover) {
     int iconWidth = CMPCThemeUtil::getConstantByDPI(window, CMPCTheme::ToolbarIconPathDimension);
     int iconHeight = iconWidth;
     float penThickness = 1;
@@ -808,7 +808,12 @@ void CMPCThemeUtil::drawToolbarHideButton(CDC* pDC, CWnd* window, CRect iconRect
         gfx.SetSmoothingMode(Gdiplus::SmoothingModeAntiAlias8x8);
     }
     Gdiplus::Color lineClr;
-    lineClr.SetFromCOLORREF(CMPCTheme::W10DarkThemeTitlebarIconPenColor);
+
+    if (hover) { //draw like a win10 icon
+        lineClr.SetFromCOLORREF(CMPCTheme::W10DarkThemeTitlebarIconPenColor);
+    } else { //draw in fg color as there is no button bg
+        lineClr.SetFromCOLORREF(CMPCTheme::TextFGColor);
+    }
     Gdiplus::Pen iPen(lineClr, penThickness);
     if (penThickness >= 2) {
         iPen.SetLineCap(Gdiplus::LineCapSquare, Gdiplus::LineCapSquare, Gdiplus::DashCapFlat);

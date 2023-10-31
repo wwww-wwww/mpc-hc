@@ -136,7 +136,7 @@ void CMPCThemePlayerListCtrl::DoDPIChanged()
 
 BOOL CMPCThemePlayerListCtrl::PreTranslateMessage(MSG* pMsg)
 {
-    if (AppIsThemeLoaded()) {
+    if (AppNeedsThemedControls()) {
         if (!IsWindow(themedToolTip.m_hWnd)) {
             themedToolTip.Create(this, TTS_ALWAYSTIP);
             themedToolTip.enableFlickerHelper();
@@ -158,7 +158,7 @@ void CMPCThemePlayerListCtrl::setCheckedColors(COLORREF checkedBG, COLORREF chec
 
 void CMPCThemePlayerListCtrl::OnNcPaint()
 {
-    if (AppIsThemeLoaded()) {
+    if (AppNeedsThemedControls()) {
         if (nullptr != themedSBHelper) {
             themedSBHelper->themedNcPaintWithSB();
         } else {
@@ -176,7 +176,7 @@ int CMPCThemePlayerListCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
         return -1;
     }
 
-    if (AppIsThemeLoaded()) {
+    if (AppNeedsThemedControls()) {
         SetBkColor(CMPCTheme::ContentBGColor);
         subclassHeader();
     }
@@ -186,7 +186,7 @@ int CMPCThemePlayerListCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 BOOL CMPCThemePlayerListCtrl::OnLvnEndScroll(NMHDR* pNMHDR, LRESULT* pResult)
 {
-    if (AppIsThemeLoaded()) {
+    if (AppNeedsThemedControls()) {
         if (nullptr != themedSBHelper) {
             themedSBHelper->updateScrollInfo();
         }
@@ -211,7 +211,7 @@ void CMPCThemePlayerListCtrl::updateScrollInfo()
 
 LRESULT CMPCThemePlayerListCtrl::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 {
-    if (AppIsThemeLoaded() && nullptr != themedSBHelper) {
+    if (AppNeedsThemedControls() && nullptr != themedSBHelper) {
         if (themedSBHelper->WindowProc(this, message, wParam, lParam)) {
             return 1;
         }

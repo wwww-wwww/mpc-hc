@@ -72,7 +72,7 @@ public:
     static const std::vector<CMPCTheme::pathPoint> getIconPathByDPI(CWnd* wnd, WPARAM buttonType);
     static void drawCheckBox(CWnd* window, UINT checkState, bool isHover, bool useSystemSize, CRect rectCheck, CDC* pDC, bool isRadio = false);
     static void drawGripper(CWnd* window, CWnd* dpiRefWnd, CRect rectGripper, CDC* pDC, bool rot90);
-    static void drawToolbarHideButton(CDC* pDC, CWnd* window, CRect iconRect, std::vector<CMPCTheme::pathPoint> icon, double dpiScaling, bool antiAlias);
+    static void drawToolbarHideButton(CDC* pDC, CWnd* window, CRect iconRect, std::vector<CMPCTheme::pathPoint> icon, double dpiScaling, bool antiAlias, bool hover);
     static bool canUseWin10DarkTheme();
     static UINT defaultLogo();
     static void drawParentDialogBGClr(CWnd* wnd, CDC* pDC, CRect r, bool fill = true);

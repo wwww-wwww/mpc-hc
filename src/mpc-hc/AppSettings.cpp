@@ -163,7 +163,6 @@ CAppSettings::CAppSettings()
     , bMPCTheme(false)
     , bWindows10DarkThemeActive(false)
     , bWindows10AccentColorsEnabled(false)
-    , bModernSeekbar(true)
     , iModernSeekbarHeight(DEF_MODERN_SEEKBAR_HEIGHT)
     , eModernThemeMode(CMPCTheme::ModernThemeMode::DARK)
     , iFullscreenDelay(MIN_FULLSCREEN_DELAY)
@@ -954,7 +953,6 @@ void CAppSettings::SaveSettings(bool write_full_history /* = false */)
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_AUTOUPLOADSUBTITLES, bAutoUploadSubtitles);
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_PREFERHEARINGIMPAIREDSUBTITLES, bPreferHearingImpairedSubtitles);
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_MPCTHEME, bMPCTheme);
-    pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_MODERNSEEKBAR, bModernSeekbar);
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_MODERNSEEKBARHEIGHT, iModernSeekbarHeight);
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_MODERNTHEMEMODE, static_cast<int>(eModernThemeMode));
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_FULLSCREEN_DELAY, iFullscreenDelay);
@@ -1689,7 +1687,6 @@ void CAppSettings::LoadSettings()
             }
         }
     }
-    bModernSeekbar = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_MODERNSEEKBAR, TRUE);
     iModernSeekbarHeight = pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_MODERNSEEKBARHEIGHT, DEF_MODERN_SEEKBAR_HEIGHT);
     if (iModernSeekbarHeight < MIN_MODERN_SEEKBAR_HEIGHT || iModernSeekbarHeight > MAX_MODERN_SEEKBAR_HEIGHT) {
         iModernSeekbarHeight = DEF_MODERN_SEEKBAR_HEIGHT;

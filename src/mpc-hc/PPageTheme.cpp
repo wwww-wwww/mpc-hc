@@ -34,7 +34,6 @@ IMPLEMENT_DYNAMIC(CPPageTheme, CMPCThemePPageBase)
 CPPageTheme::CPPageTheme()
     : CMPCThemePPageBase(CPPageTheme::IDD, CPPageTheme::IDD)
     , m_bUseModernTheme(FALSE)
-    , m_bUseModernSeekbar(FALSE)
     , m_iModernSeekbarHeight(DEF_MODERN_SEEKBAR_HEIGHT)
     , m_iThemeMode(0)
 {
@@ -48,7 +47,6 @@ void CPPageTheme::DoDataExchange(CDataExchange* pDX)
 {
     __super::DoDataExchange(pDX);
     DDX_Check(pDX, IDC_CHECK1, m_bUseModernTheme);
-    DDX_Check(pDX, IDC_CHECK2, m_bUseModernSeekbar);
     DDX_Text(pDX, IDC_MODERNSEEKBARHEIGHT, m_iModernSeekbarHeight);
     DDV_MinMaxInt(pDX, m_iModernSeekbarHeight, MIN_MODERN_SEEKBAR_HEIGHT, MAX_MODERN_SEEKBAR_HEIGHT);
     DDX_Control(pDX, IDC_MODERNSEEKBARHEIGHT_SPIN, m_ModernSeekbarHeightCtrl);
@@ -69,7 +67,6 @@ BOOL CPPageTheme::OnInitDialog()
 
     const CAppSettings& s = AfxGetAppSettings();
     m_bUseModernTheme = s.bMPCTheme;
-    m_bUseModernSeekbar = s.bModernSeekbar;
     m_ModernSeekbarHeightCtrl.SetRange32(MIN_MODERN_SEEKBAR_HEIGHT, MAX_MODERN_SEEKBAR_HEIGHT);
     m_iModernSeekbarHeight = s.iModernSeekbarHeight;
     m_iThemeMode = static_cast<int>(s.eModernThemeMode);
@@ -91,7 +88,6 @@ BOOL CPPageTheme::OnApply()
 
     CAppSettings& s = AfxGetAppSettings();
     s.bMPCTheme = !!m_bUseModernTheme;
-    s.bModernSeekbar = !!m_bUseModernSeekbar;
     s.iModernSeekbarHeight = m_iModernSeekbarHeight;
     s.eModernThemeMode = static_cast<CMPCTheme::ModernThemeMode>(m_iThemeMode);
 

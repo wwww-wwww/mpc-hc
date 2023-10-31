@@ -69,7 +69,7 @@ BOOL CMPCThemeMsgBox::MessageBox(CWnd* parent, LPCWSTR lpText)
 
 BOOL CMPCThemeMsgBox::MessageBox(CWnd* parent, LPCWSTR lpText, LPCWSTR lpCaption, UINT uType)
 {
-    if (AppIsThemeLoaded()) {
+    if (AppNeedsThemedControls()) {
         CMPCThemeMsgBox dlgMessage(parent, lpText, lpCaption, uType, NULL);
         return (BOOL)dlgMessage.DoModal();
     } else {

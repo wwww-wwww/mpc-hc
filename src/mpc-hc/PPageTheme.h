@@ -32,7 +32,6 @@ class CPPageTheme : public CMPCThemePPageBase
 
 private:
     BOOL m_bUseModernTheme;
-    BOOL m_bUseModernSeekbar;
     int m_iModernSeekbarHeight;
     CMPCThemeSpinButtonCtrl m_ModernSeekbarHeightCtrl;
     CMPCThemeComboBox m_ThemeMode;

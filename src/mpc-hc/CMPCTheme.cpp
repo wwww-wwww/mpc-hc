@@ -671,7 +671,7 @@ void CMPCTheme::InitializeColors(ModernThemeMode themeMode) {
         TabCtrlInactiveColor = RGB(255, 0, 0); //not implemented for light theme, default windows controls used
 
 
-        StatusBarBGColor = RGB(255, 0, 0); //not implemented for light theme, default windows controls used
+        StatusBarBGColor = RGBGS(240);
         StatusBarSeparatorColor = RGB(255, 0, 0); //not implemented for light theme, default windows controls used
 
         ProgressBarBGColor = RGB(255, 0, 0); //not implemented for light theme, default windows controls used
