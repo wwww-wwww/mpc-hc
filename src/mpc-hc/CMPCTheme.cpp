@@ -647,7 +647,7 @@ void CMPCTheme::InitializeColors(ModernThemeMode themeMode) {
 
         ImageDisabledColor = RGBGS(128);
 
-        SliderChannelColor = RGBGS(240);
+        SliderChannelColor = RGBGS(128);
 
         EditBorderColor = RGB(106, 106, 106);
 

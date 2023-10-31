@@ -57,7 +57,7 @@ CMPCThemeComboBox::~CMPCThemeComboBox()
 
 void CMPCThemeComboBox::themeDropDown()
 {
-    if (AppIsThemeLoaded()) {
+    if (AppNeedsThemedControls()) {
         if (CMPCThemeUtil::canUseWin10DarkTheme() && !isThemedDropDown) {
             COMBOBOXINFO info = { sizeof(COMBOBOXINFO) };
             if (GetComboBoxInfo(&info)) {
@@ -119,7 +119,7 @@ void CMPCThemeComboBox::drawComboArrow(CDC& dc, COLORREF arrowClr, CRect arrowRe
 
 void CMPCThemeComboBox::OnPaint()
 {
-    if (AppIsThemeLoaded()) {
+    if (AppNeedsThemedControls()) {
         CPaintDC dc(this);
         CRect r, rBorder, rText, rBG, rSelect, rDownArrow;
         GetClientRect(r);
