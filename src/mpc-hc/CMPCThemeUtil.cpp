@@ -110,7 +110,7 @@ void CMPCThemeUtil::fulfillThemeReqs(CWnd* wnd)
                     CMPCThemeSpinButtonCtrl* pObject = DEBUG_NEW CMPCThemeSpinButtonCtrl();
                     makeThemed(pObject, tChild);
                 } else if (0 == _tcsicmp(windowClass, _T("#32770"))) { //dialog class
-                    CMPCThemeDialog* pObject = DEBUG_NEW CMPCThemeDialog();
+                    CMPCThemeDialog* pObject = DEBUG_NEW CMPCThemeDialog(windowTitle == "");
                     makeThemed(pObject, tChild);
                 } else if (0 == _tcsicmp(windowClass, WC_COMBOBOX)) {
                     CMPCThemeComboBox* pObject = DEBUG_NEW CMPCThemeComboBox();
