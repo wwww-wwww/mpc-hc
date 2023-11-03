@@ -1962,7 +1962,7 @@ BOOL CMPlayerCApp::InitInstance()
     pFrame->UpdateControlState(CMainFrame::UPDATE_CONTROLS_VISIBILITY);
     pFrame->SetIcon(icon, TRUE);
 
-    bool bRestoreLastWindowType = m_s->fRememberWindowSize && m_s->fRememberWindowPos && !m_s->fLastFullScreen && !m_s->fLaunchfullscreen;
+    bool bRestoreLastWindowType = (m_s->fRememberWindowSize || m_s->fRememberWindowPos) && !m_s->fLastFullScreen && !m_s->fLaunchfullscreen;
     bool bMinimized = (m_s->nCLSwitches & CLSW_MINIMIZED) || (bRestoreLastWindowType && m_s->nLastWindowType == SIZE_MINIMIZED);
     bool bMaximized = bRestoreLastWindowType && m_s->nLastWindowType == SIZE_MAXIMIZED;
 

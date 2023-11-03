@@ -1604,16 +1604,14 @@ void CAppSettings::LoadSettings()
     iRecentFilesNumber = std::max(0, (int)pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_RECENT_FILES_NUMBER, 100));
     MRU.SetSize(iRecentFilesNumber);
 
-    if (fRememberWindowPos || fRememberWindowSize) {
-        if (pApp->GetProfileBinary(IDS_R_SETTINGS, IDS_RS_LASTWINDOWRECT, &ptr, &len)) {
-            if (len == sizeof(CRect)) {
-                memcpy(&rcLastWindowPos, ptr, sizeof(CRect));
-                if (rcLastWindowPos.Width() < 400 || rcLastWindowPos.Height() < 100) {
-                    rcLastWindowPos = CRect(100, 100, 400, 300);
-                }
+    if (pApp->GetProfileBinary(IDS_R_SETTINGS, IDS_RS_LASTWINDOWRECT, &ptr, &len)) {
+        if (len == sizeof(CRect)) {
+            memcpy(&rcLastWindowPos, ptr, sizeof(CRect));
+            if (rcLastWindowPos.Width() < 400 || rcLastWindowPos.Height() < 100) {
+                rcLastWindowPos = CRect(100, 100, 400, 300);
             }
-            delete[] ptr;
         }
+        delete[] ptr;
     }
     nLastWindowType = pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_LASTWINDOWTYPE, SIZE_RESTORED);
     fLastFullScreen = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_LASTFULLSCREEN, FALSE);
