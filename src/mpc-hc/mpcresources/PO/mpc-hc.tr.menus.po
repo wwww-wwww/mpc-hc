@@ -155,10 +155,6 @@ msgctxt "ID_VIEW_PRESETS_NORMAL"
 msgid "&Normal"
 msgstr "&Normal"
 
-msgctxt "ID_VIEW_MPCTHEME"
-msgid "Dark Theme (restart)"
-msgstr "Koyu Tema (yeniden başlatma gerekli)"
-
 msgctxt "ID_VIEW_FULLSCREEN"
 msgid "F&ull Screen"
 msgstr "Ta&m Ekran"
