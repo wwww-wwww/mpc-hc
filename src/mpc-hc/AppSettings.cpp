@@ -70,7 +70,7 @@ CAppSettings::CAppSettings()
     , bRememberPlaylistItems(true)
     , fRememberWindowPos(false)
     , fRememberWindowSize(false)
-    , rcLastWindowPos(CRect(100, 100, 400, 300))
+    , rcLastWindowPos(CRect(100, 100, 500, 400))
     , fSavePnSZoom(false)
     , dZoomX(1.0)
     , dZoomY(1.0)
@@ -1607,8 +1607,8 @@ void CAppSettings::LoadSettings()
     if (pApp->GetProfileBinary(IDS_R_SETTINGS, IDS_RS_LASTWINDOWRECT, &ptr, &len)) {
         if (len == sizeof(CRect)) {
             memcpy(&rcLastWindowPos, ptr, sizeof(CRect));
-            if (rcLastWindowPos.Width() < 400 || rcLastWindowPos.Height() < 100) {
-                rcLastWindowPos = CRect(100, 100, 400, 300);
+            if (rcLastWindowPos.Width() < 250 || rcLastWindowPos.Height() < 80) {
+                rcLastWindowPos = CRect(100, 100, 500, 400);
             }
         }
         delete[] ptr;
