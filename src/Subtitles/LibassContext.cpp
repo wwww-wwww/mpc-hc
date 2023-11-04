@@ -348,17 +348,22 @@ ASS_Track* srt_read_data(ASS_Library* library, ASS_Track* track, std::istream &s
             if (!streamIsUTF8) {
                 // Convert to UTF-8 only if UTF-8 not detected
                 if (style.charSet != 0)
+                    // FIXME: this sometimes give empty result
                     ConvertCPToUTF8(style.charSet, lineOut);
             }
 
-            ParseSrtLine(lineOut, style);
+            if (lineOut.empty()) {
+                ASSERT(false);
+            } else {
+                ParseSrtLine(lineOut, style);
 
-            CT2CA tmpCustomTags(style.customTags);
-            _snprintf_s(outBuffer, _TRUNCATE, "Dialogue: 0,%d:%02d:%02d.%02d,%d:%02d:%02d.%02d,Default,,0,0,0,,{\\blur%u}%s%s",
-                start[0], start[1], start[2],
-                (int)floor((double)start[3] / 10.0), end[0], end[1],
-                end[2], (int)floor((double)end[3] / 10.0), style.fBlur, std::string(tmpCustomTags).c_str(), lineOut.c_str());
-            ass_process_data(track, outBuffer, static_cast<int>(strnlen_s(outBuffer, sizeof(outBuffer))));
+                CT2CA tmpCustomTags(style.customTags);
+                _snprintf_s(outBuffer, _TRUNCATE, "Dialogue: 0,%d:%02d:%02d.%02d,%d:%02d:%02d.%02d,Default,,0,0,0,,{\\blur%u}%s%s",
+                    start[0], start[1], start[2],
+                    (int)floor((double)start[3] / 10.0), end[0], end[1],
+                    end[2], (int)floor((double)end[3] / 10.0), style.fBlur, std::string(tmpCustomTags).c_str(), lineOut.c_str());
+                ass_process_data(track, outBuffer, static_cast<int>(strnlen_s(outBuffer, sizeof(outBuffer))));
+            }
         }
     }
     ass_process_force_style(track);
