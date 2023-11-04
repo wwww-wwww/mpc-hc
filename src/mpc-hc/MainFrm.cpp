@@ -12813,7 +12813,7 @@ void CMainFrame::OpenFile(OpenFileData* pOFD)
                     if (m_bUseSeekPreview) {
                         CLSID clsid;
                         if (S_OK == pBF->GetClassID(&clsid)) {
-                            if (clsid == CLSID_StillVideo) {
+                            if (clsid == CLSID_StillVideo || clsid == CLSID_MPCImageSource) {
                                 m_bUseSeekPreview = false;
                             } else if (clsid == __uuidof(CRARFileSource)) {
                                 WCHAR* pFN = nullptr;
