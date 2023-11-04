@@ -1660,21 +1660,6 @@ void CEVRAllocatorPresenter::GetMixerThread()
                 bQuit = true;
                 break;
             case WAIT_TIMEOUT: {
-                CRenderersData* rd = GetRenderersData();
-                // FIXME: can give access violation error if main thread is closing down
-                if (rd && rd->m_iDisplayStats) {
-                    CComPtr<IPin> pPin;
-                    CComPtr<IPin> pPinTo;
-                    if (SUCCEEDED(m_pOuterEVR->FindPin(L"EVR Input0", &pPin)) &&
-                            SUCCEEDED(pPin->ConnectedTo(&pPinTo)) && pPinTo) {
-                        if (CComPtr<IBaseFilter> pFilter = GetFilterFromPin(pPinTo)) {
-                            if (CComQIPtr<IMPCVideoDecFilter2> MPCVideoDecFilter = pFilter) {
-                                m_nFrameType = (FF_FIELD_TYPE)MPCVideoDecFilter->GetFrameType();
-                            }
-                        }
-                    }
-                }
-
                 bool bDoneSomething = false;
                 {
                     CAutoLock AutoLock(&m_ImageProcessingLock);
@@ -1710,9 +1695,7 @@ void CEVRAllocatorPresenter::GetMixerThread()
                         m_fps = 10000000.0 / m_rtTimePerFrame;
                         m_pSubPicQueue->SetFPS(m_fps);
                     }
-
                 }
-
             }
             break;
         }
