@@ -223,13 +223,10 @@ static std::wstring SSAColorTagCS(std::wstring arg, CStringW ctag = L"c") {
 const BYTE CharSetList[] = {
     ANSI_CHARSET,
     DEFAULT_CHARSET,
-    SYMBOL_CHARSET,
     SHIFTJIS_CHARSET,
-    HANGEUL_CHARSET,
     HANGUL_CHARSET,
     GB2312_CHARSET,
     CHINESEBIG5_CHARSET,
-    OEM_CHARSET,
     JOHAB_CHARSET,
     HEBREW_CHARSET,
     ARABIC_CHARSET,
@@ -239,20 +236,16 @@ const BYTE CharSetList[] = {
     THAI_CHARSET,
     EASTEUROPE_CHARSET,
     RUSSIAN_CHARSET,
-    MAC_CHARSET,
     BALTIC_CHARSET
 };
 
 const TCHAR* CharSetNames[] = {
     _T("ANSI"),
     _T("DEFAULT"),
-    _T("SYMBOL"),
     _T("SHIFTJIS"),
-    _T("HANGEUL"),
     _T("HANGUL"),
     _T("GB2312"),
     _T("CHINESEBIG5"),
-    _T("OEM"),
     _T("JOHAB"),
     _T("HEBREW"),
     _T("ARABIC"),
@@ -262,7 +255,6 @@ const TCHAR* CharSetNames[] = {
     _T("THAI"),
     _T("EASTEUROPE"),
     _T("RUSSIAN"),
-    _T("MAC"),
     _T("BALTIC"),
 };
 
