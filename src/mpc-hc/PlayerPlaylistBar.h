@@ -70,12 +70,12 @@ private:
     int m_nTimeColWidth;
     void ResizeListColumn();
 
-    void AddItem(CString fn);
+    void AddItem(CString fn, bool insertAtCurrent = false);
     void AddItem(CString fn, CAtlList<CString>* subs);
     void AddItem(CAtlList<CString>& fns, CAtlList<CString>* subs = nullptr, CString label = _T(""), CString ydl_src = _T(""), CString cue = _T(""), CAtlList<CYoutubeDLInstance::YDLSubInfo>* ydl_subs = nullptr);
-    bool AddItemNoDuplicate(CString fn);
-    bool AddFromFilemask(CString mask, bool recurse_dirs = false);
-    bool AddItemsInFolder(CString folder);
+    bool AddItemNoDuplicate(CString fn, bool insertAtCurrent = false);
+    bool AddFromFilemask(CString mask, bool recurse_dirs, bool insertAtCurrent = false);
+    bool AddItemsInFolder(CString folder, bool insertAtCurrent = false);
     void ParsePlayList(CString fn, CAtlList<CString>* subs, int redir_count = 0);
     void ParsePlayList(CAtlList<CString>& fns, CAtlList<CString>* subs, int redir_count = 0, CString label = _T(""), CString ydl_src = _T(""), CString cue = _T(""), CAtlList<CYoutubeDLInstance::YDLSubInfo>* ydl_subs = nullptr);
     void ResolveLinkFiles(CAtlList<CString>& fns);
@@ -93,6 +93,7 @@ private:
     void EnsureVisible(POSITION pos);
     int FindItem(const POSITION pos) const;
     POSITION FindPos(int i);
+    POSITION m_insertingPos;
 
     CImageList* m_pDragImage;
     BOOL m_bDragging;
