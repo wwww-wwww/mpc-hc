@@ -3275,7 +3275,7 @@ bool CSimpleTextSubtitle::Open(CTextFile* f, int CharSet, CString name) {
 #if USE_LIBASS
         if ((m_subtitleType == Subtitle::SubType::SSA || m_subtitleType == Subtitle::SubType::ASS) && m_SubRendererSettings.renderSSAUsingLibass) {
             m_LibassContext.LoadASSFile(Subtitle::SubType::SSA);
-        } else if (m_subtitleType == Subtitle::SubType::SRT && m_SubRendererSettings.renderSRTUsingLibass && m_encoding == CTextFile::UTF8) {
+        } else if (m_subtitleType == Subtitle::SubType::SRT && m_SubRendererSettings.renderSRTUsingLibass) {
             m_LibassContext.LoadASSFile(Subtitle::SubType::SRT);
         }
         if (m_LibassContext.IsLibassActive()) {
