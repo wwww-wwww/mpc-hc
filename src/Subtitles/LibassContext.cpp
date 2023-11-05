@@ -347,9 +347,15 @@ ASS_Track* srt_read_data(ASS_Library* library, ASS_Track* track, std::istream &s
 
             if (!streamIsUTF8) {
                 // Convert to UTF-8 only if UTF-8 not detected
-                if (style.charSet != 0)
-                    // FIXME: this sometimes give empty result
-                    ConvertCPToUTF8(style.charSet, lineOut);
+                if (style.charSet != 0) {
+                    auto saveLineOut = lineOut;
+                    UINT CP = CharSetToCodePage(style.charSet);
+                    ConvertCPToUTF8(CP, lineOut);
+                    if (lineOut.empty()) { //don't allow convert to destroy our text in case it's not encoded
+                        lineOut = saveLineOut;
+                    }
+                }
+                  
             }
 
             if (lineOut.empty()) {
