@@ -936,6 +936,7 @@ public:
     CString sYDLSubsPreference;
     bool bUseAutomaticCaptions;
     bool bUseFreeType;
+    bool bUseMediainfoLoadFileDuration;
     CStringA strOpenTypeLangHint;
 
     CStringW lastQuickOpenPath;

@@ -231,6 +231,7 @@ private:
         OPEN_REC_PANEL_WHEN_OPENING_DEVICE,
         ALWAYS_USE_SHORT_MENU,
         USE_FREETYPE,
+        USE_MEDIAINFO_LOAD_FILE_DURATION
     };
 
     enum {

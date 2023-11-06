@@ -108,6 +108,7 @@
 #define IDS_RS_STILL_VIDEO_DURATION         _T("StillVideoDuration")
 #define IDS_RS_MOUSE_LEFTUP_DELAY           _T("MouseLeftUpDelay")
 #define IDS_RS_USE_FREETYPE                 _T("UseFreetype")
+#define IDS_RS_USE_MEDIAINFO_LOAD_FILE_DURATION _T("UseMediainfoLoadFileDuration")
 
 // Audio
 #define IDS_RS_VOLUME                       _T("Volume")

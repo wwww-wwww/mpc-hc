@@ -127,6 +127,8 @@ public:
     bool IsHiddenDueToFullscreen() const;
     void SetHiddenDueToFullscreen(bool bHidenDueToFullscreen);
 
+    void LoadDuration(POSITION pos);
+
     CPlaylist m_pl;
 
     INT_PTR GetCount() const;

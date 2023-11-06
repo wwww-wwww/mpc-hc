@@ -260,6 +260,7 @@ CAppSettings::CAppSettings()
     , iStillVideoDuration(10)
     , iMouseLeftUpDelay(0)
     , bUseFreeType(false)
+    , bUseMediainfoLoadFileDuration(false)
 {
     // Internal source filter
 #if INTERNAL_SOURCEFILTER_CDDA
@@ -928,6 +929,7 @@ void CAppSettings::SaveSettings(bool write_full_history /* = false */)
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_SUBTITLESLANG, idSubtitlesLang);
     pApp->WriteProfileString(IDS_R_SETTINGS, IDS_RS_OPENTYPELANGHINT, CString(strOpenTypeLangHint));
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_USE_FREETYPE, bUseFreeType);
+    pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_USE_MEDIAINFO_LOAD_FILE_DURATION, bUseMediainfoLoadFileDuration);
 #if USE_LIBASS
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_RENDERSSAUSINGLIBASS, bRenderSSAUsingLibass);
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_RENDERSRTUSINGLIBASS, bRenderSRTUsingLibass);
@@ -1634,7 +1636,8 @@ void CAppSettings::LoadSettings()
 #endif
     CT2A tmpLangHint(pApp->GetProfileString(IDS_R_SETTINGS, IDS_RS_OPENTYPELANGHINT, _T("")));
     strOpenTypeLangHint = tmpLangHint;
-    bUseFreeType= !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_USE_FREETYPE, FALSE);
+    bUseFreeType = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_USE_FREETYPE, FALSE);
+    bUseMediainfoLoadFileDuration = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_USE_MEDIAINFO_LOAD_FILE_DURATION, FALSE);
 
     fClosedCaptions = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_CLOSEDCAPTIONS, FALSE);
     {

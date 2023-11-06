@@ -4116,6 +4116,7 @@ BEGIN
                             "The renderer will try to initialize the device skipping some checks."
     IDS_FILTER_RESET_SETTINGS "Reset"
     IDS_AG_DEFAULT          "Default"
+		IDS_PPAGEADVANCED_USE_MEDIAINFO_LOAD_FILE_DURATION "Load file duration when adding items to playlist (uses MediaInfo and results may vary)"
 END
 
 #endif    // English (United States) resources
