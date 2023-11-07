@@ -63,6 +63,10 @@ class CSubtitleInputPin : public CBaseInputPin
     REFERENCE_TIME DecodeSample(const std::unique_ptr<SubtitleSample>& pSample);
     void InvalidateSamples();
 
+    REFERENCE_TIME m_lastSegmentStart = 0LL;
+    REFERENCE_TIME m_lastSegmentStop  = 0LL;
+    double m_lastSegmentRate = 1.0;
+
 protected:
     virtual void AddSubStream(ISubStream* pSubStream) = 0;
     virtual void RemoveSubStream(ISubStream* pSubStream) = 0;
