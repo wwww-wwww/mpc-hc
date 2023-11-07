@@ -72,6 +72,7 @@ CMyFont::CMyFont(const STSStyle& style)
 
     HFONT hOldFont = SelectFont(g_hDC, *this);
 
+#if 0
     WCHAR selectedFontName[LF_FACESIZE];
     GetTextFaceW(g_hDC, LF_FACESIZE, selectedFontName);
     if (wcsncmp(selectedFontName, lf.lfFaceName, LF_FACESIZE)) { //GDI chose a different font -- let's use default instead
@@ -81,6 +82,7 @@ CMyFont::CMyFont(const STSStyle& style)
         VERIFY(CreateFontIndirect(&lf));
         HFONT hOldFont = SelectFont(g_hDC, *this);
     }
+#endif
 
     TEXTMETRIC tm;
     GetTextMetrics(g_hDC, &tm);
