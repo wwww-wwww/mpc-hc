@@ -9089,13 +9089,22 @@ void CMainFrame::OnPlayFiltersCopyToClipboard()
     VERIFY(clipboard.SetText(filtersList));
 }
 
-void CMainFrame::OnPlayFilters(UINT nID)
+bool CMainFrame::FilterSettingsByClassID(CLSID clsid, CWnd* parent)
 {
-    //ShowPPage(m_spparray[nID - ID_FILTERS_SUBITEM_START], m_hWnd);
+    for (int a = 0; a < m_pparray.GetCount(); a++) {
+        CComQIPtr<IBaseFilter> pBF2 = m_pparray[a];
+        CLSID tclsid;
+        pBF2->GetClassID(&tclsid);
+        if (tclsid == clsid) {
+            FilterSettings(m_pparray[a], parent);
+            return true;
+        }
+    }
+    return false;
+}
 
-    CComPtr<IUnknown> pUnk = m_pparray[nID - ID_FILTERS_SUBITEM_START];
-
-    CComPropertySheet ps(IDS_PROPSHEET_PROPERTIES, GetModalParent());
+void CMainFrame::FilterSettings(CComPtr<IUnknown> pUnk, CWnd* parent) {
+    CComPropertySheet ps(IDS_PROPSHEET_PROPERTIES);
 
     // Find out if we are opening the property page for an internal filter
     CComQIPtr<IBaseFilter> pBF = pUnk;
@@ -9143,6 +9152,15 @@ void CMainFrame::OnPlayFilters(UINT nID)
             }
         }
     }
+}
+
+void CMainFrame::OnPlayFilters(UINT nID)
+{
+    //ShowPPage(m_spparray[nID - ID_FILTERS_SUBITEM_START], m_hWnd);
+
+    CComPtr<IUnknown> pUnk = m_pparray[nID - ID_FILTERS_SUBITEM_START];
+
+    FilterSettings(pUnk, GetModalParent());
 }
 
 void CMainFrame::OnUpdatePlayFilters(CCmdUI* pCmdUI)

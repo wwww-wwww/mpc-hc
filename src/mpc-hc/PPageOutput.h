@@ -86,9 +86,13 @@ protected:
     virtual BOOL OnInitDialog();
     virtual BOOL OnApply();
 
+    void ShowPPage(CUnknown* (__stdcall* CreateInstance)(HWND wnd, HRESULT& hr, CString& _Error));
+
     DECLARE_MESSAGE_MAP()
 
 public:
+    afx_msg void OnUpdateVideoRendererSettings(CCmdUI* pCmdUI);
+    afx_msg void OpenVideoRendererSettings();
     afx_msg void OnSurfaceChange();
     afx_msg void OnDSRendererChange();
     afx_msg void OnAudioRendererChange();

@@ -1146,6 +1146,9 @@ public:
     afx_msg void OnHelpDonate();
 
     afx_msg void OnClose();
+    bool FilterSettingsByClassID(CLSID clsid, CWnd* parent);
+    void FilterSettings(CComPtr<IUnknown> pUnk, CWnd* parent);
+
 
     CMPC_Lcd m_Lcd;
 

@@ -27,6 +27,9 @@
 #include "MPCPngImage.h"
 #include <WinapiFunc.h>
 #include "PPageAudioRenderer.h"
+#include "FGFilter.h"
+#include "MainFrm.h"
+#include <mvrInterfaces.h>
 
 // CPPageOutput dialog
 
@@ -98,6 +101,8 @@ void CPPageOutput::DoDataExchange(CDataExchange* pDX)
 }
 
 BEGIN_MESSAGE_MAP(CPPageOutput, CMPCThemePPageBase)
+    ON_UPDATE_COMMAND_UI(IDC_BUTTON1, OnUpdateVideoRendererSettings)
+    ON_BN_CLICKED(IDC_BUTTON1, &CPPageOutput::OpenVideoRendererSettings)
     ON_CBN_SELCHANGE(IDC_VIDRND_COMBO, &CPPageOutput::OnDSRendererChange)
     ON_CBN_SELCHANGE(IDC_AUDRND_COMBO, &CPPageOutput::OnAudioRendererChange)
     ON_CBN_SELCHANGE(IDC_COMBO1, &CPPageOutput::OnSubtitleRendererChange)
@@ -478,6 +483,30 @@ BOOL CPPageOutput::OnApply()
     }
 
     return __super::OnApply();
+}
+
+void CPPageOutput::OnUpdateVideoRendererSettings(CCmdUI* pCmdUI) {
+    pCmdUI->Enable(m_iDSVideoRendererType == VIDRNDT_DS_MPCVR || m_iDSVideoRendererType == VIDRNDT_DS_MADVR);
+}
+
+void CPPageOutput::OpenVideoRendererSettings() {
+    GUID clsid;
+    if (m_iDSVideoRendererType == VIDRNDT_DS_MPCVR) {
+        clsid = CLSID_MPCVR;
+    } else if (m_iDSVideoRendererType == VIDRNDT_DS_MADVR) {
+        clsid = CLSID_madVR;
+    } else {
+        return;
+    }
+
+    if (!AfxGetMainFrame()->FilterSettingsByClassID(clsid, this)) { //if it is currently in use, get the running instance
+        CFGFilterRegistry fvr(clsid);
+        CComPtr<IBaseFilter> pBF;
+        CInterfaceList<IUnknown, &IID_IUnknown> pUnks; //unused
+        if (!FAILED(fvr.Create(&pBF, pUnks))) { //otherwise, create our own
+            AfxGetMainFrame()->FilterSettings(CComPtr<IUnknown>(pBF), this);
+        }
+    }
 }
 
 void CPPageOutput::OnSurfaceChange()
