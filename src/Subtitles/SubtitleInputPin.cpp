@@ -234,11 +234,7 @@ STDMETHODIMP CSubtitleInputPin::NewSegment(REFERENCE_TIME tStart, REFERENCE_TIME
 {
     CAutoLock cAutoLock(&m_csReceive);
 
-    if (tStop != m_lastSegmentStop || dRate == m_lastSegmentRate) {
-        m_lastSegmentStart = tStart;
-        m_lastSegmentStop = tStop;
-        m_lastSegmentRate = dRate;
-
+    if (tStop != m_tStop || dRate == m_dRate) {
         InvalidateSamples();
 
         if (m_mt.majortype == MEDIATYPE_Text || m_mt.majortype == MEDIATYPE_Subtitle && (m_mt.subtype == MEDIASUBTYPE_UTF8
