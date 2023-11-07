@@ -235,7 +235,6 @@ STDMETHODIMP CSubtitleInputPin::NewSegment(REFERENCE_TIME tStart, REFERENCE_TIME
     CAutoLock cAutoLock(&m_csReceive);
 
     if (tStop != m_lastSegmentStop || dRate == m_lastSegmentRate) {
-        ASSERT(m_lastSegmentStart != tStart);
         m_lastSegmentStart = tStart;
         m_lastSegmentStop = tStop;
         m_lastSegmentRate = dRate;
