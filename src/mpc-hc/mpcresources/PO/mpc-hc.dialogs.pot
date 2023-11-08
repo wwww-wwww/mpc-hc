@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2023-11-03 23:11:00+0000\n"
+"POT-Creation-Date: 2023-11-07 22:46:07+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1148,6 +1148,10 @@ msgstr ""
 
 msgctxt "IDD_PPAGEOUTPUT_IDC_STATIC"
 msgid "DirectShow Video"
+msgstr ""
+
+msgctxt "IDD_PPAGEOUTPUT_IDC_BUTTON1"
+msgid "Settings"
 msgstr ""
 
 msgctxt "IDD_PPAGEOUTPUT_IDC_STATIC"

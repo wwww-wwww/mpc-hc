@@ -1170,6 +1170,10 @@ msgctxt "IDD_PPAGEOUTPUT_IDC_STATIC"
 msgid "DirectShow Video"
 msgstr "DirectShow видео"
 
+msgctxt "IDD_PPAGEOUTPUT_IDC_BUTTON1"
+msgid "Settings"
+msgstr ""
+
 msgctxt "IDD_PPAGEOUTPUT_IDC_STATIC"
 msgid "DXVA"
 msgstr "DXVA"
