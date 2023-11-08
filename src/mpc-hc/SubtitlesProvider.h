@@ -106,7 +106,7 @@ std::string UserAgent() const override
 DEFINE_SUBTITLESPROVIDER_END
 #endif
 
-DEFINE_SUBTITLESPROVIDER_BEGIN(podnapisi, "podnapisi", "https://www.podnapisi.net", IDI_PODNAPISI, SPF_SEARCH)
+DEFINE_SUBTITLESPROVIDER_BEGIN(podnapisi, "Podnapisi", "https://www.podnapisi.net", IDI_PODNAPISI, SPF_SEARCH)
 SRESULT Login(const std::string& sUserName, const std::string& sPassword) override;
 SRESULT Hash(SubtitlesInfo& pFileInfo) override;
 DEFINE_SUBTITLESPROVIDER_END
