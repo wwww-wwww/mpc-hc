@@ -63,7 +63,12 @@ bool CPlayerToolBar::LoadExternalToolBar(CImage& image, bool useColor)
     const std::vector<CString> extensions({ _T("png"), _T("bmp") });
     CString basetbname;
     if (AppIsThemeLoaded()) {
-        basetbname = _T("toolbar_dark.");
+        const auto& s = AfxGetAppSettings();
+        if (s.eModernThemeMode == CMPCTheme::ModernThemeMode::DARK || s.eModernThemeMode == CMPCTheme::ModernThemeMode::WINDOWSDEFAULT && s.bWindows10DarkThemeActive) {
+            basetbname = _T("toolbar_dark.");
+        } else {
+            basetbname = _T("toolbar_light.");
+        }
     } else {
         basetbname = _T("toolbar.");
     }
