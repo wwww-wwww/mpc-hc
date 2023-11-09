@@ -653,7 +653,7 @@ static constexpr wmcmd_base default_wmcmds[] = {
     { ID_DVD_SUB_NEXT,                      0, FVIRTKEY | FNOINVERT,                    IDS_MPLAYERC_95 },
     { ID_DVD_SUB_PREV,                      0, FVIRTKEY | FNOINVERT,                    IDS_MPLAYERC_96 },
     { ID_DVD_SUB_ONOFF,                     0, FVIRTKEY | FNOINVERT,                    IDS_MPLAYERC_97 },
-    { ID_VIEW_TEARING_TEST,               'T', FVIRTKEY | FCONTROL | FNOINVERT,         IDS_AG_TEARING_TEST },
+    { ID_VIEW_TEARING_TEST,                 0, FVIRTKEY | FNOINVERT,                    IDS_AG_TEARING_TEST },
     { ID_VIEW_OSD_DISPLAY_TIME,           'I', FVIRTKEY | FCONTROL | FNOINVERT,         IDS_OSD_DISPLAY_CURRENT_TIME },
     { ID_VIEW_OSD_SHOW_FILENAME,          'N', FVIRTKEY | FNOINVERT,                    IDS_OSD_SHOW_FILENAME },
     { ID_SHADERS_PRESET_NEXT,               0, FVIRTKEY | FNOINVERT,                    IDS_AG_SHADERS_PRESET_NEXT },
