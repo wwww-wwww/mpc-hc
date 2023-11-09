@@ -136,6 +136,7 @@ public:
 
     void Sort(bool fRestoreReadorder = false);
     void CreateSegments();
+    void FlushEventsLibass();
 
     void Append(CSimpleTextSubtitle& sts, REFERENCE_TIME timeoff = -1);
 

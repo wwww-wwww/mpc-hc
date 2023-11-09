@@ -244,6 +244,7 @@ STDMETHODIMP CSubtitleInputPin::NewSegment(REFERENCE_TIME tStart, REFERENCE_TIME
         if (pRTS->m_webvtt_allow_clear || pRTS->m_subtitleType != Subtitle::VTT) {
             pRTS->RemoveAll();
             pRTS->CreateSegments();
+            pRTS->FlushEventsLibass();
         }
         // WebVTT can be read as one big blob of data during pin connection, instead of as samples during playback.
         // This depends on how it is being demuxed. So clear only if we previously got data through samples.
