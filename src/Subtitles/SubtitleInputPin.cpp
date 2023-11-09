@@ -234,34 +234,32 @@ STDMETHODIMP CSubtitleInputPin::NewSegment(REFERENCE_TIME tStart, REFERENCE_TIME
 {
     CAutoLock cAutoLock(&m_csReceive);
 
-    if (tStop != m_tStop || dRate == m_dRate) {
-        InvalidateSamples();
+    InvalidateSamples();
 
-        if (m_mt.majortype == MEDIATYPE_Text || m_mt.majortype == MEDIATYPE_Subtitle && (m_mt.subtype == MEDIASUBTYPE_UTF8
-            || m_mt.subtype == MEDIASUBTYPE_WEBVTT || m_mt.subtype == MEDIASUBTYPE_SSA || m_mt.subtype == MEDIASUBTYPE_ASS
-            || m_mt.subtype == MEDIASUBTYPE_ASS2)) {
-            CAutoLock cAutoLock2(m_pSubLock);
-            CRenderedTextSubtitle* pRTS = (CRenderedTextSubtitle*)(ISubStream*)m_pSubStream;
-            if (pRTS->m_webvtt_allow_clear || pRTS->m_subtitleType != Subtitle::VTT) {
-                pRTS->RemoveAll();
-                pRTS->CreateSegments();
-            }
-            // WebVTT can be read as one big blob of data during pin connection, instead of as samples during playback.
-            // This depends on how it is being demuxed. So clear only if we previously got data through samples.
-        } else if (m_mt.majortype == MEDIATYPE_Subtitle && (m_mt.subtype == MEDIASUBTYPE_VOBSUB)) {
-            CAutoLock cAutoLock2(m_pSubLock);
-            CVobSubStream* pVSS = (CVobSubStream*)(ISubStream*)m_pSubStream;
-            pVSS->RemoveAll();
-        } else if (IsRLECodedSub(&m_mt)) {
-            CAutoLock cAutoLock2(m_pSubLock);
-            CRLECodedSubtitle* pRLECodedSubtitle = (CRLECodedSubtitle*)(ISubStream*)m_pSubStream;
-            pRLECodedSubtitle->NewSegment(tStart, tStop, dRate);
+    if (m_mt.majortype == MEDIATYPE_Text || m_mt.majortype == MEDIATYPE_Subtitle && (m_mt.subtype == MEDIASUBTYPE_UTF8
+        || m_mt.subtype == MEDIASUBTYPE_WEBVTT || m_mt.subtype == MEDIASUBTYPE_SSA || m_mt.subtype == MEDIASUBTYPE_ASS
+        || m_mt.subtype == MEDIASUBTYPE_ASS2)) {
+        CAutoLock cAutoLock2(m_pSubLock);
+        CRenderedTextSubtitle* pRTS = (CRenderedTextSubtitle*)(ISubStream*)m_pSubStream;
+        if (pRTS->m_webvtt_allow_clear || pRTS->m_subtitleType != Subtitle::VTT) {
+            pRTS->RemoveAll();
+            pRTS->CreateSegments();
         }
-
-        TRACE(_T("NewSegment: InvalidateSubtitle %.3f\n"), RT2SEC(tStart));
-        // IMPORTANT: m_pSubLock must not be locked when calling this
-        InvalidateSubtitle(tStart, m_pSubStream);
+        // WebVTT can be read as one big blob of data during pin connection, instead of as samples during playback.
+        // This depends on how it is being demuxed. So clear only if we previously got data through samples.
+    } else if (m_mt.majortype == MEDIATYPE_Subtitle && (m_mt.subtype == MEDIASUBTYPE_VOBSUB)) {
+        CAutoLock cAutoLock2(m_pSubLock);
+        CVobSubStream* pVSS = (CVobSubStream*)(ISubStream*)m_pSubStream;
+        pVSS->RemoveAll();
+    } else if (IsRLECodedSub(&m_mt)) {
+        CAutoLock cAutoLock2(m_pSubLock);
+        CRLECodedSubtitle* pRLECodedSubtitle = (CRLECodedSubtitle*)(ISubStream*)m_pSubStream;
+        pRLECodedSubtitle->NewSegment(tStart, tStop, dRate);
     }
+
+    TRACE(_T("NewSegment: InvalidateSubtitle %.3f\n"), RT2SEC(tStart));
+    // IMPORTANT: m_pSubLock must not be locked when calling this
+    InvalidateSubtitle(tStart, m_pSubStream);
 
     return __super::NewSegment(tStart, tStop, dRate);
 }
