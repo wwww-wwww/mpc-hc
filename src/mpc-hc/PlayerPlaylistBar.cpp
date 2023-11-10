@@ -262,7 +262,10 @@ void CPlayerPlaylistBar::AddItem(CAtlList<CString>& fns, CAtlList<CString>* subs
     }
 
     POSITION ipos = m_pl.AddTail(pli);
-    LoadDuration(ipos);
+
+    if (m_pl.GetCount() > 1) {
+        LoadDuration(ipos);
+    }
 }
 
 void CPlayerPlaylistBar::ReplaceCurrentItem(CAtlList<CString>& fns, CAtlList<CString>* subs, CString label, CString ydl_src, CString cue, CAtlList<CYoutubeDLInstance::YDLSubInfo>* ydl_subs)
