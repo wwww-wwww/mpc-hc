@@ -26,9 +26,7 @@
 #include "Logger.h"
 #include <wininet.h>
 
-#include "MediaInfo/MediaInfoDLL.h"
 #include "CMPCThemeMsgBox.h"
-using namespace MediaInfoDLL;
 
 using namespace SubtitlesProvidersUtils;
 

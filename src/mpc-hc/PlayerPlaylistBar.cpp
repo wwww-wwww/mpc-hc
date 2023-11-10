@@ -168,24 +168,27 @@ void CPlayerPlaylistBar::LoadDuration(POSITION pos) {
         CPlaylistItem& pli = m_pl.GetAt(pos);
 
         MediaInfoDLL::MediaInfo mi;
-        auto fn = pli.m_fns.GetHead();
-        if (!PathUtils::IsURL(fn)) {
-            auto fnString = fn.GetBuffer();
-            size_t fp = mi.Open(fnString);
-            fn.ReleaseBuffer();
-            if (fp > 0) {
-                MediaInfoDLL::String info = mi.Get(MediaInfoDLL::Stream_General, 0, L"Duration");
-                if (!info.empty()) {
-                    try {
-                        int duration = std::stoi(info);
-                        if (duration > 0) {
-                            pli.m_duration = duration * 10000LL;
-                            m_list.SetItemText(FindItem(pos), COL_TIME, pli.GetLabel(1));
+        if (mi.IsReady()) {
+            auto fn = pli.m_fns.GetHead();
+            if (!PathUtils::IsURL(fn)) {
+                auto fnString = fn.GetBuffer();
+                size_t fp = mi.Open(fnString);
+                fn.ReleaseBuffer();
+                if (fp > 0) {
+                    MediaInfoDLL::String info = mi.Get(MediaInfoDLL::Stream_General, 0, L"Duration");
+                    if (!info.empty()) {
+                        try {
+                            int duration = std::stoi(info);
+                            if (duration > 0) {
+                                pli.m_duration = duration * 10000LL;
+                                m_list.SetItemText(FindItem(pos), COL_TIME, pli.GetLabel(1));
+                            }
+                        } catch (...) {
                         }
-                    } catch (...) {
                     }
                 }
             }
+            mi.Close();
         }
     }
 }
