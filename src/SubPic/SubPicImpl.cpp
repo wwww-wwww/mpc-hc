@@ -273,24 +273,37 @@ STDMETHODIMP CSubPicImpl::GetMaxSize(SIZE* pMaxSize) const
 STDMETHODIMP CSubPicImpl::SetSize(SIZE size, RECT vidrect)
 {
     m_size = size;
-    m_vidrect = vidrect;
-
     if (m_size.cx > m_maxsize.cx) {
         m_size.cy = MulDiv(m_size.cy, m_maxsize.cx, m_size.cx);
         m_size.cx = m_maxsize.cx;
     }
-
     if (m_size.cy > m_maxsize.cy) {
         m_size.cx = MulDiv(m_size.cx, m_maxsize.cy, m_size.cy);
         m_size.cy = m_maxsize.cy;
     }
 
-    if (m_size.cx != size.cx || m_size.cy != size.cy) {
-        m_vidrect.top    = MulDiv(m_vidrect.top,    m_size.cx, size.cx);
-        m_vidrect.bottom = MulDiv(m_vidrect.bottom, m_size.cx, size.cx);
-        m_vidrect.left   = MulDiv(m_vidrect.left,   m_size.cy, size.cy);
-        m_vidrect.right  = MulDiv(m_vidrect.right,  m_size.cy, size.cy);
+    // vidrect must be scaled to within texture size limits
+    // the rendered texture is later scaled to actual video window size
+    m_vidrect = vidrect;
+    int w = m_vidrect.Width();
+    if (w > m_size.cx) {
+        if (m_vidrect.left)
+        m_vidrect.left   = MulDiv(m_vidrect.left,   m_size.cx, w);
+        m_vidrect.right  = MulDiv(m_vidrect.right,  m_size.cx, w);
+        if (m_vidrect.top)
+        m_vidrect.top    = MulDiv(m_vidrect.top,    m_size.cx, w);
+        m_vidrect.bottom = MulDiv(m_vidrect.bottom, m_size.cx, w);
     }
+    int h = m_vidrect.Height();
+    if (h > m_size.cy) {
+        if (m_vidrect.left)
+        m_vidrect.left   = MulDiv(m_vidrect.left,   m_size.cy, h);
+        m_vidrect.right  = MulDiv(m_vidrect.right,  m_size.cy, h);
+        if (m_vidrect.top)
+        m_vidrect.top    = MulDiv(m_vidrect.top,    m_size.cy, h);
+        m_vidrect.bottom = MulDiv(m_vidrect.bottom, m_size.cy, h);
+    }
+
     m_virtualTextureSize = m_size;
 
     return S_OK;
