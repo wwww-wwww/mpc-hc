@@ -18055,8 +18055,13 @@ void CMainFrame::CloseMedia(bool bNextIsQueued/* = false*/)
             ENSURE(TerminateThread(m_pGraphThread->m_hThread, DWORD_ERROR));
             // then we recreate graph thread
             bGraphTerminated = true;
-            m_pGraphThread = (CGraphThread*)AfxBeginThread(RUNTIME_CLASS(CGraphThread));
-            m_pGraphThread->SetMainFrame(this);
+            CWinThread* newthread = AfxBeginThread(RUNTIME_CLASS(CGraphThread));
+            if (newthread) {
+                m_pGraphThread = (CGraphThread*)newthread;
+                m_pGraphThread->SetMainFrame(this);
+            } else {
+                m_pGraphThread = nullptr;
+            }
         }
         EndWaitCursor();
 
