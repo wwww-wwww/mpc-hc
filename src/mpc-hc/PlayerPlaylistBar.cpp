@@ -1220,7 +1220,14 @@ CPlaylistItem* CPlayerPlaylistBar::GetCur()
     if (!m_pl.IsEmpty()) {
         POSITION p = m_pl.GetPos();
         if (p) {
-            return &m_pl.GetAt(p);
+            CPlaylistItem* result = &m_pl.GetAt(p);
+            // validate
+            if (result->m_type >= 0 && result->m_type <= 1 && !result->m_fns.IsEmpty()) {
+                return result;
+            } else {
+                ASSERT(false);
+                return nullptr;
+            }
         }
     }
     return nullptr;
