@@ -590,7 +590,6 @@
     <ClCompile Include="PlayerPreView.cpp">
       <Filter>Toolbars</Filter>
     </ClCompile>
-    <ClCompile Include="RegexUtil.cpp" />
     <ClCompile Include="MediaTransControls.cpp">
       <Filter>Main View</Filter>
     </ClCompile>
@@ -1132,7 +1131,6 @@
     <ClInclude Include="PlayerPreView.h">
       <Filter>Toolbars</Filter>
     </ClInclude>
-    <ClInclude Include="RegexUtil.h" />
     <ClInclude Include="MediaTransControls.h">
       <Filter>Main View</Filter>
     </ClInclude>

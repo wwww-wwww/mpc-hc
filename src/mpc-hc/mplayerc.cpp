@@ -2633,14 +2633,3 @@ void CMPlayerCApp::RunAsAdministrator(LPCTSTR strCommand, LPCTSTR strArgs, bool 
     }
 }
 
-// RenderersSettings.h
-
-CRenderersData* GetRenderersData()
-{
-    return &AfxGetMyApp()->m_Renderers;
-}
-
-CRenderersSettings& GetRenderersSettings()
-{
-    return AfxGetAppSettings().m_RenderersSettings;
-}

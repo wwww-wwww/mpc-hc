@@ -121,7 +121,7 @@ configure() {
     if [ "${COMPILER}" == "MSVC" ]; then
       OPTIONS="${OPTIONS} --enable-debug"
       EXTRA_CFLAGS="-D_WIN32_WINNT=0x0600 -DWINVER=0x0600 -Zo -GS-"
-      EXTRA_CFLAGS="${EXTRA_CFLAGS} -I../../../thirdparty/64/include -I../../../../../../thirdparty/zlib -MDd"
+      EXTRA_CFLAGS="${EXTRA_CFLAGS} -I../../../thirdparty/64/include -I../../../../../zlib -I../../../../msvcInclude -MDd"
       EXTRA_LDFLAGS="${EXTRA_LDFLAGS} -LIBPATH:../../../thirdparty/64/lib -LIBPATH:../../../../../../../bin/lib/Debug_x64 -NODEFAULTLIB:libcmt"
       TOOLCHAIN="--toolchain=msvc"
     else
@@ -136,7 +136,7 @@ configure() {
     if [ "${COMPILER}" == "MSVC" ]; then
       OPTIONS="${OPTIONS} --enable-debug"
       EXTRA_CFLAGS="-D_WIN32_WINNT=0x0600 -DWINVER=0x0600 -Zo -GS-"
-      EXTRA_CFLAGS="${EXTRA_CFLAGS} -I../../../thirdparty/32/include -I../../../../../../thirdparty/zlib -MDd"
+      EXTRA_CFLAGS="${EXTRA_CFLAGS} -I../../../thirdparty/32/include -I../../../../../zlib -I../../../../msvcInclude -MDd"
       EXTRA_LDFLAGS="${EXTRA_LDFLAGS} -LIBPATH:../../../thirdparty/32/lib -LIBPATH:../../../../../../../bin/lib/Debug_Win32 -NODEFAULTLIB:libcmt"
       TOOLCHAIN="--toolchain=msvc"
     else
