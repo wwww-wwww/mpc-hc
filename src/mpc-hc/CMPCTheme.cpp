@@ -46,6 +46,7 @@ COLORREF CMPCTheme::MainMenuBorderColor;
 
 COLORREF CMPCTheme::TextFGColor;
 COLORREF CMPCTheme::TextFGColorFade;
+COLORREF CMPCTheme::PropPageCaptionFGColor;
 COLORREF CMPCTheme::ContentTextDisabledFGColorFade;
 COLORREF CMPCTheme::ContentTextDisabledFGColorFade2; //even more faded, used for NA text on CListCtrl/audio switcher
 
@@ -485,6 +486,7 @@ void CMPCTheme::InitializeColors(ModernThemeMode themeMode) {
         MainMenuBorderColor = RGB(32, 32, 32);
 
         TextFGColor = RGB(255, 255, 255);
+        PropPageCaptionFGColor = RGBGS(255);
         TextFGColorFade = RGB(200, 200, 200);
         ContentTextDisabledFGColorFade = RGB(109, 109, 109);
         ContentTextDisabledFGColorFade2 = RGB(60, 60, 60); //even more faded, used for NA text on CListCtrl/audio switcher
@@ -597,6 +599,7 @@ void CMPCTheme::InitializeColors(ModernThemeMode themeMode) {
         MainMenuBorderColor = RGBGS(255);
 
         TextFGColor = RGBGS(0);
+        PropPageCaptionFGColor = RGBGS(245);
         TextFGColorFade = RGBGS(109);
         ContentTextDisabledFGColorFade = RGBGS(176);
         ContentTextDisabledFGColorFade2 = RGBGS(224); //even more faded, used for NA text on CListCtrl/audio switcher

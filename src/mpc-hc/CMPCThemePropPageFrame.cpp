@@ -46,7 +46,7 @@ void CMPCThemePropPageFrame::DrawCaption(CDC* pDC, CRect rect, LPCTSTR lpszCapti
 
     rect.left += 2;
 
-    COLORREF clrPrev = pDC->SetTextColor(CMPCTheme::TextFGColor);
+    COLORREF clrPrev = pDC->SetTextColor(CMPCTheme::PropPageCaptionFGColor);
     int nBkStyle = pDC->SetBkMode(TRANSPARENT);
 
     LOGFONT lf;
@@ -69,7 +69,7 @@ void CMPCThemePropPageFrame::DrawCaption(CDC* pDC, CRect rect, LPCTSTR lpszCapti
     }
 
 
-    rect.top -= GDIMetrics.tmDescent;
+    rect.top -= GDIMetrics.tmDescent - 1;
 
     pDC->DrawTextW(lpszCaption, rect, DT_LEFT | DT_SINGLELINE | DT_END_ELLIPSIS);
 

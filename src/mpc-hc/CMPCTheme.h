@@ -26,6 +26,7 @@ public:
 
     static COLORREF TextFGColor;
     static COLORREF TextFGColorFade;
+    static COLORREF PropPageCaptionFGColor;
     static COLORREF ContentTextDisabledFGColorFade;
     static COLORREF ContentTextDisabledFGColorFade2;
     static COLORREF SubmenuColor;
