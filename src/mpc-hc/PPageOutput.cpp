@@ -30,6 +30,7 @@
 #include "FGFilter.h"
 #include "MainFrm.h"
 #include <mvrInterfaces.h>
+#include "FGManager.h"
 
 // CPPageOutput dialog
 
@@ -102,11 +103,13 @@ void CPPageOutput::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(CPPageOutput, CMPCThemePPageBase)
     ON_UPDATE_COMMAND_UI(IDC_BUTTON1, OnUpdateVideoRendererSettings)
-    ON_BN_CLICKED(IDC_BUTTON1, &CPPageOutput::OpenVideoRendererSettings)
-    ON_CBN_SELCHANGE(IDC_VIDRND_COMBO, &CPPageOutput::OnDSRendererChange)
-    ON_CBN_SELCHANGE(IDC_AUDRND_COMBO, &CPPageOutput::OnAudioRendererChange)
-    ON_CBN_SELCHANGE(IDC_COMBO1, &CPPageOutput::OnSubtitleRendererChange)
-    ON_CBN_SELCHANGE(IDC_DX_SURFACE, &CPPageOutput::OnSurfaceChange)
+    ON_BN_CLICKED(IDC_BUTTON1, OpenVideoRendererSettings)
+    ON_UPDATE_COMMAND_UI(IDC_BUTTON2, OnUpdateAudioRendererSettings)
+    ON_BN_CLICKED(IDC_BUTTON2, OpenAudioRendererSettings)
+    ON_CBN_SELCHANGE(IDC_VIDRND_COMBO, OnDSRendererChange)
+    ON_CBN_SELCHANGE(IDC_AUDRND_COMBO, OnAudioRendererChange)
+    ON_CBN_SELCHANGE(IDC_COMBO1, OnSubtitleRendererChange)
+    ON_CBN_SELCHANGE(IDC_DX_SURFACE, OnSurfaceChange)
     ON_BN_CLICKED(IDC_D3D9DEVICE, OnD3D9DeviceCheck)
     ON_BN_CLICKED(IDC_FULLSCREEN_MONITOR_CHECK, OnFullscreenCheck)
 END_MESSAGE_MAP()
@@ -168,8 +171,9 @@ BOOL CPPageOutput::OnInitDialog()
     // MPC AR
     m_AudioRendererDisplayNames.Add(AUDRNDT_MPC);
     m_iAudioRendererTypeCtrl.AddString(ResStr(IDS_PPAGE_OUTPUT_AUD_MPC_REND).GetString());
+    m_iMPCAudioRendererType = m_iAudioRendererTypeCtrl.GetCount() - 1;
     if (s.strAudioRendererDisplayName == AUDRNDT_MPC && m_iAudioRendererType == 0) {
-        m_iAudioRendererType = m_iAudioRendererTypeCtrl.GetCount() - 1;
+        m_iAudioRendererType = m_iMPCAudioRendererType;
     }
 
     // List of available renderers
@@ -506,6 +510,16 @@ void CPPageOutput::OpenVideoRendererSettings() {
         if (!FAILED(fvr.Create(&pBF, pUnks))) { //otherwise, create our own
             AfxGetMainFrame()->FilterSettings(CComPtr<IUnknown>(pBF), this);
         }
+    }
+}
+
+void CPPageOutput::OnUpdateAudioRendererSettings(CCmdUI* pCmdUI) {
+    pCmdUI->Enable(m_iAudioRendererType == m_iMPCAudioRendererType);
+}
+
+void CPPageOutput::OpenAudioRendererSettings() {
+    if (m_iAudioRendererType == m_iMPCAudioRendererType) {
+        ShowPPage(CFGManager::GetMpcAudioRendererInstance);
     }
 }
 
