@@ -655,6 +655,7 @@ public:
     bool            bAllowInaccurateFastseek;
     bool            bLoopFolderOnPlayNextFile;
     bool            bLockNoPause;
+    bool            bPreventDisplaySleep;
     bool            bUseSMTC;
     int             iReloadAfterLongPause;
     bool            bOpenRecPanelWhenOpeningDevice;

@@ -249,6 +249,7 @@ CAppSettings::CAppSettings()
     , sYDLSubsPreference()
     , bUseAutomaticCaptions(false)
     , bLockNoPause(false)
+    , bPreventDisplaySleep(true)
     , bUseSMTC(false)
     , iReloadAfterLongPause(0)
     , bOpenRecPanelWhenOpeningDevice(true)
@@ -1184,6 +1185,7 @@ void CAppSettings::SaveSettings(bool write_full_history /* = false */)
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_LOOP_FOLDER_NEXT_FILE, bLoopFolderOnPlayNextFile);
 
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_LOCK_NOPAUSE, bLockNoPause);
+    pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_PREVENT_DISPLAY_SLEEP, bPreventDisplaySleep);
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_USE_SMTC, bUseSMTC);
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_RELOAD_AFTER_LONG_PAUSE, iReloadAfterLongPause);
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_OPEN_REC_PANEL_WHEN_OPENING_DEVICE, bOpenRecPanelWhenOpeningDevice);
@@ -2036,6 +2038,7 @@ void CAppSettings::LoadSettings()
     bLoopFolderOnPlayNextFile = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_LOOP_FOLDER_NEXT_FILE, FALSE);
 
     bLockNoPause = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_LOCK_NOPAUSE, FALSE);
+    bPreventDisplaySleep = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_PREVENT_DISPLAY_SLEEP, TRUE);
     bUseSMTC = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_USE_SMTC, FALSE);
     iReloadAfterLongPause = pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_RELOAD_AFTER_LONG_PAUSE, 0);
     bOpenRecPanelWhenOpeningDevice = pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_OPEN_REC_PANEL_WHEN_OPENING_DEVICE, TRUE);

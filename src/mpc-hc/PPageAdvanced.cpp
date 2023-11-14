@@ -170,6 +170,7 @@ void CPPageAdvanced::InitSettings()
     addBoolItem(USE_TITLE_IN_RECENT_FILE_LIST, IDS_RS_USE_TITLE_IN_RECENT_FILE_LIST, true, s.bUseTitleInRecentFileList, StrRes(IDS_PPAGEADVANCED_USE_TITLE_IN_RECENT_FILE_LIST));
     addIntItem(MOUSE_LEFTUP_DELAY, IDS_RS_MOUSE_LEFTUP_DELAY, 0, s.iMouseLeftUpDelay, std::make_pair(0, 1000), StrRes(IDS_PPAGEADVANCED_MOUSE_LEFTUP_DELAY));
     addBoolItem(LOCK_NOPAUSE, IDS_RS_LOCK_NOPAUSE, false, s.bLockNoPause, StrRes(IDS_PPAGEADVANCED_LOCK_NOPAUSE));
+    addBoolItem(PREVENT_DISPLAY_SLEEP, IDS_RS_PREVENT_DISPLAY_SLEEP, true, s.bPreventDisplaySleep, _T("Disable screen saver and monitor sleep mode during video playback."));
     addIntItem(RELOAD_AFTER_LONG_PAUSE, IDS_RS_RELOAD_AFTER_LONG_PAUSE, 0, s.iReloadAfterLongPause, std::make_pair(-1, 1440), StrRes(IDS_PPAGEADVANCED_RELOAD_AFTER_LONG_PAUSE));
     addBoolItem(INACCURATE_FASTSEEK, IDS_RS_ALLOW_INACCURATE_FASTSEEK, true, s.bAllowInaccurateFastseek, StrRes(IDS_PPAGEADVANCED_ALLOW_INACCURATE_FASTSEEK));
     addIntItem(STILL_VIDEO_DURATION, IDS_RS_STILL_VIDEO_DURATION, 10, s.iStillVideoDuration, std::make_pair(0, 86400), _T("Display duration in seconds for images rendered by ""Generate Still Video"" and ""MPC Image Source"" filters. Use 0 for infinite."));

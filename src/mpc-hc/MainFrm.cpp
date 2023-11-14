@@ -2212,6 +2212,8 @@ void CMainFrame::OnTimer(UINT_PTR nIDEvent)
                 EndEnumFilters;
             }
 
+            const CAppSettings& s = AfxGetAppSettings();
+
             if (GetPlaybackMode() == PM_DVD) { // we also use this timer to update the info panel for DVD playback
                 ULONG ulAvailable, ulCurrent;
 
@@ -2391,7 +2393,6 @@ void CMainFrame::OnTimer(UINT_PTR nIDEvent)
                 }
             } else if (GetPlaybackMode() == PM_FILE) {
                 OpenSetupInfoBar(false);
-                const CAppSettings& s = AfxGetAppSettings();
                 if (s.iTitleBarTextStyle == 1 && s.fTitleBarTextTitle) {
                     OpenSetupWindowTitle();
                 }
@@ -2400,14 +2401,16 @@ void CMainFrame::OnTimer(UINT_PTR nIDEvent)
             }
 
             if (m_CachedFilterState == State_Running && !m_fAudioOnly) {
-                BOOL fActive = FALSE;
-                if (SystemParametersInfo(SPI_GETSCREENSAVEACTIVE, 0, &fActive, 0) && fActive) {
-                    SystemParametersInfo(SPI_SETSCREENSAVEACTIVE, FALSE,   nullptr, SPIF_SENDWININICHANGE);
-                    SystemParametersInfo(SPI_SETSCREENSAVEACTIVE, fActive, nullptr, SPIF_SENDWININICHANGE);
-                }
+                if (s.bPreventDisplaySleep) {
+                    BOOL fActive = FALSE;
+                    if (SystemParametersInfo(SPI_GETSCREENSAVEACTIVE, 0, &fActive, 0) && fActive) {
+                        SystemParametersInfo(SPI_SETSCREENSAVEACTIVE, FALSE, nullptr, SPIF_SENDWININICHANGE);
+                        SystemParametersInfo(SPI_SETSCREENSAVEACTIVE, fActive, nullptr, SPIF_SENDWININICHANGE);
+                    }
 
-                // prevent screensaver activate, monitor sleep/turn off after playback
-                SetThreadExecutionState(ES_SYSTEM_REQUIRED | ES_DISPLAY_REQUIRED);
+                    // prevent screensaver activate, monitor sleep/turn off after playback
+                    SetThreadExecutionState(ES_SYSTEM_REQUIRED | ES_DISPLAY_REQUIRED);
+                }
 
                 UpdateDXVAStatus();
             }
@@ -18361,12 +18364,17 @@ void CMainFrame::SetPlayState(MPC_PLAYSTATE iState)
         SendAPICommand(CMD_NOTIFYENDOFSTREAM, L"\0");     // do not pass NULL here!
     }
 
-    // Prevent sleep when playing audio and/or video, but allow screensaver when only audio
-    if (!m_fAudioOnly) {
-        SetThreadExecutionState(iState == PS_PLAY ? ES_CONTINUOUS | ES_DISPLAY_REQUIRED | ES_SYSTEM_REQUIRED : ES_CONTINUOUS);
+    if (iState == PS_PLAY) {
+        // Prevent sleep when playing audio and/or video, but allow screensaver when only audio
+        if (!m_fAudioOnly && AfxGetAppSettings().bPreventDisplaySleep) {
+            SetThreadExecutionState(ES_CONTINUOUS | ES_DISPLAY_REQUIRED | ES_SYSTEM_REQUIRED);
+        } else {
+            SetThreadExecutionState(ES_CONTINUOUS | ES_SYSTEM_REQUIRED);
+        }
     } else {
-        SetThreadExecutionState(iState == PS_PLAY ? ES_CONTINUOUS | ES_SYSTEM_REQUIRED : ES_CONTINUOUS);
+        SetThreadExecutionState(ES_CONTINUOUS);
     }
+
 
     UpdateThumbarButton(iState);
 }
