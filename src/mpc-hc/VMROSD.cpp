@@ -396,7 +396,7 @@ void CVMROSD::UpdateSeekBarPos(CPoint point)
     }
 
     if (m_pWnd) {
-        AfxGetApp()->GetMainWnd()->PostMessage(WM_HSCROLL, NULL, reinterpret_cast<LPARAM>(m_pWnd->m_hWnd));
+        AfxGetApp()->GetMainWnd()->PostMessage(WM_HSCROLL, (WPARAM)0, reinterpret_cast<LPARAM>(m_pWnd->m_hWnd));
     }
 }
 

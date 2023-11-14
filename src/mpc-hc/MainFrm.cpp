@@ -1159,7 +1159,7 @@ void CMainFrame::OnDestroy()
 
     if (m_pGraphThread) {
         CAMMsgEvent e;
-        m_pGraphThread->PostThreadMessage(CGraphThread::TM_EXIT, 0, (LPARAM)&e);
+        m_pGraphThread->PostThreadMessage(CGraphThread::TM_EXIT, (WPARAM)0, (LPARAM)&e);
         if (!e.Wait(5000)) {
             TRACE(_T("ERROR: Must call TerminateThread() on CMainFrame::m_pGraphThread->m_hThread\n"));
             TerminateThread(m_pGraphThread->m_hThread, DWORD_ERROR);
@@ -1739,7 +1739,7 @@ void CMainFrame::OnDisplayChange() // untested, not sure if it's working...
     if (GetLoadState() == MLS::LOADED) {
         if (m_pGraphThread) {
             CAMMsgEvent e;
-            m_pGraphThread->PostThreadMessage(CGraphThread::TM_DISPLAY_CHANGE, 0, (LPARAM)&e);
+            m_pGraphThread->PostThreadMessage(CGraphThread::TM_DISPLAY_CHANGE, (WPARAM)0, (LPARAM)&e);
             e.WaitMsg();
         } else {
             DisplayChange();
@@ -3122,7 +3122,7 @@ LRESULT CMainFrame::OnResetDevice(WPARAM wParam, LPARAM lParam)
 
     if (m_bOpenedThroughThread) {
         CAMMsgEvent e;
-        m_pGraphThread->PostThreadMessage(CGraphThread::TM_RESET, 0, (LPARAM)&e);
+        m_pGraphThread->PostThreadMessage(CGraphThread::TM_RESET, (WPARAM)0, (LPARAM)&e);
         e.WaitMsg();
     } else {
         ResetDevice();
@@ -17915,7 +17915,7 @@ void CMainFrame::OpenMedia(CAutoPtr<OpenMediaData> pOMD)
     // initiate graph creation, OpenMediaPrivate() will call OnFilePostOpenmedia()
     if (bUseThread) {
         VERIFY(m_evOpenPrivateFinished.Reset());
-        VERIFY(m_pGraphThread->PostThreadMessage(CGraphThread::TM_OPEN, 0, (LPARAM)pOMD.Detach()));
+        VERIFY(m_pGraphThread->PostThreadMessage(CGraphThread::TM_OPEN, (WPARAM)0, (LPARAM)pOMD.Detach()));
         m_bOpenedThroughThread = true;
     } else {
         OpenMediaPrivate(pOMD);
@@ -18109,7 +18109,7 @@ void CMainFrame::CloseMedia(bool bNextIsQueued/* = false*/)
     if (m_pGraphThread && m_bOpenedThroughThread && !bGraphTerminated) {
         // either opening or closing has to be blocked to prevent reentering them, closing is the better choice
         VERIFY(m_evClosePrivateFinished.Reset());
-        VERIFY(m_pGraphThread->PostThreadMessage(CGraphThread::TM_CLOSE, 0, 0));
+        VERIFY(m_pGraphThread->PostThreadMessage(CGraphThread::TM_CLOSE, (WPARAM)0, (LPARAM)0));
 
         HANDLE handle = m_evClosePrivateFinished;
         DWORD dwWait;
@@ -18146,7 +18146,7 @@ void CMainFrame::StartTunerScan(CAutoPtr<TunerScanData> pTSD)
     SendNowPlayingToSkype();
 
     if (m_pGraphThread) {
-        m_pGraphThread->PostThreadMessage(CGraphThread::TM_TUNER_SCAN, 0, (LPARAM)pTSD.Detach());
+        m_pGraphThread->PostThreadMessage(CGraphThread::TM_TUNER_SCAN, (WPARAM)0, (LPARAM)pTSD.Detach());
     } else {
         DoTunerScan(pTSD);
     }

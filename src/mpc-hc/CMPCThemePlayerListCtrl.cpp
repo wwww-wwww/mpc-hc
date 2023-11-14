@@ -597,7 +597,7 @@ BOOL CMPCThemePlayerListCtrl::OnLvnItemchanged(NMHDR* pNMHDR, LRESULT* pResult)
 {
     //LPNMLISTVIEW pNMLV = reinterpret_cast<LPNMLISTVIEW>(pNMHDR);
     if (AppNeedsThemedControls()) {
-        ::PostMessage(m_hWnd, PLAYER_PLAYLIST_LVN_ITEMCHANGED, 0, 0);
+        ::PostMessage(m_hWnd, PLAYER_PLAYLIST_LVN_ITEMCHANGED, (WPARAM)0, (LPARAM)0);
     }
     *pResult = 0;
     return FALSE;

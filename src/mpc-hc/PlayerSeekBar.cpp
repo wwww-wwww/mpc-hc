@@ -153,7 +153,7 @@ void CPlayerSeekBar::MoveThumb(const CPoint& point)
 
 void CPlayerSeekBar::SyncVideoToThumb()
 {
-    GetParent()->PostMessage(WM_HSCROLL, NULL, reinterpret_cast<LPARAM>(m_hWnd));
+    GetParent()->PostMessage(WM_HSCROLL, (WPARAM)0, reinterpret_cast<LPARAM>(m_hWnd));
 }
 
 void CPlayerSeekBar::CheckScrollDistance(CPoint point, REFERENCE_TIME minimum_duration_change, ULONGLONG minimum_elapsed_tickcount)
