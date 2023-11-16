@@ -16,9 +16,9 @@ If you are a programmer and want to help improve MPC-HC, then you can do so by s
 
 A lot of people seem to be unaware of some of the awesome features that have been added to MPC-HC in the past years. Here is a list of useful options and features that everyone should know about:
 * Dark interface<br/>
-Menu > View > Dark Theme<br/>
-When using dark theme it is also possible to change the height of the seekbar and size of the toolbar buttons.<br/>
-Options > Advanced
+Options > Player > Theme<br/>
+When using modern theme it is also possible to change the height of the seekbar and size of the toolbar buttons.<br/>
+Options > Advanced > DefaultToolbarSize
 * Video preview on the seekbar<br/>
 Options > Tweaks > Show preview on seek bar
 * Play HDR video<br/>
