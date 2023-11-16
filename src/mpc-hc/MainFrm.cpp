@@ -9093,11 +9093,13 @@ bool CMainFrame::FilterSettingsByClassID(CLSID clsid, CWnd* parent)
 {
     for (int a = 0; a < m_pparray.GetCount(); a++) {
         CComQIPtr<IBaseFilter> pBF2 = m_pparray[a];
-        CLSID tclsid;
-        pBF2->GetClassID(&tclsid);
-        if (tclsid == clsid) {
-            FilterSettings(m_pparray[a], parent);
-            return true;
+        if (pBF2) {
+            CLSID tclsid;
+            pBF2->GetClassID(&tclsid);
+            if (tclsid == clsid) {
+                FilterSettings(m_pparray[a], parent);
+                return true;
+            }
         }
     }
     return false;
