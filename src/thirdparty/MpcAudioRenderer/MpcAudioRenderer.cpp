@@ -2011,6 +2011,10 @@ again:
 		TRACE(L"CMpcAudioRenderer::CheckAudioClient() - Format changed, re-initialize the audio client\n");
 
 		CopyWaveFormat(m_pWaveFormatExInput, &m_pWaveFormatExOutput);
+        if (!m_pWaveFormatExOutput) {
+            ASSERT(false);
+            return E_FAIL;
+        }
 
 		if (IsExclusive(pWaveFormatEx)) { // EXCLUSIVE/BITSTREAM
 			WAVEFORMATEX *pFormat = nullptr;
