@@ -2568,12 +2568,10 @@ void CMainFrame::OnUpdateABRepeat(CCmdUI* pCmdUI) {
 
 
 void CMainFrame::OnABRepeat(UINT nID) {
-    CAppSettings& s = AfxGetAppSettings();
     switch (nID) {
     case ID_PLAY_REPEAT_AB:
         if (abRepeat) { //only support disabling from the menu
-            abRepeat = ABRepeat();
-            m_wndSeekBar.Invalidate();
+            DisableABRepeat();
         }
         break;
     case ID_PLAY_REPEAT_AB_MARK_A:
@@ -2635,8 +2633,7 @@ void CMainFrame::OnABRepeat(UINT nID) {
             }
         }
 
-
-        auto* pMRU = &s.MRU;
+        auto pMRU = &AfxGetAppSettings().MRU;
         pMRU->UpdateCurrentABRepeat(abRepeat);
 
         m_wndSeekBar.Invalidate();
