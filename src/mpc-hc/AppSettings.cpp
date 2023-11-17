@@ -2860,6 +2860,42 @@ DVD_POSITION CAppSettings::CRecentFileListWithMoreInfo::GetCurrentDVDPosition() 
     return DVD_POSITION();
 }
 
+void CAppSettings::CRecentFileListWithMoreInfo::UpdateCurrentAudioTrack(int audioIndex) {
+    size_t idx;
+    if (GetCurrentIndex(idx)) {
+        if (rfe_array[idx].AudioTrackIndex != audioIndex) {
+            rfe_array[idx].AudioTrackIndex = audioIndex;
+            WriteMediaHistoryAudioIndex(rfe_array[idx]);
+        }
+    }
+}
+
+int CAppSettings::CRecentFileListWithMoreInfo::GetCurrentAudioTrack() {
+    size_t idx;
+    if (GetCurrentIndex(idx)) {
+        return rfe_array[idx].AudioTrackIndex;
+    }
+    return -1;
+}
+
+void CAppSettings::CRecentFileListWithMoreInfo::UpdateCurrentSubtitleTrack(int audioIndex) {
+    size_t idx;
+    if (GetCurrentIndex(idx)) {
+        if (rfe_array[idx].SubtitleTrackIndex != audioIndex) {
+            rfe_array[idx].SubtitleTrackIndex = audioIndex;
+            WriteMediaHistorySubtitleIndex(rfe_array[idx]);
+        }
+    }
+}
+
+int CAppSettings::CRecentFileListWithMoreInfo::GetCurrentSubtitleTrack() {
+    size_t idx; 
+    if (GetCurrentIndex(idx)) {
+        return rfe_array[idx].SubtitleTrackIndex;
+    }
+    return -1;
+}
+
 void CAppSettings::CRecentFileListWithMoreInfo::AddSubToCurrent(CStringW subpath) {
     size_t idx;
     if (GetCurrentIndex(idx)) {
@@ -3100,6 +3136,9 @@ bool CAppSettings::CRecentFileListWithMoreInfo::LoadMediaHistoryEntry(CStringW h
         }
         r.subs.AddTail(st);
     }
+
+    r.AudioTrackIndex = pApp->GetProfileIntW(subSection, L"AudioTrackIndex", -1);
+    r.SubtitleTrackIndex = pApp->GetProfileIntW(subSection, L"SubtitleTrackIndex", -1);
     return true;
 }
 
@@ -3146,6 +3185,40 @@ void CAppSettings::CRecentFileListWithMoreInfo::ReadMediaHistory() {
     rfe_array.FreeExtra();
 }
 
+void CAppSettings::CRecentFileListWithMoreInfo::WriteMediaHistoryAudioIndex(RecentFileEntry& r) {
+    auto pApp = AfxGetMyApp();
+
+    if (r.hash.IsEmpty()) {
+        r.hash = getRFEHash(r.fns.GetHead());
+    }
+
+    CStringW subSection, t;
+    subSection.Format(L"%s\\%s", m_section, static_cast<LPCWSTR>(r.hash));
+
+    if (r.AudioTrackIndex != -1) {
+        pApp->WriteProfileInt(subSection, L"AudioTrackIndex", int(r.AudioTrackIndex));
+    } else {
+        pApp->WriteProfileStringW(subSection, L"AudioTrackIndex", nullptr);
+    }
+}
+
+void CAppSettings::CRecentFileListWithMoreInfo::WriteMediaHistorySubtitleIndex(RecentFileEntry& r) {
+    auto pApp = AfxGetMyApp();
+
+    if (r.hash.IsEmpty()) {
+        r.hash = getRFEHash(r.fns.GetHead());
+    }
+
+    CStringW subSection, t;
+    subSection.Format(L"%s\\%s", m_section, static_cast<LPCWSTR>(r.hash));
+
+    if (r.SubtitleTrackIndex != -1) {
+        pApp->WriteProfileInt(subSection, L"SubtitleTrackIndex", int(r.SubtitleTrackIndex));
+    } else {
+        pApp->WriteProfileStringW(subSection, L"SubtitleTrackIndex", nullptr);
+    }
+}
+
 void CAppSettings::CRecentFileListWithMoreInfo::WriteMediaHistoryEntry(RecentFileEntry& r, bool updateLastOpened /* = false */) {
     auto pApp = AfxGetMyApp();
 
@@ -3153,7 +3226,7 @@ void CAppSettings::CRecentFileListWithMoreInfo::WriteMediaHistoryEntry(RecentFil
         r.hash = getRFEHash(r.fns.GetHead());
     }
 
-    CStringW hashName, subSection, t;
+    CStringW subSection, t;
     subSection.Format(L"%s\\%s", m_section, static_cast<LPCWSTR>(r.hash));
     pApp->WriteProfileStringW(subSection, L"Filename", r.fns.GetHead());
 
@@ -3164,17 +3237,17 @@ void CAppSettings::CRecentFileListWithMoreInfo::WriteMediaHistoryEntry(RecentFil
         while (p != nullptr) {
             CString fn = r.fns.GetNext(p);
             t.Format(L"Filename%03d", k);
-            pApp->WriteProfileString(subSection, t, fn);
+            pApp->WriteProfileStringW(subSection, t, fn);
             k++;
         }
     }
     if (!r.title.IsEmpty()) {
         t = L"Title";
-        pApp->WriteProfileString(subSection, t, r.title);
+        pApp->WriteProfileStringW(subSection, t, r.title);
     }
     if (!r.cue.IsEmpty()) {
         t = L"Cue";
-        pApp->WriteProfileString(subSection, t, r.cue);
+        pApp->WriteProfileStringW(subSection, t, r.cue);
     }
     if (r.subs.GetCount() > 0) {
         int k = 1;
@@ -3182,14 +3255,14 @@ void CAppSettings::CRecentFileListWithMoreInfo::WriteMediaHistoryEntry(RecentFil
         while (p != nullptr) {
             CString fn = r.subs.GetNext(p);
             t.Format(L"Sub%03d", k);
-            pApp->WriteProfileString(subSection, t, fn);
+            pApp->WriteProfileStringW(subSection, t, fn);
             k++;
         }
     }
     if (r.DVDPosition.llDVDGuid) {
         t = L"DVDPosition";
         CStringW strValue = SerializeHex((BYTE*)&r.DVDPosition, sizeof(DVD_POSITION));
-        pApp->WriteProfileString(subSection, t, strValue);
+        pApp->WriteProfileStringW(subSection, t, strValue);
     } else {
         t = L"FilePosition";
         pApp->WriteProfileInt(subSection, t, int(r.filePosition / 10000LL));
@@ -3211,6 +3284,17 @@ void CAppSettings::CRecentFileListWithMoreInfo::WriteMediaHistoryEntry(RecentFil
         pApp->WriteProfileStringW(subSection, L"abRepeat.dvdTitle", nullptr);
     }
 
+    if (r.AudioTrackIndex != -1) {
+        pApp->WriteProfileInt(subSection, L"AudioTrackIndex", int(r.AudioTrackIndex));
+    } else {
+        pApp->WriteProfileStringW(subSection, L"AudioTrackIndex", nullptr);
+    }
+
+    if (r.SubtitleTrackIndex != -1) {
+        pApp->WriteProfileInt(subSection, L"SubtitleTrackIndex", int(r.SubtitleTrackIndex));
+    } else {
+        pApp->WriteProfileStringW(subSection, L"SubtitleTrackIndex", nullptr);
+    }
 
     if (updateLastOpened || r.lastOpened.IsEmpty()) {
         auto now = std::chrono::system_clock::now();

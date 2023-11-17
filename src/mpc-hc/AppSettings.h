@@ -452,6 +452,8 @@ public:
         fns.AddHeadList(&r.fns);
         subs.AddHeadList(&r.subs);
         abRepeat = r.abRepeat;
+        AudioTrackIndex = r.AudioTrackIndex;
+        SubtitleTrackIndex = r.SubtitleTrackIndex;
     }
     RecentFileEntry(const RecentFileEntry &r) {
         InitEntry(r);
@@ -466,6 +468,8 @@ public:
     REFERENCE_TIME filePosition=0;
     DVD_POSITION DVDPosition = {};
     ABRepeat abRepeat;
+    int AudioTrackIndex = -1;
+    int SubtitleTrackIndex = -1;
 
     void operator=(const RecentFileEntry &r) {
         InitEntry(r);
@@ -523,11 +527,17 @@ class CAppSettings
         void UpdateCurrentDVDTimecode(DVD_HMSF_TIMECODE *time);
         void UpdateCurrentDVDTitle(DWORD title);
         DVD_POSITION GetCurrentDVDPosition();
+        void UpdateCurrentAudioTrack(int audioIndex);
+        int GetCurrentAudioTrack();
+        void UpdateCurrentSubtitleTrack(int audioIndex);
+        int GetCurrentSubtitleTrack();
         void AddSubToCurrent(CStringW subpath);
         void SetCurrentTitle(CStringW subpath);
         void UpdateCurrentABRepeat(ABRepeat abRepeat);
         void WriteCurrentEntry();
         void ReadMediaHistory();
+        void WriteMediaHistoryAudioIndex(RecentFileEntry& r);
+        void WriteMediaHistorySubtitleIndex(RecentFileEntry& r);
         void WriteMediaHistoryEntry(RecentFileEntry& r, bool updateLastOpened = false);
         void SaveMediaHistory();
         void ReadLegacyMediaHistory(std::map<CStringW, size_t> &filenameToIndex);
