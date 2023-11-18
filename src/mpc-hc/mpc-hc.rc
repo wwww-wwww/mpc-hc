@@ -537,7 +537,7 @@ END
 
 IDD_PNSPRESET_DLG DIALOGEX 0, 0, 210, 120
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "Pan & Scan Presets"
+CAPTION "PnS Frame Adjust Presets"
 FONT 9, "Segoe UI", 400, 0, 0x1
 BEGIN
     LISTBOX         IDC_LIST1,5,5,125,50,LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
@@ -1660,7 +1660,7 @@ BEGIN
             END
             MENUITEM "&Correct Monitor/Desktop AR Diff", ID_VIEW_VF_COMPMONDESKARDIFF
         END
-        POPUP "Pa&n && Scan"
+        POPUP "P&nS Frame Adjust"
         BEGIN
             MENUITEM "&Increase Size",              ID_VIEW_INCSIZE
             MENUITEM "&Decrease Size",              ID_VIEW_DECSIZE
@@ -1865,7 +1865,7 @@ BEGIN
             END
             MENUITEM "&Correct Monitor/Desktop AR Diff", ID_VIEW_VF_COMPMONDESKARDIFF
         END
-        POPUP "Pa&n && Scan"
+        POPUP "P&nS Frame Adjust"
         BEGIN
             MENUITEM "&Increase Size",              ID_VIEW_INCSIZE
             MENUITEM "&Decrease Size",              ID_VIEW_DECSIZE
@@ -2183,7 +2183,7 @@ BEGIN
                 END
                 MENUITEM "&Correct Monitor/Desktop AR Diff", ID_VIEW_VF_COMPMONDESKARDIFF
             END
-            POPUP "Pa&n && Scan"
+            POPUP "P&nS Frame Adjust"
             BEGIN
                 MENUITEM "&Increase Size",              ID_VIEW_INCSIZE
                 MENUITEM "&Decrease Size",              ID_VIEW_DECSIZE
@@ -2933,11 +2933,11 @@ END
 
 STRINGTABLE
 BEGIN
-    IDS_AG_PNS_ROTATEX_M    "PnS Rotate X-"
-    IDS_AG_PNS_ROTATEY_P    "PnS Rotate Y+"
-    IDS_AG_PNS_ROTATEY_M    "PnS Rotate Y-"
-    IDS_AG_PNS_ROTATEZ_P    "PnS Rotate Z+"
-    IDS_AG_PNS_ROTATEZ_M    "PnS Rotate Z-"
+    IDS_AG_PNS_ROTATEX_M    "Video Frame Rotate X-"
+    IDS_AG_PNS_ROTATEY_P    "Video Frame Rotate Y+"
+    IDS_AG_PNS_ROTATEY_M    "Video Frame Rotate Y-"
+    IDS_AG_PNS_ROTATEZ_P    "Video Frame Rotate Z+"
+    IDS_AG_PNS_ROTATEZ_M    "Video Frame Rotate Z-"
     IDS_AG_TEARING_TEST     "Tearing Test"
     IDS_SCALE_16_9          "Scale to 16:9 TV,%.3f,%.3f,%.3f,%.3f"
     IDS_SCALE_WIDESCREEN    "Zoom to Widescreen,%.3f,%.3f,%.3f,%.3f"
@@ -3199,16 +3199,16 @@ BEGIN
     IDS_AG_FULLSCREEN       "Fullscreen"
     IDS_MPLAYERC_39         "Fullscreen (w/o res.change)"
     IDS_AG_ZOOM_AUTO_FIT    "Zoom Auto Fit"
-    IDS_AG_VIDFRM_HALF      "VidFrm Half"
-    IDS_AG_VIDFRM_NORMAL    "VidFrm Normal"
-    IDS_AG_VIDFRM_DOUBLE    "VidFrm Double"
+    IDS_AG_VIDFRM_HALF      "Video Frame Half Size"
+    IDS_AG_VIDFRM_NORMAL    "Video Frame Normal Size"
+    IDS_AG_VIDFRM_DOUBLE    "Video Frame Double Size"
     IDS_AG_ALWAYS_ON_TOP    "Always On Top"
-    IDS_AG_PNS_INC_SIZE     "PnS Inc Size"
-    IDS_AG_PNS_INC_WIDTH    "PnS Inc Width"
-    IDS_MPLAYERC_47         "PnS Inc Height"
-    IDS_AG_PNS_DEC_SIZE     "PnS Dec Size"
-    IDS_AG_PNS_DEC_WIDTH    "PnS Dec Width"
-    IDS_MPLAYERC_50         "PnS Dec Height"
+    IDS_AG_PNS_INC_SIZE     "Video Frame Inc Size"
+    IDS_AG_PNS_INC_WIDTH    "Video Frame Inc Width"
+    IDS_MPLAYERC_47         "Video Frame Inc Height"
+    IDS_AG_PNS_DEC_SIZE     "Video Frame Dec Size"
+    IDS_AG_PNS_DEC_WIDTH    "Video Frame Dec Width"
+    IDS_MPLAYERC_50         "Video Frame Dec Height"
 END
 
 STRINGTABLE
@@ -3234,15 +3234,15 @@ END
 
 STRINGTABLE
 BEGIN
-    IDS_AG_PNS_CENTER       "PnS Center"
-    IDS_AG_PNS_LEFT         "PnS Left"
-    IDS_AG_PNS_RIGHT        "PnS Right"
-    IDS_AG_PNS_UP           "PnS Up"
-    IDS_AG_PNS_DOWN         "PnS Down"
-    IDS_AG_PNS_UPLEFT       "PnS Up/Left"
-    IDS_AG_PNS_UPRIGHT      "PnS Up/Right"
-    IDS_AG_PNS_DOWNLEFT     "PnS Down/Left"
-    IDS_MPLAYERC_59         "PnS Down/Right"
+    IDS_AG_PNS_CENTER       "Video Frame Center"
+    IDS_AG_PNS_LEFT         "Video Frame Left"
+    IDS_AG_PNS_RIGHT        "Video Frame Right"
+    IDS_AG_PNS_UP           "Video Frame Up"
+    IDS_AG_PNS_DOWN         "Video Frame Down"
+    IDS_AG_PNS_UPLEFT       "Video Frame Up/Left"
+    IDS_AG_PNS_UPRIGHT      "Video Frame Up/Right"
+    IDS_AG_PNS_DOWNLEFT     "Video Frame Down/Left"
+    IDS_MPLAYERC_59         "Video Frame Down/Right"
     IDS_AG_VOLUME_UP        "Volume Up"
     IDS_AG_VOLUME_DOWN      "Volume Down"
     IDS_AG_VOLUME_MUTE      "Volume Mute"
@@ -3488,11 +3488,11 @@ BEGIN
     IDS_AG_ZOOM_100         "Zoom 100%"
     IDS_AG_ZOOM_200         "Zoom 200%"
     IDS_AG_NEXT_AR_PRESET   "Next AR Preset"
-    IDS_AG_VIDFRM_STRETCH   "VidFrm Stretch"
-    IDS_AG_VIDFRM_INSIDE    "VidFrm Inside"
-    IDS_AG_VIDFRM_OUTSIDE   "VidFrm Outside"
-    IDS_AG_PNS_RESET        "PnS Reset"
-    IDS_AG_PNS_ROTATEX_P    "PnS Rotate X+"
+    IDS_AG_VIDFRM_STRETCH   "Video Frame Stretch"
+    IDS_AG_VIDFRM_INSIDE    "Video Frame Inside"
+    IDS_AG_VIDFRM_OUTSIDE   "Video Frame Outside"
+    IDS_AG_PNS_RESET        "Video Frame Reset"
+    IDS_AG_PNS_ROTATEX_P    "Video Frame Rotate X+"
 END
 
 STRINGTABLE
@@ -3519,9 +3519,9 @@ END
 
 STRINGTABLE
 BEGIN
-    IDS_AG_VIDFRM_ZOOM1     "VidFrm Zoom 1"
-    IDS_AG_VIDFRM_ZOOM2     "VidFrm Zoom 2"
-    IDS_AG_VIDFRM_SWITCHZOOM "VidFrm Switch Zoom"
+    IDS_AG_VIDFRM_ZOOM1     "Video Frame Zoom 1"
+    IDS_AG_VIDFRM_ZOOM2     "Video Frame Zoom 2"
+    IDS_AG_VIDFRM_SWITCHZOOM "Video Frame Switch Zoom"
     IDS_ENABLE_ALL_FILTERS  "&Enable all filters"
 END
 
@@ -3864,7 +3864,7 @@ END
 
 STRINGTABLE
 BEGIN
-    IDS_CMD_PNS             "/pns ""name or values""\tSpecify Pan & Scan preset name to use or direct position and zoom values in format ""px,py,zx,zy"""
+    IDS_CMD_PNS             "/pns ""name or values""\tSpecify Video Frame preset name to use or direct position and zoom values in format ""px,py,zx,zy"""
     IDS_CMD_ICONASSOC       "/iconsassoc\tReassociate format icons"
     IDS_CMD_NOFOCUS         "/nofocus\t\tOpen MPC-HC in background"
     IDS_CMD_WEBPORT         "/webport N\tStart web interface on specified port"
