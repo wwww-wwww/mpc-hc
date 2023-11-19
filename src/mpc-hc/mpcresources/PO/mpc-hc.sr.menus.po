@@ -442,8 +442,8 @@ msgid "&Correct Monitor/Desktop AR Diff"
 msgstr "&Исправи разлику размере слике на монитору/радној површини"
 
 msgctxt "POPUP"
-msgid "Pa&n && Scan"
-msgstr "Размера и положај &кадра"
+msgid "P&nS Frame Adjust"
+msgstr ""
 
 msgctxt "ID_VIEW_INCSIZE"
 msgid "&Increase Size"

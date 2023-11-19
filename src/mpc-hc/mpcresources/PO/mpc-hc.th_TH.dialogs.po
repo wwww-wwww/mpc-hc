@@ -858,8 +858,8 @@ msgid "OK"
 msgstr "ตกลง"
 
 msgctxt "IDD_PNSPRESET_DLG_CAPTION"
-msgid "Pan & Scan Presets"
-msgstr "ค่าสำเร็จรูปการส่องและกวาด"
+msgid "PnS Frame Adjust Presets"
+msgstr ""
 
 msgctxt "IDD_PNSPRESET_DLG_IDC_BUTTON2"
 msgid "New"

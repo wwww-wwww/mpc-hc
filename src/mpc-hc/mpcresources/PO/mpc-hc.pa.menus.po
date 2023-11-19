@@ -442,8 +442,8 @@ msgid "&Correct Monitor/Desktop AR Diff"
 msgstr ""
 
 msgctxt "POPUP"
-msgid "Pa&n && Scan"
-msgstr "ਪੈਨ ਤੇ ਆਕਾਰ(&n)"
+msgid "P&nS Frame Adjust"
+msgstr ""
 
 msgctxt "ID_VIEW_INCSIZE"
 msgid "&Increase Size"

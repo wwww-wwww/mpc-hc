@@ -869,8 +869,8 @@ msgid "OK"
 msgstr "Εντάξει"
 
 msgctxt "IDD_PNSPRESET_DLG_CAPTION"
-msgid "Pan & Scan Presets"
-msgstr "Προεπιλογές πανοραμικής οπτικής & σάρωσης"
+msgid "PnS Frame Adjust Presets"
+msgstr ""
 
 msgctxt "IDD_PNSPRESET_DLG_IDC_BUTTON2"
 msgid "New"

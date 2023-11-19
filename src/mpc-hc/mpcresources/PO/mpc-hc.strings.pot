@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2023-11-07 22:46:07+0000\n"
+"POT-Creation-Date: 2023-11-19 23:27:04+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1173,23 +1173,23 @@ msgid "EDL set Out"
 msgstr ""
 
 msgctxt "IDS_AG_PNS_ROTATEX_M"
-msgid "PnS Rotate X-"
+msgid "Video Frame Rotate X-"
 msgstr ""
 
 msgctxt "IDS_AG_PNS_ROTATEY_P"
-msgid "PnS Rotate Y+"
+msgid "Video Frame Rotate Y+"
 msgstr ""
 
 msgctxt "IDS_AG_PNS_ROTATEY_M"
-msgid "PnS Rotate Y-"
+msgid "Video Frame Rotate Y-"
 msgstr ""
 
 msgctxt "IDS_AG_PNS_ROTATEZ_P"
-msgid "PnS Rotate Z+"
+msgid "Video Frame Rotate Z+"
 msgstr ""
 
 msgctxt "IDS_AG_PNS_ROTATEZ_M"
-msgid "PnS Rotate Z-"
+msgid "Video Frame Rotate Z-"
 msgstr ""
 
 msgctxt "IDS_AG_TEARING_TEST"
@@ -1953,15 +1953,15 @@ msgid "Zoom Auto Fit"
 msgstr ""
 
 msgctxt "IDS_AG_VIDFRM_HALF"
-msgid "VidFrm Half"
+msgid "Video Frame Half Size"
 msgstr ""
 
 msgctxt "IDS_AG_VIDFRM_NORMAL"
-msgid "VidFrm Normal"
+msgid "Video Frame Normal Size"
 msgstr ""
 
 msgctxt "IDS_AG_VIDFRM_DOUBLE"
-msgid "VidFrm Double"
+msgid "Video Frame Double Size"
 msgstr ""
 
 msgctxt "IDS_AG_ALWAYS_ON_TOP"
@@ -1969,27 +1969,27 @@ msgid "Always On Top"
 msgstr ""
 
 msgctxt "IDS_AG_PNS_INC_SIZE"
-msgid "PnS Inc Size"
+msgid "Video Frame Inc Size"
 msgstr ""
 
 msgctxt "IDS_AG_PNS_INC_WIDTH"
-msgid "PnS Inc Width"
+msgid "Video Frame Inc Width"
 msgstr ""
 
 msgctxt "IDS_MPLAYERC_47"
-msgid "PnS Inc Height"
+msgid "Video Frame Inc Height"
 msgstr ""
 
 msgctxt "IDS_AG_PNS_DEC_SIZE"
-msgid "PnS Dec Size"
+msgid "Video Frame Dec Size"
 msgstr ""
 
 msgctxt "IDS_AG_PNS_DEC_WIDTH"
-msgid "PnS Dec Width"
+msgid "Video Frame Dec Width"
 msgstr ""
 
 msgctxt "IDS_MPLAYERC_50"
-msgid "PnS Dec Height"
+msgid "Video Frame Dec Height"
 msgstr ""
 
 msgctxt "IDS_SUBDL_DLG_DOWNLOADING"
@@ -2060,39 +2060,39 @@ msgid "Please enter a number between 1 and 365."
 msgstr ""
 
 msgctxt "IDS_AG_PNS_CENTER"
-msgid "PnS Center"
+msgid "Video Frame Center"
 msgstr ""
 
 msgctxt "IDS_AG_PNS_LEFT"
-msgid "PnS Left"
+msgid "Video Frame Left"
 msgstr ""
 
 msgctxt "IDS_AG_PNS_RIGHT"
-msgid "PnS Right"
+msgid "Video Frame Right"
 msgstr ""
 
 msgctxt "IDS_AG_PNS_UP"
-msgid "PnS Up"
+msgid "Video Frame Up"
 msgstr ""
 
 msgctxt "IDS_AG_PNS_DOWN"
-msgid "PnS Down"
+msgid "Video Frame Down"
 msgstr ""
 
 msgctxt "IDS_AG_PNS_UPLEFT"
-msgid "PnS Up/Left"
+msgid "Video Frame Up/Left"
 msgstr ""
 
 msgctxt "IDS_AG_PNS_UPRIGHT"
-msgid "PnS Up/Right"
+msgid "Video Frame Up/Right"
 msgstr ""
 
 msgctxt "IDS_AG_PNS_DOWNLEFT"
-msgid "PnS Down/Left"
+msgid "Video Frame Down/Left"
 msgstr ""
 
 msgctxt "IDS_MPLAYERC_59"
-msgid "PnS Down/Right"
+msgid "Video Frame Down/Right"
 msgstr ""
 
 msgctxt "IDS_AG_VOLUME_UP"
@@ -2817,23 +2817,23 @@ msgid "Next AR Preset"
 msgstr ""
 
 msgctxt "IDS_AG_VIDFRM_STRETCH"
-msgid "VidFrm Stretch"
+msgid "Video Frame Stretch"
 msgstr ""
 
 msgctxt "IDS_AG_VIDFRM_INSIDE"
-msgid "VidFrm Inside"
+msgid "Video Frame Inside"
 msgstr ""
 
 msgctxt "IDS_AG_VIDFRM_OUTSIDE"
-msgid "VidFrm Outside"
+msgid "Video Frame Outside"
 msgstr ""
 
 msgctxt "IDS_AG_PNS_RESET"
-msgid "PnS Reset"
+msgid "Video Frame Reset"
 msgstr ""
 
 msgctxt "IDS_AG_PNS_ROTATEX_P"
-msgid "PnS Rotate X+"
+msgid "Video Frame Rotate X+"
 msgstr ""
 
 msgctxt "IDS_TIME_TOOLTIP_ABOVE"
@@ -2893,15 +2893,15 @@ msgid "Zoom Window -"
 msgstr ""
 
 msgctxt "IDS_AG_VIDFRM_ZOOM1"
-msgid "VidFrm Zoom 1"
+msgid "Video Frame Zoom 1"
 msgstr ""
 
 msgctxt "IDS_AG_VIDFRM_ZOOM2"
-msgid "VidFrm Zoom 2"
+msgid "Video Frame Zoom 2"
 msgstr ""
 
 msgctxt "IDS_AG_VIDFRM_SWITCHZOOM"
-msgid "VidFrm Switch Zoom"
+msgid "Video Frame Switch Zoom"
 msgstr ""
 
 msgctxt "IDS_ENABLE_ALL_FILTERS"
@@ -3851,7 +3851,7 @@ msgstr ""
 
 msgctxt "IDS_CMD_PNS"
 msgid ""
-"/pns \"name or values\"\tSpecify Pan & Scan preset name to use or direct "
+"/pns \"name or values\"\tSpecify Video Frame preset name to use or direct "
 "position and zoom values in format \"px,py,zx,zy\""
 msgstr ""
 

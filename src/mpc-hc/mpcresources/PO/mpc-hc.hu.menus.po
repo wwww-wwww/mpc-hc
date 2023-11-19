@@ -445,8 +445,8 @@ msgid "&Correct Monitor/Desktop AR Diff"
 msgstr "Monitor/Asztal képarány-eltérés javítása"
 
 msgctxt "POPUP"
-msgid "Pa&n && Scan"
-msgstr "&Pásztázás && Letapogatás"
+msgid "P&nS Frame Adjust"
+msgstr ""
 
 msgctxt "ID_VIEW_INCSIZE"
 msgid "&Increase Size"

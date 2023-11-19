@@ -848,7 +848,7 @@ msgid "OK"
 msgstr "ਠੀਕ ਹੈ"
 
 msgctxt "IDD_PNSPRESET_DLG_CAPTION"
-msgid "Pan & Scan Presets"
+msgid "PnS Frame Adjust Presets"
 msgstr ""
 
 msgctxt "IDD_PNSPRESET_DLG_IDC_BUTTON2"

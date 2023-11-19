@@ -443,8 +443,8 @@ msgid "&Correct Monitor/Desktop AR Diff"
 msgstr "Հաշվի առնել մոնիտորի և Աշխատասեղանի տարբերությունները"
 
 msgctxt "POPUP"
-msgid "Pa&n && Scan"
-msgstr "Կա&դրի դիրքը և չափը"
+msgid "P&nS Frame Adjust"
+msgstr ""
 
 msgctxt "ID_VIEW_INCSIZE"
 msgid "&Increase Size"

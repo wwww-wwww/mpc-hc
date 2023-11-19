@@ -444,8 +444,8 @@ msgid "&Correct Monitor/Desktop AR Diff"
 msgstr "Afwijking beeldschermverhouding corrigeren"
 
 msgctxt "POPUP"
-msgid "Pa&n && Scan"
-msgstr "Positie en uitsnede"
+msgid "P&nS Frame Adjust"
+msgstr ""
 
 msgctxt "ID_VIEW_INCSIZE"
 msgid "&Increase Size"

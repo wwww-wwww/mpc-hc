@@ -445,8 +445,8 @@ msgstr ""
 "&Corrigir a Diferença da Proporção do Aspecto do Monitor/Área de Trabalho"
 
 msgctxt "POPUP"
-msgid "Pa&n && Scan"
-msgstr "Pa&n && Scan"
+msgid "P&nS Frame Adjust"
+msgstr ""
 
 msgctxt "ID_VIEW_INCSIZE"
 msgid "&Increase Size"

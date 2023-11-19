@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2023-11-03 23:11:00+0000\n"
+"POT-Creation-Date: 2023-11-19 23:27:04+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -438,7 +438,7 @@ msgid "&Correct Monitor/Desktop AR Diff"
 msgstr ""
 
 msgctxt "POPUP"
-msgid "Pa&n && Scan"
+msgid "P&nS Frame Adjust"
 msgstr ""
 
 msgctxt "ID_VIEW_INCSIZE"

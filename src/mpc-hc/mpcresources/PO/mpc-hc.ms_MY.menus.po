@@ -443,8 +443,8 @@ msgid "&Correct Monitor/Desktop AR Diff"
 msgstr "Be&tul Perbezaan AR Desktop/Monitor"
 
 msgctxt "POPUP"
-msgid "Pa&n && Scan"
-msgstr "La&ta&&Imbas"
+msgid "P&nS Frame Adjust"
+msgstr ""
 
 msgctxt "ID_VIEW_INCSIZE"
 msgid "&Increase Size"

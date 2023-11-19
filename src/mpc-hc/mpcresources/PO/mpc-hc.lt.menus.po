@@ -442,8 +442,8 @@ msgid "&Correct Monitor/Desktop AR Diff"
 msgstr "&Taisyti monitoriaus / darbalaukio kraštinių santykio skirtumą"
 
 msgctxt "POPUP"
-msgid "Pa&n && Scan"
-msgstr "&Padėtis ir dydis"
+msgid "P&nS Frame Adjust"
+msgstr ""
 
 msgctxt "ID_VIEW_INCSIZE"
 msgid "&Increase Size"

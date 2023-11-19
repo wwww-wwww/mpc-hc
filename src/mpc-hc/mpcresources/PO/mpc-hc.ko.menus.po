@@ -443,8 +443,8 @@ msgid "&Correct Monitor/Desktop AR Diff"
 msgstr "모니터/바탕 화면 종횡비 보정(&C)"
 
 msgctxt "POPUP"
-msgid "Pa&n && Scan"
-msgstr "화면 크기/위치 조정(&N)"
+msgid "P&nS Frame Adjust"
+msgstr ""
 
 msgctxt "ID_VIEW_INCSIZE"
 msgid "&Increase Size"
