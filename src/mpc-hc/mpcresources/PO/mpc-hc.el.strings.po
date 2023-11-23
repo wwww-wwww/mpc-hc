@@ -1687,6 +1687,10 @@ msgctxt "IDS_TIMER_HIGH_PRECISION"
 msgid "High precision"
 msgstr "Υψηλή ακρίβεια"
 
+msgctxt "IDS_TIMER_SHOW_PERCENTAGE"
+msgid "Show percentage"
+msgstr ""
+
 msgctxt "IDS_AFTERPLAYBACK_REWIND"
 msgid "After Playback: Rewind current file"
 msgstr "Μετά την αναπαραγωγή: Επαναφορά τρέχοντος αρχείου"

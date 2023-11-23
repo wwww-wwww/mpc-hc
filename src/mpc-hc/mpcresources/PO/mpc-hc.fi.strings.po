@@ -1661,6 +1661,10 @@ msgctxt "IDS_TIMER_HIGH_PRECISION"
 msgid "High precision"
 msgstr "Korkea tarkkuus"
 
+msgctxt "IDS_TIMER_SHOW_PERCENTAGE"
+msgid "Show percentage"
+msgstr ""
+
 msgctxt "IDS_AFTERPLAYBACK_REWIND"
 msgid "After Playback: Rewind current file"
 msgstr "Toiston jälkeen: Mene nykyisen tiedoston alkuun"

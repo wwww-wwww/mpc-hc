@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2023-11-19 23:27:04+0000\n"
+"POT-Creation-Date: 2023-11-23 01:08:04+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1559,6 +1559,10 @@ msgstr ""
 
 msgctxt "IDS_TIMER_HIGH_PRECISION"
 msgid "High precision"
+msgstr ""
+
+msgctxt "IDS_TIMER_SHOW_PERCENTAGE"
+msgid "Show percentage"
 msgstr ""
 
 msgctxt "IDS_AFTERPLAYBACK_REWIND"

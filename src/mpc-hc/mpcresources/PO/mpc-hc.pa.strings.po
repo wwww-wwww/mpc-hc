@@ -1589,6 +1589,10 @@ msgctxt "IDS_TIMER_HIGH_PRECISION"
 msgid "High precision"
 msgstr "ਉੱਚ ਸਹੀਪੁਣਾ"
 
+msgctxt "IDS_TIMER_SHOW_PERCENTAGE"
+msgid "Show percentage"
+msgstr ""
+
 msgctxt "IDS_AFTERPLAYBACK_REWIND"
 msgid "After Playback: Rewind current file"
 msgstr "ਚਲਾਓ ਦੇ ਬਾਅਦ: ਮੌਜੂਦਾ ਫ਼ਾਇਲ ਨੂੰ ਵਾਪਿਸ ਪਿੱਛੇ ਕਰੋ"
