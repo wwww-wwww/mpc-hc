@@ -3070,6 +3070,7 @@ BEGIN
     IDS_PPAGEADVANCED_LOGGER "Enables logging to file (requires restart)"
     IDS_TIMER_REMAINING_TIME "Remaining time"
     IDS_TIMER_HIGH_PRECISION "High precision"
+    IDS_TIMER_SHOW_PERCENTAGE "Show percentage"
     IDS_AFTERPLAYBACK_REWIND "After Playback: Rewind current file"
     IDS_AFTERPLAYBACK_CLOSE "After Playback: Close"
     IDS_FRAME_INIT_FAILED   "MPC-HC encountered a problem during initialization."

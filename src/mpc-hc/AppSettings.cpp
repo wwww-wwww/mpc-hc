@@ -213,6 +213,7 @@ CAppSettings::CAppSettings()
     , nLastUsedPage(0)
     , fRemainingTime(false)
     , bHighPrecisionTimer(false)
+    , bTimerShowPercentage(false)
     , fLastFullScreen(false)
     , fEnableEDLEditor(false)
     , hMasterWnd(nullptr)
@@ -1159,6 +1160,7 @@ void CAppSettings::SaveSettings(bool write_full_history /* = false */)
 
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_REMAINING_TIME, fRemainingTime);
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_HIGH_PRECISION_TIMER, bHighPrecisionTimer);
+    pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_TIMER_SHOW_PERCENTAGE, bTimerShowPercentage);
 
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_UPDATER_AUTO_CHECK, nUpdaterAutoCheck);
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_UPDATER_DELAY, nUpdaterDelay);
@@ -2006,6 +2008,7 @@ void CAppSettings::LoadSettings()
 
     fRemainingTime = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_REMAINING_TIME, FALSE);
     bHighPrecisionTimer = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_HIGH_PRECISION_TIMER, FALSE);
+    bTimerShowPercentage = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_TIMER_SHOW_PERCENTAGE, FALSE);
 
     nUpdaterAutoCheck = pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_UPDATER_AUTO_CHECK, AUTOUPDATE_UNKNOWN);
     nUpdaterDelay = pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_UPDATER_DELAY, 7);

@@ -870,6 +870,7 @@ public:
     WORD            nLastUsedPage;
     bool            fRemainingTime;
     bool            bHighPrecisionTimer;
+    bool            bTimerShowPercentage;
     bool            fLastFullScreen;
 
     bool            fEnableEDLEditor;
