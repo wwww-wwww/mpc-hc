@@ -1894,7 +1894,7 @@ bool CRenderedTextSubtitle::Init(CSize size, const CRect& vidrect)
     CRect newVidRect = CRect(vidrect.left * 8, vidrect.top * 8, vidrect.right * 8, vidrect.bottom * 8);
     CSize newSize = CSize(size.cx * 8, size.cy * 8);
     if (m_size != newSize || m_vidrect != newVidRect) {
-        TRACE(_T("Change RTS sizes: %dx%d | %dx%d\n"), size.cx, size.cy, vidrect.Width(), vidrect.Height());
+        TRACE(_T("RTS Init | texture %dx%d | vidrect %dx%d\n"), size.cx, size.cy, vidrect.Width(), vidrect.Height());
         Deinit();
         m_size = newSize;
         m_vidrect = newVidRect;
