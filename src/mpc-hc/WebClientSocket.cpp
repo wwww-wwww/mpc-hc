@@ -240,10 +240,18 @@ void CWebClientSocket::ParseHeader(const char* headerEnd)
 
     // Parse the request type
     end = strchr(start, ' ');
+    if (!end) {
+        ASSERT(false);
+        return;
+    }
     m_cmd.SetString(start, int(end - start));
     m_cmd.MakeUpper();
     start = end + 1;
     end = strchr(start, ' ');
+    if (!end) {
+        ASSERT(false);
+        return;
+    }
     m_path.SetString(start, int(end - start));
     start = end + 1;
     end = strstr(start, "\r\n");
