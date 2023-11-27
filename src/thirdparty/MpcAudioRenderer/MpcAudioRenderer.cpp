@@ -2993,11 +2993,12 @@ void CMpcAudioRenderer::WaitFinish()
 	if (!m_bIsBitstream && m_input_params.samplerate != m_output_params.samplerate) {
 		int out_samples = m_Resampler.CalcOutSamples(0);
 		if (out_samples) {
+            ASSERT(m_pWaveFormatExOutput);
 			REFERENCE_TIME rtStart = m_rtNextRenderedSampleTime;
 			for (;;) {
 				BYTE* buff = DNew BYTE[out_samples * m_output_params.channels * get_bytes_per_sample(m_output_params.sf)];
 				out_samples = m_Resampler.Receive(buff, out_samples);
-				if (out_samples) {
+				if (out_samples && m_pWaveFormatExOutput) {
 					std::unique_ptr<CPacket> p(DNew CPacket());
 					p->rtStart = rtStart;
 					p->rtStop  = rtStart + SamplesToTime(out_samples, m_pWaveFormatExOutput);
