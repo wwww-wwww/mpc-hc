@@ -76,9 +76,7 @@
     <None Include="libass.def" />
   </ItemGroup>
   <ItemGroup>
-    <NASM Include="libass\libass\x86\be_blur.asm">
-      <ExcludedFromBuild Condition="'$(Platform)'=='Win32'">true</ExcludedFromBuild>
-    </NASM>
+    <NASM Include="libass\libass\x86\be_blur.asm" />
     <NASM Include="libass\libass\x86\blend_bitmaps.asm" />
     <NASM Include="libass\libass\x86\blur.asm" />
     <NASM Include="libass\libass\x86\cpuid.asm" />
@@ -110,7 +108,7 @@
   <ItemDefinitionGroup>
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <PreprocessorDefinitions>_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>CONFIG_ASM;ARCH_X86;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>.;libass\libass;..\fribidi\generated;..\libiconv\libiconv-for-Windows\include;..\dirent;..\freetype2\freetype2\include\freetype;..\fontconfig\fontconfig;..\freetype2\freetype2\include;..\harfbuzz\harfbuzz\src;..\fribidi\fribidi\lib;..\fribidi\fribidi\charset;..\fribidi;..\fribidi\fribidi\SMP\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level2</WarningLevel>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
