@@ -706,7 +706,9 @@ void LibassContext::InitLibASS() {
     m_ass = decltype(m_ass)(ass_library_init());
     ass_set_fonts_dir(m_ass.get(), NULL); //initialize it or we get free() errors in debug mode
     m_renderer = decltype(m_renderer)(ass_renderer_init(m_ass.get()));
-    ass_set_cache_limits(m_renderer.get(), 0, 1024);
+#if WIN64
+    ass_set_cache_limits(m_renderer.get(), 0, 768); // libass default is 192
+#endif
     m_track = decltype(m_track)(ass_new_track(m_ass.get()));
 }
 
