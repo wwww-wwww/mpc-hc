@@ -35,6 +35,7 @@
     <ClInclude Include="libass\libass\ass_outline.h" />
     <ClInclude Include="libass\libass\ass_parse.h" />
     <ClInclude Include="libass\libass\ass_rasterizer.h" />
+    <ClInclude Include="libass\libass\c\blur_template.h" />
     <ClInclude Include="libass\libass\c\rasterizer_template.h" />
     <ClInclude Include="libass\libass\ass_render.h" />
     <ClInclude Include="libass\libass\ass_shaper.h" />
@@ -81,9 +82,6 @@
     <NASM Include="libass\libass\x86\blur.asm" />
     <NASM Include="libass\libass\x86\cpuid.asm" />
     <NASM Include="libass\libass\x86\rasterizer.asm" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="readme.txt" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{19677DFD-C020-434D-9CB1-D0F105E72770}</ProjectGuid>
