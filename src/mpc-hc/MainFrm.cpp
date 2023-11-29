@@ -4909,7 +4909,7 @@ BOOL IsAudioFilename(CString filename)
     return mf.FindExt(ext, true);
 }
 
-void CMainFrame::OnDropFiles(CAtlList<CString>& slFiles, DROPEFFECT dropEffect)
+void CMainFrame::OnDropFiles(CAtlList<CStringW>& slFiles, DROPEFFECT dropEffect)
 {
     SetForegroundWindow();
 

@@ -484,7 +484,7 @@ private:
     void OnVideoSizeChanged(const bool bWasAudioOnly = false);
 
     CDropTarget m_dropTarget;
-    void OnDropFiles(CAtlList<CString>& slFiles, DROPEFFECT dropEffect) override;
+    void OnDropFiles(CAtlList<CStringW>& slFiles, DROPEFFECT dropEffect) override;
     DROPEFFECT OnDropAccept(COleDataObject* pDataObject, DWORD dwKeyState, CPoint point) override;
 
 public:
