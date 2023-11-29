@@ -6,6 +6,9 @@
 /* ASM enabled */
 #define CONFIG_ASM 1
 
+/* targeting a 32 - or 64 - bit x86 host architecture */
+#define ARCH_X86 1
+
 /* found CoreText in System library */
 /* #undef CONFIG_CORETEXT */
 
@@ -26,6 +29,8 @@
 
 /* use iconv */
 #define CONFIG_ICONV 1
+
+#define CONFIG_UNIBREAK 1
 
 /* use small tiles */
 /* #undef CONFIG_LARGE_TILES */
