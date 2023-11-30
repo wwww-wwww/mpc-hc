@@ -266,6 +266,11 @@ BOOL CMPCThemePlayerListCtrl::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
 void CMPCThemePlayerListCtrl::OnNcCalcSize(BOOL bCalcValidRects, NCCALCSIZE_PARAMS* lpncsp)
 {
     __super::OnNcCalcSize(bCalcValidRects, lpncsp);
+    if (AppNeedsThemedControls()) {
+        if (GetStyle() & WS_HSCROLL && nullptr == themedSBHelper) {
+            themedSBHelper = DEBUG_NEW CMPCThemeScrollBarHelper(this);
+        }
+    }
 }
 
 void CMPCThemePlayerListCtrl::drawItem(CDC* pDC, int nItem, int nSubItem)
