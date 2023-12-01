@@ -272,3 +272,23 @@ int CMPCThemeComboBox::OnCreate(LPCREATESTRUCT lpCreateStruct)
 BOOL CMPCThemeComboBox::OnEraseBkgnd(CDC* pDC) {
     return TRUE;
 }
+
+int CMPCThemeComboBox::SetCurSel(int nSelect) { //note, this is NOT virtual, and only works for explicit subclass
+    int cur = GetCurSel();
+    if (cur != nSelect) {
+        int ret = __super::SetCurSel(nSelect);
+        RedrawWindow();
+        return ret;
+    } else {
+        return nSelect;
+    }
+}
+
+void CMPCThemeComboBox::SelectByItemData(DWORD_PTR data) {
+    for (int i = 0; i < GetCount(); i++) {
+        if (GetItemData(i) == data) { 
+            SetCurSel(i); //calls CMPCThemeComboBox::SetCurSel
+            break;
+        }
+    }
+}

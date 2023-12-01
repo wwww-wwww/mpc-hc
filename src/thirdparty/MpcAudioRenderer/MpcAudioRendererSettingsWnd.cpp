@@ -215,7 +215,7 @@ void CMpcAudioRendererSettingsWnd::OnBnClickedReset()
 {
 	m_cbWasapiMode.SetCurSel(MODE_WASAPI_SHARED);
 	m_cbWasapiMethod.SetCurSel(WASAPI_METHOD::EVENT);
-	SelectByItemData(m_cbDevicePeriod, 50);
+	m_cbDevicePeriod.SelectByItemData(50);
 
 	m_cbUseBitExactOutput.SetCheck(BST_CHECKED);
 	m_cbUseSystemLayoutChannels.SetCheck(BST_CHECKED);
