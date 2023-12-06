@@ -2171,7 +2171,7 @@ void CFGManagerCustom::InsertLAVVideo(bool IsPreview)
     pFGF = IsPreview || tra[TRA_SCREEN] ? pFGLAVVideo : pFGLAVVideoLM;
     pFGF->AddType(MEDIATYPE_Video, MEDIASUBTYPE_TSCC);
     pFGF->AddType(MEDIATYPE_Video, MEDIASUBTYPE_TSC2);
-    pFGF->AddType(MEDIATYPE_Video, MEDIASUBTYPE_VMnc);
+    pFGF->AddType(MEDIATYPE_Video, MEDIASUBTYPE_VMNC);
 #endif
 #if INTERNAL_DECODER_FLIC
     pFGF = IsPreview || tra[TRA_FLIC] ? pFGLAVVideo : pFGLAVVideoLM;
