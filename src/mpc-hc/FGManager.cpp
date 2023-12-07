@@ -1941,14 +1941,6 @@ void CFGManagerCustom::InsertOtherInternalSourcefilters(bool IsPreview)
     }
 #endif
 
-#if INTERNAL_SOURCEFILTER_AVI2AC3
-    // hmmm, shouldn't there be an option in the GUI to enable/disable this filter?
-    pFGF = DEBUG_NEW CFGFilterInternal<CAVI2AC3Filter>(AVI2AC3FilterName, MERIT64(0x00680000) + 1);
-    pFGF->AddType(MEDIATYPE_Audio, MEDIASUBTYPE_WAVE_DOLBY_AC3);
-    pFGF->AddType(MEDIATYPE_Audio, MEDIASUBTYPE_WAVE_DTS);
-    m_transform.AddTail(pFGF);
-#endif
-
 #if INTERNAL_SOURCEFILTER_DSM
     if (src[SRC_DSM]) {
         pFGF = DEBUG_NEW CFGFilterInternal<CDSMSplitterFilter>(DSMSplitterName, MERIT64_ABOVE_DSHOW);
@@ -1986,6 +1978,7 @@ void CFGManagerCustom::InsertLAVVideo(bool IsPreview)
     pFGF = IsPreview || tra[TRA_VP356] ? pFGLAVVideo : pFGLAVVideoLM;
     pFGF->AddType(MEDIATYPE_Video, MEDIASUBTYPE_VP30);
     pFGF->AddType(MEDIATYPE_Video, MEDIASUBTYPE_VP31);
+    pFGF->AddType(MEDIATYPE_Video, MEDIASUBTYPE_VP40);
     pFGF->AddType(MEDIATYPE_Video, MEDIASUBTYPE_VP50);
     pFGF->AddType(MEDIATYPE_Video, MEDIASUBTYPE_vp50);
     pFGF->AddType(MEDIATYPE_Video, MEDIASUBTYPE_VP60);
@@ -2087,11 +2080,9 @@ void CFGManagerCustom::InsertLAVVideo(bool IsPreview)
     pFGF->AddType(MEDIATYPE_Video, MEDIASUBTYPE_wmv1);
     pFGF->AddType(MEDIATYPE_Video, MEDIASUBTYPE_WMV2);
     pFGF->AddType(MEDIATYPE_Video, MEDIASUBTYPE_wmv2);
-#endif
-#if INTERNAL_DECODER_WMV
-    pFGF = IsPreview || tra[TRA_WMV] ? pFGLAVVideo : pFGLAVVideoLM;
     pFGF->AddType(MEDIATYPE_Video, MEDIASUBTYPE_WMV3);
     pFGF->AddType(MEDIATYPE_Video, MEDIASUBTYPE_wmv3);
+    pFGF->AddType(MEDIATYPE_Video, MEDIASUBTYPE_2VMW);
 #endif
 #if INTERNAL_DECODER_MSMPEG4
     pFGF = IsPreview || tra[TRA_MSMPEG4] ? pFGLAVVideo : pFGLAVVideoLM;
@@ -2159,6 +2150,14 @@ void CFGManagerCustom::InsertLAVVideo(bool IsPreview)
     pFGF->AddType(MEDIATYPE_Video, MEDIASUBTYPE_QTJpeg);
     pFGF->AddType(MEDIATYPE_Video, MEDIASUBTYPE_MJPA);
     pFGF->AddType(MEDIATYPE_Video, MEDIASUBTYPE_MJPB);
+    pFGF->AddType(MEDIATYPE_Video, MEDIASUBTYPE_AVRn);
+    pFGF->AddType(MEDIATYPE_Video, MEDIASUBTYPE_LJPG);
+    pFGF->AddType(MEDIATYPE_Video, MEDIASUBTYPE_JPGL);
+    pFGF->AddType(MEDIATYPE_Video, MEDIASUBTYPE_MJLS);
+    pFGF->AddType(MEDIATYPE_Video, MEDIASUBTYPE_MJPA);
+    pFGF->AddType(MEDIATYPE_Video, MEDIASUBTYPE_MJPB);
+    pFGF->AddType(MEDIATYPE_Video, MEDIASUBTYPE_SP5X);
+    pFGF->AddType(MEDIATYPE_Video, MEDIASUBTYPE_SP54);
 #endif
 #if INTERNAL_DECODER_INDEO
     pFGF = IsPreview || tra[TRA_INDEO] ? pFGLAVVideo : pFGLAVVideoLM;
@@ -2195,6 +2194,24 @@ void CFGManagerCustom::InsertLAVVideo(bool IsPreview)
     pFGF->AddType(MEDIATYPE_MPEG2_PES, MEDIASUBTYPE_MPEG2_VIDEO);
     pFGF->AddType(MEDIATYPE_Video, MEDIASUBTYPE_MPEG2_VIDEO);
     pFGF->AddType(MEDIATYPE_Video, MEDIASUBTYPE_MPG2);
+#endif
+#if INTERNAL_DECODER_PRORES
+    pFGF = IsPreview || tra[TRA_V210_V410] ? pFGLAVVideo : pFGLAVVideoLM;
+    pFGF->AddType(MEDIATYPE_Video, MEDIASUBTYPE_apch);
+    pFGF->AddType(MEDIATYPE_Video, MEDIASUBTYPE_apcn);
+    pFGF->AddType(MEDIATYPE_Video, MEDIASUBTYPE_apcs);
+    pFGF->AddType(MEDIATYPE_Video, MEDIASUBTYPE_apco);
+    pFGF->AddType(MEDIATYPE_Video, MEDIASUBTYPE_ap4h);
+    pFGF->AddType(MEDIATYPE_Video, MEDIASUBTYPE_ap4x);
+#endif
+#if INTERNAL_DECODER_DNXHD
+    pFGF = IsPreview || tra[TRA_V210_V410] ? pFGLAVVideo : pFGLAVVideoLM;
+    pFGF->AddType(MEDIATYPE_Video, MEDIASUBTYPE_AVdn);
+    pFGF->AddType(MEDIATYPE_Video, MEDIASUBTYPE_AVdh);
+#endif
+#if INTERNAL_DECODER_OTHERVIDEO
+    pFGF = IsPreview || tra[TRA_V210_V410] ? pFGLAVVideo : pFGLAVVideoLM;
+    pFGF->AddType(MEDIATYPE_Video, MEDIASUBTYPE_CFHD);
 #endif
 
     // Add LAV Video if needed
@@ -2354,7 +2371,24 @@ void CFGManagerCustom::InsertLAVAudio()
     pFGF->AddType(MEDIATYPE_Audio, MEDIASUBTYPE_IMA4);
     pFGF->AddType(MEDIATYPE_Audio, MEDIASUBTYPE_ADPCM_SWF);
     pFGF->AddType(MEDIATYPE_Audio, MEDIASUBTYPE_ADPCM_AMV);
+    pFGF->AddType(MEDIATYPE_Audio, MEDIASUBTYPE_IMA_WAV);
     #endif
+#endif
+
+#if INTERNAL_DECODER_G726
+    pFGF = tra[TRA_WMALL] ? pFGLAVAudio : pFGLAVAudioLM;
+    pFGF->AddType(MEDIATYPE_Audio, MEDIASUBTYPE_G726);
+#endif
+
+#if INTERNAL_DECODER_G729
+    pFGF = tra[TRA_WMALL] ? pFGLAVAudio : pFGLAVAudioLM;
+    pFGF->AddType(MEDIATYPE_Audio, MEDIASUBTYPE_G729);
+    pFGF->AddType(MEDIATYPE_Audio, MEDIASUBTYPE_729A);
+#endif
+
+#if INTERNAL_DECODER_OTHERAUDIO
+    pFGF = tra[TRA_WMALL] ? pFGLAVAudio : pFGLAVAudioLM;
+    pFGF->AddType(MEDIATYPE_Audio, MEDIASUBTYPE_IMC);
 #endif
 
     // Add LAV Audio if needed

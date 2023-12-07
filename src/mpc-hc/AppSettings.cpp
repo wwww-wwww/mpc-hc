@@ -413,6 +413,15 @@ CAppSettings::CAppSettings()
 #if INTERNAL_DECODER_WMALL
     TraFiltersKeys[TRA_WMALL] = FilterKey(_T("TRA_WMALL"), false);
 #endif
+#if INTERNAL_DECODER_G726
+    TraFiltersKeys[TRA_G726] = FilterKey(_T("TRA_G726"), true);
+#endif
+#if INTERNAL_DECODER_G729
+    TraFiltersKeys[TRA_G729] = FilterKey(_T("TRA_G729"), true);
+#endif
+#if INTERNAL_DECODER_OTHERAUDIO
+    TraFiltersKeys[TRA_OTHERAUDIO] = FilterKey(_T("TRA_OTHERAUDIO"), true);
+#endif
 #if INTERNAL_DECODER_PCM
     TraFiltersKeys[TRA_PCM] = FilterKey(_T("TRA_PCM"), true);
 #endif
@@ -481,6 +490,15 @@ CAppSettings::CAppSettings()
 #endif
 #if INTERNAL_DECODER_V210_V410
     TraFiltersKeys[TRA_V210_V410] = FilterKey(_T("TRA_V210_V410"), false);
+#endif
+#if INTERNAL_DECODER_PRORES
+    TraFiltersKeys[TRA_PRORES] = FilterKey(_T("TRA_PRORES"), true);
+#endif
+#if INTERNAL_DECODER_DNXHD
+    TraFiltersKeys[TRA_DNXHD] = FilterKey(_T("TRA_DNXHD"), true);
+#endif
+#if INTERNAL_DECODER_OTHERVIDEO
+    TraFiltersKeys[TRA_OTHERVIDEO] = FilterKey(_T("TRA_OTHERVIDEO"), true);
 #endif
 
     ZeroMemory(&DVDPosition, sizeof(DVDPosition));
