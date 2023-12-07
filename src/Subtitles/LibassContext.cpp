@@ -737,7 +737,6 @@ bool LibassContext::LoadASSFile(Subtitle::SubType subType) {
     ass_set_fonts(m_renderer.get(), NULL, std::string(tmpFontName).c_str(), ASS_FONTPROVIDER_AUTODETECT, NULL, 0);
 
     m_assloaded = true;
-    m_assfontloaded = true;
 
     return true;
 }
