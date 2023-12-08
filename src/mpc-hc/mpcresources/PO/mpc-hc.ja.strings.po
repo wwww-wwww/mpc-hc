@@ -3,14 +3,13 @@
 # This file is distributed under the same license as the MPC-HC package.
 # Translators:
 # MPC HC <adiposegithub@gmail.com>, 2020
-# O SA, 2020
 # Sonozaki Shion <mskt01a@gmail.com>, 2021
 # ever_green, 2023
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2023-11-03 23:11:00+0000\n"
+"POT-Creation-Date: 2023-11-23 01:08:04+0000\n"
 "PO-Revision-Date: 2020-01-02 07:46+0000\n"
 "Last-Translator: ever_green, 2023\n"
 "Language-Team: Japanese (https://app.transifex.com/mpchc/teams/106126/ja/)\n"
@@ -86,7 +85,7 @@ msgstr "DVD"
 
 msgctxt "IDS_PLAYLOOPMODE_AB"
 msgid "A-B Repeat: Reset Positions"
-msgstr "A-B リピート: 区間をリセット"
+msgstr "A-B リピート: 区間を解除"
 
 msgctxt "IDS_PLAY_LOOPMODE_AB"
 msgid "A-B"
@@ -106,11 +105,11 @@ msgstr "字幕を含める"
 
 msgctxt "IDS_THEMEMODE_DARK"
 msgid "Dark"
-msgstr "ダーク"
+msgstr "暗い"
 
 msgctxt "IDS_THEMEMODE_LIGHT"
 msgid "Light"
-msgstr "ライト"
+msgstr "明るい"
 
 msgctxt "IDS_THEMEMODE_WINDOWS"
 msgid "Windows Default"
@@ -1236,23 +1235,23 @@ msgstr "EDL 終了点を設定"
 
 msgctxt "IDS_AG_PNS_ROTATEX_M"
 msgid "Video Frame Rotate X-"
-msgstr ""
+msgstr "ビデオ フレーム: 回転 X- (上下反転)"
 
 msgctxt "IDS_AG_PNS_ROTATEY_P"
 msgid "Video Frame Rotate Y+"
-msgstr ""
+msgstr "ビデオ フレーム: 回転 Y+ (左回転)"
 
 msgctxt "IDS_AG_PNS_ROTATEY_M"
 msgid "Video Frame Rotate Y-"
-msgstr ""
+msgstr "ビデオ フレーム: 回転 Y- (左右反転)"
 
 msgctxt "IDS_AG_PNS_ROTATEZ_P"
 msgid "Video Frame Rotate Z+"
-msgstr ""
+msgstr "ビデオ フレーム: 回転 Z+ (反時計回り)"
 
 msgctxt "IDS_AG_PNS_ROTATEZ_M"
 msgid "Video Frame Rotate Z-"
-msgstr ""
+msgstr "ビデオ フレーム: 回転 Z- (90 度反時計回り)"
 
 msgctxt "IDS_AG_TEARING_TEST"
 msgid "Tearing Test"
@@ -1625,7 +1624,7 @@ msgstr "高精細表示"
 
 msgctxt "IDS_TIMER_SHOW_PERCENTAGE"
 msgid "Show percentage"
-msgstr ""
+msgstr "パーセンテージを表示"
 
 msgctxt "IDS_AFTERPLAYBACK_REWIND"
 msgid "After Playback: Rewind current file"
@@ -1889,35 +1888,35 @@ msgstr "音声の遅延 -10 ミリ秒"
 
 msgctxt "IDS_MPLAYERC_23"
 msgid "Jump Forward (small)"
-msgstr "順方向にジャンプ (小)"
+msgstr "ジャンプ送り (小)"
 
 msgctxt "IDS_MPLAYERC_24"
 msgid "Jump Backward (small)"
-msgstr "逆方向にジャンプ (小)"
+msgstr "ジャンプ戻し (小)"
 
 msgctxt "IDS_MPLAYERC_25"
 msgid "Jump Forward (medium)"
-msgstr "順方向にジャンプ (中)"
+msgstr "ジャンプ送り (中)"
 
 msgctxt "IDS_MPLAYERC_26"
 msgid "Jump Backward (medium)"
-msgstr "逆方向にジャンプ (中)"
+msgstr "ジャンプ戻し (中)"
 
 msgctxt "IDS_MPLAYERC_27"
 msgid "Jump Forward (large)"
-msgstr "順方向にジャンプ (大)"
+msgstr "ジャンプ送り (大)"
 
 msgctxt "IDS_MPLAYERC_28"
 msgid "Jump Backward (large)"
-msgstr "逆方向にジャンプ (大)"
+msgstr "ジャンプ戻し (大)"
 
 msgctxt "IDS_MPLAYERC_29"
 msgid "Jump Forward (keyframe)"
-msgstr "順方向にジャンプ (キーフレーム)"
+msgstr "ジャンプ送り (キーフレーム)"
 
 msgctxt "IDS_MPLAYERC_30"
 msgid "Jump Backward (keyframe)"
-msgstr "逆方向にジャンプ (キーフレーム)"
+msgstr "ジャンプ戻し (キーフレーム)"
 
 msgctxt "IDS_AG_NEXT"
 msgid "Next"
@@ -2029,15 +2028,15 @@ msgstr "拡大 自動調整"
 
 msgctxt "IDS_AG_VIDFRM_HALF"
 msgid "Video Frame Half Size"
-msgstr ""
+msgstr "ビデオ フレーム: 1/2 のサイズ"
 
 msgctxt "IDS_AG_VIDFRM_NORMAL"
 msgid "Video Frame Normal Size"
-msgstr ""
+msgstr "ビデオ フレーム: 標準のサイズ"
 
 msgctxt "IDS_AG_VIDFRM_DOUBLE"
 msgid "Video Frame Double Size"
-msgstr ""
+msgstr "ビデオ フレーム: 2 倍のサイズ"
 
 msgctxt "IDS_AG_ALWAYS_ON_TOP"
 msgid "Always On Top"
@@ -2045,27 +2044,27 @@ msgstr "常に手前に表示"
 
 msgctxt "IDS_AG_PNS_INC_SIZE"
 msgid "Video Frame Inc Size"
-msgstr ""
+msgstr "ビデオ フレーム: サイズを拡大"
 
 msgctxt "IDS_AG_PNS_INC_WIDTH"
 msgid "Video Frame Inc Width"
-msgstr ""
+msgstr "ビデオ フレーム: 幅を拡大"
 
 msgctxt "IDS_MPLAYERC_47"
 msgid "Video Frame Inc Height"
-msgstr ""
+msgstr "ビデオ フレーム: 高さを拡大"
 
 msgctxt "IDS_AG_PNS_DEC_SIZE"
 msgid "Video Frame Dec Size"
-msgstr ""
+msgstr "ビデオ フレーム: サイズを縮小"
 
 msgctxt "IDS_AG_PNS_DEC_WIDTH"
 msgid "Video Frame Dec Width"
-msgstr ""
+msgstr "ビデオ フレーム: 幅を縮小"
 
 msgctxt "IDS_MPLAYERC_50"
 msgid "Video Frame Dec Height"
-msgstr ""
+msgstr "ビデオ フレーム: 高さを縮小"
 
 msgctxt "IDS_SUBDL_DLG_DOWNLOADING"
 msgid "Downloading [%s] \"%s\""
@@ -2139,39 +2138,39 @@ msgstr "1 から 365 までの数字を入力してください。"
 
 msgctxt "IDS_AG_PNS_CENTER"
 msgid "Video Frame Center"
-msgstr ""
+msgstr "ビデオ フレーム: 中央へ戻す"
 
 msgctxt "IDS_AG_PNS_LEFT"
 msgid "Video Frame Left"
-msgstr ""
+msgstr "ビデオ フレーム: 左へ移動"
 
 msgctxt "IDS_AG_PNS_RIGHT"
 msgid "Video Frame Right"
-msgstr ""
+msgstr "ビデオ フレーム: 右へ移動"
 
 msgctxt "IDS_AG_PNS_UP"
 msgid "Video Frame Up"
-msgstr ""
+msgstr "ビデオ フレーム: 上へ移動"
 
 msgctxt "IDS_AG_PNS_DOWN"
 msgid "Video Frame Down"
-msgstr ""
+msgstr "ビデオ フレーム: 下へ移動"
 
 msgctxt "IDS_AG_PNS_UPLEFT"
 msgid "Video Frame Up/Left"
-msgstr ""
+msgstr "ビデオ フレーム: 左上へ移動"
 
 msgctxt "IDS_AG_PNS_UPRIGHT"
 msgid "Video Frame Up/Right"
-msgstr ""
+msgstr "ビデオ フレーム: 右上へ移動"
 
 msgctxt "IDS_AG_PNS_DOWNLEFT"
 msgid "Video Frame Down/Left"
-msgstr ""
+msgstr "ビデオ フレーム: 左下へ移動"
 
 msgctxt "IDS_MPLAYERC_59"
 msgid "Video Frame Down/Right"
-msgstr ""
+msgstr "ビデオ フレーム: 右下へ移動"
 
 msgctxt "IDS_AG_VOLUME_UP"
 msgid "Volume Up"
@@ -2910,23 +2909,23 @@ msgstr "次の縦横比のプリセット"
 
 msgctxt "IDS_AG_VIDFRM_STRETCH"
 msgid "Video Frame Stretch"
-msgstr ""
+msgstr "ビデオ フレーム: 大きさに広げる"
 
 msgctxt "IDS_AG_VIDFRM_INSIDE"
 msgid "Video Frame Inside"
-msgstr ""
+msgstr "ビデオ フレーム: 内接"
 
 msgctxt "IDS_AG_VIDFRM_OUTSIDE"
 msgid "Video Frame Outside"
-msgstr ""
+msgstr "ビデオ フレーム: 外接"
 
 msgctxt "IDS_AG_PNS_RESET"
 msgid "Video Frame Reset"
-msgstr ""
+msgstr "ビデオ フレーム: リセット"
 
 msgctxt "IDS_AG_PNS_ROTATEX_P"
 msgid "Video Frame Rotate X+"
-msgstr ""
+msgstr "ビデオ フレーム: 回転 X+ (上回転)"
 
 msgctxt "IDS_TIME_TOOLTIP_ABOVE"
 msgid "Above seek bar"
@@ -2986,15 +2985,15 @@ msgstr "ズーム ウィンドウ -"
 
 msgctxt "IDS_AG_VIDFRM_ZOOM1"
 msgid "Video Frame Zoom 1"
-msgstr ""
+msgstr "ビデオ フレーム: 拡大 1"
 
 msgctxt "IDS_AG_VIDFRM_ZOOM2"
 msgid "Video Frame Zoom 2"
-msgstr ""
+msgstr "ビデオ フレーム: 拡大 2"
 
 msgctxt "IDS_AG_VIDFRM_SWITCHZOOM"
 msgid "Video Frame Switch Zoom"
-msgstr ""
+msgstr "ビデオ フレーム: 拡大設定の切り替え"
 
 msgctxt "IDS_ENABLE_ALL_FILTERS"
 msgid "&Enable all filters"
@@ -3961,6 +3960,8 @@ msgid ""
 "/pns \"name or values\"\tSpecify Video Frame preset name to use or direct "
 "position and zoom values in format \"px,py,zx,zy\""
 msgstr ""
+"/pns \"name or values\"\t使用するビデオ フレームのプリセット名を指定するか、位置とズームの値を \"px,py,zx,zy\""
+" の形式で指定する"
 
 msgctxt "IDS_CMD_ICONASSOC"
 msgid "/iconsassoc\tReassociate format icons"
@@ -4476,7 +4477,7 @@ msgstr "既定の字幕スタイルに切り替え"
 
 msgctxt "IDS_AG_TOGGLE_MPCTHEME"
 msgid "Toggle Dark Theme"
-msgstr "ダーク テーマに切り替え"
+msgstr "暗いテーマに切り替え"
 
 msgctxt "IDS_PPAGEADVANCED_LOOP_FOLDER_NEXT_FILE"
 msgid "Loop back to first file in folder after playing the last file."
@@ -4745,4 +4746,4 @@ msgctxt "IDS_PPAGEADVANCED_USE_MEDIAINFO_LOAD_FILE_DURATION"
 msgid ""
 "Load file duration when adding items to playlist (uses MediaInfo and results"
 " may vary)"
-msgstr ""
+msgstr "再生リストに項目を追加するときにファイルの長さを読み込みます (MediaInfo を使用し、結果は異なる場合があります)"

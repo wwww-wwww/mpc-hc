@@ -7,14 +7,15 @@
 # ageback <yeskky@gmail.com>, 2021
 # tasty0tomato, 2022
 # lychichem <leichixian@outlook.com>, 2022
+# CyanVesper <SharpNight93@gmail.com>, 2023
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2022-06-21 19:15:32+0000\n"
+"POT-Creation-Date: 2023-11-03 23:11:00+0000\n"
 "PO-Revision-Date: 2020-01-02 07:46+0000\n"
-"Last-Translator: lychichem <leichixian@outlook.com>, 2022\n"
-"Language-Team: Chinese (China) (https://www.transifex.com/mpchc/teams/106126/zh_CN/)\n"
+"Last-Translator: CyanVesper <SharpNight93@gmail.com>, 2023\n"
+"Language-Team: Chinese (China) (https://app.transifex.com/mpchc/teams/106126/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -201,7 +202,7 @@ msgstr "关于"
 
 msgctxt "IDD_ABOUTBOX_IDC_AUTHORS_LINK"
 msgid "Copyright 2002-2023 clsid2 and others"
-msgstr "版权所有 2002-2023 clsid2和其他开发者"
+msgstr "版权所有 2002-2023 clsid2 和其他开发者"
 
 msgctxt "IDD_ABOUTBOX_IDC_STATIC"
 msgid ""
@@ -704,7 +705,7 @@ msgstr "在播放列表中仅有一个项目时使用 \"向前/后跳转\" 后�
 
 msgctxt "IDD_PPAGETWEAKS_IDC_CHECK8"
 msgid "Show time tooltip (and preview):"
-msgstr ""
+msgstr "显示时间信息提示（以及视频预览）"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_STATIC"
 msgid "OSD font:"
@@ -1090,23 +1091,23 @@ msgstr "连接 alpha 通道"
 
 msgctxt "IDD_PPAGESUBSTYLE_IDC_STATIC21"
 msgid "8-bit Character Set"
-msgstr ""
+msgstr "8位字符集"
 
 msgctxt "IDD_PPAGESUBSTYLE_IDC_STATIC22"
 msgid "OpenType Language"
-msgstr ""
+msgstr "OpenType 语言"
 
 msgctxt "IDD_PPAGESUBSTYLE_IDC_STATIC_LIBASS"
 msgid "Libass Options"
-msgstr ""
+msgstr "Libass 选项"
 
 msgctxt "IDD_PPAGESUBSTYLE_IDC_CHECK2"
 msgid "Use libass for SSA/ASS"
-msgstr ""
+msgstr "将 libass 用于 SSA/ASS 格式"
 
 msgctxt "IDD_PPAGESUBSTYLE_IDC_CHECK3"
 msgid "Use libass for SRT"
-msgstr ""
+msgstr "将 libass 用于 SRT 格式"
 
 msgctxt "IDD_PPAGEINTERNALFILTERS_IDC_STATIC"
 msgid ""
@@ -1858,16 +1859,16 @@ msgstr "自动播放"
 
 msgctxt "IDD_PPAGETHEME_IDC_STATIC1"
 msgid "Modern Theme Settings (require restart)"
-msgstr ""
+msgstr "现代主题设置（需要重启应用以生效）"
 
 msgctxt "IDD_PPAGETHEME_IDC_CHECK1"
 msgid "Use Modern Theme"
-msgstr ""
+msgstr "使用现代主题"
 
 msgctxt "IDD_PPAGETHEME_IDC_STATIC"
 msgid "Modern Seekbar height:"
-msgstr ""
+msgstr "现代进度条高度: "
 
 msgctxt "IDD_PPAGETHEME_IDC_STATIC2"
 msgid "Modern Theme Color:"
-msgstr ""
+msgstr "现代主题颜色: "

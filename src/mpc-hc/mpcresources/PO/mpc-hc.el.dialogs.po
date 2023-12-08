@@ -9,7 +9,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2022-06-21 19:15:32+0000\n"
+"POT-Creation-Date: 2023-11-19 23:27:04+0000\n"
 "PO-Revision-Date: 2020-01-02 07:46+0000\n"
 "Last-Translator: George Mantratzis, 2023\n"
 "Language-Team: Greek (https://app.transifex.com/mpchc/teams/106126/el/)\n"
@@ -722,7 +722,7 @@ msgstr ""
 
 msgctxt "IDD_PPAGETWEAKS_IDC_CHECK8"
 msgid "Show time tooltip (and preview):"
-msgstr ""
+msgstr "Εμφάνιση εργαλείου ώρας (και προεπισκόπηση):"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_STATIC"
 msgid "OSD font:"
@@ -870,7 +870,7 @@ msgstr "Εντάξει"
 
 msgctxt "IDD_PNSPRESET_DLG_CAPTION"
 msgid "PnS Frame Adjust Presets"
-msgstr ""
+msgstr "PnS Προεπιλογές Ρύθμισης Πλαισίου"
 
 msgctxt "IDD_PNSPRESET_DLG_IDC_BUTTON2"
 msgid "New"
@@ -1110,23 +1110,23 @@ msgstr "Σύνδεση καναλιών άλφα"
 
 msgctxt "IDD_PPAGESUBSTYLE_IDC_STATIC21"
 msgid "8-bit Character Set"
-msgstr ""
+msgstr "8-bit Σύνολο Χαρακτήρων"
 
 msgctxt "IDD_PPAGESUBSTYLE_IDC_STATIC22"
 msgid "OpenType Language"
-msgstr ""
+msgstr "Γλώσσα OpenType"
 
 msgctxt "IDD_PPAGESUBSTYLE_IDC_STATIC_LIBASS"
 msgid "Libass Options"
-msgstr ""
+msgstr "Επιλογές Libass"
 
 msgctxt "IDD_PPAGESUBSTYLE_IDC_CHECK2"
 msgid "Use libass for SSA/ASS"
-msgstr ""
+msgstr "Χρησιμοποιήστε libass για SSA/ASS"
 
 msgctxt "IDD_PPAGESUBSTYLE_IDC_CHECK3"
 msgid "Use libass for SRT"
-msgstr ""
+msgstr "Χρησιμοποιήστε libass για SRT"
 
 msgctxt "IDD_PPAGEINTERNALFILTERS_IDC_STATIC"
 msgid ""
@@ -1182,7 +1182,7 @@ msgstr "Βίντεο DirectShow"
 
 msgctxt "IDD_PPAGEOUTPUT_IDC_BUTTON1"
 msgid "Settings"
-msgstr ""
+msgstr "Ρυθμίσεις"
 
 msgctxt "IDD_PPAGEOUTPUT_IDC_STATIC"
 msgid "DXVA"
@@ -1210,7 +1210,7 @@ msgstr "Πρόγραμμα απόδοσης ήχου"
 
 msgctxt "IDD_PPAGEOUTPUT_IDC_BUTTON2"
 msgid "Settings"
-msgstr ""
+msgstr "Ρυθμίσεις"
 
 msgctxt "IDD_PPAGEOUTPUT_IDC_STATIC"
 msgid "Subtitle Renderer"
@@ -1901,16 +1901,16 @@ msgstr "Αυτόματη εκτέλεση"
 
 msgctxt "IDD_PPAGETHEME_IDC_STATIC1"
 msgid "Modern Theme Settings (require restart)"
-msgstr ""
+msgstr "Ρυθμίσεις Μοντέρνου Θέματος (απαιτεί επανεκκίνηση)"
 
 msgctxt "IDD_PPAGETHEME_IDC_CHECK1"
 msgid "Use Modern Theme"
-msgstr ""
+msgstr "Χρησιμοποιήστε Μοντέρνο Θέμα"
 
 msgctxt "IDD_PPAGETHEME_IDC_STATIC"
 msgid "Modern Seekbar height:"
-msgstr ""
+msgstr "Ύψος μοντέρνας μπάρας αναζήτησης:"
 
 msgctxt "IDD_PPAGETHEME_IDC_STATIC2"
 msgid "Modern Theme Color:"
-msgstr ""
+msgstr "Μοντέρνο Χρώμα Θέματος:"

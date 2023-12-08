@@ -9,7 +9,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2023-11-03 23:11:00+0000\n"
+"POT-Creation-Date: 2023-11-19 23:27:04+0000\n"
 "PO-Revision-Date: 2020-01-02 07:46+0000\n"
 "Last-Translator: Mücahid Aksel <mucahidaksel@gmail.com>, 2023\n"
 "Language-Team: Turkish (https://app.transifex.com/mpchc/teams/106126/tr/)\n"
@@ -89,7 +89,7 @@ msgstr "Ö&zellikler"
 
 msgctxt "ID_FILE_OPEN_LOCATION"
 msgid "Open File &Location"
-msgstr "Dosya Ko&numunu Aç"
+msgstr "Dosya konumunu aç"
 
 msgctxt "ID_FILE_EXIT"
 msgid "E&xit"
@@ -145,15 +145,15 @@ msgstr "&Oynatıcı Ayrıntıları..."
 
 msgctxt "ID_VIEW_PRESETS_MINIMAL"
 msgid "&Minimal"
-msgstr "&En Az"
+msgstr "Minimal"
 
 msgctxt "ID_VIEW_PRESETS_COMPACT"
 msgid "&Compact"
-msgstr "&Az"
+msgstr "Kompakt"
 
 msgctxt "ID_VIEW_PRESETS_NORMAL"
 msgid "&Normal"
-msgstr "&Normal"
+msgstr "Normal"
 
 msgctxt "ID_VIEW_FULLSCREEN"
 msgid "F&ull Screen"
@@ -189,11 +189,11 @@ msgstr "Sığdır (&Sadece büyütme)"
 
 msgctxt "POPUP"
 msgid "R&enderer Settings"
-msgstr "Ç&evirici Ayarları"
+msgstr "İşleyici Ayarları"
 
 msgctxt "ID_VIEW_TEARING_TEST"
 msgid "&Tearing Test"
-msgstr "&Kopukluk Testi"
+msgstr "Yırtılma Testi"
 
 msgctxt "ID_VIEW_DISPLAY_RENDERER_STATS"
 msgid "&Display Statistics"
@@ -333,7 +333,7 @@ msgstr "&Tam Eşzamanla"
 
 msgctxt "ID_VIEW_ALTERNATIVEVSYNC"
 msgid "A&lternative VSync"
-msgstr "F&arklı Eşzamanla"
+msgstr "Alternatif VSync"
 
 msgctxt "ID_VIEW_VSYNCOFFSET_DECREASE"
 msgid "&Decrease VSync Offset"
@@ -445,7 +445,7 @@ msgstr "Monitör/Masaüstü AR Farkını &Düzelt"
 
 msgctxt "POPUP"
 msgid "P&nS Frame Adjust"
-msgstr ""
+msgstr "P&nS Kare uyarlama"
 
 msgctxt "ID_VIEW_INCSIZE"
 msgid "&Increase Size"
@@ -697,11 +697,11 @@ msgstr "Oy&natmadan Sonra"
 
 msgctxt "ID_AFTERPLAYBACK_DONOTHING"
 msgid "Do no&thing"
-msgstr "Bir &İşlem Yapma"
+msgstr "Hiçbir şey yapma"
 
 msgctxt "ID_AFTERPLAYBACK_PLAYNEXT"
 msgid "Play &next file in the folder"
-msgstr "Klasördeki &Sıradaki Dosyayı Yürüt"
+msgstr "Klasördeki sonraki dosyayı oynat"
 
 msgctxt "ID_AFTERPLAYBACK_MONITOROFF"
 msgid "Turn off the &monitor"
@@ -789,7 +789,7 @@ msgstr "Güncelleştirmeleri &kontrol et"
 
 msgctxt "ID_HELP_SHOWCOMMANDLINESWITCHES"
 msgid "&Command Line Switches"
-msgstr "&Komut Satırı Anahtarları"
+msgstr "&Komut satırı anahtarları"
 
 msgctxt "ID_HELP_TOOLBARIMAGES"
 msgid "Download &Toolbar Images"

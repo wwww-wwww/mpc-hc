@@ -6,7 +6,7 @@
 # ThePiratePeter, 2020
 # Massimiliano F. <garfield002@gmail.com>, 2020
 # Gianni Chedda <gianni.chedda0@gmail.com>, 2023
-# GA BG, 2023
+# GABG, 2023
 # 
 msgid ""
 msgstr ""
@@ -111,7 +111,7 @@ msgstr "Scuro"
 
 msgctxt "IDS_THEMEMODE_LIGHT"
 msgid "Light"
-msgstr "Chiara"
+msgstr "Chiaro"
 
 msgctxt "IDS_THEMEMODE_WINDOWS"
 msgid "Windows Default"
@@ -2492,10 +2492,10 @@ msgid ""
 "It supports all common video and audio file formats available for playback. "
 "We are 100% spyware free, there are no advertisements or toolbars."
 msgstr ""
-"MPC-HC is an extremely light-weight, open source media player for Windows. "
-"Supporta tutti i comuni formati audio e video disponibili per la "
-"riproduzione. Noi siamo al 100% liberi da spyware, non c'è pubblicità o "
-"barre degli strumenti."
+"MPC-HC è un lettore multimediale per Windows estremamente leggero e open "
+"source. Supporta tutti i comuni formati audio e video disponibili per la "
+"riproduzione. È al 100% libero da spyware, non c'è pubblicità o barre degli "
+"strumenti fastidiose."
 
 msgctxt "IDS_MAINFRM_12"
 msgid "channel"

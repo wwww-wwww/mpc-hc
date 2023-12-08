@@ -5,17 +5,17 @@
 # MPC HC <adiposegithub@gmail.com>, 2020
 # lifegpc <g1710431395@gmail.com>, 2021
 # BCZJG6GT <luticliu@foxmail.com>, 2021
-# CyanVesper <SharpNight93@gmail.com>, 2021
 # Jackson Chen, 2022
 # lychichem <leichixian@outlook.com>, 2022
+# CyanVesper <SharpNight93@gmail.com>, 2023
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2022-06-24 16:57:41+0000\n"
+"POT-Creation-Date: 2023-11-03 23:11:00+0000\n"
 "PO-Revision-Date: 2020-01-02 07:46+0000\n"
-"Last-Translator: lychichem <leichixian@outlook.com>, 2022\n"
-"Language-Team: Chinese (China) (https://www.transifex.com/mpchc/teams/106126/zh_CN/)\n"
+"Last-Translator: CyanVesper <SharpNight93@gmail.com>, 2023\n"
+"Language-Team: Chinese (China) (https://app.transifex.com/mpchc/teams/106126/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -108,15 +108,15 @@ msgstr "包括字幕"
 
 msgctxt "IDS_THEMEMODE_DARK"
 msgid "Dark"
-msgstr ""
+msgstr "深色"
 
 msgctxt "IDS_THEMEMODE_LIGHT"
 msgid "Light"
-msgstr ""
+msgstr "浅色"
 
 msgctxt "IDS_THEMEMODE_WINDOWS"
 msgid "Windows Default"
-msgstr ""
+msgstr "Windows 默认"
 
 msgctxt "IDS_INFOBAR_CHANNEL"
 msgid "Channel"
@@ -753,7 +753,7 @@ msgstr "播放器::标志"
 
 msgctxt "IDD_PPAGETHEME"
 msgid "Player::Theme"
-msgstr ""
+msgstr "播放器::主题"
 
 msgctxt "IDD_PPAGEOUTPUT"
 msgid "Playback::Output"
@@ -4024,13 +4024,13 @@ msgctxt "IDS_PPAGEADVANCED_MOUSE_LEFTUP_DELAY"
 msgid ""
 "Maximum delay in milliseconds of mouse LeftUp event when clicking on the "
 "video."
-msgstr ""
+msgstr "当在视频中进行点击时，鼠标 LeftUp 事件的最大延迟（毫秒）。"
 
 msgctxt "IDS_PPAGEADVANCED_USE_FREETYPE"
 msgid ""
 "Use FreeType for subtitle rendering.  Enables support for per-language "
 "glyphs."
-msgstr ""
+msgstr "使用 FreeType 进行字幕渲染。将对每种语言字形都启用支持。"
 
 msgctxt "IDS_SUBUL_DLG_STATUS_NOTIMPLEMENTED"
 msgid "Not implemented."
@@ -4654,7 +4654,7 @@ msgstr "设备缓冲区:"
 
 msgctxt "IDS_ARS_ALT_CHECK_FORMAT"
 msgid "Do not check format support"
-msgstr ""
+msgstr "不检查格式支持"
 
 msgctxt "IDS_ARS_STATUS"
 msgid "Status"
@@ -4700,15 +4700,15 @@ msgctxt "IDS_ARS_TIP_BITEXACT_OUTPUT"
 msgid ""
 "If possible, the audio will be sent out in its original format.\n"
 "Otherwise, the format specified in the system settings will be used."
-msgstr ""
+msgstr "如果可能的话，音频将会以其原始格式进行发送。但如果不行的话，则将使用系统设置中指定的格式。"
 
 msgctxt "IDS_ARS_TIP_ALT_CHECK_FORMAT"
 msgid "The renderer will try to initialize the device skipping some checks."
-msgstr ""
+msgstr "渲染器将会尝试初始化设备来跳过一些检测"
 
 msgctxt "IDS_FILTER_RESET_SETTINGS"
 msgid "Reset"
-msgstr ""
+msgstr "重置"
 
 msgctxt "IDS_AG_DEFAULT"
 msgid "Default"
