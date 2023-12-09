@@ -5104,23 +5104,9 @@ bool CMainFrame::GetDIB(BYTE** ppData, long& size, bool fSilent)
             }
 
             hr = m_pCAP->GetDIB(*ppData, (DWORD*)&size);
-            //if (FAILED(hr)) {errmsg.Format(_T("GetDIB failed, hr = %08x"), hr); break;}
             if (FAILED(hr)) {
-                OnPlayPause();
-                GetMediaState(); // Pause and retry to support ffdshow queuing.
-                int retry = 0;
-                while (FAILED(hr) && retry < 20) {
-                    hr = m_pCAP->GetDIB(*ppData, (DWORD*)&size);
-                    if (SUCCEEDED(hr)) {
-                        break;
-                    }
-                    Sleep(1);
-                    retry++;
-                }
-                if (FAILED(hr)) {
-                    errmsg.Format(IDS_GETDIB_FAILED, hr);
-                    break;
-                }
+                errmsg.Format(IDS_GETDIB_FAILED, hr);
+                break;
             }
         } else if (m_pMFVDC) {
             // Capture with EVR
