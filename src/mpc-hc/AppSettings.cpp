@@ -1333,48 +1333,6 @@ void CAppSettings::LoadExternalFilters(CAutoPtrList<FilterOverride>& filters, LP
     }
 }
 
-void CAppSettings::ConvertOldExternalFiltersList()
-{
-    CAutoPtrList<FilterOverride> filters, succeededFilters, failedFilters;
-    // Load the old filters list
-    LoadExternalFilters(filters, IDS_R_FILTERS);
-    if (!filters.IsEmpty()) {
-        POSITION pos = filters.GetHeadPosition();
-        while (pos) {
-            CAutoPtr<FilterOverride>& fo = filters.GetNext(pos);
-
-            CAutoPtr<CFGFilter> pFGF;
-            if (fo->type == FilterOverride::REGISTERED) {
-                pFGF.Attach(DEBUG_NEW CFGFilterRegistry(fo->dispname));
-            } else if (fo->type == FilterOverride::EXTERNAL) {
-                pFGF.Attach(DEBUG_NEW CFGFilterFile(fo->clsid, fo->path, CStringW(fo->name)));
-            }
-            if (!pFGF) {
-                continue;
-            }
-
-            CComPtr<IBaseFilter> pBF;
-            CInterfaceList<IUnknown, &IID_IUnknown> pUnks;
-            if (SUCCEEDED(pFGF->Create(&pBF, pUnks))) {
-                succeededFilters.AddTail(fo);
-            } else {
-                failedFilters.AddTail(fo);
-            }
-        }
-        // Clear the old filters list
-        filters.RemoveAll();
-        SaveExternalFilters(filters, IDS_R_FILTERS);
-        // Save the new filters lists
-#ifndef _WIN64
-        SaveExternalFilters(succeededFilters, IDS_R_EXTERNAL_FILTERS_x86);
-        SaveExternalFilters(failedFilters, IDS_R_EXTERNAL_FILTERS_x64);
-#else
-        SaveExternalFilters(succeededFilters, IDS_R_EXTERNAL_FILTERS_x64);
-        SaveExternalFilters(failedFilters, IDS_R_EXTERNAL_FILTERS_x86);
-#endif
-    }
-}
-
 void CAppSettings::SaveExternalFilters(CAutoPtrList<FilterOverride>& filters, LPCTSTR baseKey /*= IDS_R_EXTERNAL_FILTERS*/)
 {
     // Saving External Filter settings takes a long time. Use only when really necessary.
@@ -3407,8 +3365,6 @@ void CAppSettings::UpdateSettings()
                 nAudioBoostTmp = 300;
             }
             pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_AUDIOBOOST, nAudioBoostTmp);
-
-            ConvertOldExternalFiltersList();
         }
         {
             const CString section(_T("Settings"));
