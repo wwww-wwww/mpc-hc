@@ -5573,12 +5573,12 @@ void CMainFrame::SaveThumbnails(LPCTSTR fn)
 
     const CAppSettings& s = AfxGetAppSettings();
 
-    int cols = std::max(1, std::min(16, s.iThumbCols));
-    int rows = std::max(1, std::min(40, s.iThumbRows));
+    int cols = std::clamp(s.iThumbCols, 1, 16);
+    int rows = std::clamp(s.iThumbRows, 1, 40);
 
     const int margin = 5;
     const int infoheight = 70;
-    int width = std::max(256, std::min(3840, s.iThumbWidth));
+    int width = std::clamp(s.iThumbWidth, 256, 3840);
     int height = width * szVideoARCorrected.cy / szVideoARCorrected.cx * rows / cols + infoheight;
 
     int dibsize = sizeof(BITMAPINFOHEADER) + width * height * 4;
@@ -6086,9 +6086,9 @@ void CMainFrame::OnFileSaveThumbnails()
         s.strSnapshotExt = _T(".png");
     }
 
-    s.iThumbRows = fd.m_rows;
-    s.iThumbCols = fd.m_cols;
-    s.iThumbWidth = fd.m_width;
+    s.iThumbRows = std::clamp(fd.m_rows, 1, 40);
+    s.iThumbCols = std::clamp(fd.m_cols, 1, 16);
+    s.iThumbWidth = std::clamp(fd.m_width, 256, 3840);
 
     CPath pdst(fd.GetPathName());
     CString ext(pdst.GetExtension().MakeLower());

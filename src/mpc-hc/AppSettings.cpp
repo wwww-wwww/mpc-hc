@@ -2037,7 +2037,7 @@ void CAppSettings::LoadSettings()
     bNotifySkype = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_NOTIFY_SKYPE, FALSE);
 
     nJpegQuality = pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_JPEG_QUALITY, 90);
-    if (nJpegQuality < 0 || nJpegQuality > 100) {
+    if (nJpegQuality < 20 || nJpegQuality > 100) {
         nJpegQuality = 90;
     }
 
