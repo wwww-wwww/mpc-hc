@@ -686,7 +686,7 @@ public:
     bool            fClosedCaptions;
 
     // Output
-    CRenderersSettings m_RenderersSettings;
+    CRenderersSettings alignas(16) m_RenderersSettings;
     int             iDSVideoRendererType;
 
     CStringW        strAudioRendererDisplayName;
@@ -731,8 +731,8 @@ public:
     DVB_StopFilterGraph nDVBStopFilterGraph;
 
     // Internal Filters
-    bool            SrcFilters[SRC_LAST + !SRC_LAST];
-    bool            TraFilters[TRA_LAST + !TRA_LAST];
+    bool            alignas(16) SrcFilters[SRC_LAST + !SRC_LAST];
+    bool            alignas(16) TraFilters[TRA_LAST + !TRA_LAST];
 
     // Audio Switcher
     bool            fEnableAudioSwitcher;
@@ -757,7 +757,7 @@ public:
     int             nSubDelayStep;
 
     // Default Style
-    STSStyle        subtitlesDefStyle;
+    STSStyle        alignas(16) subtitlesDefStyle;
 
     // Misc
     bool            bPreferDefaultForcedSubtitles;
