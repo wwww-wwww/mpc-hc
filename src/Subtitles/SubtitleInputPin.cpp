@@ -29,7 +29,6 @@
 #include <uuids.h>
 #include "moreuuids.h"
 #include "../DSUtil/ISOLang.h"
-#include "../mpc-hc/mplayerc.h"
 
 // our first format id
 #define __GAB1__ "GAB1"

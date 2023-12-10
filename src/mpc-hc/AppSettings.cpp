@@ -3556,3 +3556,28 @@ void CAppSettings::UpdateSettings()
     }
 }
 
+// RenderersSettings.h
+
+CRenderersData* GetRenderersData() {
+    return &AfxGetMyApp()->m_Renderers;
+}
+
+CRenderersSettings& GetRenderersSettings() {
+    return AfxGetAppSettings().m_RenderersSettings;
+}
+
+// SubRendererSettings.h
+
+// Todo: move individual members of AppSettings into SubRendererSettings struct and use this function to get a reference to it
+SubRendererSettings GetSubRendererSettings() {
+    const auto& s = AfxGetAppSettings();
+    SubRendererSettings srs;
+    srs.defaultStyle = s.subtitlesDefStyle;
+    srs.overrideDefaultStyle = s.fUseDefaultSubtitlesStyle;
+#if USE_LIBASS
+    srs.renderSSAUsingLibass = s.bRenderSSAUsingLibass;
+    srs.renderSRTUsingLibass = s.bRenderSRTUsingLibass;
+#endif
+    OpenTypeLang::CStringAtoHintStr(srs.openTypeLangHint, s.strOpenTypeLangHint);
+    return srs;
+}

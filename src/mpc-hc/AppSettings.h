@@ -686,7 +686,7 @@ public:
     bool            fClosedCaptions;
 
     // Output
-    CRenderersSettings alignas(16) m_RenderersSettings;
+    CRenderersSettings m_RenderersSettings;
     int             iDSVideoRendererType;
 
     CStringW        strAudioRendererDisplayName;
@@ -731,8 +731,8 @@ public:
     DVB_StopFilterGraph nDVBStopFilterGraph;
 
     // Internal Filters
-    bool            alignas(16) SrcFilters[SRC_LAST + !SRC_LAST];
-    bool            alignas(16) TraFilters[TRA_LAST + !TRA_LAST];
+    bool            SrcFilters[SRC_LAST + !SRC_LAST];
+    bool            TraFilters[TRA_LAST + !TRA_LAST];
 
     // Audio Switcher
     bool            fEnableAudioSwitcher;
@@ -757,7 +757,7 @@ public:
     int             nSubDelayStep;
 
     // Default Style
-    STSStyle        alignas(16) subtitlesDefStyle;
+    STSStyle        subtitlesDefStyle;
 
     // Misc
     bool            bPreferDefaultForcedSubtitles;
@@ -991,7 +991,6 @@ private:
     void            SaveSettingsAutoChangeFullScreenMode();
 
     void            UpdateRenderersData(bool fSave);
-    friend void     CRenderersSettings::UpdateData(bool bSave);
 
     SubtitleRenderer eSubtitleRenderer;
     CSize            sizeAspectRatio;
@@ -1025,6 +1024,5 @@ public:
     bool            GetAllowMultiInst() const;
 
     static bool     IsVSFilterInstalled();
-    SubRendererSettings	GetSubRendererSettings();
 };
 

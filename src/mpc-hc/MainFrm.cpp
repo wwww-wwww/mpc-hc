@@ -6796,7 +6796,6 @@ void CMainFrame::OnViewVSync()
 {
     CRenderersSettings& r = AfxGetAppSettings().m_RenderersSettings;
     r.m_AdvRendSets.bVMR9VSync = !r.m_AdvRendSets.bVMR9VSync;
-    r.UpdateData(true);
     m_OSD.DisplayMessage(OSD_TOPRIGHT, ResStr(r.m_AdvRendSets.bVMR9VSync
                                               ? IDS_OSD_RS_VSYNC_ON : IDS_OSD_RS_VSYNC_OFF));
 }
@@ -6805,7 +6804,6 @@ void CMainFrame::OnViewVSyncAccurate()
 {
     CRenderersSettings& r = AfxGetAppSettings().m_RenderersSettings;
     r.m_AdvRendSets.bVMR9VSyncAccurate = !r.m_AdvRendSets.bVMR9VSyncAccurate;
-    r.UpdateData(true);
     m_OSD.DisplayMessage(OSD_TOPRIGHT, ResStr(r.m_AdvRendSets.bVMR9VSyncAccurate
                                               ? IDS_OSD_RS_ACCURATE_VSYNC_ON : IDS_OSD_RS_ACCURATE_VSYNC_OFF));
 }
@@ -6821,8 +6819,6 @@ void CMainFrame::OnViewSynchronizeVideo()
         r.m_AdvRendSets.bVMR9VSyncAccurate = false;
         r.m_AdvRendSets.bVMR9AlterativeVSync = false;
     }
-
-    r.UpdateData(true);
     m_OSD.DisplayMessage(OSD_TOPRIGHT, ResStr(r.m_AdvRendSets.bSynchronizeVideo
                                               ? IDS_OSD_RS_SYNC_TO_DISPLAY_ON : IDS_OSD_RS_SYNC_TO_DISPLAY_ON));
 }
@@ -6838,8 +6834,6 @@ void CMainFrame::OnViewSynchronizeDisplay()
         r.m_AdvRendSets.bVMR9VSyncAccurate = false;
         r.m_AdvRendSets.bVMR9AlterativeVSync = false;
     }
-
-    r.UpdateData(true);
     m_OSD.DisplayMessage(OSD_TOPRIGHT, ResStr(r.m_AdvRendSets.bSynchronizeDisplay
                                               ? IDS_OSD_RS_SYNC_TO_VIDEO_ON : IDS_OSD_RS_SYNC_TO_VIDEO_ON));
 }
@@ -6855,8 +6849,6 @@ void CMainFrame::OnViewSynchronizeNearest()
         r.m_AdvRendSets.bVMR9VSyncAccurate = false;
         r.m_AdvRendSets.bVMR9AlterativeVSync = false;
     }
-
-    r.UpdateData(true);
     m_OSD.DisplayMessage(OSD_TOPRIGHT, ResStr(r.m_AdvRendSets.bSynchronizeNearest
                                               ? IDS_OSD_RS_PRESENT_NEAREST_ON : IDS_OSD_RS_PRESENT_NEAREST_OFF));
 }
@@ -6865,7 +6857,6 @@ void CMainFrame::OnViewColorManagementEnable()
 {
     CRenderersSettings& r = AfxGetAppSettings().m_RenderersSettings;
     r.m_AdvRendSets.bVMR9ColorManagementEnable = !r.m_AdvRendSets.bVMR9ColorManagementEnable;
-    r.UpdateData(true);
     m_OSD.DisplayMessage(OSD_TOPRIGHT, ResStr(r.m_AdvRendSets.bVMR9ColorManagementEnable
                                               ? IDS_OSD_RS_COLOR_MANAGEMENT_ON : IDS_OSD_RS_COLOR_MANAGEMENT_OFF));
 }
@@ -6874,7 +6865,6 @@ void CMainFrame::OnViewColorManagementInputAuto()
 {
     CRenderersSettings& r = AfxGetAppSettings().m_RenderersSettings;
     r.m_AdvRendSets.iVMR9ColorManagementInput = VIDEO_SYSTEM_UNKNOWN;
-    r.UpdateData(true);
     m_OSD.DisplayMessage(OSD_TOPRIGHT, ResStr(IDS_OSD_RS_INPUT_TYPE_AUTO));
 }
 
@@ -6882,7 +6872,6 @@ void CMainFrame::OnViewColorManagementInputHDTV()
 {
     CRenderersSettings& r = AfxGetAppSettings().m_RenderersSettings;
     r.m_AdvRendSets.iVMR9ColorManagementInput = VIDEO_SYSTEM_HDTV;
-    r.UpdateData(true);
     m_OSD.DisplayMessage(OSD_TOPRIGHT, ResStr(IDS_OSD_RS_INPUT_TYPE_HDTV));
 }
 
@@ -6890,7 +6879,6 @@ void CMainFrame::OnViewColorManagementInputSDTV_NTSC()
 {
     CRenderersSettings& r = AfxGetAppSettings().m_RenderersSettings;
     r.m_AdvRendSets.iVMR9ColorManagementInput = VIDEO_SYSTEM_SDTV_NTSC;
-    r.UpdateData(true);
     m_OSD.DisplayMessage(OSD_TOPRIGHT, ResStr(IDS_OSD_RS_INPUT_TYPE_SD_NTSC));
 }
 
@@ -6898,7 +6886,6 @@ void CMainFrame::OnViewColorManagementInputSDTV_PAL()
 {
     CRenderersSettings& r = AfxGetAppSettings().m_RenderersSettings;
     r.m_AdvRendSets.iVMR9ColorManagementInput = VIDEO_SYSTEM_SDTV_PAL;
-    r.UpdateData(true);
     m_OSD.DisplayMessage(OSD_TOPRIGHT, ResStr(IDS_OSD_RS_INPUT_TYPE_SD_PAL));
 }
 
@@ -6906,7 +6893,6 @@ void CMainFrame::OnViewColorManagementAmbientLightBright()
 {
     CRenderersSettings& r = AfxGetAppSettings().m_RenderersSettings;
     r.m_AdvRendSets.iVMR9ColorManagementAmbientLight = AMBIENT_LIGHT_BRIGHT;
-    r.UpdateData(true);
     m_OSD.DisplayMessage(OSD_TOPRIGHT, ResStr(IDS_OSD_RS_AMBIENT_LIGHT_BRIGHT));
 }
 
@@ -6914,7 +6900,6 @@ void CMainFrame::OnViewColorManagementAmbientLightDim()
 {
     CRenderersSettings& r = AfxGetAppSettings().m_RenderersSettings;
     r.m_AdvRendSets.iVMR9ColorManagementAmbientLight = AMBIENT_LIGHT_DIM;
-    r.UpdateData(true);
     m_OSD.DisplayMessage(OSD_TOPRIGHT, ResStr(IDS_OSD_RS_AMBIENT_LIGHT_DIM));
 }
 
@@ -6922,7 +6907,6 @@ void CMainFrame::OnViewColorManagementAmbientLightDark()
 {
     CRenderersSettings& r = AfxGetAppSettings().m_RenderersSettings;
     r.m_AdvRendSets.iVMR9ColorManagementAmbientLight = AMBIENT_LIGHT_DARK;
-    r.UpdateData(true);
     m_OSD.DisplayMessage(OSD_TOPRIGHT, ResStr(IDS_OSD_RS_AMBIENT_LIGHT_DARK));
 }
 
@@ -6930,7 +6914,6 @@ void CMainFrame::OnViewColorManagementIntentPerceptual()
 {
     CRenderersSettings& r = AfxGetAppSettings().m_RenderersSettings;
     r.m_AdvRendSets.iVMR9ColorManagementIntent = COLOR_RENDERING_INTENT_PERCEPTUAL;
-    r.UpdateData(true);
     m_OSD.DisplayMessage(OSD_TOPRIGHT, ResStr(IDS_OSD_RS_REND_INTENT_PERCEPT));
 }
 
@@ -6938,7 +6921,6 @@ void CMainFrame::OnViewColorManagementIntentRelativeColorimetric()
 {
     CRenderersSettings& r = AfxGetAppSettings().m_RenderersSettings;
     r.m_AdvRendSets.iVMR9ColorManagementIntent = COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC;
-    r.UpdateData(true);
     m_OSD.DisplayMessage(OSD_TOPRIGHT, ResStr(IDS_OSD_RS_REND_INTENT_RELATIVE));
 }
 
@@ -6946,7 +6928,6 @@ void CMainFrame::OnViewColorManagementIntentSaturation()
 {
     CRenderersSettings& r = AfxGetAppSettings().m_RenderersSettings;
     r.m_AdvRendSets.iVMR9ColorManagementIntent = COLOR_RENDERING_INTENT_SATURATION;
-    r.UpdateData(true);
     m_OSD.DisplayMessage(OSD_TOPRIGHT, ResStr(IDS_OSD_RS_REND_INTENT_SATUR));
 }
 
@@ -6954,7 +6935,6 @@ void CMainFrame::OnViewColorManagementIntentAbsoluteColorimetric()
 {
     CRenderersSettings& r = AfxGetAppSettings().m_RenderersSettings;
     r.m_AdvRendSets.iVMR9ColorManagementIntent = COLOR_RENDERING_INTENT_ABSOLUTE_COLORIMETRIC;
-    r.UpdateData(true);
     m_OSD.DisplayMessage(OSD_TOPRIGHT, ResStr(IDS_OSD_RS_REND_INTENT_ABSOLUTE));
 }
 
@@ -6962,7 +6942,6 @@ void CMainFrame::OnViewEVROutputRange_0_255()
 {
     CRenderersSettings& r = AfxGetAppSettings().m_RenderersSettings;
     r.m_AdvRendSets.iEVROutputRange = 0;
-    r.UpdateData(true);
     CString strOSD;
     strOSD.Format(IDS_OSD_RS_OUTPUT_RANGE, _T("0 - 255"));
     m_OSD.DisplayMessage(OSD_TOPRIGHT, strOSD);
@@ -6972,7 +6951,6 @@ void CMainFrame::OnViewEVROutputRange_16_235()
 {
     CRenderersSettings& r = AfxGetAppSettings().m_RenderersSettings;
     r.m_AdvRendSets.iEVROutputRange = 1;
-    r.UpdateData(true);
     CString strOSD;
     strOSD.Format(IDS_OSD_RS_OUTPUT_RANGE, _T("16 - 235"));
     m_OSD.DisplayMessage(OSD_TOPRIGHT, strOSD);
@@ -6982,7 +6960,6 @@ void CMainFrame::OnViewFlushGPUBeforeVSync()
 {
     CRenderersSettings& r = AfxGetAppSettings().m_RenderersSettings;
     r.m_AdvRendSets.bVMRFlushGPUBeforeVSync = !r.m_AdvRendSets.bVMRFlushGPUBeforeVSync;
-    r.UpdateData(true);
     m_OSD.DisplayMessage(OSD_TOPRIGHT, ResStr(r.m_AdvRendSets.bVMRFlushGPUBeforeVSync
                                               ? IDS_OSD_RS_FLUSH_BEF_VSYNC_ON : IDS_OSD_RS_FLUSH_BEF_VSYNC_OFF));
 }
@@ -6991,7 +6968,6 @@ void CMainFrame::OnViewFlushGPUAfterVSync()
 {
     CRenderersSettings& r = AfxGetAppSettings().m_RenderersSettings;
     r.m_AdvRendSets.bVMRFlushGPUAfterPresent = !r.m_AdvRendSets.bVMRFlushGPUAfterPresent;
-    r.UpdateData(true);
     m_OSD.DisplayMessage(OSD_TOPRIGHT, ResStr(r.m_AdvRendSets.bVMRFlushGPUAfterPresent
                                               ? IDS_OSD_RS_FLUSH_AFT_PRES_ON : IDS_OSD_RS_FLUSH_AFT_PRES_OFF));
 }
@@ -7000,7 +6976,6 @@ void CMainFrame::OnViewFlushGPUWait()
 {
     CRenderersSettings& r = AfxGetAppSettings().m_RenderersSettings;
     r.m_AdvRendSets.bVMRFlushGPUWait = !r.m_AdvRendSets.bVMRFlushGPUWait;
-    r.UpdateData(true);
     m_OSD.DisplayMessage(OSD_TOPRIGHT, ResStr(r.m_AdvRendSets.bVMRFlushGPUWait
                                               ? IDS_OSD_RS_WAIT_ON : IDS_OSD_RS_WAIT_OFF));
 }
@@ -7018,7 +6993,6 @@ void CMainFrame::OnViewDisableDesktopComposition()
 {
     CRenderersSettings& r = AfxGetAppSettings().m_RenderersSettings;
     r.m_AdvRendSets.bVMRDisableDesktopComposition = !r.m_AdvRendSets.bVMRDisableDesktopComposition;
-    r.UpdateData(true);
     m_OSD.DisplayMessage(OSD_TOPRIGHT, ResStr(r.m_AdvRendSets.bVMRDisableDesktopComposition
                                               ? IDS_OSD_RS_NO_DESKTOP_COMP_ON : IDS_OSD_RS_NO_DESKTOP_COMP_OFF));
 }
@@ -7027,7 +7001,6 @@ void CMainFrame::OnViewAlternativeVSync()
 {
     CRenderersSettings& r = AfxGetAppSettings().m_RenderersSettings;
     r.m_AdvRendSets.bVMR9AlterativeVSync = !r.m_AdvRendSets.bVMR9AlterativeVSync;
-    r.UpdateData(true);
     m_OSD.DisplayMessage(OSD_TOPRIGHT, ResStr(r.m_AdvRendSets.bVMR9AlterativeVSync
                                               ? IDS_OSD_RS_ALT_VSYNC_ON : IDS_OSD_RS_ALT_VSYNC_OFF));
 }
@@ -7036,7 +7009,6 @@ void CMainFrame::OnViewResetDefault()
 {
     CRenderersSettings& r = AfxGetAppSettings().m_RenderersSettings;
     r.m_AdvRendSets.SetDefault();
-    r.UpdateData(true);
     m_OSD.DisplayMessage(OSD_TOPRIGHT, ResStr(IDS_OSD_RS_RESET_DEFAULT));
 }
 
@@ -7044,7 +7016,6 @@ void CMainFrame::OnViewResetOptimal()
 {
     CRenderersSettings& r = AfxGetAppSettings().m_RenderersSettings;
     r.m_AdvRendSets.SetOptimal();
-    r.UpdateData(true);
     m_OSD.DisplayMessage(OSD_TOPRIGHT, ResStr(IDS_OSD_RS_RESET_OPTIMAL));
 }
 
@@ -7052,7 +7023,6 @@ void CMainFrame::OnViewFullscreenGUISupport()
 {
     CRenderersSettings& r = AfxGetAppSettings().m_RenderersSettings;
     r.m_AdvRendSets.bVMR9FullscreenGUISupport = !r.m_AdvRendSets.bVMR9FullscreenGUISupport;
-    r.UpdateData(true);
     m_OSD.DisplayMessage(OSD_TOPRIGHT, ResStr(r.m_AdvRendSets.bVMR9FullscreenGUISupport
                                               ? IDS_OSD_RS_D3D_FS_GUI_SUPP_ON : IDS_OSD_RS_D3D_FS_GUI_SUPP_OFF));
 }
@@ -7061,7 +7031,6 @@ void CMainFrame::OnViewHighColorResolution()
 {
     CRenderersSettings& r = AfxGetAppSettings().m_RenderersSettings;
     r.m_AdvRendSets.bEVRHighColorResolution = !r.m_AdvRendSets.bEVRHighColorResolution;
-    r.UpdateData(true);
     m_OSD.DisplayMessage(OSD_TOPRIGHT, ResStr(r.m_AdvRendSets.bEVRHighColorResolution
                                               ? IDS_OSD_RS_10BIT_RBG_OUT_ON : IDS_OSD_RS_10BIT_RBG_OUT_OFF));
 }
@@ -7070,7 +7039,6 @@ void CMainFrame::OnViewForceInputHighColorResolution()
 {
     CRenderersSettings& r = AfxGetAppSettings().m_RenderersSettings;
     r.m_AdvRendSets.bEVRForceInputHighColorResolution = !r.m_AdvRendSets.bEVRForceInputHighColorResolution;
-    r.UpdateData(true);
     m_OSD.DisplayMessage(OSD_TOPRIGHT, ResStr(r.m_AdvRendSets.bEVRForceInputHighColorResolution
                                               ? IDS_OSD_RS_10BIT_RBG_IN_ON : IDS_OSD_RS_10BIT_RBG_IN_OFF));
 }
@@ -7087,7 +7055,6 @@ void CMainFrame::OnViewFullFloatingPointProcessing()
     if (r.m_AdvRendSets.bVMR9FullFloatingPointProcessing) {
         r.m_AdvRendSets.bVMR9HalfFloatingPointProcessing = false;
     }
-    r.UpdateData(true);
     m_OSD.DisplayMessage(OSD_TOPRIGHT, ResStr(r.m_AdvRendSets.bVMR9FullFloatingPointProcessing
                                               ? IDS_OSD_RS_FULL_FP_PROCESS_ON : IDS_OSD_RS_FULL_FP_PROCESS_OFF));
 }
@@ -7099,7 +7066,6 @@ void CMainFrame::OnViewHalfFloatingPointProcessing()
     if (r.m_AdvRendSets.bVMR9HalfFloatingPointProcessing) {
         r.m_AdvRendSets.bVMR9FullFloatingPointProcessing = false;
     }
-    r.UpdateData(true);
     m_OSD.DisplayMessage(OSD_TOPRIGHT, ResStr(r.m_AdvRendSets.bVMR9HalfFloatingPointProcessing
                                               ? IDS_OSD_RS_HALF_FP_PROCESS_ON : IDS_OSD_RS_HALF_FP_PROCESS_OFF));
 }
@@ -7108,7 +7074,6 @@ void CMainFrame::OnViewEnableFrameTimeCorrection()
 {
     CRenderersSettings& r = AfxGetAppSettings().m_RenderersSettings;
     r.m_AdvRendSets.bEVREnableFrameTimeCorrection = !r.m_AdvRendSets.bEVREnableFrameTimeCorrection;
-    r.UpdateData(true);
     m_OSD.DisplayMessage(OSD_TOPRIGHT, ResStr(r.m_AdvRendSets.bEVREnableFrameTimeCorrection
                                               ? IDS_OSD_RS_FT_CORRECTION_ON : IDS_OSD_RS_FT_CORRECTION_OFF));
 }
@@ -7125,7 +7090,6 @@ void CMainFrame::OnViewVSyncOffsetIncrease()
         ++r.m_AdvRendSets.iVMR9VSyncOffset;
         strOSD.Format(IDS_OSD_RS_VSYNC_OFFSET, r.m_AdvRendSets.iVMR9VSyncOffset);
     }
-    r.UpdateData(true);
     m_OSD.DisplayMessage(OSD_TOPRIGHT, strOSD);
 }
 
@@ -7141,7 +7105,6 @@ void CMainFrame::OnViewVSyncOffsetDecrease()
         --r.m_AdvRendSets.iVMR9VSyncOffset;
         strOSD.Format(IDS_OSD_RS_VSYNC_OFFSET, r.m_AdvRendSets.iVMR9VSyncOffset);
     }
-    r.UpdateData(true);
     m_OSD.DisplayMessage(OSD_TOPRIGHT, strOSD);
 }
 
