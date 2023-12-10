@@ -2196,7 +2196,7 @@ void CFGManagerCustom::InsertLAVVideo(bool IsPreview)
     pFGF->AddType(MEDIATYPE_Video, MEDIASUBTYPE_MPG2);
 #endif
 #if INTERNAL_DECODER_PRORES
-    pFGF = IsPreview || tra[TRA_V210_V410] ? pFGLAVVideo : pFGLAVVideoLM;
+    pFGF = IsPreview || tra[TRA_PRORES] ? pFGLAVVideo : pFGLAVVideoLM;
     pFGF->AddType(MEDIATYPE_Video, MEDIASUBTYPE_apch);
     pFGF->AddType(MEDIATYPE_Video, MEDIASUBTYPE_apcn);
     pFGF->AddType(MEDIATYPE_Video, MEDIASUBTYPE_apcs);
@@ -2205,12 +2205,12 @@ void CFGManagerCustom::InsertLAVVideo(bool IsPreview)
     pFGF->AddType(MEDIATYPE_Video, MEDIASUBTYPE_ap4x);
 #endif
 #if INTERNAL_DECODER_DNXHD
-    pFGF = IsPreview || tra[TRA_V210_V410] ? pFGLAVVideo : pFGLAVVideoLM;
+    pFGF = IsPreview || tra[TRA_DNXHD] ? pFGLAVVideo : pFGLAVVideoLM;
     pFGF->AddType(MEDIATYPE_Video, MEDIASUBTYPE_AVdn);
     pFGF->AddType(MEDIATYPE_Video, MEDIASUBTYPE_AVdh);
 #endif
 #if INTERNAL_DECODER_OTHERVIDEO
-    pFGF = IsPreview || tra[TRA_V210_V410] ? pFGLAVVideo : pFGLAVVideoLM;
+    pFGF = IsPreview || tra[TRA_OTHERVIDEO] ? pFGLAVVideo : pFGLAVVideoLM;
     pFGF->AddType(MEDIATYPE_Video, MEDIASUBTYPE_CFHD);
 #endif
 
@@ -2376,18 +2376,18 @@ void CFGManagerCustom::InsertLAVAudio()
 #endif
 
 #if INTERNAL_DECODER_G726
-    pFGF = tra[TRA_WMALL] ? pFGLAVAudio : pFGLAVAudioLM;
+    pFGF = tra[TRA_G726] ? pFGLAVAudio : pFGLAVAudioLM;
     pFGF->AddType(MEDIATYPE_Audio, MEDIASUBTYPE_G726);
 #endif
 
 #if INTERNAL_DECODER_G729
-    pFGF = tra[TRA_WMALL] ? pFGLAVAudio : pFGLAVAudioLM;
+    pFGF = tra[TRA_G729] ? pFGLAVAudio : pFGLAVAudioLM;
     pFGF->AddType(MEDIATYPE_Audio, MEDIASUBTYPE_G729);
     pFGF->AddType(MEDIATYPE_Audio, MEDIASUBTYPE_729A);
 #endif
 
 #if INTERNAL_DECODER_OTHERAUDIO
-    pFGF = tra[TRA_WMALL] ? pFGLAVAudio : pFGLAVAudioLM;
+    pFGF = tra[TRA_OTHERAUDIO] ? pFGLAVAudio : pFGLAVAudioLM;
     pFGF->AddType(MEDIATYPE_Audio, MEDIASUBTYPE_IMC);
 #endif
 
