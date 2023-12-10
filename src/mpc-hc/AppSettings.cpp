@@ -265,47 +265,11 @@ CAppSettings::CAppSettings()
     , bUseMediainfoLoadFileDuration(false)
 {
     // Internal source filter
-#if INTERNAL_SOURCEFILTER_CDDA
-    SrcFiltersKeys[SRC_CDDA] = FilterKey(_T("SRC_CDDA"), true);
-#endif
-#if INTERNAL_SOURCEFILTER_CDXA
-    SrcFiltersKeys[SRC_CDXA] = FilterKey(_T("SRC_CDXA"), true);
-#endif
-#if INTERNAL_SOURCEFILTER_VTS
-    SrcFiltersKeys[SRC_VTS] = FilterKey(_T("SRC_VTS"), true);
-#endif
-#if INTERNAL_SOURCEFILTER_FLIC
-    SrcFiltersKeys[SRC_FLIC] = FilterKey(_T("SRC_FLIC"), true);
-#endif
 #if INTERNAL_SOURCEFILTER_AC3
     SrcFiltersKeys[SRC_AC3] = FilterKey(_T("SRC_AC3"), true);
 #endif
-#if INTERNAL_SOURCEFILTER_DTS
-    SrcFiltersKeys[SRC_DTS] = FilterKey(_T("SRC_DTS"), true);
-#endif
-#if INTERNAL_SOURCEFILTER_MATROSKA
-    SrcFiltersKeys[SRC_MATROSKA] = FilterKey(_T("SRC_MATROSKA"), true);
-#endif
-#if INTERNAL_SOURCEFILTER_HTTP
-    SrcFiltersKeys[SRC_HTTP] = FilterKey(_T("SRC_HTTP"), true);
-#endif
-#if INTERNAL_SOURCEFILTER_RTSP
-    SrcFiltersKeys[SRC_RTSP] = FilterKey(_T("SRC_RTSP"), true);
-#endif
-#if INTERNAL_SOURCEFILTER_RTSP
-    SrcFiltersKeys[SRC_UDP] = FilterKey(_T("SRC_UDP"), true);
-#endif
-#if INTERNAL_SOURCEFILTER_RTP
-    SrcFiltersKeys[SRC_RTP] = FilterKey(_T("SRC_RTP"), true);
-#endif
-#if INTERNAL_SOURCEFILTER_MMS
-    SrcFiltersKeys[SRC_MMS] = FilterKey(_T("SRC_MMS"), true);
-#endif
-#if INTERNAL_SOURCEFILTER_RTMP
-    SrcFiltersKeys[SRC_RTMP] = FilterKey(_T("SRC_RTMP"), true);
-#endif
-#if INTERNAL_SOURCEFILTER_REALMEDIA
-    SrcFiltersKeys[SRC_REALMEDIA] = FilterKey(_T("SRC_REALMEDIA"), true);
+#if INTERNAL_SOURCEFILTER_ASF
+    SrcFiltersKeys[SRC_ASF] = FilterKey(_T("SRC_ASF"), false);
 #endif
 #if INTERNAL_SOURCEFILTER_AVI
     SrcFiltersKeys[SRC_AVI] = FilterKey(_T("SRC_AVI"), true);
@@ -313,22 +277,14 @@ CAppSettings::CAppSettings()
 #if INTERNAL_SOURCEFILTER_AVS
     SrcFiltersKeys[SRC_AVS] = FilterKey(_T("SRC_AVS"), true);
 #endif
-#if INTERNAL_SOURCEFILTER_OGG
-    SrcFiltersKeys[SRC_OGG] = FilterKey(_T("SRC_OGG"), true);
+#if INTERNAL_SOURCEFILTER_DTS
+    SrcFiltersKeys[SRC_DTS] = FilterKey(_T("SRC_DTS"), true);
 #endif
-#if INTERNAL_SOURCEFILTER_MPEG
-    SrcFiltersKeys[SRC_MPEG] = FilterKey(_T("SRC_MPEG"), true);
-    SrcFiltersKeys[SRC_MPEGTS] = FilterKey(_T("SRC_MPEGTS"), true);
+#if INTERNAL_SOURCEFILTER_FLAC
+    SrcFiltersKeys[SRC_FLAC] = FilterKey(_T("SRC_FLAC"), true);
 #endif
-#if INTERNAL_SOURCEFILTER_MPEGAUDIO
-    SrcFiltersKeys[SRC_MPA] = FilterKey(_T("SRC_MPA"), true);
-#endif
-#if INTERNAL_SOURCEFILTER_DSM
-    SrcFiltersKeys[SRC_DSM] = FilterKey(_T("SRC_DSM"), true);
-#endif
-    SrcFiltersKeys[SRC_SUBS] = FilterKey(_T("SRC_SUBS"), true);
-#if INTERNAL_SOURCEFILTER_MP4
-    SrcFiltersKeys[SRC_MP4] = FilterKey(_T("SRC_MP4"), true);
+#if INTERNAL_SOURCEFILTER_FLIC
+    SrcFiltersKeys[SRC_FLIC] = FilterKey(_T("SRC_FLIC"), true);
 #endif
 #if INTERNAL_SOURCEFILTER_FLV
     SrcFiltersKeys[SRC_FLV] = FilterKey(_T("SRC_FLV"), true);
@@ -336,20 +292,63 @@ CAppSettings::CAppSettings()
 #if INTERNAL_SOURCEFILTER_GIF
     SrcFiltersKeys[SRC_GIF] = FilterKey(_T("SRC_GIF"), true);
 #endif
-#if INTERNAL_SOURCEFILTER_ASF
-    SrcFiltersKeys[SRC_ASF] = FilterKey(_T("SRC_ASF"), false);
+#if INTERNAL_SOURCEFILTER_HTTP
+    SrcFiltersKeys[SRC_HTTP] = FilterKey(_T("SRC_HTTP"), true);
+#endif
+#if INTERNAL_SOURCEFILTER_MATROSKA
+    SrcFiltersKeys[SRC_MATROSKA] = FilterKey(_T("SRC_MATROSKA"), true);
+#endif
+#if INTERNAL_SOURCEFILTER_MISC
+    SrcFiltersKeys[SRC_MISC] = FilterKey(_T("SRC_MISC"), true);
+#endif
+#if INTERNAL_SOURCEFILTER_MMS
+    SrcFiltersKeys[SRC_MMS] = FilterKey(_T("SRC_MMS"), true);
+#endif
+#if INTERNAL_SOURCEFILTER_MP4
+    SrcFiltersKeys[SRC_MP4] = FilterKey(_T("SRC_MP4"), true);
+#endif
+#if INTERNAL_SOURCEFILTER_MPEGAUDIO
+    SrcFiltersKeys[SRC_MPA] = FilterKey(_T("SRC_MPA"), true);
+#endif
+#if INTERNAL_SOURCEFILTER_MPEG
+    SrcFiltersKeys[SRC_MPEG] = FilterKey(_T("SRC_MPEG"), true);
+    SrcFiltersKeys[SRC_MPEGTS] = FilterKey(_T("SRC_MPEGTS"), true);
+#endif
+#if INTERNAL_SOURCEFILTER_OGG
+    SrcFiltersKeys[SRC_OGG] = FilterKey(_T("SRC_OGG"), true);
+#endif
+#if INTERNAL_SOURCEFILTER_REALMEDIA
+    SrcFiltersKeys[SRC_REALMEDIA] = FilterKey(_T("SRC_REALMEDIA"), true);
+#endif
+#if INTERNAL_SOURCEFILTER_RTMP
+    SrcFiltersKeys[SRC_RTMP] = FilterKey(_T("SRC_RTMP"), true);
+#endif
+#if INTERNAL_SOURCEFILTER_RTP
+    SrcFiltersKeys[SRC_RTP] = FilterKey(_T("SRC_RTP"), true);
+#endif
+#if INTERNAL_SOURCEFILTER_RTSP
+    SrcFiltersKeys[SRC_RTSP] = FilterKey(_T("SRC_RTSP"), true);
+#endif
+#if INTERNAL_SOURCEFILTER_RTSP
+    SrcFiltersKeys[SRC_UDP] = FilterKey(_T("SRC_UDP"), true);
 #endif
 #if INTERNAL_SOURCEFILTER_WTV
     SrcFiltersKeys[SRC_WTV] = FilterKey(_T("SRC_WTV"), true);
 #endif
-#if INTERNAL_SOURCEFILTER_FLAC
-    SrcFiltersKeys[SRC_FLAC] = FilterKey(_T("SRC_FLAC"), true);
+#if INTERNAL_SOURCEFILTER_CDDA
+    SrcFiltersKeys[SRC_CDDA] = FilterKey(_T("SRC_CDDA"), true);
+#endif
+#if INTERNAL_SOURCEFILTER_CDXA
+    SrcFiltersKeys[SRC_CDXA] = FilterKey(_T("SRC_CDXA"), true);
+#endif
+#if INTERNAL_SOURCEFILTER_DSM
+    SrcFiltersKeys[SRC_DSM] = FilterKey(_T("SRC_DSM"), true);
 #endif
 #if INTERNAL_SOURCEFILTER_RFS
     SrcFiltersKeys[SRC_RFS] = FilterKey(_T("SRC_RFS"), true);
 #endif
-#if INTERNAL_SOURCEFILTER_MISC
-    SrcFiltersKeys[SRC_MISC] = FilterKey(_T("SRC_MISC"), true);
+#if INTERNAL_SOURCEFILTER_VTS
+    SrcFiltersKeys[SRC_VTS] = FilterKey(_T("SRC_VTS"), true);
 #endif
 
     // Internal decoders
