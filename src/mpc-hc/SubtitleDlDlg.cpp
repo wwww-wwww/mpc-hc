@@ -43,16 +43,6 @@ void CSubtitleDlDlgListCtrl::PreSubclassWindow()
 BOOL CSubtitleDlDlgListCtrl::OnToolNeedText(UINT id, NMHDR* pNMHDR, LRESULT*)
 {
     auto pTTT = reinterpret_cast<TOOLTIPTEXT*>(pNMHDR);
-    UINT_PTR nID = pNMHDR->idFrom;
-
-    if (pTTT->uFlags & TTF_IDISHWND) {
-        // idFrom is actually the HWND of the tool
-        nID = ::GetDlgCtrlID((HWND)nID);
-    }
-
-    if (nID == 0) {   // Notification in NT from automatically
-        return FALSE; // created tooltip
-    }
 
     CPoint pt(GetMessagePos());
     ScreenToClient(&pt);
