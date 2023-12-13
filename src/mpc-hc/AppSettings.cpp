@@ -1971,7 +1971,7 @@ void CAppSettings::LoadSettings()
     fRememberFilePos = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_FILEPOS, FALSE);
     iRememberPosForLongerThan = pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_FILEPOSLONGER, 5);
     bRememberPosForAudioFiles = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_FILEPOSAUDIO, TRUE);
-    if (iRememberPosForLongerThan < 1) {
+    if (iRememberPosForLongerThan < 0) {
         iRememberPosForLongerThan = 5;
     }
 
