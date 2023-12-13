@@ -50,6 +50,7 @@ extern void  NukeDownstream(IBaseFilter* pBF, IFilterGraph* pFG);
 extern void  NukeDownstream(IPin* pPin, IFilterGraph* pFG);
 extern IBaseFilter* FindFilter(LPCWSTR clsid, IFilterGraph* pFG);
 extern IBaseFilter* FindFilter(const CLSID& clsid, IFilterGraph* pFG);
+extern IBaseFilter* FindFirstFilter(IFilterGraph* pFG);
 extern IPin* FindPin(IBaseFilter* pBF, PIN_DIRECTION direction, const AM_MEDIA_TYPE* pRequestedMT);
 extern CStringW GetFilterName(IBaseFilter* pBF);
 extern CStringW GetPinName(IPin* pPin);
