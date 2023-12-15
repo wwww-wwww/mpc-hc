@@ -5594,7 +5594,7 @@ void CMainFrame::SaveThumbnails(LPCTSTR fn)
     spd.vidrect = CRect(0, 0, width, height);
     spd.bits = (BYTE*)(bih + 1) + (width * 4) * (height - 1);
 
-    bool darktheme = AppIsThemeLoaded();
+    bool darktheme = s.bMPCTheme && s.eModernThemeMode == CMPCTheme::ModernThemeMode::DARK;
 
     int gradientBase = 0xe0;
     if (darktheme) {
