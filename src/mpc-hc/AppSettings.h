@@ -865,7 +865,7 @@ public:
     bool            bHidePlaylistFullScreen;
 
     // OTHER STATES
-    CStringW        strLastOpenDir;
+    //CStringW        strLastOpenDir;
     UINT            nLastWindowType;
     WORD            nLastUsedPage;
     bool            fRemainingTime;

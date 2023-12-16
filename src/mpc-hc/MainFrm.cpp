@@ -4370,7 +4370,7 @@ void CMainFrame::OnFileOpenQuick()
     }
 
     COpenFileDlg fd(mask, true, nullptr, nullptr, dwFlags, filter, GetModalParent());
-    if (s.lastQuickOpenPath.GetLength()) {
+    if (!s.lastQuickOpenPath.IsEmpty()) {
         fd.m_ofn.lpstrInitialDir = s.lastQuickOpenPath;
     }
     if (fd.DoModal() != IDOK) {

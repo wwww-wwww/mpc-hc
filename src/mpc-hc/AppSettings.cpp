@@ -1013,7 +1013,7 @@ void CAppSettings::SaveSettings(bool write_full_history /* = false */)
     // Associated types with icon or not...
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_ASSOCIATED_WITH_ICON, fAssociatedWithIcons);
     // Last Open Dir
-    pApp->WriteProfileString(IDS_R_SETTINGS, IDS_RS_LAST_OPEN_DIR, strLastOpenDir);
+    //pApp->WriteProfileString(IDS_R_SETTINGS, IDS_RS_LAST_OPEN_DIR, strLastOpenDir);
 
     // CASIMIR666 : new settings
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_D3DFULLSCREEN, fD3DFullscreen);
@@ -1527,7 +1527,7 @@ void CAppSettings::LoadSettings()
     // Associated types with icon or not...
     fAssociatedWithIcons = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_ASSOCIATED_WITH_ICON, TRUE);
     // Last Open Dir
-    strLastOpenDir = pApp->GetProfileString(IDS_R_SETTINGS, IDS_RS_LAST_OPEN_DIR, _T("C:\\"));
+    //strLastOpenDir = pApp->GetProfileString(IDS_R_SETTINGS, IDS_RS_LAST_OPEN_DIR, _T("C:\\"));
 
     fAudioTimeShift = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_ENABLEAUDIOTIMESHIFT, FALSE);
     iAudioTimeShift = pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_AUDIOTIMESHIFT, 0);
@@ -2773,14 +2773,14 @@ void CAppSettings::CRecentFileListWithMoreInfo::Add(LPCTSTR fn, ULONGLONG llDVDG
 }
 
 bool CAppSettings::CRecentFileListWithMoreInfo::GetCurrentIndex(size_t& idx) {
-    ASSERT(!current_rfe_hash.IsEmpty());
+    ASSERT(rfe_array.IsEmpty() || !current_rfe_hash.IsEmpty());
     for (int i = 0; i < rfe_array.GetCount(); i++) {
         if (rfe_array[i].hash == current_rfe_hash) {
             idx = i;
             return true;
         }
     }
-    ASSERT(false);
+    ASSERT(rfe_array.IsEmpty());
     return false;
 }
 
