@@ -960,6 +960,8 @@ public:
     int iStillVideoDuration;
     int iMouseLeftUpDelay;
 
+    bool bCaptureDeinterlace;
+
 private:
     struct FilterKey {
         CString name;

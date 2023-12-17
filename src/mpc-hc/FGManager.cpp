@@ -2969,10 +2969,14 @@ STDMETHODIMP CFGManagerDVD::AddSourceFilter(LPCWSTR lpcwstrFileName, LPCWSTR lpc
 CFGManagerCapture::CFGManagerCapture(LPCTSTR pName, LPUNKNOWN pUnk, HWND hWnd)
     : CFGManagerPlayer(pName, pUnk, hWnd)
 {
-    // set merit higher than our video renderers
-    CFGFilter* pFGF = DEBUG_NEW CFGFilterInternal<CDeinterlacerFilter>(L"Deinterlacer", MERIT64(0x800001) + 0x200);
-    pFGF->AddType(MEDIATYPE_Video, MEDIASUBTYPE_NULL);
-    m_transform.AddTail(pFGF);
+    const CAppSettings& s = AfxGetAppSettings();
+
+    if (s.bCaptureDeinterlace) {
+        // set merit higher than our video renderers
+        CFGFilter* pFGF = DEBUG_NEW CFGFilterInternal<CDeinterlacerFilter>(L"Deinterlacer", MERIT64(0x800001) + 0x200);
+        pFGF->AddType(MEDIATYPE_Video, MEDIASUBTYPE_NULL);
+        m_transform.AddTail(pFGF);
+    }
 }
 
 //
