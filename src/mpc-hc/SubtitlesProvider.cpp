@@ -607,7 +607,13 @@ SRESULT OpenSubtitles2::Search(const SubtitlesInfo& pFileInfo)
         url.AppendFormat(_T("moviehash=%s&"), (LPCTSTR) CString(pFileInfo.fileHash.c_str()));
     }
 
-    url.AppendFormat(_T("query=%s"), (LPCTSTR)CString(pFileInfo.fileName.c_str()));
+    CString query;
+    if (pFileInfo.manualSearchString.IsEmpty())
+        query = pFileInfo.fileName.c_str();
+    else
+        query = pFileInfo.manualSearchString;
+
+    url.AppendFormat(_T("query=%s"), (LPCTSTR)query);
 
     CHttpFile* httpFile = con->OpenRequest(CHttpConnection::HTTP_VERB_GET, url, NULL, 1, NULL, NULL, INTERNET_FLAG_SECURE);
 
@@ -644,6 +650,10 @@ SRESULT OpenSubtitles2::Search(const SubtitlesInfo& pFileInfo)
             }
         }
     }
+    httpFile->Close();
+    delete httpFile;
+    con->Close();
+    delete con;
     return result;
 }
 
@@ -682,7 +692,10 @@ SRESULT OpenSubtitles2::Download(SubtitlesInfo& pSubtitlesInfo)
         }
 
     }
-
+    httpFile->Close();
+    delete httpFile;
+    con->Close();
+    delete con;
     return result;
 }
 
@@ -704,10 +717,14 @@ SRESULT OpenSubtitles2::LogOut()
         if (CallAPI(httpFile, headers, response)) {
             result = SR_SUCCEEDED;
         }
+        httpFile->Close();
+        delete httpFile;
+        con->Close();
+        delete con;
     }
 
     token.Empty();
-
+    
     return result;
 }
 
