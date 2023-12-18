@@ -45,7 +45,7 @@ msgstr "Diz&in Aç..."
 
 msgctxt "ID_FILE_OPENDISC"
 msgid "O&pen Disc"
-msgstr "CD-RO&M Aç"
+msgstr "Diski aç"
 
 msgctxt "ID_RECENT_FILES"
 msgid "Recent &Files"
@@ -93,7 +93,7 @@ msgstr "Dosya konumunu aç"
 
 msgctxt "ID_FILE_EXIT"
 msgid "E&xit"
-msgstr "&Çıkış"
+msgstr "Uygulamadan &çık"
 
 msgctxt "POPUP"
 msgid "&View"
@@ -209,7 +209,7 @@ msgstr "Dosya &Adını Göster"
 
 msgctxt "POPUP"
 msgid "&Output Range"
-msgstr "&Çıktı Aralığı"
+msgstr "&Çıkış Aralığı"
 
 msgctxt "ID_VIEW_EVROUTPUTRANGE_0_255"
 msgid "&0 - 255"
@@ -445,7 +445,7 @@ msgstr "Monitör/Masaüstü AR Farkını &Düzelt"
 
 msgctxt "POPUP"
 msgid "P&nS Frame Adjust"
-msgstr "P&nS Kare uyarlama"
+msgstr "Kare uyarlama P&nS"
 
 msgctxt "ID_VIEW_INCSIZE"
 msgid "&Increase Size"
@@ -533,7 +533,7 @@ msgstr "Video &oynatılırken"
 
 msgctxt "ID_VIEW_OPTIONS"
 msgid "&Options..."
-msgstr "&Ayarlar..."
+msgstr "&Seçenekler..."
 
 msgctxt "POPUP"
 msgid "&Play"
@@ -709,7 +709,7 @@ msgstr "E&kranı Kapat"
 
 msgctxt "ID_AFTERPLAYBACK_EXIT"
 msgid "&Exit"
-msgstr "&Çık"
+msgstr "Uygulamadan &çık"
 
 msgctxt "ID_AFTERPLAYBACK_STANDBY"
 msgid "&Stand By"

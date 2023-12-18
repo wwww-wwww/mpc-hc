@@ -1148,8 +1148,8 @@ msgid ""
 "Pause\n"
 "Pause"
 msgstr ""
-"Pausar\n"
-"Pausar"
+"Pausa\n"
+"Pausa"
 
 msgctxt "ID_PLAY_STOP"
 msgid ""
@@ -1755,7 +1755,7 @@ msgstr "Sair"
 
 msgctxt "IDS_AG_PLAYPAUSE"
 msgid "Play/Pause"
-msgstr "Reproduzir/pausar"
+msgstr "Reproduzir/Pausa"
 
 msgctxt "IDS_AG_PLAY"
 msgid "Play"
@@ -2756,7 +2756,7 @@ msgstr "Incluir subpastas"
 
 msgctxt "IDS_AG_PAUSE"
 msgid "Pause"
-msgstr "Pausar"
+msgstr "Pausa"
 
 msgctxt "IDS_AG_TOGGLE_CAPTION"
 msgid "Toggle Caption&Menu"
@@ -4742,7 +4742,7 @@ msgstr ""
 
 msgctxt "IDS_PPAGEADVANCED_LOCK_NOPAUSE"
 msgid "Do not pause playback when locking the screen."
-msgstr "Não pausar a reprodução ao bloquear o ecrã."
+msgstr "Não colocar em pausa a reprodução ao bloquear o ecrã."
 
 msgctxt "IDS_PPAGEADVANCED_RELOAD_AFTER_LONG_PAUSE"
 msgid ""

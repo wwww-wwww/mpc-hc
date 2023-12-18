@@ -540,7 +540,7 @@ msgstr "Re&produzir"
 
 msgctxt "ID_PLAY_PLAYPAUSE"
 msgid "&Play/Pause"
-msgstr "Re&produzir/pausar"
+msgstr "Re&produzir/Pausa"
 
 msgctxt "ID_PLAY_STOP"
 msgid "&Stop"

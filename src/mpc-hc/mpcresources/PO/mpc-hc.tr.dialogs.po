@@ -86,7 +86,7 @@ msgstr "Normalleştirme"
 
 msgctxt "IDD_PPAGEAUDIOSWITCHER_IDC_STATIC4"
 msgid "Max amplification:"
-msgstr "Ses yükseltme oranı:"
+msgstr "Maksimum ses güçlendirme:"
 
 msgctxt "IDD_PPAGEAUDIOSWITCHER_IDC_STATIC5"
 msgid "%"
@@ -155,7 +155,7 @@ msgstr ""
 
 msgctxt "IDD_GOTO_DLG_IDC_STATIC"
 msgid "Frame"
-msgstr "Görüntü"
+msgstr "Kare"
 
 msgctxt "IDD_GOTO_DLG_IDC_OK2"
 msgid "Go!"
@@ -212,8 +212,7 @@ msgstr "Telif hakkı 2002-2023 clsid2 ve diğerleri"
 msgctxt "IDD_ABOUTBOX_IDC_STATIC"
 msgid ""
 "This program is freeware and released under the GNU General Public License."
-msgstr ""
-"Bu yazılım ücretsizdir ve Genel Kamu Lisansı (GNU) ile yayınlanmıştır."
+msgstr "Bu yazılım ücretsizdir ve GNU Genel Kamu Lisansı ile yayınlanmıştır."
 
 msgctxt "IDD_ABOUTBOX_IDC_STATIC"
 msgid "English translation made by MPC-HC Team"
@@ -317,7 +316,7 @@ msgstr "Ayarları .ini dosyasında sakla"
 
 msgctxt "IDD_PPAGEPLAYER_IDC_CHECK10"
 msgid "Disable \"Open Disc\" menu"
-msgstr "\"CD-ROM aç\" menüsünü kapat"
+msgstr "\"Diski Aç\" menüsünü devre dışı bırak"
 
 msgctxt "IDD_PPAGEPLAYER_IDC_CHECK9"
 msgid "Process priority above normal"
@@ -357,7 +356,7 @@ msgstr "Son pencere boyutunu hatırla"
 
 msgctxt "IDD_PPAGEPLAYER_IDC_CHECK11"
 msgid "Remember last Pan && Scan Zoom"
-msgstr "Son Süzme ve Tarama ayarlarını hatırla"
+msgstr "Son kare uyarlaması (PnS) ayarlarını hatırla"
 
 msgctxt "IDD_PPAGEDVD_IDC_STATIC"
 msgid "\"Open DVD/BD\" behavior"
@@ -405,7 +404,7 @@ msgstr "Düzey"
 
 msgctxt "IDD_PPAGEPLAYBACK_IDC_STATIC"
 msgid "Min"
-msgstr "Alçak"
+msgstr "Düşük"
 
 msgctxt "IDD_PPAGEPLAYBACK_IDC_STATIC"
 msgid "Max"
@@ -429,7 +428,7 @@ msgstr "Kontrol"
 
 msgctxt "IDD_PPAGEPLAYBACK_IDC_STATIC"
 msgid "Volume step:"
-msgstr "Ses oranı:"
+msgstr "Ses değişim oranı:"
 
 msgctxt "IDD_PPAGEPLAYBACK_IDC_STATIC"
 msgid "%"
@@ -437,7 +436,7 @@ msgstr "%"
 
 msgctxt "IDD_PPAGEPLAYBACK_IDC_STATIC"
 msgid "Speed step:"
-msgstr "Hız oranı:"
+msgstr "Hız değişim oranı:"
 
 msgctxt "IDD_PPAGEPLAYBACK_IDC_STATIC"
 msgid "Playback"
@@ -469,7 +468,7 @@ msgstr "Yakınlaştırma ve Hizalama"
 
 msgctxt "IDD_PPAGEPLAYBACK_IDC_CHECK5"
 msgid "Auto-zoom:"
-msgstr "Büyütme oranı:"
+msgstr "Otomatik yakınlaştır:"
 
 msgctxt "IDD_PPAGEPLAYBACK_IDC_STATIC2"
 msgid "Auto fit factor:"
@@ -489,7 +488,7 @@ msgstr "Varsayılan parça tercihi"
 
 msgctxt "IDD_PPAGEPLAYBACK_IDC_STATIC"
 msgid "Subtitles:"
-msgstr "Altyazılar:"
+msgstr "Altyazı:"
 
 msgctxt "IDD_PPAGEPLAYBACK_IDC_STATIC"
 msgid "Audio:"
@@ -517,7 +516,7 @@ msgstr "Ses dosyalarını otomatik olarak yükle"
 
 msgctxt "IDD_PPAGESUBTITLES_IDC_CHECK3"
 msgid "Override placement"
-msgstr "Özel yerleşim oranları"
+msgstr "Özel yerleşim ayarları"
 
 msgctxt "IDD_PPAGESUBTITLES_IDC_STATIC1"
 msgid "Horizontal:"
@@ -537,7 +536,7 @@ msgstr "%"
 
 msgctxt "IDD_PPAGESUBTITLES_IDC_STATIC"
 msgid "Delay step"
-msgstr "Gecikme oranı"
+msgstr "Gecikme aralığı"
 
 msgctxt "IDD_PPAGESUBTITLES_IDC_STATIC"
 msgid "ms"
@@ -864,7 +863,7 @@ msgstr "Tamam"
 
 msgctxt "IDD_PNSPRESET_DLG_CAPTION"
 msgid "PnS Frame Adjust Presets"
-msgstr "PnS Kare uyarlama ön ayarları"
+msgstr "Kare uyarlama (PnS) ön ayarları"
 
 msgctxt "IDD_PNSPRESET_DLG_IDC_BUTTON2"
 msgid "New"
@@ -1040,7 +1039,7 @@ msgstr "Dış çizgi"
 
 msgctxt "IDD_PPAGESUBSTYLE_IDC_RADIO2"
 msgid "Opaque box"
-msgstr "Saydam kutu"
+msgstr "Mat kutu"
 
 msgctxt "IDD_PPAGESUBSTYLE_IDC_STATIC"
 msgid "Width"
@@ -1554,7 +1553,7 @@ msgstr "ms"
 
 msgctxt "IDD_PPAGEFULLSCREEN_IDC_CHECK6"
 msgid "Hide docked panels"
-msgstr "Yerleşik panelleri gizle"
+msgstr "Yapıştırılmış panelleri gizle"
 
 msgctxt "IDD_PPAGEFULLSCREEN_IDC_CHECK5"
 msgid "Exit fullscreen at the end of playback"
@@ -1610,11 +1609,11 @@ msgstr "Tara"
 
 msgctxt "IDD_PPAGESUBMISC_IDC_CHECK1"
 msgid "Prefer forced and/or default subtitles tracks"
-msgstr "Zorlanmış ve/veya varsayılan altyazı izlerini tercih et"
+msgstr "Zorlanmış veya varsayılan altyazıları tercih et"
 
 msgctxt "IDD_PPAGESUBMISC_IDC_CHECK2"
 msgid "Prefer external subtitles over embedded subtitles"
-msgstr "Gömülü altyazılar yerine harici altyazıları tercih et"
+msgstr "Dahili altyazılar yerine harici altyazıları tercih et"
 
 msgctxt "IDD_PPAGESUBMISC_IDC_CHECK3"
 msgid "Ignore embedded subtitles"
