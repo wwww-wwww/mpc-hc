@@ -13881,7 +13881,13 @@ void CMainFrame::OpenSetupStatusBar()
             EndEnumPins;
 
             if ((input_pins == 0 || splitter) && !fcc.IsEmpty()) {
-                m_statusbarVideoFourCC = fcc;
+                if (fcc == L"HVC1") {
+                    m_statusbarVideoFourCC = L"HEVC";
+                } else if (fcc == L"AVC1") {
+                    m_statusbarVideoFourCC = L"H264";
+                } else {
+                    m_statusbarVideoFourCC = fcc;
+                }
                 break;
             }
         }
