@@ -19009,83 +19009,165 @@ void CMainFrame::SendNowPlayingToApi(bool sendtrackinfo)
 void CMainFrame::SendSubtitleTracksToApi()
 {
     CStringW strSubs;
-
     if (GetLoadState() == MLS::LOADED) {
-        POSITION pos = m_pSubStreams.GetHeadPosition();
-        int i = 0, iSelected = -1;
-        if (pos) {
-            while (pos) {
-                SubtitleInput& subInput = m_pSubStreams.GetNext(pos);
+        if (GetPlaybackMode() == PM_DVD) {
+            ULONG ulStreamsAvailable, ulCurrentStream;
+            BOOL bIsDisabled;
+            if (m_pDVDI && SUCCEEDED(m_pDVDI->GetCurrentSubpicture(&ulStreamsAvailable, &ulCurrentStream, &bIsDisabled))
+                && ulStreamsAvailable > 0) {
+                LCID DefLanguage;
+                int i = 0, iSelected = -1;
 
-                if (CComQIPtr<IAMStreamSelect> pSSF = subInput.pSourceFilter) {
-                    DWORD cStreams;
-                    if (FAILED(pSSF->Count(&cStreams))) {
+                DVD_SUBPICTURE_LANG_EXT ext;
+                if (FAILED(m_pDVDI->GetDefaultSubpictureLanguage(&DefLanguage, &ext))) {
+                    return;
+                }
+
+                for (i = 0; i < ulStreamsAvailable; i++) {
+                    LCID Language;
+                    if (FAILED(m_pDVDI->GetSubpictureLanguage(i, &Language))) {
                         continue;
                     }
 
-                    for (int j = 0, cnt = (int)cStreams; j < cnt; j++) {
-                        DWORD dwFlags, dwGroup;
-                        WCHAR* pszName = nullptr;
-
-                        if (FAILED(pSSF->Info(j, nullptr, &dwFlags, nullptr, &dwGroup, &pszName, nullptr, nullptr))
-                                || !pszName) {
-                            continue;
-                        }
-
-                        CString name(pszName);
-                        CoTaskMemFree(pszName);
-
-                        if (dwGroup != 2) {
-                            continue;
-                        }
-
-                        if (subInput.pSubStream == m_pCurrentSubInput.pSubStream
-                                && dwFlags & (AMSTREAMSELECTINFO_ENABLED | AMSTREAMSELECTINFO_EXCLUSIVE)) {
-                            iSelected = j;
-                        }
-
-                        if (!strSubs.IsEmpty()) {
-                            strSubs.Append(L"|");
-                        }
-                        name.Replace(L"|", L"\\|");
-                        strSubs.Append(name);
-
-                        i++;
+                    if (i == ulCurrentStream) {
+                        iSelected = i;
                     }
+
+                    CString str;
+                    if (Language) {
+                        GetLocaleString(Language, LOCALE_SENGLANGUAGE, str);
+                    } else {
+                        str.Format(IDS_AG_UNKNOWN, i + 1);
+                    }
+
+                    DVD_SubpictureAttributes ATR;
+                    if (SUCCEEDED(m_pDVDI->GetSubpictureAttributes(i, &ATR))) {
+                        switch (ATR.LanguageExtension) {
+                        case DVD_SP_EXT_NotSpecified:
+                        default:
+                            break;
+                        case DVD_SP_EXT_Caption_Normal:
+                            str += _T("");
+                            break;
+                        case DVD_SP_EXT_Caption_Big:
+                            str += _T(" (Big)");
+                            break;
+                        case DVD_SP_EXT_Caption_Children:
+                            str += _T(" (Children)");
+                            break;
+                        case DVD_SP_EXT_CC_Normal:
+                            str += _T(" (CC)");
+                            break;
+                        case DVD_SP_EXT_CC_Big:
+                            str += _T(" (CC Big)");
+                            break;
+                        case DVD_SP_EXT_CC_Children:
+                            str += _T(" (CC Children)");
+                            break;
+                        case DVD_SP_EXT_Forced:
+                            str += _T(" (Forced)");
+                            break;
+                        case DVD_SP_EXT_DirectorComments_Normal:
+                            str += _T(" (Director Comments)");
+                            break;
+                        case DVD_SP_EXT_DirectorComments_Big:
+                            str += _T(" (Director Comments, Big)");
+                            break;
+                        case DVD_SP_EXT_DirectorComments_Children:
+                            str += _T(" (Director Comments, Children)");
+                            break;
+                        }
+                    }
+                    if (!strSubs.IsEmpty()) {
+                        strSubs.Append(L"|");
+                    }
+                    str.Replace(L"|", L"\\|");
+                    strSubs.Append(str);
+                }
+                if (AfxGetAppSettings().fEnableSubtitles) {
+                    strSubs.AppendFormat(L"|%d", iSelected);
                 } else {
-                    CComPtr<ISubStream> pSubStream = subInput.pSubStream;
-                    if (!pSubStream) {
-                        continue;
-                    }
+                    strSubs.Append(L"|-1");
+                }
+            }
+        } else {
 
-                    if (subInput.pSubStream == m_pCurrentSubInput.pSubStream) {
-                        iSelected = i + pSubStream->GetStream();
-                    }
+            POSITION pos = m_pSubStreams.GetHeadPosition();
+            int i = 0, iSelected = -1;
+            if (pos) {
+                while (pos) {
+                    SubtitleInput& subInput = m_pSubStreams.GetNext(pos);
 
-                    for (int j = 0, cnt = pSubStream->GetStreamCount(); j < cnt; j++) {
-                        WCHAR* pName = nullptr;
-                        if (SUCCEEDED(pSubStream->GetStreamInfo(j, &pName, nullptr))) {
-                            CString name(pName);
-                            CoTaskMemFree(pName);
+                    if (CComQIPtr<IAMStreamSelect> pSSF = subInput.pSourceFilter) {
+                        DWORD cStreams;
+                        if (FAILED(pSSF->Count(&cStreams))) {
+                            continue;
+                        }
+
+                        for (int j = 0, cnt = (int)cStreams; j < cnt; j++) {
+                            DWORD dwFlags, dwGroup;
+                            WCHAR* pszName = nullptr;
+
+                            if (FAILED(pSSF->Info(j, nullptr, &dwFlags, nullptr, &dwGroup, &pszName, nullptr, nullptr))
+                                || !pszName) {
+                                continue;
+                            }
+
+                            CString name(pszName);
+                            CoTaskMemFree(pszName);
+
+                            if (dwGroup != 2) {
+                                continue;
+                            }
+
+                            if (subInput.pSubStream == m_pCurrentSubInput.pSubStream
+                                && dwFlags & (AMSTREAMSELECTINFO_ENABLED | AMSTREAMSELECTINFO_EXCLUSIVE)) {
+                                iSelected = j;
+                            }
 
                             if (!strSubs.IsEmpty()) {
                                 strSubs.Append(L"|");
                             }
                             name.Replace(L"|", L"\\|");
                             strSubs.Append(name);
-                        }
-                        i++;
-                    }
-                }
 
-            }
-            if (AfxGetAppSettings().fEnableSubtitles) {
-                strSubs.AppendFormat(L"|%d", iSelected);
+                            i++;
+                        }
+                    } else {
+                        CComPtr<ISubStream> pSubStream = subInput.pSubStream;
+                        if (!pSubStream) {
+                            continue;
+                        }
+
+                        if (subInput.pSubStream == m_pCurrentSubInput.pSubStream) {
+                            iSelected = i + pSubStream->GetStream();
+                        }
+
+                        for (int j = 0, cnt = pSubStream->GetStreamCount(); j < cnt; j++) {
+                            WCHAR* pName = nullptr;
+                            if (SUCCEEDED(pSubStream->GetStreamInfo(j, &pName, nullptr))) {
+                                CString name(pName);
+                                CoTaskMemFree(pName);
+
+                                if (!strSubs.IsEmpty()) {
+                                    strSubs.Append(L"|");
+                                }
+                                name.Replace(L"|", L"\\|");
+                                strSubs.Append(name);
+                            }
+                            i++;
+                        }
+                    }
+
+                }
+                if (AfxGetAppSettings().fEnableSubtitles) {
+                    strSubs.AppendFormat(L"|%d", iSelected);
+                } else {
+                    strSubs.Append(L"|-1");
+                }
             } else {
-                strSubs.Append(L"|-1");
+                strSubs.Append(L"-1");
             }
-        } else {
-            strSubs.Append(L"-1");
         }
     } else {
         strSubs.Append(L"-2");
