@@ -16566,8 +16566,7 @@ bool CMainFrame::LoadSubtitle(CString fn, SubtitleInput* pSubInput /*= nullptr*/
             m_wndPlaylistBar.AddSubtitleToCurrent(fn);
             if (s.fKeepHistory) {
                 s.MRU.AddSubToCurrent(fn);
-
-                AfxGetAppSettings().MRU.UpdateCurrentSubtitleTrack(GetSelectedSubtitleTrackIndex());
+                s.MRU.UpdateCurrentSubtitleTrack(GetSelectedSubtitleTrackIndex());
             }
         }
     }
@@ -20607,6 +20606,11 @@ LRESULT CMainFrame::OnLoadSubtitles(WPARAM wParam, LPARAM lParam)
             if (data.bActivate) {
                 m_ExternalSubstreams.push_back(subElement.pSubStream);
                 SetSubtitle(subElement.pSubStream);
+
+                auto& s = AfxGetAppSettings();
+                if (s.fKeepHistory && s.bAutoSaveDownloadedSubtitles) {
+                    s.MRU.UpdateCurrentSubtitleTrack(GetSelectedSubtitleTrackIndex());
+                }
             }
             return TRUE;
         }
