@@ -9188,6 +9188,38 @@ bool CMainFrame::IsValidAudioStream(int i) {
     return false;
 }
 
+int CMainFrame::GetSelectedSubtitleTrackIndex() {
+    int subIdx = 0;
+    POSITION pos = m_pSubStreams.GetHeadPosition();
+    while (pos) {
+        SubtitleInput& subInput = m_pSubStreams.GetNext(pos);
+        CComQIPtr<IAMStreamSelect> pSSF = subInput.pSourceFilter;
+        if (pSSF) {
+            DWORD cStreams;
+            if (SUCCEEDED(pSSF->Count(&cStreams))) {
+                for (long j = 0; j < (long)cStreams; j++) {
+                    DWORD dwFlags, dwGroup;
+                    if (SUCCEEDED(pSSF->Info(j, nullptr, &dwFlags, nullptr, &dwGroup, nullptr, nullptr, nullptr))) {
+                        if (dwGroup == 2) {
+                            if (subInput.pSubStream == m_pCurrentSubInput.pSubStream && dwFlags & (AMSTREAMSELECTINFO_ENABLED | AMSTREAMSELECTINFO_EXCLUSIVE)) {
+                                return subIdx;
+                            }
+                            subIdx++;
+                        }
+                    }
+                }
+            }
+        } else {
+            if (subInput.pSubStream == m_pCurrentSubInput.pSubStream) {
+                return subIdx;
+            } else {
+                subIdx += subInput.pSubStream->GetStreamCount();
+            }
+        }
+    }
+    return 0;
+}
+
 bool CMainFrame::IsValidSubtitleStream(int i) {
     if (GetSubtitleInput(i) != nullptr) {
         return true;
@@ -16534,6 +16566,8 @@ bool CMainFrame::LoadSubtitle(CString fn, SubtitleInput* pSubInput /*= nullptr*/
             m_wndPlaylistBar.AddSubtitleToCurrent(fn);
             if (s.fKeepHistory) {
                 s.MRU.AddSubToCurrent(fn);
+
+                AfxGetAppSettings().MRU.UpdateCurrentSubtitleTrack(GetSelectedSubtitleTrackIndex());
             }
         }
     }

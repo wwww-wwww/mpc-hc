@@ -340,6 +340,7 @@ private:
     SubtitleInput* GetSubtitleInput(int& i, bool bIsOffset = false);
     bool IsValidAudioStream(int i);
     bool IsValidSubtitleStream(int i);
+    int GetSelectedSubtitleTrackIndex();
 
     friend class CTextPassThruFilter;
 

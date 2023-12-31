@@ -2859,11 +2859,11 @@ int CAppSettings::CRecentFileListWithMoreInfo::GetCurrentAudioTrack() {
     return -1;
 }
 
-void CAppSettings::CRecentFileListWithMoreInfo::UpdateCurrentSubtitleTrack(int audioIndex) {
+void CAppSettings::CRecentFileListWithMoreInfo::UpdateCurrentSubtitleTrack(int subIndex) {
     size_t idx;
     if (GetCurrentIndex(idx)) {
-        if (rfe_array[idx].SubtitleTrackIndex != audioIndex) {
-            rfe_array[idx].SubtitleTrackIndex = audioIndex;
+        if (rfe_array[idx].SubtitleTrackIndex != subIndex) {
+            rfe_array[idx].SubtitleTrackIndex = subIndex;
             WriteMediaHistorySubtitleIndex(rfe_array[idx]);
         }
     }
