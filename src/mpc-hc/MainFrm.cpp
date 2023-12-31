@@ -12910,10 +12910,10 @@ void CMainFrame::OpenFile(OpenFileData* pOFD)
 
         // We don't keep track of piped inputs since that hardly makes any sense
         if (s.fKeepHistory && fn.Find(_T("pipe:")) != 0 && pOFD->bAddToRecent) {
+            CPlaylistItem* pli = m_wndPlaylistBar.GetCur();
             if (bMainFile) {
                 auto* pMRU = &s.MRU;
                 RecentFileEntry r;
-                CPlaylistItem* pli = m_wndPlaylistBar.GetCur();
                 if (pli) {
                     if (pli->m_bYoutubeDL && !pli->m_ydlSourceURL.IsEmpty()) {
                         pMRU->LoadMediaHistoryEntryFN(pli->m_ydlSourceURL, r);
@@ -12970,10 +12970,12 @@ void CMainFrame::OpenFile(OpenFileData* pOFD)
                 pMRU->Add(r, true);
             }
             else {
-                CRecentFileList* pMRUDub = &s.MRUDub;
-                pMRUDub->ReadList();
-                pMRUDub->Add(fn);
-                pMRUDub->WriteList();
+                if (!pli || !pli->m_bYoutubeDL) {
+                    CRecentFileList* pMRUDub = &s.MRUDub;
+                    pMRUDub->ReadList();
+                    pMRUDub->Add(fn);
+                    pMRUDub->WriteList();
+                }
             }
         }
 
