@@ -2776,14 +2776,12 @@ void CAppSettings::CRecentFileListWithMoreInfo::Add(LPCTSTR fn, ULONGLONG llDVDG
 }
 
 bool CAppSettings::CRecentFileListWithMoreInfo::GetCurrentIndex(size_t& idx) {
-    ASSERT(rfe_array.IsEmpty() || !current_rfe_hash.IsEmpty());
     for (int i = 0; i < rfe_array.GetCount(); i++) {
         if (rfe_array[i].hash == current_rfe_hash) {
             idx = i;
             return true;
         }
     }
-    ASSERT(rfe_array.IsEmpty());
     return false;
 }
 
