@@ -20843,7 +20843,7 @@ bool CMainFrame::ProcessYoutubeDLURL(CString url, bool append, bool replace)
     if (s.fKeepHistory) {
         auto* mru = &s.MRU;
         RecentFileEntry r;
-        mru->LoadMediaHistoryEntry(url, r);
+        mru->LoadMediaHistoryEntryFN(url, r);
         if (streams.GetCount() > 1) {
             auto h = streams.GetHead();
             if (!h.series.IsEmpty()) {
