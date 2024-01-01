@@ -3852,6 +3852,7 @@ BEGIN
     IDS_SUBDL_DLG_DOWNLOADS_COL "Downloads"
     IDS_SUBDL_DLG_SCORE_COL "Score"
     IDS_SUBDL_DLG_FAILED    "Online subtitles search failed."
+    IDS_SUBDL_DLG_FAILED_DL "Subtitle download failed."
     IDS_SUBDL_DLG_ABORTED   "Online subtitles search aborted."
     IDS_SUBDL_DLG_FOUND     "Online subtitles search completed, %d subtitles found."
     IDS_SUBDL_DLG_NOTFOUND  "Online subtitles search completed, no subtitles found."
