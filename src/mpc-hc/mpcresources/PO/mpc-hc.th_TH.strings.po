@@ -3944,6 +3944,10 @@ msgctxt "IDS_SUBDL_DLG_FAILED"
 msgid "Online subtitles search failed."
 msgstr "การค้นหาศัพท์บรรยายออนไลน์ล้มเหลว"
 
+msgctxt "IDS_SUBDL_DLG_FAILED_DL"
+msgid "Subtitle download failed."
+msgstr ""
+
 msgctxt "IDS_SUBDL_DLG_ABORTED"
 msgid "Online subtitles search aborted."
 msgstr "การค้นหาศัพท์บรรยายออนไลน์ถูกยกเลิก"
