@@ -58,6 +58,7 @@ private:                                                                        
 #define DEFINE_SUBTITLESPROVIDER_END                                                   \
 };
 
+#if 0
 DEFINE_SUBTITLESPROVIDER_BEGIN(OpenSubtitles, "OpenSubtitles.org", "https://api.opensubtitles.org", IDI_OPENSUBTITLES, SPF_LOGIN | SPF_HASH | SPF_UPLOAD)
 void Initialize() override;
 bool NeedLogin() override;
@@ -68,6 +69,7 @@ SRESULT Upload(const SubtitlesInfo& pSubtitlesInfo) override;
 std::unique_ptr<XmlRpcClient> xmlrpc;
 XmlRpcValue token;
 DEFINE_SUBTITLESPROVIDER_END
+#endif
 
 DEFINE_SUBTITLESPROVIDER_BEGIN(OpenSubtitles2, "OpenSubtitles.com", "https://www.opensubtitles.com", IDI_OPENSUBTITLES, SPF_LOGIN | SPF_HASH)
 void Initialize() override;

@@ -53,7 +53,7 @@ class LanguageDownloadException : public std::exception
 ******************************************************************************/
 void SubtitlesProviders::RegisterProviders()
 {
-    Register<OpenSubtitles>(this);
+    //Register<OpenSubtitles>(this);
     Register<OpenSubtitles2>(this);
     Register<podnapisi>(this);
 #ifdef INCLUDE_SUBDB
@@ -66,6 +66,7 @@ void SubtitlesProviders::RegisterProviders()
 ** OpenSubtitles
 ******************************************************************************/
 
+#if 0
 void OpenSubtitles::Initialize()
 {
     xmlrpc = std::make_unique<XmlRpcClient>((Url() + "/xml-rpc").c_str());
@@ -524,7 +525,7 @@ bool OpenSubtitles::NeedLogin()
 
     return true;
 }
-
+#endif
 
 /******************************************************************************
 ** OpenSubtitles.com
