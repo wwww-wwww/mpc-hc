@@ -205,8 +205,8 @@ msgid "About"
 msgstr "Tentang"
 
 msgctxt "IDD_ABOUTBOX_IDC_AUTHORS_LINK"
-msgid "Copyright 2002-2023 clsid2 and others"
-msgstr "Hak cipta 2002-2023 clsid2 dan lainnya"
+msgid "Copyright 2002-2024 clsid2 and others"
+msgstr "Hak cipta 2002-2024 clsid2 dan lainnya"
 
 msgctxt "IDD_ABOUTBOX_IDC_STATIC"
 msgid ""

@@ -203,8 +203,8 @@ msgid "About"
 msgstr "O programe"
 
 msgctxt "IDD_ABOUTBOX_IDC_AUTHORS_LINK"
-msgid "Copyright 2002-2023 clsid2 and others"
-msgstr "Copyright 2002-2023 clsid2 a ostatní"
+msgid "Copyright 2002-2024 clsid2 and others"
+msgstr "Copyright 2002-2024 clsid2 a ostatní"
 
 msgctxt "IDD_ABOUTBOX_IDC_STATIC"
 msgid ""
