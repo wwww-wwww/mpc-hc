@@ -16568,7 +16568,6 @@ bool CMainFrame::LoadSubtitle(CString fn, SubtitleInput* pSubInput /*= nullptr*/
             m_wndPlaylistBar.AddSubtitleToCurrent(fn);
             if (s.fKeepHistory) {
                 s.MRU.AddSubToCurrent(fn);
-                s.MRU.UpdateCurrentSubtitleTrack(GetSelectedSubtitleTrackIndex());
             }
         }
     }
@@ -16670,6 +16669,8 @@ bool CMainFrame::SetSubtitle(int i, bool bIsOffset /*= false*/, bool bDisplayMes
         return false;
     }
 
+    CAppSettings& s = AfxGetAppSettings();
+
     SubtitleInput* pSubInput = nullptr;
     if (m_iReloadSubIdx >= 0) {
         pSubInput = GetSubtitleInput(m_iReloadSubIdx);
@@ -16678,7 +16679,7 @@ bool CMainFrame::SetSubtitle(int i, bool bIsOffset /*= false*/, bool bDisplayMes
         }
         m_iReloadSubIdx = -1;
     }
-    int subIndex = i;
+
     if (!pSubInput) {
         pSubInput = GetSubtitleInput(i, bIsOffset);
     }
@@ -16693,7 +16694,7 @@ bool CMainFrame::SetSubtitle(int i, bool bIsOffset /*= false*/, bool bDisplayMes
             if (FAILED(pSSF->Info(i, nullptr, &dwFlags, &lcid, nullptr, &pName, nullptr, nullptr))) {
                 dwFlags = 0;
             }
-            if (lcid && AfxGetAppSettings().fEnableSubtitles) {
+            if (lcid && s.fEnableSubtitles) {
                 currentSubLang = ISOLang::GetLocaleStringCompat(lcid);
             } else {
                 currentSubLang.Empty();
@@ -16715,7 +16716,7 @@ bool CMainFrame::SetSubtitle(int i, bool bIsOffset /*= false*/, bool bDisplayMes
         if (!pName) {
             LCID lcid = 0;
             pSubInput->pSubStream->GetStreamInfo(0, &pName, &lcid);
-            if (lcid && AfxGetAppSettings().fEnableSubtitles) {
+            if (lcid && s.fEnableSubtitles) {
                 currentSubLang = ISOLang::GetLocaleStringCompat(lcid);
             } else {
                 currentSubLang.Empty();
@@ -16728,8 +16729,8 @@ bool CMainFrame::SetSubtitle(int i, bool bIsOffset /*= false*/, bool bDisplayMes
         success = true;
     }
 
-    if (success) {
-        AfxGetAppSettings().MRU.UpdateCurrentSubtitleTrack(subIndex);
+    if (success && s.fKeepHistory) {
+        s.MRU.UpdateCurrentSubtitleTrack(GetSelectedSubtitleTrackIndex());
     }
     return success;
 }
@@ -16846,6 +16847,10 @@ void CMainFrame::SetSubtitle(const SubtitleInput& subInput, bool skip_lcid /* = 
 
     if (m_pCAP && s.fEnableSubtitles) {
         m_pCAP->SetSubPicProvider(CComQIPtr<ISubPicProvider>(subInput.pSubStream));
+    }
+
+    if (s.fKeepHistory) {
+        s.MRU.UpdateCurrentSubtitleTrack(GetSelectedSubtitleTrackIndex());
     }
 }
 
