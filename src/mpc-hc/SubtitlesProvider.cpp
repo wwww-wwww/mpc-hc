@@ -666,7 +666,7 @@ SRESULT OpenSubtitles2::Download(SubtitlesInfo& pSubtitlesInfo)
     CHttpFile* httpFile = con->OpenRequest(CHttpConnection::HTTP_VERB_POST, url, NULL, 1, NULL, NULL, INTERNET_FLAG_SECURE);
 
     CString headers(_T("Accept: application/json\r\n")); 
-    headers.AppendFormat(_T("Api-Key: %s\r\n "), APIKEY);
+    headers.AppendFormat(_T("Api-Key: %s\r\n"), APIKEY);
 	headers.Append(_T("Content-Type: application/json\r\n"));
     if (!token.IsEmpty()) {
         headers.AppendFormat(_T("Authorization: Bearer %s\r\n"), (LPCTSTR)token);
@@ -709,7 +709,7 @@ SRESULT OpenSubtitles2::LogOut()
         CHttpFile* httpFile = con->OpenRequest(CHttpConnection::HTTP_VERB_DELETE, url, NULL, 1, NULL, NULL, INTERNET_FLAG_SECURE);
 
         CString headers(_T("Accept: application/json\r\n"));
-        headers.AppendFormat(_T("Api-Key: %s \r\n"), (LPCTSTR)APIKEY);
+        headers.AppendFormat(_T("Api-Key: %s\r\n"), (LPCTSTR)APIKEY);
         headers.AppendFormat(_T("Authorization: Bearer %s\r\n"), (LPCTSTR)token);
         Response response;
         if (CallAPI(httpFile, headers, response)) {
