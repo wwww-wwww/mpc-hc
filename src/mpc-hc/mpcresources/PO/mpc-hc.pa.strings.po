@@ -744,7 +744,7 @@ msgid "Player::Logo"
 msgstr "ਪਲੇਅਰ::ਲੋਗੋ"
 
 msgctxt "IDD_PPAGETHEME"
-msgid "Player::Theme"
+msgid "Player::User Interface"
 msgstr ""
 
 msgctxt "IDD_PPAGEOUTPUT"
@@ -4645,4 +4645,12 @@ msgctxt "IDS_PPAGEADVANCED_USE_MEDIAINFO_LOAD_FILE_DURATION"
 msgid ""
 "Load file duration when adding items to playlist (uses MediaInfo and results"
 " may vary)"
+msgstr ""
+
+msgctxt "IDS_SEEKBAR_HOVER_PREVIEW"
+msgid "Video Preview"
+msgstr ""
+
+msgctxt "IDS_SEEKBAR_HOVER_TOOLTIP"
+msgid "Seek Time"
 msgstr ""

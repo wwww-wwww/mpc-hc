@@ -758,8 +758,8 @@ msgid "Player::Logo"
 msgstr "Lecteur::Logo"
 
 msgctxt "IDD_PPAGETHEME"
-msgid "Player::Theme"
-msgstr "Lecteur::Thème"
+msgid "Player::User Interface"
+msgstr ""
 
 msgctxt "IDD_PPAGEOUTPUT"
 msgid "Playback::Output"
@@ -4908,3 +4908,11 @@ msgid ""
 msgstr ""
 "Charger la durée du contenu lors de son ajout à la liste de lecture (utilise"
 " MediaInfo et le résultat peut s'écarter)"
+
+msgctxt "IDS_SEEKBAR_HOVER_PREVIEW"
+msgid "Video Preview"
+msgstr ""
+
+msgctxt "IDS_SEEKBAR_HOVER_TOOLTIP"
+msgid "Seek Time"
+msgstr ""

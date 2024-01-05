@@ -752,8 +752,8 @@ msgid "Player::Logo"
 msgstr "播放器::标志"
 
 msgctxt "IDD_PPAGETHEME"
-msgid "Player::Theme"
-msgstr "播放器::主题"
+msgid "Player::User Interface"
+msgstr ""
 
 msgctxt "IDD_PPAGEOUTPUT"
 msgid "Playback::Output"
@@ -4723,3 +4723,11 @@ msgid ""
 "Load file duration when adding items to playlist (uses MediaInfo and results"
 " may vary)"
 msgstr "将内容添加到播放列表时加载文件时长 (使用 MediaInfo 获取，结果可能会与实际值有所不同)"
+
+msgctxt "IDS_SEEKBAR_HOVER_PREVIEW"
+msgid "Video Preview"
+msgstr ""
+
+msgctxt "IDS_SEEKBAR_HOVER_TOOLTIP"
+msgid "Seek Time"
+msgstr ""

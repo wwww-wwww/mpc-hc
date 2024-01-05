@@ -756,8 +756,8 @@ msgid "Player::Logo"
 msgstr "Oynatıcı::Logo"
 
 msgctxt "IDD_PPAGETHEME"
-msgid "Player::Theme"
-msgstr "Oynatıcı::Tema"
+msgid "Player::User Interface"
+msgstr ""
 
 msgctxt "IDD_PPAGEOUTPUT"
 msgid "Playback::Output"
@@ -4870,3 +4870,11 @@ msgid ""
 msgstr ""
 "Oynatma listesine öğe eklerken dosya sürelerini öğren (MediaInfo kullanılır "
 "ve sonuçlar farklılık gösterebilir)"
+
+msgctxt "IDS_SEEKBAR_HOVER_PREVIEW"
+msgid "Video Preview"
+msgstr ""
+
+msgctxt "IDS_SEEKBAR_HOVER_TOOLTIP"
+msgid "Seek Time"
+msgstr ""

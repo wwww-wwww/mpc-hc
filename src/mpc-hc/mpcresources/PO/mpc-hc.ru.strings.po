@@ -757,8 +757,8 @@ msgid "Player::Logo"
 msgstr "Проигрыватель::Логотип"
 
 msgctxt "IDD_PPAGETHEME"
-msgid "Player::Theme"
-msgstr "Проигрыватель::Тема"
+msgid "Player::User Interface"
+msgstr ""
 
 msgctxt "IDD_PPAGEOUTPUT"
 msgid "Playback::Output"
@@ -4857,3 +4857,11 @@ msgid ""
 msgstr ""
 "Определять длительность файлов, добавляемых в список воспроизведения "
 "(используется MediaInfo, результаты могут отличаться)"
+
+msgctxt "IDS_SEEKBAR_HOVER_PREVIEW"
+msgid "Video Preview"
+msgstr ""
+
+msgctxt "IDS_SEEKBAR_HOVER_TOOLTIP"
+msgid "Seek Time"
+msgstr ""

@@ -756,8 +756,8 @@ msgid "Player::Logo"
 msgstr "Prehrávač::Logo"
 
 msgctxt "IDD_PPAGETHEME"
-msgid "Player::Theme"
-msgstr "Prehrávač::Téma"
+msgid "Player::User Interface"
+msgstr ""
 
 msgctxt "IDD_PPAGEOUTPUT"
 msgid "Playback::Output"
@@ -4867,3 +4867,11 @@ msgid ""
 msgstr ""
 "Načítať trvanie súboru pri pridávaní položiek do playlistu (používa "
 "MediaInfo a výsledky sa môžu líšiť)"
+
+msgctxt "IDS_SEEKBAR_HOVER_PREVIEW"
+msgid "Video Preview"
+msgstr ""
+
+msgctxt "IDS_SEEKBAR_HOVER_TOOLTIP"
+msgid "Seek Time"
+msgstr ""

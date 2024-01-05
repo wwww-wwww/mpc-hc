@@ -758,8 +758,8 @@ msgid "Player::Logo"
 msgstr "Pemutar::Logo"
 
 msgctxt "IDD_PPAGETHEME"
-msgid "Player::Theme"
-msgstr "Pemutar::Tema"
+msgid "Player::User Interface"
+msgstr ""
 
 msgctxt "IDD_PPAGEOUTPUT"
 msgid "Playback::Output"
@@ -4863,3 +4863,11 @@ msgid ""
 msgstr ""
 "Durasi pengisian file saat menambahkan item ke daftar putar (menggunakan "
 "MediaInfo dan hasilnya mungkin bervariasi)"
+
+msgctxt "IDS_SEEKBAR_HOVER_PREVIEW"
+msgid "Video Preview"
+msgstr ""
+
+msgctxt "IDS_SEEKBAR_HOVER_TOOLTIP"
+msgid "Seek Time"
+msgstr ""

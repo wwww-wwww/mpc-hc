@@ -759,8 +759,8 @@ msgid "Player::Logo"
 msgstr "Speler::Logo"
 
 msgctxt "IDD_PPAGETHEME"
-msgid "Player::Theme"
-msgstr "Speler::Thema"
+msgid "Player::User Interface"
+msgstr ""
 
 msgctxt "IDD_PPAGEOUTPUT"
 msgid "Playback::Output"
@@ -4869,3 +4869,11 @@ msgid ""
 msgstr ""
 "Laad de afspeelduur bij het toevoegen van items aan de afspeellijst. Maakt "
 "gebruik van MediaInfo."
+
+msgctxt "IDS_SEEKBAR_HOVER_PREVIEW"
+msgid "Video Preview"
+msgstr ""
+
+msgctxt "IDS_SEEKBAR_HOVER_TOOLTIP"
+msgid "Seek Time"
+msgstr ""

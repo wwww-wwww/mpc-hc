@@ -758,8 +758,8 @@ msgid "Player::Logo"
 msgstr "Player::Logo"
 
 msgctxt "IDD_PPAGETHEME"
-msgid "Player::Theme"
-msgstr "Player::Tema"
+msgid "Player::User Interface"
+msgstr ""
 
 msgctxt "IDD_PPAGEOUTPUT"
 msgid "Playback::Output"
@@ -4883,3 +4883,11 @@ msgid ""
 msgstr ""
 "Carregar a duração do arquivo quando adicionar itens a lista de reprodução "
 "(usa o MediaInfo e os resultados podem variar)"
+
+msgctxt "IDS_SEEKBAR_HOVER_PREVIEW"
+msgid "Video Preview"
+msgstr ""
+
+msgctxt "IDS_SEEKBAR_HOVER_TOOLTIP"
+msgid "Seek Time"
+msgstr ""

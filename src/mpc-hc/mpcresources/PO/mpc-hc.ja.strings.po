@@ -751,8 +751,8 @@ msgid "Player::Logo"
 msgstr "プレーヤー::ロゴ"
 
 msgctxt "IDD_PPAGETHEME"
-msgid "Player::Theme"
-msgstr "プレーヤー::テーマ"
+msgid "Player::User Interface"
+msgstr ""
 
 msgctxt "IDD_PPAGEOUTPUT"
 msgid "Playback::Output"
@@ -4751,3 +4751,11 @@ msgid ""
 "Load file duration when adding items to playlist (uses MediaInfo and results"
 " may vary)"
 msgstr "再生リストに項目を追加するときにファイルの長さを読み込みます (MediaInfo を使用し、結果は異なる場合があります)"
+
+msgctxt "IDS_SEEKBAR_HOVER_PREVIEW"
+msgid "Video Preview"
+msgstr ""
+
+msgctxt "IDS_SEEKBAR_HOVER_TOOLTIP"
+msgid "Seek Time"
+msgstr ""
