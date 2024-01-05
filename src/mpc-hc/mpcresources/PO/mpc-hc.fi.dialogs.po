@@ -679,7 +679,7 @@ msgid "Fast seek (on keyframe)"
 msgstr "Pikahaku (avainkehys)"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_CHECK2"
-msgid "Show chapter marks in seek bar"
+msgid "Show chapter marks on seekbar"
 msgstr "Näytä kappalemerkit hakupalkissa"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_CHECK3"

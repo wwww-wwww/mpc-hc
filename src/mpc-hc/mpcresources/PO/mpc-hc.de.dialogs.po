@@ -685,7 +685,7 @@ msgid "Fast seek (on keyframe)"
 msgstr "Schnellen Suchlauf verwenden (auf den Keyframe)"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_CHECK2"
-msgid "Show chapter marks in seek bar"
+msgid "Show chapter marks on seekbar"
 msgstr "Zeitleiste mit Kapitelmarken anzeigen"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_CHECK3"

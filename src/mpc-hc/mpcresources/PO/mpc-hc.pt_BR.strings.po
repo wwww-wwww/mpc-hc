@@ -2767,7 +2767,7 @@ msgid "Toggle Caption&Menu"
 msgstr "Alternar Menu das &Legendas"
 
 msgctxt "IDS_AG_TOGGLE_SEEKER"
-msgid "Toggle Seek Bar"
+msgid "Toggle Seekbar"
 msgstr "Alternar Barra de Busca"
 
 msgctxt "IDS_AG_TOGGLE_CONTROLS"
@@ -2999,11 +2999,11 @@ msgid "Video Frame Rotate X+"
 msgstr "Rotação do Frame do Vídeo X-"
 
 msgctxt "IDS_TIME_TOOLTIP_ABOVE"
-msgid "Above seek bar"
+msgid "Above seekbar"
 msgstr "Acima da barra de busca"
 
 msgctxt "IDS_TIME_TOOLTIP_BELOW"
-msgid "Below seek bar"
+msgid "Below seekbar"
 msgstr "Abaixo da barra de busca"
 
 msgctxt "IDS_VIDEO_STREAM"

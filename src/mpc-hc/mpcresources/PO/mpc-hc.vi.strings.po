@@ -2756,7 +2756,7 @@ msgid "Toggle Caption&Menu"
 msgstr "Chuyển Nhãn&Menu"
 
 msgctxt "IDS_AG_TOGGLE_SEEKER"
-msgid "Toggle Seek Bar"
+msgid "Toggle Seekbar"
 msgstr "Chuyển đổi thanh tìm kiếm"
 
 msgctxt "IDS_AG_TOGGLE_CONTROLS"
@@ -2990,11 +2990,11 @@ msgid "Video Frame Rotate X+"
 msgstr ""
 
 msgctxt "IDS_TIME_TOOLTIP_ABOVE"
-msgid "Above seek bar"
+msgid "Above seekbar"
 msgstr "Phía trên thanh tìm kiếm"
 
 msgctxt "IDS_TIME_TOOLTIP_BELOW"
-msgid "Below seek bar"
+msgid "Below seekbar"
 msgstr "Phía dưới thanh tìm kiếm"
 
 msgctxt "IDS_VIDEO_STREAM"

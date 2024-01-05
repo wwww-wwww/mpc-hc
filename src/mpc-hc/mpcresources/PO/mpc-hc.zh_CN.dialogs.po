@@ -673,7 +673,7 @@ msgid "Fast seek (on keyframe)"
 msgstr "快速定位 (按关键帧)"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_CHECK2"
-msgid "Show chapter marks in seek bar"
+msgid "Show chapter marks on seekbar"
 msgstr "在进度栏显示章节标志"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_CHECK3"

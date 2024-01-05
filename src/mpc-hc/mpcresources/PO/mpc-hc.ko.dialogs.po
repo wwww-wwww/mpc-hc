@@ -671,7 +671,7 @@ msgid "Fast seek (on keyframe)"
 msgstr "빠른 탐색(키 프레임)"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_CHECK2"
-msgid "Show chapter marks in seek bar"
+msgid "Show chapter marks on seekbar"
 msgstr "탐색 바에 챕터 마크 표시"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_CHECK3"

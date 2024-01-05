@@ -677,7 +677,7 @@ msgid "Fast seek (on keyframe)"
 msgstr "Хуткая перамотка (па ключавых кадрах)"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_CHECK2"
-msgid "Show chapter marks in seek bar"
+msgid "Show chapter marks on seekbar"
 msgstr "Паказваць пазначнікі сцэн на паласе прагорткі"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_CHECK3"

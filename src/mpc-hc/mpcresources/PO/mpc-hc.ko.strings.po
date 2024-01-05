@@ -2692,7 +2692,7 @@ msgid "Toggle Caption&Menu"
 msgstr "제목 표시줄 & 메뉴 표시"
 
 msgctxt "IDS_AG_TOGGLE_SEEKER"
-msgid "Toggle Seek Bar"
+msgid "Toggle Seekbar"
 msgstr "검색 표시줄 전환"
 
 msgctxt "IDS_AG_TOGGLE_CONTROLS"
@@ -2924,11 +2924,11 @@ msgid "Video Frame Rotate X+"
 msgstr "비디오 프레임 회전 X+"
 
 msgctxt "IDS_TIME_TOOLTIP_ABOVE"
-msgid "Above seek bar"
+msgid "Above seekbar"
 msgstr "탐색바 위에"
 
 msgctxt "IDS_TIME_TOOLTIP_BELOW"
-msgid "Below seek bar"
+msgid "Below seekbar"
 msgstr "탐색바 아래에"
 
 msgctxt "IDS_VIDEO_STREAM"

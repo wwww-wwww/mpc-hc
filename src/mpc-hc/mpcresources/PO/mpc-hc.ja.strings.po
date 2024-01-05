@@ -2696,7 +2696,7 @@ msgid "Toggle Caption&Menu"
 msgstr "タイトルとメニューの表示"
 
 msgctxt "IDS_AG_TOGGLE_SEEKER"
-msgid "Toggle Seek Bar"
+msgid "Toggle Seekbar"
 msgstr "シーク バーの表示"
 
 msgctxt "IDS_AG_TOGGLE_CONTROLS"
@@ -2928,11 +2928,11 @@ msgid "Video Frame Rotate X+"
 msgstr "ビデオ フレーム: 回転 X+ (上回転)"
 
 msgctxt "IDS_TIME_TOOLTIP_ABOVE"
-msgid "Above seek bar"
+msgid "Above seekbar"
 msgstr "シーク バーの上に"
 
 msgctxt "IDS_TIME_TOOLTIP_BELOW"
-msgid "Below seek bar"
+msgid "Below seekbar"
 msgstr "シーク バーの下に"
 
 msgctxt "IDS_VIDEO_STREAM"

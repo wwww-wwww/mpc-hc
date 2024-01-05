@@ -681,7 +681,7 @@ msgid "Fast seek (on keyframe)"
 msgstr "Hızlı oynatma (çerçeve içinde)"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_CHECK2"
-msgid "Show chapter marks in seek bar"
+msgid "Show chapter marks on seekbar"
 msgstr "Bölüm işaretlerini ilerleme çubuğunda göster"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_CHECK3"

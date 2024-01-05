@@ -2721,7 +2721,7 @@ msgid "Toggle Caption&Menu"
 msgstr "เปิดปิด ข้อความและเมนู"
 
 msgctxt "IDS_AG_TOGGLE_SEEKER"
-msgid "Toggle Seek Bar"
+msgid "Toggle Seekbar"
 msgstr "เปิดปิด ตัวเลื่อนหา"
 
 msgctxt "IDS_AG_TOGGLE_CONTROLS"
@@ -2953,11 +2953,11 @@ msgid "Video Frame Rotate X+"
 msgstr ""
 
 msgctxt "IDS_TIME_TOOLTIP_ABOVE"
-msgid "Above seek bar"
+msgid "Above seekbar"
 msgstr "เหนือแถบเลื่อนหา"
 
 msgctxt "IDS_TIME_TOOLTIP_BELOW"
-msgid "Below seek bar"
+msgid "Below seekbar"
 msgstr "ล่างแถบเลื่อนหา"
 
 msgctxt "IDS_VIDEO_STREAM"

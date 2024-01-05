@@ -678,7 +678,7 @@ msgid "Fast seek (on keyframe)"
 msgstr "Тиз кабатлау (төп кадрлар буенча)"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_CHECK2"
-msgid "Show chapter marks in seek bar"
+msgid "Show chapter marks on seekbar"
 msgstr "Әйләндерү тасмасында бүлекләр билгесен күрсәтергә"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_CHECK3"

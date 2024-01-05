@@ -2759,7 +2759,7 @@ msgid "Toggle Caption&Menu"
 msgstr "Titel&Menu aan / uit"
 
 msgctxt "IDS_AG_TOGGLE_SEEKER"
-msgid "Toggle Seek Bar"
+msgid "Toggle Seekbar"
 msgstr "Tijdlijn aan / uit"
 
 msgctxt "IDS_AG_TOGGLE_CONTROLS"
@@ -2991,11 +2991,11 @@ msgid "Video Frame Rotate X+"
 msgstr "Videoframe roteer X+"
 
 msgctxt "IDS_TIME_TOOLTIP_ABOVE"
-msgid "Above seek bar"
+msgid "Above seekbar"
 msgstr "Boven tijdlijn"
 
 msgctxt "IDS_TIME_TOOLTIP_BELOW"
-msgid "Below seek bar"
+msgid "Below seekbar"
 msgstr "Onder tijdlijn"
 
 msgctxt "IDS_VIDEO_STREAM"

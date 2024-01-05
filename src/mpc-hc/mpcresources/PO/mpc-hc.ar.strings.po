@@ -2707,7 +2707,7 @@ msgid "Toggle Caption&Menu"
 msgstr "تبديل العنوان و القائمة"
 
 msgctxt "IDS_AG_TOGGLE_SEEKER"
-msgid "Toggle Seek Bar"
+msgid "Toggle Seekbar"
 msgstr "تبديل الباحث"
 
 msgctxt "IDS_AG_TOGGLE_CONTROLS"
@@ -2939,11 +2939,11 @@ msgid "Video Frame Rotate X+"
 msgstr ""
 
 msgctxt "IDS_TIME_TOOLTIP_ABOVE"
-msgid "Above seek bar"
+msgid "Above seekbar"
 msgstr "فوق شريط الباحث"
 
 msgctxt "IDS_TIME_TOOLTIP_BELOW"
-msgid "Below seek bar"
+msgid "Below seekbar"
 msgstr "تحت شريط الباحث"
 
 msgctxt "IDS_VIDEO_STREAM"

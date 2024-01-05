@@ -679,7 +679,7 @@ msgid "Fast seek (on keyframe)"
 msgstr "দ্রুত সীক করণ (কীফ্রেমে)"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_CHECK2"
-msgid "Show chapter marks in seek bar"
+msgid "Show chapter marks on seekbar"
 msgstr "সীক বারে পরিচ্ছেদ নির্দেশক প্রদর্শন"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_CHECK3"

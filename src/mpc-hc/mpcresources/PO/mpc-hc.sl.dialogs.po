@@ -678,7 +678,7 @@ msgid "Fast seek (on keyframe)"
 msgstr "Hitro iskanje (po ključni sliki)"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_CHECK2"
-msgid "Show chapter marks in seek bar"
+msgid "Show chapter marks on seekbar"
 msgstr "Prikaži oznake poglavij na iskalnem traku"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_CHECK3"

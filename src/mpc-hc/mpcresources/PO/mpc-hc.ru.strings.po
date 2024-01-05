@@ -2750,7 +2750,7 @@ msgid "Toggle Caption&Menu"
 msgstr "Вкл/откл отображение заголовка и меню"
 
 msgctxt "IDS_AG_TOGGLE_SEEKER"
-msgid "Toggle Seek Bar"
+msgid "Toggle Seekbar"
 msgstr "Вкл/откл отображение ползунка"
 
 msgctxt "IDS_AG_TOGGLE_CONTROLS"
@@ -2982,11 +2982,11 @@ msgid "Video Frame Rotate X+"
 msgstr "Повернуть кадр X+"
 
 msgctxt "IDS_TIME_TOOLTIP_ABOVE"
-msgid "Above seek bar"
+msgid "Above seekbar"
 msgstr "Над полосой прокрутки"
 
 msgctxt "IDS_TIME_TOOLTIP_BELOW"
-msgid "Below seek bar"
+msgid "Below seekbar"
 msgstr "Под полосой прокрутки"
 
 msgctxt "IDS_VIDEO_STREAM"

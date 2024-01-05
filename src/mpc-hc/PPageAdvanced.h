@@ -184,12 +184,7 @@ private:
     enum ADVANCED_SETTINGS {
         HIDE_WINDOWED,
         MODERNSEEKBAR_HEIGHT,
-        DEFAULT_TOOLBAR_SIZE,
         USE_LEGACY_TOOLBAR,
-        VIDEOINFO_STATUSBAR,
-        LANG_STATUSBAR,
-        FPS_STATUSBAR,
-        ABMARKS_STATUSBAR,
         RECENT_FILES_NB,
         FILE_POS_LONGER,
         FILE_POS_AUDIO,
@@ -211,7 +206,6 @@ private:
         SAVEIMAGE_CURRENTTIME,
         SNAPSHOTSUBTITLES,
         SNAPSHOTKEEPVIDEOEXTENSION,
-        USE_SMTC,
         ADD_LANGCODE_WHEN_SAVE_SUBTITLES,
         USE_TITLE_IN_RECENT_FILE_LIST,
         MOUSE_LEFTUP_DELAY,
@@ -240,8 +234,6 @@ private:
         COL_NAME,
         COL_VALUE
     };
-
-    EventClient m_eventc;
 
     CFont m_fontBold;
     CMPCThemeComboBox m_comboBox;

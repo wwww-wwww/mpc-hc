@@ -682,7 +682,7 @@ msgid "Fast seek (on keyframe)"
 msgstr "Tìm kiếm nhanh (trên keyframe)"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_CHECK2"
-msgid "Show chapter marks in seek bar"
+msgid "Show chapter marks on seekbar"
 msgstr "Hiển thị các dấu chương trong thanh tìm kiếm"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_CHECK3"

@@ -682,7 +682,7 @@ msgid "Fast seek (on keyframe)"
 msgstr "Szybkie przewijanie (na klatkę kluczową)"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_CHECK2"
-msgid "Show chapter marks in seek bar"
+msgid "Show chapter marks on seekbar"
 msgstr "Pokazuj znaczniki rozdziałów na pasku postępu"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_CHECK3"

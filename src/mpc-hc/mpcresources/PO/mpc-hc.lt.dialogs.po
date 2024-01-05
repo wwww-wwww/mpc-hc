@@ -681,7 +681,7 @@ msgid "Fast seek (on keyframe)"
 msgstr "Greita prasuka (pagal raktinius kadrus)"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_CHECK2"
-msgid "Show chapter marks in seek bar"
+msgid "Show chapter marks on seekbar"
 msgstr "Rodyti skyrių žymes prasukos juostoje"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_CHECK3"

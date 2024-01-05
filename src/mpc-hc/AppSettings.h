@@ -808,8 +808,8 @@ public:
     bool            fSeekPreview;
     int             iSeekPreviewSize;
     bool            fUseSearchInFolder;
-    bool            fUseTimeTooltip;
-    int             nTimeTooltipPosition;
+    bool            fUseSeekbarHover;
+    int             nHoverPosition;
     CString         strOSDFont;
     int             nOSDSize;
     bool            bHideWindowedMousePointer;

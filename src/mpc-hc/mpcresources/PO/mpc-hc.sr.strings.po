@@ -2726,7 +2726,7 @@ msgid "Toggle Caption&Menu"
 msgstr "Укључи/искључи наслов и мени"
 
 msgctxt "IDS_AG_TOGGLE_SEEKER"
-msgid "Toggle Seek Bar"
+msgid "Toggle Seekbar"
 msgstr "Укључи/искључи траку за премотавање"
 
 msgctxt "IDS_AG_TOGGLE_CONTROLS"
@@ -2958,11 +2958,11 @@ msgid "Video Frame Rotate X+"
 msgstr ""
 
 msgctxt "IDS_TIME_TOOLTIP_ABOVE"
-msgid "Above seek bar"
+msgid "Above seekbar"
 msgstr "изнад траке за премотавање"
 
 msgctxt "IDS_TIME_TOOLTIP_BELOW"
-msgid "Below seek bar"
+msgid "Below seekbar"
 msgstr "испод траке за премотавање"
 
 msgctxt "IDS_VIDEO_STREAM"

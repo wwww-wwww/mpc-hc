@@ -688,7 +688,7 @@ msgid "Fast seek (on keyframe)"
 msgstr "Gyors keresés (kulcskockára)"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_CHECK2"
-msgid "Show chapter marks in seek bar"
+msgid "Show chapter marks on seekbar"
 msgstr "Mutassa a fejezeteket a keresősávon"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_CHECK3"

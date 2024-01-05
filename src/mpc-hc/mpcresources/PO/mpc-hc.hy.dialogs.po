@@ -675,7 +675,7 @@ msgid "Fast seek (on keyframe)"
 msgstr "Արագ պտտում (on keyframe)"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_CHECK2"
-msgid "Show chapter marks in seek bar"
+msgid "Show chapter marks on seekbar"
 msgstr "Ցուցադրել գլուխների նշանները պտտման տողում"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_CHECK3"

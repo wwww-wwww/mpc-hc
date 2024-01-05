@@ -676,7 +676,7 @@ msgid "Fast seek (on keyframe)"
 msgstr "קפיצות מהירות (לפריים מפתח)"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_CHECK2"
-msgid "Show chapter marks in seek bar"
+msgid "Show chapter marks on seekbar"
 msgstr "הצג סימוני פרקים בפס הקפיצה"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_CHECK3"

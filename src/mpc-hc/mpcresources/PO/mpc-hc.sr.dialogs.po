@@ -674,7 +674,7 @@ msgid "Fast seek (on keyframe)"
 msgstr "Брзо премотавање (по кључним кадровима):"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_CHECK2"
-msgid "Show chapter marks in seek bar"
+msgid "Show chapter marks on seekbar"
 msgstr "Ознаке поглавља у траци за премотавање"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_CHECK3"

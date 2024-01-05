@@ -2704,7 +2704,7 @@ msgid "Toggle Caption&Menu"
 msgstr "Башлам һәм менюны Каб/Сүн"
 
 msgctxt "IDS_AG_TOGGLE_SEEKER"
-msgid "Toggle Seek Bar"
+msgid "Toggle Seekbar"
 msgstr "Әйләндерү тасмасын Каб/Сүн"
 
 msgctxt "IDS_AG_TOGGLE_CONTROLS"
@@ -2936,11 +2936,11 @@ msgid "Video Frame Rotate X+"
 msgstr ""
 
 msgctxt "IDS_TIME_TOOLTIP_ABOVE"
-msgid "Above seek bar"
+msgid "Above seekbar"
 msgstr "әйләндерү тасмасы өстендә"
 
 msgctxt "IDS_TIME_TOOLTIP_BELOW"
-msgid "Below seek bar"
+msgid "Below seekbar"
 msgstr "әйләндерү тасмасы астында"
 
 msgctxt "IDS_VIDEO_STREAM"

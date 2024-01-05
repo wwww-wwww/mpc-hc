@@ -682,7 +682,7 @@ msgid "Fast seek (on keyframe)"
 msgstr "Jangkau cepat (pada keyframe)"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_CHECK2"
-msgid "Show chapter marks in seek bar"
+msgid "Show chapter marks on seekbar"
 msgstr "Tampilkan tanda bab pada bilah jangkau"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_CHECK3"

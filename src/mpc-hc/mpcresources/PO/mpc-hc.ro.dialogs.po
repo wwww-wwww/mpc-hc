@@ -688,7 +688,7 @@ msgid "Fast seek (on keyframe)"
 msgstr "Derulare rapidă (la cadru cheie)"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_CHECK2"
-msgid "Show chapter marks in seek bar"
+msgid "Show chapter marks on seekbar"
 msgstr "Arată semne pentru capitole în bara de căutare"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_CHECK3"

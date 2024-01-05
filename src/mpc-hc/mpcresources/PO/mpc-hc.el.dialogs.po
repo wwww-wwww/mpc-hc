@@ -684,7 +684,7 @@ msgid "Fast seek (on keyframe)"
 msgstr "Γρήγορη αναζήτηση (σε βασικό καρέ)"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_CHECK2"
-msgid "Show chapter marks in seek bar"
+msgid "Show chapter marks on seekbar"
 msgstr "Εμφάνιση σημάνσεων κεφαλαίων στη γραμμή αναζήτησης"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_CHECK3"

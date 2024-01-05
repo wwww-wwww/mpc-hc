@@ -678,7 +678,7 @@ msgid "Fast seek (on keyframe)"
 msgstr "الطلب السريع (على الإطار الرئيسي)"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_CHECK2"
-msgid "Show chapter marks in seek bar"
+msgid "Show chapter marks on seekbar"
 msgstr "عرض علامات الفصول في شريط التشغيل"
 
 msgctxt "IDD_PPAGETWEAKS_IDC_CHECK3"
