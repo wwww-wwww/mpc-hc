@@ -1339,6 +1339,16 @@ void CPlayerPlaylistBar::SetCurValid(bool fValid)
     }
 }
 
+void CPlayerPlaylistBar::SetCurLabel(CString label) {
+    POSITION pos = m_pl.GetPos();
+    if (pos) {
+        auto pi = m_pl.GetAt(pos);
+        pi.m_label = label;
+        m_pl.SetAt(pos, pi);
+        Refresh();
+    }
+}
+
 void CPlayerPlaylistBar::SetCurTime(REFERENCE_TIME rt)
 {
     POSITION pos = m_pl.GetPos();

@@ -10561,13 +10561,16 @@ void CMainFrame::PlayFavoriteFile(const CString& fav)
 
     CAtlList<CString> args;
     REFERENCE_TIME rtStart = 0;
-    ParseFavoriteFile(fav, args, &rtStart);
+    FileFavorite ff = ParseFavoriteFile(fav, args, &rtStart);
 
-    if (!m_wndPlaylistBar.SelectFileInPlaylist(args.GetHead()) &&
-        (!CanSendToYoutubeDL(args.GetHead()) ||
-         !ProcessYoutubeDLURL(args.GetHead(), false))) {
+    auto firstFile = args.GetHead();
+    if (!m_wndPlaylistBar.SelectFileInPlaylist(firstFile) &&
+        (!CanSendToYoutubeDL(firstFile) ||
+         !ProcessYoutubeDLURL(firstFile, false))) {
         m_wndPlaylistBar.Open(args, false);
     }
+
+    m_wndPlaylistBar.SetCurLabel(ff.Name);
 
     if (GetPlaybackMode() == PM_FILE && args.GetHead() == m_lastOMD->title) {
         m_pMS->SetPositions(&rtStart, AM_SEEKING_AbsolutePositioning, nullptr, AM_SEEKING_NoPositioning);
@@ -10575,9 +10578,10 @@ void CMainFrame::PlayFavoriteFile(const CString& fav)
     } else {
         OpenCurPlaylistItem(rtStart);
     }
+
 }
 
-void CMainFrame::ParseFavoriteFile(const CString& fav, CAtlList<CString>& args, REFERENCE_TIME* prtStart)
+FileFavorite CMainFrame::ParseFavoriteFile(const CString& fav, CAtlList<CString>& args, REFERENCE_TIME* prtStart)
 {
     FileFavorite ff;
     VERIFY(FileFavorite::TryParse(fav, ff, args));
@@ -10624,6 +10628,7 @@ void CMainFrame::ParseFavoriteFile(const CString& fav, CAtlList<CString>& args, 
             }
         }
     }
+    return ff;
 }
 
 void CMainFrame::OnUpdateFavoritesFile(CCmdUI* pCmdUI)
