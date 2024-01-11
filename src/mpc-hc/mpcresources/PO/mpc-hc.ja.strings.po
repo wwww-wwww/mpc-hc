@@ -4,14 +4,14 @@
 # Translators:
 # MPC HC <adiposegithub@gmail.com>, 2020
 # Sonozaki Shion <mskt01a@gmail.com>, 2021
-# ever_green, 2023
+# ever_green, 2024
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2023-11-23 01:08:04+0000\n"
+"POT-Creation-Date: 2024-01-05 15:29:45+0000\n"
 "PO-Revision-Date: 2020-01-02 07:46+0000\n"
-"Last-Translator: ever_green, 2023\n"
+"Last-Translator: ever_green, 2024\n"
 "Language-Team: Japanese (https://app.transifex.com/mpchc/teams/106126/ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -41,7 +41,7 @@ msgstr "チャプター"
 
 msgctxt "IDS_CONTROLS_COMPLETING"
 msgid "Completing..."
-msgstr "完了しています..."
+msgstr "完了中..."
 
 msgctxt "IDS_AUTOPLAY_PLAYVIDEO"
 msgid "Play Video"
@@ -105,11 +105,11 @@ msgstr "字幕を含める"
 
 msgctxt "IDS_THEMEMODE_DARK"
 msgid "Dark"
-msgstr "暗い"
+msgstr "ダーク"
 
 msgctxt "IDS_THEMEMODE_LIGHT"
 msgid "Light"
-msgstr "明るい"
+msgstr "ライト"
 
 msgctxt "IDS_THEMEMODE_WINDOWS"
 msgid "Windows Default"
@@ -190,7 +190,7 @@ msgstr "なし"
 
 msgctxt "IDS_PPAGE_CAPTURE_FG1"
 msgid "Only when switching different video types"
-msgstr "異なるビデオ タイプに切り替えた場合のみ"
+msgstr "異なるビデオ タイプに切り替える場合のみ"
 
 msgctxt "IDS_PPAGE_CAPTURE_FG2"
 msgid "Always (default)"
@@ -200,13 +200,13 @@ msgctxt "IDS_PPAGE_CAPTURE_FGDESC0"
 msgid ""
 "Not supported by some devices. Two video decoders always present in the "
 "filter graph."
-msgstr "一部のデバイスではサポートされていない。フィルタ グラフに常に 2 つのビデオ デコーダが存在する。"
+msgstr "一部のデバイスではサポートされていない。フィルタ グラフには常に 2 つのビデオ デコーダが表示される。"
 
 msgctxt "IDS_PPAGE_CAPTURE_FGDESC1"
 msgid ""
 "Fast except when switching between different video streams. Only one video "
 "decoder present in the filter graph."
-msgstr "異なるビデオ ストリームに切り替えた場合を除いて速い。一つのビデオ デコーダのみがフィルタ グラフに存在する。"
+msgstr "異なるビデオ ストリーム間の切り替え時以外は速い。1 つのビデオ デコーダのみがフィルタ グラフに表示される。"
 
 msgctxt "IDS_PPAGE_CAPTURE_SFG0"
 msgid "Never if possible (fastest, but not supported by most filters)"
@@ -214,15 +214,15 @@ msgstr "できれば使用しない (最速だが、ほとんどのフィルタ�
 
 msgctxt "IDS_PPAGE_CAPTURE_SFG1"
 msgid "Only when switching different video types"
-msgstr "異なるビデオ タイプに切り替えた場合のみ"
+msgstr "異なるビデオ タイプに切り替える場合のみ"
 
 msgctxt "IDS_PPAGE_CAPTURE_SFG2"
 msgid "Always (may be required by some devices)"
-msgstr "常に (一部のデバイスで必要となる場合あり)"
+msgstr "常に (デバイスによっては必要な場合あり)"
 
 msgctxt "IDS_INFOBAR_PARENTAL_RATING"
 msgid "Parental rating"
-msgstr "保護者による評価"
+msgstr "保護者の評価"
 
 msgctxt "IDS_PARENTAL_RATING"
 msgid "%d+"
@@ -338,7 +338,7 @@ msgstr "編集リスト エディタ"
 
 msgctxt "IDS_GOTO_ERROR_INVALID_TIME"
 msgid "The entered time is greater than the file duration."
-msgstr "入力された時間がファイルの再生時間よりも大きくなっています。"
+msgstr "入力された時間がファイルの再生時間よりも長くなっています。"
 
 msgctxt "IDS_MISSING_ICONS_LIB"
 msgid ""
@@ -703,7 +703,7 @@ msgid ""
 "External splitters can have their own language preference options thus MPC-HC default behavior is not to change their initial choice.\n"
 "Enable this option if you want MPC-HC to control external splitters."
 msgstr ""
-"外部スプリッタは独自の言語設定オプションをもつことができるので、MPC-HC の既定の動作では初期選択を変更しません。\n"
+"外部スプリッタは独自の言語設定オプションをもつことができるため、MPC-HC の既定の動作では初期選択を変更しません。\n"
 "MPC-HC で外部スプリッタを制御する場合は、このオプションを有効にしてください。"
 
 msgctxt "IDS_NAVIGATE_BD_PLAYLISTS"
@@ -752,7 +752,7 @@ msgstr "プレーヤー::ロゴ"
 
 msgctxt "IDD_PPAGETHEME"
 msgid "Player::User Interface"
-msgstr ""
+msgstr "プレーヤー::ユーザー インターフェイス"
 
 msgctxt "IDD_PPAGEOUTPUT"
 msgid "Playback::Output"
@@ -1010,7 +1010,7 @@ msgstr "すべてのアーカイブ ボリュームを見つけられません�
 
 msgctxt "IDC_FULLSCREEN_MONITOR_CHECK"
 msgid "Reduces tearing but prevents the toolbar from being shown."
-msgstr "テアリングを減らしますが、ツール バーが表示されなくなります。"
+msgstr "テアリングを減らしますが、ツール バーが表示せれません。"
 
 msgctxt "IDC_DSVMR9ALTERNATIVEVSYNC"
 msgid "Reduces tearing by bypassing the default VSync built into D3D."
@@ -1095,7 +1095,7 @@ msgctxt "IDC_CHECK_ALLOW_DROPPING_SUBPIC"
 msgid ""
 "Disabling this option will prevent the subtitles from blinking but it may "
 "cause the video renderer to skip some video frames."
-msgstr "このオプションを無効にすると、字幕の点滅は防げますが、ビデオ レンダラが一部のビデオ フレームをスキップする可能性があります。"
+msgstr "このオプションを無効にすると、字幕が点滅しなくなりますが、ビデオ レンダラが一部のビデオ フレームをスキップする可能性があります。"
 
 msgctxt "ID_PLAY_PLAY"
 msgid ""
@@ -1251,7 +1251,7 @@ msgstr "ビデオ フレーム: 回転 Z+ (反時計回り)"
 
 msgctxt "IDS_AG_PNS_ROTATEZ_M"
 msgid "Video Frame Rotate Z-"
-msgstr "ビデオ フレーム: 回転 Z- (90 度反時計回り)"
+msgstr "ビデオ フレーム: 回転 Z- (90 度時計回り)"
 
 msgctxt "IDS_AG_TEARING_TEST"
 msgid "Tearing Test"
@@ -1395,11 +1395,11 @@ msgstr "DVD/BD を開く"
 
 msgctxt "IDS_MAINFRM_POST_SHADERS_FAILED"
 msgid "Failed to set post-resize shaders"
-msgstr "サイズ変更後のシェーダを設定できませんでした"
+msgstr "リサイズ後のシェーダを設定できませんでした"
 
 msgctxt "IDS_MAINFRM_BOTH_SHADERS_FAILED"
 msgid "Failed to set both pre-resize and post-resize shaders"
-msgstr "サイズ変更前とサイズ変更後のシェーダの両方を設定できませんでした"
+msgstr "リサイズ前と後の両方のシェーダを設定できませんでした"
 
 msgctxt "IDS_DEBUGSHADERS_FIRSTRUN_MSG"
 msgid ""
@@ -1793,7 +1793,7 @@ msgstr "コントロールをポイントしたときに表示する。　表示
 
 msgctxt "IDS_MAINFRM_PRE_SHADERS_FAILED"
 msgid "Failed to set pre-resize shaders"
-msgstr "サイズ変更前のシェーダを設定できませんでした"
+msgstr "リサイズ前のシェーダを設定できませんでした"
 
 msgctxt "IDS_OSD_RS_FT_CORRECTION_ON"
 msgid "Frame Time Correction: On"
@@ -2477,7 +2477,7 @@ msgid ""
 "\n"
 "Do you really want to activate this option?"
 msgstr ""
-"このオプションは、テアリングを避けるように設計されています。ただし、再生中に MPC-HC がコンテキスト メニューとダイアログ ボックスを表示することもできなくなります。\n"
+"このオプションは、テアリングを回避するように設計されています。ただし、再生中に MPC-HC がコンテキスト メニューやダイアログ ボックスを表示することもできません。\n"
 "\n"
 "このオプションを有効にしますか？"
 
@@ -2697,7 +2697,7 @@ msgstr "タイトルとメニューの表示"
 
 msgctxt "IDS_AG_TOGGLE_SEEKER"
 msgid "Toggle Seekbar"
-msgstr "シーク バーの表示"
+msgstr "シークバーの表示"
 
 msgctxt "IDS_AG_TOGGLE_CONTROLS"
 msgid "Toggle Controls"
@@ -2929,11 +2929,11 @@ msgstr "ビデオ フレーム: 回転 X+ (上回転)"
 
 msgctxt "IDS_TIME_TOOLTIP_ABOVE"
 msgid "Above seekbar"
-msgstr "シーク バーの上に"
+msgstr "シークバーの上に"
 
 msgctxt "IDS_TIME_TOOLTIP_BELOW"
 msgid "Below seekbar"
-msgstr "シーク バーの下に"
+msgstr "シークバーの下に"
 
 msgctxt "IDS_VIDEO_STREAM"
 msgid "Video: %s"
@@ -3921,7 +3921,7 @@ msgstr "オンライン字幕検索に失敗しました。"
 
 msgctxt "IDS_SUBDL_DLG_FAILED_DL"
 msgid "Subtitle download failed."
-msgstr ""
+msgstr "字幕のダウンロードに失敗しました。"
 
 msgctxt "IDS_SUBDL_DLG_ABORTED"
 msgid "Online subtitles search aborted."
@@ -4481,7 +4481,7 @@ msgstr "既定の字幕スタイルに切り替え"
 
 msgctxt "IDS_AG_TOGGLE_MPCTHEME"
 msgid "Toggle Dark Theme"
-msgstr "暗いテーマに切り替え"
+msgstr "ダーク テーマに切り替え"
 
 msgctxt "IDS_PPAGEADVANCED_LOOP_FOLDER_NEXT_FILE"
 msgid "Loop back to first file in folder after playing the last file."
@@ -4501,7 +4501,7 @@ msgstr "モダン シークバーの高さ (96dpi、それ以外の場合はス�
 
 msgctxt "IDS_PPAGEADVANCED_FULLSCREEN_DELAY"
 msgid "Delay before showing fullscreen video, to prevent visual glitches."
-msgstr "視覚的な不具合を防ぐために、ビデオを全画面表示する前の遅延です。"
+msgstr "ビデオを全画面表示するまでの遅延です。表示の不具合を回避します。"
 
 msgctxt "IDS_PPAGEADVANCED_SNAPSHOTSUBTITLES"
 msgid "Render subtitles onto screenshots"
@@ -4514,27 +4514,27 @@ msgstr "スナップショットのファイル名に動画ファイルの拡張
 
 msgctxt "IDS_PRESIZE_SHADERS_ENABLED"
 msgid "Pre-Resize Pixel Shaders: on"
-msgstr "サイズ変更前のピクセル シェーダ: オン"
+msgstr "リサイズ前のピクセル シェーダ: オン"
 
 msgctxt "IDS_PRESIZE_SHADERS_DISABLED"
 msgid "Pre-Resize Pixel Shaders: off"
-msgstr "サイズ変更前のピクセル シェーダ: オフ"
+msgstr "リサイズ前のピクセル シェーダ: オフ"
 
 msgctxt "IDS_PRESIZE_SHADERS_TOGGLE"
 msgid "Enable Pre-Resize Pixel Shaders"
-msgstr "サイズ変更前のピクセル シェーダを有効にする"
+msgstr "リサイズ前のピクセル シェーダを有効にする"
 
 msgctxt "IDS_POSTSIZE_SHADERS_ENABLED"
 msgid "Post-Resize Pixel Shaders: on"
-msgstr "サイズ変更後のピクセル シェーダ: オン"
+msgstr "リサイズ後のピクセル シェーダ: オン"
 
 msgctxt "IDS_POSTSIZE_SHADERS_DISABLED"
 msgid "Post-Resize Pixel Shaders: off"
-msgstr "サイズ変更後のピクセル シェーダ: オフ"
+msgstr "リサイズ後のピクセル シェーダ: オフ"
 
 msgctxt "IDS_POSTSIZE_SHADERS_TOGGLE"
 msgid "Enable Post-Resize Pixel Shaders"
-msgstr "サイズ変更後のピクセル シェーダを有効にする"
+msgstr "リサイズ後のピクセル シェーダを有効にする"
 
 msgctxt "IDS_PPAGEADVANCED_TIME_REFRESH_INTERVAL"
 msgid "Refresh interval (in milliseconds) of time in status bar"
@@ -4754,8 +4754,8 @@ msgstr "再生リストに項目を追加するときにファイルの長さを
 
 msgctxt "IDS_SEEKBAR_HOVER_PREVIEW"
 msgid "Video Preview"
-msgstr ""
+msgstr "ビデオ プレビュー"
 
 msgctxt "IDS_SEEKBAR_HOVER_TOOLTIP"
 msgid "Seek Time"
-msgstr ""
+msgstr "シーク タイム"

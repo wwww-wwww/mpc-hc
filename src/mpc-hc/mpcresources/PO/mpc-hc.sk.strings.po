@@ -3,14 +3,14 @@
 # This file is distributed under the same license as the MPC-HC package.
 # Translators:
 # MPC HC <adiposegithub@gmail.com>, 2020
-# Marián Hikaník <podnety@mojepreklady.net>, 2023
+# Marián Hikaník <podnety@mojepreklady.net>, 2024
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2023-11-23 01:08:04+0000\n"
+"POT-Creation-Date: 2024-01-05 15:29:45+0000\n"
 "PO-Revision-Date: 2020-01-02 07:46+0000\n"
-"Last-Translator: Marián Hikaník <podnety@mojepreklady.net>, 2023\n"
+"Last-Translator: Marián Hikaník <podnety@mojepreklady.net>, 2024\n"
 "Language-Team: Slovak (https://app.transifex.com/mpchc/teams/106126/sk/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -757,7 +757,7 @@ msgstr "Prehrávač::Logo"
 
 msgctxt "IDD_PPAGETHEME"
 msgid "Player::User Interface"
-msgstr ""
+msgstr "Prehrávač::Používateľské rozhranie"
 
 msgctxt "IDD_PPAGEOUTPUT"
 msgid "Playback::Output"
@@ -2762,7 +2762,7 @@ msgstr "Prepnúť kapitolu&menu"
 
 msgctxt "IDS_AG_TOGGLE_SEEKER"
 msgid "Toggle Seekbar"
-msgstr "Prepnúť vyhľadávač"
+msgstr "Prepnúť panel vyhľadávania"
 
 msgctxt "IDS_AG_TOGGLE_CONTROLS"
 msgid "Toggle Controls"
@@ -3989,7 +3989,7 @@ msgstr "Vyhľadávanie titulkov online bolo neúspešné."
 
 msgctxt "IDS_SUBDL_DLG_FAILED_DL"
 msgid "Subtitle download failed."
-msgstr ""
+msgstr "Nepodarilo sa stiahnuť titulky."
 
 msgctxt "IDS_SUBDL_DLG_ABORTED"
 msgid "Online subtitles search aborted."
@@ -4870,8 +4870,8 @@ msgstr ""
 
 msgctxt "IDS_SEEKBAR_HOVER_PREVIEW"
 msgid "Video Preview"
-msgstr ""
+msgstr "Náhľad videa"
 
 msgctxt "IDS_SEEKBAR_HOVER_TOOLTIP"
 msgid "Seek Time"
-msgstr ""
+msgstr "Čas vyhľadávania"
