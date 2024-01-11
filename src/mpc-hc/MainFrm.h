@@ -890,6 +890,8 @@ public:
 
     // menu item handlers
 
+    INT_PTR DoFileDialogWithLastFolder(CFileDialog& fd, CStringW& lastPath);
+
     afx_msg void OnFileOpenQuick();
     afx_msg void OnFileOpenmedia();
     afx_msg void OnUpdateFileOpen(CCmdUI* pCmdUI);

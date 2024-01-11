@@ -255,7 +255,8 @@ CAppSettings::CAppSettings()
     , iReloadAfterLongPause(0)
     , bOpenRecPanelWhenOpeningDevice(true)
     , lastQuickOpenPath(L"")
-    , lastSaveImagePath(L"")
+    , lastFileSaveCopyPath(L"")
+    , lastFileOpenDirPath(L"")
     , iRedirectOpenToAppendThreshold(1000)
     , bFullscreenSeparateControls(false)
     , bAlwaysUseShortMenu(false)
@@ -1253,7 +1254,9 @@ void CAppSettings::SaveSettings(bool write_full_history /* = false */)
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_USE_AUTOMATIC_CAPTIONS, bUseAutomaticCaptions);
 
     pApp->WriteProfileString(IDS_R_SETTINGS, IDS_LAST_QUICKOPEN_PATH, lastQuickOpenPath);
-    pApp->WriteProfileString(IDS_R_SETTINGS, IDS_LAST_SAVEIMAGE_PATH, lastSaveImagePath);
+    pApp->WriteProfileString(IDS_R_SETTINGS, IDS_LAST_FILESAVECOPY_PATH, lastFileSaveCopyPath);
+    pApp->WriteProfileString(IDS_R_SETTINGS, IDS_LAST_FILEOPENDIR_PATH, lastFileOpenDirPath);
+
 
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_REDIRECT_OPEN_TO_APPEND_THRESHOLD, iRedirectOpenToAppendThreshold);
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_FULLSCREEN_SEPARATE_CONTROLS, bFullscreenSeparateControls);
@@ -2060,7 +2063,9 @@ void CAppSettings::LoadSettings()
     bUseAutomaticCaptions = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_USE_AUTOMATIC_CAPTIONS, FALSE);
 
     lastQuickOpenPath = pApp->GetProfileString(IDS_R_SETTINGS, IDS_LAST_QUICKOPEN_PATH, L"");
-    lastSaveImagePath = pApp->GetProfileString(IDS_R_SETTINGS, IDS_LAST_SAVEIMAGE_PATH, L"");
+    lastFileSaveCopyPath = pApp->GetProfileString(IDS_R_SETTINGS, IDS_LAST_FILESAVECOPY_PATH, L"");
+    lastFileOpenDirPath = pApp->GetProfileString(IDS_R_SETTINGS, IDS_LAST_FILEOPENDIR_PATH, L"");
+
 
     iRedirectOpenToAppendThreshold = pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_REDIRECT_OPEN_TO_APPEND_THRESHOLD, 1000);
     bFullscreenSeparateControls = pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_FULLSCREEN_SEPARATE_CONTROLS, FALSE);

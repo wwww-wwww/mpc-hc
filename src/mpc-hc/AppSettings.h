@@ -952,7 +952,8 @@ public:
     CStringA strOpenTypeLangHint;
 
     CStringW lastQuickOpenPath;
-    CStringW lastSaveImagePath;
+    CStringW lastFileSaveCopyPath;
+    CStringW lastFileOpenDirPath;
 
     int iRedirectOpenToAppendThreshold;
     bool bFullscreenSeparateControls;

@@ -2010,3 +2010,10 @@ bool FindStringInList(const CAtlList<CString>& list, CString& value)
     }
     return found;
 }
+
+CStringW ForceTrailingSlash(CStringW folder) {
+    if (folder.Right(1) != L'\\' && folder.GetLength() > 0) {
+        folder += L'\\';
+    }
+    return folder;
+}

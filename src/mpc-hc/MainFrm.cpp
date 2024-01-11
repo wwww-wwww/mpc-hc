@@ -4353,6 +4353,18 @@ void CMainFrame::OnDvdSubOnOff()
 
 // file
 
+INT_PTR CMainFrame::DoFileDialogWithLastFolder(CFileDialog& fd, CStringW& lastPath) {
+    if (!lastPath.IsEmpty()) {
+        fd.m_ofn.lpstrInitialDir = lastPath;
+    }
+    INT_PTR ret = fd.DoModal();
+    if (ret == IDOK) {
+        lastPath = GetFolderOnly(fd.m_ofn.lpstrFile);
+    }
+    return ret;
+}
+
+
 void CMainFrame::OnFileOpenQuick()
 {
     if (GetLoadState() == MLS::LOADING || !IsWindow(m_wndPlaylistBar)) {
@@ -4370,13 +4382,9 @@ void CMainFrame::OnFileOpenQuick()
     }
 
     COpenFileDlg fd(mask, true, nullptr, nullptr, dwFlags, filter, GetModalParent());
-    if (!s.lastQuickOpenPath.IsEmpty()) {
-        fd.m_ofn.lpstrInitialDir = s.lastQuickOpenPath;
-    }
-    if (fd.DoModal() != IDOK) {
+    if (DoFileDialogWithLastFolder(fd, s.lastQuickOpenPath) != IDOK) {
         return;
     }
-    s.lastQuickOpenPath = GetFolderOnly(fd.m_ofn.lpstrFile);
 
     CAtlList<CString> fns;
 
@@ -4757,19 +4765,16 @@ void CMainFrame::OnFileOpendvd()
     if (s.fUseDVDPath && !s.strDVDPath.IsEmpty()) {
         path = s.strDVDPath;
     } else {
-        CFileDialog dlg(TRUE);
-        IFileOpenDialog* openDlgPtr = dlg.GetIFileOpenDialog();
+        //strDVDPath is actually used as a default to open without the dialog,
+        //but since it is always updated to the last path chosen,
+        //we can use it as the default for the dialog, too
+        CFolderPickerDialog fd(ForceTrailingSlash(s.strDVDPath), FOS_PATHMUSTEXIST, GetModalParent());
+        fd.m_ofn.lpstrTitle = strTitle;
 
-        if (openDlgPtr != nullptr) {
-            openDlgPtr->SetTitle(strTitle);
-            openDlgPtr->SetOptions(FOS_PICKFOLDERS | FOS_FORCEFILESYSTEM | FOS_PATHMUSTEXIST);
-            if (FAILED(openDlgPtr->Show(m_hWnd))) {
-                openDlgPtr->Release();
-                return;
-            }
-            openDlgPtr->Release();
-
-            path = dlg.GetFolderPath();
+        if (fd.DoModal() == IDOK) {
+            path = fd.GetPathName(); //getfolderpath() does not work correctly for CFolderPickerDialog
+        } else {
+            return;
         }
     }
 
@@ -4779,9 +4784,7 @@ void CMainFrame::OnFileOpendvd()
             CAutoPtr<OpenDVDData> p(DEBUG_NEW OpenDVDData());
             p->path = path;
             p->path.Replace(_T('/'), _T('\\'));
-            if (p->path[p->path.GetLength() - 1] != '\\') {
-                p->path += _T('\\');
-            }
+            p->path = ForceTrailingSlash(p->path);
 
             OpenMedia(p);
         }
@@ -5004,6 +5007,7 @@ void CMainFrame::OnDropFiles(CAtlList<CStringW>& slFiles, DROPEFFECT dropEffect)
 void CMainFrame::OnFileSaveAs()
 {
     CString in, out, ext;
+    CAppSettings& s = AfxGetAppSettings();
 
     CPlaylistItem* pli = m_wndPlaylistBar.GetCur();
     if (pli && !pli->m_fns.IsEmpty()) {
@@ -5033,7 +5037,7 @@ void CMainFrame::OnFileSaveAs()
         CFileDialog fd(FALSE, 0, out,
                        OFN_EXPLORER | OFN_ENABLESIZING | OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT | OFN_PATHMUSTEXIST | OFN_NOCHANGEDIR,
                        ResStr(IDS_ALL_FILES_FILTER), GetModalParent(), 0);
-        if (fd.DoModal() != IDOK || !in.CompareNoCase(fd.GetPathName())) {
+        if (DoFileDialogWithLastFolder(fd, s.lastFileSaveCopyPath) != IDOK || !in.CompareNoCase(fd.GetPathName())) {
             return;
         } else {
             out = fd.GetPathName();
@@ -5969,13 +5973,9 @@ void CMainFrame::OnFileSaveImage()
         fd.m_pOFN->nFilterIndex = 3;
     }
 
-    if (s.lastSaveImagePath.GetLength()) {
-        fd.m_ofn.lpstrInitialDir = s.lastSaveImagePath;
-    }
     if (fd.DoModal() != IDOK) {
         return;
     }
-    s.lastSaveImagePath = GetFolderOnly(fd.m_ofn.lpstrFile);
 
     if (fd.m_pOFN->nFilterIndex == 1) {
         s.strSnapshotExt = _T(".bmp");
@@ -19462,30 +19462,23 @@ void CMainFrame::OnFileOpendirectory()
         return;
     }
 
+    auto& s = AfxGetAppSettings();
     CString strTitle(StrRes(IDS_MAINFRM_DIR_TITLE));
     CString path;
 
-    CFileDialog dlg(TRUE);
-    dlg.AddCheckButton(IDS_MAINFRM_DIR_CHECK, ResStr(IDS_MAINFRM_DIR_CHECK), TRUE);
-    IFileOpenDialog* openDlgPtr = dlg.GetIFileOpenDialog();
+    CFolderPickerDialog fd(ForceTrailingSlash(s.lastFileOpenDirPath), FOS_PATHMUSTEXIST, GetModalParent());
+    fd.AddCheckButton(IDS_MAINFRM_DIR_CHECK, ResStr(IDS_MAINFRM_DIR_CHECK), TRUE);
+    fd.m_ofn.lpstrTitle = strTitle;
 
-    if (openDlgPtr != nullptr) {
-        openDlgPtr->SetTitle(strTitle);
-        openDlgPtr->SetOptions(FOS_PICKFOLDERS | FOS_FORCEFILESYSTEM | FOS_PATHMUSTEXIST);
-        if (FAILED(openDlgPtr->Show(m_hWnd))) {
-            openDlgPtr->Release();
-            return;
-        }
-        openDlgPtr->Release();
-
-        path = dlg.GetFolderPath();
-
-        BOOL recur = TRUE;
-        dlg.GetCheckButtonState(IDS_MAINFRM_DIR_CHECK, recur);
-        COpenDirHelper::m_incl_subdir = !!recur;
+    if (fd.DoModal() == IDOK) {
+        path = fd.GetPathName(); //getfolderpath() does not work correctly for CFolderPickerDialog
     } else {
         return;
     }
+
+    BOOL recur = TRUE;
+    fd.GetCheckButtonState(IDS_MAINFRM_DIR_CHECK, recur);
+    COpenDirHelper::m_incl_subdir = !!recur;
 
     // If we got a link file that points to a directory, follow the link
     if (PathUtils::IsLinkFile(path)) {
@@ -19495,9 +19488,8 @@ void CMainFrame::OnFileOpendirectory()
         }
     }
 
-    if (path[path.GetLength() - 1] != '\\') {
-        path += _T('\\');
-    }
+    path = ForceTrailingSlash(path);
+    s.lastFileOpenDirPath = path;
 
     CAtlList<CString> sl;
     sl.AddTail(path);

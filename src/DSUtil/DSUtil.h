@@ -131,6 +131,7 @@ extern void SetThreadName(DWORD dwThreadID, LPCSTR szThreadName);
 extern CString FindCoverArt(const CString& path, const CString& author);
 extern CString NormalizeUnicodeStrForSearch(CString srcStr, LANGID langid);
 extern bool FindStringInList(const CAtlList<CString>& list, CString& value);
+extern CStringW ForceTrailingSlash(CStringW folder);
 
 extern inline const LONGLONG GetPerfCounter();
 
