@@ -608,11 +608,11 @@ HRESULT CStreamSwitcherInputPin::CompleteConnect(IPin* pReceivePin)
         }
 
         if (CComQIPtr<IFileSourceFilter> pFSF = pBF) {
-            CComHeapPtr<WCHAR> pszName;
+            CComHeapPtr<WCHAR> fileName;
             AM_MEDIA_TYPE mt;
 
-            if (SUCCEEDED(pFSF->GetCurFile(&pszName, &mt)) && pszName) {
-                streamName = pszName;
+            if (SUCCEEDED(pFSF->GetCurFile(&fileName, &mt)) && fileName) {
+                streamName = fileName;
                 if (streamName.Find(L"googlevideo.com")) { //we don't like these URLs
                     streamName = pszNameSS;
                     if (streamName.GetLength() <= 0) {
