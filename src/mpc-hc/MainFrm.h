@@ -1280,7 +1280,15 @@ protected:
 
     CString m_sydlLastProcessURL;
 
-    bool IsImageFile(CString fn);
+    bool IsImageFile(CStringW fn);
+    bool IsPlayableFormatExt(CStringW ext);
+    bool IsAudioFileExt(CStringW ext);
+    bool IsImageFileExt(CStringW ext);
+    bool IsPlaylistFileExt(CStringW ext);
+    bool IsAudioOrVideoFileExt(CStringW ext);
+    bool CanSkipToExt(CStringW ext, CStringW curExt);
+    bool IsAudioFilename(CString filename);
+
 
     // Handles MF_DEFAULT and escapes '&'
     static BOOL AppendMenuEx(CMenu& menu, UINT nFlags, UINT nIDNewItem, CString& text);

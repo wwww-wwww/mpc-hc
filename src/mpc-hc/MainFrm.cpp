@@ -2669,12 +2669,6 @@ bool CMainFrame::CheckABRepeat(REFERENCE_TIME& aPos, REFERENCE_TIME& bPos) {
     return false;
 }
 
-bool CMainFrame::IsImageFile(CString fn)
-{
-    CPath path(fn);
-    CString ext(path.GetExtension().MakeLower());
-    return (ext == _T(".jpg") || ext == _T(".jpeg") || ext == _T(".png") || ext == _T(".gif") || ext == _T(".bmp") || ext == _T(".tiff") || ext == _T(".jpe") || ext == _T(".tga"));
-}
 
 //
 // graph event EC_COMPLETE handler
@@ -4894,6 +4888,49 @@ DROPEFFECT CMainFrame::OnDropAccept(COleDataObject* pDataObject, DWORD dwKeyStat
     return DROPEFFECT_NONE;
 }
 
+bool CMainFrame::IsImageFile(CStringW fn) {
+    CPath path(fn);
+    CStringW ext(path.GetExtension());
+    return IsImageFileExt(ext);
+}
+
+bool CMainFrame::IsImageFileExt(CStringW ext) {
+    ext.MakeLower();
+    return (
+        ext == _T(".jpg") || ext == _T(".jpeg") || ext == _T(".png") || ext == _T(".gif") || ext == _T(".bmp")
+        || ext == _T(".tiff") || ext == _T(".jpe") || ext == _T(".tga") || ext == _T(".heic") || ext == _T(".avif")
+    );
+}
+
+bool CMainFrame::IsPlaylistFileExt(CStringW ext) {
+    return (ext == _T(".m3u") || ext == _T(".m3u8") || ext == _T(".mpcpl") || ext == _T(".pls") || ext == _T(".cue") || ext == _T(".asx"));
+}
+
+bool CMainFrame::IsAudioOrVideoFileExt(CStringW ext) {
+    return IsPlayableFormatExt(ext);
+}
+
+bool CMainFrame::IsAudioFileExt(CStringW ext) {
+    const CMediaFormats& mf = AfxGetAppSettings().m_Formats;
+    ext.MakeLower();
+    return mf.FindExt(ext, true);
+}
+
+bool CMainFrame::IsPlayableFormatExt(CStringW ext) {
+    const CMediaFormats& mf = AfxGetAppSettings().m_Formats;
+    ext.MakeLower();
+    return mf.FindExt(ext);
+}
+
+bool CMainFrame::CanSkipToExt(CStringW ext, CStringW curExt)
+{
+    if (IsImageFileExt(curExt)) {
+        return IsImageFileExt(ext);
+    } else {
+        return IsPlayableFormatExt(ext);
+    }
+}
+
 BOOL IsSubtitleExtension(CString ext)
 {
     return (ext == _T(".srt") || ext == _T(".ssa") || ext == _T(".ass") || ext == _T(".idx") || ext == _T(".sub") || ext == _T(".webvtt") || ext == _T(".vtt") || ext == _T(".sup") || ext == _T(".smi") || ext == _T(".psb") || ext == _T(".usf") || ext == _T(".xss") || ext == _T(".rt")|| ext == _T(".txt"));
@@ -4905,11 +4942,10 @@ BOOL IsSubtitleFilename(CString filename)
     return IsSubtitleExtension(ext);
 }
 
-BOOL IsAudioFilename(CString filename)
+bool CMainFrame::IsAudioFilename(CString filename)
 {
-    const CMediaFormats& mf = AfxGetAppSettings().m_Formats;
-    CString ext = CPath(filename).GetExtension().MakeLower();
-    return mf.FindExt(ext, true);
+    CString ext = CPath(filename).GetExtension();
+    return IsAudioFileExt(ext);
 }
 
 void CMainFrame::OnDropFiles(CAtlList<CStringW>& slFiles, DROPEFFECT dropEffect)
@@ -14893,9 +14929,9 @@ bool CMainFrame::WildcardFileSearch(CString searchstr, std::set<CString, CString
     ZeroMemory(&findData, sizeof(WIN32_FIND_DATA));
     HANDLE h = FindFirstFile(searchstr, &findData);
     if (h != INVALID_HANDLE_VALUE) {
-        const CMediaFormats& mf = AfxGetAppSettings().m_Formats;
         CString search_ext = searchstr.Mid(searchstr.ReverseFind('.')).MakeLower();
         bool other_ext = (search_ext != _T(".*"));
+        CStringW curExt = CPath(m_wndPlaylistBar.GetCurFileName()).GetExtension().MakeLower();
 
         do {
             CString filename = findData.cFileName;
@@ -14909,9 +14945,9 @@ bool CMainFrame::WildcardFileSearch(CString searchstr, std::set<CString, CString
 
             CString ext = filename.Mid(filename.ReverseFind('.')).MakeLower();
 
-            if (mf.FindExt(ext)) {
+            if (CanSkipToExt(ext, curExt)) {
                 /* playlist and cue files should be ignored when searching dir for playable files */
-                if (ext != _T(".m3u") && ext != _T(".m3u8") && ext != _T(".mpcpl") && ext != _T(".pls") && ext != _T(".cue") && ext != _T(".asx")) {
+                if (!IsPlaylistFileExt(ext)) {
                     results.insert(path + filename);
                 }
             } else if (other_ext && search_ext == ext) {
