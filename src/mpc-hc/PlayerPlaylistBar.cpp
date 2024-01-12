@@ -696,7 +696,9 @@ bool CPlayerPlaylistBar::ParseM3UPlayList(CString fn) {
                         if (-1 == (findDelim = value.Find(_T(",")))) {
                             continue; // discard invalid EXTINF line
                         }
-                        if (f.ReadString(str)) {
+                        str = L"";
+                        while (f.ReadString(str) && str.Left(1) == L"#") {}
+                        if (!str. IsEmpty()) {
                             pli = CPlaylistItem();
                             pli.m_label = value.Mid(findDelim + 1);
                             str = CombinePath(base, str, isurl);
