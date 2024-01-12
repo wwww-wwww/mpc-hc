@@ -588,11 +588,12 @@ HRESULT CStreamSwitcherInputPin::CompleteConnect(IPin* pReceivePin)
         fForkedSomewhere = fForkedSomewhere || nIn > 1 || nOut > 1;
 
         DWORD cStreams = 0;
-        CComHeapPtr<WCHAR> pszNameSS;
+        CStringW streamSSName;
         if (CComQIPtr<IAMStreamSelect> pSSF = pBF) {
             hr = pSSF->Count(&cStreams);
             if (SUCCEEDED(hr)) {
                 for (int i = 0; i < (int)cStreams; i++) {
+                    CComHeapPtr<WCHAR> pszNameSS;
                     AM_MEDIA_TYPE* pmt = nullptr;
                     LCID lcid = 0;
 
@@ -600,6 +601,7 @@ HRESULT CStreamSwitcherInputPin::CompleteConnect(IPin* pReceivePin)
                     if (SUCCEEDED(hr) && pmt && pmt->majortype == MEDIATYPE_Audio) {
                         m_pSSF = pSSF;
                         DeleteMediaType(pmt);
+                        streamSSName = pszNameSS;
                         break;
                     }
                     DeleteMediaType(pmt);
@@ -614,7 +616,7 @@ HRESULT CStreamSwitcherInputPin::CompleteConnect(IPin* pReceivePin)
             if (SUCCEEDED(pFSF->GetCurFile(&fileName, &mt)) && fileName) {
                 streamName = fileName;
                 if (streamName.Find(L"googlevideo.com")) { //we don't like these URLs
-                    streamName = pszNameSS;
+                    streamName = streamSSName;
                     if (streamName.GetLength() <= 0) {
                         streamName = L"YouTube Audio Stream";
                     }
