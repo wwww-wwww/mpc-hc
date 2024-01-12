@@ -480,6 +480,7 @@ private:
 
     bool m_bSettingUpMenus;
     bool m_bOpenMediaActive;
+    int m_OpenMediaFailedCount;
 
     REFTIME GetAvgTimePerFrame() const;
     void OnVideoSizeChanged(const bool bWasAudioOnly = false);

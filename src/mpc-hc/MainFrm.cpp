@@ -825,6 +825,7 @@ CMainFrame::CMainFrame()
     , m_CachedFilterState(-1)
     , m_bSettingUpMenus(false)
     , m_bOpenMediaActive(false)
+    , m_OpenMediaFailedCount(0)
     , m_fFullScreen(false)
     , m_bFullScreenWindowIsD3D(false)
     , m_bFullScreenWindowIsOnSeparateDisplay(false)
@@ -3749,6 +3750,7 @@ LRESULT CMainFrame::OnFilePostOpenmedia(WPARAM wParam, LPARAM lParam)
 
     // from this on
     m_bOpenMediaActive = false;
+    m_OpenMediaFailedCount = 0;
     m_bSettingUpMenus = true;
 
     SetLoadState(MLS::LOADED);
@@ -3962,13 +3964,14 @@ LRESULT CMainFrame::OnOpenMediaFailed(WPARAM wParam, LPARAM lParam)
     bool bAfterPlaybackEvent = false;
 
     m_bOpenMediaActive = false;
+    m_OpenMediaFailedCount++;
 
     m_dwReloadPos = 0;
     reloadABRepeat = ABRepeat();
     m_iReloadAudioIdx = -1;
     m_iReloadSubIdx = -1;
 
-    if (wParam == PM_FILE) {
+    if (wParam == PM_FILE && m_OpenMediaFailedCount < 5) {
         auto* pli = m_wndPlaylistBar.GetCur();
         if (pli != nullptr && pli->m_bYoutubeDL && m_sydlLastProcessURL != pli->m_ydlSourceURL) {
             OpenCurPlaylistItem(0, true);  // Try to reprocess if failed first time.
@@ -4007,7 +4010,21 @@ LRESULT CMainFrame::OnOpenMediaFailed(WPARAM wParam, LPARAM lParam)
 
     CloseMedia(bOpenNextInPlaylist);
 
-    if (bOpenNextInPlaylist) {
+    if (m_OpenMediaFailedCount >= 5) {
+        m_wndPlaylistBar.SetCurValid(false);
+        if (m_wndPlaylistBar.IsAtEnd()) {
+            m_nLoops++;
+        }
+        if (s.fLoopForever || m_nLoops < s.nLoops) {
+            if (m_nLastSkipDirection == ID_NAVIGATE_SKIPBACK) {
+                m_wndPlaylistBar.SetPrev();
+            } else {
+                m_wndPlaylistBar.SetNext();
+            }
+        }
+        m_OpenMediaFailedCount = 0;
+    }
+    else if (bOpenNextInPlaylist) {
         OpenCurPlaylistItem();
     }
     else if (bAfterPlaybackEvent) {
