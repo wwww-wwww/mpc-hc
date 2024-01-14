@@ -23,6 +23,7 @@
 #include <algorithm>
 #include "StreamSwitcher.h"
 #include "../../../DSUtil/DSUtil.h"
+#include "../../../DSUtil/PathUtils.h"
 
 #ifdef STANDALONE_FILTER
 #include <InitGuid.h>
@@ -615,10 +616,10 @@ HRESULT CStreamSwitcherInputPin::CompleteConnect(IPin* pReceivePin)
 
             if (SUCCEEDED(pFSF->GetCurFile(&fileName, &mt)) && fileName) {
                 streamName = fileName;
-                if (streamName.Find(L"googlevideo.com")) { //we don't like these URLs
+                if (streamName.Find(L"googlevideo.com") || (PathUtils::IsURL(streamName) && streamName.GetLength() > 50)) { //we don't like these URLs
                     streamName = streamSSName;
                     if (streamName.GetLength() <= 0) {
-                        streamName = L"YouTube Audio Stream";
+                        streamName = L"Online Audio Stream";
                     }
                 } else {
                     streamName.Replace('\\', '/');
