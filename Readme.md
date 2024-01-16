@@ -22,7 +22,7 @@ Options > Advanced > DefaultToolbarSize
 * Video preview on the seekbar<br/>
 Options > Tweaks > Show preview on seek bar
 * Play HDR video<br/>
-This requires using [MPC Video Renderer](https://github.com/Aleksoid1978/VideoRenderer/releases) or [madVR](http://forum.doom9.org/showthread.php?t=146228).<br/>
+This requires using [MPC Video Renderer](https://github.com/clsid2/MPCVideoRenderer/releases) or [madVR](http://forum.doom9.org/showthread.php?t=146228).<br/>
 After installation these renderers can be selected here:<br/>
 Options > Playback > Output<br/>
 Tip: If you want an easy to use all-in-one package that contains MPC-HC and these renderers, then use [K-Lite Codec pack](http://codecguide.com/download_kl.htm).
