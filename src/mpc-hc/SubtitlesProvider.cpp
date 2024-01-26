@@ -460,7 +460,7 @@ const std::set<std::string>& OpenSubtitles::Languages() const
     static std::once_flag initialized;
     static std::set<std::string> result;
 #if 1
-    result = {"af", "an", "ar", "at", "az", "be", "bg", "bn", "br", "bs", "ca", "cs", "da", "de", "el", "en", "eo", "es", "et", "eu", "ex", "fa", "fi", "fr", "ga", "gd", "gl", "he", "hi", "hr", "hu", "hy", "id", "ig", "is", "it", "ja", "ka", "kk", "km", "kn", "ko", "ku", "lb", "lt", "lv", "ma", "me", "mk", "ml", "mn", "ms", "my", "nl", "no", "oc", "pb", "pl", "pm", "pt", "ro", "ru", "sd", "se", "si", "sk", "sl", "so", "sq", "sr", "sv", "sw", "sy", "ta", "te", "th", "tl", "tr", "tt", "uk", "ur", "vi", "ze", "zh", "zt"};
+    result = {"ab", "af", "am", "an", "ar", "as", "at", "az", "be", "bg", "bn", "br", "bs", "ca", "cy", "cs", "da", "de", "ea", "el", "en", "eo", "es", "et", "eu", "ex", "fa", "fi", "fr", "ga", "gd", "gl", "he", "hi", "hr", "hu", "hy", "ia", "id", "ig", "is", "it", "ja", "ka", "kk", "km", "kn", "ko", "ku", "lb", "lt", "lv", "ma", "me", "mk", "ml", "mn", "mr", "ms", "my", "ne", "nl", "no", "nv", "oc", "or", "pb", "pl", "pm", "pr", "ps", "pt", "ro", "ru", "sd", "se", "si", "sk", "sl", "so", "sp", "sq", "sr", "sv", "sw", "sx", "sy", "ta", "te", "th", "tl", "tr", "tp", "tt", "uk", "ur", "uz", "vi", "ze", "zh", "zt"};
 #else
 
     try {
@@ -486,8 +486,13 @@ const std::set<std::string>& OpenSubtitles::Languages() const
                 std::string ISO6391 = data[i]["ISO639"];
                 ASSERT(!ISO6391.empty());
                 ASSERT(!subLanguageID.empty());
-                ASSERT(ISOLang::ISO6391To6392(ISO6391.c_str()) == subLanguageID.c_str());
-                ASSERT(ISOLang::ISO6392To6391(subLanguageID.c_str()) == ISO6391.c_str());
+                TRACE("opensubtitles lang %s %s\n", subLanguageID.c_str(), ISO6391.c_str());
+                if (ISOLang::ISO6391To6392(ISO6391.c_str()) != subLanguageID.c_str()) {
+                    TRACE("opensubtitles lang %s %s\n", subLanguageID.c_str(), ISO6391.c_str());
+                }
+                if (ISOLang::ISO6392To6391(subLanguageID.c_str()) != ISO6391.c_str()) {
+                    TRACE("opensubtitles lang %s %s\n", subLanguageID.c_str(), ISO6391.c_str());
+                }
                 //std::string languageName = data[i]["LanguageName"];
                 //ASSERT(ISO639XToLanguage(ISO6391.c_str()) == languageName.c_str());
                 //ASSERT(ISO639XToLanguage(subLanguageID.c_str()) == languageName.c_str());
@@ -815,7 +820,7 @@ bool OpenSubtitles2::CallAPIResponse(CHttpFile* httpFile, Response& response)
 const std::set<std::string>& OpenSubtitles2::Languages() const
 {
     static std::set<std::string> result;
-    result = { "af", "an", "ar", "at", "az", "be", "bg", "bn", "br", "bs", "ca", "cs", "da", "de", "el", "en", "eo", "es", "et", "eu", "ex", "fa", "fi", "fr", "ga", "gd", "gl", "he", "hi", "hr", "hu", "hy", "id", "ig", "is", "it", "ja", "ka", "kk", "km", "kn", "ko", "ku", "lb", "lt", "lv", "ma", "me", "mk", "ml", "mn", "ms", "my", "nl", "no", "oc", "pb", "pl", "pm", "pt", "ro", "ru", "sd", "se", "si", "sk", "sl", "so", "sq", "sr", "sv", "sw", "sy", "ta", "te", "th", "tl", "tr", "tt", "uk", "ur", "vi", "ze", "zh", "zt" };
+    result = { "ab", "af", "am", "an", "ar", "as", "at", "az", "be", "bg", "bn", "br", "bs", "ca", "cy", "cs", "da", "de", "ea", "el", "en", "eo", "es", "et", "eu", "ex", "fa", "fi", "fr", "ga", "gd", "gl", "he", "hi", "hr", "hu", "hy", "ia", "id", "ig", "is", "it", "ja", "ka", "kk", "km", "kn", "ko", "ku", "lb", "lt", "lv", "ma", "me", "mk", "ml", "mn", "mr", "ms", "my", "ne", "nl", "no", "nv", "oc", "or", "pb", "pl", "pm", "pr", "ps", "pt", "ro", "ru", "sd", "se", "si", "sk", "sl", "so", "sp", "sq", "sr", "sv", "sw", "sx", "sy", "ta", "te", "th", "tl", "tr", "tp", "tt", "uk", "ur", "uz", "vi", "ze", "zh", "zt" };
     return result;
 }
 
