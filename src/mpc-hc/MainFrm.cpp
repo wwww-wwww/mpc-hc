@@ -4701,7 +4701,9 @@ BOOL CMainFrame::OnCopyData(CWnd* pWnd, COPYDATASTRUCT* pCDS)
                 }
 
                 applyRandomizeSwitch();
-                m_wndPlaylistBar.SetFirst();
+                if (sl.GetCount() != 1 || !IsPlaylistFile(sl.GetHead())) { //playlists already set first pos (or saved pos)
+                    m_wndPlaylistBar.SetFirst();
+                }
                 OpenCurPlaylistItem((s.nCLSwitches & CLSW_STARTVALID) ? s.rtStart : 0, false, s.abRepeat);
 
                 s.nCLSwitches &= ~CLSW_STARTVALID;
@@ -4917,6 +4919,12 @@ bool CMainFrame::IsImageFileExt(CStringW ext) {
         ext == _T(".jpg") || ext == _T(".jpeg") || ext == _T(".png") || ext == _T(".gif") || ext == _T(".bmp")
         || ext == _T(".tiff") || ext == _T(".jpe") || ext == _T(".tga") || ext == _T(".heic") || ext == _T(".avif")
     );
+}
+
+bool CMainFrame::IsPlaylistFile(CStringW fn) {
+    CPath path(fn);
+    CStringW ext(path.GetExtension());
+    return IsPlaylistFileExt(ext);
 }
 
 bool CMainFrame::IsPlaylistFileExt(CStringW ext) {
@@ -13022,6 +13030,10 @@ void CMainFrame::OpenFile(OpenFileData* pOFD)
                 }
 
                 pMRU->Add(r, true);
+                CStringW playListName;
+                if (m_wndPlaylistBar.IsExternalPlayListActive(playListName)) {
+                    s.SavePlayListPosition(playListName, m_wndPlaylistBar.GetSelIdx());
+                }
             }
             else {
                 if (!pli || !pli->m_bYoutubeDL) {

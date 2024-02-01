@@ -63,6 +63,10 @@ private:
     int m_itemHeight = 0;
     int m_initialWindowDPI = 0;
     bool createdWindow;
+    CStringW m_ExternalPlayListPath;
+    CPlaylistIDs m_ExternalPlayListFNCopy;
+    void ExternalPlayListLoaded(CStringW fn);
+
 
     EventClient m_eventc;
     void EventCallback(MpcEvent ev);
@@ -152,6 +156,7 @@ public:
     void UpdateLabel(CString in);
 
     void Refresh();
+    void PlayListChanged();
     bool Empty();
 
     void Open(CAtlList<CString>& fns, bool fMulti, CAtlList<CString>* subs = nullptr, CString label = _T(""), CString ydl_src = _T(""), CString cue = _T(""));
@@ -169,6 +174,7 @@ public:
 
     bool SelectFileInPlaylist(LPCTSTR filename);
     bool DeleteFileInPlaylist(POSITION pos, bool recycle = true);
+    bool IsExternalPlayListActive(CStringW& playlistPath);
 
 protected:
     virtual BOOL PreCreateWindow(CREATESTRUCT& cs);

@@ -1285,6 +1285,7 @@ protected:
     bool IsPlayableFormatExt(CStringW ext);
     bool IsAudioFileExt(CStringW ext);
     bool IsImageFileExt(CStringW ext);
+    bool IsPlaylistFile(CStringW fn);
     bool IsPlaylistFileExt(CStringW ext);
     bool IsAudioOrVideoFileExt(CStringW ext);
     bool CanSkipToExt(CStringW ext, CStringW curExt);

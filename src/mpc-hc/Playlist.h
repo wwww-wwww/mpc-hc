@@ -66,6 +66,11 @@ public:
     CString GetLabel(int i = 0);
 };
 
+
+class CPlaylistIDs : public std::vector<UINT> {
+
+};
+
 class CPlaylist : protected CAtlList<CPlaylistItem>
 {
 protected:
@@ -113,4 +118,5 @@ public:
     CPlaylistItem& GetPrevWrap(POSITION& pos);
 
     void SetShuffle(bool bEnable);
+    CPlaylistIDs GetIDs();
 };

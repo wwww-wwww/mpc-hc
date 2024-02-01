@@ -1273,7 +1273,42 @@ void CAppSettings::SaveSettings(bool write_full_history /* = false */)
         }
     }
 
+    size_t maxsize = AfxGetAppSettings().fKeepHistory ? iRecentFilesNumber : 0;
+    CStringW section = L"PlaylistHistory";
+    auto timeToHash = LoadHistoryHashes(section, L"LastUpdated");
+
+    int entries = 0;
+    for (auto iter = timeToHash.rbegin(); iter != timeToHash.rend(); ++iter, ++entries) {
+        CStringW hash = iter->second;
+        if (entries >= maxsize) {
+            PurgeExpiredHash(section, hash);
+        }
+    }
+
     pApp->FlushProfile();
+}
+
+std::multimap<CStringW, CStringW> CAppSettings::LoadHistoryHashes(CStringW section, CStringW dateField) {
+    auto pApp = AfxGetMyApp();
+    auto hashes = pApp->GetSectionSubKeys(section);
+
+    std::multimap<CStringW, CStringW> timeToHash;
+    for (auto const& hash : hashes) {
+        CStringW lastOpened, subSection;
+        subSection.Format(L"%s\\%s", section, static_cast<LPCWSTR>(hash));
+        lastOpened = pApp->GetProfileStringW(subSection, dateField, L"0000-00-00T00:00:00.0Z");
+        if (!lastOpened.IsEmpty()) {
+            timeToHash.insert(std::pair<CStringW, CStringW>(lastOpened, hash));
+        }
+    }
+    return timeToHash;
+}
+
+void CAppSettings::PurgeExpiredHash(CStringW section, CStringW hash) {
+    auto pApp = AfxGetMyApp();
+    CStringW subSection;
+    subSection.Format(L"%s\\%s", section, static_cast<LPCWSTR>(hash));
+    pApp->WriteProfileString(subSection, nullptr, nullptr);
 }
 
 void CAppSettings::LoadExternalFilters(CAutoPtrList<FilterOverride>& filters, LPCTSTR baseKey /*= IDS_R_EXTERNAL_FILTERS*/)
@@ -3136,15 +3171,7 @@ void CAppSettings::CRecentFileListWithMoreInfo::ReadMediaHistory() {
         hashes = pApp->GetSectionSubKeys(m_section);
     }
 
-    std::multimap<CStringW, CStringW> timeToHash;
-    for (auto const& hash : hashes) {
-        CStringW lastOpened, subSection;
-        subSection.Format(L"%s\\%s", m_section, static_cast<LPCWSTR>(hash));
-        lastOpened = pApp->GetProfileStringW(subSection, L"LastOpened");
-        if (!lastOpened.IsEmpty()) {
-            timeToHash.insert(std::pair<CStringW, CStringW>(lastOpened, hash));
-        }
-    }
+    auto timeToHash = CAppSettings::LoadHistoryHashes(m_section, L"LastOpened");
 
     rfe_array.RemoveAll();
     int entries = 0;
@@ -3161,9 +3188,7 @@ void CAppSettings::CRecentFileListWithMoreInfo::ReadMediaHistory() {
             }
         }
         if (purge_rfe) { //purge entry
-            CStringW subSection;
-            subSection.Format(L"%s\\%s", m_section, static_cast<LPCWSTR>(hash));
-            pApp->WriteProfileString(subSection, nullptr, nullptr);
+            CAppSettings::PurgeExpiredHash(m_section, hash);
         }
     }
     rfe_array.FreeExtra();
@@ -3577,6 +3602,37 @@ CRenderersSettings& GetRenderersSettings() {
         }
     }
     return s.m_RenderersSettings;
+}
+
+void CAppSettings::SavePlayListPosition(CStringW playlistPath, UINT position) {
+    auto pApp = AfxGetMyApp();
+    ASSERT(pApp);
+
+    auto hash = getRFEHash(playlistPath);
+
+    CStringW subSection, t;
+    subSection.Format(L"%s\\%s", L"PlaylistHistory", static_cast<LPCWSTR>(hash));
+    pApp->WriteProfileInt(subSection, L"Position", position);
+
+    auto now = std::chrono::system_clock::now();
+    auto nowISO = date::format<wchar_t>(L"%FT%TZ", date::floor<std::chrono::microseconds>(now));
+    CStringW lastUpdated = CStringW(nowISO.c_str());
+    pApp->WriteProfileStringW(subSection, L"LastUpdated", lastUpdated);
+}
+
+UINT CAppSettings::GetSavedPlayListPosition(CStringW playlistPath) {
+    auto pApp = AfxGetMyApp();
+    ASSERT(pApp);
+
+    auto hash = getRFEHash(playlistPath);
+
+    CStringW subSection, t;
+    subSection.Format(L"%s\\%s", L"PlaylistHistory", static_cast<LPCWSTR>(hash));
+    UINT position = pApp->GetProfileIntW(subSection, L"Position", -1);
+    if (position != (UINT)-1) {
+        return position;
+    }
+    return 0;
 }
 
 // SubRendererSettings.h

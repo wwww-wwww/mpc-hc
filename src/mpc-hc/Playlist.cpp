@@ -453,6 +453,16 @@ void CPlaylist::SetShuffle(bool bEnable)
     }
 }
 
+CPlaylistIDs CPlaylist::GetIDs() {
+    CPlaylistIDs ids;
+    POSITION pos = GetHeadPosition();
+    for (size_t i = 0; pos; i++, GetNext(pos)) {
+        CPlaylistItem& pli = GetAt(pos);
+        ids.push_back(pli.m_id);
+    }
+    return ids;
+}
+
 // This will reshuffle if the shuffled list size
 // does not match the playlist size.
 bool CPlaylist::ReshuffleIfNeeded()
