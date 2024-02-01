@@ -1094,7 +1094,7 @@ void CPlayerPlaylistBar::Append(CAtlList<CString>& fns, bool fMulti, CAtlList<CS
         m_pl.GetNext(posFirstAdded);
     } else { // if the playlist was originally empty
         posFirstAdded = m_pl.GetHeadPosition();
-        if (fns.GetCount() == 1 && fns.GetHead() == m_ExternalPlayListPath) {
+        if (AfxGetAppSettings().fKeepHistory && fns.GetCount() == 1 && fns.GetHead() == m_ExternalPlayListPath) {
             UINT idx = AfxGetAppSettings().GetSavedPlayListPosition(m_ExternalPlayListPath);
             if (idx != 0) {
                 posFirstAdded = FindPos(idx);
