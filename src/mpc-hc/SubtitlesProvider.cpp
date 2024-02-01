@@ -602,9 +602,17 @@ SRESULT OpenSubtitles2::Search(const SubtitlesInfo& pFileInfo)
     CHttpConnection* con = session.GetHttpConnection(_T("api.opensubtitles.com"), (DWORD)INTERNET_FLAG_SECURE);
 
     CString url(_T("/api/v1/subtitles?"));
+
+    // FIXME: replace LanguagesISO6391() with a function that returns list in desired format and without duplicates
     const auto languages = LanguagesISO6391();
     if (!languages.empty()) {
         url.AppendFormat(_T("languages=%s&"), JoinContainer(languages, _T(",")).c_str());
+        // add alternative language codes used by the provider in case they differ from standard ISO code
+        for (auto it = languages.begin(); it != languages.end(); ++it) {
+            if ((*it).compare("pb") == 0) { // Portuguese Brazil
+                url += ",pt-br";
+            }
+        }
     }
     if (!pFileInfo.fileHash.empty()) {
         url.AppendFormat(_T("moviehash=%s&"), (LPCTSTR) CString(pFileInfo.fileHash.c_str()));
