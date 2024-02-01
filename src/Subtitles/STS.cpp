@@ -2099,6 +2099,10 @@ bool OpenSubStationAlpha(CTextFile* file, CSimpleTextSubtitle& ret, int CharSet)
             // ignored
         } else if (entry == L"playdepth") {
             // ignored
+        } else if (entry == L"[aegisub extradata]") {
+            // ignored
+        } else if (entry == L"data") {
+            // ignored
         } else {
             TRACE(_T("Ignoring unknown SSA entry: %s\n"), static_cast<LPCWSTR>(entry));
             if (!fRet) {
