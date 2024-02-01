@@ -627,7 +627,22 @@ CString ISOLang::ISO639XToLanguage(LPCSTR code)
                 lang.Empty();
             }
             break;
+        case 5:
+            lang = code;
+            if (_wcsicmp(lang, L"pt-BR") == 0) {
+                lang = L"Portuguese (Brazil)";
+            } else if (_wcsicmp(lang, L"pt-PT") == 0) {
+                lang = L"Portuguese";
+            } else if (_wcsicmp(lang, L"zh-CN") == 0) {
+                lang = L"Chinese (Simplified)";
+            } else if (_wcsicmp(lang, L"zh-TW") == 0) {
+                lang = L"Chinese (Traditional)";
+            } else {
+                ASSERT(FALSE);
+            }
+            break;
         default:
+            lang = code;
             ASSERT(FALSE);
     }
 

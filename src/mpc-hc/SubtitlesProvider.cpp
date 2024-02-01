@@ -603,16 +603,21 @@ SRESULT OpenSubtitles2::Search(const SubtitlesInfo& pFileInfo)
 
     CString url(_T("/api/v1/subtitles?"));
 
-    // FIXME: replace LanguagesISO6391() with a function that returns list in desired format and without duplicates
-    const auto languages = LanguagesISO6391();
+    std::list<std::string> languages = LanguagesISO6391();
     if (!languages.empty()) {
-        url.AppendFormat(_T("languages=%s&"), JoinContainer(languages, _T(",")).c_str());
-        // add alternative language codes used by the provider in case they differ from standard ISO code
+        languages.sort();
+        languages.unique();
+        // use alternative language codes used by the provider in case they differ from our ISO codes
         for (auto it = languages.begin(); it != languages.end(); ++it) {
             if ((*it).compare("pb") == 0) { // Portuguese Brazil
-                url += ",pt-br";
+                *it = "pt-br";
+            } else if ((*it).compare("pt") == 0) { // Portuguese
+                *it = "pt-pt";
+            } else if ((*it).compare("zh") == 0) { // Chinese
+                *it = "zh-cn,zh-tw";
             }
         }
+        url.AppendFormat(_T("languages=%s&"), JoinContainer(languages, _T(",")).c_str());
     }
     if (!pFileInfo.fileHash.empty()) {
         url.AppendFormat(_T("moviehash=%s&"), (LPCTSTR) CString(pFileInfo.fileHash.c_str()));
@@ -916,15 +921,17 @@ SRESULT podnapisi::Search(const SubtitlesInfo& pFileInfo)
                 url += "&sK=" + UrlEncode(search.c_str());
             }
         }
-        const auto languages = LanguagesISO6391();
+        std::list<std::string> languages = LanguagesISO6391();
         if (!languages.empty()) {
-            url += "&sL=" + JoinContainer(languages, ",");
-            // add alternative language codes used by the provider in case they differ from standard ISO code
+            languages.sort();
+            languages.unique();
+            // use alternative language codes used by the provider in case they differ from our ISO codes
             for (auto it = languages.begin(); it != languages.end(); ++it) {
                 if ((*it).compare("pb") == 0) { // Portuguese Brazil
-                    url += ",pt-br";
+                    *it = "pt-br";
                 }
             }
+            url += "&sL=" + JoinContainer(languages, ",");
         }
         url += "&page=" + std::to_string(page);
         LOG(LOG_INPUT, url.c_str());
