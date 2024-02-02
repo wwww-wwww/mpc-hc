@@ -232,7 +232,8 @@ private:
 
     enum {
         COL_NAME,
-        COL_VALUE
+        COL_VALUE,
+        COL_DUMMYCOL //use to block value column from oversizing it
     };
 
     CFont m_fontBold;
