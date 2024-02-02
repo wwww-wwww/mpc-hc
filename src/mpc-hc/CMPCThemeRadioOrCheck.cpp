@@ -156,13 +156,19 @@ void CMPCThemeRadioOrCheck::OnPaint()
                 }
                 dc.SelectObject(pOldFont);
 
+                CRect focusRect = rectItem;
+                focusRect.InflateRect(0, 0);
                 if (isFocused) {
-                    CRect focusRect = rectItem;
-                    focusRect.InflateRect(0, 0);
                     dc.SetTextColor(CMPCTheme::ButtonBorderKBFocusColor); //no example of this in explorer, but white seems too harsh
                     CBrush* dotted = dc.GetHalftoneBrush();
                     dc.FrameRect(focusRect, dotted);
                     DeleteObject(dotted);
+                } else {
+                    HBRUSH hb = CMPCThemeUtil::getParentDialogBGClr(this, &dc);
+                    CBrush cb;
+                    cb.Attach(hb);
+                    dc.FrameRect(focusRect, &cb);
+                    cb.Detach();
                 }
 
             }

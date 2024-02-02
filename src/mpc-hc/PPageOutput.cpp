@@ -31,6 +31,7 @@
 #include "MainFrm.h"
 #include <mvrInterfaces.h>
 #include "FGManager.h"
+#include "CMPCThemeMsgBox.h"
 
 // CPPageOutput dialog
 
@@ -737,8 +738,7 @@ void CPPageOutput::OnSubtitleRendererChange()
 void CPPageOutput::OnFullscreenCheck()
 {
     UpdateData();
-    if (m_fD3DFullscreen &&
-            (MessageBox(ResStr(IDS_D3DFS_WARNING), nullptr, MB_ICONQUESTION | MB_YESNO | MB_DEFBUTTON2) == IDNO)) {
+    if (m_fD3DFullscreen && CMPCThemeMsgBox::MessageBoxW(this, ResStr(IDS_D3DFS_WARNING), nullptr, MB_ICONQUESTION | MB_YESNO | MB_DEFBUTTON2) == IDNO) {
         m_fD3DFullscreen = false;
         UpdateData(FALSE);
     } else {

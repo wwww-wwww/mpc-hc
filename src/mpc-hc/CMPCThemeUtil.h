@@ -81,6 +81,7 @@ public:
     static void drawToolbarHideButton(CDC* pDC, CWnd* window, CRect iconRect, std::vector<CMPCTheme::pathPoint> icon, double dpiScaling, bool antiAlias, bool hover);
     static bool canUseWin10DarkTheme();
     static UINT defaultLogo();
+    static HBRUSH getParentDialogBGClr(CWnd* wnd, CDC* pDC);
     static void drawParentDialogBGClr(CWnd* wnd, CDC* pDC, CRect r, bool fill = true);
     static void fulfillThemeReqs(CProgressCtrl* ctl);
     static void enableWindows10DarkFrame(CWnd* window);

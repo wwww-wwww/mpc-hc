@@ -976,9 +976,7 @@ struct AFX_CTLCOLOR {
     UINT nCtlType;
 };
 
-void CMPCThemeUtil::drawParentDialogBGClr(CWnd* wnd, CDC* pDC, CRect r, bool fill)
-{
-    CBrush brush;
+HBRUSH CMPCThemeUtil::getParentDialogBGClr(CWnd* wnd, CDC* pDC) {
     WPARAM w = (WPARAM)pDC;
     AFX_CTLCOLOR ctl;
     ctl.hWnd = wnd->GetSafeHwnd();
@@ -988,7 +986,14 @@ void CMPCThemeUtil::drawParentDialogBGClr(CWnd* wnd, CDC* pDC, CRect r, bool fil
     if (nullptr == parent) {
         parent = wnd;
     }
-    HBRUSH bg = (HBRUSH)parent->SendMessage(WM_CTLCOLORDLG, w, (LPARAM)& ctl);
+    HBRUSH bg = (HBRUSH)parent->SendMessage(WM_CTLCOLORDLG, w, (LPARAM)&ctl);
+    return bg;
+}
+
+void CMPCThemeUtil::drawParentDialogBGClr(CWnd* wnd, CDC* pDC, CRect r, bool fill)
+{
+    CBrush brush;
+    HBRUSH bg = getParentDialogBGClr(wnd, pDC);
     brush.Attach(bg);
     if (fill) {
         pDC->FillRect(r, &brush);
