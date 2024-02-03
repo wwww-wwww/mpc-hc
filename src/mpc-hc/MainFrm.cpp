@@ -13031,7 +13031,7 @@ void CMainFrame::OpenFile(OpenFileData* pOFD)
 
                 pMRU->Add(r, true);
                 CStringW playListName;
-                if (m_wndPlaylistBar.IsExternalPlayListActive(playListName)) {
+                if (s.bRememberExternalPlaylistPos && m_wndPlaylistBar.IsExternalPlayListActive(playListName)) {
                     s.SavePlayListPosition(playListName, m_wndPlaylistBar.GetSelIdx());
                 }
             }
@@ -14692,7 +14692,7 @@ bool CMainFrame::OpenMediaPrivate(CAutoPtr<OpenMediaData> pOMD)
                     }
                 }
             }
-            if (pMRU->rfe_array.GetCount()) {
+            if (s.fKeepHistory && s.bRememberTrackSelection && pMRU->rfe_array.GetCount()) {
                 if (m_loadedAudioTrackIndex == -1) {
                     m_loadedAudioTrackIndex = pMRU->GetCurrentAudioTrack();
                 }
@@ -16795,7 +16795,7 @@ bool CMainFrame::SetSubtitle(int i, bool bIsOffset /*= false*/, bool bDisplayMes
         success = true;
     }
 
-    if (success && s.fKeepHistory) {
+    if (success && s.fKeepHistory && s.bRememberTrackSelection) {
         s.MRU.UpdateCurrentSubtitleTrack(GetSelectedSubtitleTrackIndex());
     }
     return success;
@@ -16915,7 +16915,7 @@ void CMainFrame::SetSubtitle(const SubtitleInput& subInput, bool skip_lcid /* = 
         m_pCAP->SetSubPicProvider(CComQIPtr<ISubPicProvider>(subInput.pSubStream));
     }
 
-    if (s.fKeepHistory) {
+    if (s.fKeepHistory && s.bRememberTrackSelection) {
         s.MRU.UpdateCurrentSubtitleTrack(GetSelectedSubtitleTrackIndex());
     }
 }
@@ -20673,7 +20673,7 @@ LRESULT CMainFrame::OnLoadSubtitles(WPARAM wParam, LPARAM lParam)
                 SetSubtitle(subElement.pSubStream);
 
                 auto& s = AfxGetAppSettings();
-                if (s.fKeepHistory && s.bAutoSaveDownloadedSubtitles) {
+                if (s.fKeepHistory && s.bRememberTrackSelection && s.bAutoSaveDownloadedSubtitles) {
                     s.MRU.UpdateCurrentSubtitleTrack(GetSelectedSubtitleTrackIndex());
                 }
             }

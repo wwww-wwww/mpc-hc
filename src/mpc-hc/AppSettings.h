@@ -595,6 +595,8 @@ public:
     bool            fRememberFilePos;
     int             iRememberPosForLongerThan;
     bool            bRememberPosForAudioFiles;
+    bool            bRememberExternalPlaylistPos;
+    bool            bRememberTrackSelection;
     bool            bRememberPlaylistItems;
     bool            fRememberWindowPos;
     CRect           rcLastWindowPos;

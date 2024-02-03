@@ -67,6 +67,8 @@ CAppSettings::CAppSettings()
     , fRememberFilePos(false)
     , iRememberPosForLongerThan(5)
     , bRememberPosForAudioFiles(true)
+    , bRememberExternalPlaylistPos(true)
+    , bRememberTrackSelection(true)
     , bRememberPlaylistItems(true)
     , fRememberWindowPos(false)
     , fRememberWindowSize(false)
@@ -1073,6 +1075,8 @@ void CAppSettings::SaveSettings(bool write_full_history /* = false */)
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_FILEPOS, fRememberFilePos);
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_FILEPOSLONGER, iRememberPosForLongerThan);
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_FILEPOSAUDIO, bRememberPosForAudioFiles);
+    pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_FILEPOS_PLAYLIST, bRememberExternalPlaylistPos);
+    pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_FILEPOS_TRACK_SELECTION, bRememberTrackSelection);
 
     pApp->WriteProfileString(IDS_R_SETTINGS _T("\\") IDS_RS_PNSPRESETS, nullptr, nullptr);
     for (INT_PTR i = 0, j = m_pnspresets.GetCount(); i < j; i++) {
@@ -2015,6 +2019,8 @@ void CAppSettings::LoadSettings()
     if (iRememberPosForLongerThan < 0) {
         iRememberPosForLongerThan = 5;
     }
+    bRememberExternalPlaylistPos = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_FILEPOS_PLAYLIST, TRUE);
+    bRememberTrackSelection = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_FILEPOS_TRACK_SELECTION, TRUE);
 
     // playback positions for last played DVDs
     fRememberDVDPos = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_DVDPOS, FALSE);
