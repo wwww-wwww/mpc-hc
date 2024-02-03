@@ -46,6 +46,8 @@
 #define IDS_RS_FILEPOS                      _T("RememberFilePos")
 #define IDS_RS_FILEPOSLONGER                _T("RememberPosForLongerThan")
 #define IDS_RS_FILEPOSAUDIO                 _T("RememberPosForAudioFiles")
+#define IDS_RS_FILEPOS_PLAYLIST             _T("RememberExternalPlaylistPos")
+#define IDS_RS_FILEPOS_TRACK_SELECTION      _T("RememberTrackSelection")
 #define IDS_RS_LASTFULLSCREEN               _T("LastFullScreen")
 #define IDS_RS_EVR_BUFFERS                  _T("EVRBuffers")
 #define IDS_RS_SHOWOSD                      _T("ShowOSD")

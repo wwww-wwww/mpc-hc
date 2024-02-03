@@ -139,6 +139,8 @@ void CPPageAdvanced::InitSettings()
     addIntItem(RECENT_FILES_NB, IDS_RS_RECENT_FILES_NUMBER, 100, s.iRecentFilesNumber, std::make_pair(0, 1000), StrRes(IDS_PPAGEADVANCED_RECENT_FILES_NUMBER));
     addIntItem(FILE_POS_LONGER, IDS_RS_FILEPOSLONGER, 5, s.iRememberPosForLongerThan, std::make_pair(0, INT_MAX), StrRes(IDS_PPAGEADVANCED_FILE_POS_LONGER));
     addBoolItem(FILE_POS_AUDIO, IDS_RS_FILEPOSAUDIO, true, s.bRememberPosForAudioFiles, StrRes(IDS_PPAGEADVANCED_FILE_POS_AUDIO));
+    addBoolItem(FILE_POS_PLAYLIST, IDS_RS_FILEPOS_PLAYLIST, true, s.bRememberExternalPlaylistPos, _T("Remember playback position in local M3U and MPCPL playlist files."));
+    addBoolItem(FILE_POS_TRACK_SELECTION, IDS_RS_FILEPOS_TRACK_SELECTION, true, s.bRememberTrackSelection, _T("Remember the selected audio and subtitle track (when file history is enabled)."));
     addBoolItem(FULLSCREEN_SEPARATE_CONTROLS, IDS_RS_FULLSCREEN_SEPARATE_CONTROLS, false, s.bFullscreenSeparateControls, StrRes(IDS_PPAGEADVANCED_FULLSCREEN_SEPARATE_CONTROLS));
     addIntItem(COVER_SIZE_LIMIT, IDS_RS_COVER_ART_SIZE_LIMIT, 600, s.nCoverArtSizeLimit, std::make_pair(0, INT_MAX), StrRes(IDS_PPAGEADVANCED_COVER_SIZE_LIMIT));
     addBoolItem(BLOCK_VSFILTER, IDS_RS_BLOCKVSFILTER, true, s.fBlockVSFilter, StrRes(IDS_PPAGEADVANCED_BLOCK_VSFILTER));
