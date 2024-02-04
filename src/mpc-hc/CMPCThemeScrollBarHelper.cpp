@@ -7,6 +7,7 @@ CMPCThemeScrollBarHelper::CMPCThemeScrollBarHelper(CWnd* scrollWindow)
 {
     window = scrollWindow;
     pParent = nullptr;
+    currentlyClipped = false;
 }
 
 
@@ -80,10 +81,34 @@ void CMPCThemeScrollBarHelper::setDrawingArea(CRect& cr, CRect& wr, bool clippin
                 horzSB.ShowWindow(SW_HIDE);
             }
         }
-    }
+        bool wasClipped = currentlyClipped;
 
-    HRGN iehrgn = CreateRectRgn(wr.left, wr.top, wr.right, wr.bottom);
-    window->SetWindowRgn(iehrgn, false);
+        if (wr != realWR) {
+            HRGN iehrgn = CreateRectRgn(wr.left, wr.top, wr.right, wr.bottom);
+            window->SetWindowRgn(iehrgn, false);
+            currentlyClipped = true;
+        } else {
+            window->SetWindowRgn(NULL, false);
+            currentlyClipped = false;
+        }
+        if (wasClipped && currentClipRegion != wr) { //we do not repaint during SetWindowRgn, but we need to invalidate areas that were previously clipped
+            if (currentClipRegion.right < wr.right) {
+                CRect rightRedraw;
+                window->GetClientRect(rightRedraw);
+                rightRedraw.left = rightRedraw.right - (wr.right - currentClipRegion.right);
+                window->InvalidateRect(rightRedraw);
+            }
+            if (currentClipRegion.bottom < wr.bottom) {
+                CRect bottomRedraw = wr;
+                window->GetClientRect(bottomRedraw);
+                bottomRedraw.top = bottomRedraw.bottom - (wr.bottom - currentClipRegion.bottom);
+                window->InvalidateRect(bottomRedraw);
+            }
+        }
+        currentClipRegion = wr;
+    } else {
+        window->SetWindowRgn(NULL, false);
+    }
 }
 
 void CMPCThemeScrollBarHelper::hideSB()

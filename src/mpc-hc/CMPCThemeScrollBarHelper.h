@@ -15,6 +15,8 @@ class CMPCThemeScrollBarHelper
 protected:
     CWnd* window, *pParent;
     CMPCThemeScrollBar vertSB, horzSB;
+    CRect currentClipRegion;
+    bool currentlyClipped;
     bool hasVSB;
     bool hasHSB;
     static void doNcPaint(CWnd* window);

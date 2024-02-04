@@ -61,7 +61,7 @@ BEGIN_MESSAGE_MAP(CMPCThemePlayerListCtrl, CListCtrl)
     ON_NOTIFY(HDN_ENDTRACKA, 0, &OnHdnEndtrack)
     ON_NOTIFY(HDN_ENDTRACKW, 0, &OnHdnEndtrack)
     ON_NOTIFY_REFLECT_EX(LVN_ITEMCHANGED, &OnLvnItemchanged)
-    ON_MESSAGE(PLAYER_PLAYLIST_LVN_ITEMCHANGED, OnDelayed_updateListCtrl)
+    ON_MESSAGE(PLAYER_PLAYLIST_UPDATE_SCROLLBAR, OnDelayed_UpdateScrollbar)
 END_MESSAGE_MAP()
 
 void CMPCThemePlayerListCtrl::subclassHeader()
@@ -270,6 +270,7 @@ void CMPCThemePlayerListCtrl::OnNcCalcSize(BOOL bCalcValidRects, NCCALCSIZE_PARA
         if (GetStyle() & WS_HSCROLL && nullptr == themedSBHelper) {
             themedSBHelper = DEBUG_NEW CMPCThemeScrollBarHelper(this);
         }
+        ::PostMessage(m_hWnd, PLAYER_PLAYLIST_UPDATE_SCROLLBAR, (WPARAM)0, (LPARAM)0);
     }
 }
 
@@ -592,7 +593,7 @@ void CMPCThemePlayerListCtrl::OnHdnEndtrack(NMHDR* pNMHDR, LRESULT* pResult)
     *pResult = 0;
 }
 
-LRESULT CMPCThemePlayerListCtrl::OnDelayed_updateListCtrl(WPARAM, LPARAM)
+LRESULT CMPCThemePlayerListCtrl::OnDelayed_UpdateScrollbar(WPARAM, LPARAM)
 {
     updateScrollInfo();
     return 0;
@@ -602,7 +603,7 @@ BOOL CMPCThemePlayerListCtrl::OnLvnItemchanged(NMHDR* pNMHDR, LRESULT* pResult)
 {
     //LPNMLISTVIEW pNMLV = reinterpret_cast<LPNMLISTVIEW>(pNMHDR);
     if (AppNeedsThemedControls()) {
-        ::PostMessage(m_hWnd, PLAYER_PLAYLIST_LVN_ITEMCHANGED, (WPARAM)0, (LPARAM)0);
+        ::PostMessage(m_hWnd, PLAYER_PLAYLIST_UPDATE_SCROLLBAR, (WPARAM)0, (LPARAM)0);
     }
     *pResult = 0;
     return FALSE;

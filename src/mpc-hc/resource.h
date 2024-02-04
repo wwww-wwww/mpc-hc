@@ -740,7 +740,7 @@
 #define ID_FILE_RECYCLE                 24044
 #define ID_VIEW_MPCTHEME                24045
 #define IDS_AG_TOGGLE_MPCTHEME          24046
-#define PLAYER_PLAYLIST_LVN_ITEMCHANGED 24048
+#define PLAYER_PLAYLIST_UPDATE_SCROLLBAR 24048
 #define IDF_LOGO4                       24050
 #define ID_SUBTITLES_DEFAULT_STYLE      24051
 #define ID_SUB_POS_DOWN                 24052
