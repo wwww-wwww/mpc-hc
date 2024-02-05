@@ -27,6 +27,7 @@
 #include "PPageSubStyle.h"
 #include "../Subtitles/RTS.h"
 #include "CMPCTheme.h"
+#include "CMPCThemePropertySheet.h"
 
 // CPlayerSubresyncBar
 
@@ -1201,7 +1202,8 @@ void CPlayerSubresyncBar::OnRclickList(NMHDR* pNMHDR, LRESULT* pResult)
                             }
                         }
 
-                        CPropertySheet dlg(ResStr(IDS_SUBTITLES_STYLES_CAPTION), this, iSelPage);
+                        CMPCThemePropertySheet dlg(ResStr(IDS_SUBTITLES_STYLES_CAPTION), this, iSelPage);
+
                         for (size_t i = 0, l = pages.GetCount(); i < l; i++) {
                             dlg.AddPage(pages[i]);
                         }

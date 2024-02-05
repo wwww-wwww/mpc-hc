@@ -7,11 +7,13 @@
 
 CMPCThemePropertySheet::CMPCThemePropertySheet(UINT nIDCaption, CWnd* pParentWnd, UINT iSelectPage)
     : CPropertySheet(nIDCaption, pParentWnd, iSelectPage)
+    ,isModal(false)
 {
 }
 
 CMPCThemePropertySheet::CMPCThemePropertySheet(LPCTSTR pszCaption, CWnd* pParentWnd, UINT iSelectPage)
     : CPropertySheet(pszCaption, pParentWnd, iSelectPage)
+    ,isModal(false)
 {
 }
 
@@ -35,6 +37,9 @@ void CMPCThemePropertySheet::fulfillThemeReqs()
 {
     if (AppNeedsThemedControls()) {
         CMPCThemeUtil::fulfillThemeReqs((CWnd*)this);
+        if (isModal) { //propsheets not normally modal, but if so...
+            CMPCThemeUtil::enableWindows10DarkFrame(this);
+        }
     }
 }
 
@@ -55,6 +60,7 @@ HBRUSH CMPCThemePropertySheet::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 }
 
 INT_PTR CMPCThemePropertySheet::DoModal() {
+    isModal = true;
     PreDoModalRTL(&m_psh);
     return __super::DoModal();
 }

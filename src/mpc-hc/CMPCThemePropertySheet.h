@@ -20,6 +20,6 @@ public:
 
     DECLARE_MESSAGE_MAP()
     afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
-
+    bool isModal;
 };
 
