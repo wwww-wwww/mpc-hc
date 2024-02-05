@@ -147,6 +147,17 @@ void CMPCThemeRadioOrCheck::OnPaint()
                 } else {
                     dc.SetBkColor(CMPCTheme::WindowBGColor);
                 }
+
+                CRect focusRect = rectItem;
+                focusRect.InflateRect(0, 0);
+                if (buttonStyle & BS_MULTILINE) { //needed to clear old select for multi-line
+                    HBRUSH hb = CMPCThemeUtil::getParentDialogBGClr(this, &dc);
+                    CBrush cb;
+                    cb.Attach(hb);
+                    dc.FrameRect(focusRect, &cb);
+                    cb.Detach();
+                }
+
                 if (isDisabled) {
                     dc.SetTextColor(CMPCTheme::ButtonDisabledFGColor);
                     dc.DrawText(sTitle, -1, &rectItem, uFormat);
@@ -156,19 +167,11 @@ void CMPCThemeRadioOrCheck::OnPaint()
                 }
                 dc.SelectObject(pOldFont);
 
-                CRect focusRect = rectItem;
-                focusRect.InflateRect(0, 0);
                 if (isFocused) {
                     dc.SetTextColor(CMPCTheme::ButtonBorderKBFocusColor); //no example of this in explorer, but white seems too harsh
                     CBrush* dotted = dc.GetHalftoneBrush();
                     dc.FrameRect(focusRect, dotted);
                     DeleteObject(dotted);
-                } else {
-                    HBRUSH hb = CMPCThemeUtil::getParentDialogBGClr(this, &dc);
-                    CBrush cb;
-                    cb.Attach(hb);
-                    dc.FrameRect(focusRect, &cb);
-                    cb.Detach();
                 }
 
             }
