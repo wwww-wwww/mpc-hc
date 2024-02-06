@@ -5045,6 +5045,9 @@ void CMainFrame::OnDropFiles(CAtlList<CStringW>& slFiles, DROPEFFECT dropEffect)
 
     // load http url with youtube-dl, if available
     if (CanSendToYoutubeDL(slFiles.GetHead())) {
+        if (GetLoadState() == MLS::LOADED) {
+            CloseMedia(true);
+        }
         if (ProcessYoutubeDLURL(slFiles.GetHead(), bAppend)) {
             if (!bAppend) {
                 OpenCurPlaylistItem();
@@ -20929,7 +20932,7 @@ bool CMainFrame::ProcessYoutubeDLURL(CString url, bool append, bool replace)
         else if (streams.GetCount() == 1) {
             r.title = f_title;
         }
-        mru->Add(r, true);
+        mru->Add(r, false);
     }
 
     if (!append && (!replace || !m_wndPlaylistBar.GetCur())) {
