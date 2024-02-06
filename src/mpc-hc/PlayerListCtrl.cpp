@@ -491,6 +491,7 @@ CPlayerListCtrl::CPlayerListCtrl(int tStartEditingDelay)
     , m_tStartEditingDelay(tStartEditingDelay)
     , m_nTimerID(0)
     , m_fInPlaceDirty(false)
+    , inPlaceControl(true)
 {
 }
 
@@ -699,7 +700,7 @@ bool CPlayerListCtrl::PrepareInPlaceControl(int nRow, int nCol, CRect& rect)
     rect &= rcClient;
 
     rect.DeflateRect(1, 0, 0, 1);
-
+    inPlaceControl = true;
     return true;
 }
 
@@ -857,6 +858,8 @@ BEGIN_MESSAGE_MAP(CPlayerListCtrl, CMPCThemePlayerListCtrl)
     ON_WM_XBUTTONDOWN()
     ON_WM_XBUTTONUP()
     ON_WM_XBUTTONDBLCLK()
+    ON_WM_SETCURSOR()
+    ON_NOTIFY_REFLECT(LVN_ENDLABELEDIT, &CPlayerListCtrl::OnLvnEndlabeledit)
 END_MESSAGE_MAP()
 
 // CPlayerListCtrl message handlers
@@ -1109,4 +1112,19 @@ void CPlayerListCtrl::OnXButtonDblClk(UINT nFlags, UINT nButton, CPoint point)
         MapWindowPoints(pParent, &point, 1);
         pParent->SendMessage(WM_XBUTTONDBLCLK, MAKEWPARAM(nFlags, nButton), MAKELPARAM(point.x, point.y));
     }
+}
+
+BOOL CPlayerListCtrl::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message) {
+    if (inPlaceControl) {
+        return FALSE;
+    } else {
+        return CListCtrl::OnSetCursor(pWnd, nHitTest, message);
+    }
+}
+
+
+void CPlayerListCtrl::OnLvnEndlabeledit(NMHDR* pNMHDR, LRESULT* pResult) {
+    NMLVDISPINFO* pDispInfo = reinterpret_cast<NMLVDISPINFO*>(pNMHDR);
+    inPlaceControl = false;
+    *pResult = 0;
 }

@@ -149,6 +149,7 @@ class CPlayerListCtrl : public CMPCThemePlayerListCtrl
 private:
     int m_nItemClicked, m_nSubItemClicked;
     int m_tStartEditingDelay;
+    bool inPlaceControl;
     UINT_PTR m_nTimerID;
 
     bool PrepareInPlaceControl(int nRow, int nCol, CRect& rect);
@@ -196,4 +197,6 @@ public:
     afx_msg void OnXButtonDown(UINT nFlags, UINT nButton, CPoint point);
     afx_msg void OnXButtonUp(UINT nFlags, UINT nButton, CPoint point);
     afx_msg void OnXButtonDblClk(UINT nFlags, UINT nButton, CPoint point);
+    afx_msg BOOL OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message);
+    afx_msg void OnLvnEndlabeledit(NMHDR* pNMHDR, LRESULT* pResult);
 };

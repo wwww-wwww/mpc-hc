@@ -395,7 +395,7 @@ void CMPCThemePlayerListCtrl::drawItem(CDC* pDC, int nItem, int nSubItem)
             }
 
             if (IsWindowEnabled()) {
-                if (GetItemState(nItem, LVIS_SELECTED) == LVIS_SELECTED && (nSubItem == 0 || fullRowSelect)) {
+                if (GetItemState(nItem, LVIS_SELECTED) == LVIS_SELECTED && (nSubItem == 0 || fullRowSelect) && (GetStyle() & LVS_SHOWSELALWAYS || GetFocus() == this)) {
                     bgColor = selectedBGColor;
                     if (LVS_REPORT != dwStyle) { //in list mode we don't fill the "whole" column
                         CRect tmp = rText;
