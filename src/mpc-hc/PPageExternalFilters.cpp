@@ -358,6 +358,11 @@ bool IsExternalVideoRenderer(CLSID clsid)
         clsid == CLSID_VideoRenderer || clsid == CLSID_VideoRendererDefault || clsid == CLSID_OverlayMixer || clsid == CLSID_OverlayMixer2 || clsid == CLSID_NullRenderer;
 }
 
+bool IgnoreExternalFilter(CLSID clsid)
+{
+    return IsExternalVideoRenderer(clsid) || clsid == CLSID_DVDNavigator || clsid == CLSID_SmartTee;
+}
+
 void CPPageExternalFilters::OnAddRegistered()
 {
     CRegFilterChooserDlg dlg(this);

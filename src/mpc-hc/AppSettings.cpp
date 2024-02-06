@@ -1351,7 +1351,7 @@ void CAppSettings::LoadExternalFilters(CAutoPtrList<FilterOverride>& filters, LP
             break;
         }
 
-        if (IsExternalVideoRenderer(f->clsid)) {
+        if (IgnoreExternalFilter(f->clsid)) {
             continue;
         }
 
