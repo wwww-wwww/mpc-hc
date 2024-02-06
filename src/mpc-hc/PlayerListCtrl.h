@@ -198,5 +198,5 @@ public:
     afx_msg void OnXButtonUp(UINT nFlags, UINT nButton, CPoint point);
     afx_msg void OnXButtonDblClk(UINT nFlags, UINT nButton, CPoint point);
     afx_msg BOOL OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message);
-    afx_msg void OnLvnEndlabeledit(NMHDR* pNMHDR, LRESULT* pResult);
+    afx_msg BOOL OnLvnEndlabeledit(NMHDR* pNMHDR, LRESULT* pResult);
 };

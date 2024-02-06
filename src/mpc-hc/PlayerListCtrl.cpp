@@ -859,7 +859,7 @@ BEGIN_MESSAGE_MAP(CPlayerListCtrl, CMPCThemePlayerListCtrl)
     ON_WM_XBUTTONUP()
     ON_WM_XBUTTONDBLCLK()
     ON_WM_SETCURSOR()
-    ON_NOTIFY_REFLECT(LVN_ENDLABELEDIT, &CPlayerListCtrl::OnLvnEndlabeledit)
+    ON_NOTIFY_REFLECT_EX(LVN_ENDLABELEDIT, &CPlayerListCtrl::OnLvnEndlabeledit)
 END_MESSAGE_MAP()
 
 // CPlayerListCtrl message handlers
@@ -1123,8 +1123,7 @@ BOOL CPlayerListCtrl::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message) {
 }
 
 
-void CPlayerListCtrl::OnLvnEndlabeledit(NMHDR* pNMHDR, LRESULT* pResult) {
-    NMLVDISPINFO* pDispInfo = reinterpret_cast<NMLVDISPINFO*>(pNMHDR);
+BOOL CPlayerListCtrl::OnLvnEndlabeledit(NMHDR* pNMHDR, LRESULT* pResult) {
     inPlaceControl = false;
-    *pResult = 0;
+    return FALSE;
 }
