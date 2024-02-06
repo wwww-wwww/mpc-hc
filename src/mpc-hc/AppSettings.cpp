@@ -37,6 +37,7 @@
 #include <mvrInterfaces.h>
 #include <chrono>
 #include "date/date.h"
+#include "PPageExternalFilters.h"
 
 #pragma warning(push)
 #pragma warning(disable: 4351) // new behavior: elements of array 'array' will be default initialized
@@ -1333,6 +1334,13 @@ void CAppSettings::LoadExternalFilters(CAutoPtrList<FilterOverride>& filters, LP
             f->type = FilterOverride::REGISTERED;
             f->dispname = CStringW(pApp->GetProfileString(key, _T("DisplayName")));
             f->name = pApp->GetProfileString(key, _T("Name"));
+            CString clsid_str = pApp->GetProfileString(key, _T("CLSID"));
+            if (clsid_str.IsEmpty() && f->dispname.GetLength() == 88 && f->dispname.Left(1) == L"@") {
+                clsid_str = f->dispname.Right(38);
+            }
+            if (clsid_str.GetLength() == 38) {
+                f->clsid = GUIDFromCString(clsid_str);
+            }
         } else if (j == 1) {
             f->type = FilterOverride::EXTERNAL;
             f->path = pApp->GetProfileString(key, _T("Path"));
@@ -1341,6 +1349,10 @@ void CAppSettings::LoadExternalFilters(CAutoPtrList<FilterOverride>& filters, LP
         } else {
             pApp->WriteProfileString(key, nullptr, 0);
             break;
+        }
+
+        if (IsExternalVideoRenderer(f->clsid)) {
+            continue;
         }
 
         f->backup.RemoveAll();
@@ -1407,13 +1419,12 @@ void CAppSettings::SaveExternalFilters(CAutoPtrList<FilterOverride>& filters, LP
 
         pApp->WriteProfileInt(key, _T("SourceType"), (int)f->type);
         pApp->WriteProfileInt(key, _T("Enabled"), (int)!f->fDisabled);
+        pApp->WriteProfileString(key, _T("Name"), f->name);
+        pApp->WriteProfileString(key, _T("CLSID"), CStringFromGUID(f->clsid));
         if (f->type == FilterOverride::REGISTERED) {
             pApp->WriteProfileString(key, _T("DisplayName"), CString(f->dispname));
-            pApp->WriteProfileString(key, _T("Name"), f->name);
         } else if (f->type == FilterOverride::EXTERNAL) {
             pApp->WriteProfileString(key, _T("Path"), f->path);
-            pApp->WriteProfileString(key, _T("Name"), f->name);
-            pApp->WriteProfileString(key, _T("CLSID"), CStringFromGUID(f->clsid));
         }
         POSITION pos2 = f->backup.GetHeadPosition();
         for (unsigned int i = 0; pos2; i++) {

@@ -352,6 +352,12 @@ void CPPageExternalFilters::OnUpdateDeleteType(CCmdUI* pCmdUI)
     pCmdUI->Enable(!!m_tree.GetSelectedItem());
 }
 
+bool IsExternalVideoRenderer(CLSID clsid)
+{
+    return clsid == CLSID_MPCVR || clsid == CLSID_MadVR || clsid == CLSID_DXR || clsid == CLSID_EnhancedVideoRenderer || clsid == CLSID_VideoMixingRenderer9 || clsid == CLSID_VideoMixingRenderer || \
+        clsid == CLSID_VideoRenderer || clsid == CLSID_VideoRendererDefault || clsid == CLSID_OverlayMixer || clsid == CLSID_OverlayMixer2 || clsid == CLSID_NullRenderer;
+}
+
 void CPPageExternalFilters::OnAddRegistered()
 {
     CRegFilterChooserDlg dlg(this);
@@ -359,14 +365,16 @@ void CPPageExternalFilters::OnAddRegistered()
         while (!dlg.m_filters.IsEmpty()) {
             if (FilterOverride* f = dlg.m_filters.RemoveHead()) {
                 CAutoPtr<FilterOverride> p(f);
-                CString name = f->name;
 
-                if (f->type == FilterOverride::REGISTERED) {
-                    if (name == "madVR" || name == "MPC Video Renderer") {
-                        AfxMessageBox(L"You can not add video renderers as external filter. You should select your preferred video renderer on the Output settings page.", MB_OK);
-                        continue;
-                    }
+                if (f->name.IsEmpty() && !f->dwMerit && f->guids.IsEmpty()) {
+                    AfxMessageBox(L"Error: Unsupported filter", MB_OK);
+                    continue;
+                } else if (IsExternalVideoRenderer(f->clsid)) {
+                    AfxMessageBox(L"You can not add video renderers as external filter. You should select your preferred video renderer on the Playback Output settings page.", MB_OK);
+                    continue;
                 }
+
+                CString name = f->name;
                 if (f->type == FilterOverride::EXTERNAL) {
                     if (!PathUtils::Exists(MakeFullPath(f->path))) {
                         name += _T(" <not found!>");
@@ -796,6 +804,12 @@ void CPPageExternalFilters::OnDropFiles(CAtlList<CString>& slFiles, DROPEFFECT)
         while (!fm2.m_filters.IsEmpty()) {
             if (FilterOverride* f = fm2.m_filters.RemoveHead()) {
                 CAutoPtr<FilterOverride> p(f);
+
+                if (IsExternalVideoRenderer(f->clsid)) {
+                    AfxMessageBox(L"You can not add video renderers as external filter. You should select your preferred video renderer on the Playback Output settings page.", MB_OK);
+                    continue;
+                }
+
                 int i = m_filters.InsertItem(m_filters.GetItemCount(), f->name);
                 m_filters.SetItemData(i, reinterpret_cast<DWORD_PTR>(m_pFilters.AddTail(p)));
                 m_filters.SetCheck(i, 1);
