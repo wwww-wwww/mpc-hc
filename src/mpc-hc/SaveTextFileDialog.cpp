@@ -59,6 +59,11 @@ CSaveTextFileDialog::~CSaveTextFileDialog()
 {
 }
 
+INT_PTR CSaveTextFileDialog::DoModal() {
+    enableFileDialogHook();
+    return __super::DoModal();
+}
+
 BOOL CSaveTextFileDialog::OnInitDialog()
 {
     __super::OnInitDialog();
