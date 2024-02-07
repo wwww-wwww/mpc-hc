@@ -377,8 +377,6 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWnd)
     ON_UPDATE_COMMAND_UI(ID_VIEW_CAPTURE, OnUpdateViewCapture)
     ON_COMMAND(ID_VIEW_DEBUGSHADERS, OnViewDebugShaders)
     ON_UPDATE_COMMAND_UI(ID_VIEW_DEBUGSHADERS, OnUpdateViewDebugShaders)
-    ON_COMMAND(ID_VIEW_MPCTHEME, OnViewMPCTheme)
-    ON_UPDATE_COMMAND_UI(ID_VIEW_MPCTHEME, OnUpdateViewMPCTheme)
     ON_COMMAND(ID_VIEW_PRESETS_MINIMAL, OnViewMinimal)
     ON_UPDATE_COMMAND_UI(ID_VIEW_PRESETS_MINIMAL, OnUpdateViewMinimal)
     ON_COMMAND(ID_VIEW_PRESETS_COMPACT, OnViewCompact)
@@ -7583,18 +7581,6 @@ void CMainFrame::OnUpdateViewDebugShaders(CCmdUI* pCmdUI)
 {
     const auto& dlg = m_pDebugShaders;
     pCmdUI->SetCheck(dlg && dlg->m_hWnd && dlg->IsWindowVisible());
-}
-
-void CMainFrame::OnUpdateViewMPCTheme(CCmdUI* pCmdUI)
-{
-    const CAppSettings& s = AfxGetAppSettings();
-    pCmdUI->SetCheck(s.bMPCTheme);
-}
-
-void CMainFrame::OnViewMPCTheme()
-{
-    CAppSettings& s = AfxGetAppSettings();
-    s.bMPCTheme = !s.bMPCTheme;
 }
 
 void CMainFrame::OnViewMinimal()

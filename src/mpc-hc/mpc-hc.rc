@@ -4043,11 +4043,6 @@ END
 
 STRINGTABLE
 BEGIN
-    IDS_AG_TOGGLE_MPCTHEME  "Toggle Dark Theme"
-END
-
-STRINGTABLE
-BEGIN
     IDS_PPAGEADVANCED_LOOP_FOLDER_NEXT_FILE 
                             "Loop back to first file in folder after playing the last file."
     IDS_PPAGEADVANCED_MODERNSEEKBAR 
