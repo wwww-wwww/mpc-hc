@@ -12091,12 +12091,11 @@ void CMainFrame::ZoomVideoWindow(double dScale/* = ZOOM_DEFAULT_LEVEL*/)
                 s.iZoomLevel == 0 ? 0.5 :
                 s.iZoomLevel == 1 ? 1.0 :
                 s.iZoomLevel == 2 ? 2.0 :
-                s.iZoomLevel == 3 ? GetZoomAutoFitScale(false) :
-                s.iZoomLevel == 4 ? GetZoomAutoFitScale(true) : 1.0;
+                s.iZoomLevel == 3 ? GetZoomAutoFitScale() :
+//                s.iZoomLevel == 4 ? GetZoomAutoFitScale(true) :
+                1.0;
         } else if (dScale == (double)ZOOM_AUTOFIT) {
-            dScale = GetZoomAutoFitScale(false);
-        } else if (dScale == (double)ZOOM_AUTOFIT_LARGER) {
-            dScale = GetZoomAutoFitScale(true);
+            dScale = GetZoomAutoFitScale();
         } else if (dScale <= 0.0) {
             ASSERT(FALSE);
             return;
@@ -12105,7 +12104,7 @@ void CMainFrame::ZoomVideoWindow(double dScale/* = ZOOM_DEFAULT_LEVEL*/)
     }
 }
 
-double CMainFrame::GetZoomAutoFitScale(bool bLargerOnly)
+double CMainFrame::GetZoomAutoFitScale()
 {
     if (GetLoadState() != MLS::LOADED || m_fAudioOnly) {
         return 1.0;
@@ -12171,23 +12170,35 @@ double CMainFrame::GetZoomAutoFitScale(bool bLargerOnly)
     LONG width = wa.right - wa.left;
     LONG height = wa.bottom - wa.top;
 
-    double sx = ((double)width  * s.nAutoFitFactor / 100 - decorationsSize.cx) / arxy.cx;
-    double sy = ((double)height * s.nAutoFitFactor / 100 - decorationsSize.cy) / arxy.cy;
-    sx = std::min(sx, sy);
+    double sxMin = ((double)width  * s.nAutoFitFactorMin / 100 - decorationsSize.cx) / arxy.cx;
+    double syMin = ((double)height * s.nAutoFitFactorMin / 100 - decorationsSize.cy) / arxy.cy;
+    sxMin = std::min(sxMin, syMin);
     // Take movie aspect ratio into consideration
     // The scaling is computed so that the height is an integer value
-    sy = floor(arxy.cy * floor(arxy.cx * sx + 0.5) / arxy.cx + 0.5) / arxy.cy;
+    syMin = floor(arxy.cy * floor(arxy.cx * sxMin + 0.5) / arxy.cx + 0.5) / arxy.cy;
 
-    if (sy < 0.0) {
+    double sxMax = ((double)width * s.nAutoFitFactorMax / 100 - decorationsSize.cx) / arxy.cx;
+    double syMax = ((double)height * s.nAutoFitFactorMax / 100 - decorationsSize.cy) / arxy.cy;
+    sxMax = std::min(sxMax, syMax);
+    // Take movie aspect ratio into consideration
+    // The scaling is computed so that the height is an integer value
+    syMax = floor(arxy.cy * floor(arxy.cx * sxMax + 0.5) / arxy.cx + 0.5) / arxy.cy;
+
+
+    if (syMin < 0.0 || syMax < 0.0) {
         ASSERT(FALSE);
-        sy = 0.0;
+        syMin = 0.0;
+        syMax = 0.0;
     }
 
-    if (bLargerOnly && sy >= 1.0) {
-        return 1.0;
+    if (syMin > 1.0) {
+        return syMin;
     }
+    if (syMax < 1.0) {
+        return syMax;
+    }
+    return 1.0;
 
-    return sy;
 }
 
 void CMainFrame::RepaintVideo()

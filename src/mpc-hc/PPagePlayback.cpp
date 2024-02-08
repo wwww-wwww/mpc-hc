@@ -44,7 +44,8 @@ CPPagePlayback::CPPagePlayback()
     , m_iZoomLevel(1)
     , verticalAlignVideo(0)
     , m_iRememberZoomLevel(FALSE)
-    , m_nAutoFitFactor(75)
+    , m_nAutoFitFactorMin(75)
+    , m_nAutoFitFactorMax(75)
     , m_fAutoloadAudio(FALSE)
     , m_fEnableWorkerThreadForOpening(FALSE)
     , m_fReportFailedPins(FALSE)
@@ -79,10 +80,12 @@ void CPPagePlayback::DoDataExchange(CDataExchange* pDX)
     DDX_Text(pDX, IDC_EDIT3, m_audiosLanguageOrder);
     DDX_Check(pDX, IDC_CHECK4, m_fAllowOverridingExternalSplitterChoice);
     DDX_Text(pDX, IDC_VOLUMESTEP, m_nVolumeStep);
-    DDX_Text(pDX, IDC_EDIT4, m_nAutoFitFactor);
+    DDX_Text(pDX, IDC_EDIT4, m_nAutoFitFactorMin);
+    DDX_Text(pDX, IDC_EDIT5, m_nAutoFitFactorMax);
     DDX_Control(pDX, IDC_VOLUMESTEP_SPIN, m_VolumeStepCtrl);
     DDX_Control(pDX, IDC_SPEEDSTEP_SPIN, m_SpeedStepCtrl);
-    DDX_Control(pDX, IDC_SPIN1, m_AutoFitFactorCtrl);
+    DDX_Control(pDX, IDC_SPIN1, m_AutoFitFactorMinCtrl);
+    DDX_Control(pDX, IDC_SPIN2, m_AutoFitFactorMaxCtrl);
     DDX_Control(pDX, IDC_COMBO3, m_LoopMode);
     DDX_CBIndex(pDX, IDC_COMBO3, m_iLoopMode);
 }
@@ -128,9 +131,12 @@ BOOL CPPagePlayback::OnInitDialog()
     m_iZoomLevel = s.iZoomLevel + 1;
     verticalAlignVideo = static_cast<int>(s.iVerticalAlignVideo);
     m_iRememberZoomLevel = s.fRememberZoomLevel;
-    m_nAutoFitFactor = s.nAutoFitFactor;
-    m_AutoFitFactorCtrl.SetPos32(m_nAutoFitFactor);
-    m_AutoFitFactorCtrl.SetRange32(25, 100);
+    m_nAutoFitFactorMin = s.nAutoFitFactorMin;
+    m_AutoFitFactorMinCtrl.SetPos32(m_nAutoFitFactorMin);
+    m_AutoFitFactorMinCtrl.SetRange32(25, 100);
+    m_nAutoFitFactorMax = s.nAutoFitFactorMax;
+    m_AutoFitFactorMaxCtrl.SetPos32(m_nAutoFitFactorMax);
+    m_AutoFitFactorMaxCtrl.SetRange32(25, 100);
     m_fAutoloadAudio = s.fAutoloadAudio;
     m_fEnableWorkerThreadForOpening = s.fEnableWorkerThreadForOpening;
     m_fReportFailedPins = s.fReportFailedPins;
@@ -143,7 +149,7 @@ BOOL CPPagePlayback::OnInitDialog()
     m_zoomlevelctrl.AddString(ResStr(IDS_ZOOM_100));
     m_zoomlevelctrl.AddString(ResStr(IDS_ZOOM_200));
     m_zoomlevelctrl.AddString(ResStr(IDS_ZOOM_AUTOFIT));
-    m_zoomlevelctrl.AddString(ResStr(IDS_ZOOM_AUTOFIT_LARGER));
+    //m_zoomlevelctrl.AddString(ResStr(IDS_ZOOM_AUTOFIT_LARGER));
     CorrectComboListWidth(m_zoomlevelctrl);
 
     verticalAlignVideoCombo.AddString(ResStr(IDS_VERTICAL_ALIGN_VIDEO_MIDDLE));
@@ -197,7 +203,8 @@ BOOL CPPagePlayback::OnApply()
     s.iZoomLevel = m_iZoomLevel - 1;
     s.iVerticalAlignVideo = static_cast<CAppSettings::verticalAlignVideoType>(verticalAlignVideo);
     s.fRememberZoomLevel = !!m_iRememberZoomLevel;
-    s.nAutoFitFactor = m_nAutoFitFactor = std::min(std::max(m_nAutoFitFactor, 25), 100);
+    s.nAutoFitFactorMin = m_nAutoFitFactorMin = std::min(std::max(m_nAutoFitFactorMin, 25), 100);
+    s.nAutoFitFactorMax = m_nAutoFitFactorMax = std::min(std::max(m_nAutoFitFactorMax, 25), 100);
     s.fAutoloadAudio = !!m_fAutoloadAudio;
     s.fEnableWorkerThreadForOpening = !!m_fEnableWorkerThreadForOpening;
     s.fReportFailedPins = !!m_fReportFailedPins;

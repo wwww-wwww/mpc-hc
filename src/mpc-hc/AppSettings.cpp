@@ -99,7 +99,8 @@ CAppSettings::CAppSettings()
     , fLoopForever(false)
     , eLoopMode(LoopMode::PLAYLIST)
     , fRememberZoomLevel(true)
-    , nAutoFitFactor(75)
+    , nAutoFitFactorMin(75)
+    , nAutoFitFactorMax(75)
     , iZoomLevel(1)
     , fEnableWorkerThreadForOpening(true)
     , fReportFailedPins(true)
@@ -889,7 +890,9 @@ void CAppSettings::SaveSettings(bool write_full_history /* = false */)
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_ONTOP, iOnTop);
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_TRAYICON, fTrayIcon);
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_AUTOZOOM, fRememberZoomLevel);
-    pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_AUTOFITFACTOR, nAutoFitFactor);
+    pApp->WriteProfileStringW(IDS_R_SETTINGS, IDS_RS_AUTOFITFACTOR, NULL); //remove old form factor
+    pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_AUTOFITFACTOR_MIN, nAutoFitFactorMin);
+    pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_AUTOFITFACTOR_MAX, nAutoFitFactorMax);
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_AFTER_PLAYBACK, static_cast<int>(eAfterPlayback));
 
     VERIFY(pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_HIDE_FULLSCREEN_CONTROLS, bHideFullscreenControls));
@@ -1551,7 +1554,9 @@ void CAppSettings::LoadSettings()
     iOnTop = pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_ONTOP, 0);
     fTrayIcon = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_TRAYICON, FALSE);
     fRememberZoomLevel = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_AUTOZOOM, TRUE);
-    nAutoFitFactor = pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_AUTOFITFACTOR, 75);
+    int tAutoFitFactor = pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_AUTOFITFACTOR, 75); //old fit factor will be default for min/max
+    nAutoFitFactorMin = pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_AUTOFITFACTOR_MIN, tAutoFitFactor);
+    nAutoFitFactorMax = pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_AUTOFITFACTOR_MAX, tAutoFitFactor);
     eAfterPlayback = static_cast<AfterPlayback>(pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_AFTER_PLAYBACK, 0));
 
     bHideFullscreenControls = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_HIDE_FULLSCREEN_CONTROLS, TRUE);

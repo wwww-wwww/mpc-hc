@@ -307,9 +307,12 @@ BEGIN
     CONTROL         "Auto-zoom:",IDC_CHECK5,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,170,80,90,8
     COMBOBOX        IDC_COMBO1,261,78,80,47,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
     LTEXT           "Auto fit factor:",IDC_STATIC2,170,101,113,8
-    EDITTEXT        IDC_EDIT4,286,97,42,14,ES_CENTER | ES_AUTOHSCROLL | ES_NUMBER
-    CONTROL         "",IDC_SPIN1,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS | UDS_HOTTRACK,328,97,13,14
-    LTEXT           "%",IDC_STATIC3,332,101,10,8
+    EDITTEXT        IDC_EDIT4,281,97,25,14,ES_CENTER | ES_AUTOHSCROLL | ES_NUMBER
+    CONTROL         "",IDC_SPIN1,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS | UDS_HOTTRACK,306,97,13,14
+    LTEXT           "min %",IDC_STATIC,281,112,25,8
+    EDITTEXT        IDC_EDIT5,316,97,25,14,ES_CENTER | ES_AUTOHSCROLL | ES_NUMBER
+    CONTROL         "",IDC_SPIN2,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS | UDS_HOTTRACK,341,97,13,14
+    LTEXT           "max %",IDC_STATIC,316,112,25,8
     LTEXT           "Vertical Alignment:",IDC_STATIC4,170,125,93,9
     COMBOBOX        IDC_COMBO4,261,123,80,47,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
     GROUPBOX        "Default track preference",IDC_STATIC,164,151,185,74
@@ -1588,7 +1591,6 @@ BEGIN
             MENUITEM "&100%",                       ID_VIEW_ZOOM_100
             MENUITEM "&200%",                       ID_VIEW_ZOOM_200
             MENUITEM "Auto &Fit",                   ID_VIEW_ZOOM_AUTOFIT
-            MENUITEM "Auto Fit (&Larger Only)",     ID_VIEW_ZOOM_AUTOFIT_LARGER
         END
         MENUITEM SEPARATOR
         POPUP "R&enderer Settings"
@@ -1861,7 +1863,6 @@ BEGIN
             MENUITEM "&100%",                       ID_VIEW_ZOOM_100
             MENUITEM "&200%",                       ID_VIEW_ZOOM_200
             MENUITEM "Auto &Fit",                   ID_VIEW_ZOOM_AUTOFIT
-            MENUITEM "Auto Fit (&Larger Only)",     ID_VIEW_ZOOM_AUTOFIT_LARGER
         END
         MENUITEM SEPARATOR
         POPUP "Video &Frame"
@@ -2111,7 +2112,6 @@ BEGIN
                 MENUITEM "&100%",                       ID_VIEW_ZOOM_100
                 MENUITEM "&200%",                       ID_VIEW_ZOOM_200
                 MENUITEM "Auto &Fit",                   ID_VIEW_ZOOM_AUTOFIT
-                MENUITEM "Auto Fit (&Larger Only)",     ID_VIEW_ZOOM_AUTOFIT_LARGER
             END
             MENUITEM SEPARATOR
             POPUP "R&enderer Settings"
@@ -3246,7 +3246,6 @@ BEGIN
     IDS_ZOOM_100            "100%"
     IDS_ZOOM_200            "200%"
     IDS_ZOOM_AUTOFIT        "Auto Fit"
-    IDS_ZOOM_AUTOFIT_LARGER "Auto Fit (Larger Only)"
     IDS_AG_ZOOM_AUTO_FIT_LARGER "Zoom Auto Fit (Larger Only)"
     IDS_OSD_ZOOM_AUTO_LARGER "Zoom: Auto (Larger Only)"
     IDS_TOOLTIP_EXPLORE_TO_FILE "Double click to open file location"

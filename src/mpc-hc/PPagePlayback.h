@@ -56,8 +56,8 @@ public:
     int m_iZoomLevel;
     int verticalAlignVideo;
     BOOL m_iRememberZoomLevel;
-    int m_nAutoFitFactor;
-    CMPCThemeSpinButtonCtrl m_AutoFitFactorCtrl;
+    int m_nAutoFitFactorMin, m_nAutoFitFactorMax;
+    CMPCThemeSpinButtonCtrl m_AutoFitFactorMinCtrl, m_AutoFitFactorMaxCtrl;
     BOOL m_fAutoloadAudio;
     BOOL m_fEnableWorkerThreadForOpening;
     BOOL m_fReportFailedPins;

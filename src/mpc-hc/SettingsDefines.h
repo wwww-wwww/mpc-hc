@@ -158,6 +158,8 @@
 #define IDS_RS_ALWAYSONTOP                  _T("AlwaysOnTop")
 #define IDS_RS_AUTOZOOM                     _T("AutoZoom")
 #define IDS_RS_AUTOFITFACTOR                _T("AutoFitFactor")
+#define IDS_RS_AUTOFITFACTOR_MIN            _T("AutoFitFactorMin")
+#define IDS_RS_AUTOFITFACTOR_MAX            _T("AutoFitFactorMax")
 #define IDS_RS_AFTER_PLAYBACK               _T("AfterPlayback")
 #define IDS_RS_SPSTYLE                      _T("SPDefaultStyle")
 #define IDS_RS_SPOVERRIDEPLACEMENT          _T("SPOverridePlacement")

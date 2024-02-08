@@ -650,7 +650,8 @@ public:
     } eLoopMode;
 
     bool            fRememberZoomLevel;
-    int             nAutoFitFactor;
+    int             nAutoFitFactorMin;
+    int             nAutoFitFactorMax;
     int             iZoomLevel;
     CStringW        strAudiosLanguageOrder;
     CStringW        strSubtitlesLanguageOrder;
