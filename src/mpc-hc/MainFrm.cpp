@@ -6331,16 +6331,20 @@ void CMainFrame::SubtitlesSave(const TCHAR* directory, bool silent)
             };
 
             CString filter;
-            filter += _T("SubRip (*.srt)|*.srt|");
-            filter += _T("MicroDVD (*.sub)|*.sub|");
-            filter += _T("SAMI (*.smi)|*.smi|");
-            filter += _T("PowerDivX (*.psb)|*.psb|");
-            filter += _T("SubStation Alpha (*.ssa)|*.ssa|");
-            filter += _T("Advanced SubStation Alpha (*.ass)|*.ass|");
+            filter += _T("SubRip (*.srt)|*.srt|"); //1 = default
+            filter += _T("MicroDVD (*.sub)|*.sub|"); //2
+            filter += _T("SAMI (*.smi)|*.smi|"); //3
+            filter += _T("PowerDivX (*.psb)|*.psb|"); //4
+            filter += _T("SubStation Alpha (*.ssa)|*.ssa|"); //5
+            filter += _T("Advanced SubStation Alpha (*.ass)|*.ass|"); //6
             filter += _T("|");
 
             CSaveSubtitlesFileDialog fd(pRTS->m_encoding, m_pCAP->GetSubtitleDelay(), s.bSubSaveExternalStyleFile,
                                         _T("srt"), suggestedFileName, filter, types, GetModalParent());
+
+            if (pRTS->m_subtitleType == Subtitle::SSA || pRTS->m_subtitleType == Subtitle::ASS) {
+                fd.m_ofn.nFilterIndex = 6; //nFilterIndex is 1-based
+            }
 
             if (fd.DoModal() == IDOK) {
                 CAutoLock cAutoLock(&m_csSubLock);
