@@ -1554,9 +1554,12 @@ void CAppSettings::LoadSettings()
     iOnTop = pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_ONTOP, 0);
     fTrayIcon = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_TRAYICON, FALSE);
     fRememberZoomLevel = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_AUTOZOOM, TRUE);
-    int tAutoFitFactor = pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_AUTOFITFACTOR, 75); //old fit factor will be default for min/max
-    nAutoFitFactorMin = pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_AUTOFITFACTOR_MIN, tAutoFitFactor);
-    nAutoFitFactorMax = pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_AUTOFITFACTOR_MAX, tAutoFitFactor);
+    int tAutoFitFactor = pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_AUTOFITFACTOR, 0); //if found, old fit factor will be default for min/max
+    nAutoFitFactorMin = pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_AUTOFITFACTOR_MIN, tAutoFitFactor ? tAutoFitFactor : DEF_MIN_AUTOFIT_SCALE_FACTOR); //otherwise default min to DEF_MIN_AUTOFIT_SCALE_FACTOR
+    nAutoFitFactorMax = pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_AUTOFITFACTOR_MAX, tAutoFitFactor ? tAutoFitFactor : DEF_MAX_AUTOFIT_SCALE_FACTOR); //otherwise default max to DEF_MAX_AUTOFIT_SCALE_FACTOR
+    nAutoFitFactorMin = std::max(std::min(nAutoFitFactorMin, nAutoFitFactorMax), MIN_AUTOFIT_SCALE_FACTOR);
+    nAutoFitFactorMax = std::min(std::max(nAutoFitFactorMin, nAutoFitFactorMax), MAX_AUTOFIT_SCALE_FACTOR);
+
     eAfterPlayback = static_cast<AfterPlayback>(pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_AFTER_PLAYBACK, 0));
 
     bHideFullscreenControls = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_HIDE_FULLSCREEN_CONTROLS, TRUE);

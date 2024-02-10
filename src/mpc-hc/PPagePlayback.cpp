@@ -26,7 +26,6 @@
 #include "Monitors.h"
 #include "MultiMonitor.h"
 
-
 // CPPagePlayback dialog
 
 IMPLEMENT_DYNAMIC(CPPagePlayback, CMPCThemePPageBase)
@@ -44,12 +43,13 @@ CPPagePlayback::CPPagePlayback()
     , m_iZoomLevel(1)
     , verticalAlignVideo(0)
     , m_iRememberZoomLevel(FALSE)
-    , m_nAutoFitFactorMin(75)
-    , m_nAutoFitFactorMax(75)
+    , m_nAutoFitFactorMin(DEF_MIN_AUTOFIT_SCALE_FACTOR)
+    , m_nAutoFitFactorMax(DEF_MAX_AUTOFIT_SCALE_FACTOR)
     , m_fAutoloadAudio(FALSE)
     , m_fEnableWorkerThreadForOpening(FALSE)
     , m_fReportFailedPins(FALSE)
     , m_fAllowOverridingExternalSplitterChoice(FALSE)
+    , m_bInitDialogComplete(false)
 {
 }
 
@@ -93,6 +93,8 @@ void CPPagePlayback::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(CPPagePlayback, CMPCThemePPageBase)
     ON_WM_HSCROLL()
     ON_CONTROL_RANGE(BN_CLICKED, IDC_RADIO1, IDC_RADIO2, OnBnClickedRadio12)
+    ON_EN_CHANGE(IDC_EDIT4, OnChangeFitFactorMin)
+    ON_EN_CHANGE(IDC_EDIT5, OnChangeFitFactorMax)
     ON_UPDATE_COMMAND_UI(IDC_EDIT1, OnUpdateLoopNum)
     ON_UPDATE_COMMAND_UI(IDC_STATIC1, OnUpdateLoopNum)
     ON_UPDATE_COMMAND_UI(IDC_COMBO1, OnUpdateAutoZoomCombo)
@@ -133,10 +135,10 @@ BOOL CPPagePlayback::OnInitDialog()
     m_iRememberZoomLevel = s.fRememberZoomLevel;
     m_nAutoFitFactorMin = s.nAutoFitFactorMin;
     m_AutoFitFactorMinCtrl.SetPos32(m_nAutoFitFactorMin);
-    m_AutoFitFactorMinCtrl.SetRange32(25, 100);
+    m_AutoFitFactorMinCtrl.SetRange32(MIN_AUTOFIT_SCALE_FACTOR, m_nAutoFitFactorMax);
     m_nAutoFitFactorMax = s.nAutoFitFactorMax;
     m_AutoFitFactorMaxCtrl.SetPos32(m_nAutoFitFactorMax);
-    m_AutoFitFactorMaxCtrl.SetRange32(25, 100);
+    m_AutoFitFactorMaxCtrl.SetRange32(m_nAutoFitFactorMin, MAX_AUTOFIT_SCALE_FACTOR);
     m_fAutoloadAudio = s.fAutoloadAudio;
     m_fEnableWorkerThreadForOpening = s.fEnableWorkerThreadForOpening;
     m_fReportFailedPins = s.fReportFailedPins;
@@ -181,7 +183,7 @@ BOOL CPPagePlayback::OnInitDialog()
     m_wndToolTip.AddTool(GetDlgItem(IDC_CHECK4), ResStr(IDS_OVERRIDE_EXT_SPLITTER_CHOICE));
 
     UpdateData(FALSE);
-
+    m_bInitDialogComplete = true; //UpdateData is dangerous to call before this, some events fire as soon as control is created (ON_EN_CHANGE)
     return TRUE;  // return TRUE unless you set the focus to a control
     // EXCEPTION: OCX Property Pages should return FALSE
 }
@@ -332,4 +334,24 @@ void CPPagePlayback::OnCancel()
     }
 
     __super::OnCancel();
+}
+
+void CPPagePlayback::OnChangeFitFactorMin() {
+    if (m_bInitDialogComplete) { //DO NOT REMOVE THIS! EN_CHANGE fired before all controls created
+        UpdateData(true);
+        if (m_AutoFitFactorMaxCtrl.m_hWnd) {
+            m_AutoFitFactorMaxCtrl.SetRange32(m_nAutoFitFactorMin, MAX_AUTOFIT_SCALE_FACTOR);
+        }
+        SetModified();
+    }
+}
+
+void CPPagePlayback::OnChangeFitFactorMax() {
+    if (m_bInitDialogComplete) { //DO NOT REMOVE THIS! EN_CHANGE fired before all controls created
+        UpdateData(true);
+        if (m_AutoFitFactorMinCtrl.m_hWnd) {
+            m_AutoFitFactorMinCtrl.SetRange32(MIN_AUTOFIT_SCALE_FACTOR, m_nAutoFitFactorMax);
+        }
+        SetModified();
+    }
 }

@@ -68,6 +68,7 @@ public:
     CMPCThemeComboBox m_zoomlevelctrl;
     CMPCThemeComboBox verticalAlignVideoCombo;
     CMPCThemeComboBox m_afterPlayback;
+    bool m_bInitDialogComplete;
 
     // Dialog Data
     enum { IDD = IDD_PPAGEPLAYBACK };
@@ -89,4 +90,6 @@ public:
     afx_msg void OnBalanceTextDblClk();
     afx_msg BOOL OnToolTipNotify(UINT id, NMHDR* pNMHDR, LRESULT* pResult);
     virtual void OnCancel();
+    afx_msg void OnChangeFitFactorMin();
+    afx_msg void OnChangeFitFactorMax();
 };
