@@ -2134,10 +2134,6 @@ msgctxt "IDS_ZOOM_AUTOFIT"
 msgid "Auto Fit"
 msgstr "Упісаць аўтаматычна"
 
-msgctxt "IDS_ZOOM_AUTOFIT_LARGER"
-msgid "Auto Fit (Larger Only)"
-msgstr "Упісаць аўтаматычна (Толькі вялікія)"
-
 msgctxt "IDS_AG_ZOOM_AUTO_FIT_LARGER"
 msgid "Zoom Auto Fit (Larger Only)"
 msgstr "Упісаць (толькі вялікія)"
@@ -4490,10 +4486,6 @@ msgstr ""
 
 msgctxt "IDS_AG_TOGGLE_DEFAULT_SUBTITLE_STYLE"
 msgid "Toggle Default Subtitle Style"
-msgstr ""
-
-msgctxt "IDS_AG_TOGGLE_MPCTHEME"
-msgid "Toggle Dark Theme"
 msgstr ""
 
 msgctxt "IDS_PPAGEADVANCED_LOOP_FOLDER_NEXT_FILE"

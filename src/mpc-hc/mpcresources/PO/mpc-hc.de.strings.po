@@ -2173,10 +2173,6 @@ msgctxt "IDS_ZOOM_AUTOFIT"
 msgid "Auto Fit"
 msgstr "Eingepasst"
 
-msgctxt "IDS_ZOOM_AUTOFIT_LARGER"
-msgid "Auto Fit (Larger Only)"
-msgstr "Nur verkleinert"
-
 msgctxt "IDS_AG_ZOOM_AUTO_FIT_LARGER"
 msgid "Zoom Auto Fit (Larger Only)"
 msgstr "Zoom: Nur verkleinert"
@@ -4579,10 +4575,6 @@ msgstr "&Fortsetzen"
 msgctxt "IDS_AG_TOGGLE_DEFAULT_SUBTITLE_STYLE"
 msgid "Toggle Default Subtitle Style"
 msgstr "Standard-Untertitelstil umschalten"
-
-msgctxt "IDS_AG_TOGGLE_MPCTHEME"
-msgid "Toggle Dark Theme"
-msgstr "Dunkles Thema umschalten"
 
 msgctxt "IDS_PPAGEADVANCED_LOOP_FOLDER_NEXT_FILE"
 msgid "Loop back to first file in folder after playing the last file."

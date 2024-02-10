@@ -182,10 +182,6 @@ msgctxt "ID_VIEW_ZOOM_AUTOFIT"
 msgid "Auto &Fit"
 msgstr "Automaticky prisp&ôsobiť"
 
-msgctxt "ID_VIEW_ZOOM_AUTOFIT_LARGER"
-msgid "Auto Fit (&Larger Only)"
-msgstr "Automaticky prispôsobiť (iba &väčšie)"
-
 msgctxt "POPUP"
 msgid "R&enderer Settings"
 msgstr "Nastavenia vykr&esľovača"

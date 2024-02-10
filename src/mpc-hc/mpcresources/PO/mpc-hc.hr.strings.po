@@ -2158,10 +2158,6 @@ msgctxt "IDS_ZOOM_AUTOFIT"
 msgid "Auto Fit"
 msgstr "Automatski namjesti"
 
-msgctxt "IDS_ZOOM_AUTOFIT_LARGER"
-msgid "Auto Fit (Larger Only)"
-msgstr "Automatski namjesti (samo veliko)"
-
 msgctxt "IDS_AG_ZOOM_AUTO_FIT_LARGER"
 msgid "Zoom Auto Fit (Larger Only)"
 msgstr "Zumiraj automatski (samo veliko)"
@@ -4516,10 +4512,6 @@ msgstr ""
 msgctxt "IDS_AG_TOGGLE_DEFAULT_SUBTITLE_STYLE"
 msgid "Toggle Default Subtitle Style"
 msgstr ""
-
-msgctxt "IDS_AG_TOGGLE_MPCTHEME"
-msgid "Toggle Dark Theme"
-msgstr "Uključi tamnu temu"
 
 msgctxt "IDS_PPAGEADVANCED_LOOP_FOLDER_NEXT_FILE"
 msgid "Loop back to first file in folder after playing the last file."

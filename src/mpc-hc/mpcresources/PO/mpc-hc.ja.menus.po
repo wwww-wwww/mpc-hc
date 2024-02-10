@@ -183,10 +183,6 @@ msgctxt "ID_VIEW_ZOOM_AUTOFIT"
 msgid "Auto &Fit"
 msgstr "自動調整(&F)"
 
-msgctxt "ID_VIEW_ZOOM_AUTOFIT_LARGER"
-msgid "Auto Fit (&Larger Only)"
-msgstr "自動調整 (超過のみ)(&L)"
-
 msgctxt "POPUP"
 msgid "R&enderer Settings"
 msgstr "レンダラの設定(&E)"

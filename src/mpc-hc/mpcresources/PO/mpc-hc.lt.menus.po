@@ -181,10 +181,6 @@ msgctxt "ID_VIEW_ZOOM_AUTOFIT"
 msgid "Auto &Fit"
 msgstr "&Automatinis pritaikymas"
 
-msgctxt "ID_VIEW_ZOOM_AUTOFIT_LARGER"
-msgid "Auto Fit (&Larger Only)"
-msgstr "Automatinis pritaikymas (tik &didesniems)"
-
 msgctxt "POPUP"
 msgid "R&enderer Settings"
 msgstr "At&vaizdavimo nuostatos"

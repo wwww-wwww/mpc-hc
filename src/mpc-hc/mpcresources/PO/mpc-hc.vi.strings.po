@@ -2163,10 +2163,6 @@ msgctxt "IDS_ZOOM_AUTOFIT"
 msgid "Auto Fit"
 msgstr "Tự động vừa"
 
-msgctxt "IDS_ZOOM_AUTOFIT_LARGER"
-msgid "Auto Fit (Larger Only)"
-msgstr "Tự động vừa (chỉ lớn hơn)"
-
 msgctxt "IDS_AG_ZOOM_AUTO_FIT_LARGER"
 msgid "Zoom Auto Fit (Larger Only)"
 msgstr "Phóng tự động vừa (chỉ lớn hơn)"
@@ -4559,10 +4555,6 @@ msgstr "&Tiếp tục"
 msgctxt "IDS_AG_TOGGLE_DEFAULT_SUBTITLE_STYLE"
 msgid "Toggle Default Subtitle Style"
 msgstr "Chuyển đổi kiểu phụ đề mặc định"
-
-msgctxt "IDS_AG_TOGGLE_MPCTHEME"
-msgid "Toggle Dark Theme"
-msgstr "Chuyển đổi chủ đề tối"
 
 msgctxt "IDS_PPAGEADVANCED_LOOP_FOLDER_NEXT_FILE"
 msgid "Loop back to first file in folder after playing the last file."

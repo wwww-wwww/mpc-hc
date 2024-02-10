@@ -2140,10 +2140,6 @@ msgctxt "IDS_ZOOM_AUTOFIT"
 msgid "Auto Fit"
 msgstr "Savaiminis prisitaikymas"
 
-msgctxt "IDS_ZOOM_AUTOFIT_LARGER"
-msgid "Auto Fit (Larger Only)"
-msgstr "Savaiminis prisitaikymas (tik didesniam)"
-
 msgctxt "IDS_AG_ZOOM_AUTO_FIT_LARGER"
 msgid "Zoom Auto Fit (Larger Only)"
 msgstr "Mastelio savaiminis prisitaikymas (tik didesniam)"
@@ -4474,10 +4470,6 @@ msgstr ""
 
 msgctxt "IDS_AG_TOGGLE_DEFAULT_SUBTITLE_STYLE"
 msgid "Toggle Default Subtitle Style"
-msgstr ""
-
-msgctxt "IDS_AG_TOGGLE_MPCTHEME"
-msgid "Toggle Dark Theme"
 msgstr ""
 
 msgctxt "IDS_PPAGEADVANCED_LOOP_FOLDER_NEXT_FILE"

@@ -182,10 +182,6 @@ msgctxt "ID_VIEW_ZOOM_AUTOFIT"
 msgid "Auto &Fit"
 msgstr "화면에 맞춰 자동 크기 조정"
 
-msgctxt "ID_VIEW_ZOOM_AUTOFIT_LARGER"
-msgid "Auto Fit (&Larger Only)"
-msgstr "자동 크기 조정(확대)"
-
 msgctxt "POPUP"
 msgid "R&enderer Settings"
 msgstr "렌더러 설정(&E)"

@@ -181,10 +181,6 @@ msgctxt "ID_VIEW_ZOOM_AUTOFIT"
 msgid "Auto &Fit"
 msgstr "&พอดีอัตโนมัติ"
 
-msgctxt "ID_VIEW_ZOOM_AUTOFIT_LARGER"
-msgid "Auto Fit (&Larger Only)"
-msgstr "พอดีอัตโนมัติ (ใ&หญ่กว่าเท่านั้น)"
-
 msgctxt "POPUP"
 msgid "R&enderer Settings"
 msgstr "การตั้งค่าตัวแ&ปลผล"

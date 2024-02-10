@@ -182,10 +182,6 @@ msgctxt "ID_VIEW_ZOOM_AUTOFIT"
 msgid "Auto &Fit"
 msgstr "&Подогнать"
 
-msgctxt "ID_VIEW_ZOOM_AUTOFIT_LARGER"
-msgid "Auto Fit (&Larger Only)"
-msgstr "Подогнать (только &большие)"
-
 msgctxt "POPUP"
 msgid "R&enderer Settings"
 msgstr "Настройки &рендера"

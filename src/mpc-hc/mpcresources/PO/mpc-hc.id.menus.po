@@ -183,10 +183,6 @@ msgctxt "ID_VIEW_ZOOM_AUTOFIT"
 msgid "Auto &Fit"
 msgstr "Oto &Suai"
 
-msgctxt "ID_VIEW_ZOOM_AUTOFIT_LARGER"
-msgid "Auto Fit (&Larger Only)"
-msgstr "Oto Suai (&Lebih Besar Saja)"
-
 msgctxt "POPUP"
 msgid "R&enderer Settings"
 msgstr "Pengaturan Per&ender"

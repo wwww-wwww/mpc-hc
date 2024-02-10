@@ -181,10 +181,6 @@ msgctxt "ID_VIEW_ZOOM_AUTOFIT"
 msgid "Auto &Fit"
 msgstr "ਆਟੋ ਫਿੱਟ(&F)"
 
-msgctxt "ID_VIEW_ZOOM_AUTOFIT_LARGER"
-msgid "Auto Fit (&Larger Only)"
-msgstr "ਆਟੋ ਫਿੱਟ (ਕੇਵਲ ਵੱਡਾ)(&L)"
-
 msgctxt "POPUP"
 msgid "R&enderer Settings"
 msgstr "ਰੈਂਡਰਰ ਸੈਟਿੰਗਾਂ(&e)"

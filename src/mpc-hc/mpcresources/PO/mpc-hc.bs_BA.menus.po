@@ -181,10 +181,6 @@ msgctxt "ID_VIEW_ZOOM_AUTOFIT"
 msgid "Auto &Fit"
 msgstr "Automatska Veličina"
 
-msgctxt "ID_VIEW_ZOOM_AUTOFIT_LARGER"
-msgid "Auto Fit (&Larger Only)"
-msgstr "Automatska Veličina (Samo Ve&liki)"
-
 msgctxt "POPUP"
 msgid "R&enderer Settings"
 msgstr "Podešenja R&enderiranja"

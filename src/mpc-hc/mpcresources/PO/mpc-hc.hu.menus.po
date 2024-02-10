@@ -184,10 +184,6 @@ msgctxt "ID_VIEW_ZOOM_AUTOFIT"
 msgid "Auto &Fit"
 msgstr "Automatikus illesztés"
 
-msgctxt "ID_VIEW_ZOOM_AUTOFIT_LARGER"
-msgid "Auto Fit (&Larger Only)"
-msgstr "Automatikus illesztés (csak nagyobbnál)"
-
 msgctxt "POPUP"
 msgid "R&enderer Settings"
 msgstr "Videó átalakító beállítások"

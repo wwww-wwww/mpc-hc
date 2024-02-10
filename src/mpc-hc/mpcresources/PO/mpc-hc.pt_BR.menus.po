@@ -183,10 +183,6 @@ msgctxt "ID_VIEW_ZOOM_AUTOFIT"
 msgid "Auto &Fit"
 msgstr "Auto-&Ajustar"
 
-msgctxt "ID_VIEW_ZOOM_AUTOFIT_LARGER"
-msgid "Auto Fit (&Larger Only)"
-msgstr "Auto-Ajustar (&Só Maior)"
-
 msgctxt "POPUP"
 msgid "R&enderer Settings"
 msgstr "C&onfiguações do Renderizador"

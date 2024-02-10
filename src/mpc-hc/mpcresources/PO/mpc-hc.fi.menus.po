@@ -181,10 +181,6 @@ msgctxt "ID_VIEW_ZOOM_AUTOFIT"
 msgid "Auto &Fit"
 msgstr "Sovita automaattisesti"
 
-msgctxt "ID_VIEW_ZOOM_AUTOFIT_LARGER"
-msgid "Auto Fit (&Larger Only)"
-msgstr "Sovita automaattisesti (Vain suurempi)"
-
 msgctxt "POPUP"
 msgid "R&enderer Settings"
 msgstr "Renderöintiasetukset"

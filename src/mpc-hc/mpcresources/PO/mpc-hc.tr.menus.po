@@ -183,10 +183,6 @@ msgctxt "ID_VIEW_ZOOM_AUTOFIT"
 msgid "Auto &Fit"
 msgstr "&Otomatik uyum"
 
-msgctxt "ID_VIEW_ZOOM_AUTOFIT_LARGER"
-msgid "Auto Fit (&Larger Only)"
-msgstr "Oto. uyum (Sadece &büyük)"
-
 msgctxt "POPUP"
 msgid "R&enderer Settings"
 msgstr "İşleyici ayarları"

@@ -183,10 +183,6 @@ msgctxt "ID_VIEW_ZOOM_AUTOFIT"
 msgid "Auto &Fit"
 msgstr "自动适应(&F)"
 
-msgctxt "ID_VIEW_ZOOM_AUTOFIT_LARGER"
-msgid "Auto Fit (&Larger Only)"
-msgstr "自动适应 (仅放大)(&L)"
-
 msgctxt "POPUP"
 msgid "R&enderer Settings"
 msgstr "渲染器设置(&E)"
