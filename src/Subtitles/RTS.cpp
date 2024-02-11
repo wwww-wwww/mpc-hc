@@ -1842,6 +1842,7 @@ void CRenderedTextSubtitle::Empty()
 }
 
 void CRenderedTextSubtitle::SetOverride(bool bOverride, const STSStyle& styleOverride) {
+    ApplyANSICP(styleOverride.charSet);
     bool changed = (m_bOverrideStyle != bOverride) || bOverride && (m_styleOverride != styleOverride);
     if (changed) {
         m_bOverrideStyle = bOverride;
