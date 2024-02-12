@@ -491,7 +491,7 @@ CPlayerListCtrl::CPlayerListCtrl(int tStartEditingDelay)
     , m_tStartEditingDelay(tStartEditingDelay)
     , m_nTimerID(0)
     , m_fInPlaceDirty(false)
-    , inPlaceControl(true)
+    , inPlaceControl(false)
 {
 }
 
