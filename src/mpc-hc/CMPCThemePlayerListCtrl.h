@@ -24,7 +24,7 @@ public:
     DECLARE_DYNAMIC(CMPCThemePlayerListCtrl)
 
     void updateSB();
-    void updateScrollInfo();
+    void updateScrollInfo(bool invalidate = false);
     LRESULT WindowProc(UINT message, WPARAM wParam, LPARAM lParam);
     void updateToolTip(CPoint point);
     virtual BOOL PreTranslateMessage(MSG* pMsg);

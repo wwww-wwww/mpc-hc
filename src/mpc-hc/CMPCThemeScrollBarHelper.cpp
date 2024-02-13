@@ -55,9 +55,11 @@ void CMPCThemeScrollBarHelper::setDrawingArea(CRect& cr, CRect& wr, bool clippin
         int borderWidth = cr.left - wr.left; //GetSystemMetrics(SM_CXSIZEFRAME) + 1;
         int sbThickness = GetSystemMetrics(SM_CXVSCROLL);
         CRect realWR = wr;
+        bool canVSB = sbThickness < wr.Width() - borderWidth * 2; //SB simply disappears if window is that small
+        bool canHSB = sbThickness < wr.Height() - borderWidth * 2; //SB simply disappears if window is that small
 
         if (IsWindow(vertSB.m_hWnd)) {
-            if (hasVSB) {
+            if (hasVSB && canVSB) {
                 int width = sbThickness, height = realWR.bottom - realWR.top - 2 * borderWidth - (hasHSB ? sbThickness : 0);
                 wr.right -= sbThickness + borderWidth; //clip whole SB plus border
 
@@ -65,12 +67,18 @@ void CMPCThemeScrollBarHelper::setDrawingArea(CRect& cr, CRect& wr, bool clippin
                 vertSB.ShowWindow(SW_SHOW);
                 updateScrollInfo();
             } else {
-                vertSB.ShowWindow(SW_HIDE);
+                if (vertSB.IsWindowVisible()) {
+                    CRect sbWR;
+                    vertSB.GetWindowRect(sbWR);
+                    vertSB.ShowWindow(SW_HIDE);
+                    window->ScreenToClient(sbWR);
+                    window->InvalidateRect(sbWR);
+                }
             }
         }
 
         if (IsWindow(horzSB.m_hWnd)) {
-            if (hasHSB) {
+            if (hasHSB && canHSB) {
                 int height = sbThickness, width = realWR.right - realWR.left - 2 * borderWidth - (hasVSB ? sbThickness : 0);
                 wr.bottom -= sbThickness + borderWidth; //clip whole SB plus border
 
@@ -78,7 +86,13 @@ void CMPCThemeScrollBarHelper::setDrawingArea(CRect& cr, CRect& wr, bool clippin
                 horzSB.ShowWindow(SW_SHOW);
                 updateScrollInfo();
             } else {
-                horzSB.ShowWindow(SW_HIDE);
+                if (horzSB.IsWindowVisible()) {
+                    CRect sbWR;
+                    horzSB.GetWindowRect(sbWR);
+                    horzSB.ShowWindow(SW_HIDE);
+                    window->ScreenToClient(sbWR);
+                    window->InvalidateRect(sbWR);
+                }
             }
         }
         bool wasClipped = currentlyClipped;
@@ -117,14 +131,19 @@ void CMPCThemeScrollBarHelper::hideSB()
     setDrawingArea(cr, wr, true);
 }
 
-
-void CMPCThemeScrollBarHelper::updateScrollInfo()
+void CMPCThemeScrollBarHelper::updateScrollInfo(bool invalidate /*=false*/)
 {
     if (IsWindow(vertSB.m_hWnd)) {
         vertSB.updateScrollInfo();
+        if (invalidate) {
+            vertSB.Invalidate();
+        }
     }
     if (IsWindow(horzSB.m_hWnd)) {
         horzSB.updateScrollInfo();
+        if (invalidate) {
+            horzSB.Invalidate();
+        }
     }
 }
 
@@ -264,6 +283,11 @@ void CMPCThemeScrollBarHelper::doNcPaint(CWnd* window)
     window->GetWindowRect(wr);
     window->ScreenToClient(wr);
 
+    int sbThickness = GetSystemMetrics(SM_CXVSCROLL);
+    int borderWidth = cr.left - wr.left; //GetSystemMetrics(SM_CXSIZEFRAME) + 1;
+    bool canVSB = sbThickness < wr.Width() - borderWidth * 2; //SB simply disappears if window is that small
+    bool canHSB = sbThickness < wr.Height() - borderWidth * 2; //SB simply disappears if window is that small
+    
     window->GetClientRect(&cr);
     int borderThickness = cr.left - wr.left;
     wr.OffsetRect(-wr.left, -wr.top);
@@ -275,8 +299,7 @@ void CMPCThemeScrollBarHelper::doNcPaint(CWnd* window)
     dc.FrameRect(wr, &brush);
 
     dc.RestoreDC(oldDC);
-    if ((window->GetStyle() & (WS_VSCROLL | WS_HSCROLL)) == (WS_VSCROLL | WS_HSCROLL)) {
-        int sbThickness = GetSystemMetrics(SM_CXVSCROLL);
+    if ((window->GetStyle() & (WS_VSCROLL | WS_HSCROLL)) == (WS_VSCROLL | WS_HSCROLL) && canVSB && canHSB) {
         corner = { wr.right - sbThickness - borderThickness, wr.bottom - sbThickness - borderThickness,  wr.right - borderThickness, wr.bottom - borderThickness};
         dc.FillSolidRect(corner, CMPCTheme::ContentBGColor);
     }

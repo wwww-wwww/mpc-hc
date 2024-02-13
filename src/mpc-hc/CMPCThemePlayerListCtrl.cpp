@@ -202,10 +202,10 @@ void CMPCThemePlayerListCtrl::updateSB()
     }
 }
 
-void CMPCThemePlayerListCtrl::updateScrollInfo()
+void CMPCThemePlayerListCtrl::updateScrollInfo(bool invalidate /*=false*/)
 {
     if (nullptr != themedSBHelper) {
-        themedSBHelper->updateScrollInfo();
+        themedSBHelper->updateScrollInfo(invalidate);
     }
 }
 
@@ -270,7 +270,7 @@ void CMPCThemePlayerListCtrl::OnNcCalcSize(BOOL bCalcValidRects, NCCALCSIZE_PARA
         if (GetStyle() & WS_HSCROLL && nullptr == themedSBHelper) {
             themedSBHelper = DEBUG_NEW CMPCThemeScrollBarHelper(this);
         }
-        ::PostMessage(m_hWnd, PLAYER_PLAYLIST_UPDATE_SCROLLBAR, (WPARAM)0, (LPARAM)0);
+        ::PostMessage(m_hWnd, PLAYER_PLAYLIST_UPDATE_SCROLLBAR, (WPARAM)0, (LPARAM)TRUE);
     }
 }
 
@@ -593,9 +593,9 @@ void CMPCThemePlayerListCtrl::OnHdnEndtrack(NMHDR* pNMHDR, LRESULT* pResult)
     *pResult = 0;
 }
 
-LRESULT CMPCThemePlayerListCtrl::OnDelayed_UpdateScrollbar(WPARAM, LPARAM)
+LRESULT CMPCThemePlayerListCtrl::OnDelayed_UpdateScrollbar(WPARAM, LPARAM invalidate)
 {
-    updateScrollInfo();
+    updateScrollInfo((bool)invalidate);
     return 0;
 }
 

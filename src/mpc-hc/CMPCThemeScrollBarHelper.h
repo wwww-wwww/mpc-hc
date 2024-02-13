@@ -26,7 +26,7 @@ public:
     void createSB();
     void setDrawingArea(CRect& cr, CRect& wr, bool clipping);
     void hideSB();
-    void updateScrollInfo();
+    void updateScrollInfo(bool invalidate = false);
     bool WindowProc(CListCtrl* list, UINT message, WPARAM wParam, LPARAM lParam);
     bool WindowProc(CTreeCtrl* tree, UINT message, WPARAM wParam, LPARAM lParam);
     void themedNcPaintWithSB();
