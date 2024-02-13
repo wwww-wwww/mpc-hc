@@ -168,7 +168,9 @@ Name: ca;    MessagesFile: compiler:Languages\Catalan.isl
 Name: cs;    MessagesFile: compiler:Languages\Czech.isl
 Name: da;    MessagesFile: compiler:Languages\Danish.isl
 Name: de;    MessagesFile: compiler:Languages\German.isl
+#if VER <= EncodeVer(5,5,9)
 Name: el;    MessagesFile: compiler:Languages\Greek.isl
+#endif
 Name: en_GB; MessagesFile: Languages\EnglishBritish.isl
 Name: es;    MessagesFile: compiler:Languages\Spanish.isl
 Name: eu;    MessagesFile: Languages\Basque.isl
@@ -197,7 +199,9 @@ Name: ro;    MessagesFile: Languages\Romanian.isl
 Name: ru;    MessagesFile: compiler:Languages\Russian.isl
 Name: sk;    MessagesFile: Languages\Slovak.isl
 Name: sl;    MessagesFile: compiler:Languages\Slovenian.isl
+#if VER <= EncodeVer(5,5,9)
 Name: sr;    MessagesFile: compiler:Languages\SerbianCyrillic.isl
+#endif
 Name: sv;    MessagesFile: Languages\Swedish.isl
 Name: th_TH; MessagesFile: Languages\Thai.isl
 Name: tt;    MessagesFile: Languages\Tatar.isl

@@ -61,9 +61,11 @@ da.WinVersionTooLowError=[name] kræver Windows 7 eller nyere for at køre.
 de.WelcomeLabel2=Hiermit wird der [name] installiert. Bitte alle anderen Anwendungen schließen, bevor Sie mit der Installation fortfahren.
 de.WinVersionTooLowError=Systemvoraussetzung ist Windows 7 oder neuer.
 
+#if VER <= EncodeVer(5,5,9)
 ; Greek (Greece)
 el.WelcomeLabel2=Θα γίνει εγκατάσταση του [name] στον υπολογιστή σας.%n%nΣας συνιστούμε να κλείσετε κάθε άλλη εφαρμογή πριν συνεχίσετε.
 el.WinVersionTooLowError=Το [name] απαιτεί Windows 7 ή νεότερα για να λειτουργήσει.
+#endif
 
 ; English (United Kingdom)
 en_GB.WelcomeLabel2=This will install [name] on your computer.%n%nIt is recommended that you close all other applications before continuing.
@@ -161,9 +163,11 @@ sk.WinVersionTooLowError=[name] vyžaduje na svoje fungovanie systém Windows 7 
 sl.WelcomeLabel2=[name] bo nameščen na tem računalniku.%n%nPriporočamo, da zaprete vse ostale programa pred nadaljevanjem.
 sl.WinVersionTooLowError=[name] requires Windows 7 or newer to run.
 
+#if VER <= EncodeVer(5,5,9)
 ; Serbian (Cyrillic)
 sr.WelcomeLabel2=Овај програм ће инсталирати [name] на ваш рачунар.%n%nПре него што наставите, препоручује се да затворите све друге програме.
 sr.WinVersionTooLowError=[name] requires Windows 7 or newer to run.
+#endif
 
 ; Swedish
 sv.WelcomeLabel2=Detta kommer att installera [name] på din dator.%n%nDet rekommenderas att du stänger alla andra program innan du fortsätter.
@@ -352,6 +356,7 @@ de.types_DefaultInstallation=Standard-Installation
 de.types_CustomInstallation=Benutzerdefinierte Installation
 de.ViewChangelog=Änderungsprotokoll anzeigen
 
+#if VER <= EncodeVer(5,5,9)
 ; Greek (Greece)
 el.langid=00001032
 el.comp_mpciconlib=Βιβλιοθήκη εικονιδίων
@@ -368,6 +373,7 @@ el.tsk_ResetSettings=Επαναφορά ρυθμίσεων
 el.types_DefaultInstallation=Προκαθορισμένη εγκατάσταση
 el.types_CustomInstallation=Προσαρμοσμένη εγκατάσταση
 el.ViewChangelog=Εμφάνιση μητρώου αλλαγών
+#endif
 
 ; English (United Kingdom)
 en_GB.langid=00002057
@@ -777,6 +783,7 @@ sl.types_DefaultInstallation=Privzeta namestitev
 sl.types_CustomInstallation=Namestitev po meri
 sl.ViewChangelog=Poglej dnevnik sprememb
 
+#if VER <= EncodeVer(5,5,9)
 ; Serbian (Cyrillic)
 sr.langid=00003098
 sr.comp_mpciconlib=Библиотека са иконама
@@ -793,6 +800,7 @@ sr.tsk_ResetSettings=Врати подразумеване поставке
 sr.types_DefaultInstallation=Уобичајена инсталација
 sr.types_CustomInstallation=Прилагођена инсталација
 sr.ViewChangelog=Погледај евиденцију промена
+#endif
 
 ; Swedish
 sv.langid=00001053
