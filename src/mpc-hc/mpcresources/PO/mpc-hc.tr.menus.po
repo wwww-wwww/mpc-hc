@@ -9,7 +9,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2023-11-19 23:27:04+0000\n"
+"POT-Creation-Date: 2024-02-10 16:52:19+0000\n"
 "PO-Revision-Date: 2020-01-02 07:46+0000\n"
 "Last-Translator: Mücahid Aksel <mucahidaksel@gmail.com>, 2024\n"
 "Language-Team: Turkish (https://app.transifex.com/mpchc/teams/106126/tr/)\n"
@@ -81,7 +81,7 @@ msgstr "Altyazı &kaydet..."
 
 msgctxt "ID_FILE_SUBTITLES_DOWNLOAD"
 msgid "&Download Subtitles..."
-msgstr "Altyazı &indir..."
+msgstr "Altyazı in&dir..."
 
 msgctxt "ID_FILE_PROPERTIES"
 msgid "P&roperties"
@@ -133,7 +133,7 @@ msgstr "Oynatma &listesi"
 
 msgctxt "ID_VIEW_CAPTURE"
 msgid "Captu&re"
-msgstr "&Yakalama"
+msgstr "Kaydetme paneli"
 
 msgctxt "ID_VIEW_NAVIGATION"
 msgid "Na&vigation"
@@ -193,7 +193,7 @@ msgstr "&Yırtılma testi"
 
 msgctxt "ID_VIEW_DISPLAY_RENDERER_STATS"
 msgid "&Display Statistics"
-msgstr "&İstatistikleri göster"
+msgstr "İ&statistikleri göster"
 
 msgctxt "ID_VIEW_OSD_DISPLAY_TIME"
 msgid "Display Current T&ime"
@@ -297,7 +297,7 @@ msgstr "&Karanlık (2.4 Gama)"
 
 msgctxt "POPUP"
 msgid "&Rendering Intent"
-msgstr "&İşleme maksadı"
+msgstr "İşleme &amacı"
 
 msgctxt "ID_VIEW_CM_INTENT_PERCEPTUAL"
 msgid "&Perceptual"
@@ -305,7 +305,7 @@ msgstr "&Algısal"
 
 msgctxt "ID_VIEW_CM_INTENT_RELATIVECOLORIMETRIC"
 msgid "&Relative Colorimetric"
-msgstr "&Göreceli Renk Ölçümü"
+msgstr "&Göreli Renkölçer"
 
 msgctxt "ID_VIEW_CM_INTENT_SATURATION"
 msgid "&Saturation"
@@ -313,7 +313,7 @@ msgstr "&Doygunluk"
 
 msgctxt "ID_VIEW_CM_INTENT_ABSOLUTECOLORIMETRIC"
 msgid "&Absolute Colorimetric"
-msgstr "&Koşulsuz Renk Ölçümü"
+msgstr "&Mutlak Renkölçer"
 
 msgctxt "POPUP"
 msgid "&VSync"
@@ -337,7 +337,7 @@ msgstr "VSync kaydırmasını a&zalt"
 
 msgctxt "ID_VIEW_VSYNCOFFSET_INCREASE"
 msgid "&Increase VSync Offset"
-msgstr "VSync kaydırmasını a&rttır"
+msgstr "VSync kaydırmasını a&rtır"
 
 msgctxt "POPUP"
 msgid "&GPU Control"
@@ -445,15 +445,15 @@ msgstr "Kare uyarlama P&nS"
 
 msgctxt "ID_VIEW_INCSIZE"
 msgid "&Increase Size"
-msgstr "&Boyutu arttır"
+msgstr "Boyutu artır"
 
 msgctxt "ID_VIEW_DECSIZE"
 msgid "&Decrease Size"
-msgstr "&Boyutu azalt"
+msgstr "Boyutu azalt"
 
 msgctxt "ID_VIEW_INCWIDTH"
 msgid "I&ncrease Width"
-msgstr "G&enişliği arttır"
+msgstr "Genişliği artır"
 
 msgctxt "ID_VIEW_DECWIDTH"
 msgid "D&ecrease Width"
@@ -461,7 +461,7 @@ msgstr "Genişliği azalt"
 
 msgctxt "ID_VIEW_INCHEIGHT"
 msgid "In&crease Height"
-msgstr "Yüksekliği arttır"
+msgstr "Yüksekliği artır"
 
 msgctxt "ID_VIEW_DECHEIGHT"
 msgid "Decre&ase Height"
@@ -473,7 +473,7 @@ msgstr "Sağa taşı"
 
 msgctxt "ID_PANSCAN_MOVELEFT"
 msgid "Move &Left"
-msgstr "Sola &taşı"
+msgstr "Sola taşı"
 
 msgctxt "ID_PANSCAN_MOVEUP"
 msgid "Move &Up"
@@ -485,11 +485,11 @@ msgstr "Aşağı taşı"
 
 msgctxt "ID_PANSCAN_CENTER"
 msgid "Cen&ter"
-msgstr "Ort&ala"
+msgstr "Ortala"
 
 msgctxt "ID_PANSCAN_ROTATEZM"
 msgid "Rotate Cloc&kwise"
-msgstr "Saat &yönünde döndür"
+msgstr "Saat yönünde döndür"
 
 msgctxt "ID_PANSCAN_ROTATEZ270"
 msgid "Rotate Counter-Clock&wise"
@@ -501,11 +501,11 @@ msgstr "Baş aşağı dönd&ür"
 
 msgctxt "ID_PANSCAN_ROTATEYM"
 msgid "&Mirror"
-msgstr "A&yna"
+msgstr "Ayna"
 
 msgctxt "ID_VIEW_RESET"
 msgid "Re&set"
-msgstr "Sı&fırla"
+msgstr "Sıfırla"
 
 msgctxt "POPUP"
 msgid "On &Top"
@@ -521,11 +521,11 @@ msgstr "&Her zaman"
 
 msgctxt "ID_ONTOP_WHILEPLAYING"
 msgid "While &Playing"
-msgstr "Medya o&ynatılırken"
+msgstr "Medya &oynatılırken"
 
 msgctxt "ID_ONTOP_WHILEPLAYINGVIDEO"
 msgid "While Playing &Video"
-msgstr "Video &oynatılırken"
+msgstr "&Video oynatılırken"
 
 msgctxt "ID_VIEW_OPTIONS"
 msgid "&Options..."
@@ -645,7 +645,7 @@ msgstr "Hızı a&zalt"
 
 msgctxt "ID_PLAY_INCRATE"
 msgid "&Increase Rate"
-msgstr "Hızı a&rttır"
+msgstr "Hızı a&rtır"
 
 msgctxt "ID_PLAY_RESETRATE"
 msgid "R&eset Rate"
@@ -677,7 +677,7 @@ msgstr "S&es düzeyi"
 
 msgctxt "ID_VOLUME_UP"
 msgid "&Up"
-msgstr "&Arttır"
+msgstr "A&rtır"
 
 msgctxt "ID_VOLUME_DOWN"
 msgid "&Down"
@@ -685,7 +685,7 @@ msgstr "&Azalt"
 
 msgctxt "ID_VOLUME_MUTE"
 msgid "&Mute"
-msgstr "&Sesi Kıs"
+msgstr "&Sesi kes"
 
 msgctxt "POPUP"
 msgid "Af&ter Playback"
@@ -701,7 +701,7 @@ msgstr "Klasördeki sonraki dosyayı oynat"
 
 msgctxt "ID_AFTERPLAYBACK_MONITOROFF"
 msgid "Turn off the &monitor"
-msgstr "E&kranı Kapat"
+msgstr "Ekranı kapat"
 
 msgctxt "ID_AFTERPLAYBACK_EXIT"
 msgid "&Exit"
@@ -713,19 +713,19 @@ msgstr "&Askıya Al"
 
 msgctxt "ID_AFTERPLAYBACK_HIBERNATE"
 msgid "&Hibernate"
-msgstr "&Hazırda Beklet"
+msgstr "Hazırda beklet"
 
 msgctxt "ID_AFTERPLAYBACK_SHUTDOWN"
 msgid "Shut&down"
-msgstr "B&ilgisayarı Kapat"
+msgstr "Bilgisayarı kapat"
 
 msgctxt "ID_AFTERPLAYBACK_LOGOFF"
 msgid "Log &Off"
-msgstr "Oturumu &Kapat"
+msgstr "Oturumu kapat"
 
 msgctxt "ID_AFTERPLAYBACK_LOCK"
 msgid "&Lock"
-msgstr "&Bilgisayarı Kilitle"
+msgstr "Oturumu kilitle"
 
 msgctxt "POPUP"
 msgid "&Navigate"

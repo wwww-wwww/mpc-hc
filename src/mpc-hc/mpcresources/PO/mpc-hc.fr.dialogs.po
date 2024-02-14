@@ -1889,11 +1889,11 @@ msgstr "Taille des boutons de contrôle"
 
 msgctxt "IDD_PPAGETHEME_IDC_STATIC4"
 msgid "Seekbar"
-msgstr "Barre de défilement"
+msgstr "Barre de lecture"
 
 msgctxt "IDD_PPAGETHEME_IDC_STATIC"
 msgid "Modern Seekbar height:"
-msgstr "Hauteur de la barre de recherche moderne:"
+msgstr "Hauteur de la barre de lecture moderne:"
 
 msgctxt "IDD_PPAGETHEME_IDC_CHECK8"
 msgid "Hover:"
@@ -1909,7 +1909,7 @@ msgstr "Largeur de l'aperçu (% d'écran)"
 
 msgctxt "IDD_PPAGETHEME_IDC_CHECK2"
 msgid "Show chapter marks on seekbar"
-msgstr "Afficher la position des chapitres dans la barre de déplacement"
+msgstr "Afficher la position des chapitres"
 
 msgctxt "IDD_PPAGETHEME_IDC_STATIC10"
 msgid "Status Bar Elements"
@@ -1977,8 +1977,8 @@ msgstr "Intégration à Windows"
 
 msgctxt "IDD_PPAGETHEME_IDC_CHECK_ENHANCED_TASKBAR"
 msgid "Use enhanced taskbar features"
-msgstr "Utiliser les fonctionnalités avancées de la barre des tâches"
+msgstr "Affichage barre des tâches avancé"
 
 msgctxt "IDD_PPAGETHEME_IDC_CHECK11"
 msgid "Control via Windows UI (SMTC)"
-msgstr "Contrôler via l'interface Windows (SMTC)"
+msgstr "Contrôle via l'interface Windows SMTC"

@@ -9,7 +9,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2023-11-23 01:08:04+0000\n"
+"POT-Creation-Date: 2024-02-10 16:52:19+0000\n"
 "PO-Revision-Date: 2020-01-02 07:46+0000\n"
 "Last-Translator: George Mantratzis, 2024\n"
 "Language-Team: Greek (https://app.transifex.com/mpchc/teams/106126/el/)\n"
@@ -762,7 +762,7 @@ msgstr "Αναπαραγωγός::Λογότυπο"
 
 msgctxt "IDD_PPAGETHEME"
 msgid "Player::User Interface"
-msgstr ""
+msgstr "Αναπαραγωγός::Διεπαφή χρήστη"
 
 msgctxt "IDD_PPAGEOUTPUT"
 msgid "Playback::Output"
@@ -2780,7 +2780,7 @@ msgstr "Εναλλαγή σε λεζάντα & μενού"
 
 msgctxt "IDS_AG_TOGGLE_SEEKER"
 msgid "Toggle Seekbar"
-msgstr "Εναλλαγή σε γραμμή αναζήτησης"
+msgstr "Εναλλαγή σε Γραμμή αναζήτησης"
 
 msgctxt "IDS_AG_TOGGLE_CONTROLS"
 msgid "Toggle Controls"
@@ -4014,7 +4014,7 @@ msgstr "Η αναζήτηση υποτίτλων σε άμεση σύνδεση 
 
 msgctxt "IDS_SUBDL_DLG_FAILED_DL"
 msgid "Subtitle download failed."
-msgstr ""
+msgstr "Η λήψη υποτίτλων απέτυχε."
 
 msgctxt "IDS_SUBDL_DLG_ABORTED"
 msgid "Online subtitles search aborted."
@@ -4915,8 +4915,8 @@ msgstr ""
 
 msgctxt "IDS_SEEKBAR_HOVER_PREVIEW"
 msgid "Video Preview"
-msgstr ""
+msgstr "Προεπισκόπηση Βίντεο"
 
 msgctxt "IDS_SEEKBAR_HOVER_TOOLTIP"
 msgid "Seek Time"
-msgstr ""
+msgstr "Αναζήτηση Χρόνου"

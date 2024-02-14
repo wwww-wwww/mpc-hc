@@ -1852,11 +1852,11 @@ msgstr " モダン シークバーの高さ:"
 
 msgctxt "IDD_PPAGETHEME_IDC_CHECK8"
 msgid "Hover:"
-msgstr "ホバー位置:"
+msgstr "ホバー:"
 
 msgctxt "IDD_PPAGETHEME_IDC_STATIC8"
 msgid "Hover type:"
-msgstr "ホバー項目:"
+msgstr "ホバーの種類:"
 
 msgctxt "IDD_PPAGETHEME_IDC_STATIC7"
 msgid "Preview width (% of screen)"
