@@ -3187,12 +3187,25 @@ bool CAppSettings::CRecentFileListWithMoreInfo::LoadMediaHistoryEntry(CStringW h
 
 void CAppSettings::CRecentFileListWithMoreInfo::ReadMediaHistory() {
     auto pApp = AfxGetMyApp();
-    std::list<CStringW> hashes = pApp->GetSectionSubKeys(m_section);
+
+    int lastAddedStored = pApp->GetProfileIntW(m_section, L"LastAdded", 0);
+    if (lastAddedStored != 0 && lastAddedStored == rfe_last_added || rfe_last_added == 1) {
+        return;
+    }
 
     size_t maxsize = AfxGetAppSettings().fKeepHistory ? m_maxSize : 0;
-    if (hashes.empty() && maxsize > 0) {
-        MigrateLegacyHistory();
-        hashes = pApp->GetSectionSubKeys(m_section);
+
+    std::list<CStringW> hashes = pApp->GetSectionSubKeys(m_section);
+
+    if (hashes.empty()) {
+        if (maxsize > 0) {
+            MigrateLegacyHistory();
+            hashes = pApp->GetSectionSubKeys(m_section);
+        } else {
+            rfe_last_added = 1;
+            rfe_array.RemoveAll();
+            return;
+        }
     }
 
     auto timeToHash = CAppSettings::LoadHistoryHashes(m_section, L"LastOpened");
@@ -3216,6 +3229,13 @@ void CAppSettings::CRecentFileListWithMoreInfo::ReadMediaHistory() {
         }
     }
     rfe_array.FreeExtra();
+
+    if (lastAddedStored == 0 && m_maxSize > 0) {
+        rfe_last_added = 1; // history read, but nothing new added yet
+        pApp->WriteProfileInt(m_section, L"LastAdded", rfe_last_added);
+    } else {
+        rfe_last_added = lastAddedStored;
+    }
 }
 
 void CAppSettings::CRecentFileListWithMoreInfo::WriteMediaHistoryAudioIndex(RecentFileEntry& r) {
@@ -3261,6 +3281,9 @@ void CAppSettings::CRecentFileListWithMoreInfo::WriteMediaHistoryEntry(RecentFil
 
     CStringW subSection, t;
     subSection.Format(L"%s\\%s", m_section, static_cast<LPCWSTR>(r.hash));
+
+    bool isNewEntry = pApp->GetProfileStringW(subSection, L"Filename", L"").IsEmpty();
+
     pApp->WriteProfileStringW(subSection, L"Filename", r.fns.GetHead());
 
     if (r.fns.GetCount() > 1) {
@@ -3329,10 +3352,15 @@ void CAppSettings::CRecentFileListWithMoreInfo::WriteMediaHistoryEntry(RecentFil
         pApp->WriteProfileStringW(subSection, L"SubtitleTrackIndex", nullptr);
     }
 
-    if (updateLastOpened || r.lastOpened.IsEmpty()) {
+    if (updateLastOpened || isNewEntry || r.lastOpened.IsEmpty()) {
         auto now = std::chrono::system_clock::now();
-        auto nowISO = date::format<wchar_t>(L"%FT%TZ", date::floor<std::chrono::microseconds>(now));
+        auto nowISO = date::format<wchar_t>(L"%FT%TZ", date::floor<std::chrono::milliseconds>(now));
         r.lastOpened = CStringW(nowISO.c_str());
+        if (isNewEntry) {
+            long lastAddedLong = std::chrono::time_point_cast<std::chrono::seconds>(now).time_since_epoch().count();
+            rfe_last_added = (int)lastAddedLong;
+            pApp->WriteProfileInt(m_section, L"LastAdded", rfe_last_added);
+        }
     }
     pApp->WriteProfileStringW(subSection, L"LastOpened", r.lastOpened);
 }
