@@ -701,6 +701,8 @@ bool CPlayerListCtrl::PrepareInPlaceControl(int nRow, int nCol, CRect& rect)
 
     rect.DeflateRect(1, 0, 0, 1);
     inPlaceControl = true;
+    inPlaceControlRect = rect;
+    ClientToScreen(inPlaceControlRect);
     return true;
 }
 
@@ -1116,10 +1118,13 @@ void CPlayerListCtrl::OnXButtonDblClk(UINT nFlags, UINT nButton, CPoint point)
 
 BOOL CPlayerListCtrl::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message) {
     if (inPlaceControl) {
-        return FALSE;
-    } else {
-        return CListCtrl::OnSetCursor(pWnd, nHitTest, message);
+        POINT p;
+        GetCursorPos(&p);
+        if (inPlaceControlRect.PtInRect(p)) {
+            return FALSE;
+        }
     }
+    return CListCtrl::OnSetCursor(pWnd, nHitTest, message);
 }
 
 
