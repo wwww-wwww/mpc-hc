@@ -72,7 +72,7 @@ void CMPCThemeScrollBarHelper::setDrawingArea(CRect& cr, CRect& wr, bool clippin
                     vertSB.GetWindowRect(sbWR);
                     vertSB.ShowWindow(SW_HIDE);
                     window->ScreenToClient(sbWR);
-                    window->InvalidateRect(sbWR);
+                    window->RedrawWindow(sbWR, NULL, RDW_INVALIDATE | RDW_ALLCHILDREN);
                 }
             }
         }
@@ -91,7 +91,7 @@ void CMPCThemeScrollBarHelper::setDrawingArea(CRect& cr, CRect& wr, bool clippin
                     horzSB.GetWindowRect(sbWR);
                     horzSB.ShowWindow(SW_HIDE);
                     window->ScreenToClient(sbWR);
-                    window->InvalidateRect(sbWR);
+                    window->RedrawWindow(sbWR, NULL, RDW_INVALIDATE | RDW_ALLCHILDREN);
                 }
             }
         }
@@ -110,13 +110,13 @@ void CMPCThemeScrollBarHelper::setDrawingArea(CRect& cr, CRect& wr, bool clippin
                 CRect rightRedraw;
                 window->GetClientRect(rightRedraw);
                 rightRedraw.left = rightRedraw.right - (wr.right - currentClipRegion.right);
-                window->InvalidateRect(rightRedraw);
+                window->RedrawWindow(rightRedraw, NULL, RDW_INVALIDATE | RDW_ALLCHILDREN);
             }
             if (currentClipRegion.bottom < wr.bottom) {
                 CRect bottomRedraw = wr;
                 window->GetClientRect(bottomRedraw);
                 bottomRedraw.top = bottomRedraw.bottom - (wr.bottom - currentClipRegion.bottom);
-                window->InvalidateRect(bottomRedraw);
+                window->RedrawWindow(bottomRedraw, NULL, RDW_INVALIDATE | RDW_ALLCHILDREN);
             }
         }
         currentClipRegion = wr;
