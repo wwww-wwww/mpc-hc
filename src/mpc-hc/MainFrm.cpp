@@ -8576,7 +8576,15 @@ void CMainFrame::OnPlayFramestep(UINT nID)
             }
         }
 
-        m_pFS->Step(1, nullptr);
+       HRESULT hr = m_pFS->Step(1, nullptr);
+       if (FAILED(hr)) {
+           TRACE(_T("Frame step failed.\n"));
+           m_fFrameSteppingActive = false;
+           m_nStepForwardCount = 0;
+           if (m_pBA) {
+               m_pBA->put_Volume(m_nVolumeBeforeFrameStepping);
+           }
+       }
     } else if (m_pMS && (m_nStepForwardCount == 0) && (S_OK == m_pMS->IsFormatSupported(&TIME_FORMAT_FRAME))) {
         if (SUCCEEDED(m_pMS->SetTimeFormat(&TIME_FORMAT_FRAME))) {
             REFERENCE_TIME rtCurPos;
