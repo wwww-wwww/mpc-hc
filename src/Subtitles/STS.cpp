@@ -2398,6 +2398,7 @@ CSimpleTextSubtitle::CSimpleTextSubtitle()
     , m_ePARCompensationType(EPCTDisabled)
     , m_dPARCompensation(1.0)
     , m_SubRendererSettings(GetSubRendererSettings())
+    , overrideANSICharset(0)
 #if USE_LIBASS
     , m_LibassContext(this)
 #endif
@@ -2685,18 +2686,6 @@ STSStyle* CSimpleTextSubtitle::CreateDefaultStyle(int CharSet)
     m_originalDefaultStyle = *ret;
 
     return ret;
-}
-
-void CSimpleTextSubtitle::ApplyANSICP(int CharSet) {
-    if (CharSet != DEFAULT_CHARSET && CharSet != ANSI_CHARSET) { //don't bother
-        POSITION pos = m_styles.GetStartPosition();
-        while (pos) {
-            CStringW key = m_styles.GetNextKey(pos);
-            if (m_styles[key]->charSet == DEFAULT_CHARSET || m_styles[key]->charSet == ANSI_CHARSET) {
-                m_styles[key]->charSet = CharSet;
-            }
-        }
-    }
 }
 
 void CSimpleTextSubtitle::ChangeUnknownStylesToDefault()
@@ -3066,7 +3055,11 @@ bool CSimpleTextSubtitle::GetStyle(CString styleName, STSStyle& stss)
 int CSimpleTextSubtitle::GetCharSet(int i)
 {
     const STSStyle* stss = GetStyle(i);
-    return stss ? stss->charSet : DEFAULT_CHARSET;
+    int stssCharset = stss ? stss->charSet : DEFAULT_CHARSET;
+    if (overrideANSICharset > DEFAULT_CHARSET && (stssCharset == DEFAULT_CHARSET || stssCharset == ANSI_CHARSET)) {
+        return overrideANSICharset;
+    }
+    return stssCharset;
 }
 
 bool CSimpleTextSubtitle::IsEntryUnicode(int i)
