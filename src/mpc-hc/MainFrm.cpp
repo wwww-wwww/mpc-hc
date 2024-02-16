@@ -2641,7 +2641,7 @@ void CMainFrame::OnABRepeat(UINT nID) {
 }
 
 void CMainFrame::PerformABRepeat() {
-    DoSeekTo(abRepeat.positionA);
+    DoSeekTo(abRepeat.positionA, false);
 
     if (GetMediaState() == State_Stopped) {
         SendMessage(WM_COMMAND, ID_PLAY_PLAY);
@@ -8696,7 +8696,7 @@ void CMainFrame::OnPlaySeekSet()
         rtStart = abRepeat.positionA;
     }
     if (rtPos != rtStart) {
-        SeekTo(rtStart);
+        SeekTo(rtStart, false);
     }
 }
 
