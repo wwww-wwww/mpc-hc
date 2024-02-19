@@ -379,35 +379,6 @@ static CStringW UnicodeSSAToMBCS(CStringW str, DWORD CharSet)
     return ret;
 }
 
-static CStringW ToUnicode(CStringW str, DWORD CharSet)
-{
-    CStringW ret;
-    DWORD cp = CharSetToCodePage(CharSet);
-
-    for (int i = 0, j = str.GetLength(); i < j; i++) {
-        WCHAR wc = str.GetAt(i);
-        char c = wc & 0xff;
-
-        if (IsDBCSLeadByteEx(cp, (BYTE)wc)) {
-            i++;
-
-            if (i < j) {
-                char cc[2];
-                cc[0] = c;
-                cc[1] = (char)str.GetAt(i);
-
-                MultiByteToWideChar(cp, 0, cc, 2, &wc, 1);
-            }
-        } else {
-            MultiByteToWideChar(cp, 0, &c, 1, &wc, 1);
-        }
-
-        ret += wc;
-    }
-
-    return ret;
-}
-
 static CStringW MBCSSSAToUnicode(CStringW str, int CharSet)
 {
     CStringW ret;
@@ -1959,6 +1930,7 @@ bool OpenSubStationAlpha(CTextFile* file, CSimpleTextSubtitle& ret, int CharSet)
 
                 styleName.TrimLeft(_T('*'));
 
+                style->hasAnsiStyleName = !file->IsUnicode();
                 ret.AddStyle(styleName, style);
             } catch (...) {
                 delete style;
@@ -3052,14 +3024,18 @@ bool CSimpleTextSubtitle::GetStyle(CString styleName, STSStyle& stss)
     return true;
 }
 
-int CSimpleTextSubtitle::GetCharSet(int i)
+int CSimpleTextSubtitle::GetCharSet(int charSet)
 {
-    const STSStyle* stss = GetStyle(i);
-    int stssCharset = stss ? stss->charSet : DEFAULT_CHARSET;
-    if (overrideANSICharset > DEFAULT_CHARSET && (stssCharset == DEFAULT_CHARSET || stssCharset == ANSI_CHARSET)) {
+    if (overrideANSICharset > DEFAULT_CHARSET && (charSet == DEFAULT_CHARSET || charSet == ANSI_CHARSET)) {
         return overrideANSICharset;
     }
-    return stssCharset;
+    return charSet;
+}
+
+int CSimpleTextSubtitle::GetStyleCharSet(int i)
+{
+    const STSStyle* stss = GetStyle(i);
+    return GetCharSet(stss ? stss->charSet : DEFAULT_CHARSET);
 }
 
 bool CSimpleTextSubtitle::IsEntryUnicode(int i)
@@ -3072,7 +3048,7 @@ void CSimpleTextSubtitle::ConvertUnicode(int i, bool fUnicode)
     STSEntry& stse = GetAt(i);
 
     if (stse.fUnicode ^ fUnicode) {
-        int CharSet = GetCharSet(i);
+        int CharSet = GetStyleCharSet(i);
 
         stse.str = fUnicode
                    ? MBCSSSAToUnicode(stse.str, CharSet)
@@ -3090,7 +3066,7 @@ CStringA CSimpleTextSubtitle::GetStrA(int i, bool fSSA)
 CStringW CSimpleTextSubtitle::GetStrW(int i, bool fSSA)
 {
     STSEntry const& stse = GetAt(i);
-    int CharSet = GetCharSet(i);
+    int CharSet = GetStyleCharSet(i);
 
     CStringW str = stse.str;
 
@@ -3108,7 +3084,7 @@ CStringW CSimpleTextSubtitle::GetStrW(int i, bool fSSA)
 CStringW CSimpleTextSubtitle::GetStrWA(int i, bool fSSA)
 {
     STSEntry const& stse = GetAt(i);
-    int CharSet = GetCharSet(i);
+    int CharSet = GetStyleCharSet(i);
 
     CStringW str = stse.str;
 
@@ -3135,9 +3111,9 @@ void CSimpleTextSubtitle::SetStr(int i, CStringW str, bool fUnicode)
     str.Replace(L"\n", L"\\N");
 
     if (stse.fUnicode && !fUnicode) {
-        stse.str = MBCSSSAToUnicode(str, GetCharSet(i));
+        stse.str = MBCSSSAToUnicode(str, GetStyleCharSet(i));
     } else if (!stse.fUnicode && fUnicode) {
-        stse.str = UnicodeSSAToMBCS(str, GetCharSet(i));
+        stse.str = UnicodeSSAToMBCS(str, GetStyleCharSet(i));
     } else {
         stse.str = str;
     }
@@ -3719,6 +3695,7 @@ void STSStyle::SetDefault()
     fGaussianBlur = 0;
     fontShiftX = fontShiftY = fontAngleZ = fontAngleX = fontAngleY = 0;
     relativeTo = STSStyle::AUTO;
+    hasAnsiStyleName = false;
 }
 
 bool STSStyle::operator == (const STSStyle& s) const

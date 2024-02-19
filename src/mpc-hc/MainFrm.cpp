@@ -9399,14 +9399,17 @@ void CMainFrame::OnPlaySubtitles(UINT nID)
 
                     POSITION pos = pRTS->m_styles.GetStartPosition();
                     for (int k = 0; pos; k++) {
-                        CString key;
-                        STSStyle* val;
-                        pRTS->m_styles.GetNextAssoc(pos, key, val);
+                        CString styleName;
+                        STSStyle* style;
+                        pRTS->m_styles.GetNextAssoc(pos, styleName, style);
 
                         CAutoPtr<CPPageSubStyle> page(DEBUG_NEW CPPageSubStyle());
-                        page->InitStyle(key, *val);
+                        if (style->hasAnsiStyleName) {
+                            styleName = ToUnicode(styleName, pRTS->GetCharSet(style->charSet));
+                        }
+                        page->InitStyle(styleName, *style);
                         pages.Add(page);
-                        styles.Add(val);
+                        styles.Add(style);
                     }
 
                     CMPCThemePropertySheet dlg(IDS_SUBTITLES_STYLES_CAPTION, GetModalParent());

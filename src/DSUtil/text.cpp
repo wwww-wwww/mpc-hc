@@ -356,3 +356,31 @@ bool IsNameSimilar(const CString& title, const CString& fileName) {
     if (fileName.Find(title.Left(25)) > -1) return true;
     return false;
 }
+
+CStringW ToUnicode(CStringW str, DWORD CharSet) {
+    CStringW ret;
+    DWORD cp = CharSetToCodePage(CharSet);
+
+    for (int i = 0, j = str.GetLength(); i < j; i++) {
+        WCHAR wc = str.GetAt(i);
+        char c = wc & 0xff;
+
+        if (IsDBCSLeadByteEx(cp, (BYTE)wc)) {
+            i++;
+
+            if (i < j) {
+                char cc[2];
+                cc[0] = c;
+                cc[1] = (char)str.GetAt(i);
+
+                MultiByteToWideChar(cp, 0, cc, 2, &wc, 1);
+            }
+        } else {
+            MultiByteToWideChar(cp, 0, &c, 1, &wc, 1);
+        }
+
+        ret += wc;
+    }
+
+    return ret;
+}
