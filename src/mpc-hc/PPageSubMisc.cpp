@@ -248,7 +248,14 @@ void CPPageSubMisc::OnRightClick(NMHDR* pNMHDR, LRESULT* pResult)
                     provider.LogOut();
                     provider.UserName(static_cast<const char*>(UTF16To8(szUser)));
                     provider.Password(static_cast<const char*>(UTF16To8(szPass)));
-                    m_list.SetItemText(lpnmlv->iItem, 1, szUser);
+                    if (provider.LoginInternal()) {
+                        m_list.SetItemText(lpnmlv->iItem, 1, szUser);
+                    } else {
+                        // login failed
+                        provider.UserName("");
+                        provider.Password("");
+                        m_list.SetItemText(lpnmlv->iItem, 1, _T(""));
+                    }
                     SetModified();
                 }
                 break;
@@ -336,7 +343,15 @@ void CPPageSubMisc::OnItemChanged(NMHDR* pNMHDR, LRESULT* pResult)
                         subprovider.LogOut();
                         subprovider.UserName(static_cast<const char*>(UTF16To8(szUser)));
                         subprovider.Password(static_cast<const char*>(UTF16To8(szPass)));
-                        m_list.SetItemText(pNMLV->iItem, 1, szUser);
+                        if (subprovider.LoginInternal()) {
+                            m_list.SetItemText(pNMLV->iItem, 1, szUser);
+                        } else {
+                            // login failed
+                            subprovider.UserName("");
+                            subprovider.Password("");
+                            m_list.SetItemText(pNMLV->iItem, 1, _T(""));
+                            ListView_SetCheckState(pNMHDR->hwndFrom, i, FALSE);
+                        }
                     } else if (!allow_anon) {
                         ListView_SetCheckState(pNMHDR->hwndFrom, i, FALSE);
                         return;
