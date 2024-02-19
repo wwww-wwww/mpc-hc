@@ -582,7 +582,17 @@ SRESULT OpenSubtitles2::Login(const std::string& sUserName, const std::string& s
         }
     } else if (response.code == 401) {
         CString msg;
-        msg.FormatMessage(IDS_SUB_CREDENTIALS_ERROR, static_cast<LPCWSTR>(UTF8To16(Name().c_str())), static_cast<LPCWSTR>(UTF8To16(sUserName.c_str())));
+        msg.FormatMessage(IDS_SUB_CREDENTIALS_ERROR, L"opensubtitles.com", static_cast<LPCWSTR>(UTF8To16(sUserName.c_str())));
+        AfxMessageBox(msg, MB_ICONERROR | MB_OK);
+    } else if (response.code == 400) {
+        CString msg = L"Failed to login to opensubtitles.com";
+        rapidjson::Document doc;
+        doc.Parse(response.text.c_str());
+        if (doc.IsObject() && doc.HasMember("message") && doc["message"].IsString()) {
+            CString errmsg = doc["message"].GetString();
+            msg.Append(L"\n\n");
+            msg.Append(errmsg);
+        }
         AfxMessageBox(msg, MB_ICONERROR | MB_OK);
     }
 
