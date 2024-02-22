@@ -2784,8 +2784,6 @@ LRESULT CMainFrame::OnGraphNotify(WPARAM wParam, LPARAM lParam)
                     SetupChapters();
                 } else if (GetPlaybackMode() == PM_DVD) {
                     m_iDVDTitle = (DWORD)evParam1;
-                    // Save current chapter
-                    s.MRU.UpdateCurrentDVDTitle(m_iDVDTitle);
 
                     if (m_iDVDDomain == DVD_DOMAIN_Title) {
                         CString Domain;
@@ -2900,23 +2898,31 @@ LRESULT CMainFrame::OnGraphNotify(WPARAM wParam, LPARAM lParam)
                                 // Set last remembered position (if found...)
                                 DVD_POSITION dvdPosition = s.MRU.GetCurrentDVDPosition();
 
-                                m_pDVDC->PlayTitle(dvdPosition.lTitle, DVD_CMD_FLAG_Block | DVD_CMD_FLAG_Flush, nullptr);
-                                m_pDVDC->Resume(DVD_CMD_FLAG_Block | DVD_CMD_FLAG_Flush, nullptr);
-#if 1
-                                if (SUCCEEDED(hr = m_pDVDC->PlayAtTimeInTitle(
-                                                       dvdPosition.lTitle, &dvdPosition.timecode,
-                                                       DVD_CMD_FLAG_Block | DVD_CMD_FLAG_Flush, nullptr)))
-#else
-                                if (SUCCEEDED(hr = m_pDVDC->PlayAtTime(&dvdPosition.timecode,
-                                                                       DVD_CMD_FLAG_Flush, nullptr)))
-#endif
-                                {
+                                hr = m_pDVDC->PlayTitle(dvdPosition.lTitle, DVD_CMD_FLAG_Block | DVD_CMD_FLAG_Flush, nullptr);
+                                if (FAILED(hr)) {
+                                    TRACE(_T("Failed to set remembered DVD title index, hr = 0x%08X"), hr);
+                                } else {
                                     m_iDVDTitle = dvdPosition.lTitle;
-                                }
-                                ABRepeat tmp = s.MRU.GetCurrentABRepeat();
-                                if (tmp.dvdTitle == m_iDVDTitle) {
-                                    abRepeat = tmp;
-                                    m_wndSeekBar.Invalidate();
+
+                                    if (dvdPosition.timecode.bSeconds > 0 || dvdPosition.timecode.bMinutes > 0 || dvdPosition.timecode.bHours > 0 || dvdPosition.timecode.bFrames > 0) {
+#if 0
+                                        hr = m_pDVDC->Resume(DVD_CMD_FLAG_Block | DVD_CMD_FLAG_Flush, nullptr);
+                                        if (FAILED(hr)) {
+                                            TRACE(_T("Failed to set remembered DVD resume flags, hr = 0x%08X"), hr);
+                                        }
+#endif
+#if 0
+                                        hr = m_pDVDC->PlayAtTimeInTitle(dvdPosition.lTitle, &dvdPosition.timecode, DVD_CMD_FLAG_Block | DVD_CMD_FLAG_Flush, nullptr);
+#else
+                                        hr = m_pDVDC->PlayAtTime(&dvdPosition.timecode, DVD_CMD_FLAG_Flush, nullptr);
+#endif
+                                    }
+
+                                    ABRepeat tmp = s.MRU.GetCurrentABRepeat();
+                                    if (tmp.dvdTitle == m_iDVDTitle) {
+                                        abRepeat = tmp;
+                                        m_wndSeekBar.Invalidate();
+                                    }
                                 }
                             }
 
@@ -2942,15 +2948,13 @@ LRESULT CMainFrame::OnGraphNotify(WPARAM wParam, LPARAM lParam)
                         if (s.fShowDebugInfo) {
                             m_OSD.DebugMessage(_T("%s"), Domain.GetString());
                         }
-                        {
+                        if (s.fKeepHistory && s.fRememberDVDPos) {
                             s.MRU.UpdateCurrentDVDTitle(m_iDVDTitle);
-
-                            if (!m_fValidDVDOpen && m_pDVDC) {
-                                m_fValidDVDOpen = true;
-                                m_pDVDC->ShowMenu(DVD_MENU_Title, DVD_CMD_FLAG_Block | DVD_CMD_FLAG_Flush, nullptr);
-                            }
                         }
-
+                        if (!m_fValidDVDOpen && m_pDVDC) {
+                            m_fValidDVDOpen = true;
+                            m_pDVDC->ShowMenu(DVD_MENU_Title, DVD_CMD_FLAG_Block | DVD_CMD_FLAG_Flush, nullptr);
+                        }
                         break;
                     case DVD_DOMAIN_Stop:
                         Domain.LoadString(IDS_AG_STOP);
