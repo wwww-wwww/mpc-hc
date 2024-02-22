@@ -1272,12 +1272,8 @@ void CAppSettings::SaveSettings(bool write_full_history /* = false */)
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_MOUSE_LEFTUP_DELAY, iMouseLeftUpDelay);
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_CAPTURE_DEINTERLACE, bCaptureDeinterlace);
 
-    if (fKeepHistory) {
-        if (write_full_history) {
-            MRU.SaveMediaHistory();
-        } else {
-            MRU.WriteCurrentEntry();
-        }
+    if (fKeepHistory && write_full_history) {
+        MRU.SaveMediaHistory();
     }
 
     size_t maxsize = AfxGetAppSettings().fKeepHistory ? iRecentFilesNumber : 0;
@@ -3282,9 +3278,11 @@ void CAppSettings::CRecentFileListWithMoreInfo::WriteMediaHistoryEntry(RecentFil
     CStringW subSection, t;
     subSection.Format(L"%s\\%s", m_section, static_cast<LPCWSTR>(r.hash));
 
-    bool isNewEntry = pApp->GetProfileStringW(subSection, L"Filename", L"").IsEmpty();
-
-    pApp->WriteProfileStringW(subSection, L"Filename", r.fns.GetHead());
+    CString storedFilename = pApp->GetProfileStringW(subSection, L"Filename", L"");
+    bool isNewEntry = storedFilename.IsEmpty();
+    if (isNewEntry || storedFilename != r.fns.GetHead()) {
+        pApp->WriteProfileStringW(subSection, L"Filename", r.fns.GetHead());
+    }
 
     if (r.fns.GetCount() > 1) {
         int k = 2;
@@ -3356,13 +3354,12 @@ void CAppSettings::CRecentFileListWithMoreInfo::WriteMediaHistoryEntry(RecentFil
         auto now = std::chrono::system_clock::now();
         auto nowISO = date::format<wchar_t>(L"%FT%TZ", date::floor<std::chrono::milliseconds>(now));
         r.lastOpened = CStringW(nowISO.c_str());
+        pApp->WriteProfileStringW(subSection, L"LastOpened", r.lastOpened);
         if (isNewEntry) {
-            long lastAddedLong = std::chrono::time_point_cast<std::chrono::seconds>(now).time_since_epoch().count();
-            rfe_last_added = (int)lastAddedLong;
+            rfe_last_added = (int)std::chrono::time_point_cast<std::chrono::seconds>(now).time_since_epoch().count();
             pApp->WriteProfileInt(m_section, L"LastAdded", rfe_last_added);
         }
     }
-    pApp->WriteProfileStringW(subSection, L"LastOpened", r.lastOpened);
 }
 
 void CAppSettings::CRecentFileListWithMoreInfo::SaveMediaHistory() {

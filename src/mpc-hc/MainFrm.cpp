@@ -2994,7 +2994,6 @@ LRESULT CMainFrame::OnGraphNotify(WPARAM wParam, LPARAM lParam)
             }
             break;
             case EC_DVD_CURRENT_HMSF_TIME: {
-                // Casimir666 : Save current position in the chapter
                 s.MRU.UpdateCurrentDVDTimecode((DVD_HMSF_TIMECODE*)&evParam1);
             }
             break;
@@ -18125,25 +18124,42 @@ void CMainFrame::CloseMedia(bool bNextIsQueued/* = false*/)
         ASSERT(!m_bSettingUpMenus);
     }
 
+    auto& s = AfxGetAppSettings();
+    bool savehistory = false;
     if (GetLoadState() == MLS::LOADED) {
-        // save playback position
-        auto& s = AfxGetAppSettings();
-        if (m_bRememberFilePos && !m_fEndOfStream && m_dwReloadPos == 0 && m_pMS) {
-            REFERENCE_TIME rtNow = 0;
-            m_pMS->GetCurrentPosition(&rtNow);
-            if (rtNow > 0) {
-                REFERENCE_TIME rtDur = 0;
-                m_pMS->GetDuration(&rtDur);
-                if (rtNow >= rtDur || rtDur - rtNow < 50000000LL) { // at end of file
-                    rtNow = 0;
-                }
-            }
-            s.MRU.UpdateCurrentFilePosition(rtNow, true);
-        }
-
         // abort sub search
         m_pSubtitlesProviders->Abort(SubtitlesThreadType(STT_SEARCH | STT_DOWNLOAD));
         m_wndSubtitlesDownloadDialog.DoClear();
+
+        // save playback position
+        if (s.fKeepHistory) {
+            if (m_bRememberFilePos && !m_fEndOfStream && m_dwReloadPos == 0 && m_pMS) {
+                REFERENCE_TIME rtNow = 0;
+                m_pMS->GetCurrentPosition(&rtNow);
+                if (rtNow > 0) {
+                    REFERENCE_TIME rtDur = 0;
+                    m_pMS->GetDuration(&rtDur);
+                    if (rtNow >= rtDur || rtDur - rtNow < 50000000LL) { // at end of file
+                        rtNow = 0;
+                    }
+                }
+                s.MRU.UpdateCurrentFilePosition(rtNow, true);
+            } else if (GetPlaybackMode() == PM_DVD && m_pDVDI) {
+                DVD_DOMAIN DVDDomain;
+                if (SUCCEEDED(m_pDVDI->GetCurrentDomain(&DVDDomain))) {
+                    if (DVDDomain == DVD_DOMAIN_Title) {
+                        DVD_PLAYBACK_LOCATION2 Location2;
+                        if (SUCCEEDED(m_pDVDI->GetCurrentLocation(&Location2))) {
+                            DVD_POSITION dvdPosition = s.MRU.GetCurrentDVDPosition();
+                            if (dvdPosition.llDVDGuid) {
+                                dvdPosition.lTitle = Location2.TitleNum;
+                                dvdPosition.timecode = Location2.TimeCode;
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
         // save external subtitle
         if (g_bExternalSubtitle &&
@@ -18161,6 +18177,10 @@ void CMainFrame::CloseMedia(bool bNextIsQueued/* = false*/)
                 }
                 SubtitlesSave(dir, true);
             }
+        }
+
+        if (s.fKeepHistory) {
+            savehistory = true;
         }
     }
 
@@ -18275,6 +18295,11 @@ void CMainFrame::CloseMedia(bool bNextIsQueued/* = false*/)
 
     // graph is destroyed, update stuff
     OnFilePostClosemedia(bNextIsQueued);
+
+    if (savehistory) {
+        s.MRU.WriteCurrentEntry();
+    }
+    s.MRU.current_rfe_hash.Empty();
 
     TRACE(_T("Close media completed\n"));
 }
