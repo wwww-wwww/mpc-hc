@@ -894,6 +894,7 @@ bool LibassContext::RenderFrame(long long now, SubPicDesc& spd, CRect& rcDirty) 
     if (!image) return false;
     if (changed) {
         AssFlattenSSE2(image, spd, rcDirty);
+        rcDirty.IntersectRect(rcDirty, CRect(0, 0, spd.w, spd.h));
         lastDirty = rcDirty;
     } else {
         rcDirty = lastDirty;
