@@ -521,7 +521,7 @@ class CAppSettings
             return rfe_array[nIndex];
         }
 
-        void Remove(size_t nIndex);
+        //void Remove(size_t nIndex);
         void Add(LPCTSTR fn);
         void Add(LPCTSTR fn, ULONGLONG llDVDGuid);
         void Add(RecentFileEntry r, bool current_open = false);
@@ -552,6 +552,7 @@ class CAppSettings
         bool LoadMediaHistoryEntry(CStringW hash, RecentFileEntry& r);
         void MigrateLegacyHistory();
         void SetSize(size_t nSize);
+        void RemoveAll();
     };
 
 public:
@@ -1014,8 +1015,11 @@ public:
     CAppSettings& operator = (const CAppSettings&) = delete;
 
     void            SaveSettings(bool write_full_history = false);
+    void            ClearRecentFiles();
+    static void     PurgeMediaHistory(size_t maxsize = 0);
+    static void     PurgePlaylistHistory(size_t maxsize = 0);
     static std::multimap<CStringW, CStringW> LoadHistoryHashes(CStringW section, CStringW dateField);
-    static void PurgeExpiredHash(CStringW section, CStringW hash);
+    static void     PurgeExpiredHash(CStringW section, CStringW hash);
     void            LoadSettings();
     void            SaveExternalFilters() {
         if (bInitialized) {

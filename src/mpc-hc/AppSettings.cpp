@@ -860,6 +860,22 @@ CString CAppSettings::SelectedAudioRenderer() const
     return strResult;
 }
 
+void CAppSettings::ClearRecentFiles() {
+    MRU.RemoveAll();
+
+    for (int i = MRUDub.GetSize() - 1; i >= 0; i--) {
+        MRUDub.Remove(i);
+    }
+    MRUDub.WriteList();
+
+    // Empty the Windows "Recent" jump list
+    CComPtr<IApplicationDestinations> pDests;
+    HRESULT hr = pDests.CoCreateInstance(CLSID_ApplicationDestinations, nullptr, CLSCTX_INPROC_SERVER);
+    if (SUCCEEDED(hr)) {
+        pDests->RemoveAllDestinations();
+    }
+}
+
 void CAppSettings::SaveSettings(bool write_full_history /* = false */)
 {
     CMPlayerCApp* pApp = AfxGetMyApp();
@@ -1276,19 +1292,39 @@ void CAppSettings::SaveSettings(bool write_full_history /* = false */)
         MRU.SaveMediaHistory();
     }
 
-    size_t maxsize = AfxGetAppSettings().fKeepHistory ? iRecentFilesNumber : 0;
-    CStringW section = L"PlaylistHistory";
-    auto timeToHash = LoadHistoryHashes(section, L"LastUpdated");
+    pApp->FlushProfile();
+}
 
-    int entries = 0;
-    for (auto iter = timeToHash.rbegin(); iter != timeToHash.rend(); ++iter, ++entries) {
-        CStringW hash = iter->second;
-        if (entries >= maxsize) {
-            PurgeExpiredHash(section, hash);
+void CAppSettings::PurgeMediaHistory(size_t maxsize) {
+    CStringW section = L"MediaHistory";
+    auto timeToHash = LoadHistoryHashes(section, L"LastUpdated");
+    size_t entries = timeToHash.size();
+    if (entries > maxsize) {
+        for (auto iter = timeToHash.rbegin(); iter != timeToHash.rend(); ++iter) {
+            if (entries > maxsize) {
+                PurgeExpiredHash(section, iter->second);
+                entries--;
+            } else {
+                break;
+            }
         }
     }
+}
 
-    pApp->FlushProfile();
+void CAppSettings::PurgePlaylistHistory(size_t maxsize) {
+    CStringW section = L"PlaylistHistory";
+    auto timeToHash = LoadHistoryHashes(section, L"LastUpdated");
+    size_t entries = timeToHash.size();
+    if (entries > maxsize) {
+        for (auto iter = timeToHash.rbegin(); iter != timeToHash.rend(); ++iter) {
+            if (entries > maxsize) {
+                PurgeExpiredHash(section, iter->second);
+                entries--;
+            } else {
+                break;
+            }
+        }
+    }
 }
 
 std::multimap<CStringW, CStringW> CAppSettings::LoadHistoryHashes(CStringW section, CStringW dateField) {
@@ -2807,6 +2843,7 @@ CStringW getRFEHash(RecentFileEntry &r) {
     }
 }
 
+/*
 void CAppSettings::CRecentFileListWithMoreInfo::Remove(size_t nIndex) {
     if (nIndex >= 0 && nIndex < rfe_array.GetCount()) {
         auto pApp = AfxGetMyApp();
@@ -2822,6 +2859,7 @@ void CAppSettings::CRecentFileListWithMoreInfo::Remove(size_t nIndex) {
         current_rfe_hash.Empty();
     }
 }
+*/
 
 void CAppSettings::CRecentFileListWithMoreInfo::Add(LPCTSTR fn) {
     RecentFileEntry r;
@@ -3232,6 +3270,9 @@ void CAppSettings::CRecentFileListWithMoreInfo::ReadMediaHistory() {
     } else {
         rfe_last_added = lastAddedStored;
     }
+
+    // The playlist history size is not managed elsewhere
+    CAppSettings::PurgePlaylistHistory(maxsize);
 }
 
 void CAppSettings::CRecentFileListWithMoreInfo::WriteMediaHistoryAudioIndex(RecentFileEntry& r) {
@@ -3386,8 +3427,18 @@ void CAppSettings::CRecentFileListWithMoreInfo::SetSize(size_t nSize) {
     m_maxSize = nSize;
     if (rfe_array.GetCount() > m_maxSize) {
         rfe_array.SetCount(m_maxSize);
+        PurgeMediaHistory(m_maxSize);
+        PurgePlaylistHistory(m_maxSize);
     }
     rfe_array.FreeExtra();
+
+    if (nSize == 0) {
+        current_rfe_hash.Empty();
+    }
+}
+
+void CAppSettings::CRecentFileListWithMoreInfo::RemoveAll() {
+    SetSize(0);
 }
 
 bool CAppSettings::IsVSFilterInstalled()

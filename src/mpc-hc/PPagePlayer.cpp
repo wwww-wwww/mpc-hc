@@ -142,21 +142,7 @@ BOOL CPPagePlayer::OnApply()
     s.bEnableCoverArt = !!m_bEnableCoverArt;
 
     if (!m_fKeepHistory) {
-        // Empty MPC-HC's recent menu (iterating reverse because the indexes change)
-        for (int i = s.MRU.GetSize() - 1; i >= 0; i--) {
-            s.MRU.Remove(i);
-        }
-        for (int i = s.MRUDub.GetSize() - 1; i >= 0; i--) {
-            s.MRUDub.Remove(i);
-        }
-        s.MRUDub.WriteList();
-
-        // Empty the "Recent" jump list
-        CComPtr<IApplicationDestinations> pDests;
-        HRESULT hr = pDests.CoCreateInstance(CLSID_ApplicationDestinations, nullptr, CLSCTX_INPROC_SERVER);
-        if (SUCCEEDED(hr)) {
-            pDests->RemoveAllDestinations();
-        }
+        s.ClearRecentFiles();
 
         // Ensure no new items are added in Windows recent menu and in the "Recent" jump list
         s.fileAssoc.SetNoRecentDocs(true, true);
