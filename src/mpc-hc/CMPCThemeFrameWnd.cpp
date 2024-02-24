@@ -318,7 +318,7 @@ void CMPCThemeFrameWnd::OnPaint()
             dcMem.SetTextColor(CMPCTheme::W10DarkThemeTitlebarFGColor);
             CString windowText;
             GetWindowText(windowText);
-            dcMem.DrawText(windowText, captionRect, DT_LEFT | DT_WORD_ELLIPSIS | DT_VCENTER | DT_SINGLELINE);
+            dcMem.DrawTextW(windowText, captionRect, DT_LEFT | DT_WORD_ELLIPSIS | DT_VCENTER | DT_SINGLELINE);
 
             HICON icon = (HICON)LoadImage(AfxGetInstanceHandle(), MAKEINTRESOURCE(m_nIDHelp), IMAGE_ICON, sysIconDim, sysIconDim, LR_SHARED);
             ::DrawIconEx(dcMem.m_hDC, sysMenuIconRect.left, sysMenuIconRect.top, icon, 0, 0, 0, nullptr, DI_NORMAL);

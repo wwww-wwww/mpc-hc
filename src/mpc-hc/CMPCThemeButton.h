@@ -12,7 +12,7 @@ public:
     void PreSubclassWindow();
     BOOL PreCreateWindow(CREATESTRUCT& cs);
     LRESULT setShieldIcon(WPARAM wParam, LPARAM lParam);
-    static void drawButtonBase(CDC* pDC, CRect rect, CString strText, bool selected, bool highLighted, bool focused, bool disabled, bool thin, bool shield = false);
+    static void drawButtonBase(CDC* pDC, CRect rect, CString strText, bool selected, bool highLighted, bool focused, bool disabled, bool thin, bool shield, HWND accelWindow=nullptr);
     DECLARE_DYNAMIC(CMPCThemeButton)
     DECLARE_MESSAGE_MAP()
     afx_msg void OnNMCustomdraw(NMHDR* pNMHDR, LRESULT* pResult);

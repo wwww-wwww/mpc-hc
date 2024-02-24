@@ -123,7 +123,7 @@ void CMPCThemeHeaderCtrl::drawItem(int nItem, CRect rText, CDC* pDC)
 
         GetItem(nItem, &hditem);
         int align = hditem.fmt & HDF_JUSTIFYMASK;
-        UINT textFormat = DT_VCENTER | DT_SINGLELINE | DT_END_ELLIPSIS;
+        UINT textFormat = DT_VCENTER | DT_SINGLELINE | DT_END_ELLIPSIS | DT_NOPREFIX;
         if (align == HDF_CENTER) {
             textFormat |= DT_CENTER;
         } else if (align == HDF_LEFT) {

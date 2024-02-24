@@ -75,7 +75,7 @@ void CMPCThemeStatusBar::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
         dc.SelectObject(&font);
     }
     dc.FillSolidRect(rect, CMPCTheme::StatusBarBGColor);
-    dc.DrawText(texts[item], rect, 0);
+    dc.DrawTextW(texts[item], rect, DT_NOPREFIX);
     if (item < numParts - 1) { //draw a separator
         CRect separator(rect.right, rect.top, rect.right + 1, rect.bottom);
         dc.OffsetClipRgn(1, 0); //separator is 1 pixel beyond our rect

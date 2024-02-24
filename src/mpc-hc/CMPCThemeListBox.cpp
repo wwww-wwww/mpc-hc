@@ -62,7 +62,7 @@ void CMPCThemeListBox::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 
     CFont* font = GetFont();
     CFont* pOldFont = dc.SelectObject(font);
-    dc.DrawText(strText, strText.GetLength(), &lpDrawItemStruct->rcItem, DT_VCENTER | DT_LEFT | DT_SINGLELINE | DT_NOPREFIX);
+    dc.DrawTextW(strText, strText.GetLength(), &lpDrawItemStruct->rcItem, DT_VCENTER | DT_LEFT | DT_SINGLELINE | DT_NOPREFIX);
 
     dc.SetTextColor(crOldTextColor);
     dc.SetBkColor(crOldBkColor);

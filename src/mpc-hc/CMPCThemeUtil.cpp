@@ -526,7 +526,7 @@ CSize CMPCThemeUtil::GetTextSize(CString str, CDC* pDC, CFont* font)
     CFont* pOldFont = pDC->SelectObject(font);
 
     CRect r = { 0, 0, 0, 0 };
-    pDC->DrawText(str, r, DT_SINGLELINE | DT_CALCRECT);
+    pDC->DrawTextW(str, r, DT_SINGLELINE | DT_CALCRECT);
     CSize cs = r.Size();
     pDC->SelectObject(pOldFont);
     return cs;
@@ -618,7 +618,7 @@ void CMPCThemeUtil::DrawBufferedText(CDC* pDC, CString text, CRect rect, UINT fo
 
     CRect tr = rect;
     tr.OffsetRect(-tr.left, -tr.top);
-    dcMem.DrawText(text, tr, format);
+    dcMem.DrawTextW(text, tr, format);
 
     pDC->BitBlt(rect.left, rect.top, rect.Width(), rect.Height(), &dcMem, 0, 0, SRCCOPY);
 }

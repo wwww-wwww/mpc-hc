@@ -50,6 +50,10 @@ void CMPCThemeStaticLink::OnPaint()
             format |= DT_VCENTER;
         }
 
+        if ((SendMessage(WM_QUERYUISTATE, 0, 0) & UISF_HIDEACCEL) != 0) {
+            format |= DT_HIDEPREFIX;
+        }
+
         if (!IsWindowEnabled()) {
             dc.SetTextColor(CMPCTheme::ContentTextDisabledFGColorFade);
         } else {
@@ -57,9 +61,9 @@ void CMPCThemeStaticLink::OnPaint()
         }
         CFont* font = GetFont();
         CFont* oldFont = dc.SelectObject(font);
-        dc.DrawText(text, r, format | DT_CALCRECT);
+        dc.DrawTextW(text, r, format | DT_CALCRECT);
         CMPCThemeUtil::drawParentDialogBGClr(this, &dc, r);
-        dc.DrawText(text, r, format);
+        dc.DrawTextW(text, r, format);
 
         dc.SelectObject(oldFont);
         dc.SetBkColor(oldBkClr);

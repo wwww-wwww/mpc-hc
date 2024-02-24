@@ -71,7 +71,7 @@ void CMPCThemePropPageFrame::DrawCaption(CDC* pDC, CRect rect, LPCTSTR lpszCapti
 
     rect.top -= GDIMetrics.tmDescent - 1;
 
-    pDC->DrawTextW(lpszCaption, rect, DT_LEFT | DT_SINGLELINE | DT_END_ELLIPSIS);
+    pDC->DrawTextW(lpszCaption, rect, DT_LEFT | DT_SINGLELINE | DT_END_ELLIPSIS); // DT_NOPREFIX not needed
 
     pDC->SetTextColor(clrPrev);
     pDC->SelectObject(oldFont);

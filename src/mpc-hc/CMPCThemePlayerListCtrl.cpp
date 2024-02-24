@@ -399,7 +399,7 @@ void CMPCThemePlayerListCtrl::drawItem(CDC* pDC, int nItem, int nSubItem)
                     bgColor = selectedBGColor;
                     if (LVS_REPORT != dwStyle) { //in list mode we don't fill the "whole" column
                         CRect tmp = rText;
-                        dcMem.DrawText(text, tmp, textFormat | DT_CALCRECT); //end of string
+                        dcMem.DrawTextW(text, tmp, textFormat | DT_CALCRECT); //end of string
                         rTextBG.right = tmp.right + (rText.left - rTextBG.left); //end of string plus same indent from the left side
                     }
                 } else if (hasCheckedColors) {
@@ -460,7 +460,7 @@ void CMPCThemePlayerListCtrl::drawItem(CDC* pDC, int nItem, int nSubItem)
 
                 dcMem.SelectObject(listMPCThemeFontBold);
             }
-            dcMem.DrawText(text, rText, textFormat);
+            dcMem.DrawTextW(text, rText, textFormat);
             CMPCThemeUtil::flushMemDC(pDC, dcMem, rectDC);
             pDC->SetTextColor(oldTextColor);
             pDC->SetBkColor(oldBkColor);

@@ -52,7 +52,7 @@ LRESULT CMPCThemeButton::setShieldIcon(WPARAM wParam, LPARAM lParam)
     return 1; //pass it along
 }
 
-void CMPCThemeButton::drawButtonBase(CDC* pDC, CRect rect, CString strText, bool selected, bool highLighted, bool focused, bool disabled, bool thin, bool shield)
+void CMPCThemeButton::drawButtonBase(CDC* pDC, CRect rect, CString strText, bool selected, bool highLighted, bool focused, bool disabled, bool thin, bool shield, HWND accelWindow)
 {
     CBrush fb, fb2;
     fb.CreateSolidBrush(CMPCTheme::ButtonBorderOuterColor);
@@ -108,7 +108,7 @@ void CMPCThemeButton::drawButtonBase(CDC* pDC, CRect rect, CString strText, bool
             int iconsize = MulDiv(pDC->GetDeviceCaps(LOGPIXELSX), 1, 6);
             int shieldY = rect.top + (rect.Height() - iconsize) / 2 + 1;
             CRect centerRect = rect;
-            pDC->DrawText(strText, rect, format | DT_CALCRECT);
+            pDC->DrawTextW(strText, rect, format | DT_CALCRECT);
             rect.top = centerRect.top;
             rect.bottom = centerRect.bottom;
             rect.OffsetRect((centerRect.Width() - rect.Width() + iconsize) / 2, 0);
@@ -119,7 +119,10 @@ void CMPCThemeButton::drawButtonBase(CDC* pDC, CRect rect, CString strText, bool
             }
         }
 
-        pDC->DrawText(strText, rect, format);
+        if (accelWindow && (::SendMessage(accelWindow, WM_QUERYUISTATE, 0, 0) & UISF_HIDEACCEL) != 0) {
+            format |= DT_HIDEPREFIX;
+        }
+        pDC->DrawTextW(strText, rect, format);
 
         pDC->SetTextColor(oldTextFGColor);
         pDC->SetBkMode(nMode);
@@ -146,7 +149,7 @@ void CMPCThemeButton::drawButton(HDC hdc, CRect rect, UINT state)
     bool thin = true;
 
 
-    drawButtonBase(pDC, rect, strText, selected, IsHighlighted(), focused, disabled, thin, drawShield);
+    drawButtonBase(pDC, rect, strText, selected, IsHighlighted(), focused, disabled, thin, drawShield, m_hWnd);
 
     int imageIndex = 0; //Normal
     if (disabled) {

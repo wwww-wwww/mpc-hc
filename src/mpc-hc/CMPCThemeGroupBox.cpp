@@ -64,7 +64,7 @@ void CMPCThemeGroupBox::OnPaint()
             rtext.left += CMPCTheme::GroupBoxTextIndent;
 
             text += _T(" "); //seems to be the default behavior
-            dc.DrawText(text, rtext, DT_TOP | DT_LEFT | DT_SINGLELINE | DT_EDITCONTROL);
+            dc.DrawTextW(text, rtext, DT_TOP | DT_LEFT | DT_SINGLELINE | DT_EDITCONTROL); // DT_NOPREFIX not needed
 
             dc.SelectObject(pOldFont);
             dc.SetTextColor(oldClr);

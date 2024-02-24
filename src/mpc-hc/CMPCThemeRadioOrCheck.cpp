@@ -48,6 +48,7 @@ BEGIN_MESSAGE_MAP(CMPCThemeRadioOrCheck, CButton)
     ON_WM_PAINT()
     ON_WM_ENABLE()
     ON_WM_ERASEBKGND()
+    ON_WM_UPDATEUISTATE()
 END_MESSAGE_MAP()
 
 
@@ -73,7 +74,7 @@ void CMPCThemeRadioOrCheck::OnPaint()
         if (0 != (buttonStyle & BS_PUSHLIKE)) {
             CFont* oFont, *font = GetFont();
             oFont = dc.SelectObject(font);
-            CMPCThemeButton::drawButtonBase(&dc, rectItem, sTitle, checkState != BST_UNCHECKED, isHover, isFocused, checkState == BST_INDETERMINATE, false);
+            CMPCThemeButton::drawButtonBase(&dc, rectItem, sTitle, checkState != BST_UNCHECKED, isHover, isFocused, checkState == BST_INDETERMINATE, false, false, m_hWnd);
             dc.SelectObject(oFont);
         } else {
             CRect rectCheck;
@@ -128,17 +129,17 @@ void CMPCThemeRadioOrCheck::OnPaint()
 
                 if ((buttonStyle & BS_CENTER) == BS_CENTER) {
                     uFormat |= DT_CENTER;
-                    dc.DrawText(sTitle, -1, &rectItem, uFormat | DT_CALCRECT);
+                    dc.DrawTextW(sTitle, -1, &rectItem, uFormat | DT_CALCRECT);  // DT_NOPREFIX not needed
                     rectItem.OffsetRect((centerRect.Width() - rectItem.Width()) / 2,
                                         (centerRect.Height() - rectItem.Height()) / 2);
                 } else if ((buttonStyle & BS_RIGHT) == BS_RIGHT) {
                     uFormat |= DT_RIGHT;
-                    dc.DrawText(sTitle, -1, &rectItem, uFormat | DT_CALCRECT);
+                    dc.DrawTextW(sTitle, -1, &rectItem, uFormat | DT_CALCRECT);  // DT_NOPREFIX not needed
                     rectItem.OffsetRect(centerRect.Width() - rectItem.Width(),
                                         (centerRect.Height() - rectItem.Height()) / 2);
                 } else { // if ((buttonStyle & BS_LEFT) == BS_LEFT) {
                     uFormat |= DT_LEFT;
-                    dc.DrawText(sTitle, -1, &rectItem, uFormat | DT_CALCRECT);
+                    dc.DrawTextW(sTitle, -1, &rectItem, uFormat | DT_CALCRECT);  // DT_NOPREFIX not needed
                     rectItem.OffsetRect(0, (centerRect.Height() - rectItem.Height()) / 2);
                 }
 
@@ -160,10 +161,10 @@ void CMPCThemeRadioOrCheck::OnPaint()
 
                 if (isDisabled) {
                     dc.SetTextColor(CMPCTheme::ButtonDisabledFGColor);
-                    dc.DrawText(sTitle, -1, &rectItem, uFormat);
+                    dc.DrawTextW(sTitle, -1, &rectItem, uFormat); // DT_NOPREFIX not needed
                 } else {
                     dc.SetTextColor(CMPCTheme::TextFGColor);
-                    dc.DrawText(sTitle, -1, &rectItem, uFormat);
+                    dc.DrawTextW(sTitle, -1, &rectItem, uFormat); // DT_NOPREFIX not needed
                 }
                 dc.SelectObject(pOldFont);
 
@@ -262,4 +263,12 @@ BOOL CMPCThemeRadioOrCheck::OnEraseBkgnd(CDC* pDC)
         CMPCThemeUtil::drawParentDialogBGClr(this, pDC, r);
     }
     return TRUE;
+}
+
+
+void CMPCThemeRadioOrCheck::OnUpdateUIState(UINT nAction, UINT nUIElement) {
+    if (nUIElement & UISF_HIDEACCEL) {
+        Invalidate();
+    }
+    return __super::OnUpdateUIState(nAction, nUIElement);
 }

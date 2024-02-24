@@ -66,13 +66,17 @@ void CMPCThemeStatic::OnPaint()
                 uFormat |= DT_LEFT;
             }
 
+            if ((SendMessage(WM_QUERYUISTATE, 0, 0) & UISF_HIDEACCEL) != 0) {
+                uFormat |= DT_HIDEPREFIX;
+            }
+
             dc.SetBkColor(CMPCTheme::WindowBGColor);
             if (isDisabled) {
                 dc.SetTextColor(CMPCTheme::ButtonDisabledFGColor);
-                dc.DrawText(sTitle, -1, &rectItem, uFormat);
+                dc.DrawTextW(sTitle, -1, &rectItem, uFormat);
             } else {
                 dc.SetTextColor(CMPCTheme::TextFGColor);
-                dc.DrawText(sTitle, -1, &rectItem, uFormat);
+                dc.DrawTextW(sTitle, -1, &rectItem, uFormat);
             }
             dc.SelectObject(pOldFont);
             dc.SetBkColor(oldBkColor);

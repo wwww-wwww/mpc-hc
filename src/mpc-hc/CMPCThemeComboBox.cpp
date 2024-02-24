@@ -37,7 +37,7 @@ void CMPCThemeComboBox::doDraw(CDC& dc, CString strText, CRect rText, COLORREF b
 
     CFont* font = GetFont();
     CFont* pOldFont = dc.SelectObject(font);
-    dc.DrawText(strText, &textRect, DT_VCENTER | DT_LEFT | DT_SINGLELINE | DT_NOPREFIX);
+    dc.DrawTextW(strText, &textRect, DT_VCENTER | DT_LEFT | DT_SINGLELINE | DT_NOPREFIX);
     dc.SelectObject(pOldFont);
 
     if (drawDotted) {
