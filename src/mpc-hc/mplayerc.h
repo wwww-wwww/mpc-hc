@@ -64,6 +64,7 @@ extern bool LoadType(CString fn, CString& type);
 extern bool LoadResource(UINT resid, CStringA& str, LPCTSTR restype);
 extern CString GetContentType(CString fn, CAtlList<CString>* redir = nullptr);
 extern WORD AssignedToCmd(UINT keyOrMouseValue, bool bIsFullScreen = false, bool bCheckMouse = true);
+extern std::map<CStringW, CStringW> GetAudioDeviceList();
 extern void SetAudioRenderer(int AudioDevNo);
 extern void SetHandCursor(HWND m_hWnd, UINT nID);
 

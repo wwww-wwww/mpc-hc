@@ -585,30 +585,55 @@ WORD AssignedToCmd(UINT keyOrMouseValue, bool bIsFullScreen, bool bCheckMouse)
     return assignTo;
 }
 
-void SetAudioRenderer(int AudioDevNo)
-{
-    CStringArray m_AudioRendererDisplayNames;
-    AfxGetMyApp()->m_AudioRendererDisplayName_CL = _T("");
-    m_AudioRendererDisplayNames.Add(_T(""));
-    int i = 2;
-
+std::map<CStringW, CStringW> GetAudioDeviceList() {
+    std::map<CStringW, CStringW> devicelist;
     BeginEnumSysDev(CLSID_AudioRendererCategory, pMoniker) {
         CComHeapPtr<OLECHAR> olestr;
         if (FAILED(pMoniker->GetDisplayName(0, 0, &olestr))) {
             continue;
         }
-        CStringW str(olestr);
-        m_AudioRendererDisplayNames.Add(CString(str));
-        i++;
+        CStringW dispname(olestr);
+        CStringW friendlyname;
+        CComPtr<IPropertyBag> pPB;
+        if (SUCCEEDED(pMoniker->BindToStorage(0, 0, IID_PPV_ARGS(&pPB)))) {
+            CComVariant var;
+            if (SUCCEEDED(pPB->Read(_T("FriendlyName"), &var, nullptr))) {
+                CStringW frname(var.bstrVal);
+                var.Clear();
+                friendlyname = frname;
+            }
+        } else {
+            friendlyname = dispname;
+        }
+        devicelist.emplace(friendlyname, dispname);
     }
     EndEnumSysDev;
 
-    m_AudioRendererDisplayNames.Add(AUDRNDT_NULL_COMP);
-    m_AudioRendererDisplayNames.Add(AUDRNDT_NULL_UNCOMP);
-    m_AudioRendererDisplayNames.Add(AUDRNDT_INTERNAL);
-    i += 3;
-    if (AudioDevNo >= 1 && AudioDevNo <= i) {
-        AfxGetMyApp()->m_AudioRendererDisplayName_CL = m_AudioRendererDisplayNames[AudioDevNo - 1];
+    return devicelist;
+}
+
+void SetAudioRenderer(int AudioDevNo)
+{
+    CStringArray dispnames;
+    AfxGetMyApp()->m_AudioRendererDisplayName_CL = _T("");
+    dispnames.Add(_T(""));
+    dispnames.Add(AUDRNDT_INTERNAL);
+    dispnames.Add(AUDRNDT_MPC);
+    int devcount = 3;
+
+    std::map<CStringW, CStringW> devicelist = GetAudioDeviceList();
+
+    for (auto it = devicelist.cbegin(); it != devicelist.cend(); it++) {
+        dispnames.Add((*it).second);
+        devcount++;
+    }
+
+    dispnames.Add(AUDRNDT_NULL_COMP);
+    dispnames.Add(AUDRNDT_NULL_UNCOMP);
+    devcount += 2;
+
+    if (AudioDevNo >= 1 && AudioDevNo <= devcount) {
+        AfxGetMyApp()->m_AudioRendererDisplayName_CL = dispnames[AudioDevNo - 1];
     }
 }
 

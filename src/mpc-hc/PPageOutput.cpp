@@ -178,70 +178,12 @@ BOOL CPPageOutput::OnInitDialog()
     }
 
     // List of available renderers
-    CAtlArray<CString> dispnames, listnames;
-    BeginEnumSysDev(CLSID_AudioRendererCategory, pMoniker) {
-        CComHeapPtr<OLECHAR> olestr;
-        if (FAILED(pMoniker->GetDisplayName(0, 0, &olestr))) {
-            continue;
-        }
+    std::map<CStringW,CStringW> devicelist = GetAudioDeviceList();
 
-        CStringW dispname(olestr);
-        CString listname;
-        CComPtr<IPropertyBag> pPB;
-        if (SUCCEEDED(pMoniker->BindToStorage(0, 0, IID_PPV_ARGS(&pPB)))) {
-            CComVariant var;
-            if (SUCCEEDED(pPB->Read(_T("FriendlyName"), &var, nullptr))) {
-                CString frname(var.bstrVal);
-                var.Clear();
-                if (SUCCEEDED(pPB->Read(_T("FilterData"), &var, nullptr))) {
-                    BSTR* pbstr;
-                    if (SUCCEEDED(SafeArrayAccessData(var.parray, (void**)&pbstr))) {
-                        frname.AppendFormat(_T(" (%08x)"), *((DWORD*)pbstr + 1));
-                        SafeArrayUnaccessData(var.parray);
-                    }
-                }
-                listname = frname;
-            }
-        } else {
-            listname = dispname;
-        }
-
-        dispnames.Add(dispname);
-        listnames.Add(listname);
-    }
-    EndEnumSysDev;
-
-    // Add them in organized order (Default/DirectSound/Other)
-    for (int i = 0; i < listnames.GetCount();) {
-        if (listnames[i].Find(L"Default") == 0) {
-            m_AudioRendererDisplayNames.Add(dispnames[i]);
-            m_iAudioRendererTypeCtrl.AddString(listnames[i]);
-            if (s.strAudioRendererDisplayName == dispnames[i] && m_iAudioRendererType == 0) {
-                m_iAudioRendererType = m_iAudioRendererTypeCtrl.GetCount() - 1;
-            }
-            listnames.RemoveAt(i);
-            dispnames.RemoveAt(i);
-        } else {
-            i++;
-        }
-    }
-    for (int i = 0; i < listnames.GetCount();) {
-        if (listnames[i].Find(L"DirectSound:") == 0) {
-            m_AudioRendererDisplayNames.Add(dispnames[i]);
-            m_iAudioRendererTypeCtrl.AddString(listnames[i]);
-            if (s.strAudioRendererDisplayName == dispnames[i] && m_iAudioRendererType == 0) {
-                m_iAudioRendererType = m_iAudioRendererTypeCtrl.GetCount() - 1;
-            }
-            listnames.RemoveAt(i);
-            dispnames.RemoveAt(i);
-        } else {
-            i++;
-        }
-    }
-    for (int i = 0; i < listnames.GetCount(); i++) {
-        m_AudioRendererDisplayNames.Add(dispnames[i]);
-        m_iAudioRendererTypeCtrl.AddString(listnames[i]);
-        if (s.strAudioRendererDisplayName == dispnames[i] && m_iAudioRendererType == 0) {
+    for (auto it = devicelist.cbegin(); it != devicelist.cend(); it++) {
+        m_AudioRendererDisplayNames.Add((*it).second);
+        m_iAudioRendererTypeCtrl.AddString((*it).first);
+        if (s.strAudioRendererDisplayName == (*it).first && m_iAudioRendererType == 0) {
             m_iAudioRendererType = m_iAudioRendererTypeCtrl.GetCount() - 1;
         }
     }
