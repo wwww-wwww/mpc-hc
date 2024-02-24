@@ -3031,7 +3031,7 @@ bool CSimpleTextSubtitle::GetStyle(CString styleName, STSStyle& stss)
 
 int CSimpleTextSubtitle::GetCharSet(int charSet)
 {
-    if (overrideANSICharset > DEFAULT_CHARSET && (charSet == DEFAULT_CHARSET || charSet == ANSI_CHARSET)) {
+    if (overrideANSICharset >= DEFAULT_CHARSET && (charSet == DEFAULT_CHARSET || charSet == ANSI_CHARSET)) {
         return overrideANSICharset;
     }
     return charSet;
