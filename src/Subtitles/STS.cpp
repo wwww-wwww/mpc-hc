@@ -1745,21 +1745,21 @@ bool OpenSubStationAlpha(CTextFile* file, CSimpleTextSubtitle& ret, int CharSet)
 
     // Order of bits: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, MarginB, AlphaLevel, Encoding, RelativeTo
     // 26 bits, RelativeTo is least significant
-    uint32_t style_param_v3   = 0b11111111100000001111110110;
-    uint32_t style_param_v4   = 0b11111111100000011111110110;
-    uint32_t style_param_v4p  = 0b11111111111111111111110010;
-    uint32_t style_param_v4pp = 0b11111111111111111111111011;
-    uint32_t style_param_var1 = 0b11111111110000011111110110;
+    const uint32_t style_param_v3   = 0b11111111100000001111110110;
+    const uint32_t style_param_v4   = 0b11111111100000011111110110;
+    const uint32_t style_param_v4p  = 0b11111111111111111111110010;
+    const uint32_t style_param_v4pp = 0b11111111111111111111111011;
+    const uint32_t style_param_var1 = 0b11111111110000011111110110;
     uint32_t style_param = style_param_v3;
 
     // Order of bits:  Marked, Layer, Start, End, Style, Name/Actor, MarginL, MarginR, MarginV, MarginB, Effect, Text
     // 12 bits, Text is least significant bit
-    uint32_t event_param_v3   = 0b101111111011;
-    uint32_t event_param_v4   = 0b101111111011;
-    uint32_t event_param_v4p  = 0b011111111011;
-    uint32_t event_param_v4pp = 0b011111111111;
-    uint32_t event_param_var1 = 0b011111000001;
-    uint32_t event_param = event_param_v3;
+    const uint32_t event_param_v3   = 0b101111111011;
+    const uint32_t event_param_v4   = 0b101111111011;
+    const uint32_t event_param_v4p  = 0b011111111011;
+    const uint32_t event_param_v4pp = 0b011111111111;
+    const uint32_t event_param_var1 = 0b011111000001;
+    ret.event_param = event_param_v3;
 
     while (file->ReadString(buff)) {
         FastTrim(buff);
@@ -1789,11 +1789,11 @@ bool OpenSubStationAlpha(CTextFile* file, CSimpleTextSubtitle& ret, int CharSet)
                 int hh1, mm1, ss1, ms1_div10, hh2, mm2, ss2, ms2_div10, layer = 0;
                 CRect marginRect;
 
-                if (event_param & (1 << 11)) { // Marked
+                if (ret.event_param & (1 << 11)) { // Marked
                     GetStrW(pszBuff, nBuffLength, L'=');
                     GetInt(pszBuff, nBuffLength);
                 }
-                if (event_param & (1 << 10)) { // Layer
+                if (ret.event_param & (1 << 10)) { // Layer
                     layer = GetInt(pszBuff, nBuffLength);
                 }
                 hh1 = GetInt(pszBuff, nBuffLength, L':');
@@ -1808,25 +1808,25 @@ bool OpenSubStationAlpha(CTextFile* file, CSimpleTextSubtitle& ret, int CharSet)
                 CString style = WToT(GetStrW(pszBuff, nBuffLength));
 
                 CString actor;
-                if (event_param & (1 << 6)) { // Actor/Name
+                if (ret.event_param & (1 << 6)) { // Actor/Name
                     actor = WToT(GetStrW(pszBuff, nBuffLength));
                 }
 
-                if (event_param & (1 << 5)) {
+                if (ret.event_param & (1 << 5)) {
                     marginRect.left = GetInt(pszBuff, nBuffLength);
                 }
-                if (event_param & (1 << 4)) {
+                if (ret.event_param & (1 << 4)) {
                     marginRect.right = GetInt(pszBuff, nBuffLength);
                 }
-                if (event_param & (1 << 3)) {
+                if (ret.event_param & (1 << 3)) {
                     marginRect.top = marginRect.bottom = GetInt(pszBuff, nBuffLength);
                 }
-                if (event_param & (1 << 2)) {
+                if (ret.event_param & (1 << 2)) {
                     marginRect.bottom = GetInt(pszBuff, nBuffLength);
                 }
 
                 CString effect;
-                if (event_param & (1 << 1)) {
+                if (ret.event_param & (1 << 1)) {
                     effect = WToT(GetStrW(pszBuff, nBuffLength));
                     int len = std::min(effect.GetLength(), nBuffLength);
                     if (effect.Left(len) == WToT(CStringW(pszBuff, len))) {
@@ -1996,15 +1996,15 @@ bool OpenSubStationAlpha(CTextFile* file, CSimpleTextSubtitle& ret, int CharSet)
             if (buff.GetLength() >= 4 && !buff.Right(4).CompareNoCase(L"4.00")) {
                 style_version = 4;
                 style_param = style_param_v4;
-                event_param = event_param_v4;
+                ret.event_param = event_param_v4;
             } else if (buff.GetLength() >= 5 && !buff.Right(5).CompareNoCase(L"4.00+")) {
                 style_version = 5;
                 style_param = style_param_v4p;
-                event_param = event_param_v4p;
+                ret.event_param = event_param_v4p;
             } else if (buff.GetLength() >= 6 && !buff.Right(6).CompareNoCase(L"4.00++")) {
                 style_version = 6;
                 style_param = style_param_v4pp;
-                event_param = event_param_v4pp;
+                ret.event_param = event_param_v4pp;
             }
         } else if (entry == L"collisions") {
             if (nBuffLength) {
@@ -2064,15 +2064,15 @@ bool OpenSubStationAlpha(CTextFile* file, CSimpleTextSubtitle& ret, int CharSet)
             } else {
                 // Event formats
                 if (       formatstr == L"layer,start,end,style,name,marginl,marginr,marginv,effect,text") {
-                    event_param = event_param_v4p;
+                    ret.event_param = event_param_v4p;
                 } else if (formatstr == L"layer,start,end,style,actor,marginl,marginr,marginv,effect,text") {
-                    event_param = event_param_v4p;
+                    ret.event_param = event_param_v4p;
                 } else if (formatstr == L"layer,start,end,style,name,marginl,marginr,marginv,marginb,effect,text") {
-                    event_param = event_param_v4pp;
+                    ret.event_param = event_param_v4pp;
                 } else if (formatstr == L"marked,start,end,style,name,marginl,marginr,marginv,effect,text") {
-                    event_param = event_param_v4;
+                    ret.event_param = event_param_v4;
                 } else if (formatstr == L"layer,start,end,style,text") {
-                    event_param = event_param_var1;
+                    ret.event_param = event_param_var1;
                 } else {
                     TRACE(_T("Unknown SSA event format: %s\n"), static_cast<LPCWSTR>(formatstr));
                     ASSERT(false);

@@ -113,6 +113,7 @@ public:
 
     STSStyle m_originalDefaultStyle;
     bool m_bUsingPlayerDefaultStyle;
+    uint32_t event_param;
 
     CSTSStyleMap m_styles;
     int overrideANSICharset;

@@ -486,24 +486,31 @@ REFERENCE_TIME CSubtitleInputPin::DecodeSample(const std::unique_ptr<SubtitleSam
                 FastTrim(str);
                 if (!str.IsEmpty()) {
                     STSEntry stse;
-
                     int fields = m_mt.subtype == MEDIASUBTYPE_ASS2 ? 10 : 9;
-
+                    if (pRTS->event_param == 0b011111000001) { // non-standard variant
+                        fields = 4;
+                    }
                     CAtlList<CStringW> sl;
                     ExplodeNoTrim(str, sl, ',', fields);
                     if (sl.GetCount() == (size_t)fields) {
                         stse.readorder = wcstol(sl.RemoveHead(), nullptr, 10);
                         stse.layer = wcstol(sl.RemoveHead(), nullptr, 10);
                         stse.style = sl.RemoveHead(); // no trim, its value is a lookup key
-                        stse.actor = sl.RemoveHead().Trim();
-                        stse.marginRect.left = wcstol(sl.RemoveHead(), nullptr, 10);
-                        stse.marginRect.right = wcstol(sl.RemoveHead(), nullptr, 10);
-                        stse.marginRect.top = stse.marginRect.bottom = wcstol(sl.RemoveHead(), nullptr, 10);
+                        if (fields >= 9) {
+                            stse.actor = sl.RemoveHead().Trim();
+                            stse.marginRect.left = wcstol(sl.RemoveHead(), nullptr, 10);
+                            stse.marginRect.right = wcstol(sl.RemoveHead(), nullptr, 10);
+                            stse.marginRect.top = stse.marginRect.bottom = wcstol(sl.RemoveHead(), nullptr, 10);
+                        }
                         if (fields == 10) {
                             stse.marginRect.bottom = wcstol(sl.RemoveHead(), nullptr, 10);
                         }
-                        stse.effect = sl.RemoveHead().Trim();
+                        if (fields >= 9) {
+                            stse.effect = sl.RemoveHead().Trim();
+                        }
                         stse.str = sl.RemoveHead().Trim();
+                    } else {
+                        ASSERT(false);
                     }
 
                     if (!stse.str.IsEmpty()) {
