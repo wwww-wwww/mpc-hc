@@ -2051,11 +2051,11 @@ bool OpenSubStationAlpha(CTextFile* file, CSimpleTextSubtitle& ret, int CharSet)
                     style_param = style_param_v4p;
                 } else if (formatstr == L"name,fontname,fontsize,primarycolour,secondarycolour,tertiarycolour,backcolour,bold,italic,borderstyle,outline,shadow,alignment,marginl,marginr,marginv,alphalevel,encoding") {
                     style_param = style_param_v4;
-                } else if (formatstr == L"name,fontname,fontsize,primarycolour,secondarycolour,outlinecolour,backcolour,bold,italic,underline,strikeOut,scalex,scaley,spacing,angle,borderstyle,outline,shadow,alignment,marginl,marginr,marginv,marginb,encoding,relativeto") {
+                } else if (formatstr == L"name,fontname,fontsize,primarycolour,secondarycolour,outlinecolour,backcolour,bold,italic,underline,strikeout,scalex,scaley,spacing,angle,borderstyle,outline,shadow,alignment,marginl,marginr,marginv,marginb,encoding,relativeto") {
                     style_param = style_param_v4pp;
                 } else if (formatstr == L"name,fontname,fontsize,primarycolour,secondarycolour,tertiarycolour,backcolour,bold,italic,outline,shadow,alignment,marginl,marginr,marginv,alphalevel,encoding") {
                     style_param = style_param_v3;
-                } else if (formatstr == L"name,fontname,fontsize,primarycolour,secondarycolour,outlinecolour,backcolour,bold,italic,underline,borderStyle,outline,shadow,alignment,marginl,marginr,marginv,alphalevel,encoding") {
+                } else if (formatstr == L"name,fontname,fontsize,primarycolour,secondarycolour,outlinecolour,backcolour,bold,italic,underline,borderstyle,outline,shadow,alignment,marginl,marginr,marginv,alphalevel,encoding") {
                     style_param = style_param_var1;
                 } else {
                     TRACE(_T("Unknown SSA style format: %s\n"), static_cast<LPCWSTR>(formatstr));
