@@ -3094,6 +3094,16 @@ LRESULT CMainFrame::OnGraphNotify(WPARAM wParam, LPARAM lParam)
                 // madVR changed graph state
                 UpdateCachedMediaState();
                 break;
+            case EC_DVD_STILL_ON:
+            case EC_DVD_STILL_OFF:
+            case EC_DVD_BUTTON_CHANGE:
+            case EC_DVD_SUBPICTURE_STREAM_CHANGE:
+            case EC_DVD_AUDIO_STREAM_CHANGE:
+            case EC_DVD_ANGLE_CHANGE:
+            case EC_DVD_VALID_UOPS_CHANGE:
+            case EC_DVD_CHAPTER_START:
+                // no action required
+                break;
             default:
                 UpdateCachedMediaState();
                 TRACE(_T("Unhandled graph event\n"));
