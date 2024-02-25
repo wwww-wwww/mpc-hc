@@ -49,11 +49,12 @@ public:
         COL_FILENAME,
         COL_LANGUAGE,
         //COL_FORMAT,
+        COL_FRAMERATE,
         COL_HEARINGIMPAIRED,
         COL_DOWNLOADS,
-        COL_DISC,
         COL_TITLES,
         COL_SCORE,
+        COL_DISC,
         COL_TOTAL_COLUMNS
     };
 

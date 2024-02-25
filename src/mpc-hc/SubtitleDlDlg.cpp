@@ -161,6 +161,14 @@ int CALLBACK CSubtitleDlDlg::SortCompare(LPARAM lParam1, LPARAM lParam2, LPARAM 
                : (left < right ? 1 : -1);
     }
 
+    if (ps->m_nSortColumn == COL_FRAMERATE) {
+        double left  = (*(SubtitlesInfo*)(list->GetItemData((int)lParam1))).frameRate;
+        double right = (*(SubtitlesInfo*)(list->GetItemData((int)lParam2))).frameRate;
+        return left == right ? 0 : (ps->m_fSortOrder == 1)
+            ? (left > right ? 1 : -1)
+            : (left < right ? 1 : -1);
+    }
+
     if (ps->m_nSortColumn == COL_SCORE) {
         SHORT left = (SHORT)LOWORD((*(SubtitlesInfo*)(list->GetItemData((int)lParam1))).Score());
         SHORT right = (SHORT)LOWORD((*(SubtitlesInfo*)(list->GetItemData((int)lParam2))).Score());
@@ -221,24 +229,26 @@ BOOL CSubtitleDlDlg::OnInitDialog()
     if (columnWidth.GetCount() != COL_TOTAL_COLUMNS) {
         // default sizes
         columnWidth.RemoveAll();
-        columnWidth.Add(100);
+        columnWidth.Add(150);
         columnWidth.Add(300);
-        columnWidth.Add(80);
+        columnWidth.Add(100);
         columnWidth.Add(40);
-        columnWidth.Add(50);
         columnWidth.Add(40);
+        columnWidth.Add(70);
         columnWidth.Add(250);
+        columnWidth.Add(40);
         columnWidth.Add(40);
     }
 
     m_list.InsertColumn(COL_PROVIDER, ResStr(IDS_SUBDL_DLG_PROVIDER_COL), LVCFMT_LEFT, columnWidth[COL_PROVIDER]);
     m_list.InsertColumn(COL_FILENAME, ResStr(IDS_SUBDL_DLG_FILENAME_COL), LVCFMT_LEFT, columnWidth[COL_FILENAME]);
-    m_list.InsertColumn(COL_LANGUAGE, ResStr(IDS_SUBDL_DLG_LANGUAGE_COL), LVCFMT_CENTER, columnWidth[COL_LANGUAGE]);
-    m_list.InsertColumn(COL_DISC, ResStr(IDS_SUBDL_DLG_DISC_COL), LVCFMT_CENTER, columnWidth[COL_DISC]);
-    m_list.InsertColumn(COL_HEARINGIMPAIRED, ResStr(IDS_SUBDL_DLG_HI_COL), LVCFMT_CENTER, columnWidth[COL_HEARINGIMPAIRED]);
+    m_list.InsertColumn(COL_LANGUAGE, ResStr(IDS_SUBDL_DLG_LANGUAGE_COL), LVCFMT_LEFT, columnWidth[COL_LANGUAGE]);
+    m_list.InsertColumn(COL_FRAMERATE, L"FPS", LVCFMT_RIGHT, columnWidth[COL_FRAMERATE]);
+    m_list.InsertColumn(COL_HEARINGIMPAIRED, ResStr(IDS_SUBDL_DLG_HI_COL), LVCFMT_RIGHT, columnWidth[COL_HEARINGIMPAIRED]);
     m_list.InsertColumn(COL_DOWNLOADS, ResStr(IDS_SUBDL_DLG_DOWNLOADS_COL), LVCFMT_RIGHT, columnWidth[COL_DOWNLOADS]);
     m_list.InsertColumn(COL_TITLES, ResStr(IDS_SUBDL_DLG_TITLES_COL), LVCFMT_LEFT, columnWidth[COL_TITLES]);
     m_list.InsertColumn(COL_SCORE, ResStr(IDS_SUBDL_DLG_SCORE_COL), LVCFMT_RIGHT, columnWidth[COL_SCORE]);
+    m_list.InsertColumn(COL_DISC, ResStr(IDS_SUBDL_DLG_DISC_COL), LVCFMT_RIGHT, columnWidth[COL_DISC]);
     SetListViewSortColumn();
 
     AddAnchor(IDC_LIST1, TOP_LEFT, BOTTOM_RIGHT);
@@ -643,6 +653,10 @@ afx_msg LRESULT CSubtitleDlDlg::OnCompleted(WPARAM wParam, LPARAM lParam)
             }
             m_list.SetItemText(iItem, COL_DOWNLOADS, downloads);
             m_list.SetItemText(iItem, COL_TITLES, UTF8To16(subInfo.DisplayTitle().c_str()));
+
+            CString fps;
+            fps.Format(_T("%.3f"), subInfo.frameRate);
+            m_list.SetItemText(iItem, COL_FRAMERATE, fps);
 
             CString score;
             score.Format(_T("%d"), (SHORT)LOWORD(subInfo.Score()));
