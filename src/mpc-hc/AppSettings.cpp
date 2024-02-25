@@ -3226,6 +3226,7 @@ void CAppSettings::CRecentFileListWithMoreInfo::ReadMediaHistory() {
     if (lastAddedStored != 0 && lastAddedStored == rfe_last_added || rfe_last_added == 1) {
         return;
     }
+    listModifySequence++;
 
     size_t maxsize = AfxGetAppSettings().fKeepHistory ? m_maxSize : 0;
 
@@ -3401,6 +3402,7 @@ void CAppSettings::CRecentFileListWithMoreInfo::WriteMediaHistoryEntry(RecentFil
             pApp->WriteProfileInt(m_section, L"LastAdded", rfe_last_added);
         }
     }
+    listModifySequence++;
 }
 
 void CAppSettings::CRecentFileListWithMoreInfo::SaveMediaHistory() {

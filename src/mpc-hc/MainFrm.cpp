@@ -906,6 +906,7 @@ CMainFrame::CMainFrame()
     , lastSeekFinish(0)
     , defaultVideoAngle(0)
     , m_media_trans_control()
+    , recentFilesMenuFromMRUSequence(-1)
 {
     // Don't let CFrameWnd handle automatically the state of the menu items.
     // This means that menu items without handlers won't be automatically
@@ -16239,18 +16240,22 @@ CString CMainFrame::GetStreamOSDString(CString name, LCID lcid, DWORD dwSelGroup
 
 void CMainFrame::SetupRecentFilesSubMenu()
 {
+    auto& s = AfxGetAppSettings();
+    auto& MRU = s.MRU;
+    MRU.ReadMediaHistory();
+
+    if (MRU.listModifySequence == recentFilesMenuFromMRUSequence) {
+        return;
+    }
+    recentFilesMenuFromMRUSequence = MRU.listModifySequence;
+
     CMenu& subMenu = m_recentFilesMenu;
     // Empty the menu
     while (subMenu.RemoveMenu(0, MF_BYPOSITION));
-
-    auto& s = AfxGetAppSettings();
    
     if (!s.fKeepHistory) {
         return;
     }
-
-    auto& MRU = s.MRU;
-    MRU.ReadMediaHistory();
 
     if (MRU.GetSize() > 0) {
         VERIFY(subMenu.AppendMenu(MF_STRING | MF_ENABLED, ID_RECENT_FILES_CLEAR, ResStr(IDS_RECENT_FILES_CLEAR)));

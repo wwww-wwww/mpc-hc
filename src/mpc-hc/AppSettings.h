@@ -511,6 +511,7 @@ class CAppSettings
         REFERENCE_TIME persistedFilePosition = 0;
         CString current_rfe_hash;
         int rfe_last_added = 0;
+        int listModifySequence = 0;
 
         int GetSize() {
             return (int)rfe_array.GetCount();

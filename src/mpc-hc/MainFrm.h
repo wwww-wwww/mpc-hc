@@ -388,6 +388,7 @@ private:
     CMPCThemeMenu m_favoritesMenu;
     CMPCThemeMenu m_shadersMenu;
     CMPCThemeMenu m_recentFilesMenu;
+    int recentFilesMenuFromMRUSequence;
 
     UINT m_nJumpToSubMenusCount;
 
