@@ -262,12 +262,16 @@ BOOL CSubtitleDlDlg::OnInitDialog()
 
 BOOL CSubtitleDlDlg::PreTranslateMessage(MSG* pMsg)
 {
-    // Inhibit default handling for the Enter key when the list has the focus and an item is selected.
-    if (pMsg->message == WM_KEYDOWN && pMsg->wParam == VK_RETURN
-            && pMsg->hwnd == m_list.GetSafeHwnd() && m_list.GetSelectedCount() > 0) {
-        return FALSE;
+    if (pMsg->message == WM_KEYDOWN && pMsg->wParam == VK_RETURN) {
+        // Inhibit default handling for the Enter key when the list has the focus and an item is selected.
+        if (pMsg->hwnd == m_list.GetSafeHwnd() && m_list.GetSelectedCount() > 0) {
+            return FALSE;
+        }
+        if (pMsg->hwnd == GetDlgItem(IDC_EDIT1)->GetSafeHwnd()) { //we want <enter> in the search field to initiate search
+            SendMessage(WM_COMMAND, (WPARAM)IDC_BUTTON4, LPARAM(0)); //press search button
+            return FALSE;
+        }
     }
-
     return __super::PreTranslateMessage(pMsg);
 }
 
@@ -573,7 +577,11 @@ afx_msg LRESULT CSubtitleDlDlg::OnSearch(WPARAM wParam, LPARAM /*lParam*/)
 afx_msg LRESULT CSubtitleDlDlg::OnSearching(WPARAM /*wParam*/, LPARAM lParam)
 {
     SubtitlesInfo& _fileInfo = *(SubtitlesInfo*)lParam;
-    CString title = ResStr(IDS_SUBDL_DLG_TITLE) + _T(" - ") + UTF8To16(_fileInfo.fileName.c_str());
+    CStringW search = UTF8To16(_fileInfo.fileName.c_str());
+    if (search.IsEmpty()) {
+        search = _fileInfo.manualSearchString;
+    }
+    CStringW title = ResStr(IDS_SUBDL_DLG_TITLE) + _T(" - ") + search;
     SetWindowText(title);
     return S_OK;
 }
