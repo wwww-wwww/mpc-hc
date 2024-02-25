@@ -2069,9 +2069,7 @@ bool OpenSubStationAlpha(CTextFile* file, CSimpleTextSubtitle& ret, int CharSet)
                     event_param = event_param_v4p;
                 } else if (formatstr == L"layer,start,end,style,name,marginl,marginr,marginv,marginb,effect,text") {
                     event_param = event_param_v4pp;
-                } else if (formatstr == L"marked=0,start,end,style,name,marginl,marginr,marginv,effect,text") {
-                    event_param = event_param_v4;
-                } else if (formatstr == L"marked=1,start,end,style,name,marginl,marginr,marginv,effect,text") {
+                } else if (formatstr == L"marked,start,end,style,name,marginl,marginr,marginv,effect,text") {
                     event_param = event_param_v4;
                 } else if (formatstr == L"layer,start,end,style,text") {
                     event_param = event_param_var1;
