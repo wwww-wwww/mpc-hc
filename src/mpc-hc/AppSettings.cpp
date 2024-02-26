@@ -1628,7 +1628,7 @@ void CAppSettings::LoadSettings()
 
     // Auto-change fullscreen mode
     autoChangeFSMode.bEnabled = !!pApp->GetProfileInt(IDS_R_SETTINGS_FULLSCREEN_AUTOCHANGE_MODE, IDS_RS_FULLSCREEN_AUTOCHANGE_MODE_ENABLE, FALSE);
-    autoChangeFSMode.bApplyDefaultModeAtFSExit = !!pApp->GetProfileInt(IDS_R_SETTINGS_FULLSCREEN_AUTOCHANGE_MODE, IDS_RS_FULLSCREEN_AUTOCHANGE_MODE_APPLYDEFMODEATFSEXIT, TRUE);
+    autoChangeFSMode.bApplyDefaultModeAtFSExit = !!pApp->GetProfileInt(IDS_R_SETTINGS_FULLSCREEN_AUTOCHANGE_MODE, IDS_RS_FULLSCREEN_AUTOCHANGE_MODE_APPLYDEFMODEATFSEXIT, FALSE);
     autoChangeFSMode.bRestoreResAfterProgExit  = !!pApp->GetProfileInt(IDS_R_SETTINGS_FULLSCREEN_AUTOCHANGE_MODE, IDS_RS_FULLSCREEN_AUTOCHANGE_MODE_RESTORERESAFTEREXIT, TRUE);
     autoChangeFSMode.uDelay = pApp->GetProfileInt(IDS_R_SETTINGS_FULLSCREEN_AUTOCHANGE_MODE, IDS_RS_FULLSCREEN_AUTOCHANGE_MODE_DELAY, 0);
 
@@ -3638,7 +3638,7 @@ void CAppSettings::UpdateSettings()
 
             if (bSetDefault) {
                 autoChangeFSMode.bEnabled = false;
-                autoChangeFSMode.bApplyDefaultModeAtFSExit = true;
+                autoChangeFSMode.bApplyDefaultModeAtFSExit = false;
                 autoChangeFSMode.modes.clear();
             }
             autoChangeFSMode.bRestoreResAfterProgExit = !!pApp->GetProfileInt(IDS_R_SETTINGS, _T("RestoreResAfterExit"), TRUE);

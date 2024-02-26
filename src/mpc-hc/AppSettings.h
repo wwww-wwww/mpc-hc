@@ -264,7 +264,7 @@ struct AutoChangeMode {
 struct AutoChangeFullscreenMode {
     bool                        bEnabled = false;
     std::vector<AutoChangeMode> modes;
-    bool                        bApplyDefaultModeAtFSExit = true;
+    bool                        bApplyDefaultModeAtFSExit = false;
     bool                        bRestoreResAfterProgExit = true;
     unsigned                    uDelay = 0u;
 };
