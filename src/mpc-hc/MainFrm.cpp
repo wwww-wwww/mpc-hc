@@ -13019,7 +13019,7 @@ void CMainFrame::OpenFile(OpenFileData* pOFD)
                                 }
                             }
                         }
-                        if (!title.IsEmpty() && !IsNameSimilar(title, PathUtils::StripPathOrUrl(fn))) {
+                        if (title.GetLength() >= 10 && !IsNameSimilar(title, PathUtils::StripPathOrUrl(fn))) {
                             r.title = title;
                         }
                     } else {
