@@ -642,8 +642,14 @@ afx_msg LRESULT CSubtitleDlDlg::OnCompleted(WPARAM wParam, LPARAM lParam)
             int iItem = m_list.InsertItem(0, UTF8To16(subInfo.Provider()->DisplayName().c_str()), subInfo.Provider()->GetIconIndex());
             m_list.SetItemText(iItem, COL_FILENAME, UTF8To16(subInfo.fileName.c_str()));
             m_list.SetItemText(iItem, COL_LANGUAGE, ISOLang::ISO639XToLanguage(subInfo.languageCode.c_str()));
-            CString disc;
-            disc.Format(_T("%d/%d"), subInfo.discNumber, subInfo.discCount);
+            CStringW disc = L"";
+            if (subInfo.discNumber > 0) {
+                if (subInfo.discCount > 0) {
+                    disc.Format(L"%d/%d", subInfo.discNumber, subInfo.discCount);
+                } else {
+                    disc.Format(L"%d", subInfo.discNumber);
+                }
+            }
             m_list.SetItemText(iItem, COL_DISC, disc);
             m_list.SetItemText(iItem, COL_HEARINGIMPAIRED, subInfo.hearingImpaired == -1 ? _T("-") : subInfo.hearingImpaired > 0 ? ResStr(IDS_YES).GetString() : ResStr(IDS_NO).GetString());
             CString downloads(_T("-"));
