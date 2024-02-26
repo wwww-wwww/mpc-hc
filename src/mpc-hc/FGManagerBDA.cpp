@@ -1275,6 +1275,10 @@ HRESULT CFGManagerBDA::SwitchStream(BDA_STREAM_TYPE nOldType, BDA_STREAM_TYPE nN
     CComPtr<IPin> pInPin;
     if (pOldOut && pFGNew) {
         pOldOut->ConnectedTo(&pInPin);
+        if (!pInPin) {
+            ASSERT(false);
+            return E_UNEXPECTED;
+        }
         CComPtr<IPin> pNewOut = GetFirstPin(pFGNew, PINDIR_OUTPUT);
         CComPtr<IPinConnection> pNewOutDynamic;
 
