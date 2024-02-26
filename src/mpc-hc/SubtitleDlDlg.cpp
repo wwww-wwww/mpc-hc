@@ -134,47 +134,86 @@ void CSubtitleDlDlg::SetListViewSortColumn()
     }
 }
 
+int SortScoreFile(SubtitlesInfo* si_left, SubtitlesInfo* si_right, bool sortup) {
+    // high bits are language score
+    // low bits are file score
+    SHORT left = (SHORT)LOWORD(si_left->Score());
+    SHORT right = (SHORT)LOWORD(si_right->Score());
+    return left == right ? 0 : sortup ? (left > right ? 1 : -1) : (left < right ? 1 : -1);
+}
+
+int SortScore(SubtitlesInfo* si_left, SubtitlesInfo* si_right, bool sortup) {
+    DWORD left  = si_left->Score();
+    DWORD right = si_right->Score();
+    return left == right ? 0 : sortup ? (left > right ? 1 : -1) : (left < right ? 1 : -1);
+}
+
+int SortFramerate(SubtitlesInfo* si_left, SubtitlesInfo* si_right, bool sortup) {
+    double left = si_left->frameRate;
+    double right = si_right->frameRate;
+    return (abs(left-right) < 0.001) ? 0 : sortup ? (left > right ? 1 : -1) : (left < right ? 1 : -1);
+}
+
+int SortDownloads(SubtitlesInfo* si_left, SubtitlesInfo* si_right, bool sortup) {
+    int left = si_left->downloadCount;
+    int right = si_right->downloadCount;
+    if (left == -1 && right != -1) {
+        return 1;
+    }
+    if (left != -1 && right == -1) {
+        return -1;
+    }
+    return left == right ? 0 : sortup ? (left > right ? 1 : -1) : (left < right ? 1 : -1);
+}
+
 int CALLBACK CSubtitleDlDlg::SortCompare(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort)
 {
     PPARAMSORT ps = (PPARAMSORT)(lParamSort);
     CListCtrl* list = (CListCtrl*)CListCtrl::FromHandle(ps->m_hWnd);
 
+    SubtitlesInfo* si_left  = (SubtitlesInfo*)(list->GetItemData((int)lParam1));
+    SubtitlesInfo* si_right = (SubtitlesInfo*)(list->GetItemData((int)lParam2));
+    bool sortup = (ps->m_fSortOrder == 1);
+
     if (ps->m_fSortOrder == 0) {
-        DWORD left = (*(SubtitlesInfo*)(list->GetItemData((int)lParam1))).Score();
-        DWORD right = (*(SubtitlesInfo*)(list->GetItemData((int)lParam2))).Score();
-        return left == right ? 0 : left < right ? 1 : -1;
+        int x = SortScore(si_left, si_right, false);
+        if (x == 0) {
+            return SortDownloads(si_left, si_right, false);
+        } else {
+            return x;
+        }
     }
 
     if (ps->m_nSortColumn == COL_DOWNLOADS) {
-        int left = (*(SubtitlesInfo*)(list->GetItemData((int)lParam1))).downloadCount;
-        int right = (*(SubtitlesInfo*)(list->GetItemData((int)lParam2))).downloadCount;
-        if (left == -1 && right != -1) {
-            return 1;
+        int x = SortDownloads(si_left, si_right, sortup);
+        if (x == 0) {
+            return SortScore(si_left, si_right, false);
+        } else {
+            return x;
         }
-
-        if (left != -1 && right == -1) {
-            return -1;
-        }
-
-        return left == right ? 0 : (ps->m_fSortOrder == 1)
-               ? (left > right ? 1 : -1)
-               : (left < right ? 1 : -1);
     }
 
     if (ps->m_nSortColumn == COL_FRAMERATE) {
-        double left  = (*(SubtitlesInfo*)(list->GetItemData((int)lParam1))).frameRate;
-        double right = (*(SubtitlesInfo*)(list->GetItemData((int)lParam2))).frameRate;
-        return left == right ? 0 : (ps->m_fSortOrder == 1)
-            ? (left > right ? 1 : -1)
-            : (left < right ? 1 : -1);
+        int x = SortFramerate(si_left, si_right, sortup);
+        if (x == 0) {
+            return SortScore(si_left, si_right, false);
+        } else {
+            return x;
+        }
     }
 
     if (ps->m_nSortColumn == COL_SCORE) {
-        SHORT left = (SHORT)LOWORD((*(SubtitlesInfo*)(list->GetItemData((int)lParam1))).Score());
-        SHORT right = (SHORT)LOWORD((*(SubtitlesInfo*)(list->GetItemData((int)lParam2))).Score());
-        return left == right ? 0 : (ps->m_fSortOrder == 1)
-               ? (left > right ? 1 : -1)
-               : (left < right ? 1 : -1);
+        int x = SortScoreFile(si_left, si_right, sortup);
+        if (x == 0) {
+            x = SortScore(si_left, si_right, sortup);
+            if (x == 0) {
+                return SortDownloads(si_left, si_right, false);
+            } else {
+                return x;
+            }
+        } else {
+            return x;
+        }
     }
 
     CString left(list->GetItemText((int)lParam1, ps->m_nSortColumn));
@@ -182,12 +221,19 @@ int CALLBACK CSubtitleDlDlg::SortCompare(LPARAM lParam1, LPARAM lParam2, LPARAM 
     if (left == _T("-") && right != _T("-")) {
         return 1;
     }
-
     if (left != _T("-") && right == _T("-")) {
         return -1;
     }
-
-    return (ps->m_fSortOrder == 1) ? StrCmpLogicalW(left, right) : StrCmpLogicalW(right, left);
+    int x = sortup ? StrCmpLogicalW(left, right) : StrCmpLogicalW(right, left);
+    if (x == 0) {
+        int x = (ps->m_nSortColumn == COL_LANGUAGE) ? SortScoreFile(si_left, si_right, false) : SortScore(si_left, si_right, false);
+        if (x == 0) {
+            return SortDownloads(si_left, si_right, false);
+        } else {
+            return x;
+        }
+    }
+    return x;
 }
 
 BOOL CSubtitleDlDlg::OnInitDialog()
