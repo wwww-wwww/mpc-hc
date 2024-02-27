@@ -558,7 +558,7 @@ void CVMROSD::DisplayMessage(OSD_MESSAGEPOS nPos, LPCTSTR strMsg, int nDuration,
         } else {
             m_iFontSize = iFontSize;
         }
-        if (m_iFontSize < 10 || m_iFontSize > 26) {
+        if (m_iFontSize < 10 || m_iFontSize > 50) {
             m_iFontSize = 20;
         }
         if (fontName.IsEmpty()) {

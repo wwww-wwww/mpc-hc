@@ -209,7 +209,7 @@ BOOL CPPageTheme::OnInitDialog()
     m_FontType.SetCurSel(iSel);
 
     CString str;
-    for (int i = 10; i < 26; ++i) {
+    for (int i = 10; i < 51; ++i) {
         str.Format(_T("%d"), i);
         m_FontSize.AddString(str);
         if (m_nOSDSize == i) {
