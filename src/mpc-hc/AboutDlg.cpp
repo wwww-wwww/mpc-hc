@@ -318,7 +318,11 @@ void CAboutDlg::OnCopyToClipboard()
             CRect mr;
             monitor.GetMonitorRect(mr);
             int dpi = DpiHelper::GetDPIForMonitor(monitor);
-            str.AppendFormat(L" [%ix%i %i-bit %i DPI]", mr.Width(), mr.Height(), bpp, dpi);
+            CString dpis;
+            if (dpi > 0) {
+                dpis.Format(L" %i DPI", dpi);
+            }
+            str.AppendFormat(L" [%ix%i %i-bit%s]", mr.Width(), mr.Height(), bpp, dpis.GetString());
             if (displayName == currentMonitorName) {
                 str.AppendFormat(L" - [%s]", ResStr(IDS_FULLSCREENMONITOR_CURRENT).GetString());
             }

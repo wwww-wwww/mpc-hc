@@ -201,7 +201,8 @@ public:
     virtual HRESULT STDMETHODCALLTYPE get_TextScaleFactor(__RPC__out DOUBLE * value) = 0;
 };
 
-double DpiHelper::GetTextScaleFactor() {
+//Windows 7 can return exception due to ::WindowsCreateStringReference not found
+double DoGetTextScaleFactor() {
     double value = 1.0;
 
     using namespace Microsoft::WRL;
@@ -219,4 +220,15 @@ double DpiHelper::GetTextScaleFactor() {
     if (FAILED(hr)) return value;
 
     return value;
+}
+
+double DpiHelper::GetTextScaleFactor() {
+    if (!IsWindows10OrGreater()) {
+        return 1.0;
+    }
+    __try {
+        return DoGetTextScaleFactor();
+    } __except (EXCEPTION_EXECUTE_HANDLER) {
+        return 1.0;
+    }
 }
