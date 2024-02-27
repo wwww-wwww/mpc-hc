@@ -117,6 +117,9 @@ namespace PathUtils
                 case _T('|'):
                 case _T('?'):
                 case _T('*'):
+                case _T('\r'):
+                case _T('\n'):
+                case _T('\t'):
                     buff[i] = replacementChar;
                     break;
                 default:
