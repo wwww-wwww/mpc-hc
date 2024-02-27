@@ -23,6 +23,11 @@
 #include "WinapiFunc.h"
 #include <VersionHelpersInternal.h>
 
+//used for GetTextScaleFactor
+#include <wrl.h>
+#include <Windows.UI.ViewManagement.h>
+#include <inspectable.h>
+//end GetTextScaleFactor
 
 namespace
 {
@@ -38,6 +43,7 @@ namespace
     BOOL WINAPI SystemParametersInfoForDpi(UINT uiAction, UINT uiParam, PVOID pvParam, UINT fWinIni, UINT dpi);
     int WINAPI GetSystemMetricsForDpi(int nIndex);
     UINT WINAPI GetDpiForWindow(HWND hwnd);
+    double WINAPI TextScaleFactor(void);
 }
 
 DpiHelper::DpiHelper()
@@ -52,9 +58,22 @@ DpiHelper::DpiHelper()
 
 UINT DpiHelper::GetDPIForWindow(HWND wnd) {
     const WinapiFunc<decltype(GetDpiForWindow)>
-    fnGetDpiForWindow = { _T("user32.dll"), "GetDpiForWindow" };
+        fnGetDpiForWindow = { _T("user32.dll"), "GetDpiForWindow" };
     if (fnGetDpiForWindow) {
         return fnGetDpiForWindow(wnd);
+    }
+    return 0;
+}
+
+UINT DpiHelper::GetDPIForMonitor(HMONITOR hMonitor) {
+    const WinapiFunc<decltype(GetDpiForMonitor)>
+        fnGetDpiForMonitor = { _T("Shcore.dll"), "GetDpiForMonitor" };
+
+    if (hMonitor && fnGetDpiForMonitor) {
+        UINT tdpix, tdpiy;
+        if (fnGetDpiForMonitor(hMonitor, MDT_EFFECTIVE_DPI, &tdpix, &tdpiy) == S_OK) {
+            return tdpix;
+        }
     }
     return 0;
 }
@@ -62,7 +81,7 @@ UINT DpiHelper::GetDPIForWindow(HWND wnd) {
 void DpiHelper::Override(HWND hWindow)
 {
     const WinapiFunc<decltype(GetDpiForMonitor)>
-    fnGetDpiForMonitor = { _T("Shcore.dll"), "GetDpiForMonitor" };
+        fnGetDpiForMonitor = { _T("Shcore.dll"), "GetDpiForMonitor" };
 
     if (hWindow && fnGetDpiForMonitor) {
         if (fnGetDpiForMonitor(MonitorFromWindow(hWindow, MONITOR_DEFAULTTONULL),
@@ -172,4 +191,32 @@ int DpiHelper::CalculateListCtrlItemHeight(CListCtrl* wnd) {
     }
 
     return std::max(nItemHeight, 1);
+}
+
+//reduced interface from windows.ui.viewmanagement.h in windows 10 sdk
+MIDL_INTERFACE("BAD82401-2721-44F9-BB91-2BB228BE442F")
+IUISettings2: public IInspectable
+{
+public:
+    virtual HRESULT STDMETHODCALLTYPE get_TextScaleFactor(__RPC__out DOUBLE * value) = 0;
+};
+
+double DpiHelper::GetTextScaleFactor() {
+    double value = 1.0;
+
+    using namespace Microsoft::WRL;
+    using namespace Microsoft::WRL::Wrappers;
+
+    ComPtr<IInspectable> instance;
+    HRESULT hr = RoActivateInstance(HStringReference(RuntimeClass_Windows_UI_ViewManagement_UISettings).Get(), &instance);
+    if (FAILED(hr)) return value;
+
+    ComPtr<IUISettings2> settings2;
+    hr = instance.As(&settings2);
+    if (FAILED(hr)) return value;
+
+    hr = settings2->get_TextScaleFactor(&value);
+    if (FAILED(hr)) return value;
+
+    return value;
 }

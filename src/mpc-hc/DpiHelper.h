@@ -34,6 +34,8 @@ public:
     bool GetNonClientMetrics(PNONCLIENTMETRICSW, bool& dpiCorrected);
     int GetSystemMetrics(int type);
     static UINT GetDPIForWindow(HWND wnd);
+    static UINT GetDPIForMonitor(HMONITOR hMonitor);
+    static double GetTextScaleFactor();
     int CalculateListCtrlItemHeight(CListCtrl* wnd);
 
     inline double ScaleFactorX() const { return m_dpix / 96.0; }

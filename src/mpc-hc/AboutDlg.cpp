@@ -31,6 +31,8 @@
 #include "PathUtils.h"
 #include "VersionInfo.h"
 #include <VersionHelpers.h>
+#include "Monitors.h"
+
 
 /////////////////////////////////////////////////////////////////////////////
 // CAboutDlg dialog used for App About
@@ -336,6 +338,43 @@ void CAboutDlg::OnCopyToClipboard()
         }
         pD3D9->Release();
     }
+
+    auto &s = AfxGetAppSettings();
+    CMonitors monitors;
+
+    CStringW currentMonitorName;
+    monitors.GetNearestMonitor(AfxGetMainWnd()).GetName(currentMonitorName);
+
+    CMonitor fullscreenMonitor = monitors.GetMonitor(s.strFullScreenMonitorID, s.strFullScreenMonitorDeviceName);
+
+    for (int i = 0; i < monitors.GetCount(); i++) {
+        CMonitor monitor = monitors.GetMonitor(i);
+
+        if (monitor.IsMonitor()) {
+            CStringW displayName, deviceName;
+            monitor.GetNames(displayName, deviceName);
+            CStringW str = displayName;
+
+            if (!deviceName.IsEmpty()) {
+                str.Append(L" - " + deviceName);
+            }
+
+            int bpp = monitor.GetBitsPerPixel();
+            CRect mr;
+            monitor.GetMonitorRect(mr);
+            int dpi = DpiHelper::GetDPIForMonitor(monitor);
+            str.AppendFormat(L" [%ix%i %i-bit %i DPI]", mr.Width(), mr.Height(), bpp, dpi);
+            if (displayName == currentMonitorName) {
+                str.AppendFormat(L" - [%s]", ResStr(IDS_FULLSCREENMONITOR_CURRENT).GetString());
+            }
+            info.AppendFormat(L"    Monitor:            %s\r\n", str.GetString());
+        }
+    }
+    info += _T("\r\nText:\r\n");
+    double textScaleFactor = DpiHelper::GetTextScaleFactor();
+    info.AppendFormat(L"    Scale Factor:       %f\r\n", textScaleFactor);
+    int cp = GetACP();
+    info.AppendFormat(L"    Ansi Codepage:      %i\r\n", cp);
 
     CClipboard clipboard(this);
     VERIFY(clipboard.SetText(info));
