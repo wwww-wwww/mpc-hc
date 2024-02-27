@@ -60,62 +60,19 @@ BOOL CAboutDlg::OnInitDialog()
     m_icon.SetIcon((HICON)LoadImage(AfxGetInstanceHandle(), MAKEINTRESOURCE(IDR_MAINFRAME), IMAGE_ICON, 48, 48, LR_SHARED));
 
     m_appname = _T("MPC-HC");
-    if (VersionInfo::IsNightly() || VersionInfo::Is64Bit()) {
-        m_appname += _T(" (");
-    }
-    if (VersionInfo::IsNightly()) {
-        m_appname += VersionInfo::GetNightlyWord();
-    }
-    if (VersionInfo::IsNightly() && VersionInfo::Is64Bit()) {
-        m_appname += _T(", ");
-    }
     if (VersionInfo::Is64Bit()) {
-        m_appname += _T("64-bit");
+        m_appname += _T(" (64-bit)");
     }
-    if (VersionInfo::IsNightly() || VersionInfo::Is64Bit()) {
-        m_appname += _T(")");
-    }
-
 #ifdef MPCHC_LITE
-    m_appname += _T(" Lite");
+    m_appname += _T(" (Lite)");
+#endif
+#ifdef _DEBUG
+    m_appname += _T(" (Debug)");
 #endif
 
     m_homepage.Format(_T("<a>%s</a>"), WEBSITE_URL);
 
     m_strBuildNumber = VersionInfo::GetFullVersionString();
-
-#if defined(__INTEL_COMPILER)
-#if (__INTEL_COMPILER >= 1210)
-    m_MPCCompiler = _T("ICL ") MAKE_STR(__INTEL_COMPILER) _T(" Build ") MAKE_STR(__INTEL_COMPILER_BUILD_DATE);
-#else
-#error Compiler is not supported!
-#endif
-#elif defined(_MSC_VER)
-#if (_MSC_VER > 1800)
-    m_MPCCompiler.Format(_T("MSVC v%.2d.%.2d.%.5d"), _MSC_VER / 100, _MSC_VER % 100, _MSC_FULL_VER % 100000);
-    #if _MSC_BUILD
-    m_MPCCompiler.AppendFormat(_T(".%.2d"), _MSC_BUILD);
-    #endif
-#else
-#error Compiler is not supported!
-#endif
-#else
-#error Please add support for your compiler
-#endif
-
-#if (__AVX2__)
-    m_MPCCompiler += _T(" (AVX2)");
-#elif (__AVX__)
-    m_MPCCompiler += _T(" (AVX)");
-#elif (__SSSE3__)
-    m_MPCCompiler += _T(" (SSSE3)");
-#elif (__SSE3__)
-    m_MPCCompiler += _T(" (SSE3)");
-#endif
-
-#ifdef _DEBUG
-    m_MPCCompiler += _T(" Debug");
-#endif
 
     m_LAVFilters.Format(IDS_STRING_COLON, _T("LAV Filters"));
 #ifndef MPCHC_LITE
@@ -258,7 +215,6 @@ void CAboutDlg::DoDataExchange(CDataExchange* pDX)
     DDX_Text(pDX, IDC_STATIC1, m_appname);
     DDX_Text(pDX, IDC_HOMEPAGE_LINK, m_homepage);
     DDX_Text(pDX, IDC_VERSION, m_strBuildNumber);
-    DDX_Text(pDX, IDC_MPC_COMPILER, m_MPCCompiler);
     DDX_Text(pDX, IDC_STATIC5, m_LAVFilters);
 #ifndef MPCHC_LITE
     DDX_Text(pDX, IDC_LAVFILTERS_VERSION, m_LAVFiltersVersion);
@@ -288,7 +244,6 @@ void CAboutDlg::OnCopyToClipboard()
     info += CString(_T('-'), m_appname.GetLength()) + _T("\r\n\r\n");
     info += _T("Build information:\r\n");
     info += _T("    Version:            ") + m_strBuildNumber + _T("\r\n");
-    info += _T("    Compiler:           ") + m_MPCCompiler + _T("\r\n");
     info += _T("    Build date:         ") + m_buildDate + _T("\r\n\r\n");
 #ifndef MPCHC_LITE
     info += _T("LAV Filters:\r\n");

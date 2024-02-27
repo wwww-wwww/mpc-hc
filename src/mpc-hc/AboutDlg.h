@@ -31,7 +31,6 @@ class CAboutDlg : public CMPCThemeDialog
     CString m_homepage;
 
     CString m_strBuildNumber;
-    CString m_MPCCompiler;
     CString m_LAVFilters;
 #ifndef MPCHC_LITE
     CString m_LAVFiltersVersion;
