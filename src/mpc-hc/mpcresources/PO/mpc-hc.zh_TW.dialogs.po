@@ -219,16 +219,12 @@ msgid "Version:"
 msgstr "版本："
 
 msgctxt "IDD_ABOUTBOX_IDC_STATIC"
-msgid "Compiler:"
-msgstr "編譯器："
+msgid "Build date:"
+msgstr "編譯日期："
 
 msgctxt "IDD_ABOUTBOX_IDC_LAVFILTERS_VERSION"
 msgid "Not used"
 msgstr "未使用"
-
-msgctxt "IDD_ABOUTBOX_IDC_STATIC"
-msgid "Build date:"
-msgstr "編譯日期："
 
 msgctxt "IDD_ABOUTBOX_IDC_STATIC"
 msgid "Operating system"

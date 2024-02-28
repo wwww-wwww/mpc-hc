@@ -229,16 +229,12 @@ msgid "Version:"
 msgstr "Έκδοση:"
 
 msgctxt "IDD_ABOUTBOX_IDC_STATIC"
-msgid "Compiler:"
-msgstr "Compiler:"
+msgid "Build date:"
+msgstr "Ημερ/νία δημιουργίας:"
 
 msgctxt "IDD_ABOUTBOX_IDC_LAVFILTERS_VERSION"
 msgid "Not used"
 msgstr "Δεν χρησιμοποιείται"
-
-msgctxt "IDD_ABOUTBOX_IDC_STATIC"
-msgid "Build date:"
-msgstr "Ημερ/νία δημιουργίας:"
 
 msgctxt "IDD_ABOUTBOX_IDC_STATIC"
 msgid "Operating system"

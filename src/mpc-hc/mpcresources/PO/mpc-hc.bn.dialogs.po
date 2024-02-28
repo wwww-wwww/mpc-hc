@@ -225,16 +225,12 @@ msgid "Version:"
 msgstr "সংস্করণ:"
 
 msgctxt "IDD_ABOUTBOX_IDC_STATIC"
-msgid "Compiler:"
-msgstr "কম্পাইলার:"
+msgid "Build date:"
+msgstr "নির্মাণ তারিখ:"
 
 msgctxt "IDD_ABOUTBOX_IDC_LAVFILTERS_VERSION"
 msgid "Not used"
 msgstr "ব্যবহার করা হয়নি"
-
-msgctxt "IDD_ABOUTBOX_IDC_STATIC"
-msgid "Build date:"
-msgstr "নির্মাণ তারিখ:"
 
 msgctxt "IDD_ABOUTBOX_IDC_STATIC"
 msgid "Operating system"

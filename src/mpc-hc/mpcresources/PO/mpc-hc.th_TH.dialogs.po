@@ -223,16 +223,12 @@ msgid "Version:"
 msgstr "เวอร์ชัน:"
 
 msgctxt "IDD_ABOUTBOX_IDC_STATIC"
-msgid "Compiler:"
-msgstr "ตัวคอมไพล์:"
+msgid "Build date:"
+msgstr "วันที่สร้าง:"
 
 msgctxt "IDD_ABOUTBOX_IDC_LAVFILTERS_VERSION"
 msgid "Not used"
 msgstr "ไม่ได้ใช้"
-
-msgctxt "IDD_ABOUTBOX_IDC_STATIC"
-msgid "Build date:"
-msgstr "วันที่สร้าง:"
 
 msgctxt "IDD_ABOUTBOX_IDC_STATIC"
 msgid "Operating system"

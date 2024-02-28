@@ -221,16 +221,12 @@ msgid "Version:"
 msgstr "Տարբերակ."
 
 msgctxt "IDD_ABOUTBOX_IDC_STATIC"
-msgid "Compiler:"
-msgstr "Կազմարկիչ."
+msgid "Build date:"
+msgstr "Կառուցման ամսաթիվը."
 
 msgctxt "IDD_ABOUTBOX_IDC_LAVFILTERS_VERSION"
 msgid "Not used"
 msgstr "Չօգտագործված"
-
-msgctxt "IDD_ABOUTBOX_IDC_STATIC"
-msgid "Build date:"
-msgstr "Կառուցման ամսաթիվը."
 
 msgctxt "IDD_ABOUTBOX_IDC_STATIC"
 msgid "Operating system"
