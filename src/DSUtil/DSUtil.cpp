@@ -1819,6 +1819,20 @@ CString ReftimeToString2(const REFERENCE_TIME& rtVal)
     return strTemp;
 }
 
+// minute, second (round)
+CString ReftimeToString3(const REFERENCE_TIME& rtVal)
+{
+    CString strTemp;
+    LONGLONG seconds = (rtVal + 5000000) / 10000000;
+    int lMinute = (int)(seconds / 60 % 60);
+    int lSecond = (int)(seconds % 60);
+
+    ASSERT((int)(seconds / 3600) == 0);
+
+    strTemp.Format(_T("%02d:%02d"), lMinute, lSecond);
+    return strTemp;
+}
+
 CString DVDtimeToString(const DVD_HMSF_TIMECODE& rtVal, bool bAlwaysShowHours)
 {
     CString strTemp;

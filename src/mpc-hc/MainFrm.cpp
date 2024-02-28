@@ -9919,10 +9919,17 @@ bool CMainFrame::SeekToFileChapter(int iChapter, bool bRelative /*= false*/)
             if (m_pMS && SUCCEEDED(m_pMS->GetDuration(&rtDur))) {
                 const CAppSettings& s = AfxGetAppSettings();
                 CString strOSD;
-
-                strOSD.Format(_T("%s%s/%s %s%d/%u - \"%s\""),
-                              s.fRemainingTime ? _T("- ") : _T(""), ReftimeToString2(s.fRemainingTime ? rtDur - rt : rt).GetString(), ReftimeToString2(rtDur).GetString(),
-                              ResStr(IDS_AG_CHAPTER2).GetString(), iChapter + 1, nChapters, static_cast<LPCTSTR>(name));
+                REFERENCE_TIME rtShow = rt;
+                if (s.fRemainingTime) {
+                    strOSD.Append(_T("-"));
+                    rtShow = rtDur - rt;
+                }
+                if (rtDur >= 36005000000LL) { // At least 1 hour (rounded)
+                    strOSD.AppendFormat(_T("%s / %s  "), ReftimeToString2(rtShow).GetString(), ReftimeToString2(rtDur).GetString());
+                } else {
+                    strOSD.AppendFormat(_T("%s / %s  "), ReftimeToString3(rtShow).GetString(), ReftimeToString3(rtDur).GetString());
+                }
+                strOSD.AppendFormat(_T("\"%s\" (%d/%u)"), static_cast<LPCTSTR>(name), iChapter + 1, nChapters);
                 m_OSD.DisplayMessage(OSD_TOPLEFT, strOSD, 3000);
             }
         }
