@@ -1937,7 +1937,7 @@ void CMainFrame::OnRawInput(UINT nInputcode, HRAWINPUT hRawInput)
 
 LRESULT CMainFrame::OnHotKey(WPARAM wParam, LPARAM lParam)
 {
-    if (wParam == 0 /*|| GET_KEYSTATE_LPARAM(lParam) != 0*/) {
+    if (wParam == 0) {
         ASSERT(false);
         return FALSE;
     }

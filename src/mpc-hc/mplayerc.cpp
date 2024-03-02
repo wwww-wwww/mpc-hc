@@ -2188,11 +2188,13 @@ void CMPlayerCApp::RegisterHotkeys()
 
     if (m_s->fGlobalMedia) {
         POSITION pos = m_s->wmcmds.GetHeadPosition();
-
         while (pos) {
             const wmcmd& wc = m_s->wmcmds.GetNext(pos);
             if (wc.appcmd != 0) {
-                RegisterHotKey(m_pMainWnd->m_hWnd, wc.appcmd, 0, GetVKFromAppCommand(wc.appcmd));
+                UINT vkappcmd = GetVKFromAppCommand(wc.appcmd);
+                if (vkappcmd > 0) {
+                    RegisterHotKey(m_pMainWnd->m_hWnd, wc.appcmd, 0, vkappcmd);
+                }
             }
         }
     }
@@ -2202,7 +2204,6 @@ void CMPlayerCApp::UnregisterHotkeys()
 {
     if (m_s->fGlobalMedia) {
         POSITION pos = m_s->wmcmds.GetHeadPosition();
-
         while (pos) {
             const wmcmd& wc = m_s->wmcmds.GetNext(pos);
             if (wc.appcmd != 0) {
