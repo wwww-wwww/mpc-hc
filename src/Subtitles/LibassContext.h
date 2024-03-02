@@ -137,6 +137,7 @@ protected:
     IPin* m_pPin;
     std::unique_ptr<uint32_t[]> m_pixels;
     CRect lastDirty;
+    CRect lastSPDRect;
     REFERENCE_TIME rtCurrent;
     bool curTimeInitialized;
 };

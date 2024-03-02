@@ -891,11 +891,16 @@ void AlphaBlendToInverted(const BYTE* src, int w, int h, int pitch, BYTE* dst, i
 bool LibassContext::RenderFrame(long long now, SubPicDesc& spd, CRect& rcDirty) {
     int changed = 1;
     ASS_Image* image = ass_render_frame(m_renderer.get(), m_track.get(), now, &changed);
-    if (!image) return false;
-    if (changed) {
+    if (!image) {
+        return false;
+    }
+    CRect curSPDRect = CRect(0, 0, spd.w, spd.h);
+    if (changed || curSPDRect != lastSPDRect) {
         AssFlattenSSE2(image, spd, rcDirty);
-        rcDirty.IntersectRect(rcDirty, CRect(0, 0, spd.w, spd.h));
+        rcDirty.IntersectRect(rcDirty, curSPDRect);
+
         lastDirty = rcDirty;
+        lastSPDRect = curSPDRect;
     } else {
         rcDirty = lastDirty;
     }
