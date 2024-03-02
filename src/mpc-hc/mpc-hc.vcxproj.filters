@@ -605,6 +605,9 @@
     <ClCompile Include="CMPCThemePropPageButton.cpp">
       <Filter>MPCTheme</Filter>
     </ClCompile>
+    <ClCompile Include="STB_Image.cpp">
+      <Filter>Helpers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AppSettings.h">

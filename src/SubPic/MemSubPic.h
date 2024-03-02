@@ -53,6 +53,8 @@ public:
     CMemSubPic(const SubPicDesc& spd, CMemSubPicAllocator* pAllocator);
     virtual ~CMemSubPic();
 
+    HRESULT UnlockARGB();
+
     // ISubPic
     STDMETHODIMP GetDesc(SubPicDesc& spd);
     STDMETHODIMP CopyTo(ISubPic* pSubPic);

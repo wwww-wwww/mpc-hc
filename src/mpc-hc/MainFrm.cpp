@@ -5524,15 +5524,6 @@ HRESULT CMainFrame::RenderCurrentSubtitles(BYTE* pData) {
         const int width = bih->biWidth;
         const int height = bih->biHeight;
 
-        SubPicDesc spdRender;
-        spdRender.type = MSP_RGB32;
-        spdRender.w = width;
-        spdRender.h = abs(height);
-        spdRender.bpp = 32;
-        spdRender.pitch = width * 4;
-        spdRender.vidrect = { 0, 0, width, height };
-        spdRender.bits = DEBUG_NEW BYTE[spdRender.pitch * spdRender.h];
-
         REFERENCE_TIME rtNow = 0;
         m_pMS->GetCurrentPosition(&rtNow);
 
@@ -5545,6 +5536,28 @@ HRESULT CMainFrame::RenderCurrentSubtitles(BYTE* pData) {
             }
         }
 
+        int subWidth = width;
+        int subHeight = height;
+        bool needsResize = false;
+        if (CPGSSub* pgsSub = dynamic_cast<CPGSSub*>(pSubPicProvider.p)) {
+            CSize sz;
+            if (SUCCEEDED(pgsSub->GetPresentationSegmentTextureSize(rtNow, sz))) {
+                subWidth = sz.cx;
+                subHeight = sz.cy;
+                needsResize = true;
+            }
+        }
+
+        SubPicDesc spdRender;
+        
+        spdRender.type = MSP_RGB32;
+        spdRender.w = subWidth;
+        spdRender.h = abs(subHeight);
+        spdRender.bpp = 32;
+        spdRender.pitch = subWidth * 4;
+        spdRender.vidrect = { 0, 0, width, height };
+        spdRender.bits = DEBUG_NEW BYTE[spdRender.pitch * spdRender.h];
+        
         CComPtr<CMemSubPicAllocator> pSubPicAllocator = DEBUG_NEW CMemSubPicAllocator(spdRender.type, CSize(spdRender.w, spdRender.h));
 
         CMemSubPic memSubPic(spdRender, pSubPicAllocator);
@@ -5553,9 +5566,13 @@ HRESULT CMainFrame::RenderCurrentSubtitles(BYTE* pData) {
 
         RECT bbox = {};
         hr = pSubPicProvider->Render(spdRender, rtNow, m_pCAP->GetFPS(), bbox);
+        if (needsResize) {
+            memSubPic.UnlockARGB();
+        }
+
         if (S_OK == hr) {
             SubPicDesc spdTarget;
-			spdTarget.type    = MSP_RGB32;
+            spdTarget.type = MSP_RGB32;
             spdTarget.w = width;
             spdTarget.h = height;
             spdTarget.bpp = 32;

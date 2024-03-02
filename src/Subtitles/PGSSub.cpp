@@ -232,6 +232,20 @@ void CPGSSub::AllocSegment(size_t nSize)
     m_nSegSize = nSize;
 }
 
+HRESULT CPGSSub::GetPresentationSegmentTextureSize(REFERENCE_TIME rt, CSize& size) {
+    POSITION posPresentationSegment = FindPresentationSegment(rt);
+
+    if (posPresentationSegment) {
+        const auto& pPresentationSegment = m_pPresentationSegments.GetAt(posPresentationSegment);
+        if (pPresentationSegment->video_descriptor.nVideoWidth > 0) {
+            size.cx = pPresentationSegment->video_descriptor.nVideoWidth;
+            size.cy = pPresentationSegment->video_descriptor.nVideoHeight;
+            return S_OK;
+        }
+    }
+    return E_FAIL;
+}
+
 HRESULT CPGSSub::Render(SubPicDesc& spd, REFERENCE_TIME rt, RECT& bbox, bool bRemoveOldSegments)
 {
     CAutoLock cAutoLock(&m_csCritSec);

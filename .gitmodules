@@ -52,3 +52,6 @@
 [submodule "src/thirdparty/libunibreak/libunibreak"]
 	path = src/thirdparty/libunibreak/libunibreak
 	url = https://github.com/adah1972/libunibreak
+[submodule "src/thirdparty/stb"]
+	path = src/thirdparty/stb
+	url = https://github.com/nothings/stb.git

@@ -47,6 +47,7 @@ public:
     virtual HRESULT ParseSample(REFERENCE_TIME rtStart, REFERENCE_TIME rtStop, BYTE* pData, size_t nLen);
     virtual void    EndOfStream() { /* Nothing to do */ };
     virtual void    Reset();
+    HRESULT GetPresentationSegmentTextureSize(REFERENCE_TIME rt, CSize& size);
 
 protected:
     HRESULT Render(SubPicDesc& spd, REFERENCE_TIME rt, RECT& bbox, bool bRemoveOldSegments);

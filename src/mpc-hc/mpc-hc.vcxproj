@@ -282,6 +282,7 @@
     <ClCompile Include="ShockwaveGraph.cpp" />
     <ClCompile Include="SkypeMoodMsgHandler.cpp" />
     <ClCompile Include="MediaTransControls.cpp" />
+    <ClCompile Include="STB_Image.cpp" />
     <ClCompile Include="SVGImage.cpp" />
     <ClCompile Include="Translations.cpp" />
     <ClCompile Include="StaticLink.cpp" />
