@@ -766,7 +766,6 @@
 #define IDS_AG_COMMAND                  32833
 #define IDS_AG_KEY                      32834
 #define IDS_AG_MOUSE                    32836
-#define IDS_AG_MOUSE_FS                 32837
 #define IDS_AG_APP_COMMAND              32838
 #define IDS_AG_MEDIAFILES               32871
 #define IDS_AG_ALLFILES                 32872
@@ -1093,7 +1092,6 @@
 #define ID_PLAY_REPEAT_AB               33453
 #define IDS_AG_MOUSE_MODIFIER           33453
 #define ID_PLAY_REPEAT_AB_MARK_A        33454
-#define IDS_AG_MOUSE_FS_MODIFIER        33454
 #define ID_PLAY_REPEAT_AB_MARK_B        33455
 #define ID_VIEW_ZOOM_SUB                33456
 #define ID_VIEW_ZOOM_ADD                33457

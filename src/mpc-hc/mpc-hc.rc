@@ -2995,8 +2995,7 @@ BEGIN
     IDS_AG_NONE             "None"
     IDS_AG_COMMAND          "Command"
     IDS_AG_KEY              "Key"
-    IDS_AG_MOUSE            "Mouse Windowed"
-    IDS_AG_MOUSE_FS         "Mouse Fullscreen"
+    IDS_AG_MOUSE            "Mouse"
     IDS_AG_APP_COMMAND      "App Command"
 END
 
@@ -3528,7 +3527,6 @@ BEGIN
     IDS_TEXTFILE_ENC        "Encoding:"
     IDS_AG_ZOOM_25          "Zoom 25%"
     IDS_AG_MOUSE_MODIFIER   "Mouse Modifier"
-    IDS_AG_MOUSE_FS_MODIFIER "Mouse FS Modifier"
 END
 
 STRINGTABLE

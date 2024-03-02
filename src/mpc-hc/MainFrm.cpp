@@ -1333,13 +1333,8 @@ BOOL CMainFrame::PreCreateWindow(CREATESTRUCT& cs)
 BOOL CMainFrame::PreTranslateMessage(MSG* pMsg)
 {
     if (pMsg->message == WM_KEYDOWN) {
-        /*if (m_fShockwaveGraph
-          && (pMsg->wParam == VK_LEFT || pMsg->wParam == VK_RIGHT
-              || pMsg->wParam == VK_UP || pMsg->wParam == VK_DOWN))
-              return FALSE;
-        */
         if (pMsg->wParam == VK_ESCAPE) {
-            bool fEscapeNotAssigned = !AssignedToCmd(VK_ESCAPE, m_fFullScreen, false);
+            bool fEscapeNotAssigned = !AssignedToCmd(VK_ESCAPE, false);
 
             if (fEscapeNotAssigned) {
                 if (IsFullScreenMode()) {

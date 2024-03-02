@@ -533,7 +533,7 @@ static constexpr wmcmd_base default_wmcmds[] = {
     { ID_FILE_PROPERTIES,              VK_F10, FVIRTKEY | FSHIFT | FNOINVERT,           IDS_AG_PROPERTIES },
     { ID_FILE_OPEN_LOCATION,           VK_F10, FVIRTKEY | FCONTROL | FSHIFT | FNOINVERT,IDS_AG_OPEN_FILE_LOCATION },
     { ID_FILE_EXIT,                       'X', FVIRTKEY | FALT | FNOINVERT,             IDS_AG_EXIT },
-    { ID_PLAY_PLAYPAUSE,             VK_SPACE, FVIRTKEY | FNOINVERT,                    IDS_AG_PLAYPAUSE,   APPCOMMAND_MEDIA_PLAY_PAUSE, wmcmd::LUP, wmcmd::LUP },
+    { ID_PLAY_PLAYPAUSE,             VK_SPACE, FVIRTKEY | FNOINVERT,                    IDS_AG_PLAYPAUSE,   APPCOMMAND_MEDIA_PLAY_PAUSE, wmcmd::LUP },
     { ID_PLAY_PLAY,                         0, FVIRTKEY | FNOINVERT,                    IDS_AG_PLAY,        APPCOMMAND_MEDIA_PLAY },
     { ID_PLAY_PAUSE,                        0, FVIRTKEY | FNOINVERT,                    IDS_AG_PAUSE,       APPCOMMAND_MEDIA_PAUSE },
     { ID_PLAY_STOP,             VK_OEM_PERIOD, FVIRTKEY | FNOINVERT,                    IDS_AG_STOP,        APPCOMMAND_MEDIA_STOP },
@@ -549,8 +549,8 @@ static constexpr wmcmd_base default_wmcmds[] = {
     { ID_PLAY_SEEKBACKWARDSMALL,            0, FVIRTKEY | FNOINVERT,                    IDS_MPLAYERC_24 },
     { ID_PLAY_SEEKFORWARDMED,        VK_RIGHT, FVIRTKEY | FNOINVERT,                    IDS_MPLAYERC_25 },
     { ID_PLAY_SEEKBACKWARDMED,        VK_LEFT, FVIRTKEY | FNOINVERT,                    IDS_MPLAYERC_26 },
-    { ID_PLAY_SEEKFORWARDLARGE,             0, FVIRTKEY | FNOINVERT,                    IDS_MPLAYERC_27, 0, wmcmd::WUP,   wmcmd::WUP,   FVIRTKEY | FCONTROL, FVIRTKEY | FCONTROL },
-    { ID_PLAY_SEEKBACKWARDLARGE,            0, FVIRTKEY | FNOINVERT,                    IDS_MPLAYERC_28, 0, wmcmd::WDOWN, wmcmd::WDOWN, FVIRTKEY | FCONTROL, FVIRTKEY | FCONTROL },
+    { ID_PLAY_SEEKFORWARDLARGE,             0, FVIRTKEY | FNOINVERT,                    IDS_MPLAYERC_27, 0, wmcmd::WUP,   FVIRTKEY | FCONTROL },
+    { ID_PLAY_SEEKBACKWARDLARGE,            0, FVIRTKEY | FNOINVERT,                    IDS_MPLAYERC_28, 0, wmcmd::WDOWN, FVIRTKEY | FCONTROL },
     { ID_PLAY_SEEKKEYFORWARD,        VK_RIGHT, FVIRTKEY | FSHIFT | FNOINVERT,           IDS_MPLAYERC_29 },
     { ID_PLAY_SEEKKEYBACKWARD,        VK_LEFT, FVIRTKEY | FSHIFT | FNOINVERT,           IDS_MPLAYERC_30 },
     { ID_PLAY_SEEKSET,                VK_HOME, FVIRTKEY | FNOINVERT,                    IDS_AG_SEEKSET },
@@ -560,8 +560,8 @@ static constexpr wmcmd_base default_wmcmds[] = {
     { ID_PLAY_REPEAT_AB,                    0, FVIRTKEY | FNOINVERT,                    IDS_PLAYLOOPMODE_AB },
     { ID_PLAY_REPEAT_AB_MARK_A,      VK_OEM_4, FVIRTKEY | FNOINVERT,                    IDS_PLAYLOOPMODE_AB_MARK_A },
     { ID_PLAY_REPEAT_AB_MARK_B,      VK_OEM_6, FVIRTKEY | FNOINVERT,                    IDS_PLAYLOOPMODE_AB_MARK_B },
-    { ID_NAVIGATE_SKIPFORWARD,        VK_NEXT, FVIRTKEY | FNOINVERT,                    IDS_AG_NEXT,        APPCOMMAND_MEDIA_NEXTTRACK, wmcmd::X2DOWN, wmcmd::X2DOWN },
-    { ID_NAVIGATE_SKIPBACK,          VK_PRIOR, FVIRTKEY | FNOINVERT,                    IDS_AG_PREVIOUS,    APPCOMMAND_MEDIA_PREVIOUSTRACK, wmcmd::X1DOWN, wmcmd::X1DOWN },
+    { ID_NAVIGATE_SKIPFORWARD,        VK_NEXT, FVIRTKEY | FNOINVERT,                    IDS_AG_NEXT,        APPCOMMAND_MEDIA_NEXTTRACK, wmcmd::X2DOWN },
+    { ID_NAVIGATE_SKIPBACK,          VK_PRIOR, FVIRTKEY | FNOINVERT,                    IDS_AG_PREVIOUS,    APPCOMMAND_MEDIA_PREVIOUSTRACK, wmcmd::X1DOWN },
     { ID_NAVIGATE_SKIPFORWARDFILE,    VK_NEXT, FVIRTKEY | FCONTROL | FNOINVERT,         IDS_AG_NEXT_FILE },
     { ID_NAVIGATE_SKIPBACKFILE,      VK_PRIOR, FVIRTKEY | FCONTROL | FNOINVERT,         IDS_AG_PREVIOUS_FILE },
     { ID_NAVIGATE_TUNERSCAN,              'T', FVIRTKEY | FSHIFT | FNOINVERT,           IDS_NAVIGATE_TUNERSCAN },
@@ -584,7 +584,7 @@ static constexpr wmcmd_base default_wmcmds[] = {
     { ID_VIEW_PRESETS_MINIMAL,            '1', FVIRTKEY | FNOINVERT,                    IDS_AG_VIEW_MINIMAL },
     { ID_VIEW_PRESETS_COMPACT,            '2', FVIRTKEY | FNOINVERT,                    IDS_AG_VIEW_COMPACT },
     { ID_VIEW_PRESETS_NORMAL,             '3', FVIRTKEY | FNOINVERT,                    IDS_AG_VIEW_NORMAL },
-    { ID_VIEW_FULLSCREEN,           VK_RETURN, FVIRTKEY | FALT | FNOINVERT,             IDS_AG_FULLSCREEN, 0, wmcmd::LDBLCLK, wmcmd::LDBLCLK },
+    { ID_VIEW_FULLSCREEN,           VK_RETURN, FVIRTKEY | FALT | FNOINVERT,             IDS_AG_FULLSCREEN, 0, wmcmd::LDBLCLK },
     { ID_VIEW_FULLSCREEN_SECONDARY,    VK_F11, FVIRTKEY | FNOINVERT,                    IDS_MPLAYERC_39 },
     { ID_VIEW_ZOOM_25,               VK_OEM_3, FVIRTKEY | FALT | FNOINVERT,             IDS_AG_ZOOM_25 }, /* VK_OEM_3 is `~ on US keyboards*/
     { ID_VIEW_ZOOM_50,                    '1', FVIRTKEY | FALT | FNOINVERT,             IDS_AG_ZOOM_50 },
@@ -627,8 +627,8 @@ static constexpr wmcmd_base default_wmcmds[] = {
     { ID_PANSCAN_ROTATEYM,         VK_NUMPAD6, FVIRTKEY | FALT | FNOINVERT,             IDS_AG_PNS_ROTATEY_M },
     { ID_PANSCAN_ROTATEZP,         VK_NUMPAD1, FVIRTKEY | FALT | FNOINVERT,             IDS_AG_PNS_ROTATEZ_P },
     { ID_PANSCAN_ROTATEZM,         VK_NUMPAD3, FVIRTKEY | FALT | FNOINVERT,             IDS_AG_PNS_ROTATEZ_M },
-    { ID_VOLUME_UP,                     VK_UP, FVIRTKEY | FNOINVERT,                    IDS_AG_VOLUME_UP,   0, wmcmd::WUP, wmcmd::WUP },
-    { ID_VOLUME_DOWN,                 VK_DOWN, FVIRTKEY | FNOINVERT,                    IDS_AG_VOLUME_DOWN, 0, wmcmd::WDOWN, wmcmd::WDOWN },
+    { ID_VOLUME_UP,                     VK_UP, FVIRTKEY | FNOINVERT,                    IDS_AG_VOLUME_UP,   0, wmcmd::WUP },
+    { ID_VOLUME_DOWN,                 VK_DOWN, FVIRTKEY | FNOINVERT,                    IDS_AG_VOLUME_DOWN, 0, wmcmd::WDOWN },
     { ID_VOLUME_MUTE,                     'M', FVIRTKEY | FCONTROL | FNOINVERT,         IDS_AG_VOLUME_MUTE, 0 },
     { ID_VOLUME_BOOST_INC,                  0, FVIRTKEY | FNOINVERT,                    IDS_VOLUME_BOOST_INC },
     { ID_VOLUME_BOOST_DEC,                  0, FVIRTKEY | FNOINVERT,                    IDS_VOLUME_BOOST_DEC },
@@ -660,7 +660,7 @@ static constexpr wmcmd_base default_wmcmds[] = {
     { ID_NAVIGATE_MENU_BACK,                0, FVIRTKEY | FNOINVERT,                    IDS_AG_DVD_MENU_BACK },
     { ID_NAVIGATE_MENU_LEAVE,               0, FVIRTKEY | FNOINVERT,                    IDS_MPLAYERC_75 },
     { ID_BOSS,                            'B', FVIRTKEY | FNOINVERT,                    IDS_AG_BOSS_KEY },
-    { ID_MENU_PLAYER_SHORT,           VK_APPS, FVIRTKEY | FNOINVERT,                    IDS_MPLAYERC_77, 0, wmcmd::RUP, wmcmd::RUP },
+    { ID_MENU_PLAYER_SHORT,           VK_APPS, FVIRTKEY | FNOINVERT,                    IDS_MPLAYERC_77, 0, wmcmd::RUP },
     { ID_MENU_PLAYER_LONG,                  0, FVIRTKEY | FNOINVERT,                    IDS_MPLAYERC_78 },
     { ID_MENU_FILTERS,                      0, FVIRTKEY | FNOINVERT,                    IDS_AG_FILTERS_MENU },
     { ID_VIEW_OPTIONS,                    'O', FVIRTKEY | FNOINVERT,                    IDS_AG_OPTIONS },
@@ -1112,10 +1112,11 @@ void CAppSettings::SaveSettings(bool write_full_history /* = false */)
         if (wc.IsModified()) {
             CString str;
             str.Format(_T("CommandMod%d"), i);
+            // mouse and mouseVirt are written twice for backwards compatibility with old versions
             CString str2;
             str2.Format(_T("%hu %hx %hx \"%S\" %d %hhu %u %hhu %hhu %hhu"),
                         wc.cmd, (WORD)wc.fVirt, wc.key, wc.rmcmd.GetString(),
-                        wc.rmrepcnt, wc.mouse, wc.appcmd, wc.mouseFS, wc.mouseVirt, wc.mouseFSVirt);
+                        wc.rmrepcnt, wc.mouse, wc.appcmd, wc.mouse, wc.mouseVirt, wc.mouseVirt);
             pApp->WriteProfileString(IDS_R_COMMANDS, str, str2);
             i++;
         }
@@ -1869,10 +1870,11 @@ void CAppSettings::LoadSettings()
         wmcmd tmp;
         int n;
         int fVirt = 0;
+        BYTE ignore;
         if (5 > (n = _stscanf_s(str2, _T("%hu %x %hx %S %d %hhu %u %hhu %hhu %hhu"),
                                 &tmp.cmd, &fVirt, &tmp.key, tmp.rmcmd.GetBuffer(128), 128,
-                                &tmp.rmrepcnt, &tmp.mouse, &tmp.appcmd, &tmp.mouseFS,
-                                &tmp.mouseVirt, &tmp.mouseFSVirt))) {
+                                &tmp.rmrepcnt, &tmp.mouse, &tmp.appcmd, &ignore,
+                                &tmp.mouseVirt, &ignore))) {
             break;
         }
         tmp.rmcmd.ReleaseBuffer();
@@ -1890,14 +1892,8 @@ void CAppSettings::LoadSettings()
             if (n >= 7) {
                 wc.appcmd = tmp.appcmd;
             }
-            // If there is no distinct bindings for windowed and
-            // fullscreen modes we use the same for both.
-            wc.mouseFS = (n >= 8) ? tmp.mouseFS : wc.mouse;
-            if (n > 8) {
+            if (n >= 9) {
                 wc.mouseVirt = tmp.mouseVirt;
-            }
-            if (n > 9) {
-                wc.mouseFSVirt = tmp.mouseFSVirt;
             }
             wc.rmcmd = tmp.rmcmd.Trim('\"');
             wc.rmrepcnt = tmp.rmrepcnt;

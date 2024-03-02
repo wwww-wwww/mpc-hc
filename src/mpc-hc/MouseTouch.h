@@ -91,7 +91,6 @@ private:
 
     CPoint GetVideoPoint(const CPoint& point) const;
     bool IsOnFullscreenWindow() const;
-    bool OnButton(UINT id, const CPoint& point, bool bOnFullscreen);
     bool OnButton(UINT id, const CPoint& point);
     bool SelectCursor(const CPoint& screenPoint, const CPoint& clientPoint, UINT nFlags);
     void SetCursor(UINT nFlags, const CPoint& screenPoint, const CPoint& clientPoint);

@@ -547,7 +547,7 @@ CString GetContentType(CString fn, CAtlList<CString>* redir)
     return content;
 }
 
-WORD AssignedToCmd(UINT keyOrMouseValue, bool bIsFullScreen, bool bCheckMouse)
+WORD AssignedToCmd(UINT keyOrMouseValue, bool bCheckMouse)
 {
     if (keyOrMouseValue == 0) {
         ASSERT(false);
@@ -575,11 +575,7 @@ WORD AssignedToCmd(UINT keyOrMouseValue, bool bIsFullScreen, bool bCheckMouse)
         const wmcmd& wc = s.wmcmds.GetNext(pos);
 
         if (bCheckMouse) {
-            if (bIsFullScreen) {
-                if (wc.mouseFS == keyOrMouseValue && (wc.mouseFSVirt & ~FVIRTKEY) == mouseVirt) {
-                    assignTo = wc.cmd;
-                }
-            } else if (wc.mouse == keyOrMouseValue && (wc.mouseVirt & ~FVIRTKEY) == mouseVirt) {
+            if (wc.mouse == keyOrMouseValue && (wc.mouseVirt & ~FVIRTKEY) == mouseVirt) {
                 assignTo = wc.cmd;
             }
         } else if (wc.key == keyOrMouseValue) {

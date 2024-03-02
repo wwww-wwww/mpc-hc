@@ -193,19 +193,15 @@ bool CMouse::IsOnFullscreenWindow() const
     }
 }
 
-bool CMouse::OnButton(UINT id, const CPoint& point, bool bOnFullscreen)
+bool CMouse::OnButton(UINT id, const CPoint& point)
 {
     bool ret = false;
-    WORD cmd = AssignedToCmd(id, bOnFullscreen);
+    WORD cmd = AssignedToCmd(id);
     if (cmd) {
         m_pMainFrame->PostMessage(WM_COMMAND, cmd);
         ret = true;
     }
     return ret;
-}
-bool CMouse::OnButton(UINT id, const CPoint& point)
-{
-    return OnButton(id, point, IsOnFullscreenWindow());
 }
 
 void CMouse::EventCallback(MpcEvent ev)
@@ -332,10 +328,10 @@ void CMouse::InternalOnLButtonDown(UINT nFlags, const CPoint& point)
         GetWnd().SetCapture();
         bool ret = false;
         if (bIsOnFS || !m_pMainFrame->IsCaptionHidden()) {
-            ret = OnButton(wmcmd::LDOWN, point, bIsOnFS);
+            ret = OnButton(wmcmd::LDOWN, point);
         }
         if (bDouble) {
-            ret = OnButton(wmcmd::LDBLCLK, point, bIsOnFS) || ret;
+            ret = OnButton(wmcmd::LDBLCLK, point) || ret;
         }
         if (!ret) {
             ReleaseCapture();
@@ -355,7 +351,7 @@ void CMouse::PerformDelayedLeftUp()
 {
     m_bLeftUpDelayed = false;
     bool bIsOnFS = IsOnFullscreenWindow();
-    OnButton(wmcmd::LUP, m_LeftUpPoint, bIsOnFS);
+    OnButton(wmcmd::LUP, m_LeftUpPoint);
     m_LeftUpPoint = CPoint();
 }
 
@@ -381,7 +377,7 @@ void CMouse::InternalOnLButtonUp(UINT nFlags, const CPoint& point)
                 m_LeftUpPoint = point;
                 SetTimer(GetWnd(), (UINT_PTR)this, std::min(delay, GetDoubleClickTime()), OnTimerLeftUp);
             } else {
-                OnButton(wmcmd::LUP, point, bIsOnFS);
+                OnButton(wmcmd::LUP, point);
             }
         }
     }
@@ -542,7 +538,7 @@ bool CMouse::TestDrag(const CPoint& screenPoint)
         bool checkDrag = (diff.x * diff.x + diff.y * diff.y) > maxDim*maxDim; // if dragged 10%/4% of screen maxDim start dragging
 
         if (checkDrag) {
-            bool bUpAssigned = !!AssignedToCmd(wmcmd::LUP, false);
+            bool bUpAssigned = !!AssignedToCmd(wmcmd::LUP);
             if ((!bUpAssigned && screenPoint != m_beginDragPoint) ||
                 (bUpAssigned && !PointEqualsImprecise(screenPoint, m_beginDragPoint,
                     GetSystemMetrics(SM_CXDRAG), GetSystemMetrics(SM_CYDRAG)))) {

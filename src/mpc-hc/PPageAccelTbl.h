@@ -42,8 +42,6 @@ private:
         COL_ID,
         COL_MOUSE_MODIFIER,
         COL_MOUSE,
-        COL_MOUSE_FS_MODIFIER,
-        COL_MOUSE_FS,
         COL_APPCMD,
         COL_RMCMD,
         COL_RMREPCNT
@@ -55,7 +53,6 @@ private:
 
 	void UpdateKeyDupFlags();
 	void UpdateMouseDupFlags();
-	void UpdateMouseFSDupFlags();
 	void UpdateAppcmdDupFlags();
 	void UpdateRmcmdDupFlags();
 	void UpdateAllDupFlags();

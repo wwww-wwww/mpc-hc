@@ -273,9 +273,7 @@ struct AutoChangeFullscreenMode {
 
 struct wmcmd_base : public ACCEL {
     BYTE mouse;
-    BYTE mouseFS;
     BYTE mouseVirt;
-    BYTE mouseFSVirt;
     DWORD dwname;
     UINT appcmd;
 
@@ -308,18 +306,14 @@ struct wmcmd_base : public ACCEL {
         0, 0, 0
     })
     , mouse(NONE)
-    , mouseFS(NONE)
     , mouseVirt(0)
-    , mouseFSVirt(0)
     , dwname(0)
     , appcmd(0) {}
 
-    constexpr wmcmd_base(WORD _cmd, WORD _key, BYTE _fVirt, DWORD _dwname, UINT _appcmd = 0, BYTE _mouse = NONE, BYTE _mouseFS = NONE, BYTE _mouseVirt = 0, BYTE _mouseFSVirt = 0)
+    constexpr wmcmd_base(WORD _cmd, WORD _key, BYTE _fVirt, DWORD _dwname, UINT _appcmd = 0, BYTE _mouse = NONE, BYTE _mouseVirt = 0)
         : ACCEL{ _fVirt, _key, _cmd }
         , mouse(_mouse)
-        , mouseFS(_mouseFS)
         , mouseVirt(_mouseVirt)
-        , mouseFSVirt(_mouseFSVirt)
         , dwname(_dwname)
         , appcmd(_appcmd) {}
 
@@ -361,8 +355,6 @@ public:
         appcmd = default_cmd->appcmd;
         mouse = default_cmd->mouse;
         mouseVirt = default_cmd->mouseVirt;
-        mouseFS = default_cmd->mouseFS;
-        mouseFSVirt = default_cmd->mouseFSVirt;
         rmcmd.Empty();
         rmrepcnt = 5;
     }
@@ -373,8 +365,6 @@ public:
                appcmd != default_cmd->appcmd ||
                mouse != default_cmd->mouse ||
                mouseVirt != default_cmd->mouseVirt ||
-               mouseFS != default_cmd->mouseFS ||
-               mouseFSVirt != default_cmd->mouseFSVirt ||
                !rmcmd.IsEmpty() ||
                rmrepcnt != 5;
     }
