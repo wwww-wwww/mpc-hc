@@ -549,6 +549,11 @@ CString GetContentType(CString fn, CAtlList<CString>* redir)
 
 WORD AssignedToCmd(UINT keyOrMouseValue, bool bIsFullScreen, bool bCheckMouse)
 {
+    if (keyOrMouseValue == 0) {
+        ASSERT(false);
+        return 0;
+    }
+
     WORD assignTo = 0;
     const CAppSettings& s = AfxGetAppSettings();
 
