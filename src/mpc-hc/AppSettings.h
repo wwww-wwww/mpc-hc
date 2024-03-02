@@ -269,6 +269,8 @@ struct AutoChangeFullscreenMode {
     unsigned                    uDelay = 0u;
 };
 
+#define ACCEL_LIST_SIZE 200
+
 struct wmcmd_base : public ACCEL {
     BYTE mouse;
     BYTE mouseFS;

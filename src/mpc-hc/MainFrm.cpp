@@ -1873,7 +1873,7 @@ LRESULT CMainFrame::OnAppCommand(WPARAM wParam, LPARAM lParam)
     UINT cmd  = GET_APPCOMMAND_LPARAM(lParam);
     UINT uDevice = GET_DEVICE_LPARAM(lParam);
 
-    if (uDevice != FAPPCOMMAND_OEM
+    if (uDevice != FAPPCOMMAND_OEM && cmd != 0
             || cmd == APPCOMMAND_MEDIA_PLAY
             || cmd == APPCOMMAND_MEDIA_PAUSE
             || cmd == APPCOMMAND_MEDIA_CHANNEL_UP
@@ -1942,6 +1942,11 @@ void CMainFrame::OnRawInput(UINT nInputcode, HRAWINPUT hRawInput)
 
 LRESULT CMainFrame::OnHotKey(WPARAM wParam, LPARAM lParam)
 {
+    if (wParam == 0 /*|| GET_KEYSTATE_LPARAM(lParam) != 0*/) {
+        ASSERT(false);
+        return FALSE;
+    }
+
     const CAppSettings& s = AfxGetAppSettings();
     BOOL fRet = FALSE;
 

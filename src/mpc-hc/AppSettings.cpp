@@ -723,6 +723,7 @@ void CAppSettings::CreateCommands()
     for (const auto& wc : default_wmcmds) {
         wmcmds.AddTail(wmcmd(wc));
     }
+    ASSERT(wmcmds.GetCount() <= ACCEL_LIST_SIZE);
 }
 
 CAppSettings::~CAppSettings()
@@ -1904,12 +1905,17 @@ void CAppSettings::LoadSettings()
     }
 
     CAtlArray<ACCEL> pAccel;
-    pAccel.SetCount(wmcmds.GetCount());
+    pAccel.SetCount(ACCEL_LIST_SIZE);
+    int accel_count = 0;
     POSITION pos = wmcmds.GetHeadPosition();
     for (int i = 0; pos; i++) {
-        pAccel[i] = wmcmds.GetNext(pos);
+        ACCEL x = wmcmds.GetNext(pos);
+        if (x.key > 0) {
+            pAccel[accel_count] = x;
+            accel_count++;
+        }
     }
-    hAccel = CreateAcceleratorTable(pAccel.GetData(), (int)pAccel.GetCount());
+    hAccel = CreateAcceleratorTable(pAccel.GetData(), accel_count);
 
     strWinLircAddr = pApp->GetProfileString(IDS_R_SETTINGS, IDS_RS_WINLIRCADDR, _T("127.0.0.1:8765"));
     fWinLirc = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_WINLIRC, FALSE);

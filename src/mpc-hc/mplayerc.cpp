@@ -2435,7 +2435,7 @@ void CRemoteCtrlClient::ExecuteCommand(CStringA cmd, int repcnt)
     while (pos) {
         const wmcmd& wc = s.wmcmds.GetNext(pos);
         if ((repcnt == 0 && wc.rmrepcnt == 0 || wc.rmrepcnt > 0 && (repcnt % wc.rmrepcnt) == 0)
-                && (!wc.rmcmd.CompareNoCase(cmd) || wc.cmd == (WORD)strtol(cmd, nullptr, 10))) {
+                && (wc.rmcmd.CompareNoCase(cmd) == 0 || wc.cmd == (WORD)strtol(cmd, nullptr, 10))) {
             CAutoLock cAutoLock(&m_csLock);
             TRACE(_T("CRemoteCtrlClient (calling command): %s\n"), wc.GetName().GetString());
             m_pWnd->SendMessage(WM_COMMAND, wc.cmd);

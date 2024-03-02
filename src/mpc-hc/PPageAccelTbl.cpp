@@ -1142,16 +1142,22 @@ BOOL CPPageAccelTbl::OnApply()
     s.wmcmds.RemoveAll();
     s.wmcmds.AddTail(&m_wmcmds);
 
-    CAtlArray<ACCEL> pAccel;
-    pAccel.SetCount(m_wmcmds.GetCount());
-    POSITION pos = m_wmcmds.GetHeadPosition();
-    for (int i = 0; pos; i++) {
-        pAccel[i] = m_wmcmds.GetNext(pos);
-    }
     if (s.hAccel) {
         DestroyAcceleratorTable(s.hAccel);
     }
-    s.hAccel = CreateAcceleratorTable(pAccel.GetData(), (int)pAccel.GetCount());
+
+    CAtlArray<ACCEL> pAccel;
+    pAccel.SetCount(ACCEL_LIST_SIZE);
+    int accel_count = 0;
+    POSITION pos = m_wmcmds.GetHeadPosition();
+    for (int i = 0; pos; i++) {
+        ACCEL x = m_wmcmds.GetNext(pos);
+        if (x.key > 0) {
+            pAccel[accel_count] = x;
+            accel_count++;
+        }
+    }
+    s.hAccel = CreateAcceleratorTable(pAccel.GetData(), accel_count);
 
     GetParentFrame()->m_hAccelTable = s.hAccel;
 
