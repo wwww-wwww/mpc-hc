@@ -1386,12 +1386,8 @@ msgid "Key"
 msgstr "Клавиша"
 
 msgctxt "IDS_AG_MOUSE"
-msgid "Mouse Windowed"
-msgstr "Мышь в окне"
-
-msgctxt "IDS_AG_MOUSE_FS"
-msgid "Mouse Fullscreen"
-msgstr "Мышь на полном экране"
+msgid "Mouse"
+msgstr ""
 
 msgctxt "IDS_AG_APP_COMMAND"
 msgid "App Command"
@@ -3020,10 +3016,6 @@ msgstr "Масштаб 25%"
 msgctxt "IDS_AG_MOUSE_MODIFIER"
 msgid "Mouse Modifier"
 msgstr "Модификатор мыши"
-
-msgctxt "IDS_AG_MOUSE_FS_MODIFIER"
-msgid "Mouse FS Modifier"
-msgstr "Модификатор мыши на ПЭ"
 
 msgctxt "IDS_AG_ZOOM_ADD"
 msgid "Zoom Window +"

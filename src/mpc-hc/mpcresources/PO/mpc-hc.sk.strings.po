@@ -1395,12 +1395,8 @@ msgid "Key"
 msgstr "Kláves"
 
 msgctxt "IDS_AG_MOUSE"
-msgid "Mouse Windowed"
-msgstr "Myš - v okne"
-
-msgctxt "IDS_AG_MOUSE_FS"
-msgid "Mouse Fullscreen"
-msgstr "Myš - na celú obrazovku"
+msgid "Mouse"
+msgstr ""
 
 msgctxt "IDS_AG_APP_COMMAND"
 msgid "App Command"
@@ -3031,10 +3027,6 @@ msgstr "Priblíženie: 25 %"
 msgctxt "IDS_AG_MOUSE_MODIFIER"
 msgid "Mouse Modifier"
 msgstr "Modifikátor myši"
-
-msgctxt "IDS_AG_MOUSE_FS_MODIFIER"
-msgid "Mouse FS Modifier"
-msgstr "Modifikátor myši - FS"
 
 msgctxt "IDS_AG_ZOOM_ADD"
 msgid "Zoom Window +"

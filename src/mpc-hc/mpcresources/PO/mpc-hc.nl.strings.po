@@ -1396,12 +1396,8 @@ msgid "Key"
 msgstr "Toets"
 
 msgctxt "IDS_AG_MOUSE"
-msgid "Mouse Windowed"
-msgstr "Muis vast in scherm"
-
-msgctxt "IDS_AG_MOUSE_FS"
-msgid "Mouse Fullscreen"
-msgstr "Muis volledig scherm"
+msgid "Mouse"
+msgstr ""
 
 msgctxt "IDS_AG_APP_COMMAND"
 msgid "App Command"
@@ -3029,10 +3025,6 @@ msgstr "Zoom 25%"
 msgctxt "IDS_AG_MOUSE_MODIFIER"
 msgid "Mouse Modifier"
 msgstr "Muis aanpasser"
-
-msgctxt "IDS_AG_MOUSE_FS_MODIFIER"
-msgid "Mouse FS Modifier"
-msgstr "Muis FS aanpasser"
 
 msgctxt "IDS_AG_ZOOM_ADD"
 msgid "Zoom Window +"

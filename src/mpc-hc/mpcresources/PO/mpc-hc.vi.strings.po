@@ -1387,12 +1387,8 @@ msgid "Key"
 msgstr "Phím"
 
 msgctxt "IDS_AG_MOUSE"
-msgid "Mouse Windowed"
-msgstr "Chuột cửa sổ"
-
-msgctxt "IDS_AG_MOUSE_FS"
-msgid "Mouse Fullscreen"
-msgstr "Chuột ở toàn màn hình"
+msgid "Mouse"
+msgstr ""
 
 msgctxt "IDS_AG_APP_COMMAND"
 msgid "App Command"
@@ -3028,10 +3024,6 @@ msgstr "Thu phóng 25%"
 msgctxt "IDS_AG_MOUSE_MODIFIER"
 msgid "Mouse Modifier"
 msgstr "Sửa đổi chuột"
-
-msgctxt "IDS_AG_MOUSE_FS_MODIFIER"
-msgid "Mouse FS Modifier"
-msgstr "Sửa đổi FS của chuột"
 
 msgctxt "IDS_AG_ZOOM_ADD"
 msgid "Zoom Window +"

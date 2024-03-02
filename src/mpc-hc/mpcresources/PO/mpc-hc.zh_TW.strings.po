@@ -1335,12 +1335,8 @@ msgid "Key"
 msgstr "按鍵"
 
 msgctxt "IDS_AG_MOUSE"
-msgid "Mouse Windowed"
-msgstr "滑鼠 (視窗)"
-
-msgctxt "IDS_AG_MOUSE_FS"
-msgid "Mouse Fullscreen"
-msgstr "滑鼠 (全螢幕)"
+msgid "Mouse"
+msgstr ""
 
 msgctxt "IDS_AG_APP_COMMAND"
 msgid "App Command"
@@ -2943,10 +2939,6 @@ msgstr "縮放 25%"
 msgctxt "IDS_AG_MOUSE_MODIFIER"
 msgid "Mouse Modifier"
 msgstr "滑鼠修飾鍵"
-
-msgctxt "IDS_AG_MOUSE_FS_MODIFIER"
-msgid "Mouse FS Modifier"
-msgstr "滑鼠修飾鍵（全螢幕）"
 
 msgctxt "IDS_AG_ZOOM_ADD"
 msgid "Zoom Window +"

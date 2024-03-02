@@ -1389,12 +1389,8 @@ msgid "Key"
 msgstr "Tipka"
 
 msgctxt "IDS_AG_MOUSE"
-msgid "Mouse Windowed"
-msgstr "Miška okensko"
-
-msgctxt "IDS_AG_MOUSE_FS"
-msgid "Mouse Fullscreen"
-msgstr "Miška celozaslonsko"
+msgid "Mouse"
+msgstr ""
 
 msgctxt "IDS_AG_APP_COMMAND"
 msgid "App Command"
@@ -3019,10 +3015,6 @@ msgstr "Povečava 25%"
 msgctxt "IDS_AG_MOUSE_MODIFIER"
 msgid "Mouse Modifier"
 msgstr "Modifikator miške"
-
-msgctxt "IDS_AG_MOUSE_FS_MODIFIER"
-msgid "Mouse FS Modifier"
-msgstr "FS Modifikator miške"
 
 msgctxt "IDS_AG_ZOOM_ADD"
 msgid "Zoom Window +"

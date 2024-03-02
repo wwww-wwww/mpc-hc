@@ -1398,12 +1398,8 @@ msgid "Key"
 msgstr "Tuş"
 
 msgctxt "IDS_AG_MOUSE"
-msgid "Mouse Windowed"
-msgstr "Pencere kipinde fare"
-
-msgctxt "IDS_AG_MOUSE_FS"
-msgid "Mouse Fullscreen"
-msgstr "Tam ekran kipinde fare"
+msgid "Mouse"
+msgstr ""
 
 msgctxt "IDS_AG_APP_COMMAND"
 msgid "App Command"
@@ -3037,10 +3033,6 @@ msgstr "%25 Yakınlaştır"
 msgctxt "IDS_AG_MOUSE_MODIFIER"
 msgid "Mouse Modifier"
 msgstr "Mouse Modifier"
-
-msgctxt "IDS_AG_MOUSE_FS_MODIFIER"
-msgid "Mouse FS Modifier"
-msgstr "Mouse FS Modifier"
 
 msgctxt "IDS_AG_ZOOM_ADD"
 msgid "Zoom Window +"

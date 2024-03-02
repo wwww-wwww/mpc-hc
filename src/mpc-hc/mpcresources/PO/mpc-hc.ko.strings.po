@@ -1350,12 +1350,8 @@ msgid "Key"
 msgstr "키"
 
 msgctxt "IDS_AG_MOUSE"
-msgid "Mouse Windowed"
-msgstr "창 화면 마우스"
-
-msgctxt "IDS_AG_MOUSE_FS"
-msgid "Mouse Fullscreen"
-msgstr "마우스 전체 화면"
+msgid "Mouse"
+msgstr ""
 
 msgctxt "IDS_AG_APP_COMMAND"
 msgid "App Command"
@@ -2962,10 +2958,6 @@ msgstr "확대 25%"
 msgctxt "IDS_AG_MOUSE_MODIFIER"
 msgid "Mouse Modifier"
 msgstr "마우스 수식키"
-
-msgctxt "IDS_AG_MOUSE_FS_MODIFIER"
-msgid "Mouse FS Modifier"
-msgstr "마우스 전체화면 수식키"
 
 msgctxt "IDS_AG_ZOOM_ADD"
 msgid "Zoom Window +"

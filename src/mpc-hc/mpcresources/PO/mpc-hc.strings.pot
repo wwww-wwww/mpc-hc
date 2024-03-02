@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: MPC-HC\n"
-"POT-Creation-Date: 2024-02-10 16:52:19+0000\n"
+"POT-Creation-Date: 2024-03-02 14:37:43+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1293,11 +1293,7 @@ msgid "Key"
 msgstr ""
 
 msgctxt "IDS_AG_MOUSE"
-msgid "Mouse Windowed"
-msgstr ""
-
-msgctxt "IDS_AG_MOUSE_FS"
-msgid "Mouse Fullscreen"
+msgid "Mouse"
 msgstr ""
 
 msgctxt "IDS_AG_APP_COMMAND"
@@ -2878,10 +2874,6 @@ msgstr ""
 
 msgctxt "IDS_AG_MOUSE_MODIFIER"
 msgid "Mouse Modifier"
-msgstr ""
-
-msgctxt "IDS_AG_MOUSE_FS_MODIFIER"
-msgid "Mouse FS Modifier"
 msgstr ""
 
 msgctxt "IDS_AG_ZOOM_ADD"

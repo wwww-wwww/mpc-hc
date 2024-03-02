@@ -1426,12 +1426,8 @@ msgid "Key"
 msgstr "Tecla"
 
 msgctxt "IDS_AG_MOUSE"
-msgid "Mouse Windowed"
-msgstr "Ratón en modo ventana"
-
-msgctxt "IDS_AG_MOUSE_FS"
-msgid "Mouse Fullscreen"
-msgstr "Ratón en pantalla completa"
+msgid "Mouse"
+msgstr ""
 
 msgctxt "IDS_AG_APP_COMMAND"
 msgid "App Command"
@@ -3070,10 +3066,6 @@ msgstr "Zoom al 25%"
 msgctxt "IDS_AG_MOUSE_MODIFIER"
 msgid "Mouse Modifier"
 msgstr "Modificador del ratón"
-
-msgctxt "IDS_AG_MOUSE_FS_MODIFIER"
-msgid "Mouse FS Modifier"
-msgstr "Modificador de pantalla completa del ratón"
 
 msgctxt "IDS_AG_ZOOM_ADD"
 msgid "Zoom Window +"

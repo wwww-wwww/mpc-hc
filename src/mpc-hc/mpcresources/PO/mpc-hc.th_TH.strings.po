@@ -1372,12 +1372,8 @@ msgid "Key"
 msgstr "ปุ่มคีย์"
 
 msgctxt "IDS_AG_MOUSE"
-msgid "Mouse Windowed"
-msgstr "เม้าส์ หน้าต่าง"
-
-msgctxt "IDS_AG_MOUSE_FS"
-msgid "Mouse Fullscreen"
-msgstr "เม้าส์ เต็มจอ"
+msgid "Mouse"
+msgstr ""
 
 msgctxt "IDS_AG_APP_COMMAND"
 msgid "App Command"
@@ -2990,10 +2986,6 @@ msgstr ""
 
 msgctxt "IDS_AG_MOUSE_MODIFIER"
 msgid "Mouse Modifier"
-msgstr ""
-
-msgctxt "IDS_AG_MOUSE_FS_MODIFIER"
-msgid "Mouse FS Modifier"
 msgstr ""
 
 msgctxt "IDS_AG_ZOOM_ADD"
