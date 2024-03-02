@@ -102,6 +102,8 @@ CPPageAccelTbl::CPPageAccelTbl()
     , m_fUIce(FALSE)
     , m_UIceLink(L"https://web.archive.org/web/20160609195532/http://www.mediatexx.com/") // home site no longer works
     , m_nStatusTimerID(0)
+    , filterTimerID(0)
+    , sortDirection(HDF_SORTUP)
     , m_fGlobalMedia(FALSE)
 {
 }

@@ -2215,7 +2215,24 @@ void CMPlayerCApp::UnregisterHotkeys()
 
 UINT CMPlayerCApp::GetVKFromAppCommand(UINT nAppCommand)
 {
+    // Note: Only a subset of AppCommands have a VirtualKey
     switch (nAppCommand) {
+        case APPCOMMAND_MEDIA_PLAY_PAUSE:
+            return VK_MEDIA_PLAY_PAUSE;
+        case APPCOMMAND_MEDIA_STOP:
+            return VK_MEDIA_STOP;
+        case APPCOMMAND_MEDIA_NEXTTRACK:
+            return VK_MEDIA_NEXT_TRACK;
+        case APPCOMMAND_MEDIA_PREVIOUSTRACK:
+            return VK_MEDIA_PREV_TRACK;
+        case APPCOMMAND_VOLUME_DOWN:
+            return VK_VOLUME_DOWN;
+        case APPCOMMAND_VOLUME_UP:
+            return VK_VOLUME_UP;
+        case APPCOMMAND_VOLUME_MUTE:
+            return VK_VOLUME_MUTE;
+        case APPCOMMAND_LAUNCH_MEDIA_SELECT:
+            return VK_LAUNCH_MEDIA_SELECT;
         case APPCOMMAND_BROWSER_BACKWARD:
             return VK_BROWSER_BACK;
         case APPCOMMAND_BROWSER_FORWARD:
@@ -2230,24 +2247,6 @@ UINT CMPlayerCApp::GetVKFromAppCommand(UINT nAppCommand)
             return VK_BROWSER_FAVORITES;
         case APPCOMMAND_BROWSER_HOME:
             return VK_BROWSER_HOME;
-        case APPCOMMAND_VOLUME_MUTE:
-            return VK_VOLUME_MUTE;
-        case APPCOMMAND_VOLUME_DOWN:
-            return VK_VOLUME_DOWN;
-        case APPCOMMAND_VOLUME_UP:
-            return VK_VOLUME_UP;
-        case APPCOMMAND_MEDIA_NEXTTRACK:
-            return VK_MEDIA_NEXT_TRACK;
-        case APPCOMMAND_MEDIA_PREVIOUSTRACK:
-            return VK_MEDIA_PREV_TRACK;
-        case APPCOMMAND_MEDIA_STOP:
-            return VK_MEDIA_STOP;
-        case APPCOMMAND_MEDIA_PLAY_PAUSE:
-            return VK_MEDIA_PLAY_PAUSE;
-        case APPCOMMAND_LAUNCH_MAIL:
-            return VK_LAUNCH_MAIL;
-        case APPCOMMAND_LAUNCH_MEDIA_SELECT:
-            return VK_LAUNCH_MEDIA_SELECT;
         case APPCOMMAND_LAUNCH_APP1:
             return VK_LAUNCH_APP1;
         case APPCOMMAND_LAUNCH_APP2:
