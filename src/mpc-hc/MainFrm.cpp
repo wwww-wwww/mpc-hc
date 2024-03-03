@@ -2094,7 +2094,7 @@ void CMainFrame::OnTimer(UINT_PTR nIDEvent)
                     // no break
                     case PM_DVD:
                         if (m_bOSDDisplayTime && m_OSD.CanShowMessage()) {
-                            m_OSD.DisplayMessage(OSD_TOPLEFT, m_wndStatusBar.GetStatusTimer());
+                            m_OSD.DisplayTime(m_wndStatusBar.GetStatusTimer());
                         }
                         break;
                     case PM_DIGITAL_CAPTURE: {
@@ -2106,7 +2106,7 @@ void CMainFrame::OnTimer(UINT_PTR nIDEvent)
                             REFERENCE_TIME rtDur = REFERENCE_TIME(NowNext.duration) * 10000000;
                             m_wndStatusBar.SetStatusTimer(rtNow, rtDur, false, TIME_FORMAT_MEDIA_TIME);
                             if (m_bOSDDisplayTime && m_OSD.CanShowMessage()) {
-                                m_OSD.DisplayMessage(OSD_TOPLEFT, m_wndStatusBar.GetStatusTimer());
+                                m_OSD.DisplayTime(m_wndStatusBar.GetStatusTimer());
                             }
                         } else {
                             m_wndStatusBar.SetStatusTimer(ResStr(IDS_CAPTURE_LIVE));
@@ -7217,7 +7217,7 @@ void CMainFrame::OnViewOSDDisplayTime()
     m_bOSDDisplayTime = !m_bOSDDisplayTime;
 
     if (!m_bOSDDisplayTime) {
-        m_OSD.ClearMessage();
+        m_OSD.ClearTime();
     }
 
     OnTimer(TIMER_STREAMPOSPOLLER2);

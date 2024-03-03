@@ -51,6 +51,7 @@ CVMROSD::CVMROSD(CMainFrame* pMainFrame)
     , m_llSeekPos(0)
     , m_bShowMessage(true)
     , m_nMessagePos(OSD_NOMESSAGE)
+    , timerExpires(GetTickCount())
 {
     m_colors[OSD_TRANSPARENT] = RGB(0, 0, 0);
     if (AppIsThemeLoaded()) {
@@ -501,9 +502,21 @@ void CVMROSD::TimerFunc(HWND hWnd, UINT nMsg, UINT_PTR nIDEvent, DWORD dwTime)
 {
     CVMROSD* pVMROSD = (CVMROSD*)nIDEvent;
     if (pVMROSD) {
-        pVMROSD->ClearMessage();
+        if (!pVMROSD->currentTime.IsEmpty()) {
+            pVMROSD->DisplayTime(pVMROSD->currentTime);
+        } else {
+            pVMROSD->ClearMessage();
+        }
     }
     KillTimer(hWnd, nIDEvent);
+}
+
+void CVMROSD::ClearTime()
+{
+    currentTime = L"";
+    if (timerExpires == timerExpiresForTime) {
+        ClearMessage();
+    }
 }
 
 void CVMROSD::ClearMessage(bool hide)
@@ -530,6 +543,16 @@ void CVMROSD::ClearMessage(bool hide)
 
     m_pMainFrame->RepaintVideo();
 }
+
+void CVMROSD::DisplayTime(LPCTSTR strTime)
+{
+    currentTime = strTime;
+    if (timerExpires < GetTickCount() || timerExpires == timerExpiresForTime) {
+        DisplayMessage(OSD_TOPLEFT, strTime, 1000);
+        timerExpiresForTime = timerExpires;
+    }
+}
+
 
 void CVMROSD::DisplayMessage(OSD_MESSAGEPOS nPos, LPCTSTR strMsg, int nDuration, int iFontSize, CString fontName)
 {
@@ -579,6 +602,7 @@ void CVMROSD::DisplayMessage(OSD_MESSAGEPOS nPos, LPCTSTR strMsg, int nDuration,
         if (m_pWnd) {
             m_pWnd->KillTimer((UINT_PTR)this);
             if (nDuration != -1) {
+                timerExpires = GetTickCount() + nDuration;
                 m_pWnd->SetTimer((UINT_PTR)this, nDuration, TimerFunc);
             }
         }
