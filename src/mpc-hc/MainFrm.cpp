@@ -159,10 +159,6 @@ static bool EnsureDirectory(CString directory)
     return result;
 }
 
-
-#include "MediaInfo/MediaInfoDLL.h"
-using namespace MediaInfoDLL;
-
 class CSubClock : public CUnknown, public ISubClock
 {
     STDMETHODIMP NonDelegatingQueryInterface(REFIID riid, void** ppv) {
