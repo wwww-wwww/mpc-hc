@@ -2133,7 +2133,7 @@ void CMainFrame::OnTimer(UINT_PTR nIDEvent)
             break;
         case TIMER_STATS: {
             CString rate;
-            rate.Format(_T("%.4fx"), m_dSpeedRate);
+            rate.Format(_T("%.3fx"), m_dSpeedRate);
             if (m_pQP) {
                 CString info;
                 int tmp, tmp1;
