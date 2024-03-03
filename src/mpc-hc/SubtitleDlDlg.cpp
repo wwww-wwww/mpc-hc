@@ -707,7 +707,9 @@ afx_msg LRESULT CSubtitleDlDlg::OnCompleted(WPARAM wParam, LPARAM lParam)
             m_list.SetItemText(iItem, COL_TITLES, UTF8To16(subInfo.DisplayTitle().c_str()));
 
             CString fps;
-            fps.Format(_T("%.3f"), subInfo.frameRate);
+            if (subInfo.frameRate > 0.1) {
+                fps.Format(_T("%.3f"), subInfo.frameRate);
+            }
             m_list.SetItemText(iItem, COL_FRAMERATE, fps);
 
             CString score;
