@@ -1000,7 +1000,7 @@ void memsetw(void* dst, unsigned short c, size_t nbytes)
 
 bool ExtractBIH(const AM_MEDIA_TYPE* pmt, BITMAPINFOHEADER* bih)
 {
-    if (pmt && bih) {
+    if (pmt && bih && pmt->pbFormat) {
         ZeroMemory(bih, sizeof(*bih));
 
         if (pmt->formattype == FORMAT_VideoInfo) {
