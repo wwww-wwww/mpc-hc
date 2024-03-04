@@ -67,12 +67,13 @@ private:
     CPlaylistIDs m_ExternalPlayListFNCopy;
     void ExternalPlayListLoaded(CStringW fn);
 
-
     EventClient m_eventc;
     void EventCallback(MpcEvent ev);
 
     int m_nTimeColWidth;
     void ResizeListColumn();
+
+    CPlaylistItem* GetCur();
 
     void AddItem(CString fn, bool insertAtCurrent = false);
     void AddItem(CString fn, CAtlList<CString>* subs);
@@ -140,8 +141,7 @@ public:
     int GetSelIdx() const;
     void SetSelIdx(int i);
     bool IsAtEnd();
-    bool GetCur(CPlaylistItem& pli) const;
-    CPlaylistItem* GetCur();
+    bool GetCur(CPlaylistItem& pli, bool check_fns = false) const;
     CString GetCurFileName(bool use_ydl_source = false);
     CString GetCurFileNameTitle();
     bool SetNext();

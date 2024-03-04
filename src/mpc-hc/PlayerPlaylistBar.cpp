@@ -1244,13 +1244,13 @@ bool CPlayerPlaylistBar::IsAtEnd()
     return isAtEnd;
 }
 
-bool CPlayerPlaylistBar::GetCur(CPlaylistItem& pli) const
+bool CPlayerPlaylistBar::GetCur(CPlaylistItem& pli, bool check_fns) const
 {
     if (!m_pl.IsEmpty()) {
         POSITION p = m_pl.GetPos();
         if (p) {
             pli = m_pl.GetAt(p);
-            return true;
+            return !check_fns || !pli.m_fns.IsEmpty();
         }
     }
     return false;
@@ -1262,13 +1262,7 @@ CPlaylistItem* CPlayerPlaylistBar::GetCur()
         POSITION p = m_pl.GetPos();
         if (p) {
             CPlaylistItem* result = &m_pl.GetAt(p);
-            // validate
-            if (result->m_type >= 0 && result->m_type <= 1 && !result->m_fns.IsEmpty()) {
-                return result;
-            } else {
-                ASSERT(false);
-                return nullptr;
-            }
+            return result;
         }
     }
     return nullptr;
@@ -1380,7 +1374,8 @@ void CPlayerPlaylistBar::SetCurValid(bool fValid)
     }
 }
 
-void CPlayerPlaylistBar::SetCurLabel(CString label) {
+void CPlayerPlaylistBar::SetCurLabel(CString label)
+{
     POSITION pos = m_pl.GetPos();
     if (pos) {
         auto pi = m_pl.GetAt(pos);
@@ -1408,13 +1403,13 @@ void CPlayerPlaylistBar::Randomize()
 }
 
 void CPlayerPlaylistBar::UpdateLabel(CString in) {
-    if (!m_pl.GetPos()) {
-        return;
+    POSITION pos = m_pl.GetPos();
+    if (pos) {
+        CPlaylistItem& m = m_pl.GetAt(pos);
+        m.m_label = in;
+        m_pl.SetAt(m_pl.GetPos(), m);
+        Refresh();
     }
-    CPlaylistItem& m = m_pl.GetAt(m_pl.GetPos());
-    m.m_label = in;
-    m_pl.SetAt(m_pl.GetPos(), m);
-    Refresh();
 }
 
 OpenMediaData* CPlayerPlaylistBar::GetCurOMD(REFERENCE_TIME rtStart, ABRepeat abRepeat /* = ABRepeat() */)
