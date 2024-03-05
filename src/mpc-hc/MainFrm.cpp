@@ -61,6 +61,7 @@
 #include "WebServer.h"
 #include <ISOLang.h>
 #include <PathUtils.h>
+#include <DSUtil.h>
 
 #include "../DeCSS/VobFile.h"
 #include "../Subtitles/PGSSub.h"
@@ -9284,7 +9285,7 @@ bool CMainFrame::GetAudioStreamInfo(int i, bool extractFormatInfo, CStringW& aud
         if (pSS && SUCCEEDED(pSS->Count(&cStreams)) && cStreams > 0 && cStreams > i) {
             if (extractFormatInfo) {
                 AM_MEDIA_TYPE* pmt = nullptr;
-                if ( SUCCEEDED(pSS->Info(i, &pmt, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr)) ) {
+                if (SUCCEEDED(pSS->Info(i, &pmt, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr))) {
                     audioFormat = GetShortAudioNameFromMediaType(pmt);
                     AppendWithDelimiter(audioFormat, GetChannelStrFromMediaType(pmt));
                     DeleteMediaType(pmt);
@@ -14047,6 +14048,10 @@ void CMainFrame::OpenSetupStatusBar()
                     m_statusbarVideoFourCC = L"HEVC";
                 } else if (fcc == L"AVC1") {
                     m_statusbarVideoFourCC = L"H264";
+                } else if (fcc == L"VP90") {
+                    m_statusbarVideoFourCC = L"VP9";
+                } else if (fcc == L"AV01") {
+                    m_statusbarVideoFourCC = L"AV1";
                 } else {
                     m_statusbarVideoFourCC = fcc;
                 }
@@ -14054,7 +14059,6 @@ void CMainFrame::OpenSetupStatusBar()
             }
         }
         EndEnumFilters;
-        // ToDo: merge the two filter enumeration loops
 
         UINT id = IDB_AUDIOTYPE_NOAUDIO;
         if (loadedAudioInfo) {
