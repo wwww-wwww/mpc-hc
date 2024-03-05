@@ -2038,39 +2038,43 @@ CStringW GetChannelStrFromMediaType(AM_MEDIA_TYPE* pmt) {
 }
 
 CStringW GetChannelStrFromMediaType(AM_MEDIA_TYPE* pmt, int& channels) {
-    if (pmt && pmt->majortype == MEDIATYPE_Audio && pmt->formattype == FORMAT_WaveFormatEx) {
-        CStringW ret;
-        channels = ((WAVEFORMATEX*)pmt->pbFormat)->nChannels;
-        switch (channels) {
-            case 6:
-                return L"5.1";
-            case 7:
-                return L"6.1";
-            case 8:
-                return L"7.1";
-            default:
-                ret.Format(L"%uch", channels);
-                return ret;
+    if (pmt && pmt->majortype == MEDIATYPE_Audio) {
+        if (pmt->formattype == FORMAT_WaveFormatEx) {
+            CStringW ret;
+            channels = ((WAVEFORMATEX*)pmt->pbFormat)->nChannels;
+            switch (channels) {
+                case 6:
+                    return L"5.1";
+                case 7:
+                    return L"6.1";
+                case 8:
+                    return L"7.1";
+                default:
+                    ret.Format(L"%uch", channels);
+                    return ret;
+            }
+        } else {
+            // ToDo: support Vorbis mediatype
         }
     }
+    ASSERT(false);
+    return L"";
 }
 
 CStringW GetShortAudioNameFromMediaType(AM_MEDIA_TYPE* pmt) {
-    if (!pmt) return L"";
-    if (pmt->subtype == MEDIASUBTYPE_MPEG_ADTS_AAC) {
+    if (!pmt) {
+        return L"";
+    }
+
+    if (pmt->subtype == MEDIASUBTYPE_AAC || pmt->subtype == MEDIASUBTYPE_LATM_AAC || pmt->subtype == MEDIASUBTYPE_AAC_ADTS || pmt->subtype == MEDIASUBTYPE_MPEG_ADTS_AAC
+        || pmt->subtype == MEDIASUBTYPE_MPEG_HEAAC || pmt->subtype == MEDIASUBTYPE_MP4A || pmt->subtype == MEDIASUBTYPE_mp4a) {
         return L"AAC";
-    } else if (pmt->subtype == MEDIASUBTYPE_AAC || pmt->subtype == MEDIASUBTYPE_LATM_AAC) {
-        return L"AAC";
-    } else if (pmt->subtype == MEDIASUBTYPE_MP4A || pmt->subtype == MEDIASUBTYPE_mp4a) {
-        return L"MP4A";
     } else if (pmt->subtype == MEDIASUBTYPE_DTS_HD) {
         return L"DTS-HD";
-    } else if (pmt->subtype == MEDIASUBTYPE_MPEG_HEAAC) {
-        return L"AAC";
     } else if (pmt->subtype == MEDIASUBTYPE_MPEG_LOAS) {
         return L"LOAS";
     } else if (pmt->subtype == MEDIASUBTYPE_DOLBY_DDPLUS) {
-        return L"DD+";
+        return L"E-AC3";
     } else if (pmt->subtype == MEDIASUBTYPE_DOLBY_AC3 || pmt->subtype == MEDIASUBTYPE_DOLBY_AC3_SPDIF || pmt->subtype == MEDIASUBTYPE_DVM
         || pmt->subtype == MEDIASUBTYPE_RAW_SPORT || pmt->subtype == MEDIASUBTYPE_SPDIF_TAG_241h || pmt->subtype == MEDIASUBTYPE_WAVE_DOLBY_AC3) {
         return L"AC3";
@@ -2084,10 +2088,10 @@ CStringW GetShortAudioNameFromMediaType(AM_MEDIA_TYPE* pmt) {
         return L"MP1";
     } else if (pmt->subtype == MEDIASUBTYPE_MPEG2_AUDIO) {
         return L"MP2";
-    } else if (pmt->subtype == MEDIASUBTYPE_FLAC || pmt->subtype == MEDIASUBTYPE_FLAC_FRAMED) {
-        return L"FLAC";
     } else if (pmt->subtype == MEDIASUBTYPE_MP3) {
         return L"MP3";
+    } else if (pmt->subtype == MEDIASUBTYPE_FLAC || pmt->subtype == MEDIASUBTYPE_FLAC_FRAMED) {
+        return L"FLAC";
     } else if (pmt->subtype == MEDIASUBTYPE_TTA1) {
         return L"TTA";
     } else if (pmt->subtype == MEDIASUBTYPE_SAMR) {
