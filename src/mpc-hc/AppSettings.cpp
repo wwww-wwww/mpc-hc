@@ -245,6 +245,7 @@ CAppSettings::CAppSettings()
     , bShowFPSInStatusbar(false)
     , bShowABMarksInStatusbar(false)
     , bShowVideoInfoInStatusbar(false)
+    , bShowAudioFormatInStatusbar(false)
 #if USE_LIBASS
     , bRenderSSAUsingLibass(false)
     , bRenderSRTUsingLibass(false)
@@ -1273,6 +1274,7 @@ void CAppSettings::SaveSettings(bool write_full_history /* = false */)
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_SHOW_FPS_STATUSBAR, bShowFPSInStatusbar);
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_SHOW_ABMARKS_STATUSBAR, bShowABMarksInStatusbar);
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_SHOW_VIDEOINFO_STATUSBAR, bShowVideoInfoInStatusbar);
+    pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_SHOW_AUDIOFORMAT_STATUSBAR, bShowAudioFormatInStatusbar);
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_ADD_LANGCODE_WHEN_SAVE_SUBTITLES, bAddLangCodeWhenSaveSubtitles);
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_USE_TITLE_IN_RECENT_FILE_LIST, bUseTitleInRecentFileList);
     pApp->WriteProfileString(IDS_R_SETTINGS, IDS_RS_YDL_SUBS_PREFERENCE, sYDLSubsPreference);
@@ -2149,7 +2151,8 @@ void CAppSettings::LoadSettings()
     bShowFPSInStatusbar = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_SHOW_FPS_STATUSBAR, FALSE);
     bShowABMarksInStatusbar = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_SHOW_ABMARKS_STATUSBAR, FALSE);
     bShowVideoInfoInStatusbar = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_SHOW_VIDEOINFO_STATUSBAR, FALSE);
-
+    bShowAudioFormatInStatusbar = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_SHOW_AUDIOFORMAT_STATUSBAR, FALSE);
+    
     bAddLangCodeWhenSaveSubtitles = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_ADD_LANGCODE_WHEN_SAVE_SUBTITLES, FALSE);
     bUseTitleInRecentFileList = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_USE_TITLE_IN_RECENT_FILE_LIST, TRUE);
     sYDLSubsPreference = pApp->GetProfileString(IDS_R_SETTINGS, IDS_RS_YDL_SUBS_PREFERENCE, _T(""));

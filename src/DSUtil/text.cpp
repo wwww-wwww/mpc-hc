@@ -384,3 +384,12 @@ CStringW ToUnicode(CStringW str, DWORD CharSet) {
 
     return ret;
 }
+
+void AppendWithDelimiter(CStringW &output, CStringW append, wchar_t delim) {
+    if (!append.IsEmpty()) {
+        if (!output.IsEmpty()) {
+            output.AppendChar(delim);
+        }
+        output.Append(append);
+    }
+}

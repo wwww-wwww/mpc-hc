@@ -943,6 +943,7 @@ public:
     bool bShowFPSInStatusbar;
     bool bShowABMarksInStatusbar;
     bool bShowVideoInfoInStatusbar;
+    bool bShowAudioFormatInStatusbar;
 
     bool bAddLangCodeWhenSaveSubtitles;
     bool bUseTitleInRecentFileList;

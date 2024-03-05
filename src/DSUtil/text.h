@@ -163,6 +163,7 @@ extern CAtlList<CString>& MakeUpper(CAtlList<CString>& sl);
 extern int LastIndexOfCString(const CString& text, const CString& pattern);
 extern bool IsNameSimilar(const CString& title, const CString& fileName);
 extern CStringW ToUnicode(CStringW str, DWORD CharSet);
+void AppendWithDelimiter(CStringW& output, CStringW append, wchar_t delim = L' ');
 
 CString FormatNumber(CString szNumber, bool bNoFractionalDigits = true);
 void GetLocaleString(LCID lcid, LCTYPE type, CString& output);

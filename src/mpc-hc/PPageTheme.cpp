@@ -45,6 +45,7 @@ CPPageTheme::CPPageTheme()
     , m_iSeekPreviewSize(15)
     , m_fShowOSD(FALSE)
     , m_bShowVideoInfoInStatusbar(FALSE)
+    , m_bShowAudioFormatInStatusbar(FALSE)
     , m_bShowLangInStatusbar(FALSE)
     , m_bShowFPSInStatusbar(FALSE)
     , m_bShowABMarksInStatusbar(FALSE)
@@ -96,6 +97,7 @@ void CPPageTheme::DoDataExchange(CDataExchange* pDX)
     DDX_Control(pDX, IDC_COMBO3, m_HoverPosition);
     DDX_Check(pDX, IDC_SHOW_OSD, m_fShowOSD);
     DDX_Check(pDX, IDC_CHECK4, m_bShowVideoInfoInStatusbar);
+    DDX_Check(pDX, IDC_CHECK12, m_bShowAudioFormatInStatusbar);
     DDX_Check(pDX, IDC_CHECK3, m_bShowLangInStatusbar);
     DDX_Check(pDX, IDC_CHECK5, m_bShowFPSInStatusbar);
     DDX_Check(pDX, IDC_CHECK6, m_bShowABMarksInStatusbar);
@@ -220,6 +222,7 @@ BOOL CPPageTheme::OnInitDialog()
 
     m_fShowOSD = s.fShowOSD;
     m_bShowVideoInfoInStatusbar = s.bShowVideoInfoInStatusbar;
+    m_bShowAudioFormatInStatusbar = s.bShowAudioFormatInStatusbar;
     m_bShowLangInStatusbar = s.bShowLangInStatusbar;
     m_bShowFPSInStatusbar = s.bShowFPSInStatusbar;
     m_bShowABMarksInStatusbar = s.bShowABMarksInStatusbar;
@@ -304,6 +307,7 @@ BOOL CPPageTheme::OnApply()
 
     s.fShowOSD = !!m_fShowOSD;
     s.bShowVideoInfoInStatusbar = !!m_bShowVideoInfoInStatusbar;
+    s.bShowAudioFormatInStatusbar = !!m_bShowAudioFormatInStatusbar;
     s.bShowLangInStatusbar = !!m_bShowLangInStatusbar;
     s.bShowFPSInStatusbar = !!m_bShowFPSInStatusbar;
     s.bShowABMarksInStatusbar = !!m_bShowABMarksInStatusbar;

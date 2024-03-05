@@ -57,6 +57,7 @@ private:
     CMPCThemeEdit m_SeekPreviewSizeEdit;
     BOOL m_fShowOSD;
     BOOL m_bShowVideoInfoInStatusbar;
+    BOOL m_bShowAudioFormatInStatusbar;
     BOOL m_bShowLangInStatusbar;
     BOOL m_bShowFPSInStatusbar;
     BOOL m_bShowABMarksInStatusbar;
