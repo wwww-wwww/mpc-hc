@@ -9282,16 +9282,18 @@ bool CMainFrame::GetAudioStreamInfo(int i, bool extractFormatInfo, CStringW& aud
 
         CComQIPtr<IAMStreamSelect> pSS = FindFilter(__uuidof(CAudioSwitcherFilter), m_pGB);
         DWORD cStreams = 0;
-        if (pSS && SUCCEEDED(pSS->Count(&cStreams)) && cStreams > 0 && cStreams > i) {
-            if (extractFormatInfo) {
+        if (pSS) {
+            if (SUCCEEDED(pSS->Count(&cStreams)) && cStreams > 0 && cStreams > i) {
                 AM_MEDIA_TYPE* pmt = nullptr;
                 if (SUCCEEDED(pSS->Info(i, &pmt, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr))) {
                     audioFormat = GetShortAudioNameFromMediaType(pmt);
                     AppendWithDelimiter(audioFormat, GetChannelStrFromMediaType(pmt));
                     DeleteMediaType(pmt);
+                    return true;
                 }
             }
-            return true;
+        } else {
+            // ToDo: use IAMStreamSelect
         }
     }
     return false;
@@ -14133,9 +14135,10 @@ void CMainFrame::OpenSetupWindowTitle(bool reset /*= false*/)
 // Called from GraphThread
 int CMainFrame::SetupAudioStreams()
 {
-
     bool bIsSplitter = false;
     CComQIPtr<IAMStreamSelect> pSS = FindFilter(__uuidof(CAudioSwitcherFilter), m_pGB);
+
+    // ToDo: get IAMStreamSelect interface pointer to AudioSwitcher and Source/Splitter filter during opening, allowing them to be re-used elsewhere
 
     if (!pSS && m_pFSF) { // Try to find the main splitter
         pSS = m_pFSF;
@@ -14808,12 +14811,17 @@ bool CMainFrame::OpenMediaPrivate(CAutoPtr<OpenMediaData> pOMD)
         OpenSetupWindowTitle();
         checkAborted();
 
-        int audstm;
+        int audstm; // offset in audio track menu, AudioSwitcher adds an "Options" entry above the audio tracks
 
         if (m_loadedAudioTrackIndex >= 0 && IsValidAudioStream(m_loadedAudioTrackIndex)) {
-            audstm = m_loadedAudioTrackIndex + 1;
+            audstm = s.fEnableAudioSwitcher ? m_loadedAudioTrackIndex + 1 : m_loadedAudioTrackIndex;
         } else {
             audstm = SetupAudioStreams();
+            if (s.fEnableAudioSwitcher) {
+                m_loadedAudioTrackIndex = audstm > 0 ? audstm - 1 : 0;
+            } else {
+                m_loadedAudioTrackIndex = audstm > 0 ? audstm: 0;
+            }
         }
         if (audstm >= 0) {
             OnPlayAudio(ID_AUDIO_SUBITEM_START + audstm);
