@@ -2037,24 +2037,39 @@ CStringW GetChannelStrFromMediaType(AM_MEDIA_TYPE* pmt) {
     return GetChannelStrFromMediaType(pmt, discard);
 }
 
+CStringW ChannelsToStr(int channels) {
+    CStringW ret;
+    switch (channels) {
+        case 1:
+            return L"mono";
+        case 2:
+            return L"2.0";
+        case 6:
+            return L"5.1";
+        case 7:
+            return L"6.1";
+        case 8:
+            return L"7.1";
+        default:
+            ret.Format(L"%uch", channels);
+            return ret;
+    }
+}
+
 CStringW GetChannelStrFromMediaType(AM_MEDIA_TYPE* pmt, int& channels) {
     if (pmt && pmt->majortype == MEDIATYPE_Audio) {
         if (pmt->formattype == FORMAT_WaveFormatEx) {
-            CStringW ret;
             channels = ((WAVEFORMATEX*)pmt->pbFormat)->nChannels;
-            switch (channels) {
-                case 6:
-                    return L"5.1";
-                case 7:
-                    return L"6.1";
-                case 8:
-                    return L"7.1";
-                default:
-                    ret.Format(L"%uch", channels);
-                    return ret;
-            }
+            return ChannelsToStr(channels);
+        } else if (pmt->formattype == FORMAT_VorbisFormat) {
+            channels = ((VORBISFORMAT*)pmt->pbFormat)->nChannels;
+            return ChannelsToStr(channels);
+        } else if (pmt->formattype == FORMAT_VorbisFormat2) {
+            channels = ((VORBISFORMAT2*)pmt->pbFormat)->Channels;
+            return ChannelsToStr(channels);
         } else {
-            // ToDo: support Vorbis mediatype
+            channels = 2;
+            ASSERT(false);
         }
     }
     ASSERT(false);
