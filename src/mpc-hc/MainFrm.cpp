@@ -14052,7 +14052,40 @@ void CMainFrame::OpenSetupStatusBar()
                 }
             }
         } else {
-            // ToDo: use IAMStreamSelect
+            // ToDo: use a global pointer for this 
+            CComQIPtr<IAMStreamSelect> pSS;
+            BeginEnumFilters(m_pGB, pEF, pBF) {
+                if (pSS = pBF) {
+                    break;
+                }
+            }
+            EndEnumFilters;
+            if (pSS) {
+                DWORD cStreams = 0;
+                if (SUCCEEDED(pSS->Count(&cStreams)) && cStreams > 0) {
+                    int audiostreamcount = 0;
+                    for (DWORD i = 0; i < cStreams; i++) {
+                        DWORD dwFlags, dwGroup;
+                        WCHAR* pName = nullptr;
+                        CComPtr<IUnknown> pObject;
+                        if (SUCCEEDED(pSS->Info(i, nullptr, &dwFlags, nullptr, &dwGroup, nullptr, nullptr, nullptr))) {
+                            if (dwGroup == 1) {
+                                if (m_loadedAudioTrackIndex == audiostreamcount) {
+                                    ASSERT(dwFlags& (AMSTREAMSELECTINFO_ENABLED | AMSTREAMSELECTINFO_EXCLUSIVE));
+                                    LCID lcid = 0;
+                                    AM_MEDIA_TYPE* pmt = nullptr;
+                                    if (SUCCEEDED(pSS->Info(i, &pmt, nullptr, &lcid, nullptr, nullptr, nullptr, nullptr))) {
+                                        nChannels = UpdateSelectedAudioStreamInfo(m_loadedAudioTrackIndex, pmt, lcid);
+                                        DeleteMediaType(pmt);
+                                    }
+                                    break;
+                                }
+                                audiostreamcount++;
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         UINT id = IDB_AUDIOTYPE_NOAUDIO;
