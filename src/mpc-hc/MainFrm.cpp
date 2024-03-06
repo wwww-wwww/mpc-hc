@@ -4170,26 +4170,25 @@ void CMainFrame::OnStreamAudio(UINT nID)
         return;
     }
 
-    CComQIPtr<IAMStreamSelect> pSS = FindFilter(__uuidof(CAudioSwitcherFilter), m_pGB);
-
     DWORD cStreams = 0;
-    if (pSS && SUCCEEDED(pSS->Count(&cStreams)) && cStreams > 1) {
+    if (m_pAudioSwitcherSS && SUCCEEDED(m_pAudioSwitcherSS->Count(&cStreams)) && cStreams > 1) {
         for (DWORD i = 0; i < cStreams; i++) {
             DWORD dwFlags = 0;
             LCID lcid = 0;
             DWORD dwGroup = 0;
-            if (FAILED(pSS->Info(i, nullptr, &dwFlags, &lcid, &dwGroup, nullptr, nullptr, nullptr))) {
+            if (FAILED(m_pAudioSwitcherSS->Info(i, nullptr, &dwFlags, &lcid, &dwGroup, nullptr, nullptr, nullptr))) {
                 return;
             }
             if (dwFlags & (AMSTREAMSELECTINFO_ENABLED | AMSTREAMSELECTINFO_EXCLUSIVE)) {
                 long stream_index = (i + (nID == 0 ? 1 : cStreams - 1)) % cStreams;
-                pSS->Enable(stream_index, AMSTREAMSELECTENABLE_ENABLE);
-                CComHeapPtr<WCHAR> pszName;
-                AM_MEDIA_TYPE* pmt = nullptr;
-                if (SUCCEEDED(pSS->Info(stream_index, &pmt, &dwFlags, &lcid, &dwGroup, &pszName, nullptr, nullptr))) {
-                    m_OSD.DisplayMessage(OSD_TOPLEFT, GetStreamOSDString(CString(pszName), lcid, 1));
-                    UpdateSelectedAudioStreamInfo(i, pmt, lcid);
-                    DeleteMediaType(pmt);
+                if (m_pAudioSwitcherSS->Enable(stream_index, AMSTREAMSELECTENABLE_ENABLE)) {
+                    CComHeapPtr<WCHAR> pszName;
+                    AM_MEDIA_TYPE* pmt = nullptr;
+                    if (SUCCEEDED(m_pAudioSwitcherSS->Info(stream_index, &pmt, &dwFlags, &lcid, &dwGroup, &pszName, nullptr, nullptr))) {
+                        m_OSD.DisplayMessage(OSD_TOPLEFT, GetStreamOSDString(CString(pszName), lcid, 1));
+                        UpdateSelectedAudioStreamInfo(i, pmt, lcid);
+                        DeleteMediaType(pmt);
+                    }
                 }
                 break;
             }
@@ -9328,8 +9327,6 @@ void CMainFrame::OnPlayAudio(UINT nID)
 {
     int i = (int)nID - ID_AUDIO_SUBITEM_START;
 
-    CComQIPtr<IAMStreamSelect> pSS = FindFilter(__uuidof(CAudioSwitcherFilter), m_pGB);
-
     DWORD cStreams = 0;
     if (i != 0) {
         currentAudioLang = _T("");
@@ -9341,7 +9338,7 @@ void CMainFrame::OnPlayAudio(UINT nID)
         if (SUCCEEDED(m_pDVDI->GetAudioLanguage(i, &lcid)) && lcid != 0) {
             GetLocaleString(lcid, LOCALE_SISO639LANGNAME2, currentAudioLang);
         }
-    } else if (pSS && SUCCEEDED(pSS->Count(&cStreams)) && cStreams > 0) {
+    } else if (m_pAudioSwitcherSS && SUCCEEDED(m_pAudioSwitcherSS->Count(&cStreams)) && cStreams > 0) {
         if (i == 0) {
             ShowOptions(CPPageAudioSwitcher::IDD);
         } else {
@@ -9355,10 +9352,10 @@ void CMainFrame::OnPlayAudio(UINT nID)
             if (sidx >= cStreams) { //invalid stream?
                 return;
             }
-            if (SUCCEEDED(pSS->Enable(sidx, AMSTREAMSELECTENABLE_ENABLE))) {
+            if (SUCCEEDED(m_pAudioSwitcherSS->Enable(sidx, AMSTREAMSELECTENABLE_ENABLE))) {
                 LCID lcid = 0;
                 AM_MEDIA_TYPE* pmt = nullptr;
-                if (SUCCEEDED(pSS->Info(sidx, &pmt, nullptr, &lcid, nullptr, nullptr, nullptr, nullptr))) {
+                if (SUCCEEDED(m_pAudioSwitcherSS->Info(sidx, &pmt, nullptr, &lcid, nullptr, nullptr, nullptr, nullptr))) {
                     UpdateSelectedAudioStreamInfo(sidx, pmt, lcid);
                     DeleteMediaType(pmt);
                 } else {
@@ -12943,27 +12940,47 @@ void CMainFrame::OpenFile(OpenFileData* pOFD)
 
             // Check for supported interfaces
             BeginEnumFilters(m_pGB, pEF, pBF);
+            CLSID clsid = CLSID_NULL;
+            pBF->GetClassID(&clsid);
             if (!m_pFSF) {
                 m_pFSF = pBF;
                 if (m_pFSF) { // IFileSourceFilter
                     if (!m_pAMNS) {
                         m_pAMNS = pBF;
                     }
+                    if (!m_pSplitterSS) {
+                        m_pSplitterSS = pBF;
+                    }
                     if (m_bUseSeekPreview) {
-                        CLSID clsid;
-                        if (S_OK == pBF->GetClassID(&clsid)) {
-                            if (clsid == CLSID_StillVideo || clsid == CLSID_MPCImageSource) {
-                                m_bUseSeekPreview = false;
-                            } else if (clsid == __uuidof(CRARFileSource)) {
-                                WCHAR* pFN = nullptr;
-                                AM_MEDIA_TYPE mt;
-                                if (SUCCEEDED(m_pFSF->GetCurFile(&pFN, &mt)) && pFN && *pFN) {
-                                    isRFS = true;
-                                    entryRFS = pFN;
-                                    CoTaskMemFree(pFN);
-                                }
+                        if (clsid == CLSID_StillVideo || clsid == CLSID_MPCImageSource) {
+                            m_bUseSeekPreview = false;
+                        } else if (clsid == __uuidof(CRARFileSource)) {
+                            WCHAR* pFN = nullptr;
+                            AM_MEDIA_TYPE mt;
+                            if (SUCCEEDED(m_pFSF->GetCurFile(&pFN, &mt)) && pFN && *pFN) {
+                                isRFS = true;
+                                entryRFS = pFN;
+                                CoTaskMemFree(pFN);
                             }
                         }
+                    }
+                }
+            }
+            if (clsid == __uuidof(CAudioSwitcherFilter)) {
+                m_pAudioSwitcherSS = pBF;
+            } else {
+                if (clsid == GUID_LAVSplitterSource || clsid == GUID_LAVSplitter) { // ToDo: add Haali Splitter
+                    m_pSplitterSS = pBF;
+                } else {
+                    if (clsid == CLSID_VSFilter || clsid == CLSID_XySubFilter) {
+                        m_pSubSS = pBF;
+                    } else {
+#if DEBUG
+                        if (!m_pSplitterSS && clsid != CLSID_MPCBEAudioRenderer) {
+                            CComQIPtr<IAMStreamSelect> pTest = pBF;
+                            ASSERT(!pTest); // To detect others that implement IAMStreamSelect
+                        }
+#endif
                     }
                 }
             }
@@ -12982,10 +12999,9 @@ void CMainFrame::OpenFile(OpenFileData* pOFD)
                 bIsVideo = true;
             }
             EndEnumFilters;
-            if (!m_pFSF) {
-                m_pFSF = m_pGB;
-                ASSERT(FALSE);
-            }
+
+            ASSERT(m_pFSF);
+            ASSERT(m_pAudioSwitcherSS || !s.fEnableAudioSwitcher);
 
             if (!bIsVideo) {
                 m_bUseSeekPreview = false;
@@ -14040,41 +14056,32 @@ void CMainFrame::OpenSetupStatusBar()
         EndEnumFilters;
 
         int nChannels = 0;
-        CComQIPtr<IAMStreamSelect> pSS = FindFilter(__uuidof(CAudioSwitcherFilter), m_pGB);
-        if (pSS) {
+        if (m_pAudioSwitcherSS) {
             DWORD cStreams = 0;
-            if (SUCCEEDED(pSS->Count(&cStreams)) && cStreams > 0 && cStreams > m_loadedAudioTrackIndex) {
+            if (SUCCEEDED(m_pAudioSwitcherSS->Count(&cStreams)) && cStreams > 0 && cStreams > m_loadedAudioTrackIndex) {
                 LCID lcid = 0;
                 AM_MEDIA_TYPE* pmt = nullptr;
-                if (SUCCEEDED(pSS->Info(m_loadedAudioTrackIndex, &pmt, nullptr, &lcid, nullptr, nullptr, nullptr, nullptr))) {
+                if (SUCCEEDED(m_pAudioSwitcherSS->Info(m_loadedAudioTrackIndex, &pmt, nullptr, &lcid, nullptr, nullptr, nullptr, nullptr))) {
                     nChannels = UpdateSelectedAudioStreamInfo(m_loadedAudioTrackIndex, pmt, lcid);
                     DeleteMediaType(pmt);
                 }
             }
         } else {
-            // ToDo: use a global pointer for this 
-            CComQIPtr<IAMStreamSelect> pSS;
-            BeginEnumFilters(m_pGB, pEF, pBF) {
-                if (pSS = pBF) {
-                    break;
-                }
-            }
-            EndEnumFilters;
-            if (pSS) {
+            if (m_pSplitterSS) {
                 DWORD cStreams = 0;
-                if (SUCCEEDED(pSS->Count(&cStreams)) && cStreams > 0) {
+                if (SUCCEEDED(m_pSplitterSS->Count(&cStreams)) && cStreams > 0) {
                     int audiostreamcount = 0;
                     for (DWORD i = 0; i < cStreams; i++) {
                         DWORD dwFlags, dwGroup;
                         WCHAR* pName = nullptr;
                         CComPtr<IUnknown> pObject;
-                        if (SUCCEEDED(pSS->Info(i, nullptr, &dwFlags, nullptr, &dwGroup, nullptr, nullptr, nullptr))) {
+                        if (SUCCEEDED(m_pSplitterSS->Info(i, nullptr, &dwFlags, nullptr, &dwGroup, nullptr, nullptr, nullptr))) {
                             if (dwGroup == 1) {
                                 if (m_loadedAudioTrackIndex == audiostreamcount) {
                                     ASSERT(dwFlags& (AMSTREAMSELECTINFO_ENABLED | AMSTREAMSELECTINFO_EXCLUSIVE));
                                     LCID lcid = 0;
                                     AM_MEDIA_TYPE* pmt = nullptr;
-                                    if (SUCCEEDED(pSS->Info(i, &pmt, nullptr, &lcid, nullptr, nullptr, nullptr, nullptr))) {
+                                    if (SUCCEEDED(m_pSplitterSS->Info(i, &pmt, nullptr, &lcid, nullptr, nullptr, nullptr, nullptr))) {
                                         nChannels = UpdateSelectedAudioStreamInfo(m_loadedAudioTrackIndex, pmt, lcid);
                                         DeleteMediaType(pmt);
                                     }
@@ -14159,29 +14166,11 @@ void CMainFrame::OpenSetupWindowTitle(bool reset /*= false*/)
 int CMainFrame::SetupAudioStreams()
 {
     bool bIsSplitter = false;
-    CComQIPtr<IAMStreamSelect> pSS = FindFilter(__uuidof(CAudioSwitcherFilter), m_pGB);
     m_audioTrackCount = 0;
 
-    // ToDo: get IAMStreamSelect interface pointer to AudioSwitcher and Source/Splitter filter during opening, allowing them to be re-used elsewhere
-
-    if (!pSS && m_pFSF) { // Try to find the main splitter
-        pSS = m_pFSF;
-        if (!pSS) { // If the source filter isn't a splitter
-            CComQIPtr<IBaseFilter> pBF = m_pFSF;
-            if (pBF) { // try to get the main splitter
-                PIN_DIRECTION pinDir;
-                BeginEnumPins(pBF, pEP, pPin) {
-                    CComPtr<IPin> pPinConnectedTo;
-                    if (SUCCEEDED(pPin->QueryDirection(&pinDir)) && pinDir == PINDIR_OUTPUT
-                            && SUCCEEDED(pPin->ConnectedTo(&pPinConnectedTo)) && pPinConnectedTo) {
-                        pSS = GetFilterFromPin(pPinConnectedTo);
-                        break;
-                    }
-                }
-                EndEnumPins
-            }
-        }
-        bIsSplitter = true;
+    CComQIPtr<IAMStreamSelect> pSS = m_pAudioSwitcherSS;
+    if (!pSS) {
+        pSS = m_pSplitterSS;
     }
 
     DWORD cStreams = 0;
@@ -14997,6 +14986,9 @@ void CMainFrame::CloseMediaPrivate()
     for (auto& pAMMC : m_pAMMC) {
         pAMMC.Release();
     }
+    m_pAudioSwitcherSS.Release();
+    m_pSplitterSS.Release();
+    m_pSubSS.Release();
 
     if (m_pGB) {
         m_pGB->RemoveFromROT();
@@ -15523,8 +15515,6 @@ void CMainFrame::SetupAudioSubMenu()
 
     UINT id = ID_AUDIO_SUBITEM_START;
 
-    CComQIPtr<IAMStreamSelect> pSS = FindFilter(__uuidof(CAudioSwitcherFilter), m_pGB);
-
     DWORD cStreams = 0;
 
     if (GetPlaybackMode() == PM_DVD) {
@@ -15601,7 +15591,7 @@ void CMainFrame::SetupAudioSubMenu()
         }
     }
     // If available use the audio switcher for everything but DVDs
-    else if (pSS && SUCCEEDED(pSS->Count(&cStreams)) && cStreams > 0) {
+    else if (m_pAudioSwitcherSS && SUCCEEDED(m_pAudioSwitcherSS->Count(&cStreams)) && cStreams > 0) {
         VERIFY(subMenu.AppendMenu(MF_STRING | MF_ENABLED, id++, ResStr(IDS_SUBTITLES_OPTIONS)));
         VERIFY(subMenu.AppendMenu(MF_SEPARATOR | MF_ENABLED));
 
@@ -15611,7 +15601,7 @@ void CMainFrame::SetupAudioSubMenu()
             DWORD dwFlags;
             WCHAR* pName = nullptr;
             LCID lcid = 0;
-            if (FAILED(pSS->Info(i, nullptr, &dwFlags, &lcid, nullptr, &pName, nullptr, nullptr))) {
+            if (FAILED(m_pAudioSwitcherSS->Info(i, nullptr, &dwFlags, &lcid, nullptr, &pName, nullptr, nullptr))) {
                 break;
             }
             if (dwFlags) {
@@ -17096,25 +17086,24 @@ void CMainFrame::SetSubtitleTrackIdx(int index)
 void CMainFrame::SetAudioTrackIdx(int index)
 {
     if (GetLoadState() == MLS::LOADED) {
-        CComQIPtr<IAMStreamSelect> pSS = FindFilter(__uuidof(CAudioSwitcherFilter), m_pGB);
-
         DWORD cStreams = 0;
         DWORD dwFlags = AMSTREAMSELECTENABLE_ENABLE;
-        if (pSS && SUCCEEDED(pSS->Count(&cStreams))) {
+        if (m_pAudioSwitcherSS && SUCCEEDED(m_pAudioSwitcherSS->Count(&cStreams))) {
             if ((index >= 0) && (index < ((int)cStreams))) {
-                pSS->Enable(index, dwFlags);
+                m_pAudioSwitcherSS->Enable(index, dwFlags);
 
                 m_loadedAudioTrackIndex = index;
                 LCID lcid = 0;
                 AM_MEDIA_TYPE* pmt = nullptr;
                 CComHeapPtr<WCHAR> pszName;
-                if (SUCCEEDED(pSS->Info(index, &pmt, &dwFlags, &lcid, nullptr, &pszName, nullptr, nullptr))) {
+                if (SUCCEEDED(m_pAudioSwitcherSS->Info(index, &pmt, &dwFlags, &lcid, nullptr, &pszName, nullptr, nullptr))) {
                     m_OSD.DisplayMessage(OSD_TOPLEFT, GetStreamOSDString(CString(pszName), lcid, 1));
                     UpdateSelectedAudioStreamInfo(index, pmt, lcid);
                     DeleteMediaType(pmt);
                 }
             }
         }
+        // ToDo: use m_pSplitterSS
     }
 }
 
@@ -17124,14 +17113,12 @@ int CMainFrame::GetCurrentAudioTrackIdx(CString *pstrName)
         pstrName->Empty();
 
     if (GetLoadState() == MLS::LOADED && GetPlaybackMode() == PM_FILE && m_pGB) {
-        CComQIPtr<IAMStreamSelect> pSS = FindFilter(__uuidof(CAudioSwitcherFilter), m_pGB);
-
         DWORD cStreams = 0;
-        if (pSS && SUCCEEDED(pSS->Count(&cStreams))) {
+        if (m_pAudioSwitcherSS && SUCCEEDED(m_pAudioSwitcherSS->Count(&cStreams))) {
             for (int i = 0; i < (int)cStreams; i++) {
                 DWORD dwFlags = 0;
                 CComHeapPtr<WCHAR> pName;
-                if (SUCCEEDED(pSS->Info(i, nullptr, &dwFlags, nullptr, nullptr, &pName, nullptr, nullptr))) {
+                if (SUCCEEDED(m_pAudioSwitcherSS->Info(i, nullptr, &dwFlags, nullptr, nullptr, &pName, nullptr, nullptr))) {
                     if (dwFlags & AMSTREAMSELECTINFO_ENABLED) {
                         if(pstrName)
                             *pstrName = pName;
@@ -17143,7 +17130,7 @@ int CMainFrame::GetCurrentAudioTrackIdx(CString *pstrName)
                 }
             }
         }
-        // ToDo: use IAMStreamSelect
+        // ToDo: use m_pSplitterSS
     }
     return -1;
 }
@@ -19413,10 +19400,8 @@ void CMainFrame::SendAudioTracksToApi()
     CStringW strAudios;
 
     if (GetLoadState() == MLS::LOADED) {
-        CComQIPtr<IAMStreamSelect> pSS = FindFilter(__uuidof(CAudioSwitcherFilter), m_pGB);
-
         DWORD cStreams = 0;
-        if (pSS && SUCCEEDED(pSS->Count(&cStreams))) {
+        if (m_pAudioSwitcherSS && SUCCEEDED(m_pAudioSwitcherSS->Count(&cStreams))) {
             int currentStream = -1;
             for (int i = 0; i < (int)cStreams; i++) {
                 AM_MEDIA_TYPE* pmt = nullptr;
@@ -19424,7 +19409,7 @@ void CMainFrame::SendAudioTracksToApi()
                 LCID lcid = 0;
                 DWORD dwGroup = 0;
                 WCHAR* pszName = nullptr;
-                if (FAILED(pSS->Info(i, &pmt, &dwFlags, &lcid, &dwGroup, &pszName, nullptr, nullptr))) {
+                if (FAILED(m_pAudioSwitcherSS->Info(i, &pmt, &dwFlags, &lcid, &dwGroup, &pszName, nullptr, nullptr))) {
                     return;
                 }
                 if (dwFlags == AMSTREAMSELECTINFO_EXCLUSIVE) {

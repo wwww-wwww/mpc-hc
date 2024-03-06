@@ -263,6 +263,9 @@ private:
     CComQIPtr<IAMOpenProgress> m_pAMOP;
     CComQIPtr<IAMMediaContent, &IID_IAMMediaContent> m_pAMMC[2];
     CComQIPtr<IAMNetworkStatus, &IID_IAMNetworkStatus> m_pAMNS;
+    CComQIPtr<IAMStreamSelect> m_pAudioSwitcherSS;
+    CComQIPtr<IAMStreamSelect> m_pSplitterSS;
+    CComQIPtr<IAMStreamSelect> m_pSubSS;
     // SmarkSeek
     CComPtr<IGraphBuilder2>         m_pGB_preview;
     CComQIPtr<IMediaControl>        m_pMC_preview;
