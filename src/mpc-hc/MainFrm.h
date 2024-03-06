@@ -266,6 +266,7 @@ private:
     CComQIPtr<IAMStreamSelect> m_pAudioSwitcherSS;
     CComQIPtr<IAMStreamSelect> m_pSplitterSS;
     CComQIPtr<IAMStreamSelect> m_pSubSS;
+    CComQIPtr<IAMStreamSelect> m_pOtherSS[2];
     // SmarkSeek
     CComPtr<IGraphBuilder2>         m_pGB_preview;
     CComQIPtr<IMediaControl>        m_pMC_preview;

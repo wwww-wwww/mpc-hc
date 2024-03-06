@@ -10447,18 +10447,13 @@ void CMainFrame::AddFavorite(bool fDisplayMessage, bool fShowDialog)
         bool is_BD = false;
         CString fn = m_wndPlaylistBar.GetCurFileNameTitle();
         if (fn.IsEmpty()) {
-            BeginEnumFilters(m_pGB, pEF, pBF) {
-                CComQIPtr<IFileSourceFilter> pFSF = pBF;
-                if (pFSF) {
-                    CComHeapPtr<OLECHAR> pFN;
-                    AM_MEDIA_TYPE mt;
-                    if (SUCCEEDED(pFSF->GetCurFile(&pFN, &mt)) && pFN && *pFN) {
-                        fn = CStringW(pFN);
-                    }
-                    break;
+            if (m_pFSF) {
+                CComHeapPtr<OLECHAR> pFN;
+                AM_MEDIA_TYPE mt;
+                if (SUCCEEDED(m_pFSF->GetCurFile(&pFN, &mt)) && pFN && *pFN) {
+                    fn = CStringW(pFN);
                 }
             }
-            EndEnumFilters;
             if (fn.IsEmpty()) {
                 return;
             }
@@ -11632,11 +11627,11 @@ void CMainFrame::AutoChangeMonitorMode()
             BeginEnumPins(pBF, pEP, pPin) {
                 CMediaTypeEx mt;
                 PIN_DIRECTION dir;
-                if (SUCCEEDED(pPin->QueryDirection(&dir)) && dir == PINDIR_OUTPUT
-                        && SUCCEEDED(pPin->ConnectionMediaType(&mt))) {
-                    ExtractAvgTimePerFrame(&mt, m_rtTimePerFrame);
-                    if (m_rtTimePerFrame == 0) {
-                        m_rtTimePerFrame = 1;
+                if (SUCCEEDED(pPin->QueryDirection(&dir)) && dir == PINDIR_OUTPUT && SUCCEEDED(pPin->ConnectionMediaType(&mt))) {
+                    if (ExtractAvgTimePerFrame(&mt, m_rtTimePerFrame)) {
+                        if (m_rtTimePerFrame == 0) {
+                            m_rtTimePerFrame = 1;
+                        }
                     }
                 }
             }
@@ -12940,11 +12935,13 @@ void CMainFrame::OpenFile(OpenFileData* pOFD)
 
             // Check for supported interfaces
             BeginEnumFilters(m_pGB, pEF, pBF);
+            bool fsf = false;
             CLSID clsid = CLSID_NULL;
             pBF->GetClassID(&clsid);
             if (!m_pFSF) {
                 m_pFSF = pBF;
                 if (m_pFSF) { // IFileSourceFilter
+                    fsf = true;
                     if (!m_pAMNS) {
                         m_pAMNS = pBF;
                     }
@@ -12966,21 +12963,28 @@ void CMainFrame::OpenFile(OpenFileData* pOFD)
                     }
                 }
             }
-            if (clsid == __uuidof(CAudioSwitcherFilter)) {
-                m_pAudioSwitcherSS = pBF;
-            } else {
-                if (clsid == GUID_LAVSplitterSource || clsid == GUID_LAVSplitter) { // ToDo: add Haali Splitter
-                    m_pSplitterSS = pBF;
+            if (!fsf) { // Find IAMStreamSelect filters
+                if (clsid == __uuidof(CAudioSwitcherFilter)) {
+                    m_pAudioSwitcherSS = pBF;
                 } else {
-                    if (clsid == CLSID_VSFilter || clsid == CLSID_XySubFilter) {
-                        m_pSubSS = pBF;
+                    if (clsid == GUID_LAVSplitter) {
+                        m_pSplitterSS = pBF;
                     } else {
-#if DEBUG
-                        if (!m_pSplitterSS && clsid != CLSID_MPCBEAudioRenderer) {
-                            CComQIPtr<IAMStreamSelect> pTest = pBF;
-                            ASSERT(!pTest); // To detect others that implement IAMStreamSelect
+                        if (clsid == CLSID_VSFilter || clsid == CLSID_XySubFilter) {
+                            m_pSubSS = pBF;
+                        } else {
+                            if (clsid != CLSID_MPCBEAudioRenderer) {
+                                if (CComQIPtr<IAMStreamSelect> pTest = pBF) {
+                                    if (!m_pOtherSS[0]) {
+                                        m_pOtherSS[0] = pBF;
+                                    } else if (!m_pOtherSS[1]) {
+                                        m_pOtherSS[1] = pBF;
+                                    } else {
+                                        ASSERT(false);
+                                    }
+                                }
+                            }
                         }
-#endif
                     }
                 }
             }
@@ -13463,12 +13467,42 @@ void CMainFrame::OpenDVD(OpenDVDData* pODD)
         }
     }
 
-    BeginEnumFilters(m_pGB, pEF, pBF) {
-        if ((m_pDVDC = pBF) && (m_pDVDI = pBF)) {
-            break;
+    // Check for supported interfaces
+    BeginEnumFilters(m_pGB, pEF, pBF)
+        CLSID clsid = CLSID_NULL;
+        pBF->GetClassID(&clsid);
+        // DVD stuff
+        if (!m_pDVDC) {
+            m_pDVDC = pBF;
         }
-    }
+        if (!m_pDVDI) {
+            m_pDVDI = pBF;
+        }
+        // IAMStreamSelect filters
+        if (clsid == __uuidof(CAudioSwitcherFilter)) {
+            m_pAudioSwitcherSS = pBF;
+        } else {
+            if (clsid == CLSID_VSFilter || clsid == CLSID_XySubFilter) {
+                m_pSubSS = pBF;
+            } else {
+                if (clsid != CLSID_MPCBEAudioRenderer) {
+                    if (CComQIPtr<IAMStreamSelect> pTest = pBF) {
+                        if (!m_pOtherSS[0]) {
+                            m_pOtherSS[0] = pBF;
+                        } else if (!m_pOtherSS[1]) {
+                            m_pOtherSS[1] = pBF;
+                        } else {
+                            ASSERT(false);
+                        }
+                    }
+                }
+            }
+        }
     EndEnumFilters;
+
+    ASSERT(m_pDVDC);
+    ASSERT(m_pDVDI);
+    ASSERT(m_pAudioSwitcherSS || !s.fEnableAudioSwitcher);
 
     if (m_bUseSeekPreview) {
         BeginEnumFilters(m_pGB_preview, pEF, pBF) {
@@ -14293,9 +14327,9 @@ int CMainFrame::SetupAudioStreams()
                 if (dwFlags & (AMSTREAMSELECTINFO_ENABLED | AMSTREAMSELECTINFO_EXCLUSIVE)) {
                     m_loadedAudioTrackIndex = 0;
                     m_audioTrackCount = 1;
+                    return -1; // no need to select a specific track
                 }
             }
-            return -1; // no need to select a specific track
         }        
     }
 
@@ -14993,6 +15027,9 @@ void CMainFrame::CloseMediaPrivate()
     m_pAudioSwitcherSS.Release();
     m_pSplitterSS.Release();
     m_pSubSS.Release();
+    for (auto& pSS : m_pOtherSS) {
+        pSS.Release();
+    }
 
     if (m_pGB) {
         m_pGB->RemoveFromROT();
@@ -16254,7 +16291,7 @@ void CMainFrame::OnStreamSelect(bool bForward, DWORD dwSelGroup)
             if (dwFlags) {
                 currentSel = streams.size();
             }
-            streams.emplace_back(i, streams.size(), lcid, CString(pszName));
+            streams.emplace_back(i, (int)streams.size(), lcid, CString(pszName));
         }
 
         size_t count = streams.size();
