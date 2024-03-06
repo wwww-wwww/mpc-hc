@@ -2280,8 +2280,10 @@ void CMainFrame::OnTimer(UINT_PTR nIDEvent)
                     CString lang;
                     if (AATR.Language) {
                         GetLocaleString(AATR.Language, LOCALE_SENGLANGUAGE, lang);
+                        currentAudioLang = lang;
                     } else {
                         lang.Format(IDS_AG_UNKNOWN, ulCurrent + 1);
+                        currentAudioLang.Empty();
                     }
 
                     switch (AATR.LanguageExtension) {
@@ -4281,8 +4283,10 @@ void CMainFrame::OnDvdAudio(UINT nID)
                 CString strMessage;
                 if (AATR.Language) {
                     GetLocaleString(AATR.Language, LOCALE_SENGLANGUAGE, lang);
+                    currentAudioLang = lang;
                 } else {
                     lang.Format(IDS_AG_UNKNOWN, nNextStream + 1);
+                    currentAudioLang.Empty();
                 }
 
                 CString format = GetDVDAudioFormatName(AATR);
@@ -15661,16 +15665,11 @@ void CMainFrame::SetupAudioSubMenu()
         for (long i = 0; i < (long)cStreams; i++) {
             DWORD dwFlags;
             WCHAR* pName = nullptr;
-            LCID lcid = 0;
-            if (FAILED(m_pAudioSwitcherSS->Info(i, nullptr, &dwFlags, &lcid, nullptr, &pName, nullptr, nullptr))) {
+            if (FAILED(m_pAudioSwitcherSS->Info(i, nullptr, &dwFlags, nullptr, nullptr, &pName, nullptr, nullptr))) {
                 break;
             }
             if (dwFlags) {
                 iSel = i;
-                if (lcid) {
-                    // ToDo: lang info should be gathered elsewhere
-                    GetLocaleString(lcid, LOCALE_SISO639LANGNAME2, currentAudioLang);
-                }
             }
 
             CString name(pName);
