@@ -339,8 +339,7 @@ private:
     CString m_statusbarVideoSize;
 
     SubtitleInput* GetSubtitleInput(int& i, bool bIsOffset = false);
-    bool GetAudioStreamInfo(int i, bool extractFormatInfo, CStringW& audioFormat, int& channels);
-    bool IsValidAudioStream(int i);
+    int UpdateSelectedAudioStreamInfo(int index, AM_MEDIA_TYPE* pmt, LCID lcid);
     bool IsValidSubtitleStream(int i);
     int GetSelectedSubtitleTrackIndex();
 
@@ -555,6 +554,7 @@ protected:
     DWORD       m_iDVDTitle;
     int         m_loadedAudioTrackIndex = -1;
     int         m_loadedSubtitleTrackIndex = -1;
+    int         m_audioTrackCount = 0;
 
     double m_dSpeedRate;
     double m_ZoomX, m_ZoomY, m_PosX, m_PosY;

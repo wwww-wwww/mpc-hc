@@ -2069,21 +2069,21 @@ CStringW GetShortAudioNameFromMediaType(AM_MEDIA_TYPE* pmt) {
     if (pmt->subtype == MEDIASUBTYPE_AAC || pmt->subtype == MEDIASUBTYPE_LATM_AAC || pmt->subtype == MEDIASUBTYPE_AAC_ADTS || pmt->subtype == MEDIASUBTYPE_MPEG_ADTS_AAC
         || pmt->subtype == MEDIASUBTYPE_MPEG_HEAAC || pmt->subtype == MEDIASUBTYPE_MP4A || pmt->subtype == MEDIASUBTYPE_mp4a) {
         return L"AAC";
-    } else if (pmt->subtype == MEDIASUBTYPE_DTS_HD) {
-        return L"DTS-HD";
-    } else if (pmt->subtype == MEDIASUBTYPE_MPEG_LOAS) {
-        return L"LOAS";
+    } else if (pmt->subtype == MEDIASUBTYPE_DOLBY_AC3 || pmt->subtype == MEDIASUBTYPE_WAVE_DOLBY_AC3 || pmt->subtype == MEDIASUBTYPE_DOLBY_AC3_SPDIF
+        || pmt->subtype == MEDIASUBTYPE_RAW_SPORT || pmt->subtype == MEDIASUBTYPE_SPDIF_TAG_241h || pmt->subtype == MEDIASUBTYPE_DVM) {
+        return L"AC3";
     } else if (pmt->subtype == MEDIASUBTYPE_DOLBY_DDPLUS) {
         return L"E-AC3";
-    } else if (pmt->subtype == MEDIASUBTYPE_DOLBY_AC3 || pmt->subtype == MEDIASUBTYPE_DOLBY_AC3_SPDIF || pmt->subtype == MEDIASUBTYPE_DVM
-        || pmt->subtype == MEDIASUBTYPE_RAW_SPORT || pmt->subtype == MEDIASUBTYPE_SPDIF_TAG_241h || pmt->subtype == MEDIASUBTYPE_WAVE_DOLBY_AC3) {
-        return L"AC3";
-    } else if (pmt->subtype == MEDIASUBTYPE_IEEE_FLOAT) {
-        return L"PCM";
     } else if (pmt->subtype == MEDIASUBTYPE_DTS || pmt->subtype == MEDIASUBTYPE_DTS2 || pmt->subtype == MEDIASUBTYPE_WAVE_DTS) {
         return L"DTS";
+    } else if (pmt->subtype == MEDIASUBTYPE_DTS_HD) {
+        return L"DTS-HD";
     } else if (pmt->subtype == MEDIASUBTYPE_DVD_LPCM_AUDIO) {
         return L"LPCM";
+    } else if (pmt->subtype == MEDIASUBTYPE_DOLBY_TRUEHD) {
+        return L"TrueHD";
+    } else if (pmt->subtype == MEDIASUBTYPE_IEEE_FLOAT) {
+        return L"PCM";
     } else if (pmt->subtype == MEDIASUBTYPE_MPEG1AudioPayload || pmt->subtype == MEDIASUBTYPE_MPEG1Packet || pmt->subtype == MEDIASUBTYPE_MPEG1Payload) { //are these all actually possible?
         return L"MP1";
     } else if (pmt->subtype == MEDIASUBTYPE_MPEG2_AUDIO) {
@@ -2102,6 +2102,8 @@ CStringW GetShortAudioNameFromMediaType(AM_MEDIA_TYPE* pmt) {
         return L"Vorbis";
     } else if (pmt->subtype == MEDIASUBTYPE_OPUS || pmt->subtype == MEDIASUBTYPE_OPUS_OLD) {
         return L"OPUS";
+    } else if (pmt->subtype == MEDIASUBTYPE_MPEG_LOAS) {
+        return L"LOAS";
     }
 
     CStringW fourCC;
@@ -2109,5 +2111,5 @@ CStringW GetShortAudioNameFromMediaType(AM_MEDIA_TYPE* pmt) {
         return fourCC;
     }
 
-    return L"";
+    return L"UNKN";
 }

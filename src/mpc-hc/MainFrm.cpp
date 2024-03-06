@@ -4183,13 +4183,11 @@ void CMainFrame::OnStreamAudio(UINT nID)
                 long stream_index = (i + (nID == 0 ? 1 : cStreams - 1)) % cStreams;
                 pSS->Enable(stream_index, AMSTREAMSELECTENABLE_ENABLE);
                 CComHeapPtr<WCHAR> pszName;
-                if (SUCCEEDED(pSS->Info(stream_index, nullptr, &dwFlags, &lcid, &dwGroup, &pszName, nullptr, nullptr))) {
+                AM_MEDIA_TYPE* pmt = nullptr;
+                if (SUCCEEDED(pSS->Info(stream_index, &pmt, &dwFlags, &lcid, &dwGroup, &pszName, nullptr, nullptr))) {
                     m_OSD.DisplayMessage(OSD_TOPLEFT, GetStreamOSDString(CString(pszName), lcid, 1));
-                    if (lcid) {
-                        GetLocaleString(lcid, LOCALE_SISO639LANGNAME2, currentAudioLang);
-                    } else {
-                        currentAudioLang.Empty();
-                    }
+                    UpdateSelectedAudioStreamInfo(i, pmt, lcid);
+                    DeleteMediaType(pmt);
                 }
                 break;
             }
@@ -9263,46 +9261,24 @@ void CMainFrame::OnPlayShadersPresets(UINT nID)
     }
 }
 
-bool CMainFrame::GetAudioStreamInfo(int i, bool extractFormatInfo, CStringW& audioFormat, int& channels) {
-    if (GetPlaybackMode() == PM_DVD) {
-        if (extractFormatInfo) {
-            return false; //not implemented, since we load it when it's ready
-        }
-        ULONG numLangs;
-        m_pDVDI->GetDVDTextNumberOfLanguages(&numLangs);
-        if (i < numLangs) {
-            return true;
-        }
+int CMainFrame::UpdateSelectedAudioStreamInfo(int index, AM_MEDIA_TYPE* pmt, LCID lcid) {
+    int nChannels = 0;
+    if (index >= 0) {
+        m_loadedAudioTrackIndex = index;
+        AfxGetAppSettings().MRU.UpdateCurrentAudioTrack(index);
     }
-    else {
-        if (extractFormatInfo) {
-            audioFormat = L"";
-            channels = 0;
-        }
-
-        CComQIPtr<IAMStreamSelect> pSS = FindFilter(__uuidof(CAudioSwitcherFilter), m_pGB);
-        DWORD cStreams = 0;
-        if (pSS) {
-            if (SUCCEEDED(pSS->Count(&cStreams)) && cStreams > 0 && cStreams > i) {
-                AM_MEDIA_TYPE* pmt = nullptr;
-                if (SUCCEEDED(pSS->Info(i, &pmt, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr))) {
-                    audioFormat = GetShortAudioNameFromMediaType(pmt);
-                    AppendWithDelimiter(audioFormat, GetChannelStrFromMediaType(pmt));
-                    DeleteMediaType(pmt);
-                    return true;
-                }
-            }
-        } else {
-            // ToDo: use IAMStreamSelect
-        }
+    if (pmt) {
+        m_statusbarAudioFormat = GetShortAudioNameFromMediaType(pmt);
+        AppendWithDelimiter(m_statusbarAudioFormat, GetChannelStrFromMediaType(pmt, nChannels));
+    } else {
+        m_statusbarAudioFormat.Empty();
     }
-    return false;
-}
-
-bool CMainFrame::IsValidAudioStream(int i) {
-    CStringW discard;
-    int discardc;
-    return GetAudioStreamInfo(i, false, discard, discardc);
+    if (lcid > 0) {
+        GetLocaleString(lcid, LOCALE_SISO639LANGNAME2, currentAudioLang);
+    } else {
+        currentAudioLang.Empty();
+    }
+    return nChannels;
 }
 
 int CMainFrame::GetSelectedSubtitleTrackIndex() {
@@ -9379,10 +9355,13 @@ void CMainFrame::OnPlayAudio(UINT nID)
             }
             if (SUCCEEDED(pSS->Enable(sidx, AMSTREAMSELECTENABLE_ENABLE))) {
                 LCID lcid = 0;
-                if (SUCCEEDED(pSS->Info(sidx, nullptr, nullptr, &lcid, nullptr, nullptr, nullptr, nullptr)) && lcid != 0) {
-                    GetLocaleString(lcid, LOCALE_SISO639LANGNAME2, currentAudioLang);
+                AM_MEDIA_TYPE* pmt = nullptr;
+                if (SUCCEEDED(pSS->Info(sidx, &pmt, nullptr, &lcid, nullptr, nullptr, nullptr, nullptr))) {
+                    UpdateSelectedAudioStreamInfo(sidx, pmt, lcid);
+                    DeleteMediaType(pmt);
+                } else {
+                    UpdateSelectedAudioStreamInfo(sidx, nullptr, -1);
                 }
-                AfxGetAppSettings().MRU.UpdateCurrentAudioTrack(sidx);
             }
         }
     } else if (GetPlaybackMode() == PM_FILE) {
@@ -14016,10 +13995,6 @@ void CMainFrame::OpenSetupStatusBar()
 {
     m_wndStatusBar.ShowTimer(true);
 
-    int nChannels;
-    bool loadedAudioInfo;
-    loadedAudioInfo = GetAudioStreamInfo(m_loadedAudioTrackIndex, true, m_statusbarAudioFormat, nChannels);
-
     if (!m_fCustomGraph) {
         // Find video output pin of the source filter or splitter
         BeginEnumFilters(m_pGB, pEF, pBF) {
@@ -14062,15 +14037,28 @@ void CMainFrame::OpenSetupStatusBar()
         }
         EndEnumFilters;
 
-        UINT id = IDB_AUDIOTYPE_NOAUDIO;
-        if (loadedAudioInfo) {
-            if (nChannels >= 2) {
-                id = IDB_AUDIOTYPE_STEREO;
-            } else {
-                id = IDB_AUDIOTYPE_MONO;
+        int nChannels = 0;
+        CComQIPtr<IAMStreamSelect> pSS = FindFilter(__uuidof(CAudioSwitcherFilter), m_pGB);
+        if (pSS) {
+            DWORD cStreams = 0;
+            if (SUCCEEDED(pSS->Count(&cStreams)) && cStreams > 0 && cStreams > m_loadedAudioTrackIndex) {
+                LCID lcid = 0;
+                AM_MEDIA_TYPE* pmt = nullptr;
+                if (SUCCEEDED(pSS->Info(m_loadedAudioTrackIndex, &pmt, nullptr, &lcid, nullptr, nullptr, nullptr, nullptr))) {
+                    nChannels = UpdateSelectedAudioStreamInfo(m_loadedAudioTrackIndex, pmt, lcid);
+                    DeleteMediaType(pmt);
+                }
             }
+        } else {
+            // ToDo: use IAMStreamSelect
         }
 
+        UINT id = IDB_AUDIOTYPE_NOAUDIO;
+        if (nChannels >= 2) {
+            id = IDB_AUDIOTYPE_STEREO;
+        } else if (nChannels == 1) {
+            id = IDB_AUDIOTYPE_MONO;
+        }
         m_wndStatusBar.SetStatusBitmap(id);
     }
 }
@@ -14137,6 +14125,7 @@ int CMainFrame::SetupAudioStreams()
 {
     bool bIsSplitter = false;
     CComQIPtr<IAMStreamSelect> pSS = FindFilter(__uuidof(CAudioSwitcherFilter), m_pGB);
+    m_audioTrackCount = 0;
 
     // ToDo: get IAMStreamSelect interface pointer to AudioSwitcher and Source/Splitter filter during opening, allowing them to be re-used elsewhere
 
@@ -14161,111 +14150,128 @@ int CMainFrame::SetupAudioStreams()
     }
 
     DWORD cStreams = 0;
-    if (pSS && SUCCEEDED(pSS->Count(&cStreams)) && cStreams > 1) {
-        const CAppSettings& s = AfxGetAppSettings();
+    if (pSS && SUCCEEDED(pSS->Count(&cStreams))) {
+        if (cStreams > 1) {
+            const CAppSettings& s = AfxGetAppSettings();
 
-        CAtlArray<CString> langs;
-        int tPos = 0;
-        CString lang = s.strAudiosLanguageOrder.Tokenize(_T(",; "), tPos);
-        while (tPos != -1) {
-            lang.MakeLower();
-            langs.Add(lang);
-            // Try to match the full language if possible
-            lang = ISOLang::ISO639XToLanguage(CStringA(lang));
-            if (!lang.IsEmpty()) {
-                langs.Add(lang.MakeLower());
-            }
-            lang = s.strAudiosLanguageOrder.Tokenize(_T(",; "), tPos);
-        }
-
-        int selected = -1, id = 0;
-        int maxrating = -1;
-        for (DWORD i = 0; i < cStreams; i++) {
-            DWORD dwFlags, dwGroup;
-            WCHAR* pName = nullptr;
-            CComPtr<IUnknown> pObject;
-            if (FAILED(pSS->Info(i, nullptr, &dwFlags, nullptr, &dwGroup, &pName, &pObject, nullptr))) {
-                continue;
-            }
-            CString name(pName);
-            CoTaskMemFree(pName);
-
-            // Skip no-audio track if we are dealing directly with a splitter
-            if (bIsSplitter && dwGroup != 1) {
-                continue;
-            }
-
-            int rating = 0;
-            // If the track is controlled by a splitter (directly or not) and isn't selected at splitter level
-            if ((!bIsSplitter && dwGroup == 1)
-                    || (bIsSplitter && !(dwFlags & (AMSTREAMSELECTINFO_ENABLED | AMSTREAMSELECTINFO_EXCLUSIVE)))) {
-                bool bSkipTrack;
-
-                // If the splitter is the internal LAV Splitter and no language preferences
-                // have been set at splitter level, we can override its choice safely
-                CComQIPtr<IBaseFilter> pBF = bIsSplitter ? pSS : reinterpret_cast<IBaseFilter*>(pObject.p);
-                if (pBF && CFGFilterLAV::IsInternalInstance(pBF)) {
-                    bSkipTrack = false;
-                    if (CComQIPtr<ILAVFSettings> pLAVFSettings = pBF) {
-                        LPWSTR langPrefs = nullptr;
-                        if (SUCCEEDED(pLAVFSettings->GetPreferredLanguages(&langPrefs)) && langPrefs && wcslen(langPrefs)) {
-                            bSkipTrack = true;
-                        }
-                        CoTaskMemFree(langPrefs);
-                    }
-                } else {
-                    bSkipTrack = !s.bAllowOverridingExternalSplitterChoice;
+            CAtlArray<CString> langs;
+            int tPos = 0;
+            CString lang = s.strAudiosLanguageOrder.Tokenize(_T(",; "), tPos);
+            while (tPos != -1) {
+                lang.MakeLower();
+                langs.Add(lang);
+                // Try to match the full language if possible
+                lang = ISOLang::ISO639XToLanguage(CStringA(lang));
+                if (!lang.IsEmpty()) {
+                    langs.Add(lang.MakeLower());
                 }
+                lang = s.strAudiosLanguageOrder.Tokenize(_T(",; "), tPos);
+            }
 
-                if (bSkipTrack) {
-                    id++;
+            int selected = -1, id = 0;
+            int maxrating = -1;
+            for (DWORD i = 0; i < cStreams; i++) {
+                DWORD dwFlags, dwGroup;
+                WCHAR* pName = nullptr;
+                CComPtr<IUnknown> pObject;
+                if (FAILED(pSS->Info(i, nullptr, &dwFlags, nullptr, &dwGroup, &pName, &pObject, nullptr))) {
                     continue;
                 }
-            } else if ((!bIsSplitter && dwGroup == 2)
-                       || (bIsSplitter && (dwFlags & (AMSTREAMSELECTINFO_ENABLED | AMSTREAMSELECTINFO_EXCLUSIVE)))) {
-                // If the track is controlled by a splitter (directly or not) and is selected at splitter level, we give it
-                // a slightly higher priority so that we won't override selected track in case all have the same rating.
-                rating += 1;
-            }
+                CString name(pName);
+                CoTaskMemFree(pName);
 
-            name.Trim();
-            name.MakeLower();
-
-            for (size_t j = 0; j < langs.GetCount(); j++) {
-                int num = _tstoi(langs[j]) - 1;
-                if (num >= 0) { // this is track number
-                    if (id != num) {
-                        continue;  // not matched
-                    }
-                } else { // this is lang string
-                    int len = langs[j].GetLength();
-                    if (name.Left(len) != langs[j] && name.Find(_T("[") + langs[j]) < 0) {
-                        continue; // not matched
-                    }
+                // Skip no-audio track if we are dealing directly with a splitter
+                if (bIsSplitter && dwGroup != 1) {
+                    continue;
                 }
-                rating += 16 * int(langs.GetCount() - j);
-                break;
-            }
-            if (name.Find(_T("[default,forced]")) != -1) { // for LAV Splitter
-                rating += 4 + 2;
-            }
-            if (name.Find(_T("[forced]")) != -1) {
-                rating += 4;
-            }
-            if (name.Find(_T("[default]")) != -1) {
-                rating += 2;
+
+                int rating = 0;
+                // If the track is controlled by a splitter (directly or not) and isn't selected at splitter level
+                if ((!bIsSplitter && dwGroup == 1)
+                    || (bIsSplitter && !(dwFlags & (AMSTREAMSELECTINFO_ENABLED | AMSTREAMSELECTINFO_EXCLUSIVE)))) {
+                    bool bSkipTrack;
+
+                    // If the splitter is the internal LAV Splitter and no language preferences
+                    // have been set at splitter level, we can override its choice safely
+                    CComQIPtr<IBaseFilter> pBF = bIsSplitter ? pSS : reinterpret_cast<IBaseFilter*>(pObject.p);
+                    if (pBF && CFGFilterLAV::IsInternalInstance(pBF)) {
+                        bSkipTrack = false;
+                        if (CComQIPtr<ILAVFSettings> pLAVFSettings = pBF) {
+                            LPWSTR langPrefs = nullptr;
+                            if (SUCCEEDED(pLAVFSettings->GetPreferredLanguages(&langPrefs)) && langPrefs && wcslen(langPrefs)) {
+                                bSkipTrack = true;
+                            }
+                            CoTaskMemFree(langPrefs);
+                        }
+                    } else {
+                        bSkipTrack = !s.bAllowOverridingExternalSplitterChoice;
+                    }
+
+                    if (bSkipTrack) {
+                        id++;
+                        continue;
+                    }
+                } else if ((!bIsSplitter && dwGroup == 2)
+                    || (bIsSplitter && (dwFlags & (AMSTREAMSELECTINFO_ENABLED | AMSTREAMSELECTINFO_EXCLUSIVE)))) {
+                    // If the track is controlled by a splitter (directly or not) and is selected at splitter level, we give it
+                    // a slightly higher priority so that we won't override selected track in case all have the same rating.
+                    rating += 1;
+                }
+
+                name.Trim();
+                name.MakeLower();
+
+                for (size_t j = 0; j < langs.GetCount(); j++) {
+                    int num = _tstoi(langs[j]) - 1;
+                    if (num >= 0) { // this is track number
+                        if (id != num) {
+                            continue;  // not matched
+                        }
+                    } else { // this is lang string
+                        int len = langs[j].GetLength();
+                        if (name.Left(len) != langs[j] && name.Find(_T("[") + langs[j]) < 0) {
+                            continue; // not matched
+                        }
+                    }
+                    rating += 16 * int(langs.GetCount() - j);
+                    break;
+                }
+                if (name.Find(_T("[default,forced]")) != -1) { // for LAV Splitter
+                    rating += 4 + 2;
+                }
+                if (name.Find(_T("[forced]")) != -1) {
+                    rating += 4;
+                }
+                if (name.Find(_T("[default]")) != -1) {
+                    rating += 2;
+                }
+
+                if (rating > maxrating) {
+                    maxrating = rating;
+                    selected = id;
+                }
+
+                id++;
             }
 
-            if (rating > maxrating) {
-                maxrating = rating;
-                selected = id;
+            m_audioTrackCount = id;
+            if (m_loadedAudioTrackIndex >= 0 && m_loadedAudioTrackIndex < id) {
+                selected = m_loadedAudioTrackIndex;
             }
-
-            id++;
-        }
-        return selected + !bIsSplitter;
+            return m_audioTrackCount > 1 ? selected + !bIsSplitter : -1;
+        } else if (cStreams == 1) {
+            DWORD dwFlags, dwGroup;
+            if (SUCCEEDED(pSS->Info(0, nullptr, &dwFlags, nullptr, &dwGroup, nullptr, nullptr, nullptr))) {
+                if (dwFlags & (AMSTREAMSELECTINFO_ENABLED | AMSTREAMSELECTINFO_EXCLUSIVE)) {
+                    m_loadedAudioTrackIndex = 0;
+                    m_audioTrackCount = 1;
+                }
+            }
+            return -1; // no need to select a specific track
+        }        
     }
 
+    m_loadedAudioTrackIndex = -1;
     return -1;
 }
 
@@ -14812,17 +14818,7 @@ bool CMainFrame::OpenMediaPrivate(CAutoPtr<OpenMediaData> pOMD)
         checkAborted();
 
         int audstm; // offset in audio track menu, AudioSwitcher adds an "Options" entry above the audio tracks
-
-        if (m_loadedAudioTrackIndex >= 0 && IsValidAudioStream(m_loadedAudioTrackIndex)) {
-            audstm = s.fEnableAudioSwitcher ? m_loadedAudioTrackIndex + 1 : m_loadedAudioTrackIndex;
-        } else {
-            audstm = SetupAudioStreams();
-            if (s.fEnableAudioSwitcher) {
-                m_loadedAudioTrackIndex = audstm > 0 ? audstm - 1 : 0;
-            } else {
-                m_loadedAudioTrackIndex = audstm > 0 ? audstm: 0;
-            }
-        }
+        audstm = SetupAudioStreams();
         if (audstm >= 0) {
             OnPlayAudio(ID_AUDIO_SUBITEM_START + audstm);
         }
@@ -14899,6 +14895,7 @@ void CMainFrame::CloseMediaPrivate()
     m_bBuffering = false;
     m_rtDurationOverride = -1;
     m_bUsingDXVA = false;
+    m_audioTrackCount = 0;
     if (m_pDVBState) {
         m_pDVBState->Join();
         m_pDVBState = nullptr;
@@ -15585,6 +15582,7 @@ void CMainFrame::SetupAudioSubMenu()
             if (dwFlags) {
                 iSel = i;
                 if (lcid) {
+                    // ToDo: lang info should be gathered elsewhere
                     GetLocaleString(lcid, LOCALE_SISO639LANGNAME2, currentAudioLang);
                 }
             }
@@ -16208,7 +16206,7 @@ void CMainFrame::OnStreamSelect(bool bForward, DWORD dwSelGroup)
             continue;
         }
 
-        std::vector<std::tuple<DWORD, LCID, CString>> streams;
+        std::vector<std::tuple<DWORD, int, LCID, CString>> streams;
         size_t currentSel = SIZE_MAX;
         for (DWORD i = 0; i < cStreams; i++) {
             DWORD dwFlags, dwGroup;
@@ -16227,23 +16225,33 @@ void CMainFrame::OnStreamSelect(bool bForward, DWORD dwSelGroup)
             if (dwFlags) {
                 currentSel = streams.size();
             }
-            streams.emplace_back(i, lcid, CString(pszName));
+            streams.emplace_back(i, streams.size(), lcid, CString(pszName));
         }
 
         size_t count = streams.size();
         if (count && currentSel != SIZE_MAX) {
             size_t requested = (bForward ? currentSel + 1 : currentSel - 1) % count;
             DWORD id;
+            int trackindex;
             LCID lcid = 0;
             CString name;
-            std::tie(id, lcid, name) = streams.at(requested);
-            pSS->Enable(id, AMSTREAMSELECTENABLE_ENABLE);
-            m_OSD.DisplayMessage(OSD_TOPLEFT, GetStreamOSDString(name, lcid, dwSelGroup));
-            if (lcid && AfxGetAppSettings().fEnableSubtitles) {
-                if (dwSelGroup == 2) {
-                    GetLocaleString(lcid, LOCALE_SISO639LANGNAME2, currentSubLang);
+            std::tie(id, trackindex, lcid, name) = streams.at(requested);
+            if (SUCCEEDED(pSS->Enable(id, AMSTREAMSELECTENABLE_ENABLE))) {
+                if (dwSelGroup == 1 || AfxGetAppSettings().fEnableSubtitles) {
+                    m_OSD.DisplayMessage(OSD_TOPLEFT, GetStreamOSDString(name, lcid, dwSelGroup));
+                }
+                if (dwSelGroup == 1) {
+                    AM_MEDIA_TYPE* pmt = nullptr;
+                    if (SUCCEEDED(pSS->Info(id, &pmt, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr))) {
+                        UpdateSelectedAudioStreamInfo(trackindex, pmt, lcid);
+                        DeleteMediaType(pmt);
+                    }
                 } else {
-                    GetLocaleString(lcid, LOCALE_SISO639LANGNAME2, currentAudioLang);
+                    if (lcid && AfxGetAppSettings().fEnableSubtitles) {
+                        GetLocaleString(lcid, LOCALE_SISO639LANGNAME2, currentSubLang);
+                    } else {
+                        currentSubLang.Empty();
+                    }
                 }
             }
             break;
@@ -17060,6 +17068,16 @@ void CMainFrame::SetAudioTrackIdx(int index)
         if (pSS && SUCCEEDED(pSS->Count(&cStreams))) {
             if ((index >= 0) && (index < ((int)cStreams))) {
                 pSS->Enable(index, dwFlags);
+
+                m_loadedAudioTrackIndex = index;
+                LCID lcid = 0;
+                AM_MEDIA_TYPE* pmt = nullptr;
+                CComHeapPtr<WCHAR> pszName;
+                if (SUCCEEDED(pSS->Info(index, &pmt, &dwFlags, &lcid, nullptr, &pszName, nullptr, nullptr))) {
+                    m_OSD.DisplayMessage(OSD_TOPLEFT, GetStreamOSDString(CString(pszName), lcid, 1));
+                    UpdateSelectedAudioStreamInfo(index, pmt, lcid);
+                    DeleteMediaType(pmt);
+                }
             }
         }
     }
@@ -17082,6 +17100,7 @@ int CMainFrame::GetCurrentAudioTrackIdx(CString *pstrName)
                     if (dwFlags & AMSTREAMSELECTINFO_ENABLED) {
                         if(pstrName)
                             *pstrName = pName;
+                        ASSERT(m_loadedAudioTrackIndex == i);
                         return i;
                     }
                 } else {
@@ -17089,6 +17108,7 @@ int CMainFrame::GetCurrentAudioTrackIdx(CString *pstrName)
                 }
             }
         }
+        // ToDo: use IAMStreamSelect
     }
     return -1;
 }
