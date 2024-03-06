@@ -4181,7 +4181,7 @@ void CMainFrame::OnStreamAudio(UINT nID)
             }
             if (dwFlags & (AMSTREAMSELECTINFO_ENABLED | AMSTREAMSELECTINFO_EXCLUSIVE)) {
                 long stream_index = (i + (nID == 0 ? 1 : cStreams - 1)) % cStreams;
-                if (m_pAudioSwitcherSS->Enable(stream_index, AMSTREAMSELECTENABLE_ENABLE)) {
+                if (SUCCEEDED(m_pAudioSwitcherSS->Enable(stream_index, AMSTREAMSELECTENABLE_ENABLE))) {
                     CComHeapPtr<WCHAR> pszName;
                     AM_MEDIA_TYPE* pmt = nullptr;
                     if (SUCCEEDED(m_pAudioSwitcherSS->Info(stream_index, &pmt, &dwFlags, &lcid, &dwGroup, &pszName, nullptr, nullptr))) {
@@ -14060,8 +14060,10 @@ void CMainFrame::OpenSetupStatusBar()
             DWORD cStreams = 0;
             if (SUCCEEDED(m_pAudioSwitcherSS->Count(&cStreams)) && cStreams > 0 && cStreams > m_loadedAudioTrackIndex) {
                 LCID lcid = 0;
+                DWORD dwFlags;
                 AM_MEDIA_TYPE* pmt = nullptr;
-                if (SUCCEEDED(m_pAudioSwitcherSS->Info(m_loadedAudioTrackIndex, &pmt, nullptr, &lcid, nullptr, nullptr, nullptr, nullptr))) {
+                if (SUCCEEDED(m_pAudioSwitcherSS->Info(m_loadedAudioTrackIndex, &pmt, &dwFlags, &lcid, nullptr, nullptr, nullptr, nullptr))) {
+                    ASSERT(dwFlags & (AMSTREAMSELECTINFO_ENABLED | AMSTREAMSELECTINFO_EXCLUSIVE));
                     nChannels = UpdateSelectedAudioStreamInfo(m_loadedAudioTrackIndex, pmt, lcid);
                     DeleteMediaType(pmt);
                 }
@@ -14070,6 +14072,7 @@ void CMainFrame::OpenSetupStatusBar()
             if (m_pSplitterSS) {
                 DWORD cStreams = 0;
                 if (SUCCEEDED(m_pSplitterSS->Count(&cStreams)) && cStreams > 0) {
+                    m_loadedAudioTrackIndex = -1;
                     int audiostreamcount = 0;
                     for (DWORD i = 0; i < cStreams; i++) {
                         DWORD dwFlags, dwGroup;
@@ -14077,8 +14080,8 @@ void CMainFrame::OpenSetupStatusBar()
                         CComPtr<IUnknown> pObject;
                         if (SUCCEEDED(m_pSplitterSS->Info(i, nullptr, &dwFlags, nullptr, &dwGroup, nullptr, nullptr, nullptr))) {
                             if (dwGroup == 1) {
-                                if (m_loadedAudioTrackIndex == audiostreamcount) {
-                                    ASSERT(dwFlags& (AMSTREAMSELECTINFO_ENABLED | AMSTREAMSELECTINFO_EXCLUSIVE));
+                                if (dwFlags & (AMSTREAMSELECTINFO_ENABLED | AMSTREAMSELECTINFO_EXCLUSIVE)) {
+                                    m_loadedAudioTrackIndex = audiostreamcount;
                                     LCID lcid = 0;
                                     AM_MEDIA_TYPE* pmt = nullptr;
                                     if (SUCCEEDED(m_pSplitterSS->Info(i, &pmt, nullptr, &lcid, nullptr, nullptr, nullptr, nullptr))) {
@@ -14090,6 +14093,9 @@ void CMainFrame::OpenSetupStatusBar()
                                 audiostreamcount++;
                             }
                         }
+                    }
+                    if (m_loadedAudioTrackIndex == -1) {
+                        UpdateSelectedAudioStreamInfo(-1, nullptr, -1);
                     }
                 }
             }
@@ -14170,6 +14176,7 @@ int CMainFrame::SetupAudioStreams()
 
     CComQIPtr<IAMStreamSelect> pSS = m_pAudioSwitcherSS;
     if (!pSS) {
+        bIsSplitter = true;
         pSS = m_pSplitterSS;
     }
 
@@ -14204,15 +14211,15 @@ int CMainFrame::SetupAudioStreams()
                 CString name(pName);
                 CoTaskMemFree(pName);
 
-                // Skip no-audio track if we are dealing directly with a splitter
-                if (bIsSplitter && dwGroup != 1) {
+                if (dwGroup != 1) {
                     continue;
                 }
 
+                m_audioTrackCount++;
+
                 int rating = 0;
-                // If the track is controlled by a splitter (directly or not) and isn't selected at splitter level
-                if ((!bIsSplitter && dwGroup == 1)
-                    || (bIsSplitter && !(dwFlags & (AMSTREAMSELECTINFO_ENABLED | AMSTREAMSELECTINFO_EXCLUSIVE)))) {
+                // If the track is controlled by a splitter and isn't selected at splitter level
+                if (bIsSplitter && !(dwFlags & (AMSTREAMSELECTINFO_ENABLED | AMSTREAMSELECTINFO_EXCLUSIVE))) {
                     bool bSkipTrack;
 
                     // If the splitter is the internal LAV Splitter and no language preferences
@@ -14235,10 +14242,8 @@ int CMainFrame::SetupAudioStreams()
                         id++;
                         continue;
                     }
-                } else if ((!bIsSplitter && dwGroup == 2)
-                    || (bIsSplitter && (dwFlags & (AMSTREAMSELECTINFO_ENABLED | AMSTREAMSELECTINFO_EXCLUSIVE)))) {
-                    // If the track is controlled by a splitter (directly or not) and is selected at splitter level, we give it
-                    // a slightly higher priority so that we won't override selected track in case all have the same rating.
+                } else if (dwFlags & (AMSTREAMSELECTINFO_ENABLED | AMSTREAMSELECTINFO_EXCLUSIVE)) {
+                    // Give selected track a slightly higher rating
                     rating += 1;
                 }
 
@@ -14278,8 +14283,7 @@ int CMainFrame::SetupAudioStreams()
                 id++;
             }
 
-            m_audioTrackCount = id;
-            if (m_loadedAudioTrackIndex >= 0 && m_loadedAudioTrackIndex < id) {
+            if (m_loadedAudioTrackIndex >= 0 && m_loadedAudioTrackIndex < m_audioTrackCount) {
                 selected = m_loadedAudioTrackIndex;
             }
             return m_audioTrackCount > 1 ? selected + !bIsSplitter : -1;
