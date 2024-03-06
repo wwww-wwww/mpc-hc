@@ -314,6 +314,7 @@ private:
     CComPtr<IUnknown> m_pProv;
 
     CComQIPtr<IDirectVobSub> m_pDVS;
+    CComQIPtr<IDirectVobSub2> m_pDVS2;
 
     bool m_bUsingDXVA;
     LPCTSTR m_HWAccelType;

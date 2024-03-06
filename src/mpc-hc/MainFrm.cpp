@@ -9175,8 +9175,7 @@ void CMainFrame::FilterSettings(CComPtr<IUnknown> pUnk, CWnd* parent) {
     }
 
     if (pBF && ps.GetPageCount() > 0) {
-        CLSID clsid;
-        pBF->GetClassID(&clsid);
+        CLSID clsid = GetCLSID(pBF);
         CMPCThemeComPropertyPage::SetDialogType(clsid);
         ps.DoModal();
         OpenSetupStatusBar();
@@ -12936,8 +12935,7 @@ void CMainFrame::OpenFile(OpenFileData* pOFD)
             // Check for supported interfaces
             BeginEnumFilters(m_pGB, pEF, pBF);
             bool fsf = false;
-            CLSID clsid = CLSID_NULL;
-            pBF->GetClassID(&clsid);
+            CLSID clsid = GetCLSID(pBF);
             // IFileSourceFilter
             if (!m_pFSF) {
                 m_pFSF = pBF;
@@ -12975,6 +12973,7 @@ void CMainFrame::OpenFile(OpenFileData* pOFD)
                         if (clsid == CLSID_VSFilter || clsid == CLSID_XySubFilter) {
                             m_pSubSS = pBF;
                             m_pDVS = pBF;
+                            m_pDVS2 = pBF;
                         } else {
                             if (clsid != CLSID_MPCBEAudioRenderer) {
                                 if (CComQIPtr<IAMStreamSelect> pTest = pBF) {
@@ -12992,6 +12991,9 @@ void CMainFrame::OpenFile(OpenFileData* pOFD)
                 }
             }
             // Others
+            if (!m_pLN21) {
+                m_pLN21 = pBF;
+            }
             if (!m_pKFI) {
                 m_pKFI = pBF;
             }
@@ -13474,8 +13476,7 @@ void CMainFrame::OpenDVD(OpenDVDData* pODD)
 
     // Check for supported interfaces
     BeginEnumFilters(m_pGB, pEF, pBF)
-        CLSID clsid = CLSID_NULL;
-        pBF->GetClassID(&clsid);
+        CLSID clsid = GetCLSID(pBF);
         // DVD stuff
         if (!m_pDVDC) {
             m_pDVDC = pBF;
@@ -13490,6 +13491,7 @@ void CMainFrame::OpenDVD(OpenDVDData* pODD)
             if (clsid == CLSID_VSFilter || clsid == CLSID_XySubFilter) {
                 m_pSubSS = pBF;
                 m_pDVS = pBF;
+                m_pDVS2 = pBF;
             } else {
                 if (clsid != CLSID_MPCBEAudioRenderer) {
                     if (CComQIPtr<IAMStreamSelect> pTest = pBF) {
@@ -13503,6 +13505,10 @@ void CMainFrame::OpenDVD(OpenDVDData* pODD)
                     }
                 }
             }
+        }
+        // Others
+        if (!m_pLN21) {
+            m_pLN21 = pBF;
         }
     EndEnumFilters;
 
@@ -13753,15 +13759,12 @@ void CMainFrame::OpenCustomizeGraph()
     }
 
     if (GetPlaybackMode() == PM_DVD) {
-        BeginEnumFilters(m_pGB, pEF, pBF) {
-            if (CComQIPtr<IDirectVobSub2> pDVS2 = pBF) {
-                if (!m_pSubClock) {
-                    m_pSubClock = DEBUG_NEW CSubClock;
-                }
-                pDVS2->AdviseSubClock(m_pSubClock);
+        if (m_pDVS2) {
+            if (!m_pSubClock) {
+                m_pSubClock = DEBUG_NEW CSubClock;
             }
+            m_pDVS2->AdviseSubClock(m_pSubClock);
         }
-        EndEnumFilters;
     }
 
     CleanGraph();
@@ -14696,13 +14699,10 @@ bool CMainFrame::OpenMediaPrivate(CAutoPtr<OpenMediaData> pOMD)
             }
         }
 
-        BeginEnumFilters(m_pGB, pEF, pBF) {
-            if (m_pLN21 = pBF) {
-                m_pLN21->SetServiceState(s.fClosedCaptions ? AM_L21_CCSTATE_On : AM_L21_CCSTATE_Off);
-                break;
-            }
+        if (m_pLN21) {
+            m_pLN21->SetServiceState(s.fClosedCaptions ? AM_L21_CCSTATE_On : AM_L21_CCSTATE_Off);
         }
-        EndEnumFilters;
+
         checkAborted();
 
         OpenCustomizeGraph();
@@ -14984,6 +14984,7 @@ void CMainFrame::CloseMediaPrivate()
     m_pKFI.Release();
     m_pAMNS.Release();
     m_pDVS.Release();
+    m_pDVS2.Release();
     for (auto& pAMMC : m_pAMMC) {
         pAMMC.Release();
     }
@@ -16142,23 +16143,24 @@ DWORD CMainFrame::SetupNavStreamSelectSubMenu(CMenu& subMenu, UINT id, DWORD dwS
         }
     };
 
-    CComQIPtr<IAMStreamSelect> pSS;
-
-    BeginEnumFilters(m_pGB, pEF, pBF) {
-        CLSID filterid = GetCLSID(pBF);
-        if (filterid == __uuidof(CAudioSwitcherFilter) || filterid == CLSID_MPCBEAudioRenderer) {
-            continue;
-        }
-
-        if (pSS = pBF) {
-            addStreamSelectFilter(pSS);
-        }
+    if (m_pSplitterSS) {
+        addStreamSelectFilter(m_pSplitterSS);
     }
-    EndEnumFilters
+    if (m_pSubSS && dwSelGroup == 2) {
+        addStreamSelectFilter(m_pSubSS);
+    }
+    if (m_pOtherSS[0]) {
+        addStreamSelectFilter(m_pOtherSS[0]);
+    }
+    if (m_pOtherSS[1]) {
+        addStreamSelectFilter(m_pOtherSS[1]);
+    }
 
-    if (pSS = m_pGB) {
+    if (CComQIPtr<IAMStreamSelect> pSS = m_pGB) {
+        ASSERT(false);
         addStreamSelectFilter(pSS);
     }
+
     return selected;
 }
 
@@ -16196,43 +16198,33 @@ void CMainFrame::OnNavStreamSelectSubMenu(UINT id, DWORD dwSelGroup)
         return bSelected;
     };
 
-    CComQIPtr<IAMStreamSelect> pSS;
-
-    BeginEnumFilters(m_pGB, pEF, pBF) {
-        if (GetCLSID(pBF) == __uuidof(CAudioSwitcherFilter)) {
-            continue;
-        }
-
-        if (pSS = pBF) {
-            if (processStreamSelectFilter(pSS)) {
-                return;
-            }
-        }
+    if (m_pSplitterSS) {
+        if (processStreamSelectFilter(m_pSplitterSS)) return;
     }
-    EndEnumFilters
+    if (m_pSubSS && dwSelGroup == 2) {
+        if (processStreamSelectFilter(m_pSubSS)) return;
+    }
+    if (m_pOtherSS[0]) {
+        if (processStreamSelectFilter(m_pOtherSS[0])) return;
+    }
+    if (m_pOtherSS[1]) {
+        if (processStreamSelectFilter(m_pOtherSS[1])) return;
+    }
 
-    if (pSS = m_pGB) {
-        processStreamSelectFilter(pSS);
+    if (CComQIPtr<IAMStreamSelect> pSS = m_pGB) {
+        ASSERT(false);
+        if (processStreamSelectFilter(pSS)) return;
     }
 }
 
 void CMainFrame::OnStreamSelect(bool bForward, DWORD dwSelGroup)
 {
     ASSERT(dwSelGroup == 1 || dwSelGroup == 2);
-    CComQIPtr<IAMStreamSelect> pSS;
 
-    BeginEnumFilters(m_pGB, pEF, pBF) {
-        if (GetCLSID(pBF) == __uuidof(CAudioSwitcherFilter)) {
-            continue;
-        }
-
-        if (!(pSS = pBF)) {
-            continue;
-        }
-
+    auto processStreamSelectFilter = [&](CComPtr<IAMStreamSelect> pSS) {
         DWORD cStreams;
         if (FAILED(pSS->Count(&cStreams))) {
-            continue;
+            return false;
         }
 
         std::vector<std::tuple<DWORD, int, LCID, CString>> streams;
@@ -16243,7 +16235,7 @@ void CMainFrame::OnStreamSelect(bool bForward, DWORD dwSelGroup)
             CComHeapPtr<WCHAR> pszName;
 
             if (FAILED(pSS->Info(i, nullptr, &dwFlags, &lcid, &dwGroup, &pszName, nullptr, nullptr))
-                    || !pszName) {
+                || !pszName) {
                 continue;
             }
 
@@ -16283,10 +16275,23 @@ void CMainFrame::OnStreamSelect(bool bForward, DWORD dwSelGroup)
                     }
                 }
             }
-            break;
+            return true;
         }
+        return false;
+    };
+
+    if (m_pSplitterSS) {
+        if (processStreamSelectFilter(m_pSplitterSS)) return;
     }
-    EndEnumFilters
+    if (m_pSubSS && dwSelGroup == 2) {
+        if (processStreamSelectFilter(m_pSubSS)) return;
+    }
+    if (m_pOtherSS[0]) {
+        if (processStreamSelectFilter(m_pOtherSS[0])) return;
+    }
+    if (m_pOtherSS[1]) {
+        if (processStreamSelectFilter(m_pOtherSS[1])) return;
+    }
 }
 
 CString CMainFrame::GetStreamOSDString(CString name, LCID lcid, DWORD dwSelGroup)
@@ -17144,86 +17149,80 @@ int CMainFrame::GetCurrentSubtitleTrackIdx(CString *pstrName)
     if(pstrName)
         pstrName->Empty();
 
-    if (GetLoadState() == MLS::LOADED && GetPlaybackMode() == PM_FILE && m_pCAP) {
-        int idx = 0;
-        if (!m_pSubStreams.IsEmpty()) {
-            POSITION pos = m_pSubStreams.GetHeadPosition();
-            while (pos) {
-                SubtitleInput& subInput = m_pSubStreams.GetNext(pos);
-                if (CComQIPtr<IAMStreamSelect> pSSF = subInput.pSourceFilter) {
-                    DWORD cStreams;
-                    if (FAILED(pSSF->Count(&cStreams))) {
-                        continue;
-                    }
-                    for (int j = 0, cnt = (int)cStreams; j < cnt; j++) {
-                        DWORD dwFlags, dwGroup;
-                        CComHeapPtr<WCHAR> pName;
-                        if (FAILED(pSSF->Info(j, nullptr, &dwFlags, nullptr, &dwGroup, &pName, nullptr, nullptr))) {
-                            continue;
-                        }
-                        if (dwGroup != 2) {
-                            continue;
-                        }
+    if (GetLoadState() != MLS::LOADED) {
+        return -1;
+    }
 
-                        if (subInput.pSubStream == m_pCurrentSubInput.pSubStream) {
-                            if (dwFlags & (AMSTREAMSELECTINFO_ENABLED | AMSTREAMSELECTINFO_EXCLUSIVE)) {
-                                if (pstrName)
-                                    *pstrName = pName;
-                                return idx;
-                            }
-                        }
-                        idx++;
-                    }
-                } else {
-                    CComPtr<ISubStream> pSubStream = subInput.pSubStream;
-                    if (!pSubStream) {
+    if (m_pCAP && !m_pSubStreams.IsEmpty()) {
+        int idx = 0;
+        POSITION pos = m_pSubStreams.GetHeadPosition();
+        while (pos) {
+            SubtitleInput& subInput = m_pSubStreams.GetNext(pos);
+            if (CComQIPtr<IAMStreamSelect> pSSF = subInput.pSourceFilter) {
+                DWORD cStreams;
+                if (FAILED(pSSF->Count(&cStreams))) {
+                    continue;
+                }
+                for (int j = 0, cnt = (int)cStreams; j < cnt; j++) {
+                    DWORD dwFlags, dwGroup;
+                    CComHeapPtr<WCHAR> pName;
+                    if (FAILED(pSSF->Info(j, nullptr, &dwFlags, nullptr, &dwGroup, &pName, nullptr, nullptr))) {
                         continue;
                     }
-                    if (subInput.pSubStream == m_pCurrentSubInput.pSubStream) {
-                        if (pstrName) {
-                            CComHeapPtr<WCHAR> pName;
-                            pSubStream->GetStreamInfo(pSubStream->GetStream(), &pName, nullptr);
-                            *pstrName = pName;
-                        }
-                        return idx + pSubStream->GetStream();
+                    if (dwGroup != 2) {
+                        continue;
                     }
-                    idx += pSubStream->GetStreamCount();
+
+                    if (subInput.pSubStream == m_pCurrentSubInput.pSubStream) {
+                        if (dwFlags & (AMSTREAMSELECTINFO_ENABLED | AMSTREAMSELECTINFO_EXCLUSIVE)) {
+                            if (pstrName)
+                                *pstrName = pName;
+                            return idx;
+                        }
+                    }
+                    idx++;
                 }
+            } else {
+                CComPtr<ISubStream> pSubStream = subInput.pSubStream;
+                if (!pSubStream) {
+                    continue;
+                }
+                if (subInput.pSubStream == m_pCurrentSubInput.pSubStream) {
+                    if (pstrName) {
+                        CComHeapPtr<WCHAR> pName;
+                        pSubStream->GetStreamInfo(pSubStream->GetStream(), &pName, nullptr);
+                        *pstrName = pName;
+                    }
+                    return idx + pSubStream->GetStream();
+                }
+                idx += pSubStream->GetStreamCount();
             }
         }
-        else
-        {
-            CComQIPtr<IAMStreamSelect> pSS;
+    } else if (m_pSplitterSS) {
+        DWORD cStreams;
+        if (SUCCEEDED(m_pSplitterSS->Count(&cStreams))) {
+            int idx = 0;
+            for (int i = 0; i < (int)cStreams; i++) {
+                DWORD dwFlags, dwGroup;
+                CComHeapPtr<WCHAR> pszName;
 
-            BeginEnumFilters(m_pGB, pEF, pBF) {
-                if (GetCLSID(pBF) == __uuidof(CAudioSwitcherFilter))
+                if (FAILED(m_pSplitterSS->Info(i, nullptr, &dwFlags, nullptr, &dwGroup, &pszName, nullptr, nullptr)))
                     continue;
 
-                if (pSS = pBF) {
-                    DWORD cStreams;
-                    if (SUCCEEDED(pSS->Count(&cStreams))) {
-                        for (int i = 0; i < (int)cStreams; i++) {
-                            DWORD dwFlags, dwGroup;
-                            CComHeapPtr<WCHAR> pszName;
+                if (dwGroup != 2)
+                    continue;
 
-                            if (FAILED(pSS->Info(i, nullptr, &dwFlags, nullptr, &dwGroup, &pszName, nullptr, nullptr)))
-                                continue;
-
-                            if (dwGroup != 2)
-                                continue;
-
-                            if (dwFlags & (AMSTREAMSELECTINFO_ENABLED | AMSTREAMSELECTINFO_EXCLUSIVE)) {
-                                if (pstrName)
-                                    *pstrName = pszName;
-                                return i;
-                            }
-                        }
-                    }
+                if (dwFlags & (AMSTREAMSELECTINFO_ENABLED | AMSTREAMSELECTINFO_EXCLUSIVE)) {
+                    if (pstrName)
+                        *pstrName = pszName;
+                    return idx;
                 }
+
+                idx++;
             }
-            EndEnumFilters
         }
     }
+
     return -1;
 }
 
