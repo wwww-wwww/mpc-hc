@@ -334,7 +334,7 @@ private:
     // StatusBar message text parts
     CString currentAudioLang;
     CString currentSubLang;
-    CString m_statusbarVideoFourCC;
+    CString m_statusbarVideoFormat;
     CString m_statusbarAudioFormat;
     CString m_statusbarVideoSize;
 

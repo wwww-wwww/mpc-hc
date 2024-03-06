@@ -2262,6 +2262,8 @@ void CMainFrame::OnTimer(UINT_PTR nIDEvent)
                                  ulCurrent, ulAvailable,
                                  VATR.ulSourceResolutionX, VATR.ulSourceResolutionY, VATR.ulFrameRate,
                                  VATR.ulAspectX, VATR.ulAspectY);
+                    m_statusbarVideoSize.Format(_T("%dx%d"), VATR.ulSourceResolutionX, VATR.ulSourceResolutionY);
+                    m_statusbarVideoFormat = VATR.Compression == DVD_VideoCompression_MPEG1 ? L"MPG1" : VATR.Compression == DVD_VideoCompression_MPEG2 ? L"MPG2" : L"";
                 }
 
                 m_wndInfoBar.SetLine(StrRes(IDS_INFOBAR_VIDEO), Video);
@@ -3672,12 +3674,12 @@ void CMainFrame::OnUpdatePlayerStatus(CCmdUI* pCmdUI)
             CString videoinfo;
             CString fpsinfo;
             CStringW audioinfo;
-            if (s.bShowVideoInfoInStatusbar && (!m_statusbarVideoFourCC.IsEmpty() || !m_statusbarVideoSize.IsEmpty())) {                  
-                if(!m_statusbarVideoFourCC.IsEmpty()) {
-                    videoinfo.Append(m_statusbarVideoFourCC);
+            if (s.bShowVideoInfoInStatusbar && (!m_statusbarVideoFormat.IsEmpty() || !m_statusbarVideoSize.IsEmpty())) {                  
+                if(!m_statusbarVideoFormat.IsEmpty()) {
+                    videoinfo.Append(m_statusbarVideoFormat);
                 }
                 if(!m_statusbarVideoSize.IsEmpty()) {
-                    if(!m_statusbarVideoFourCC.IsEmpty()) {
+                    if(!m_statusbarVideoFormat.IsEmpty()) {
                         videoinfo.AppendChar(_T(' '));
                     }
                     videoinfo.Append(m_statusbarVideoSize);
@@ -4083,7 +4085,7 @@ void CMainFrame::OnFilePostClosemedia(bool bNextIsQueued/* = false*/)
     m_OSD.SetPos(0);
     m_Lcd.SetMediaRange(0, 0);
     m_Lcd.SetMediaPos(0);
-    m_statusbarVideoFourCC.Empty();
+    m_statusbarVideoFormat.Empty();
     m_statusbarVideoSize.Empty();
 
     m_VidDispName.Empty();
@@ -14022,15 +14024,15 @@ void CMainFrame::OpenSetupStatusBar()
 
             if ((input_pins == 0 || splitter) && !fcc.IsEmpty()) {
                 if (fcc == L"HVC1") {
-                    m_statusbarVideoFourCC = L"HEVC";
+                    m_statusbarVideoFormat = L"HEVC";
                 } else if (fcc == L"AVC1") {
-                    m_statusbarVideoFourCC = L"H264";
+                    m_statusbarVideoFormat = L"H264";
                 } else if (fcc == L"VP90") {
-                    m_statusbarVideoFourCC = L"VP9";
+                    m_statusbarVideoFormat = L"VP9";
                 } else if (fcc == L"AV01") {
-                    m_statusbarVideoFourCC = L"AV1";
+                    m_statusbarVideoFormat = L"AV1";
                 } else {
-                    m_statusbarVideoFourCC = fcc;
+                    m_statusbarVideoFormat = fcc;
                 }
                 break;
             }
