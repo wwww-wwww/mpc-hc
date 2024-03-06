@@ -12962,7 +12962,7 @@ void CMainFrame::OpenFile(OpenFileData* pOFD)
                     }
                 }
             }
-            // IAMStreamSelect
+            // IAMStreamSelect / IDirectVobSub
             if (!fsf) {
                 if (clsid == __uuidof(CAudioSwitcherFilter)) {
                     m_pAudioSwitcherSS = pBF;
@@ -12971,7 +12971,6 @@ void CMainFrame::OpenFile(OpenFileData* pOFD)
                         m_pSplitterSS = pBF;
                     } else {
                         if (clsid == CLSID_VSFilter || clsid == CLSID_XySubFilter) {
-                            m_pSubSS = pBF;
                             m_pDVS = pBF;
                             m_pDVS2 = pBF;
                         } else {
@@ -13484,12 +13483,11 @@ void CMainFrame::OpenDVD(OpenDVDData* pODD)
         if (!m_pDVDI) {
             m_pDVDI = pBF;
         }
-        // IAMStreamSelect filters
+        // IAMStreamSelect filters / IDirectVobSub
         if (clsid == __uuidof(CAudioSwitcherFilter)) {
             m_pAudioSwitcherSS = pBF;
         } else {
             if (clsid == CLSID_VSFilter || clsid == CLSID_XySubFilter) {
-                m_pSubSS = pBF;
                 m_pDVS = pBF;
                 m_pDVS2 = pBF;
             } else {
@@ -13587,6 +13585,64 @@ HRESULT CMainFrame::OpenBDAGraph()
     if (SUCCEEDED(hr)) {
         SetPlaybackMode(PM_DIGITAL_CAPTURE);
         m_pDVBState = std::make_unique<DVBState>();
+
+        // Check for supported interfaces
+        BeginEnumFilters(m_pGB, pEF, pBF);
+        bool fsf = false;
+        CLSID clsid = GetCLSID(pBF);
+        // IFileSourceFilter
+        if (!m_pFSF) {
+            m_pFSF = pBF;
+            if (m_pFSF) {
+                fsf = true;
+                if (!m_pAMNS) {
+                    m_pAMNS = pBF;
+                }
+                if (!m_pSplitterSS) {
+                    m_pSplitterSS = pBF;
+                }
+            }
+        }
+        // IAMStreamSelect / IDirectVobSub
+        if (!fsf) {
+            if (clsid == __uuidof(CAudioSwitcherFilter)) {
+                m_pAudioSwitcherSS = pBF;
+            } else {
+                if (clsid == GUID_LAVSplitter) {
+                    m_pSplitterSS = pBF;
+                } else {
+                    if (clsid == CLSID_VSFilter || clsid == CLSID_XySubFilter) {
+                        m_pDVS = pBF;
+                        m_pDVS2 = pBF;
+                    } else {
+                        if (clsid != CLSID_MPCBEAudioRenderer) {
+                            if (CComQIPtr<IAMStreamSelect> pTest = pBF) {
+                                if (!m_pOtherSS[0]) {
+                                    m_pOtherSS[0] = pBF;
+                                } else if (!m_pOtherSS[1]) {
+                                    m_pOtherSS[1] = pBF;
+                                } else {
+                                    ASSERT(false);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        // Others
+        if (!m_pLN21) {
+            m_pLN21 = pBF;
+        }
+        if (!m_pAMMC[0]) {
+            m_pAMMC[0] = pBF;
+        } else if (!m_pAMMC[1]) {
+            m_pAMMC[1] = pBF;
+        }
+        EndEnumFilters;
+
+        ASSERT(m_pFSF);
+        ASSERT(m_pAudioSwitcherSS || !AfxGetAppSettings().fEnableAudioSwitcher);
     }
     return hr;
 }
@@ -14990,7 +15046,6 @@ void CMainFrame::CloseMediaPrivate()
     }
     m_pAudioSwitcherSS.Release();
     m_pSplitterSS.Release();
-    m_pSubSS.Release();
     for (auto& pSS : m_pOtherSS) {
         pSS.Release();
     }
@@ -16088,6 +16143,7 @@ DWORD CMainFrame::SetupNavStreamSelectSubMenu(CMenu& subMenu, UINT id, DWORD dwS
 {
     bool bAddSeparator = false;
     DWORD selected = -1;
+    bool streams_found = false;
 
     auto addStreamSelectFilter = [&](CComPtr<IAMStreamSelect> pSS) {
         DWORD cStreams;
@@ -16140,25 +16196,18 @@ DWORD CMainFrame::SetupNavStreamSelectSubMenu(CMenu& subMenu, UINT id, DWORD dwS
 
         if (bAdded) {
             bAddSeparator = true;
+            streams_found = true;
         }
     };
 
     if (m_pSplitterSS) {
         addStreamSelectFilter(m_pSplitterSS);
     }
-    if (m_pSubSS && dwSelGroup == 2) {
-        addStreamSelectFilter(m_pSubSS);
-    }
-    if (m_pOtherSS[0]) {
+    if (!streams_found && m_pOtherSS[0]) {
         addStreamSelectFilter(m_pOtherSS[0]);
     }
-    if (m_pOtherSS[1]) {
+    if (!streams_found && m_pOtherSS[1]) {
         addStreamSelectFilter(m_pOtherSS[1]);
-    }
-
-    if (CComQIPtr<IAMStreamSelect> pSS = m_pGB) {
-        ASSERT(false);
-        addStreamSelectFilter(pSS);
     }
 
     return selected;
@@ -16166,6 +16215,8 @@ DWORD CMainFrame::SetupNavStreamSelectSubMenu(CMenu& subMenu, UINT id, DWORD dwS
 
 void CMainFrame::OnNavStreamSelectSubMenu(UINT id, DWORD dwSelGroup)
 {
+    bool streams_found = false;
+
     auto processStreamSelectFilter = [&](CComPtr<IAMStreamSelect> pSS) {
         bool bSelected = false;
 
@@ -16185,6 +16236,8 @@ void CMainFrame::OnNavStreamSelectSubMenu(UINT id, DWORD dwSelGroup)
                     continue;
                 }
 
+                streams_found = true;
+
                 if (id == 0) {
                     pSS->Enable(i, AMSTREAMSELECTENABLE_ENABLE);
                     bSelected = true;
@@ -16201,25 +16254,18 @@ void CMainFrame::OnNavStreamSelectSubMenu(UINT id, DWORD dwSelGroup)
     if (m_pSplitterSS) {
         if (processStreamSelectFilter(m_pSplitterSS)) return;
     }
-    if (m_pSubSS && dwSelGroup == 2) {
-        if (processStreamSelectFilter(m_pSubSS)) return;
-    }
-    if (m_pOtherSS[0]) {
+    if (!streams_found && m_pOtherSS[0]) {
         if (processStreamSelectFilter(m_pOtherSS[0])) return;
     }
-    if (m_pOtherSS[1]) {
+    if (!streams_found && m_pOtherSS[1]) {
         if (processStreamSelectFilter(m_pOtherSS[1])) return;
-    }
-
-    if (CComQIPtr<IAMStreamSelect> pSS = m_pGB) {
-        ASSERT(false);
-        if (processStreamSelectFilter(pSS)) return;
     }
 }
 
 void CMainFrame::OnStreamSelect(bool bForward, DWORD dwSelGroup)
 {
     ASSERT(dwSelGroup == 1 || dwSelGroup == 2);
+    bool streams_found = false;
 
     auto processStreamSelectFilter = [&](CComPtr<IAMStreamSelect> pSS) {
         DWORD cStreams;
@@ -16242,6 +16288,8 @@ void CMainFrame::OnStreamSelect(bool bForward, DWORD dwSelGroup)
             if (dwGroup != dwSelGroup) {
                 continue;
             }
+
+            streams_found = true;
 
             if (dwFlags) {
                 currentSel = streams.size();
@@ -16283,13 +16331,10 @@ void CMainFrame::OnStreamSelect(bool bForward, DWORD dwSelGroup)
     if (m_pSplitterSS) {
         if (processStreamSelectFilter(m_pSplitterSS)) return;
     }
-    if (m_pSubSS && dwSelGroup == 2) {
-        if (processStreamSelectFilter(m_pSubSS)) return;
-    }
-    if (m_pOtherSS[0]) {
+    if (!streams_found && m_pOtherSS[0]) {
         if (processStreamSelectFilter(m_pOtherSS[0])) return;
     }
-    if (m_pOtherSS[1]) {
+    if (!streams_found && m_pOtherSS[1]) {
         if (processStreamSelectFilter(m_pOtherSS[1])) return;
     }
 }
