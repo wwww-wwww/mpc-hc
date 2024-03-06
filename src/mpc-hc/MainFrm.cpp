@@ -12938,9 +12938,10 @@ void CMainFrame::OpenFile(OpenFileData* pOFD)
             bool fsf = false;
             CLSID clsid = CLSID_NULL;
             pBF->GetClassID(&clsid);
+            // IFileSourceFilter
             if (!m_pFSF) {
                 m_pFSF = pBF;
-                if (m_pFSF) { // IFileSourceFilter
+                if (m_pFSF) {
                     fsf = true;
                     if (!m_pAMNS) {
                         m_pAMNS = pBF;
@@ -12963,7 +12964,8 @@ void CMainFrame::OpenFile(OpenFileData* pOFD)
                     }
                 }
             }
-            if (!fsf) { // Find IAMStreamSelect filters
+            // IAMStreamSelect
+            if (!fsf) {
                 if (clsid == __uuidof(CAudioSwitcherFilter)) {
                     m_pAudioSwitcherSS = pBF;
                 } else {
@@ -12972,6 +12974,7 @@ void CMainFrame::OpenFile(OpenFileData* pOFD)
                     } else {
                         if (clsid == CLSID_VSFilter || clsid == CLSID_XySubFilter) {
                             m_pSubSS = pBF;
+                            m_pDVS = pBF;
                         } else {
                             if (clsid != CLSID_MPCBEAudioRenderer) {
                                 if (CComQIPtr<IAMStreamSelect> pTest = pBF) {
@@ -12988,6 +12991,7 @@ void CMainFrame::OpenFile(OpenFileData* pOFD)
                     }
                 }
             }
+            // Others
             if (!m_pKFI) {
                 m_pKFI = pBF;
             }
@@ -13194,6 +13198,7 @@ void CMainFrame::SetupChapters()
         return;
     }
 
+    // ToDo: add global pointer list for IDSMChapterBag
     CInterfaceList<IBaseFilter> pBFs;
     BeginEnumFilters(m_pGB, pEF, pBF);
     pBFs.AddTail(pBF);
@@ -13484,6 +13489,7 @@ void CMainFrame::OpenDVD(OpenDVDData* pODD)
         } else {
             if (clsid == CLSID_VSFilter || clsid == CLSID_XySubFilter) {
                 m_pSubSS = pBF;
+                m_pDVS = pBF;
             } else {
                 if (clsid != CLSID_MPCBEAudioRenderer) {
                     if (CComQIPtr<IAMStreamSelect> pTest = pBF) {
@@ -13696,25 +13702,6 @@ void CMainFrame::OpenCapture(OpenDeviceData* pODD)
                 && FAILED(m_pCGB->FindInterface(&PIN_CATEGORY_PREVIEW, &MEDIATYPE_Audio, m_pAudCap, IID_PPV_ARGS(&m_pAMASC)))) {
             TRACE(_T("Warning: No IAMStreamConfig interface for vidcap"));
         }
-        /*
-        CInterfaceArray<IAMAudioInputMixer> pAMAIM;
-
-        BeginEnumPins(m_pAudCap, pEP, pPin)
-        {
-            PIN_DIRECTION dir;
-            if (FAILED(pPin->QueryDirection(&dir)) || dir != PINDIR_INPUT)
-                continue;
-
-            if (CComQIPtr<IAMAudioInputMixer> pAIM = pPin)
-                pAMAIM.Add(pAIM);
-        }
-        EndEnumPins;
-
-        if (m_pAMASC)
-        {
-            m_wndCaptureBar.m_capdlg.SetupAudioControls(auddispname, m_pAMASC, pAMAIM);
-        }
-        */
     }
 
     if (!(m_pVidCap || m_pAudCap)) {
@@ -13768,10 +13755,6 @@ void CMainFrame::OpenCustomizeGraph()
     if (GetPlaybackMode() == PM_DVD) {
         BeginEnumFilters(m_pGB, pEF, pBF) {
             if (CComQIPtr<IDirectVobSub2> pDVS2 = pBF) {
-                //pDVS2->AdviseSubClock(m_pSubClock = DEBUG_NEW CSubClock);
-                //break;
-
-                // TODO: test multiple dvobsub instances with one clock
                 if (!m_pSubClock) {
                     m_pSubClock = DEBUG_NEW CSubClock;
                 }
@@ -13798,35 +13781,22 @@ void CMainFrame::OpenSetupVideo()
         vs = m_pCAP->GetVideoSize(false);
         m_fAudioOnly = (vs.cx <= 0 || vs.cy <= 0);
     } else {
-        {
-            if (CComQIPtr<IBasicVideo> pBV = m_pGB) {
-                pBV->GetVideoSize(&vs.cx, &vs.cy);
-            }
+        if (CComQIPtr<IBasicVideo> pBV = m_pGB) {
+            pBV->GetVideoSize(&vs.cx, &vs.cy);
 
             if (vs.cx > 0 && vs.cy > 0) {
                 m_fAudioOnly = false;
             }
         }
-
-        if (m_fAudioOnly) {
-            BeginEnumFilters(m_pGB, pEF, pBF) {
-
-                if (CComQIPtr<IVideoWindow> pVW = pBF) {
-                    long lVisible;
-                    if (FAILED(pVW->get_Visible(&lVisible))) {
-                        continue;
-                    }
-
-                    pVW->get_Width(&vs.cx);
-                    pVW->get_Height(&vs.cy);
-                }
-
+        if (m_fAudioOnly && m_pVW) {
+            long lVisible;
+            if (SUCCEEDED(m_pVW->get_Visible(&lVisible))) {
+                m_pVW->get_Width(&vs.cx);
+                m_pVW->get_Height(&vs.cy);
                 if (vs.cx > 0 && vs.cy > 0) {
                     m_fAudioOnly = false;
-                    break;
                 }
             }
-            EndEnumFilters;
         }
     }
 
@@ -14408,13 +14378,6 @@ bool MatchSubtrackWithISOLang(CString& tname, const ISOLangT<CString>& l)
 int CMainFrame::SetupSubtitleStreams()
 {
     const CAppSettings& s = AfxGetAppSettings();
-
-    BeginEnumFilters(m_pGB, pEF, pBF) {
-        if (m_pDVS = pBF) {
-            break;
-        }
-    }
-    EndEnumFilters;
 
     int selected = -1;
 
