@@ -9332,15 +9332,14 @@ void CMainFrame::OnPlayAudio(UINT nID)
     int i = (int)nID - ID_AUDIO_SUBITEM_START;
 
     DWORD cStreams = 0;
-    if (i != 0) {
-        currentAudioLang = _T("");
-    }
 
     if (GetPlaybackMode() == PM_DVD) {
         m_pDVDC->SelectAudioStream(i, DVD_CMD_FLAG_Block, nullptr);
         LCID lcid = 0;
         if (SUCCEEDED(m_pDVDI->GetAudioLanguage(i, &lcid)) && lcid != 0) {
             GetLocaleString(lcid, LOCALE_SISO639LANGNAME2, currentAudioLang);
+        } else {
+            currentAudioLang.Empty();
         }
     } else if (m_pAudioSwitcherSS && SUCCEEDED(m_pAudioSwitcherSS->Count(&cStreams)) && cStreams > 0) {
         if (i == 0) {
@@ -15645,7 +15644,6 @@ void CMainFrame::SetupFiltersSubMenu()
 
 void CMainFrame::SetupAudioSubMenu()
 {
-    currentAudioLang = _T("");
     CMenu& subMenu = m_audiosMenu;
     // Empty the menu
     while (subMenu.RemoveMenu(0, MF_BYPOSITION));
@@ -15659,6 +15657,7 @@ void CMainFrame::SetupAudioSubMenu()
     DWORD cStreams = 0;
 
     if (GetPlaybackMode() == PM_DVD) {
+        currentAudioLang = _T("");
         ULONG ulStreamsAvailable, ulCurrentStream;
         if (FAILED(m_pDVDI->GetCurrentAudio(&ulStreamsAvailable, &ulCurrentStream))) {
             return;
