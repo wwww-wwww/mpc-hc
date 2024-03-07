@@ -2171,6 +2171,20 @@ CStringW GetShortAudioNameFromMediaType(AM_MEDIA_TYPE* pmt) {
         return L"LOAS";
     }
 
+    if (_IsFourCC(pmt->subtype)) {
+        CString fcc;
+        DWORD a = (pmt->subtype.Data1 >> 24) & 0xFF;
+        DWORD b = (pmt->subtype.Data1 >> 16) & 0xFF;
+        DWORD c = (pmt->subtype.Data1 >> 8) & 0xFF;
+        DWORD d = (pmt->subtype.Data1 >> 0) & 0xFF;
+        if (a != 0 || b != 0) {
+            fcc.Format(_T("%02x%02x%02x%02x"), a, b, c, d);
+        } else {
+            fcc.Format(_T("%02x%02x"), c, d);
+        }
+        return fcc;
+    }
+
     return L"UNKN";
 }
 
