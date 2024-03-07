@@ -13044,6 +13044,12 @@ void CMainFrame::OpenFile(OpenFileData* pOFD)
             CLSID clsid = GetCLSID(pBF);
             if (clsid == GUID_LAVSplitter || clsid == GUID_LAVSplitterSource) {
                 m_pSplitterDubSS = pBF;
+            } else if (clsid == __uuidof(CAudioSwitcherFilter)) {
+                if (!m_pAudioSwitcherSS) {
+                    m_pAudioSwitcherSS = pBF;
+                } else {
+                    ASSERT(false);
+                }
             }
             EndEnumFilters;
         }
