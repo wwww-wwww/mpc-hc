@@ -14088,51 +14088,72 @@ void CMainFrame::OpenSetupStatsBar()
     }
 }
 
+bool GetVideoFormatNameFromMediaType(const GUID& guid, CString& name) {
+    if (GetMediaTypeFourCC(guid, name)) {
+        if (name == L"HVC1") {
+            name = L"HEVC";
+        } else if (name == L"AVC1") {
+            name = L"H264";
+        } else if (name == L"VP90") {
+            name = L"VP9";
+        } else if (name == L"AV01") {
+            name = L"AV1";
+        }
+        return true;
+    } else if (guid == MEDIASUBTYPE_MPEG1Payload) {
+        name = L"MPEG1";
+        return true;
+    } else {
+        name = L"UNKN";
+        ASSERT(false);
+    }
+
+    return false;
+}
+
 void CMainFrame::OpenSetupStatusBar()
 {
     m_wndStatusBar.ShowTimer(true);
 
     if (!m_fCustomGraph) {
+        CString fcc;
         // Find video output pin of the source filter or splitter
         BeginEnumFilters(m_pGB, pEF, pBF) {
-            CString fcc;
-            int input_pins = 0;
-            bool splitter = false;
-            BeginEnumPins(pBF, pEP, pPin) {               
-                PIN_DIRECTION dir;
-                CMediaTypeEx mt;
-                if (SUCCEEDED(pPin->QueryDirection(&dir)) && SUCCEEDED(pPin->ConnectionMediaType(&mt))) {
-                    if (dir == PINDIR_OUTPUT) {
-                        if (mt.majortype == MEDIATYPE_Video) {
-                            GetMediaTypeFourCC(mt.subtype, fcc);
-                            if (splitter) {
-                                break;
+            CLSID clsid = GetCLSID(pBF);
+            bool splitter = (clsid == GUID_LAVSplitterSource || clsid == GUID_LAVSplitter);
+            // only process filters that might be splitters
+            if (splitter || clsid != __uuidof(CAudioSwitcherFilter) && clsid != GUID_LAVVideo && clsid != GUID_LAVAudio) {
+                int input_pins = 0;
+                BeginEnumPins(pBF, pEP, pPin) {
+                    PIN_DIRECTION dir;
+                    CMediaTypeEx mt;
+                    if (SUCCEEDED(pPin->QueryDirection(&dir)) && SUCCEEDED(pPin->ConnectionMediaType(&mt))) {
+                        if (dir == PINDIR_OUTPUT) {
+                            if (mt.majortype == MEDIATYPE_Video) {
+                                GetVideoFormatNameFromMediaType(mt.subtype, fcc);
+                                if (splitter) {
+                                    break;
+                                }
                             }
+                        } else {
+                            input_pins++;
+                            splitter = (mt.majortype == MEDIATYPE_Stream);
                         }
-                    } else {
-                        input_pins++;
-                        splitter = (mt.majortype == MEDIATYPE_Stream);
                     }
                 }
-            }
-            EndEnumPins;
+                EndEnumPins;
 
-            if ((input_pins == 0 || splitter) && !fcc.IsEmpty()) {
-                if (fcc == L"HVC1") {
-                    m_statusbarVideoFormat = L"HEVC";
-                } else if (fcc == L"AVC1") {
-                    m_statusbarVideoFormat = L"H264";
-                } else if (fcc == L"VP90") {
-                    m_statusbarVideoFormat = L"VP9";
-                } else if (fcc == L"AV01") {
-                    m_statusbarVideoFormat = L"AV1";
-                } else {
-                    m_statusbarVideoFormat = fcc;
+                if ((input_pins == 0 || splitter) && !fcc.IsEmpty()) {
+                    break;
                 }
-                break;
             }
         }
         EndEnumFilters;
+
+        if (!fcc.IsEmpty()) {
+            m_statusbarVideoFormat = fcc;
+        }
+
 
         int nChannels = 0;
         int audiostreamcount = 0;
