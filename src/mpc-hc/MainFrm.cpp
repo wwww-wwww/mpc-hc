@@ -13044,11 +13044,12 @@ void CMainFrame::OpenFile(OpenFileData* pOFD)
             CLSID clsid = GetCLSID(pBF);
             if (clsid == GUID_LAVSplitter || clsid == GUID_LAVSplitterSource) {
                 m_pSplitterDubSS = pBF;
+                if (m_pSplitterSS && m_pSplitterSS == m_pSplitterDubSS) {
+                    m_pSplitterDubSS.Release();
+                }
             } else if (clsid == __uuidof(CAudioSwitcherFilter)) {
                 if (!m_pAudioSwitcherSS) {
                     m_pAudioSwitcherSS = pBF;
-                } else {
-                    ASSERT(false);
                 }
             }
             EndEnumFilters;
@@ -14341,6 +14342,7 @@ int CMainFrame::SetupAudioStreams()
                 CoTaskMemFree(pName);
 
                 if (dwGroup != 1) {
+                    ASSERT(bIsSplitter);
                     continue;
                 }
 
