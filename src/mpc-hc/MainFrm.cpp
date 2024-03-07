@@ -13015,7 +13015,6 @@ void CMainFrame::OpenFile(OpenFileData* pOFD)
             EndEnumFilters;
 
             ASSERT(m_pFSF);
-            ASSERT(m_pAudioSwitcherSS || !s.fEnableAudioSwitcher);
 
             if (!bIsVideo) {
                 m_bUseSeekPreview = false;
@@ -13039,6 +13038,14 @@ void CMainFrame::OpenFile(OpenFileData* pOFD)
                     ReleasePreviewGraph();
                 }
             }
+        } else { // Audio DUB
+            // Check for supported interfaces
+            BeginEnumFilters(m_pGB, pEF, pBF);
+            CLSID clsid = GetCLSID(pBF);
+            if (clsid == GUID_LAVSplitter || clsid == GUID_LAVSplitterSource) {
+                m_pSplitterDubSS = pBF;
+            }
+            EndEnumFilters;
         }
 
         // We don't keep track of piped inputs since that hardly makes any sense
@@ -14124,49 +14131,78 @@ void CMainFrame::OpenSetupStatusBar()
         EndEnumFilters;
 
         int nChannels = 0;
-        if (m_pAudioSwitcherSS) {
+        int audiostreamcount = 0;
+        m_loadedAudioTrackIndex = -1;
+
+        if (m_pSplitterSS) {
             DWORD cStreams = 0;
-            if (SUCCEEDED(m_pAudioSwitcherSS->Count(&cStreams)) && cStreams > 0 && cStreams > m_loadedAudioTrackIndex) {
+            if (SUCCEEDED(m_pSplitterSS->Count(&cStreams)) && cStreams > 0) {
+                DWORD dwFlags, dwGroup;
                 LCID lcid = 0;
-                DWORD dwFlags;
                 AM_MEDIA_TYPE* pmt = nullptr;
-                if (SUCCEEDED(m_pAudioSwitcherSS->Info(m_loadedAudioTrackIndex, &pmt, &dwFlags, &lcid, nullptr, nullptr, nullptr, nullptr))) {
-                    ASSERT(dwFlags & (AMSTREAMSELECTINFO_ENABLED | AMSTREAMSELECTINFO_EXCLUSIVE));
-                    nChannels = UpdateSelectedAudioStreamInfo(m_loadedAudioTrackIndex, pmt, lcid);
-                    DeleteMediaType(pmt);
-                }
-            }
-        } else {
-            if (m_pSplitterSS) {
-                DWORD cStreams = 0;
-                if (SUCCEEDED(m_pSplitterSS->Count(&cStreams)) && cStreams > 0) {
-                    m_loadedAudioTrackIndex = -1;
-                    int audiostreamcount = 0;
-                    for (DWORD i = 0; i < cStreams; i++) {
-                        DWORD dwFlags, dwGroup;
-                        WCHAR* pName = nullptr;
-                        CComPtr<IUnknown> pObject;
-                        if (SUCCEEDED(m_pSplitterSS->Info(i, nullptr, &dwFlags, nullptr, &dwGroup, nullptr, nullptr, nullptr))) {
-                            if (dwGroup == 1) {
-                                if (dwFlags & (AMSTREAMSELECTINFO_ENABLED | AMSTREAMSELECTINFO_EXCLUSIVE)) {
-                                    m_loadedAudioTrackIndex = audiostreamcount;
-                                    LCID lcid = 0;
-                                    AM_MEDIA_TYPE* pmt = nullptr;
-                                    if (SUCCEEDED(m_pSplitterSS->Info(i, &pmt, nullptr, &lcid, nullptr, nullptr, nullptr, nullptr))) {
-                                        nChannels = UpdateSelectedAudioStreamInfo(m_loadedAudioTrackIndex, pmt, lcid);
-                                        DeleteMediaType(pmt);
-                                    }
-                                    break;
-                                }
-                                audiostreamcount++;
+                for (DWORD i = 0; i < cStreams; i++) {
+                    if (SUCCEEDED(m_pSplitterSS->Info(i, &pmt, &dwFlags, &lcid, &dwGroup, nullptr, nullptr, nullptr))) {
+                        if (dwGroup == 1) {
+                            if (dwFlags & (AMSTREAMSELECTINFO_ENABLED | AMSTREAMSELECTINFO_EXCLUSIVE)) {
+                                m_loadedAudioTrackIndex = audiostreamcount;
+                                nChannels = UpdateSelectedAudioStreamInfo(m_loadedAudioTrackIndex, pmt, lcid);
                             }
+                            audiostreamcount++;
                         }
+                        DeleteMediaType(pmt);
                     }
-                    if (m_loadedAudioTrackIndex == -1) {
-                        UpdateSelectedAudioStreamInfo(-1, nullptr, -1);
+                }
+                if (m_loadedAudioTrackIndex == -1) {
+                    UpdateSelectedAudioStreamInfo(-1, nullptr, -1);
+                }
+            }
+        }
+        if (audiostreamcount == 0 && m_pSplitterDubSS) {
+            DWORD cStreams = 0;
+            if (SUCCEEDED(m_pSplitterDubSS->Count(&cStreams)) && cStreams > 0) {
+                DWORD dwFlags, dwGroup;
+                LCID lcid = 0;
+                AM_MEDIA_TYPE* pmt = nullptr;
+                for (DWORD i = 0; i < cStreams; i++) {
+                    if (SUCCEEDED(m_pSplitterDubSS->Info(i, &pmt, &dwFlags, &lcid, &dwGroup, nullptr, nullptr, nullptr))) {
+                        if (dwGroup == 1) {
+                            if (dwFlags & (AMSTREAMSELECTINFO_ENABLED | AMSTREAMSELECTINFO_EXCLUSIVE)) {
+                                m_loadedAudioTrackIndex = audiostreamcount;
+                                nChannels = UpdateSelectedAudioStreamInfo(m_loadedAudioTrackIndex, pmt, lcid);
+                            }
+                            audiostreamcount++;
+                        }
+                        DeleteMediaType(pmt);
+                    }
+                }
+                if (m_loadedAudioTrackIndex == -1) {
+                    UpdateSelectedAudioStreamInfo(-1, nullptr, -1);
+                }
+            }
+        }
+        if (audiostreamcount == 0 && m_pAudioSwitcherSS) { // Fallback
+            DWORD cStreams = 0;
+            if (SUCCEEDED(m_pAudioSwitcherSS->Count(&cStreams)) && cStreams > 0) {
+                LCID lcid = 0;
+                DWORD dwFlags, dwGroup;
+                AM_MEDIA_TYPE* pmt = nullptr;
+                for (DWORD i = 0; i < cStreams; i++) {
+                    if (SUCCEEDED(m_pAudioSwitcherSS->Info(i, &pmt, &dwFlags, &lcid, &dwGroup, nullptr, nullptr, nullptr))) {
+                        if (dwGroup == 1) {
+                            if (dwFlags & (AMSTREAMSELECTINFO_ENABLED | AMSTREAMSELECTINFO_EXCLUSIVE)) {
+                                m_loadedAudioTrackIndex = audiostreamcount;
+                                nChannels = UpdateSelectedAudioStreamInfo(m_loadedAudioTrackIndex, pmt, lcid);
+                            }
+                            audiostreamcount++;
+                        }
+                        DeleteMediaType(pmt);
                     }
                 }
             }
+        }
+        if (audiostreamcount == 0) {
+            m_loadedAudioTrackIndex = -1;
+            UpdateSelectedAudioStreamInfo(-1, nullptr, -1);
         }
 
         UINT id = IDB_AUDIOTYPE_NOAUDIO;
@@ -15051,6 +15087,7 @@ void CMainFrame::CloseMediaPrivate()
     }
     m_pAudioSwitcherSS.Release();
     m_pSplitterSS.Release();
+    m_pSplitterDubSS.Release();
     for (auto& pSS : m_pOtherSS) {
         pSS.Release();
     }
