@@ -2113,6 +2113,16 @@ CStringW GetShortAudioNameFromMediaType(AM_MEDIA_TYPE* pmt) {
         return L"Vorbis";
     } else if (pmt->subtype == MEDIASUBTYPE_OPUS || pmt->subtype == MEDIASUBTYPE_OPUS_OLD) {
         return L"Opus";
+    } else if (pmt->subtype == MEDIASUBTYPE_MSAUDIO1) {
+        return L"WMA1";
+    } else if (pmt->subtype == MEDIASUBTYPE_WMAUDIO2) {
+        return L"WMA2";
+    } else if (pmt->subtype == MEDIASUBTYPE_WMAUDIO3) {
+        return L"WMA3";
+    } else if (pmt->subtype == MEDIASUBTYPE_WMAUDIO4) {
+        return L"WMA4";
+    } else if (pmt->subtype == MEDIASUBTYPE_WMAUDIO_LOSSLESS) {
+        return L"WMA-LL";
     } else if (pmt->subtype == MEDIASUBTYPE_BD_LPCM_AUDIO || pmt->subtype == MEDIASUBTYPE_HDMV_LPCM_AUDIO) {
         return L"LPCM";
     } else if (pmt->subtype == MEDIASUBTYPE_IMA_AMV || pmt->subtype == MEDIASUBTYPE_ADPCM_MS || pmt->subtype == MEDIASUBTYPE_IMA_WAV) {
@@ -2129,6 +2139,8 @@ CStringW GetShortAudioNameFromMediaType(AM_MEDIA_TYPE* pmt) {
         return L"GSM610";
     } else if (pmt->subtype == MEDIASUBTYPE_ALAW || pmt->subtype == MEDIASUBTYPE_MULAW) {
         return L"G711";
+    } else if (pmt->subtype == MEDIASUBTYPE_G723) {
+        return L"G723";
     } else if (pmt->subtype == MEDIASUBTYPE_G726) {
         return L"G726";
     } else if (pmt->subtype == MEDIASUBTYPE_G729 || pmt->subtype == MEDIASUBTYPE_729A) {
