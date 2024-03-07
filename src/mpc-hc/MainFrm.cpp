@@ -14302,6 +14302,8 @@ void CMainFrame::OpenSetupWindowTitle(bool reset /*= false*/)
 int CMainFrame::SetupAudioStreams()
 {
     bool bIsSplitter = false;
+    int desiredTrackIndex = m_loadedAudioTrackIndex;
+    m_loadedAudioTrackIndex = -1;
     m_audioTrackCount = 0;
 
     CComQIPtr<IAMStreamSelect> pSS = m_pAudioSwitcherSS;
@@ -14333,9 +14335,11 @@ int CMainFrame::SetupAudioStreams()
             int maxrating = -1;
             for (DWORD i = 0; i < cStreams; i++) {
                 DWORD dwFlags, dwGroup;
+                LCID lcid = 0;
+                AM_MEDIA_TYPE* pmt = nullptr;
                 WCHAR* pName = nullptr;
                 CComPtr<IUnknown> pObject;
-                if (FAILED(pSS->Info(i, nullptr, &dwFlags, nullptr, &dwGroup, &pName, &pObject, nullptr))) {
+                if (FAILED(pSS->Info(i, &pmt, &dwFlags, &lcid, &dwGroup, &pName, &pObject, nullptr))) {
                     continue;
                 }
                 CString name(pName);
@@ -14376,7 +14380,12 @@ int CMainFrame::SetupAudioStreams()
                 } else if (dwFlags & (AMSTREAMSELECTINFO_ENABLED | AMSTREAMSELECTINFO_EXCLUSIVE)) {
                     // Give selected track a slightly higher rating
                     rating += 1;
+                    // Get details of currently selected track
+                    m_loadedAudioTrackIndex = m_audioTrackCount - 1;
+                    UpdateSelectedAudioStreamInfo(m_loadedAudioTrackIndex, pmt, lcid);
                 }
+
+                DeleteMediaType(pmt);
 
                 name.Trim();
                 name.MakeLower();
@@ -14414,23 +14423,26 @@ int CMainFrame::SetupAudioStreams()
                 id++;
             }
 
-            if (m_loadedAudioTrackIndex >= 0 && m_loadedAudioTrackIndex < m_audioTrackCount) {
-                selected = m_loadedAudioTrackIndex;
+            if (desiredTrackIndex >= 0 && desiredTrackIndex < m_audioTrackCount) {
+                selected = desiredTrackIndex;
             }
             return m_audioTrackCount > 1 ? selected + !bIsSplitter : -1;
         } else if (cStreams == 1) {
             DWORD dwFlags, dwGroup;
-            if (SUCCEEDED(pSS->Info(0, nullptr, &dwFlags, nullptr, &dwGroup, nullptr, nullptr, nullptr))) {
-                if (dwFlags & (AMSTREAMSELECTINFO_ENABLED | AMSTREAMSELECTINFO_EXCLUSIVE)) {
+            LCID lcid = 0;
+            AM_MEDIA_TYPE* pmt = nullptr;
+            if (SUCCEEDED(pSS->Info(0, &pmt, &dwFlags, &lcid, &dwGroup, nullptr, nullptr, nullptr))) {
+                if (dwGroup == 1 && (dwFlags & (AMSTREAMSELECTINFO_ENABLED | AMSTREAMSELECTINFO_EXCLUSIVE))) {
                     m_loadedAudioTrackIndex = 0;
                     m_audioTrackCount = 1;
-                    return -1; // no need to select a specific track
+                    UpdateSelectedAudioStreamInfo(m_loadedAudioTrackIndex, pmt, lcid);
                 }
+                DeleteMediaType(pmt);
+                return -1; // no need to select a specific track
             }
         }        
     }
 
-    m_loadedAudioTrackIndex = -1;
     return -1;
 }
 
