@@ -2125,10 +2125,14 @@ CStringW GetShortAudioNameFromMediaType(AM_MEDIA_TYPE* pmt) {
         return L"WMA-LL";
     } else if (pmt->subtype == MEDIASUBTYPE_BD_LPCM_AUDIO || pmt->subtype == MEDIASUBTYPE_HDMV_LPCM_AUDIO) {
         return L"LPCM";
-    } else if (pmt->subtype == MEDIASUBTYPE_IMA_AMV || pmt->subtype == MEDIASUBTYPE_ADPCM_MS || pmt->subtype == MEDIASUBTYPE_IMA_WAV) {
+    } else if (pmt->subtype == MEDIASUBTYPE_IMA_AMV || pmt->subtype == MEDIASUBTYPE_ADPCM_MS || pmt->subtype == MEDIASUBTYPE_IMA_WAV || pmt->subtype == MEDIASUBTYPE_ADPCM_SWF) {
         return L"ADPCM";
     } else if (pmt->subtype == MEDIASUBTYPE_TRUESPEECH) {
         return L"TrueSpeech";
+    } else if (pmt->subtype == MEDIASUBTYPE_PCM_NONE || pmt->subtype == MEDIASUBTYPE_PCM_RAW || pmt->subtype == MEDIASUBTYPE_PCM_TWOS || pmt->subtype == MEDIASUBTYPE_PCM_SOWT
+        || pmt->subtype == MEDIASUBTYPE_PCM_IN24 || pmt->subtype == MEDIASUBTYPE_PCM_IN32 || pmt->subtype == MEDIASUBTYPE_PCM_FL32 || pmt->subtype == MEDIASUBTYPE_PCM_FL64
+        || pmt->subtype == MEDIASUBTYPE_PCM_IN24_le || pmt->subtype == MEDIASUBTYPE_PCM_IN32_le || pmt->subtype == MEDIASUBTYPE_PCM_FL32_le || pmt->subtype == MEDIASUBTYPE_PCM_FL64_le) {
+        return L"QTPCM";
     } else if (pmt->subtype == MEDIASUBTYPE_TTA1) {
         return L"TTA";
     } else if (pmt->subtype == MEDIASUBTYPE_SAMR) {
@@ -2139,12 +2143,14 @@ CStringW GetShortAudioNameFromMediaType(AM_MEDIA_TYPE* pmt) {
         return L"GSM610";
     } else if (pmt->subtype == MEDIASUBTYPE_ALAW || pmt->subtype == MEDIASUBTYPE_MULAW) {
         return L"G711";
-    } else if (pmt->subtype == MEDIASUBTYPE_G723) {
+    } else if (pmt->subtype == MEDIASUBTYPE_G723 || pmt->subtype == MEDIASUBTYPE_VIVO_G723) {
         return L"G723";
     } else if (pmt->subtype == MEDIASUBTYPE_G726) {
         return L"G726";
     } else if (pmt->subtype == MEDIASUBTYPE_G729 || pmt->subtype == MEDIASUBTYPE_729A) {
         return L"G729";
+    } else if (pmt->subtype == MEDIASUBTYPE_APE) {
+        return L"APE";
     } else if (pmt->subtype == MEDIASUBTYPE_TAK) {
         return L"TAK";
     } else if (pmt->subtype == MEDIASUBTYPE_ALS) {
@@ -2166,4 +2172,30 @@ CStringW GetShortAudioNameFromMediaType(AM_MEDIA_TYPE* pmt) {
     }
 
     return L"UNKN";
+}
+
+bool GetVideoFormatNameFromMediaType(const GUID& guid, CString& name) {
+    if (GetMediaTypeFourCC(guid, name)) {
+        if (name == L"HVC1") {
+            name = L"HEVC";
+        } else if (name == L"AVC1") {
+            name = L"H264";
+        } else if (name == L"VP90") {
+            name = L"VP9";
+        } else if (name == L"AV01") {
+            name = L"AV1";
+        }
+        return true;
+    } else if (guid == MEDIASUBTYPE_MPEG1Payload || guid == MEDIASUBTYPE_MPEG1Video) {
+        name = L"MPEG1";
+        return true;
+    } else if (guid == MEDIASUBTYPE_MPEG2_VIDEO) {
+        name = L"MPEG2";
+        return true;
+    } else {
+        name = L"UNKN";
+        ASSERT(false);
+    }
+
+    return false;
 }

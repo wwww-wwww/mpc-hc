@@ -14096,29 +14096,6 @@ void CMainFrame::OpenSetupStatsBar()
     }
 }
 
-bool GetVideoFormatNameFromMediaType(const GUID& guid, CString& name) {
-    if (GetMediaTypeFourCC(guid, name)) {
-        if (name == L"HVC1") {
-            name = L"HEVC";
-        } else if (name == L"AVC1") {
-            name = L"H264";
-        } else if (name == L"VP90") {
-            name = L"VP9";
-        } else if (name == L"AV01") {
-            name = L"AV1";
-        }
-        return true;
-    } else if (guid == MEDIASUBTYPE_MPEG1Payload) {
-        name = L"MPEG1";
-        return true;
-    } else {
-        name = L"UNKN";
-        ASSERT(false);
-    }
-
-    return false;
-}
-
 void CMainFrame::OpenSetupStatusBar()
 {
     m_wndStatusBar.ShowTimer(true);

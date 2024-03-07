@@ -136,6 +136,7 @@ extern CStringW ForceTrailingSlash(CStringW folder);
 extern CStringW GetChannelStrFromMediaType(AM_MEDIA_TYPE* pmt);
 extern CStringW GetChannelStrFromMediaType(AM_MEDIA_TYPE* pmt, int& channels);
 extern CStringW GetShortAudioNameFromMediaType(AM_MEDIA_TYPE* pmt);
+extern bool GetVideoFormatNameFromMediaType(const GUID& guid, CString& name);
 
 extern inline const LONGLONG GetPerfCounter();
 
