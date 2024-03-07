@@ -4177,19 +4177,19 @@ void CMainFrame::OnStreamAudio(UINT nID)
     if (m_pAudioSwitcherSS && SUCCEEDED(m_pAudioSwitcherSS->Count(&cStreams)) && cStreams > 1) {
         for (DWORD i = 0; i < cStreams; i++) {
             DWORD dwFlags = 0;
-            LCID lcid = 0;
             DWORD dwGroup = 0;
-            if (FAILED(m_pAudioSwitcherSS->Info(i, nullptr, &dwFlags, &lcid, &dwGroup, nullptr, nullptr, nullptr))) {
+            if (FAILED(m_pAudioSwitcherSS->Info(i, nullptr, &dwFlags, nullptr, &dwGroup, nullptr, nullptr, nullptr))) {
                 return;
             }
-            if (dwGroup == 1 && (dwFlags & (AMSTREAMSELECTINFO_ENABLED | AMSTREAMSELECTINFO_EXCLUSIVE))) {
+            if (dwFlags & (AMSTREAMSELECTINFO_ENABLED | AMSTREAMSELECTINFO_EXCLUSIVE)) {
                 long stream_index = (i + (nID == 0 ? 1 : cStreams - 1)) % cStreams;
                 if (SUCCEEDED(m_pAudioSwitcherSS->Enable(stream_index, AMSTREAMSELECTENABLE_ENABLE))) {
+                    LCID lcid = 0;
                     CComHeapPtr<WCHAR> pszName;
                     AM_MEDIA_TYPE* pmt = nullptr;
                     if (SUCCEEDED(m_pAudioSwitcherSS->Info(stream_index, &pmt, &dwFlags, &lcid, &dwGroup, &pszName, nullptr, nullptr))) {
                         m_OSD.DisplayMessage(OSD_TOPLEFT, GetStreamOSDString(CString(pszName), lcid, 1));
-                        UpdateSelectedAudioStreamInfo(i, pmt, lcid);
+                        UpdateSelectedAudioStreamInfo(stream_index, pmt, lcid);
                         DeleteMediaType(pmt);
                     }
                 }
@@ -13524,7 +13524,6 @@ void CMainFrame::OpenDVD(OpenDVDData* pODD)
 
     ASSERT(m_pDVDC);
     ASSERT(m_pDVDI);
-    ASSERT(m_pAudioSwitcherSS || !s.fEnableAudioSwitcher);
 
     if (m_bUseSeekPreview) {
         BeginEnumFilters(m_pGB_preview, pEF, pBF) {
@@ -13654,7 +13653,6 @@ HRESULT CMainFrame::OpenBDAGraph()
         EndEnumFilters;
 
         ASSERT(m_pFSF);
-        ASSERT(m_pAudioSwitcherSS || !AfxGetAppSettings().fEnableAudioSwitcher);
     }
     return hr;
 }
