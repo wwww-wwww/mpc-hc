@@ -941,6 +941,7 @@ bool CPlayerPlaylistBar::PlaylistCanStripPath(CString path)
 
 bool CPlayerPlaylistBar::SaveMPCPlayList(CString fn, CTextFile::enc e)
 {
+    CAppSettings& s = AfxGetAppSettings();
     CTextFile f;
     if (!f.Save(fn, e)) {
         return false;
@@ -1033,7 +1034,7 @@ bool CPlayerPlaylistBar::SaveMPCPlayList(CString fn, CTextFile::enc e)
             f.WriteString(str + _T("\n"));
         }
     }
-
+    s.SavePlayListPosition(fn, GetSelIdx());
     return true;
 }
 
