@@ -3700,25 +3700,33 @@ void CMainFrame::OnUpdatePlayerStatus(CCmdUI* pCmdUI)
                 audioinfo = m_statusbarAudioFormat;
             }
 
-            if (!videoinfo.IsEmpty() || !fpsinfo.IsEmpty() || !audioinfo.IsEmpty()) {
+            if (!videoinfo.IsEmpty() || !fpsinfo.IsEmpty()) {
                 CStringW tinfo = L"";
                 AppendWithDelimiter(tinfo, videoinfo);
                 AppendWithDelimiter(tinfo, fpsinfo);
-                AppendWithDelimiter(tinfo, audioinfo);
                 msg.Append(L"\u2001[" + tinfo + L"]");
             }
 
+            if (!audioinfo.IsEmpty()) {
+                msg.Append(L"\u2001[" + audioinfo);
+                if (s.bShowLangInStatusbar && !currentAudioLang.IsEmpty()) {
+                    msg.Append(L" " + currentAudioLang);
+                }
+                msg.Append(L"]");
+            }
+
             if (s.bShowLangInStatusbar) {
-                if (!currentAudioLang.IsEmpty() || !currentSubLang.IsEmpty()) {
+                bool showaudiolang = audioinfo.IsEmpty() && !currentAudioLang.IsEmpty();
+                if (showaudiolang || !currentSubLang.IsEmpty()) {
                     msg.Append(_T("\u2001["));
-                    if (!currentAudioLang.IsEmpty()) {
-                        msg.AppendFormat(_T("AUD: %s"), currentAudioLang.GetString());
+                    if (showaudiolang) {
+                        msg.Append(L"AUD: " + currentAudioLang);
                     }
                     if (!currentSubLang.IsEmpty()) {
-                        if (!currentAudioLang.IsEmpty()) {
+                        if (showaudiolang) {
                             msg.Append(_T(", "));
                         }
-                        msg.AppendFormat(_T("SUB: %s"), currentSubLang.GetString());
+                        msg.Append(L"SUB: " + currentSubLang);
                     }
                     msg.Append(_T("]"));
                 }
