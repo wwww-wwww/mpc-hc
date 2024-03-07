@@ -1492,7 +1492,7 @@ STDMETHODIMP CStreamSwitcherFilter::Info(long lIndex, AM_MEDIA_TYPE** ppmt, DWOR
                                 }
 
                                 if (pdwGroup) {
-                                    *pdwGroup = (dwFlags & (AMSTREAMSELECTINFO_ENABLED | AMSTREAMSELECTINFO_EXCLUSIVE)) ? 2 : 1;
+                                    *pdwGroup = 1;
                                 }
 
                                 if (ppszName) {
@@ -1526,7 +1526,7 @@ STDMETHODIMP CStreamSwitcherFilter::Info(long lIndex, AM_MEDIA_TYPE** ppmt, DWOR
                 }
 
                 if (pdwGroup) {
-                    *pdwGroup = 0;
+                    *pdwGroup = 1;
                 }
 
                 if (ppszName) {
