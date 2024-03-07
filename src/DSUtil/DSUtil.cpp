@@ -2097,7 +2097,7 @@ CStringW GetShortAudioNameFromMediaType(AM_MEDIA_TYPE* pmt) {
         return L"LPCM";
     } else if (pmt->subtype == MEDIASUBTYPE_DOLBY_TRUEHD) {
         return L"TrueHD";
-    } else if (pmt->subtype == MEDIASUBTYPE_IEEE_FLOAT) {
+    } else if (pmt->subtype == MEDIASUBTYPE_PCM || pmt->subtype == MEDIASUBTYPE_IEEE_FLOAT) {
         return L"PCM";
     } else if (pmt->subtype == MEDIASUBTYPE_MPEG1AudioPayload || pmt->subtype == MEDIASUBTYPE_MPEG1Packet || pmt->subtype == MEDIASUBTYPE_MPEG1Payload) { //are these all actually possible?
         return L"MP1";

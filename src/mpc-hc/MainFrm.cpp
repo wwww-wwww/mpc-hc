@@ -4182,7 +4182,7 @@ void CMainFrame::OnStreamAudio(UINT nID)
             if (FAILED(m_pAudioSwitcherSS->Info(i, nullptr, &dwFlags, &lcid, &dwGroup, nullptr, nullptr, nullptr))) {
                 return;
             }
-            if (dwFlags & (AMSTREAMSELECTINFO_ENABLED | AMSTREAMSELECTINFO_EXCLUSIVE)) {
+            if (dwGroup == 1 && (dwFlags & (AMSTREAMSELECTINFO_ENABLED | AMSTREAMSELECTINFO_EXCLUSIVE))) {
                 long stream_index = (i + (nID == 0 ? 1 : cStreams - 1)) % cStreams;
                 if (SUCCEEDED(m_pAudioSwitcherSS->Enable(stream_index, AMSTREAMSELECTENABLE_ENABLE))) {
                     CComHeapPtr<WCHAR> pszName;
