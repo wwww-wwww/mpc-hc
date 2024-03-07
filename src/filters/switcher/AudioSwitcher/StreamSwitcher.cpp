@@ -616,7 +616,7 @@ HRESULT CStreamSwitcherInputPin::CompleteConnect(IPin* pReceivePin)
 
             if (SUCCEEDED(pFSF->GetCurFile(&fileName, &mt)) && fileName) {
                 streamName = fileName;
-                if (streamName.Find(L"googlevideo.com") || (PathUtils::IsURL(streamName) && streamName.GetLength() > 50)) { //we don't like these URLs
+                if (streamName.Find(L"googlevideo.com") > 0 || (PathUtils::IsURL(streamName) && streamName.GetLength() > 50)) { //we don't like these URLs
                     streamName = streamSSName;
                     if (streamName.GetLength() <= 0) {
                         streamName = L"Online Audio Stream";
