@@ -2097,6 +2097,8 @@ CStringW GetShortAudioNameFromMediaType(AM_MEDIA_TYPE* pmt) {
         return L"LPCM";
     } else if (pmt->subtype == MEDIASUBTYPE_DOLBY_TRUEHD) {
         return L"TrueHD";
+    } else if (pmt->subtype == MEDIASUBTYPE_MLP) {
+        return L"MLP";
     } else if (pmt->subtype == MEDIASUBTYPE_PCM || pmt->subtype == MEDIASUBTYPE_IEEE_FLOAT) {
         return L"PCM";
     } else if (pmt->subtype == MEDIASUBTYPE_MPEG1AudioPayload || pmt->subtype == MEDIASUBTYPE_MPEG1Packet || pmt->subtype == MEDIASUBTYPE_MPEG1Payload) { //are these all actually possible?
@@ -2107,23 +2109,48 @@ CStringW GetShortAudioNameFromMediaType(AM_MEDIA_TYPE* pmt) {
         return L"MP3";
     } else if (pmt->subtype == MEDIASUBTYPE_FLAC || pmt->subtype == MEDIASUBTYPE_FLAC_FRAMED) {
         return L"FLAC";
+    } else if (pmt->subtype == MEDIASUBTYPE_Vorbis || pmt->subtype == MEDIASUBTYPE_Vorbis2) {
+        return L"Vorbis";
+    } else if (pmt->subtype == MEDIASUBTYPE_OPUS || pmt->subtype == MEDIASUBTYPE_OPUS_OLD) {
+        return L"Opus";
+    } else if (pmt->subtype == MEDIASUBTYPE_BD_LPCM_AUDIO || pmt->subtype == MEDIASUBTYPE_HDMV_LPCM_AUDIO) {
+        return L"LPCM";
+    } else if (pmt->subtype == MEDIASUBTYPE_IMA_AMV || pmt->subtype == MEDIASUBTYPE_ADPCM_MS || pmt->subtype == MEDIASUBTYPE_IMA_WAV) {
+        return L"ADPCM";
+    } else if (pmt->subtype == MEDIASUBTYPE_TRUESPEECH) {
+        return L"TrueSpeech";
     } else if (pmt->subtype == MEDIASUBTYPE_TTA1) {
         return L"TTA";
     } else if (pmt->subtype == MEDIASUBTYPE_SAMR) {
         return L"SAMR";
-    } else if (pmt->subtype == MEDIASUBTYPE_Ogg) {
-        return L"OGG";
-    } else if (pmt->subtype == MEDIASUBTYPE_Vorbis || pmt->subtype == MEDIASUBTYPE_Vorbis2) {
-        return L"Vorbis";
-    } else if (pmt->subtype == MEDIASUBTYPE_OPUS || pmt->subtype == MEDIASUBTYPE_OPUS_OLD) {
-        return L"OPUS";
+    } else if (pmt->subtype == MEDIASUBTYPE_QDM2) {
+        return L"QDM2";
+    } else if (pmt->subtype == MEDIASUBTYPE_MSGSM610) {
+        return L"GSM610";
+    } else if (pmt->subtype == MEDIASUBTYPE_ALAW || pmt->subtype == MEDIASUBTYPE_MULAW) {
+        return L"G711";
+    } else if (pmt->subtype == MEDIASUBTYPE_G726) {
+        return L"G726";
+    } else if (pmt->subtype == MEDIASUBTYPE_G729 || pmt->subtype == MEDIASUBTYPE_729A) {
+        return L"G729";
+    } else if (pmt->subtype == MEDIASUBTYPE_TAK) {
+        return L"TAK";
+    } else if (pmt->subtype == MEDIASUBTYPE_ALS) {
+        return L"ALS";
+    } else if (pmt->subtype == MEDIASUBTYPE_NELLYMOSER) {
+        return L"NELLY";
+    } else if (pmt->subtype == MEDIASUBTYPE_SPEEX) {
+        return L"Speex";
+    } else if (pmt->subtype == MEDIASUBTYPE_AES3) {
+        return L"AES3";
+    } else if (pmt->subtype == MEDIASUBTYPE_DSDL || pmt->subtype == MEDIASUBTYPE_DSDM || pmt->subtype == MEDIASUBTYPE_DSD1 || pmt->subtype == MEDIASUBTYPE_DSD8) {
+        return L"DSD";
+    } else if (pmt->subtype == MEDIASUBTYPE_IMC) {
+        return L"IMC";
+    } else if (pmt->subtype == MEDIASUBTYPE_VOXWARE_RT29) {
+        return L"RT29";
     } else if (pmt->subtype == MEDIASUBTYPE_MPEG_LOAS) {
         return L"LOAS";
-    }
-
-    CStringW fourCC;
-    if (GetMediaTypeFourCC(pmt->subtype, fourCC)) {
-        return fourCC;
     }
 
     return L"UNKN";
