@@ -183,7 +183,7 @@ BOOL CPPageOutput::OnInitDialog()
     for (auto it = devicelist.cbegin(); it != devicelist.cend(); it++) {
         m_AudioRendererDisplayNames.Add((*it).second);
         m_iAudioRendererTypeCtrl.AddString((*it).first);
-        if (s.strAudioRendererDisplayName == (*it).first && m_iAudioRendererType == 0) {
+        if (s.strAudioRendererDisplayName == (*it).second && m_iAudioRendererType == 0) {
             m_iAudioRendererType = m_iAudioRendererTypeCtrl.GetCount() - 1;
         }
     }
