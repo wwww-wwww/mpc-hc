@@ -103,6 +103,11 @@ bool IsStreamEnd(IBaseFilter* pBF)
 
 bool IsVideoRenderer(IBaseFilter* pBF)
 {
+    CLSID clsid = GetCLSID(pBF);
+    if (clsid == CLSID_VideoRenderer || clsid == CLSID_VideoRendererDefault || clsid == CLSID_VideoMixingRenderer9 || clsid == CLSID_EnhancedVideoRenderer || clsid == CLSID_madVR || clsid == CLSID_DXR || clsid == CLSID_MPCVR) {
+        return true;
+    }
+
     int nIn, nOut, nInC, nOutC;
     CountPins(pBF, nIn, nOut, nInC, nOutC);
 
@@ -121,11 +126,7 @@ bool IsVideoRenderer(IBaseFilter* pBF)
         EndEnumPins;
     }
 
-    CLSID clsid;
-    memcpy(&clsid, &GUID_NULL, sizeof(clsid));
-    pBF->GetClassID(&clsid);
-
-    return (clsid == CLSID_VideoRenderer || clsid == CLSID_VideoRendererDefault || clsid == CLSID_VideoMixingRenderer9 || clsid == CLSID_EnhancedVideoRenderer || clsid == CLSID_madVR || clsid == CLSID_DXR || clsid == CLSID_MPCVR);
+    return false;
 }
 
 bool IsAudioWaveRenderer(IBaseFilter* pBF)
