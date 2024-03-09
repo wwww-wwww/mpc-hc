@@ -29,6 +29,7 @@
 #include "RegFilterChooserDlg.h"
 #include "SelectMediaType.h"
 #include "FGFilter.h"
+#include "FGFilterLAV.h"
 #include "moreuuids.h"
 #include "FakeFilterMapper2.h"
 
@@ -360,7 +361,19 @@ bool IsExternalVideoRenderer(CLSID clsid)
 
 bool IgnoreExternalFilter(CLSID clsid)
 {
-    return IsExternalVideoRenderer(clsid) || clsid == CLSID_DVDNavigator || clsid == CLSID_SmartTee;
+    if (IsExternalVideoRenderer(clsid)) {
+        return true;
+    } else if (clsid == CLSID_XySubFilter || clsid == CLSID_XySubFilter_AutoLoader || clsid == CLSID_VSFilter || clsid == CLSID_VSFilter2) {
+        return true;
+    } else if (clsid == GUID_LAVSplitterSource) {
+        return true;
+    } else if (clsid == CLSID_DVDNavigator || clsid == CLSID_SmartTee || clsid == CLSID_VideoPortManager) {
+        return true;
+    } else if (clsid == CLSID_WMAsfWriter || clsid == CLSID_AviDest || clsid == CLSID_FileWriter || clsid == CLSID_DVMux || clsid == CLSID_MultFile) {
+        return true;
+    } else if (clsid == __uuidof(CMPEG2EncoderVideoDS) || clsid == __uuidof(CMPEG2EncoderDS) || clsid == __uuidof(CMPEG2EncoderAudioDS) || clsid == __uuidof(CMSAC3Enc)) {
+        return true;
+    }
 }
 
 void CPPageExternalFilters::OnAddRegistered()
