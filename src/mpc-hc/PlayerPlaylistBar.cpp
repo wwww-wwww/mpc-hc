@@ -1034,7 +1034,10 @@ bool CPlayerPlaylistBar::SaveMPCPlayList(CString fn, CTextFile::enc e)
             f.WriteString(str + _T("\n"));
         }
     }
-    s.SavePlayListPosition(fn, GetSelIdx());
+
+    if (s.fKeepHistory && s.bRememberExternalPlaylistPos) {
+        s.SavePlayListPosition(fn, GetSelIdx());
+    }
     return true;
 }
 
