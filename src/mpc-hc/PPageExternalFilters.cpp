@@ -374,6 +374,7 @@ bool IgnoreExternalFilter(CLSID clsid)
     } else if (clsid == __uuidof(CMPEG2EncoderVideoDS) || clsid == __uuidof(CMPEG2EncoderDS) || clsid == __uuidof(CMPEG2EncoderAudioDS) || clsid == __uuidof(CMSAC3Enc)) {
         return true;
     }
+    return false;
 }
 
 void CPPageExternalFilters::OnAddRegistered()
