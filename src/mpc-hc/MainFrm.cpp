@@ -14338,7 +14338,7 @@ int CMainFrame::SetupAudioStreams()
 
                 int rating = 0;
                 // If the track is controlled by a splitter and isn't selected at splitter level
-                if (bIsSplitter && !(dwFlags & (AMSTREAMSELECTINFO_ENABLED | AMSTREAMSELECTINFO_EXCLUSIVE))) {
+                if (!(dwFlags & (AMSTREAMSELECTINFO_ENABLED | AMSTREAMSELECTINFO_EXCLUSIVE))) {
                     bool bSkipTrack;
 
                     // If the splitter is the internal LAV Splitter and no language preferences
