@@ -19,8 +19,22 @@ BEGIN_MESSAGE_MAP(CMPCThemeStatic, CStatic)
     ON_WM_NCPAINT()
     ON_WM_ENABLE()
     ON_WM_ERASEBKGND()
+    ON_REGISTERED_MESSAGE(WMU_RESIZESUPPORT, ResizeSupport)
 END_MESSAGE_MAP()
 
+//this message is sent by resizablelib
+//we prevent clipping for statics as they don't get redrawn correctly after erasing
+LRESULT CMPCThemeStatic::ResizeSupport(WPARAM wParam, LPARAM lParam) {
+    if (AppNeedsThemedControls()) {
+        if (wParam == RSZSUP_QUERYPROPERTIES) {
+            LPRESIZEPROPERTIES props = (LPRESIZEPROPERTIES)lParam;
+            props->bAskClipping = false;
+            props->bCachedLikesClipping = false;
+            return TRUE;
+        }
+    }
+    return FALSE;
+}
 
 void CMPCThemeStatic::OnPaint()
 {

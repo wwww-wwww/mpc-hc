@@ -22,13 +22,13 @@
 #pragma once
 
 #include <afxwin.h>
-#include "CMPCThemePropertyPage.h"
+#include "CMPCThemeResizablePropertyPage.h"
 #include "CMPCThemeToolTipCtrl.h"
 #include "CMPCThemeEdit.h"
 
 // CPPageFileInfoClip dialog
 
-class CPPageFileInfoClip : public CMPCThemePropertyPage
+class CPPageFileInfoClip : public CMPCThemeResizablePropertyPage
 {
     DECLARE_DYNAMIC(CPPageFileInfoClip)
 

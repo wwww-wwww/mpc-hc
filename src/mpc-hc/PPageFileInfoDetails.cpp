@@ -34,9 +34,9 @@
 
 // CPPageFileInfoDetails dialog
 
-IMPLEMENT_DYNAMIC(CPPageFileInfoDetails, CMPCThemePropertyPage)
+IMPLEMENT_DYNAMIC(CPPageFileInfoDetails, CMPCThemeResizablePropertyPage)
 CPPageFileInfoDetails::CPPageFileInfoDetails(CString path, CString ydlsrc, IFilterGraph* pFG, ISubPicAllocatorPresenter* pCAP, IFileSourceFilter* pFSF, IDvdInfo2* pDVDI)
-    : CMPCThemePropertyPage(CPPageFileInfoDetails::IDD, CPPageFileInfoDetails::IDD)
+    : CMPCThemeResizablePropertyPage(CPPageFileInfoDetails::IDD, CPPageFileInfoDetails::IDD)
     , m_hIcon(nullptr)
     , m_fn(path)
     , m_ydlsrc(ydlsrc)
@@ -317,7 +317,7 @@ void CPPageFileInfoDetails::DoDataExchange(CDataExchange* pDX)
     DDX_Text(pDX, IDC_EDIT7, m_trackInfo);
 }
 
-BEGIN_MESSAGE_MAP(CPPageFileInfoDetails, CMPCThemePropertyPage)
+BEGIN_MESSAGE_MAP(CPPageFileInfoDetails, CMPCThemeResizablePropertyPage)
 END_MESSAGE_MAP()
 
 // CPPageFileInfoDetails message handlers
@@ -355,6 +355,11 @@ BOOL CPPageFileInfoDetails::OnInitDialog()
     if (!LoadType(ext, m_type)) {
         m_type.LoadString(IDS_AG_NOT_KNOWN);
     }
+
+    AddAnchor(IDC_EDIT1, TOP_LEFT, TOP_RIGHT);
+    AddAnchor(IDC_EDIT7, TOP_LEFT, BOTTOM_RIGHT);
+    AddAnchor(IDC_STATIC1, TOP_LEFT, TOP_RIGHT);
+    AddAnchor(IDC_STATIC2, TOP_LEFT, TOP_RIGHT);
 
     UpdateData(FALSE);
 

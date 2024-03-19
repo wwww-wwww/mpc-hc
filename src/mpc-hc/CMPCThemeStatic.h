@@ -10,6 +10,7 @@ public:
     virtual ~CMPCThemeStatic();
     void setFileDialogChild(bool set) { isFileDialogChild = set; };
     DECLARE_MESSAGE_MAP()
+    afx_msg LRESULT ResizeSupport(WPARAM wParam, LPARAM lParam);
     afx_msg void OnPaint();
     afx_msg void OnNcPaint();
     afx_msg void OnEnable(BOOL bEnable);

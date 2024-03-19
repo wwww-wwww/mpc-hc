@@ -29,9 +29,9 @@
 
 // CPPageFileInfoSheet
 
-IMPLEMENT_DYNAMIC(CPPageFileInfoSheet, CMPCThemePropertySheet)
+IMPLEMENT_DYNAMIC(CPPageFileInfoSheet, CMPCThemeResizablePropertySheet)
 CPPageFileInfoSheet::CPPageFileInfoSheet(CString path, CString ydlsrc, CMainFrame* pMainFrame, CWnd* pParentWnd)
-    : CMPCThemePropertySheet(IDS_PROPSHEET_PROPERTIES, pParentWnd, 0)
+    : CMPCThemeResizablePropertySheet(IDS_PROPSHEET_PROPERTIES, pParentWnd, 0)
     , m_clip(path, ydlsrc, pMainFrame->m_pGB, pMainFrame->m_pFSF, pMainFrame->m_pDVDI)
     , m_details(path, ydlsrc, pMainFrame->m_pGB, pMainFrame->m_pCAP, pMainFrame->m_pFSF, pMainFrame->m_pDVDI)
     , m_res(path, pMainFrame->m_pGB, pMainFrame->m_pFSF)
@@ -55,7 +55,7 @@ CPPageFileInfoSheet::~CPPageFileInfoSheet()
 }
 
 
-BEGIN_MESSAGE_MAP(CPPageFileInfoSheet, CMPCThemePropertySheet)
+BEGIN_MESSAGE_MAP(CPPageFileInfoSheet, CMPCThemeResizablePropertySheet)
     ON_BN_CLICKED(IDC_BUTTON_MI, OnSaveAs)
 END_MESSAGE_MAP()
 

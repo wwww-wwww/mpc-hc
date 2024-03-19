@@ -31,9 +31,9 @@
 
 // CPPageFileInfoClip dialog
 
-IMPLEMENT_DYNAMIC(CPPageFileInfoClip, CMPCThemePropertyPage)
+IMPLEMENT_DYNAMIC(CPPageFileInfoClip, CMPCThemeResizablePropertyPage)
 CPPageFileInfoClip::CPPageFileInfoClip(CString path, CString ydlsrc, IFilterGraph* pFG, IFileSourceFilter* pFSF, IDvdInfo2* pDVDI)
-    : CMPCThemePropertyPage(CPPageFileInfoClip::IDD, CPPageFileInfoClip::IDD)
+    : CMPCThemeResizablePropertyPage(CPPageFileInfoClip::IDD, CPPageFileInfoClip::IDD)
     , m_hIcon(nullptr)
     , m_fn(path)
     , m_ydlsrc(ydlsrc)
@@ -122,7 +122,7 @@ BOOL CPPageFileInfoClip::PreTranslateMessage(MSG* pMsg)
     return __super::PreTranslateMessage(pMsg);
 }
 
-BEGIN_MESSAGE_MAP(CPPageFileInfoClip, CMPCThemePropertyPage)
+BEGIN_MESSAGE_MAP(CPPageFileInfoClip, CMPCThemeResizablePropertyPage)
 END_MESSAGE_MAP()
 
 // CPPageFileInfoClip message handlers
@@ -175,6 +175,17 @@ BOOL CPPageFileInfoClip::OnInitDialog()
     if (PathUtils::Exists(m_path)) {
         m_tooltip.AddTool(&m_locationCtrl, IDS_TOOLTIP_EXPLORE_TO_FILE);
     }
+
+    AddAnchor(IDC_EDIT1, TOP_LEFT, TOP_RIGHT);
+    AddAnchor(IDC_EDIT2, TOP_LEFT, TOP_RIGHT);
+    AddAnchor(IDC_EDIT3, TOP_LEFT, TOP_RIGHT);
+    AddAnchor(IDC_EDIT4, TOP_LEFT, TOP_RIGHT);
+    AddAnchor(IDC_EDIT5, TOP_LEFT, TOP_RIGHT);
+    AddAnchor(IDC_EDIT6, TOP_LEFT, TOP_RIGHT);
+    AddAnchor(IDC_EDIT7, TOP_LEFT, BOTTOM_RIGHT);
+    AddAnchor(IDC_STATIC1, TOP_LEFT, TOP_RIGHT);
+    AddAnchor(IDC_STATIC2, TOP_LEFT, TOP_RIGHT);
+    AddAnchor(IDC_STATIC3, TOP_LEFT, TOP_RIGHT);
 
     UpdateData(FALSE);
 

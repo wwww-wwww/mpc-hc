@@ -1,5 +1,4 @@
 #pragma once
-#include "CMPCThemeResizableDialog.h"
 #include "CMPCThemeButton.h"
 #include "CMPCThemeGroupBox.h"
 #include "CMPCThemeLinkCtrl.h"

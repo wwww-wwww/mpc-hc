@@ -28,11 +28,11 @@ BOOL CMPCThemeResizableDialog::OnInitDialog() {
 
 void CMPCThemeResizableDialog::fulfillThemeReqs()
 {
-    CMPCThemeUtil::enableWindows10DarkFrame(this);
-    if (AppIsThemeLoaded()) {
+    if (AppNeedsThemedControls()) {
+        CMPCThemeUtil::enableWindows10DarkFrame(this);
         SetSizeGripBkMode(TRANSPARENT); //fix for gripper in mpc theme
+        CMPCThemeUtil::fulfillThemeReqs((CWnd*)this);
     }
-    CMPCThemeUtil::fulfillThemeReqs((CWnd*)this);
 }
 
 BEGIN_MESSAGE_MAP(CMPCThemeResizableDialog, CResizableDialog)

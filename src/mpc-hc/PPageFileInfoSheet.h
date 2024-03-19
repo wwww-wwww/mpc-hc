@@ -28,12 +28,13 @@
 #include <afxdlgs.h>
 #include "CMPCThemePropertySheet.h"
 #include "CMPCThemeButton.h"
+#include "CMPCThemeResizablePropertySheet.h"
 
 class CMainFrame;
 
 // CPPageFileInfoSheet
 
-class CPPageFileInfoSheet : public CMPCThemePropertySheet
+class CPPageFileInfoSheet : public CMPCThemeResizablePropertySheet
 {
     DECLARE_DYNAMIC(CPPageFileInfoSheet)
 
