@@ -88,6 +88,8 @@ public:
 
     void PreDoModalRTL(LPPROPSHEETHEADERW m_psh);
 
+    static CPoint GetRegionOffset(CWnd* window);
+
     enum CheckBoxStyle {
         CheckBoxRegular = 0,
         CheckBoxHover = 1,

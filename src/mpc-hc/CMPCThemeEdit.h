@@ -20,6 +20,8 @@ protected:
     bool isFileDialogChild;
 
     DECLARE_MESSAGE_MAP()
+    
+    afx_msg void OnWindowPosChanged(WINDOWPOS* lpwndpos);
     afx_msg void OnNcPaint();
     afx_msg BOOL OnMouseWheel(UINT nFlags, short zDelta, CPoint pt);
     afx_msg void OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);

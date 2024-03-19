@@ -1,5 +1,6 @@
 #pragma once
 #include "CMPCThemeScrollBar.h"
+#include <mutex>
 class CMPCThemeTreeCtrl;
 
 class CMPCThemeScrollable
@@ -10,22 +11,37 @@ public:
     virtual void doDefault() {};
 };
 
+class ScrollBarHelperInfo {
+public:
+    ScrollBarHelperInfo(CWnd* w);
+    bool UpdateHelperInfo(CWnd* w);
+    bool operator==(ScrollBarHelperInfo& lhs);
+    bool operator!=(ScrollBarHelperInfo& lhs) { return !operator==(lhs); }
+    CRect wr, corner, wrOnParent;
+    CPoint clientOffset;
+    int sbThickness;
+    int borderThickness;
+    bool canVSB;
+    bool canHSB;
+    bool needsSBCorner;
+};
+
 class CMPCThemeScrollBarHelper
 {
 protected:
     CWnd* window, *pParent;
     CMPCThemeScrollBar vertSB, horzSB;
-    CRect currentClipRegion;
-    bool currentlyClipped;
-    bool hasVSB;
-    bool hasHSB;
+    ScrollBarHelperInfo helperInfo;
+    std::recursive_mutex helperMutex;
+    bool setWindowRegionActive;
     static void doNcPaint(CWnd* window);
 public:
     CMPCThemeScrollBarHelper(CWnd* scrollWindow);
     ~CMPCThemeScrollBarHelper();
-    void createSB();
-    void setDrawingArea(CRect& cr, CRect& wr, bool clipping);
-    void hideSB();
+    void createThemedScrollBars();
+    void OnWindowPosChanged();
+    void setWindowRegionExclusive(HRGN h);
+    void hideNativeScrollBars();
     void updateScrollInfo(bool invalidate = false);
     bool WindowProc(CListCtrl* list, UINT message, WPARAM wParam, LPARAM lParam);
     bool WindowProc(CTreeCtrl* tree, UINT message, WPARAM wParam, LPARAM lParam);

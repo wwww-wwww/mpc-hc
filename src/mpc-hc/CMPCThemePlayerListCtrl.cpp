@@ -62,7 +62,18 @@ BEGIN_MESSAGE_MAP(CMPCThemePlayerListCtrl, CListCtrl)
     ON_NOTIFY(HDN_ENDTRACKW, 0, &OnHdnEndtrack)
     ON_NOTIFY_REFLECT_EX(LVN_ITEMCHANGED, &OnLvnItemchanged)
     ON_MESSAGE(PLAYER_PLAYLIST_UPDATE_SCROLLBAR, OnDelayed_UpdateScrollbar)
+    ON_WM_WINDOWPOSCHANGED()
 END_MESSAGE_MAP()
+
+void CMPCThemePlayerListCtrl::OnWindowPosChanged(WINDOWPOS* lpwndpos) {
+    if (AppNeedsThemedControls()) {
+        if (themedSBHelper && 0 != (GetStyle() & (WS_VSCROLL | WS_HSCROLL))) {
+            themedSBHelper->OnWindowPosChanged();
+        }
+    }
+    return __super::OnWindowPosChanged(lpwndpos);
+}
+
 
 void CMPCThemePlayerListCtrl::subclassHeader()
 {
@@ -198,7 +209,7 @@ BOOL CMPCThemePlayerListCtrl::OnLvnEndScroll(NMHDR* pNMHDR, LRESULT* pResult)
 void CMPCThemePlayerListCtrl::updateSB()
 {
     if (nullptr != themedSBHelper) {
-        themedSBHelper->hideSB();
+        themedSBHelper->hideNativeScrollBars();
     }
 }
 

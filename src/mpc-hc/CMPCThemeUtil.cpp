@@ -1052,3 +1052,13 @@ void CMPCThemeUtil::PreDoModalRTL(LPPROPSHEETHEADERW m_psh) {
     m_psh->dwFlags |= PSH_USECALLBACK;
     m_psh->pfnCallback = PropSheetCallBackRTL;
 }
+
+//Regions are relative to upper left of WINDOW rect (not client)
+CPoint CMPCThemeUtil::GetRegionOffset(CWnd* window) {
+    CRect twr, tcr;
+    window->GetWindowRect(twr);
+    window->GetClientRect(tcr);
+    ::MapWindowPoints(window->GetSafeHwnd(), nullptr, (LPPOINT)&tcr, 2);
+    CPoint offset = tcr.TopLeft() - twr.TopLeft();
+    return offset;
+}

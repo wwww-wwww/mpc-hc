@@ -39,6 +39,7 @@ public:
     void DoDPIChanged();
 
     DECLARE_MESSAGE_MAP()
+    afx_msg void OnWindowPosChanged(WINDOWPOS* lpwndpos);
     afx_msg void OnNcPaint();
     afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
     afx_msg BOOL OnLvnEndScroll(NMHDR* pNMHDR, LRESULT* pResult);

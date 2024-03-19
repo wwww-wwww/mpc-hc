@@ -30,8 +30,17 @@ BEGIN_MESSAGE_MAP(CMPCThemeEdit, CEdit)
     ON_WM_VSCROLL()
     ON_WM_HSCROLL()
     ON_WM_KEYDOWN()
+    ON_WM_WINDOWPOSCHANGED()
 END_MESSAGE_MAP()
 
+void CMPCThemeEdit::OnWindowPosChanged(WINDOWPOS* lpwndpos) {
+    if (AppNeedsThemedControls()) {
+        if (themedSBHelper && 0 != (GetStyle() & (WS_VSCROLL | WS_HSCROLL))) {
+            themedSBHelper->OnWindowPosChanged();
+        }
+    }
+    return __super::OnWindowPosChanged(lpwndpos);
+}
 
 void CMPCThemeEdit::PreSubclassWindow()
 {
