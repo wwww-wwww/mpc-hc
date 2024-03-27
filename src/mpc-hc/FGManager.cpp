@@ -207,6 +207,27 @@ CFGFilter* LookupFilterRegistry(const GUID& guid, CAtlList<CFGFilter*>& list, UI
     }
 }
 
+bool CFGManager::HasRarFilter(LPCWSTR lpcwstrFileName) {
+    CFGFilterList fl;
+    HRESULT hr;
+    if (FAILED(hr = EnumSourceFilters(lpcwstrFileName, fl))) {
+        return false;
+    }
+
+    hr = VFW_E_CANNOT_RENDER;
+
+    POSITION pos = fl.GetHeadPosition();
+    while (pos) {
+        CComPtr<IBaseFilter> pBF;
+        CFGFilter* pFG = fl.GetNext(pos);
+        if (pFG->GetCLSID() == __uuidof(CRARFileSource) && HRESULT_FACILITY(hr) == FACILITY_ITF) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 HRESULT CFGManager::EnumSourceFilters(LPCWSTR lpcwstrFileName, CFGFilterList& fl)
 {
     // TODO: use overrides
@@ -428,10 +449,10 @@ HRESULT CFGManager::AddSourceFilter(CFGFilter* pFGF, LPCWSTR lpcwstrFileName, LP
         return E_NOINTERFACE;
     }
 
-    if (pFGF->GetCLSID() == __uuidof(CRARFileSource) && m_bIsPreview && m_entryRFS.GetLength() > 0) {
+    if (pFGF->GetCLSID() == __uuidof(CRARFileSource) && m_entryRFS.GetLength() > 0) {
         CComPtr<CRARFileSource> rfs = static_cast<CRARFileSource*>(pBF.p);
-        std::wstring previewFileEntry(m_entryRFS.GetBuffer());
-        rfs->SetPreviewFile(previewFileEntry);
+        std::wstring preselectedRarFileEntry(m_entryRFS.GetBuffer());
+        rfs->SetPreselectedRarFileEntry(preselectedRarFileEntry);
     }
 
     if (FAILED(hr = AddFilter(pBF, lpcwstrFilterName))) {
@@ -999,9 +1020,7 @@ STDMETHODIMP CFGManager::Render(IPin* pPinOut)
 }
 
 HRESULT CFGManager::RenderRFSFileEntry(LPCWSTR lpcwstrFileName, LPCWSTR lpcwstrPlayList, CStringW entryRFS){
-    if (m_bIsPreview) {
-        this->m_entryRFS = entryRFS;
-    }
+    this->m_entryRFS = entryRFS;
     return RenderFile(lpcwstrFileName, lpcwstrPlayList);
 }
 

@@ -60,18 +60,18 @@ public:
 	// IFileSourceFilter interface
 	STDMETHODIMP Load (LPCOLESTR lpwszFileName, const AM_MEDIA_TYPE *pmt);
 	STDMETHODIMP GetCurFile (LPOLESTR *ppszFileName, AM_MEDIA_TYPE *pmt);
-    void SetPreviewFile(std::wstring previewFileEntry);
+    void SetPreselectedRarFileEntry(std::wstring preselectedRarFileEntry);
+    static HRESULT ScanArchive(wchar_t* archive_name, CRFSList<CRFSFile>* file_list, int* files_found, int* known_files_found);
 
 private:
 	static void UpdateArchiveName (wchar_t *ext, size_t len, int volume, bool new_numbering);
-    HRESULT ScanArchive(wchar_t* archive_name, CRFSList<CRFSFile>* file_list, int* files_found, int* known_files_found);
     static INT_PTR CALLBACK DlgFileList (HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
 	CRFSOutputPin m_pin;
 	CCritSec m_lock;
 	LPWSTR m_file_name;
 	CRFSFile *m_file;
-    std::wstring previewFileEntry;
+    std::wstring preselectedRarFileEntry;
 
 	static const std::vector<std::wstring> s_file_types;
 };

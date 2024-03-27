@@ -343,6 +343,7 @@
 #define IDS_R_DLG_ORGANIZE_FAV              _T("Dialogs\\OrganizeFavorites")
 
 #define IDS_R_DLG_CMD_LINE_HELP             _T("Dialogs\\CmdLineHelp")
+#define IDS_R_DLG_RAR_ENTRY_SELECTOR        _T("Dialogs\\RarEntrySelector")
 
 #define IDS_R_SHADERS                       _T("Shaders")
 #define IDS_RS_SHADERS_EXTRA                _T("Extra")

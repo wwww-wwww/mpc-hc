@@ -430,8 +430,8 @@ INT_PTR CALLBACK CRARFileSource::DlgFileList (HWND hwndDlg, UINT uMsg, WPARAM wP
 	return FALSE;
 }
 
-void CRARFileSource::SetPreviewFile(std::wstring previewFileEntry) {
-    this->previewFileEntry = previewFileEntry;
+void CRARFileSource::SetPreselectedRarFileEntry(std::wstring preselectedRarFileEntry) {
+    this->preselectedRarFileEntry = preselectedRarFileEntry;
 }
 //  IFileSourceFilter methods
 
@@ -486,16 +486,17 @@ STDMETHODIMP CRARFileSource::Load (LPCOLESTR lpwszFileName, const AM_MEDIA_TYPE 
 	}
 	else
 	{
-        if (previewFileEntry.length() > 0) {
+        if (preselectedRarFileEntry.length() > 0) {
             CRFSFile* file = file_list.First();
 
             while (file) {
-                if (previewFileEntry == file->filename) {
+                if (preselectedRarFileEntry == file->filename) {
                     m_file = file;
                     break;
                 }
                 file = file_list.Next(file);
             }
+
 
         } else {
 #ifdef STANDALONE_FILTER
