@@ -4113,6 +4113,22 @@ END
 
 STRINGTABLE
 BEGIN
+    IDS_PPAGEADVANCED_FILEPOS_PLAYLIST
+                            "Remember playback position in local M3U and MPCPL playlist files."
+    IDS_PPAGEADVANCED_FILEPOS_TRACK_SELECTION
+                            "Remember the selected audio and subtitle track (when file history is enabled)."
+    IDS_PPAGEADVANCED_YDL_AUDIO_FORMAT
+                            "Preferred audio format for stream that is selected from Youtube-DL results. Only applies if audio stream is separate from video stream.\n0: Automatic\n1: AAC\n2: OPUS"
+    IDS_PPAGEADVANCED_PREVENT_DISPLAY_SLEEP
+                            "Disable screen saver and monitor sleep mode during video playback."
+    IDS_PPAGEADVANCED_STILL_VIDEO_DURATION
+                            "Display duration in seconds for images rendered by ""Generate Still Video"" and ""MPC Image Source"" filters. Use 0 for infinite."
+    IDS_PPAGEADVANCED_CAPTURE_DEINTERLACE
+                            "Insert deinterlace filter (blend) in capture mode"
+END
+
+STRINGTABLE
+BEGIN
     IDS_ARS_WASAPI_MODE     "WASAPI mode:"
     IDS_ARS_EXCLUSIVE       "Exclusive"
     IDS_ARS_SHARED          "Shared"
