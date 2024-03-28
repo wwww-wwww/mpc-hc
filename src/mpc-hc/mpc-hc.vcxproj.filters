@@ -614,7 +614,7 @@
     <ClCompile Include="CMPCThemeResizablePropertySheet.cpp">
       <Filter>MPCTheme</Filter>
     </ClCompile>
-    <ClCompile Include="RarEntrySelectorDialog.cpp">
+    <ClCompile Include="RarEntrySelectorDialog.cpp"/>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AppSettings.h">
@@ -1166,7 +1166,7 @@
     <ClInclude Include="CMPCThemeResizablePropertySheet.h">
       <Filter>MPCTheme</Filter>
     </ClInclude>
-    <ClInclude Include="RarEntrySelectorDialog.h">
+    <ClInclude Include="RarEntrySelectorDialog.h"/>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\ani.avi">
