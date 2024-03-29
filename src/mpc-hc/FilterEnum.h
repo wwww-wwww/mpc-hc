@@ -198,6 +198,9 @@ enum DECODER {
 #if INTERNAL_DECODER_HEVC
     TRA_HEVC,
 #endif
+#if INTERNAL_DECODER_VVC
+    TRA_VVC,
+#endif
 #if INTERNAL_DECODER_AV1
     TRA_AV1,
 #endif
