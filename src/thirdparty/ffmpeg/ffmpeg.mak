@@ -109,9 +109,6 @@ SRCS_LC = \
 	libavcodec/faandct.c \
 	libavcodec/faanidct.c \
 	libavcodec/fdctdsp.c \
-	libavcodec/fft_fixed_32.c \
-	libavcodec/fft_float.c \
-	libavcodec/fft_init_table.c \
 	libavcodec/file_open.c \
 	libavcodec/idctdsp.c \
 	libavcodec/imgconvert.c \
@@ -122,7 +119,6 @@ SRCS_LC = \
 	libavcodec/mathtables.c \
 	libavcodec/mediacodec.c \
 	libavcodec/mpeg12framerate.c \
-	libavcodec/null_bsf.c \
 	libavcodec/options.c \
 	libavcodec/parser.c \
 	libavcodec/parsers.c \
@@ -132,14 +128,12 @@ SRCS_LC = \
 	libavcodec/pthread_slice.c \
 	libavcodec/qsv_api.c \
 	libavcodec/raw.c \
-	libavcodec/rdft.c \
 	libavcodec/simple_idct.c \
 	libavcodec/utils.c \
 	libavcodec/vorbis_parser.c \
 	libavcodec/xiph.c \
 	libavcodec/x86/constants.c \
 	libavcodec/x86/fdctdsp_init.c \
-	libavcodec/x86/fft_init.c \
 	libavcodec/x86/idctdsp_init.c \
 
 SRCS_LF = \
@@ -259,7 +253,6 @@ SRCS_LR = \
 SRCS_YASM_LC = \
 	libavcodec/x86/idctdsp.asm \
 	libavcodec/x86/fdct.asm \
-	libavcodec/x86/fft.asm \
 	libavcodec/x86/simple_idct.asm \
 	libavcodec/x86/simple_idct10.asm
 
