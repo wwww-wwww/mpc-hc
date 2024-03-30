@@ -3439,6 +3439,8 @@ void CAppSettings::CRecentFileListWithMoreInfo::SetSize(size_t nSize) {
         rfe_array.SetCount(m_maxSize);
         PurgeMediaHistory(m_maxSize);
         PurgePlaylistHistory(m_maxSize);
+        // to force update of recent files menu
+        listModifySequence++;
     }
     rfe_array.FreeExtra();
 
